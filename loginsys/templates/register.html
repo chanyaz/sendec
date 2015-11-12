@@ -1,0 +1,94 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% block register %}
+
+    <style>
+        .background-line{
+            position:relative;
+            z-index:1;
+            overflow:hidden;
+            text-align:center;
+        }
+
+        .background-line:before,
+        .background-line:after{
+            content: '';
+            display: inline-block;
+            width: 130px;
+            height: 1px;
+            background: black;
+            z-index: -1;
+            position: relative;
+            vertical-align: middle;
+        }
+        .background-line:before {
+            right: 10px;
+            margin:0 0 -10.3% -35.5%;
+        }
+
+        .background-line:after{
+            left: 10px;
+            margin: -12.1% -24% 0 26.5%;
+        }
+
+        #id_username:focus{
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        #id_password1:focus{
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        #id_password2:focus{
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        #global-reg-block{
+            width: 40em;
+            height: inherit;
+            margin-left: 20%;
+            margin-top: 10%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+    <div id="register-block">
+        <form action="/auth/register/" method="post" id="global-reg-block">
+        {% csrf_token %}
+            <div class="service-name" style="text-align: center;">
+                %SERVICE&nbsp;NAME%
+            </div>
+
+            <div id="welcome-text" style="margin-left: 40%;">
+                Welcome&nbsp;speech.
+            </div>
+
+            <div class="reg" style="text-align: center;">
+                <span class="background-line"><h3>REGISTRATION</h3></span>
+            </div>
+            <div style="width: 30em; margin-left: 13%;">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" class="tiny" style="height: 40px; width: 64%; margin-left: 20%; margin-top: 4%;">
+                    Sign&nbsp;Up
+                </button>
+            </div>
+            <div class="notice" style="text-align: center; margin-left: 5%;">
+                Please&nbsp;fill&nbsp;out&nbsp;all&nbsp;required&#040;<span style="color: red; ">&#042;</span>&#041;&nbsp;fields.
+            </div>
+            <div class="" style="height: 5em; width: 25em; text-align: center; margin-left: 17%; margin-top: 10%;">
+                By&nbsp;clicking&nbsp;&laquo;Sign&nbsp;Up&raquo;,you&nbsp;agree&nbsp;to&nbsp;%SERVICE&nbsp;NAME%&#39;s&nbsp;
+                <a href="">
+                    Terms&nbsp;and&nbsp;Conditions&nbsp;
+                </a>
+                and&nbsp;
+                <a href="">
+                    Privacy&nbsp;Policy.
+                </a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

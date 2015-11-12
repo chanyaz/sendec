@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% block current_category %}
+
+    <div class="row" style="">
+        <div style="text-align: center; font-size: 30px;">
+            {{ category_title }}<br><hr style="height: 2px;" color="red" width="70%">
+        </div>
+        <div class="left-side-bar" style="float: left; width: 40em; background-color: #5bc0de">
+            {% for cur_cat_news in cat_news %}
+                <div class="current_cat_news" onclick="location.href='/news/{{ cur_cat_news.news_category_id }}/{{ cur_cat_news.id }}/';">
+                    {{ cur_cat_news.news_title }}
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+        <div class="center-block" style="float: left; width: 20em; background-color: #507ebe; ">
+            123
+        </div>
+        <div class="right-side-bar" style="margin-right: 5%; background-color: #bce8f1;">
+            MostPopulare&Video&Contact&OtherNetworks
+        </div>
+    </div>
+
+{% endblock %}

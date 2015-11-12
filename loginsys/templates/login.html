@@ -1,0 +1,137 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% block login %}
+    <style>
+        video-back {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            transform: translateX(-50%) translateY(-50%);
+            background-size: cover;
+            transition: 1s opacity;
+        }
+        span{
+            position:relative;
+            z-index:1;
+            overflow:hidden;
+            text-align:center;
+        }
+        span:before,
+        span:after{
+            content: '';
+            display: inline-block;
+            width: 115px;
+            height: 1px;
+            background: black;
+            z-index: -1;
+            position: relative;
+            vertical-align: middle;
+        }
+        span:before {
+            right:10px;
+            margin:0 0 0 -26%;
+        }
+        span:after{
+            left:10px;
+            margin:0 -30% 0 0;
+        }
+        #login-tab a{
+            color: #201EBE;
+        }
+        #login-tab a:hover{
+            color: #507ebe;
+        }
+        #username:focus{
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #password:focus{
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #choice{
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+
+
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            $("#sign-in-button").click(function(){
+                var regElemenet = $("#sign-in").show();
+                $("#buttons-choice").replaceWith(regElemenet);
+            });
+        });
+    </script>
+
+    {% if user.is_authenticated %}
+        <div class="">
+            kjasdladjl9238940923
+        </div>
+    {% else %}
+        <div id="login-tab">
+            <div class = 'no' style="width: 50em;">
+
+                <div id="choice" style="width: 30em; margin: 10% 70%; height: inherit;">
+                    <div class="service-name" style="margin-left: 37.5%; margin-top: 5%;">
+                        %SERVICE&nbsp;NAME%
+                    </div>
+                    <div class="sign-in-center-data" style="text-align: center; margin-top: 5%;">
+                        <span>SIGN&nbsp;IN</span>
+                    </div>
+                    <div id="buttons-choice" style="margin-left: 20%; margin-top: 5%;">
+                        <button id="sign-in-button" class="tiny" style="width: 28em;">SIGN&nbsp;IN</button>
+                        <br>
+                        <a href="/auth/register/">
+                            <button id="sign-up-button" class="tiny" style="width: 28em; margin-bottom: 10%;">SIGN&nbsp;UP</button>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="sign-in" hidden onblur="this.style.border='solid 1px red';">
+                    <form action="/auth/login/" method="POST" autocomplete="off">
+                        {% csrf_token %}
+                        <label for="username" style="width: 64%; margin-left: 20%;">Username</label>
+                        <input type="text" name="username" id="username" style="width: 64%; margin-left: 20%;">
+                        <label for="password" style="width: 64%; margin-left: 20%;">Password</label>
+                        <input type="password" name="password" id="password" style="width: 64%; margin-left: 20%;">
+                        {% if login_error %}
+                            <label class="error"> {{ login_error }} </label>
+                        {% endif %}
+                        <button type="submit" style="height: 40px; width: 64%; margin-left: 20%;">
+                            <div class="button-text" style="margin-top: -3%;">
+                                Log&nbsp;in
+                            </div>
+                        </button>
+                        <label id="remembering" style="margin-left: 20%;">
+                            <input type="checkbox" id="check-remember" name="remember-true" value="remember-true">
+                            Remember&nbsp;me
+                        </label>
+
+                    <div class="forget-password" style="text-align: center; margin-top: 5%;">
+                        <a href="/auth/recovery/" id="remember-password">Forget&nbsp;password</a>
+                    </div>
+
+                        <hr width="65%" style="margin-left: 20%;">
+                        <div style="width: 100%; height: 50px; margin-left: 20%;">
+                            <div class="">
+                                Don't&nbsp;have&nbsp;an&nbsp;account?
+                                <a href="/auth/register/" style="margin-left: 10%;">Registration</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

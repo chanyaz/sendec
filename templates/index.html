@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8">
+    <title>Sendec&nbsp;{{ title }}</title>
+    <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="{% static 'static/img/favicon.ico' %}" type="image/x-icon">
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+</head>
+
+{% if username %}
+    <body>
+{% else %}
+    <body style="background: url('{% static 'static/img/sea-lion.jpg' %}') no-repeat fixed; background-size: cover;">
+{% endif %}
+
+    <div id="wrapper">
+    {% if username %}
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Sendec</a>
+            </div>
+            <!-- Top Menu -->
+            <ul class="nav navbar-right top-nav">
+                <li class="btn">
+                    <input type="text" class="form-control" placeholder="Search">
+                </li>
+                <li class="dropdown">
+                    <a href="/auth/logout/"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                </li>
+            </ul>
+            <!-- Menu -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active">
+
+                        <div class="row profile">
+                            <div class="col col-md-6 col-sm-6 col-xs-6">
+                                <a href="/profile/"><img class="img-responsive img-circle" src="http://placehold.it/400x400" alt=""></a>
+                                <div class="name">{{ username }}</div>
+                            </div>
+                            <div class="col col-md-5 col-sm-5 col-xs-5 menupr">
+
+                                    <div class="row">
+                                        <button type="button" class="btn btn-default btn-lg" onclick="location.href='/profile/';">
+                                            <span class="fa fa-fw fa-user" aria-hidden="true"></span>
+                                            Profile
+                                        </button>
+                                    </div>
+                                    <div class="row">
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-default" aria-label="Left Align">
+                                                <span class="fa fa-bell" aria-hidden="true"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-default" aria-label="Left Align">
+                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <button type="button" class="btn btn-default btn-lg">
+                                            <span class="fa fa-fw fa-gear" aria-hidden="true"></span> Settings
+                                        </button>
+                                    </div>
+
+                            </div>
+                        </div>
+
+                    </li>
+                    <li>
+                        <a href="#"> <i class="fa fa-fw fa-edit"></i> Navigation</a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="fa fa-fw fa-edit"></i> Navigation</a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="fa fa-fw fa-edit"></i> Navigation</a>
+                    </li>
+                    <li>
+                        <h5>О создателях:</h5>
+                        <a href="#"><i class="glyphicon glyphicon-user"></i> Somebody</a>
+                        <a href="#"><i class="glyphicon glyphicon-user"></i> Somebody</a>
+                        <a href="#"><i class="glyphicon glyphicon-user"></i> Somebody</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+            {% if news_block == True %}
+                {% include 'news_block.html' %}
+            {% endif %}
+            {% block user_profile %}{% endblock %}
+            {% block current_news %}{% endblock %}
+
+            {% block current_category %}{% endblock %}
+            <!-- /#page-wrapper -->
+        </div>
+
+
+        <hr style="height: 2px;" color="red" width="87%">
+        <div class="footer-div">
+            <div class="container-fluid">
+                1 2 3
+            </div>
+        </div>
+
+
+        </div>
+    {% else %}
+            {% block login %}{% endblock %}
+            {% block register %}{% endblock %}
+    {% endif %}
+    <!-- /#wrapper -->
+
+
+    <script src="{% static 'static/js/jquery.js' %}" type="javascript"></script>
+    <script src="{% static 'static/js/bootstrap.min.js' %}" type="javascript"></script>
+
+
+
+</body>
+</html>
