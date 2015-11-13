@@ -41,6 +41,9 @@ class News(models.Model):
     news_post_text = models.TextField(max_length=2048)
     news_portal_name = models.ForeignKey(NewsPortal)
 
+    news_latest_shown = models.BooleanField(default=False)
+    news_currently_showing = models.BooleanField(default=False)
+
     # Media
     # news_main_cover = models.FileField(upload_to='', storage=None)
 
@@ -66,6 +69,14 @@ class News(models.Model):
             "news_id": self.id,
             "comments": NewsComments.objects.filter(news_attached=self.id),
             "replies": NewsCommentsReplies.objects.filter(news_attached=self.id),
+        }
+
+    def get_json_news(self):
+        return {
+            "news_id": self.id,
+            "news_title": self.news_title,
+            "news_post_date": self.news_post_date.time().isoformat(),
+            "shown": self.news_latest_shown,
         }
 
 

@@ -3,12 +3,49 @@
 {% block current_news %}
 {% load my %}
 
+    <script>
+    // Refresh latest news
+        function load_latest_news() {
+            $.ajax({
+                type: "POST",
+                url: "/news/update_latest/",
+                success: $.get("/news/update_latest/").done(function (data) {
+                    //$(".latest-title-list").prepend(data.string[0]);
+                    data.latest_news.forEach(function (cur_lat_news) {
+                        if(cur_lat_news.shown == false) {
+                            $(".latest-titles-list").prepend(data.string[0]);
+
+                            $.get("/news/ss=" + cur_lat_news.news_id).done(function () {
+                            });
+                        }
+                    });
+                })
+            });
+        }
+
+            function refresh_latest_news(){
+                $.get("/news/update_latest/").done(function(data){
+                    //$(".latest-titles-list").prepend(data.string);
+
+                    data.latest_news.forEach(function(cur_lat_news){
+                        if(cur_lat_news.shown == false) {
+                            $(".latest-titles-list").prepend(data.string[0]);
+                            $.get("/news/ss="+cur_lat_news.news_id).done(function(){});
+                        }
+                    });
+                });
+                return true;
+            }
+            refresh_latest_news();
+            setInterval(refresh_latest_news, 1000);
+
+    </script>
+
 
     <script>
     // Likes
             function add_like_news(news_id) {
                 $.ajax({
-                    cache: false,
                     data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
                     type: "POST",
                     url: "/news/add_like/n=" + news_id,
@@ -31,7 +68,6 @@
     // Dislikes
         function add_dislike_news(news_id) {
                 $.ajax({
-                    cache: false,
                     data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
                     type: "POST",
                     url: "/news/add_dislike/n=" + news_id,
@@ -49,14 +85,6 @@
             }
             reload_dislikes();
             setInterval(reload_dislikes, 1000);
-    </script>
-
-
-
-    <script>
-        $(document).ready(function(){
-
-        })
     </script>
 
 
@@ -82,7 +110,14 @@
             <br><a href="">Vk</a>
         </div>
 
-    <div class="container-fluid" style="width: 55em; float: left;">
+    <div class="container-fluid" data-news-id="{{ current_news_values.id }}" style="width: 55em; float: left;">
+
+
+    <div class="maintenance" style="text-align: center; color: red; font-size: 20px;">
+        [!{AJAX REFRESHING LATEST NEWS}]
+    </div>
+
+
     <h5>{{ current_news_values.news_post_date.date }}</h5>
         <h1 class="page-header" style="margin-top: 0">{{ current_news_values.news_title }}</h1>
         <div class="row">
@@ -97,11 +132,10 @@
                     class="news_likes"
                     id="add_like_{{ current_news_values.id }}"
                     onclick="add_like_news('{{ current_news_values.id }}');">
-                Likes:
-                </span>&nbsp;
-                <div class="news_likes_amount_{{ current_news_values.id }}">
+                Likes:</span>&nbsp;
+                <span class="news_likes_amount_{{ current_news_values.id }}">
                     {{ current_news_values.news_likes }}
-                </div>
+                </span>
             </li>&nbsp;|
             <li>
                 <span
@@ -109,11 +143,11 @@
                         class="news_dislikes"
                         id="add_dislike_{{ current_news_values.id }}"
                         onclick="add_dislike_news('{{ current_news_values.id }}');">
-                    dislike
+                    Dislikes:
                 </span>&nbsp;
-                <div class="news_dislikes_amount_{{ current_news_values.id }}">
+                <span class="news_dislikes_amount_{{ current_news_values.id }}">
                     {{ current_news_values.news_dislikes }}
-                </div>
+                </span>
             </li>&nbsp;|
             <li><a href="#">share</a></li>&nbsp;|
             <li>
@@ -150,6 +184,7 @@
             <div class="comments-block">
             <!-- COMMENTS -->
             <form
+                    id="comments_form"
                     style="margin-top: 1%;"
                     action="/news/send/cat={{ current_news_values.news_category_id }}&id={{ current_news_values.id }}/"
                     method="post">
@@ -162,12 +197,22 @@
                         name="comments_text"
                         maxlength="512"
                         cols="81"
-                        rows="10"
+                        rows="12"
                         placeholder="Leave&nbsp;your&nbsp;comment..."
-                        onfocus=""
-                        onblur=""
+                        onfocus="document.getElementById('id_comments_text_submit').style.display='block';
+                        this.style.height='5em'"
+                        onblur="this.style.height='3em'; document.getElementById('id_comments_text_submit').style.display='none'"
+                        onkeydown="if(event.keyCode == 13 && !event.shiftKey){
+                            event.preventDefault();
+                            $('#comments_form').submit();
+                        }
+                        else{
+                            if(event.keyCode == 27){
+                                this.onblur();
+                            }
+                        }"
                 ></textarea>
-                <input type="submit" value="Send" style="margin-left: 91.5%;">
+                <input id="id_comments_text_submit" type="submit" value="Send" style="margin-left: 91.5%; display: none;">
             </form>
 
 
@@ -181,13 +226,17 @@
                             {{ current_comment.comments_text|safe|linebreaks }}
                         </div>
                         <div class="current_comment_info" style="margin-left: 60%;">
-                            <a href="#">Reply</a>&nbsp;|
+                            <span
+                                    id="span_show_reply_form"
+                                onclick="document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='block';
+                                        document.getElementById('reply_form__comment_{{ current_comment.id }}').onfocus();"
+                            >Reply</span>&nbsp;|
                             Likes:&nbsp;{{ current_comment.comments_likes }}&nbsp;|
                             Dislikes:&nbsp;{{ current_comment.comments_dislikes }}&nbsp;|
                             {{ current_comment.comments_post_date.date }}
                         </div>
                         <form
-                                id="reply_form_{{ current_comment.id }}"
+                                id="reply_form_comment_{{ current_comment.id }}"
                                 style="display: none;"
                                 action="/news/reply/nid={{ current_news_values.id }}&cid={{ current_comment.id }}/"
                                 method="post">
@@ -200,8 +249,20 @@
                                         maxlength="512"
                                         wrap="soft"
                                         placeholder="Leave&nbsp;your&nbsp;reply..."
-                                ></textarea>
-                                <input type="submit" value="Reply" style="margin-left: 92%;">
+                                        onfocus="document.getElementById('id_reply_text_submit_{{ current_comment.id }}').style.display='block';
+                                                 this.style.height='5em'"
+                                        onblur="document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='none'"
+                                        onkeydown="if(event.keyCode == 13 && !event.shiftKey){
+                                            event.preventDefault();
+                                            $('#reply_form_comment_'+'{{ current_comment.id }}').submit();
+                                        }
+                                        else{
+                                            if(event.keyCode == 27){
+                                                this.onblur();
+                                            }
+                                        }"
+                                >{{ current_comment.comments_author_id|get_username }},&nbsp;</textarea>
+                                <input id="id_reply_text_submit_{{ current_comment.id }}" type="submit" value="Reply" style="margin-left: 92%;">
                             </form>
                     </div>
 
@@ -243,8 +304,21 @@
                                             name="reply_text"
                                             maxlength="512"
                                             wrap="soft"
+                                            onfocus="document.getElementById('reply_form_second_{{ current_reply.id }}').style.display='block';
+                                                 this.style.height='5em'"
+                                        onblur="document.getElementById('reply_form_second_{{ current_reply.id }}').style.display='none';
+                                                document.getElementById('reply_form_{{ current_reply.id }}').style.display='none'"
+                                        onkeydown="if(event.keyCode == 13 && !event.shiftKey){
+                                            event.preventDefault();
+                                            $('#reply_form_'+'{{ current_reply.id }}').submit();
+                                        }
+                                        else{
+                                            if(event.keyCode == 27){
+                                                this.onblur();
+                                            }
+                                        }"
                                     >{{ current_reply.reply_author_id|get_username }},</textarea>
-                                    <input type="submit" value="Reply" style="margin-left: 92%;">
+                                    <input id="reply_form_second_{{ current_reply.id }}" type="submit" value="Reply" style="margin-left: 92%;">
                                 </form>
                             {% endif %}
 
@@ -291,21 +365,23 @@
     <div class="right-side-block" style="border: solid 1px red; margin-left: 65%; margin-right: 5%;">
         <div class="latest-news"
         style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
-            <div class="latest-title" style="text-align: center;">
+            <div class="latest-header" style="text-align: center;">
                 Latest&nbsp;news
             </div>
-            {% for i in latest_news %}
-                <ul style="list-style-type: none;">
-                    <li style="margin-left: -8%;">
-                        <span class="time" style="color: blue;">
-                            {{ i.news_post_date.time }}
-                        </span>
-                        <span class="title" onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                            {{ i.news_title }}
-                        </span>
-                    </li>
+            <div class="latest-titles">
+                <ul class="latest-titles-list" style="list-style-type: none;">
+                    {% for i in latest_news %}
+                            <li style="margin-left: -8%;">
+                                <span class="time" style="color: blue;">
+                                    {{ i.news_post_date.time }}
+                                </span>
+                                <span class="title" onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                    {{ i.news_title }}
+                                </span>
+                            </li>
+                    {% endfor %}
                 </ul>
-            {% endfor %}
+            </div>
         </div>
         <div class="video-and-subs">
             <ul style="list-style-type: none; margin-left: -10%;">

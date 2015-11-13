@@ -1,3 +1,5 @@
+# -*-coding: utf-8 -*-
+
 from django.shortcuts import render
 from django.shortcuts import render_to_response, render
 from django.template.context_processors import csrf
@@ -25,7 +27,8 @@ def render_news_politics(request):
     return News.objects.filter(news_category_id=NewsCategory.objects.get(category_name="Politics").id)
 
 def get_latest_news_total(request):
-    return News.objects.all().order_by("-news_post_date")[:10]
+    latest_10_news = News.objects.all().order_by("-news_post_date")[:10]
+    return latest_10_news
 
 
 @login_required(login_url='/auth/login/')
@@ -47,6 +50,35 @@ def render_current_news(request, category_id, news_id):
     args.update(csrf(request))
 
     return render_to_response("current_news.html", args)
+
+
+def update_latest_news(request):
+    from .models import News
+    import json
+
+    latest_new = News.objects.filter(news_latest_shown=False).order_by("-news_post_date")[0]
+    string = """<li style=''>
+                            <span class='time' style='color: blue;'>
+                                %s
+                            </span>
+                            <span class='title' onclick="location.href='/news/%s/%s/';">
+                                %s
+                            </span>
+                        </i>""" % (latest_new.news_post_date.time, latest_new.news_category_id, latest_new.id, latest_new.news_title)
+
+    response_data = {
+        "latest_news": [cur_new.get_json_news() for cur_new in News.objects.all().all().order_by("-news_post_date")[:1]],
+        "string": [string]
+    }
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+def set_shown(request, news_id):
+    from .models import News
+    instance = News.objects.get(id=int(news_id))
+    instance.news_latest_shown = True
+    instance.save()
+    return HttpResponse()
 
 
 @login_required(login_url="/auth/login/")

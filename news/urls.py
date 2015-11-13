@@ -11,6 +11,10 @@ urlpatterns = [
     url(r'^add_dislike/n=(?P<news_id>\w+)', 'news.views.add_dislike_news'),
     url(r'^check_dislike/n=(?P<news_id>\w+)', 'news.views.check_dislike_amount'),
 
+    # Latest news
+    url(r'^update_latest/', "news.views.update_latest_news"),
+    url(r'^ss=(?P<news_id>\w+)','news.views.set_shown'),
+
 
     url(r'^comments=(?P<category_id>\w+)&(?P<news_id>\w+)/', 'news.views.render_current_news_comments'),
     url(r'^send/cat=(?P<category_id>\w+)&id=(?P<news_id>\w+)/', 'news.views.comment_send'),
