@@ -53,6 +53,7 @@ def logout(request):
 
 def register(request):
     from userprofile.models import UserSettings
+    from .models import UserProfile
     if auth.get_user(request).is_authenticated():
         return redirect("/")
     else:
@@ -69,6 +70,10 @@ def register(request):
 
                 # User settings
                 user_settings = UserSettings()
+
+                UserProfile.objects.create(
+                    user_id=User.objects.get(username=auth.get_user(request).username).id,
+                )
 
                 new_user_profile = auth.get_user(request)
                 new_user_profile.birthday = "1900-01-01"

@@ -26,4 +26,4 @@ urlpatterns = [
     url(r'^news/', include('news.urls')),
     url(r'^profile/', include('userprofile.urls')),
     url(r'^', 'news.views.main_page_load'),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
