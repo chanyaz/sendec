@@ -3,13 +3,13 @@ from django.contrib.auth.models import User
 
 
 def upload_user_photo(instance, filename):
-    return "/".join(["media", "users", instance.user.username, "photos", filename])
+    return "/".join(["users", instance.user.username, "photos", filename])
 
 
 class UserProfile(models.Model):
     class Meta:
         db_table = "user_profile"
 
-    user = models.ForeignKey(User)
+    user = models.OneToOneField(User, related_name="profile")
     user_photo = models.FileField(upload_to=upload_user_photo)
 
