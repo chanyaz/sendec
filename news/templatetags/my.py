@@ -9,3 +9,8 @@ register = template.Library()
 def get_username(value):
     from userprofile.models import User
     return User.objects.get(id=int(value)).username
+
+@register.filter(name="get_news_title")
+def get_news_title(value):
+    from news.models import News
+    return News.objects.get(id=int(value)).news_title

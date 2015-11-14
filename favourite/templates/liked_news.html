@@ -3,8 +3,18 @@
 {% load my %}
 {% block favourite %}
 
-    <div class="liked_news">
-        liked
+    <div class="container-fluid">
+        <ul>
+            {% for current_fav_news in favourites %}
+                <li>
+                    <div class="current_fav_news">
+                        <div class="title">
+                            {{ current_fav_news.news_id|get_news_title }}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 
 {% endblock %}
