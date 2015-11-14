@@ -13,13 +13,23 @@ from loginsys.models import UserProfile
 def render_user_profile_page(request):
     args = {
         "username": User.objects.get(username=auth.get_user(request).username),
-        "userprofile": UserProfile.objects.get(user_id=User.objects.get(username=auth.get_user(request).username).id),
         "title": "| Profile",
         "user_profile_page": True,
     }
     args.update(csrf(request))
 
     return render_to_response("profile.html", args)
+
+
+@login_required(login_url="/auth/login/")
+def render_settings(request):
+    args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
+        "title": "| Settings",
+    }
+    args.update(csrf(request))
+
+    return render_to_response("settings.html", args)
 
 
 @login_required(login_url="/auth/login/")

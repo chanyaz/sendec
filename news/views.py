@@ -34,6 +34,7 @@ def get_latest_news_total(request):
 @login_required(login_url='/auth/login/')
 def render_current_news(request, category_id, news_id):
     import datetime
+    from userprofile.models import UserLikesNews
     from .forms import NewsCommentsForm, NewsCommentsRepliesForm
     args = {
         "title": "| %s" % News.objects.get(id=news_id).news_title,
@@ -45,11 +46,31 @@ def render_current_news(request, category_id, news_id):
         "comments_form": NewsCommentsForm,
         "replies_form": NewsCommentsRepliesForm,
         "comments_total": comments_load(request, news_id),
-        "replies_total": replies_load(request, news_id)
+        "replies_total": replies_load(request, news_id),
+        "liked": check_like(request, news_id),
+        "disliked": check_dislike(request, news_id),
+        "like_amount": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count(),
+        "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count()
     }
     args.update(csrf(request))
 
     return render_to_response("current_news.html", args)
+
+
+def check_like(request, news_id):
+    from userprofile.models import UserLikesNews
+    if UserLikesNews.objects.filter(user_id=User.objects.get(username=auth.get_user(request).username).id).filter(news_id=news_id).filter(like=True).exists():
+        return True
+    else:
+        return False
+
+
+def check_dislike(request, news_id):
+    from userprofile.models import UserLikesNews
+    if UserLikesNews.objects.filter(user_id=User.objects.get(username=auth.get_user(request).username).id).filter(news_id=news_id).filter(dislike=True  ).exists():
+        return True
+    else:
+        return False
 
 
 def update_latest_news(request):
@@ -164,29 +185,61 @@ def replies_load(request, news_id):
 @login_required(login_url="/auth/login/")
 def add_like_news(request, news_id):
     from .models import News
+    from userprofile.models import UserLikesNews
     import json
-    instance = News.objects.get(id=news_id)
-    instance.news_likes += 1
-    instance.save()
+    if UserLikesNews.objects.filter(user_id=User.objects.get(username=auth.get_user(request).username).id).filter(news_id=news_id).exists():
+        user_like_instance = UserLikesNews.objects.filter(user_id=User.objects.get(username=auth.get_user(request).username).id).get(news_id=news_id)
+        # Add like to pair USER-news
+        user_like_instance.dislike=False
+        user_like_instance.like=True
+        user_like_instance.save()
+    else:
+        instance = News.objects.get(id=news_id)
+        instance.news_likes += 1
+        instance.save()
+        UserLikesNews.objects.create(
+            like=True,
+            dislike=False,
+            news_id=news_id,
+            user_id=User.objects.get(username=auth.get_user(request).username).id
+        )
     return HttpResponse()
 
-@login_required(login_url="/auth/login/")
-def check_like_amount(request, news_id):
-    from .models import News
-    import json
-    return HttpResponse(json.dumps({"likes": News.objects.get(id=int(news_id)).news_likes}), content_type="application/json")
 
 @login_required(login_url="/auth/login/")
 def add_dislike_news(request, news_id):
     from .models import News
+    from userprofile.models import UserLikesNews
     import json
-    instance = News.objects.get(id=news_id)
-    instance.news_dislikes += 1
-    instance.save()
+
+    if UserLikesNews.objects.filter(user_id=User.objects.get(username=auth.get_user(request).username).id).filter(news_id=news_id).exists():
+        user_dislike_instance = UserLikesNews.objects.filter(user_id=User.objects.get(username=auth.get_user(request).username).id).get(news_id=news_id)
+        # Add like to pair USER-news
+        user_dislike_instance.dislike=True
+        user_dislike_instance.like=False
+        user_dislike_instance.save()
+    else:
+        instance = News.objects.get(id=news_id)
+        instance.news_likes += 1
+        instance.save()
+        UserLikesNews.objects.create(
+            like=False,
+            dislike=True,
+            news_id=news_id,
+            user_id=User.objects.get(username=auth.get_user(request).username).id
+        )
     return HttpResponse()
+
+
+@login_required(login_url="/auth/login/")
+def check_like_amount(request, news_id):
+    from userprofile.models import UserLikesNews
+    import json
+    return HttpResponse(json.dumps({"likes": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count()}), content_type="application/json")
+
 
 @login_required(login_url="/auth/login/")
 def check_dislike_amount(request, news_id):
-    from .models import News
+    from userprofile.models import UserLikesNews
     import json
-    return HttpResponse(json.dumps({"dislikes": News.objects.get(id=int(news_id)).news_dislikes}), content_type="application/json")
+    return HttpResponse(json.dumps({"dislikes": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count()}), content_type="application/json")

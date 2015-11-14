@@ -12,6 +12,18 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
+    <style>
+        ul{
+            margin-left: -20%;
+        }
+        .footer-list-element{
+            float: left;
+            margin-left: 17%;
+            height: 300px;
+            background-color: sandybrown;
+        }
+    </style>
+
 </head>
 
 {% if username %}
@@ -36,10 +48,18 @@
             </div>
             <!-- Top Menu -->
             <ul class="nav navbar-right top-nav">
-                <li class="btn">
-                    <input type="text" class="form-control" placeholder="Search">
+                <li class="btn" style="margin-left: -12%;">
+                    <form action="/search/" method="get">
+                        <input
+                                name="q"
+                                type="text"
+                                class="form-control"
+                                placeholder="Search"
+                                style="float: left;">
+                        <input type="submit" value="Search">
+                    </form>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown" style="margin-left: 12%;">
                     <a href="/auth/logout/"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                 </li>
             </ul>
@@ -63,17 +83,25 @@
                                     </div>
                                     <div class="row">
                                         <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-default" aria-label="Left Align">
+                                            <button
+                                                    onclick="location.href='/notify/';"
+                                                    type="button"
+                                                    class="btn btn-default"
+                                                    aria-label="Left Align">
                                                 <span class="fa fa-bell" aria-hidden="true"></span>
                                             </button>
-                                            <button type="button" class="btn btn-default" aria-label="Left Align">
+                                            <button
+                                                    onclick="location.href='/favourite/';"
+                                                    type="button"
+                                                    class="btn btn-default"
+                                                    aria-label="Left Align">
                                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                             </button>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <button type="button" class="btn btn-default btn-lg">
-                                            <span class="fa fa-fw fa-gear" aria-hidden="true"></span> Settings
+                                        <button type="button" class="btn btn-default btn-lg" onclick="location.href='/profile/settings/';">
+                                            <span class="fa fa-fw fa-gear" aria-hidden="true"></span>Settings
                                         </button>
                                     </div>
 
@@ -107,7 +135,11 @@
                 {% include 'news_block.html' %}
             {% endif %}
             {% block user_profile %}{% endblock %}
+            {% block settings %}{% endblock %}
+            {% block favourite %}{% endblock %}
+            {% block notify %}{% endblock %}
             {% block current_news %}{% endblock %}
+            {% block search %}{% endblock %}
 
             {% block current_category %}{% endblock %}
             <!-- /#page-wrapper -->
@@ -115,9 +147,16 @@
 
 
         <hr style="height: 2px;" color="red" width="87%">
-        <div class="footer-div">
+        <div class="footer-div" style="background-color: #23527c;">
             <div class="container-fluid">
-                1 2 3
+                <h4 style="text-align: center;">FOOTER</h4>
+                <ul style="color: white;">
+                    <li class="footer-list-element"><div id="one">one</div></li>
+                    <li class="footer-list-element"><div id="two">two</div></li>
+                    <li class="footer-list-element"><div id="three">three</div></li>
+                    <li class="footer-list-element"><div id="four">four</div></li>
+                    <li class="footer-list-element"><div id="five">five</div></li>
+                </ul>
             </div>
         </div>
 

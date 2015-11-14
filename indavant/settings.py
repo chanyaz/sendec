@@ -40,6 +40,9 @@ INSTALLED_APPS = (
     'loginsys',
     'news',
     'userprofile',
+    "favourite",
+    "notify",
+    "search",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -63,6 +66,9 @@ TEMPLATES = [
                  os.path.join(BASE_DIR, 'news/templates'),  # News templates
                  os.path.join(BASE_DIR, 'news/templatetags'),
                  os.path.join(BASE_DIR, 'userprofile/templates'),  # User profile's templates
+                 os.path.join(BASE_DIR, 'favourite/templates'),  # User favourite news templates
+                 os.path.join(BASE_DIR, 'notify/templates'),  # User favourite news templates
+                 os.path.join(BASE_DIR, 'search/templates'),  # User favourite news templates
                  ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -112,5 +118,6 @@ STATICFILES_DIRS = (
     ("static", os.path.join(BASE_DIR, 'static')),
 )
 
-MEDIA_URL = '/media/'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

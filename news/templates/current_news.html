@@ -51,6 +51,7 @@
                     url: "/news/add_like/n=" + news_id,
                     success: $.get("/news/check_like/n=" + news_id).done(function (data) {
                         $(".news_likes_amount_"+news_id).text(data.likes);
+                        $(".liked").text("Liked");
                     })
                 });
             }
@@ -73,6 +74,7 @@
                     url: "/news/add_dislike/n=" + news_id,
                     success: $.get("/news/check_dislike/n=" + news_id).done(function (data) {
                         $(".news_dislikes_amount_"+news_id).text(data.dislikes);
+                        $(".disliked").text("Disliked");
                     })
                 });
             }
@@ -132,9 +134,21 @@
                     class="news_likes"
                     id="add_like_{{ current_news_values.id }}"
                     onclick="add_like_news('{{ current_news_values.id }}');">
-                Likes:</span>&nbsp;
+                    <div class="liked" style="float: left;">
+                        {% if liked == False %}
+                            Likes:
+                        {% else %}
+                            <!-- Break like -->
+                            <span
+                                data-news-id="{{ current_news_values.id }}"
+                                class="break_like"
+                                id="break_like_{{ current_news_values.id }}"
+                                onclick="">Liked</span>
+                        {% endif %}
+                    </div>
+                </span>&nbsp;
                 <span class="news_likes_amount_{{ current_news_values.id }}">
-                    {{ current_news_values.news_likes }}
+                    {{ like_amount }}
                 </span>
             </li>&nbsp;|
             <li>
@@ -143,10 +157,21 @@
                         class="news_dislikes"
                         id="add_dislike_{{ current_news_values.id }}"
                         onclick="add_dislike_news('{{ current_news_values.id }}');">
-                    Dislikes:
+                    <div class="disliked" style="float: left;">
+                        {% if disliked == False %}
+                            Dislikes:
+                        {% else %}
+                            <!-- Break dislike -->
+                            <span
+                                data-news-id="{{ current_news_values.id }}"
+                                class="break_dislike"
+                                id="break_dislike_{{ current_news_values.id }}"
+                                onclick="">Disliked</span>
+                        {% endif %}
+                    </div>
                 </span>&nbsp;
                 <span class="news_dislikes_amount_{{ current_news_values.id }}">
-                    {{ current_news_values.news_dislikes }}
+                    {{ dislike_amount }}
                 </span>
             </li>&nbsp;|
             <li><a href="#">share</a></li>&nbsp;|
@@ -317,7 +342,7 @@
                                                 this.onblur();
                                             }
                                         }"
-                                    >{{ current_reply.reply_author_id|get_username }},</textarea>
+                                    >{{ current_reply.reply_author_id|get_username }},&nbsp;</textarea>
                                     <input id="reply_form_second_{{ current_reply.id }}" type="submit" value="Reply" style="margin-left: 92%;">
                                 </form>
                             {% endif %}

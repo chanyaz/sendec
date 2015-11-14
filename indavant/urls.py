@@ -22,7 +22,10 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^auth/', include('loginsys.urls')),
+    url(r'^favourite/', include('favourite.urls')),
     url(r'^news/', include('news.urls')),
+    url(r'^notify/', include('notify.urls')),
     url(r'^profile/', include('userprofile.urls')),
+    url(r'^search/', include('search.urls')),
     url(r'^', 'news.views.main_page_load'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

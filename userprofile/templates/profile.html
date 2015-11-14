@@ -9,7 +9,7 @@
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="text-center">
                     <img
-                            src="/media/{{ username.profile.user_photo }}"
+                            src="/media/{{ userprofile.user_photo }}"
                             class="avatar img-circle img-thumbnail"
                             alt="avatar"
                             width="400px"/>
@@ -46,7 +46,8 @@
                                     class="form-control"
                                     type="text"
                                     placeholder="Username"
-                                    value="{{ username.username }}">
+                                    value="{{ username.username }}"
+                            spellcheck="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -91,7 +92,23 @@
                         </div>
                     </div>
                 </form>
+
+                <div class="settings col-lg-10">
+                    <h3>Settings</h3>
+                    <div class="col-md-offset-0">
+                        Password:&nbsp;
+                        <form class="col-lg-offset-1">
+                            <label for="new_password">New&nbsp;password</label>
+                            <input id="new_password" type="password"><br><br>
+                            <label for="confirm_new_password">Confirm&nbsp;new&nbsp;password</label>
+                            <input id="confirm_new_password" type="password">
+                        </form>
+                    </div>
+                </div>
+
             </div>
+
+
         </div>
     </div>
 
