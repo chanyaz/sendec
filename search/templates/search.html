@@ -1,9 +1,72 @@
 {% extends 'index.html' %}
 {% load staticfiles %}
+{% load my %}
 {% block search %}
+
+    <script type="text/javascript">
+        // Raise Error If Search Input is empty
+        function validate_form ( ) {
+        	valid = true;
+                if ( document.search.q.value == "" ) {
+                        alert ( "Please, complete the field." );
+                        valid = false;
+                }
+                return valid;
+        }
+    </script>
+
 
     <div class="search">
         SEARCH
+        {% if empty_result %}
+            <div class="no_results" style="text-align: center">
+                No&nbsp;one&nbsp;matches.&nbsp;Please,&nbsp;try&nbsp;another&nbsp;request&nbsp;word<br><br>
+                <form action="/search/" method="get" name="search" onsubmit="return validate_form();">
+                    <input
+                            autocomplete="off"
+                            autofocus
+                            name="q"
+                            type="text"
+                            class="form-control"
+                            placeholder="Search"
+                            style="width: 50%; margin-left: 25%; float: left;">
+                    <input type="submit" value="Search" style="margin-left: -14%;">
+                </form>
+            </div>
+        {% endif %}
+        {% if results|length > 0 %}
+            {{ results }}
+            <div id="among_title">
+                <div style="text-align: left; font-size: 20px;"><b>Among&nbsp;titles</b><hr></div>
+                    {% for current_result in results %}
+                            <div class="current_searched" style="border: solid 1px red; margin-top: 2%;"
+                            onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"
+                            onmouseover="this.style.cursor='pointer';
+                            this.style.backgroundColor='grey';"
+                            onmouseout="this.style.backgroundColor='';">
+                                <div class="portal" style="float: left;">
+                                    <b>{{ current_result.news_portal_name_id|get_news_portal }}</b>
+                                </div>
+                                <div class="date">
+                                    &nbsp;|&nbsp;{{ current_result.news_post_date.date }}
+                                </div>
+                                <div class="title">
+                                    {{ current_result.news_title }}
+                                </div>
+                                <div class="post">
+                                    {{ current_result.news_post_text|safe|truncatewords:"15" }}
+                                </div>
+                            </div>
+                    {% endfor %}
+            </div>
+        {% endif %}
+    <br>
+        {% if among_text|length > 0 %}
+            <div id="among_text">
+                <div style="text-align: left; font-size: 20px;"><b>Among&nbsp;posts</b><hr></div>
+                {{ among_text }}
+            </div>
+        {% endif %}
     </div>
 
 {% endblock %}

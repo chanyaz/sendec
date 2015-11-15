@@ -8,6 +8,8 @@ from django.contrib import auth
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 
+from django.contrib.admin.views.decorators import staff_member_required
+
 from .models import News, NewsPortal, NewsCategory
 
 
@@ -243,3 +245,28 @@ def check_dislike_amount(request, news_id):
     from userprofile.models import UserLikesNews
     import json
     return HttpResponse(json.dumps({"dislikes": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count()}), content_type="application/json")
+
+
+def delete_comment(request, comment_id):
+    from news.models import NewsComments
+    args = {}
+    args.update(csrf(request))
+    news_instance = News.objects.get(id=NewsComments.objects.get(id=int(comment_id)).news_attached_id)
+    if User.objects.get(username=auth.get_user(request).username).is_staff:
+        instance = NewsComments.objects.get(id=int(comment_id))
+        instance.delete()
+    else:
+        pass
+    return HttpResponseRedirect("/news/%s/%s/" % (news_instance.news_category_id, news_instance.id), args)
+
+def delete_reply(request, reply_id):
+    from news.models import NewsCommentsReplies
+    args = {}
+    args.update(csrf(request))
+    news_instance = News.objects.get(id=NewsCommentsReplies.objects.get(id=int(reply_id)).news_attached_id)
+    if User.objects.get(username=auth.get_user(request).username).is_staff:
+        instance = NewsCommentsReplies.objects.get(id=int(reply_id))
+        instance.delete()
+    else:
+        pass
+    return HttpResponseRedirect("/news/%s/%s/" % (news_instance.news_category_id, news_instance.id), args)

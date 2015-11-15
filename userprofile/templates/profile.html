@@ -3,17 +3,12 @@
 {% load staticfiles %}
 
     <div class="container-fluid">
-        <h1 class="page-header">Edit Profile</h1>
+        <h1 class="page-header">Profile:&nbsp;{{ username.username }}</h1>
         <div class="row">
             <!-- left column -->
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="text-center">
-                    <img
-                            src="/media/{{ userprofile.user_photo }}"
-                            class="avatar img-circle img-thumbnail"
-                            alt="avatar"
-                            width="400px"/>
-                    <h6>Upload a different photo...</h6>
+                    <img src="/media/{{ username.profile.user_photo }}" alt="avatar" width="200">
                     <form
                         action="/profile/photo_upload/"
                         method="POST"
@@ -23,7 +18,7 @@
                                 name="username_photo"
                                 type="file"
                                 class="btn btn-default btn-block"
-                        value="Upload&nbsp;photo">
+                                value="Upload&nbsp;photo">
                             <!--<span aria-hidden="true"></span>--></input>
                         <input type="submit" value="Change&nbsp;photo">
                     </form>

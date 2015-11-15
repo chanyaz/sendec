@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.shortcuts import render_to_response, render, HttpResponseRedirect
+from django.shortcuts import render_to_response, render, HttpResponseRedirect, RequestContext
 from django.template.context_processors import csrf
 from django.contrib import auth
 from django.contrib.auth.models import User

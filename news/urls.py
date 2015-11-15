@@ -16,6 +16,11 @@ urlpatterns = [
     url(r'^ss=(?P<news_id>\w+)','news.views.set_shown'),
 
 
+    # Deleting objects
+    url(r'^cd=(?P<comment_id>\w+)/', 'news.views.delete_comment'),
+    url(r'^rd=(?P<reply_id>\w+)/', 'news.views.delete_reply'),
+
+
     url(r'^comments=(?P<category_id>\w+)&(?P<news_id>\w+)/', 'news.views.render_current_news_comments'),
     url(r'^send/cat=(?P<category_id>\w+)&id=(?P<news_id>\w+)/', 'news.views.comment_send'),
     url(r'^reply/nid=(?P<news_id>\w+)&cid=(?P<comment_id>\w+)/', 'news.views.reply_send'),

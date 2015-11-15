@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 def upload_user_photo(instance, filename):
-    return "/".join(["users", instance.user.username, "photos", filename])
+    return "/".join(["content", "users", instance.user.username, "photos", filename])
 
 
 class UserProfile(models.Model):

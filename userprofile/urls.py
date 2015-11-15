@@ -9,4 +9,4 @@ urlpatterns = [
     url(r"^photo_upload/", "userprofile.views.change_profile_photo"),
     url(r"^settings/", "userprofile.views.render_settings"),
     url(r'^', 'userprofile.views.render_user_profile_page'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

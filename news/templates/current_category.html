@@ -8,18 +8,71 @@
         </div>
         <div class="left-side-bar" style="float: left; width: 40em; background-color: #5bc0de">
             {% for cur_cat_news in cat_news %}
-                <div class="current_cat_news" onclick="location.href='/news/{{ cur_cat_news.news_category_id }}/{{ cur_cat_news.id }}/';">
-                    {{ cur_cat_news.news_title }}
+                <div
+                        class="current_cat_news"
+                        onclick="location.href='/news/{{ cur_cat_news.news_category_id }}/{{ cur_cat_news.id }}/';"
+                        style="float: left; border: solid 1px darkblue; height: 15em; width: 18em; margin-left: 1%; margin-top: 1%;">
+                    <div class="date">{{ cur_cat_news.news_post_date }}</div>
+                    <div class="cover"><img src="" width="100" /></div>
+                    <div class="title">{{ cur_cat_news.news_title }}</div>
                 </div>
-                <br>
             {% endfor %}
         </div>
-        <div class="center-block" style="float: left; width: 20em; background-color: #507ebe; ">
+        <div class="center-block" style="float: left; width: 25em; background-color: #507ebe; ">
             123
         </div>
-        <div class="right-side-bar" style="margin-right: 5%; background-color: #bce8f1;">
-            MostPopulare&Video&Contact&OtherNetworks
+        <div class="right-side-bar" style="margin-right: 0; background-color: #bce8f1;">
+            <div class="right-side-block" style="border: solid 1px red; margin-left: 65%; margin-right: 5%;">
+                <div class="latest-news"
+                style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
+                    <div class="latest-header" style="text-align: center;">
+                        Latest&nbsp;news
+                    </div>
+                    <div class="latest-titles">
+                        <ul class="latest-titles-list" style="list-style-type: none;">
+                            {% for i in latest_news %}
+                                    <li style="margin-left: -8%;">
+                                        <span class="time" style="color: blue;">
+                                            {{ i.news_post_date.time }}
+                                        </span>
+                                        <span class="title" onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                            {{ i.news_title }}
+                                        </span>
+                                    </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="video-and-subs">
+                    <ul style="list-style-type: none; margin-left: -10%;">
+                        <li style="margin-top: 2%;">
+                            <a class="twitter-timeline"
+                               href="https://twitter.com/SendecNews"
+                               data-widget-id="663274878636834816">
+                                Твиты от @SendecNews
+                            </a>
+                                <script>
+                                    !function(d,s,id){
+                                        var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+                                        if(!d.getElementById(id)){
+                                            js=d.createElement(s);
+                                            js.id=id;
+                                            js.src=p+"://platform.twitter.com/widgets.js";
+                                            fjs.parentNode.insertBefore(js,fjs);
+                                        }
+                                    }(document,"script","twitter-wjs");
+                                </script>
+                        </li>
+                        <li>
+                            2
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
+
+
+
 
 {% endblock %}

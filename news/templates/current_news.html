@@ -52,6 +52,7 @@
                     success: $.get("/news/check_like/n=" + news_id).done(function (data) {
                         $(".news_likes_amount_"+news_id).text(data.likes);
                         $(".liked").text("Liked");
+                        $(".disliked").text("Dislikes:")
                     })
                 });
             }
@@ -75,6 +76,7 @@
                     success: $.get("/news/check_dislike/n=" + news_id).done(function (data) {
                         $(".news_dislikes_amount_"+news_id).text(data.dislikes);
                         $(".disliked").text("Disliked");
+                        $(".liked").text("Likes:")
                     })
                 });
             }
@@ -267,6 +269,7 @@
                                 method="post">
                                 {% csrf_token %}
                                 <textarea
+                                        autofocus
                                         id="id_reply_text"
                                         cols="83"
                                         rows="10"
@@ -276,7 +279,7 @@
                                         placeholder="Leave&nbsp;your&nbsp;reply..."
                                         onfocus="document.getElementById('id_reply_text_submit_{{ current_comment.id }}').style.display='block';
                                                  this.style.height='5em'"
-                                        onblur="document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='none'"
+                                                onblur="document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='none'"
                                         onkeydown="if(event.keyCode == 13 && !event.shiftKey){
                                             event.preventDefault();
                                             $('#reply_form_comment_'+'{{ current_comment.id }}').submit();
@@ -313,6 +316,10 @@
                                         {% else %}
                                             {{ current_reply.reply_post_date.date }}
                                         {% endif %}
+                                        <span
+                                                name="delete-reply"
+                                                onclick="location.href='/news/rd={{ current_reply.id }}/';">
+                                            <a>delete</a></span>
                                     </div>
                                 </div>
 
@@ -323,6 +330,7 @@
                                     method="post">
                                     {% csrf_token %}
                                     <textarea
+                                            autofocus
                                             id="id_reply_text"
                                             cols="83"
                                             rows="10"

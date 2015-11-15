@@ -4,17 +4,28 @@
 {% block favourite %}
 
     <div class="container-fluid">
-        <ul>
             {% for current_fav_news in favourites %}
-                <li>
-                    <div class="current_fav_news">
+                    <div
+                            onclick="location.href='/news/{{ current_fav_news.news_id|get_news_category:'True' }}/{{ current_fav_news.news_id }}/';"
+                            class="current_fav_news_id{{ current_fav_news.news_id }}"
+                            style="float: left; width: 20em; height: 20em; border: solid 1px red; margin-left: 1%;">
                         <div class="title">
                             {{ current_fav_news.news_id|get_news_title }}
                         </div>
+                        <div class="category">
+                            {{ current_fav_news.news_id|get_news_category }}
+                        </div>
+                        <div class="portal">
+                            {{ current_fav_news.news_id|get_news_portal }}
+                        </div>
+                        <div class="text">
+                            {{ current_fav_news.news_id|get_news_text|safe|truncatewords_html:"15" }}
+                        </div>
+                        <div class="date">
+                            {{ current_fav_news.news_id|get_news_date }}
+                        </div>
                     </div>
-                </li>
             {% endfor %}
-        </ul>
     </div>
 
 {% endblock %}
