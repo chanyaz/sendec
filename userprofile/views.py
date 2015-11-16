@@ -28,6 +28,8 @@ def render_settings(request):
         "title": "| Settings",
         "portals": get_portal_names(request),
         "choosen_portals": get_currently_shown_portals(request),
+        "test": get_portals_to_add(request)[0],
+        "test_2": get_added_portals_name(request),
     }
     args.update(csrf(request))
 
@@ -36,7 +38,26 @@ def render_settings(request):
 
 def get_portal_names(request):
     from news.models import NewsPortal
-    return NewsPortal.objects.all()
+    from userprofile.models import UserSettings
+    news_list = list(NewsPortal.objects.get(id=int(cur_id)) for cur_id in get_portals_to_add(request)[0])
+    return news_list#NewsPortal.objects.all()
+
+
+def get_portals_to_add(request):
+    from userprofile.models import UserSettings
+    from news.models import News, NewsPortal
+    user_setting_instance = UserSettings.objects.get(user_id=User.objects.get(username=auth.get_user(request).username).id).portals_to_show.split(",")
+    list_of_portals_to_choose_by_user = NewsPortal.objects.all().values("id")
+    new_user_list = []
+    for i in list_of_portals_to_choose_by_user:
+        if str(i["id"]) not in user_setting_instance:
+            new_user_list.append(i["id"])
+    return new_user_list, user_setting_instance
+
+@login_required(login_url="/auth/login/")
+def get_added_portals_name(request):
+    from news.models import NewsPortal
+    return [NewsPortal.objects.get(id=int(cur_id)) for cur_id in get_portals_to_add(request)[1][:-1]]
 
 
 def get_currently_shown_portals(request):
@@ -85,7 +106,8 @@ def addition_portals_show(request):
     if request.GET:
         portals_list = request.GET.getlist("source-to-show")
         for i in portals_list:
-            settings_instance.portals_to_show += "%s," % i
-            settings_instance.save()
+            if i not in settings_instance.portals_to_show:
+                settings_instance.portals_to_show += "%s," % i
+                settings_instance.save()
 
-    return HttpResponse()
+    return HttpResponseRedirect("/profile/settings/", args)

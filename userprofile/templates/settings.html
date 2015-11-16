@@ -67,14 +67,21 @@
                             <input type="button" id="moveout" name="moveout" value="<<" onclick="return removeSelectedData();">
                         </div>
                         <div class="choosen">
-                            {{ choosen_portals }}
                             <label for="source-to-show">Chosen</label><br>
                             <select  multiple
                                      id="source-to-show"
                                      name="source-to-show"
                                      size="10"
                                      style="width: 300px;">
+                                    {% for i in test_2 %}
+                                        <option value="{{ i.id }}" id="id{{ i.id }}">{{ i.portal_name }}</option>
+                                    {% endfor %}
                             </select>
+                            <div class="maintenance" style="color: red; font-size: 20px;">
+                                {{ choosen_portals }}<br>
+                                test(not added & waits to add):{{ test }}<br>
+                                test_2(already added):{{ test_2 }}
+                            </div>
                         </div>
                         <br>
                         <input type="submit" value="Save">

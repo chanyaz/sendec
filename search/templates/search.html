@@ -16,20 +16,21 @@
     </script>
 
 
-    <div class="search">
+    <div class="search" style="float: left; width: 64.5%; border: solid 1px red;">
         {% if empty_result %}
-            <div class="no_results" style="text-align: center">
+            <div class="search-error-text" style="text-align: center;">
                 No&nbsp;one&nbsp;matches.&nbsp;Please,&nbsp;try&nbsp;another&nbsp;request&nbsp;word<br><br>
+            </div>
+            <div class="no_results">
                 <form action="/search/" method="get" name="search" onsubmit="return validate_form();">
-                    <input
-                            autocomplete="off"
-                            autofocus
-                            name="q"
-                            type="text"
-                            class="form-control"
-                            placeholder="Search"
-                            style="width: 50%; margin-left: 25%; float: left;">
-                    <input type="submit" value="Search" style="margin-left: -14%;">
+                    <input autocomplete="off"
+                           autofocus
+                           name="q"
+                           type="text"
+                           class="form-control"
+                           placeholder="Search"
+                           style="width: 50%; float: left;">
+                    <input type="submit" value="Search" style="margin-left: 1%;">
                 </form>
             </div>
         {% endif %}
@@ -39,7 +40,7 @@
                     {% else %}match
                     {% endif %}</b><hr></div>
                     {% for current_result in results %}
-                            <div class="current_searched" style="border: solid 1px red; margin-top: 2%;"
+                            <div class="current_searched" style="border: solid 1px red; margin-top: 2%; margin-left: 0.25%; margin-right: 0.25%; margin-bottom: 0.25%;"
                             onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"
                             onmouseover="this.style.cursor='pointer';
                             this.style.backgroundColor='grey';"
@@ -61,5 +62,47 @@
             </div>
         {% endif %}
     </div>
+
+
+    <div class="right-side-block" style="border: solid 1px red; margin-left: 65%; margin-right: 5%;">
+        <div class="latest-news"
+        style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
+            <div class="latest-header" style="text-align: center;">
+                Latest&nbsp;news
+            </div>
+            <div class="latest-titles">
+                    {% for i in latest_news %}
+                                <span class="time" style="color: blue;">
+                                    {{ i.news_post_date.time }}
+                                </span>
+                                <span class="title"
+                                      onmouseover="this.style.color='blue'; style.cursor='pointer';"
+                                      onmouseout="this.style.color='black';"
+                                      onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                    {{ i.news_title }}
+                                </span><br>
+                    {% endfor %}
+            </div>
+        </div>
+        <div class="video-and-subs">
+                    <a class="twitter-timeline"
+                       href="https://twitter.com/SendecNews"
+                       data-widget-id="663274878636834816">
+                        Твиты от @SendecNews
+                    </a>
+                        <script>
+                            !function(d,s,id){
+                                var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+                                if(!d.getElementById(id)){
+                                    js=d.createElement(s);
+                                    js.id=id;
+                                    js.src=p+"://platform.twitter.com/widgets.js";
+                                    fjs.parentNode.insertBefore(js,fjs);
+                                }
+                            }(document,"script","twitter-wjs");
+                        </script>
+        </div>
+    </div>
+
 
 {% endblock %}

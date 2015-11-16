@@ -12,6 +12,7 @@ from django.db.models import Q
 def render_search_page(request):
     args = {
         "username": User.objects.get(username=auth.get_user(request).username),
+        "latest_news": get_latest_news_total(request),
     }
 
     if "q" in request.GET and request.GET["q"]:
@@ -26,6 +27,13 @@ def render_search_page(request):
 
     args.update(csrf(request))
     return render_to_response("search.html", args)
+
+
+def get_latest_news_total(request):
+    from news.models import News
+    latest_10_news = News.objects.all().order_by("-news_post_date")[:10]
+    return latest_10_news
+
 
 @login_required(login_url="/auth/login/")
 def get_search_result(request, search_word):
