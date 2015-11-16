@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response, render
 from django.template.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.contrib.auth.models import User
 
 from django.contrib.admin.views.decorators import staff_member_required
@@ -24,6 +24,7 @@ def main_page_load(request):
     args.update(csrf(request))
 
     return render_to_response("index.html", args)
+
 
 def render_news_politics(request):
     return News.objects.filter(news_category_id=NewsCategory.objects.get(category_name="Politics").id)
@@ -52,7 +53,8 @@ def render_current_news(request, category_id, news_id):
         "liked": check_like(request, news_id),
         "disliked": check_dislike(request, news_id),
         "like_amount": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count(),
-        "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count()
+        "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count(),
+        "current_news_title": News.objects.get(id=news_id).news_title,
     }
     args.update(csrf(request))
 
@@ -80,19 +82,22 @@ def update_latest_news(request):
     import json
 
     latest_new = News.objects.filter(news_latest_shown=False).order_by("-news_post_date")[0]
-    string = """<li style=''>
-                            <span class='time' style='color: blue;'>
-                                %s
-                            </span>
-                            <span class='title' onclick="location.href='/news/%s/%s/';">
-                                %s
-                            </span>
-                        </i>""" % (latest_new.news_post_date.time, latest_new.news_category_id, latest_new.id, latest_new.news_title)
+    string = """<span class='time' style='color: blue;'>%s</span>
+<span class='title' onclick="location.href='/news/%s/%s/';">%s</span><br>""" \
+             % (latest_new.news_post_date.time().strftime("%H:%M"), latest_new.news_category_id, latest_new.id, latest_new.news_title)
 
     response_data = {
         "latest_news": [cur_new.get_json_news() for cur_new in News.objects.all().all().order_by("-news_post_date")[:1]],
         "string": [string]
     }
+
+    latest_10 = News.objects.filter(news_currently_showing=True).order_by("-news_post_date")[:10]
+    latest_10[10].news_currently_showing = False
+    latest_10[10].save()
+
+    latest_new.news_currently_showing = True
+    latest_new.news_latest_shown = True
+    latest_new.save()
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
@@ -126,6 +131,7 @@ def render_current_category(request, category_name):
     args = {
         "title": "| Politics",
         "username": auth.get_user(request).username,
+        "latest_news": get_latest_news_total(request),
         "category_title": category_name.capitalize(),
         "cat_news": News.objects.filter(news_category_id=NewsCategory.objects.get(category_name=category_name.capitalize()).id),
     }

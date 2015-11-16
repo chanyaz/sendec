@@ -18,11 +18,11 @@ def render_search_page(request):
         search_word = request.GET["q"]
         if search_word is "":
             args["erorr_empty_field"] = True
-        elif len(get_search_result_text(request,search_word)) < 1 and len(get_search_result_titles(request, search_word)) < 1:
+        elif len(get_search_result_text(request,search_word)) < 1 and len(get_search_result_text(request, search_word)) < 1:
             args["empty_result"] = True
         else:
             args["results"] = get_search_result(request, search_word)
-            args["among_text"] = get_search_result_text(request, search_word)
+            args["matches_amount"] = get_matches_amount(request, search_word)
 
     args.update(csrf(request))
     return render_to_response("search.html", args)
@@ -37,3 +37,8 @@ def get_search_result(request, search_word):
 def get_search_result_text(request, search_word):
     from news.models import News
     return News.objects.filter(news_post_text__contains=search_word).order_by("-news_post_date").values()
+
+@login_required(login_url="/auth/login/")
+def get_matches_amount(request, search_word):
+    from news.models import News
+    return News.objects.filter(Q(news_title__contains=search_word) | Q(news_post_text__contains=search_word)).count()

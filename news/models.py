@@ -77,6 +77,7 @@ class News(models.Model):
             "news_title": self.news_title,
             "news_post_date": self.news_post_date.time().isoformat(),
             "shown": self.news_latest_shown,
+            "show_now": self.news_currently_showing,
         }
 
 

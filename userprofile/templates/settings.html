@@ -7,11 +7,42 @@
         <div class="top-block" style="background-color: #4cae4c; text-align: center; margin-top: -1%;">
             <h3>SETTINGS</h3>
         </div>
-        <div class="left-side" style="float: left; background-color: red; width: 30em;">
+        <div class="left-side" style="float: left; background-color: red; width: 30em; height: 500px;">
             123
         </div>
-        <div class="other-side" style="background-color: blue;">
-            321
+        <div class="other-side" style="background-color: blue; height: 500px;">
+            <div class="choice-portal">
+                Choose&nbsp;Categories&nbsp;which&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
+                <div class="form-to-choose">
+                    <form>
+                        <div class="chooser" style="float: left;">
+                            <select multiple
+                                    id="source-ignore"
+                                    size="10"
+                                    style="width: 300px;">
+                                {% for portal in portals %}
+                                    <option value="{{ portal.id }}" id="id{{ portal.id }}">{{ portal.portal_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="buttons-to-choose" style="float: left;">
+                            <br><br><br>
+                            <input type="button" id="moveto" name="moveto" value=">>">
+                            <br>
+                            <input type="button" id="moveout" name="moveout" value="<<">
+                        </div>
+                        <div class="choosen">
+                            <select style="width: 300px;"
+                                    multiple name="src"
+                                    id="source-to-show"
+                                    size="10"></select>
+                        </div>
+
+                        <input type="submit" value="Save">
+
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 

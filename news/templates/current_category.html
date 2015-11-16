@@ -1,6 +1,47 @@
 {% extends 'index.html' %}
 {% load staticfiles %}
+{% load my %}
 {% block current_category %}
+
+
+    <script>
+    // Refresh latest news
+        function load_latest_news() {
+            $.ajax({
+                type: "POST",
+                url: "/news/update_latest/",
+                success: $.get("/news/update_latest/").done(function (data) {
+                    //$(".latest-title-list").prepend(data.string[0]);
+                    data.latest_news.forEach(function (cur_lat_news) {
+                        if(cur_lat_news.shown == false) {
+                            $(".latest-titles").prepend(data.string[0]);
+
+                            $.get("/news/ss=" + cur_lat_news.news_id).done(function () {
+                            });
+                        }
+                    });
+                })
+            });
+        }
+
+            function refresh_latest_news(){
+                $.get("/news/update_latest/").done(function(data){
+                    //$(".latest-titles-list").prepend(data.string);
+
+                    data.latest_news.forEach(function(cur_lat_news){
+                        if(cur_lat_news.shown == false) {
+                            $(".latest-titles").prepend(data.string[0]);
+                            $.get("/news/ss="+cur_lat_news.news_id).done(function(){});
+                        }
+                    });
+                });
+                return true;
+            }
+            refresh_latest_news();
+            setInterval(refresh_latest_news, 1000);
+
+    </script>
+
 
     <div class="row" style="">
         <div style="text-align: center; font-size: 30px;">
@@ -12,7 +53,8 @@
                         class="current_cat_news"
                         onclick="location.href='/news/{{ cur_cat_news.news_category_id }}/{{ cur_cat_news.id }}/';"
                         style="float: left; border: solid 1px darkblue; height: 15em; width: 18em; margin-left: 1%; margin-top: 1%;">
-                    <div class="date">{{ cur_cat_news.news_post_date }}</div>
+                    <div class="portal" style="float: left;">{{ cur_cat_news.news_category_id|get_news_portal }}</div>
+                    <div class="date">&nbsp;|&nbsp;{{ cur_cat_news.news_post_date }}</div>
                     <div class="cover"><img src="" width="100" /></div>
                     <div class="title">{{ cur_cat_news.news_title }}</div>
                 </div>
@@ -29,44 +71,32 @@
                         Latest&nbsp;news
                     </div>
                     <div class="latest-titles">
-                        <ul class="latest-titles-list" style="list-style-type: none;">
-                            {% for i in latest_news %}
-                                    <li style="margin-left: -8%;">
-                                        <span class="time" style="color: blue;">
-                                            {{ i.news_post_date.time }}
-                                        </span>
-                                        <span class="title" onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                            {{ i.news_title }}
-                                        </span>
-                                    </li>
-                            {% endfor %}
-                        </ul>
+                        {% for i in latest_news %}
+                            <span class="time" style="color: blue;">
+                                {{ i.news_post_date.time }}
+                            </span>
+                            <span class="title" onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                {{ i.news_title }}
+                            </span><br>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="video-and-subs">
-                    <ul style="list-style-type: none; margin-left: -10%;">
-                        <li style="margin-top: 2%;">
-                            <a class="twitter-timeline"
-                               href="https://twitter.com/SendecNews"
-                               data-widget-id="663274878636834816">
-                                Твиты от @SendecNews
-                            </a>
-                                <script>
-                                    !function(d,s,id){
-                                        var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-                                        if(!d.getElementById(id)){
-                                            js=d.createElement(s);
-                                            js.id=id;
-                                            js.src=p+"://platform.twitter.com/widgets.js";
-                                            fjs.parentNode.insertBefore(js,fjs);
-                                        }
-                                    }(document,"script","twitter-wjs");
-                                </script>
-                        </li>
-                        <li>
-                            2
-                        </li>
-                    </ul>
+                    <a class="twitter-timeline"
+                       href="https://twitter.com/SendecNews"
+                       data-widget-id="663274878636834816">Твиты от @SendecNews
+                    </a>
+                    <script>
+                        !function(d,s,id){
+                            var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+                            if(!d.getElementById(id)){
+                                js=d.createElement(s);
+                                js.id=id;
+                                js.src=p+"://platform.twitter.com/widgets.js";
+                                fjs.parentNode.insertBefore(js,fjs);
+                            }
+                        }(document,"script","twitter-wjs");
+                    </script>
                 </div>
             </div>
         </div>

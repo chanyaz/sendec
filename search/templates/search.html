@@ -17,7 +17,6 @@
 
 
     <div class="search">
-        SEARCH
         {% if empty_result %}
             <div class="no_results" style="text-align: center">
                 No&nbsp;one&nbsp;matches.&nbsp;Please,&nbsp;try&nbsp;another&nbsp;request&nbsp;word<br><br>
@@ -35,9 +34,10 @@
             </div>
         {% endif %}
         {% if results|length > 0 %}
-            {{ results }}
             <div id="among_title">
-                <div style="text-align: left; font-size: 20px;"><b>Among&nbsp;titles</b><hr></div>
+                <div style="text-align: left; font-size: 20px;"><b>Found&nbsp;{{ matches_amount }}&nbsp;{% if matches_amount > 1 %}matches
+                    {% else %}match
+                    {% endif %}</b><hr></div>
                     {% for current_result in results %}
                             <div class="current_searched" style="border: solid 1px red; margin-top: 2%;"
                             onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"
@@ -58,13 +58,6 @@
                                 </div>
                             </div>
                     {% endfor %}
-            </div>
-        {% endif %}
-    <br>
-        {% if among_text|length > 0 %}
-            <div id="among_text">
-                <div style="text-align: left; font-size: 20px;"><b>Among&nbsp;posts</b><hr></div>
-                {{ among_text }}
             </div>
         {% endif %}
     </div>

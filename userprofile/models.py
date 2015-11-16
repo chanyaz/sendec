@@ -12,6 +12,7 @@ class UserSettings(models.Model):
 
     user = models.ForeignKey(User)
     color_scheme = models.TextField(max_length=9)
+    portals_to_show = models.TextField(max_length=256)
 
     def __str__(self):
         return self.user.username

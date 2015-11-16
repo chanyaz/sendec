@@ -26,11 +26,16 @@ def render_settings(request):
     args = {
         "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| Settings",
+        "portals": get_portal_names(request),
     }
     args.update(csrf(request))
 
     return render_to_response("settings.html", args)
 
+
+def get_portal_names(request):
+    from news.models import NewsPortal
+    return NewsPortal.objects.all()
 
 @login_required(login_url="/auth/login/")
 def change_profile_data(request):

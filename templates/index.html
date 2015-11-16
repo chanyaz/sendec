@@ -56,17 +56,22 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/">Sendec</a>
+
+                <div class="navbar-header" style="color: white;">
+                    {{ current_news_title }}
+                </div>
+
             </div>
+
             <!-- Top Menu -->
             <ul class="nav navbar-right top-nav">
                 <li class="btn" style="margin-left: -12%;">
                     <form action="/search/" method="get" name="search_form" onsubmit="return validate_form();">
-                        <input
-                                name="q"
-                                type="text"
-                                class="form-control"
-                                placeholder="Search"
-                                style="float: left;">
+                        <input name="q"
+                               type="text"
+                               class="form-control"
+                               placeholder="Search"
+                               style="float: left;">
                         <input type="submit" value="Search">
                     </form>
                 </li>
