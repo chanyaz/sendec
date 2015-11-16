@@ -5,46 +5,39 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                <a href="/news/usernews/">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><i class="glyphicon glyphicon-flag"></i>
-                            User&nbsp;news
-                        </h3>
-                    </div>
-                </a>
-                    <div class="well">
-
-                        {% for current_news_politics in total_politics %}
-                            <div class="sect">
-                                <div class="current_news"
-                                     style="border: none;"
-                                     onmouseover="style.border='solid 0.2px blue';"
-                                     onmouseout="style.border='';"
-                                     onclick="location.href='/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/';">
-                                    <div class="col-xs-5">
-                                        <img class="img-responsive" src="http://placehold.it/400x400">
-                                    </div>
-                                    <div class="text">
-                                        <h4>{{ current_news_politics.news_title|truncatewords:"3" }}<hr/></h4>
-                                        {{ current_news_politics.news_post_text|safe|truncatewords:"9" }}
-                                        <a href="/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/">See&nbsp;more</a>
-                                    </div>
+            User&nbsp;news.<br>
+            <div class="news">
+                {% for i in usernews %}
+                    {% for j in i %}
+                        <div class="current_user_news"
+                             id="current_user_news"
+                             onmouseover="style.cursor='pointer';"
+                             data-user-news-id="{{ j.id }}">
+                            <div
+                                onclick="location.href='/news/{{ j.news_category_id }}/{{ j.id }}/';"
+                                class="current_fav_news_id{{ j.news_id }}"
+                                style="float: left; width: 20em; height: 20em; border: solid 1px red; margin-left: 1%;">
+                                <div class="title" id="title_{{ j.id }}">
+                                    {{ j.news_title }}
+                                </div>
+                                <div class="category">
+                                    {{ j.news_category_id }}
+                                </div>
+                                <div class="portal">
+                                    {{ j.news_portal_id }}
+                                </div>
+                                <div class="text">
+                                    {{ j.news_post_text|safe|truncatewords_html:"15" }}
+                                </div>
+                                <div class="date">
+                                    {{ j.news_post_date }}
                                 </div>
                             </div>
-                        {% endfor %}
-
-
-
-
-                    </div>
-                </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
             </div>
         </div>
-
-
-
     </div>
 
 {% endblock %}

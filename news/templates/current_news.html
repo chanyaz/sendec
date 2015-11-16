@@ -106,7 +106,6 @@
 
     </style>
 
-
     <div class="navigation" style="float: left;">
             Share:
             <br><a href="">twitter</a>
@@ -406,7 +405,10 @@
                                 <span class="time" style="color: blue;">
                                     {{ i.news_post_date.time }}
                                 </span>
-                                <span class="title" onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                <span class="title"
+                                      onmouseover="this.style.color='blue'; style.cursor='pointer';"
+                                      onmouseout="this.style.color='black';"
+                                      onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
                                     {{ i.news_title }}
                                 </span><br>
                     {% endfor %}
@@ -431,7 +433,5 @@
                         </script>
         </div>
     </div>
-
-
 
 {% endblock %}

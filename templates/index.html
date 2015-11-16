@@ -126,7 +126,7 @@
 
                     </li>
                     <li>
-                        <a href="#"> <i class="fa fa-fw fa-edit"></i> Navigation</a>
+                        <a href="/news/usernews/"> <i class="fa fa-fw fa-edit"></i>My&nbsp;news</a>
                     </li>
                     <li>
                         <a href="#"> <i class="fa fa-fw fa-edit"></i> Navigation</a>
@@ -147,18 +147,20 @@
         </nav>
 
         <div id="page-wrapper">
-            {% if news_block == True %}
-                {% include 'news_block.html' %}
-            {% endif %}
-            {% block user_profile %}{% endblock %}
-            {% block settings %}{% endblock %}
-            {% block favourite %}{% endblock %}
-            {% block notify %}{% endblock %}
-            {% block current_news %}{% endblock %}
-            {% block search %}{% endblock %}
-
-            {% block current_category %}{% endblock %}
-            <!-- /#page-wrapper -->
+            <div class="row">
+                {% if news_block == True %}
+                    {% include 'news_block.html' %}
+                {% endif %}
+                {% block user_profile %}{% endblock %}
+                {% block settings %}{% endblock %}
+                {% block favourite %}{% endblock %}
+                {% block notify %}{% endblock %}
+                {% block current_news %}{% endblock %}
+                {% block search %}{% endblock %}
+                {% block current_category %}{% endblock %}
+                {% block user_news %}{% endblock %}
+                <!-- /#page-wrapper -->
+            </div>
         </div>
 
 

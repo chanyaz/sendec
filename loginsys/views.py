@@ -69,7 +69,9 @@ def register(request):
                 auth.login(request, new_user)
 
                 # User settings
-                user_settings = UserSettings()
+                UserSettings.objects.create(
+                    user_id=User.objects.get(username=auth.get_user(request).username).id,
+                )
 
                 UserProfile.objects.create(
                     user_id=User.objects.get(username=auth.get_user(request).username).id,

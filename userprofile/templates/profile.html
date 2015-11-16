@@ -8,7 +8,11 @@
             <!-- left column -->
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="text-center">
-                    <img src="/media/{{ username.profile.user_photo }}" alt="avatar" width="200">
+                    {% if username.profile.user_photo != '' %}
+                        <img src="/media/{{ username.profile.user_photo }}" alt="avatar" width="200" />
+                    {% else %}
+                        <img src="" alt="avatar" width="200" />
+                    {% endif %}
                     <form
                         action="/profile/photo_upload/"
                         method="POST"
@@ -19,7 +23,7 @@
                                 type="file"
                                 class="btn btn-default btn-block"
                                 value="Upload&nbsp;photo">
-                            <!--<span aria-hidden="true"></span>--></input>
+                            <!--<span aria-hidden="true"></span>-->
                         <input type="submit" value="Change&nbsp;photo">
                     </form>
                 </div>

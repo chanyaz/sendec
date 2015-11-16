@@ -3,19 +3,54 @@
 {% load my %}
 {% block settings %}
 
+
+    <script>
+        function exchangeSelectData(){
+            var n = document.getElementById("source-ignore").options.selectedIndex;
+            var val = document.getElementById("source-ignore").options[n].value;
+            var text = document.getElementById("source-ignore").options[n].text;
+            document.getElementById("source-to-show").options.add(new Option(text, val));
+            document.getElementById("source-ignore").options.remove(n);
+        }
+
+        function removeSelectedData(){
+            var n = document.getElementById("source-to-show").options.selectedIndex;
+            var val = document.getElementById("source-to-show").options[n].value;
+            var text = document.getElementById("source-to-show").options[n].text;
+            document.getElementById("source-ignore").options.add(new Option(text, val));
+            document.getElementById("source-to-show").options.remove(n);
+        }
+
+        function selectAllOptions(selStr)
+        {
+            // Select ALL options on submit form.
+            var selObj = document.getElementById(selStr);
+            for (var i=0; i<selObj.options.length; i++) {
+                selObj.options[i].selected = true;
+            }
+        }
+
+
+    </script>
+
     <div class="user-settings">
         <div class="top-block" style="background-color: #4cae4c; text-align: center; margin-top: -1%;">
             <h3>SETTINGS</h3>
         </div>
-        <div class="left-side" style="float: left; background-color: red; width: 30em; height: 500px;">
+        <div class="left-side" style="float: left; width: 30em; height: 500px;">
             123
         </div>
-        <div class="other-side" style="background-color: blue; height: 500px;">
+        <div class="other-side" style="background-color: lightcyan; height: 500px;">
             <div class="choice-portal">
                 Choose&nbsp;Categories&nbsp;which&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
                 <div class="form-to-choose">
-                    <form>
+                    <form
+                            action="/profile/settings/add_portals"
+                            method="get"
+                            onsubmit="selectAllOptions('source-to-show');">
+                    {% csrf_token %}
                         <div class="chooser" style="float: left;">
+                            <label for="source-ignore">Choose</label><br>
                             <select multiple
                                     id="source-ignore"
                                     size="10"
@@ -27,17 +62,21 @@
                         </div>
                         <div class="buttons-to-choose" style="float: left;">
                             <br><br><br>
-                            <input type="button" id="moveto" name="moveto" value=">>">
+                            <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData();">
                             <br>
-                            <input type="button" id="moveout" name="moveout" value="<<">
+                            <input type="button" id="moveout" name="moveout" value="<<" onclick="return removeSelectedData();">
                         </div>
                         <div class="choosen">
-                            <select style="width: 300px;"
-                                    multiple name="src"
-                                    id="source-to-show"
-                                    size="10"></select>
+                            {{ choosen_portals }}
+                            <label for="source-to-show">Chosen</label><br>
+                            <select  multiple
+                                     id="source-to-show"
+                                     name="source-to-show"
+                                     size="10"
+                                     style="width: 300px;">
+                            </select>
                         </div>
-
+                        <br>
                         <input type="submit" value="Save">
 
                     </form>

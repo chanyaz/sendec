@@ -57,8 +57,40 @@ def render_current_news(request, category_id, news_id):
         "current_news_title": News.objects.get(id=news_id).news_title,
     }
     args.update(csrf(request))
-
     return render_to_response("current_news.html", args)
+
+
+@login_required(login_url="/auth/login/")
+def render_user_news(request):
+    args = {
+        "title": "| My news",
+        "username": auth.get_user(request).username,
+        "usernews": get_user_news_by_portals(request),
+    }
+    args.update(csrf(request))
+    return render_to_response("user_news.html", args)
+
+
+def get_user_news_by_portals(request):
+    from news.models import News, NewsPortal
+    from userprofile.models import UserSettings
+    from itertools import chain
+    from operator import attrgetter
+    from django.db.models import Q
+
+    inst = UserSettings.objects.get(user_id=User.objects.get(username=auth.get_user(request).username).id).portals_to_show.split(",")
+
+    #total_news = sorted(
+    #    chain(
+    #        News.objects.filter(news_portal_name_id=inst[cur_id]).values() for cur_id in range(len(inst)-1)
+    #    ),
+    #    key=attrgetter("news_post_date"),
+    #    reverse=True
+    #)
+
+    total_news_2 = list(News.objects.filter(Q(news_portal_name_id=inst[cur_id])).order_by("-news_post_date") for cur_id in range(len(inst)-1))
+
+    return total_news_2
 
 
 def check_like(request, news_id):
