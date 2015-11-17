@@ -56,6 +56,7 @@ def render_current_news(request, category_id, news_id):
         "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count(),
         "current_news_title": News.objects.get(id=news_id).news_title,
     }
+    addition_news_watches(request, news_id)
     args.update(csrf(request))
     return render_to_response("current_news.html", args)
 
@@ -69,6 +70,18 @@ def render_user_news(request):
     }
     args.update(csrf(request))
     return render_to_response("user_news.html", args)
+
+
+@login_required(login_url="/auth/login/")
+def render_top_news_page(request):
+    from .models import NewsWatches
+    args = {
+        "username": auth.get_user(request).username,
+        "top_news": get_top_news(request),
+    }
+    args.update(csrf(request))
+
+    return render_to_response("top_news.html", args)
 
 
 def get_user_news_by_portals(request):
@@ -142,19 +155,42 @@ def set_shown(request, news_id):
 
 
 @login_required(login_url="/auth/login/")
+def addition_news_watches(request, news_id):
+    from .models import NewsWatches
+    if NewsWatches.objects.filter(news_id=news_id).exists():
+        instance = NewsWatches.objects.get(news_id=news_id)
+        instance.watches += 1
+        instance.save()
+    else:
+        NewsWatches.objects.create(
+            news_id=news_id,
+            watches=1,
+        )
+    return HttpResponse()
+
+
+def get_top_news(request):
+    """
+    Get top 10 by watches news.
+    :param request:
+    :return:
+    """
+    from .models import NewsWatches, News
+    top_list_id = NewsWatches.objects.all()[:10].values()
+    top_news = [News.objects.get(id=int(cur_news_id["news_id"])) for cur_news_id in top_list_id]
+    return top_news
+
+
+@login_required(login_url="/auth/login/")
 def render_current_news_comments(request, category_id, news_id):
     from .models import NewsComments, NewsCommentsReplies
     import json
-
     news_comments = NewsComments.objects.filter(news_attached=int(news_id))
     news_replies = NewsCommentsReplies.objects.filter(news_attached=int(news_id))
-
-
     response_data = {
         "content_comments": [data_comments.get_json_comments() for data_comments in news_comments.all()],
         "content_replies": [data_replies.get_json_replies() for data_replies in news_replies.all()]
     }
-
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 

@@ -81,6 +81,13 @@ class News(models.Model):
         }
 
 
+class NewsWatches(models.Model):
+    class Meta:
+        db_table = "news_watches"
+
+    news = models.ForeignKey(News, related_name="watches")
+    watches = models.IntegerField(default=0)
+
 
 class NewsComments(models.Model):
     class Meta:

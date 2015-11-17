@@ -25,6 +25,10 @@ urlpatterns = [
     url(r'^send/cat=(?P<category_id>\w+)&id=(?P<news_id>\w+)/', 'news.views.comment_send'),
     url(r'^reply/nid=(?P<news_id>\w+)&cid=(?P<comment_id>\w+)/', 'news.views.reply_send'),
 
+
+    # Top news
+    url(r'^top/', "news.views.render_top_news_page"),
+
     # User news
     url(r'^usernews/', 'news.views.render_user_news'),
 

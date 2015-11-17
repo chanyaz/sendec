@@ -50,7 +50,6 @@ def logout(request):
     return redirect('/auth/login/')
 
 
-
 def register(request):
     from userprofile.models import UserSettings
     from .models import UserProfile
@@ -81,7 +80,29 @@ def register(request):
                 new_user_profile.birthday = "1900-01-01"
                 new_user_profile.phone = "+1-234-567-89-90"
                 new_user_profile.save()
-                return redirect('/')
+                return redirect('/auth/preferences/')
             else:
                 args['form'] = new_user_form
         return render_to_response('register.html', args)
+
+
+@login_required(login_url="/auth/login/")
+def render_user_preferences_page(request):
+    args = {
+        "username": auth.get_user(request).username,
+        "portals": get_portals_names(request),
+        "categories": get_categories_names(request),
+    }
+    args.update(csrf(request))
+
+    return render_to_response("user_preferences.html", args)
+
+
+def get_portals_names(request):
+    from news.models import NewsPortal
+    return NewsPortal.objects.all()
+
+
+def get_categories_names(request):
+    from news.models import NewsCategory
+    return NewsCategory.objects.all()
