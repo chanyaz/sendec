@@ -30,6 +30,27 @@
             }
         }
 
+        $(document).ready(function() {
+            $("#check_all_categories").click(function(){
+                if($(this).prop('checked')){
+                    $('.currently_category_check').prop('checked', true);
+                }
+                else{
+                    $('.currently_category_check').prop('checked', false);
+                }
+            });
+{#            $('#check_all_categories').on('change', function () {#}
+{#                $('.currently_category_check').not(this).prop('checked', true);#}
+{#            });#}
+             if ($("#settings-form input:checkbox:checked").length === 8) {
+                 $("#check_all_categories").prop('checked', true);
+             }
+             else{
+                 $("#check_all_categories").prop('checked', false);
+             }
+        });
+
+
 
     </script>
 
@@ -41,14 +62,30 @@
             123
         </div>
         <div class="other-side" style="background-color: lightcyan; height: 500px;">
+            <form
+                    id="settings-form"
+                    action="/profile/settings/add_portals"
+                    method="get"
+                    onsubmit="selectAllOptions('source-to-show');">
+                {% csrf_token %}
+
+            <div class="choice-category">
+                Choose&nbsp;categories&nbsp;which&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
+                <br>
+                <div class="categories-list">
+                    <input type="checkbox" name="check_all_categories" id="check_all_categories">
+                    <label for="check_all_categories">Check&nbsp;all</label><br>
+                    {% for category in categories %}
+                        <input class="currently_category_check" type="checkbox" id="cid{{ category.id }}" name="categories[]" value="{{ category.id }}"
+                               {% if category.id|check_reading_category:username == True %}checked{% endif %}>
+                        <label for="cid{{ category.id }}">{{ category.category_name }}</label><br>
+                    {% endfor %}
+                </div>
+            </div>
+
             <div class="choice-portal">
-                Choose&nbsp;Categories&nbsp;which&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
+                Choose&nbsp;portals&nbsp;which&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
                 <div class="form-to-choose">
-                    <form
-                            action="/profile/settings/add_portals"
-                            method="get"
-                            onsubmit="selectAllOptions('source-to-show');">
-                    {% csrf_token %}
                         <div class="chooser" style="float: left;">
                             <label for="source-ignore">Choose</label><br>
                             <select multiple

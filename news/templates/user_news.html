@@ -3,6 +3,11 @@
 {% load my %}
 {% block user_news %}
 
+    TEST:<br>
+    {% for i in deftest %}
+        {% if i %}{{ i }}{% endif %}
+    {% endfor %}
+
     <div class="container-fluid">
         <div class="row">
             User&nbsp;news.<br>

@@ -30,11 +30,16 @@ def render_settings(request):
         "choosen_portals": get_currently_shown_portals(request),
         "test": get_portals_to_add(request)[0],
         "test_2": get_added_portals_name(request),
+        "categories": get_categories_names(request),
     }
     args.update(csrf(request))
 
     return render_to_response("settings.html", args)
 
+
+def get_categories_names(request):
+    from news.models import NewsCategory
+    return NewsCategory.objects.all()
 
 def get_portal_names(request):
     from news.models import NewsPortal
@@ -108,6 +113,17 @@ def addition_portals_show(request):
         for i in portals_list:
             if i not in settings_instance.portals_to_show:
                 settings_instance.portals_to_show += "%s," % i
+                settings_instance.save()
+
+        categories_list = request.GET.getlist("categories[]")
+        for i in categories_list:
+            if i not in settings_instance.categories_to_show.split(",")[:-1]:
+                settings_instance.categories_to_show += "%s," % i
+                settings_instance.save()
+
+        for j in settings_instance.categories_to_show.split(",")[:-1]:
+            if j not in categories_list:
+                settings_instance.categories_to_show = settings_instance.categories_to_show.replace("%s," % j, "")
                 settings_instance.save()
 
     return HttpResponseRedirect("/profile/settings/", args)

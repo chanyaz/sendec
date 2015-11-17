@@ -67,6 +67,7 @@ def render_user_news(request):
         "title": "| My news",
         "username": auth.get_user(request).username,
         "usernews": get_user_news_by_portals(request),
+        "deftest": test(request),
     }
     args.update(csrf(request))
     return render_to_response("user_news.html", args)
@@ -104,6 +105,29 @@ def get_user_news_by_portals(request):
     total_news_2 = list(News.objects.filter(Q(news_portal_name_id=inst[cur_id])).order_by("-news_post_date") for cur_id in range(len(inst)-1))
 
     return total_news_2
+
+
+
+def test(request):
+    from news.models import News, NewsPortal
+    from userprofile.models import UserSettings
+    from itertools import chain
+    from operator import attrgetter
+    from django.db.models import Q
+
+    inst_portals = UserSettings.objects.get(user_id=User.objects.get(username=auth.get_user(request).username).id).portals_to_show.split(",")
+    inst_categories = UserSettings.objects.get(user_id=User.objects.get(username=auth.get_user(request).username).id).categories_to_show.split(",")
+
+    # return chain(
+    #         [News.objects.filter(Q(news_portal_name_id=inst_portals[cur_id])) for cur_id in range(len(inst_portals)-1)],
+    #         [News.objects.filter(Q(news_category_id=inst_categories[cur_id])) for cur_id in range(len(inst_categories)-1)],
+    #     (News.objects.order_by("-news_post_date"))
+    #     )
+
+
+    return [News.objects.filter(Q(news_category_id=inst_categories[cur_cat_id])).filter(Q(news_portal_name_id=inst_portals[cur_id]))
+            for cur_cat_id in range(len(inst_categories)-1) for cur_id in range(len(inst_portals)-1)]
+
 
 
 def check_like(request, news_id):
