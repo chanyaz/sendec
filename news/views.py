@@ -23,7 +23,10 @@ def main_page_load(request):
     }
     args.update(csrf(request))
 
-    return render_to_response("index.html", args)
+    if User.objects.get(username=auth.get_user(request).username).is_active:
+        return render_to_response("index.html", args)
+    else:
+        return HttpResponseRedirect("/auth/preferences=categories")
 
 
 def render_news_politics(request):
@@ -129,7 +132,7 @@ def test(request):
     test_new = sorted(
         chain(
             News.objects.filter(news_category_id=1),
-            News.objects.filter(news_category_id=i for i in range(1)),#6 if check == True else 0),
+            News.objects.filter(news_category_id=6 if check == True else 0),
         ),
         key=attrgetter("news_post_date"),
         reverse=True
@@ -238,8 +241,6 @@ def render_current_category(request, category_name):
         "cat_news": News.objects.filter(news_category_id=NewsCategory.objects.get(category_name=category_name.capitalize()).id),
     }
     args.update(csrf(request))
-
-
     return render_to_response("current_category.html", args)
 
 
@@ -253,7 +254,6 @@ def comment_send(request, category_id, news_id):
     }
     args.update(csrf(request))
 
-
     if request.POST:
         form = NewsCommentsForm(request.POST)
         if form.is_valid():
@@ -264,9 +264,11 @@ def comment_send(request, category_id, news_id):
 
     return HttpResponseRedirect("/news/%s/%s/" % (category_id, news_id), args)
 
+
 def comments_load(request, news_id):
     from .models import NewsComments
     return NewsComments.objects.filter(news_attached=news_id).order_by("-comments_post_date").values()
+
 
 @login_required(login_url="/auth/login/")
 def reply_send(request, news_id, comment_id):

@@ -1,5 +1,5 @@
 from django.contrib import auth
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect, render_to_response, HttpResponseRedirect
 from django.http import request
 from django.template.context_processors import csrf
 
@@ -75,27 +75,51 @@ def register(request):
                 UserProfile.objects.create(
                     user_id=User.objects.get(username=auth.get_user(request).username).id,
                 )
-
-                new_user_profile = auth.get_user(request)
-                new_user_profile.birthday = "1900-01-01"
-                new_user_profile.phone = "+1-234-567-89-90"
-                new_user_profile.save()
-                return redirect('/auth/preferences/')
+                #new_user_profile = auth.get_user(request)
+                #new_user_profile.birthday = "1900-01-01"
+                #new_user_profile.phone = "+1-234-567-89-90"
+                #new_user_profile.save()
+                instance = User.objects.get(username=auth.get_user(request).username)
+                instance.is_active = False
+                instance.save()
+                return redirect('/auth/preferences=categories')
             else:
                 args['form'] = new_user_form
         return render_to_response('register.html', args)
 
 
 @login_required(login_url="/auth/login/")
-def render_user_preferences_page(request):
-    args = {
-        "username": auth.get_user(request).username,
-        "portals": get_portals_names(request),
-        "categories": get_categories_names(request),
-    }
-    args.update(csrf(request))
+def render_user_preferences_categories_page(request):
+    if User.objects.get(username=auth.get_user(request).username).is_active:
+        return HttpResponseRedirect("/")
+    else:
+        args = {
+            "username": auth.get_user(request).username,
+            "categories": get_categories_names(request),
+        }
+        args.update(csrf(request))
+        return render_to_response("user_preferences_categories.html", args)
 
-    return render_to_response("user_preferences.html", args)
+
+@login_required(login_url="/auth/login/")
+def render_user_preferences_portal_page(request):
+    if User.objects.get(username=auth.get_user(request).username).is_active:
+        return HttpResponseRedirect("/")
+    else:
+        args = {
+            "username": auth.get_user(request).username,
+            "portals": get_portals_names(request),
+            }
+        args.update(csrf(request))
+        return render_to_response("user_preferences_portals.html", args)
+
+
+@login_required(login_url="/auth/login/")
+def skip_preferences(request):
+    instance = User.objects.get(username=auth.get_user(request).username)
+    instance.is_active = True
+    instance.save()
+    return HttpResponseRedirect("/")
 
 
 def get_portals_names(request):
@@ -106,3 +130,34 @@ def get_portals_names(request):
 def get_categories_names(request):
     from news.models import NewsCategory
     return NewsCategory.objects.all()
+
+
+def pref_cat_save(request):
+    from userprofile.models import UserSettings
+    args = {}
+    args.update(csrf(request))
+
+    settings_instance = UserSettings.objects.get(user_id=User.objects.get(username=auth.get_user(request).username).id)
+    if request.POST:
+        categories_list = request.POST.getlist("categories[]")
+        for i in categories_list:
+            if i not in settings_instance.portals_to_show:
+                settings_instance.categories_to_show += "%s," % i
+                settings_instance.save()
+    return HttpResponseRedirect("/auth/preferences=portals")
+
+
+def pref_portals_save(request):
+    from userprofile.models import UserSettings
+    portals_settings = UserSettings.objects.get(user_id=User.objects.get(username=auth.get_user(request).username).id)
+    if request.POST:
+        portals_list = request.POST.getlist("portals[]")
+        for i in portals_list:
+            if i not in portals_settings.portals_to_show:
+                portals_settings.portals_to_show += "%s," % i
+                portals_settings.save()
+    user_instance = User.objects.get(username=auth.get_user(request).username)
+    user_instance.is_active = True
+    user_instance.save()
+    return HttpResponseRedirect("/")
+

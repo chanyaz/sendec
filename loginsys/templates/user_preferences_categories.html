@@ -1,0 +1,39 @@
+{% load staticfiles %}
+{% load my %}
+{% block user_preferences %}
+
+    <div class="pref-title" style="text-align: center;">
+        <span class="title">SENDEC | PREFERENCES</span>
+    </div>
+    <div id="pre-preferences" style="margin-top: 2%;">
+        <div class="speech" style="text-align: center;">
+            To read your own chosen categories or portals you have to choose them here or you can
+            <span class="" onclick="location.href='/auth/skip-preferences/';" style="color: deepskyblue;" onmouseover="this.style.cursor='pointer';"><i>skip</i></span>
+            this step and do it
+            in "<i>Settings</i>" later.<br>
+        </div>
+        <hr width="50%">
+        <form action="/pref/cs/"
+              method="post"
+              style="width: 50%; margin-left: 25%; box-shadow: 0 0 10px black; padding-top: 1%;">
+            {% csrf_token %}
+            <div class="objects" style="text-align: center;">
+                <div id="categories-to-read" class="categories-to-read" style="display: block;">
+                    Categories:<br>
+                    {% for category in categories %}
+                        <span class="category-{{ category.id }}" id="cid{{ category.id }}" style="text-align: left;">
+                            <input name="categories[]" type="checkbox" id="portalCheckBox" value="{{ category.id }}">
+                            {{ category.category_name }}
+                        </span><br>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="accept-and-next" style="padding-bottom: 2%;">
+                <input type="submit" value="Next">
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}
