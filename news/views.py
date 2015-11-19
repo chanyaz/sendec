@@ -20,11 +20,12 @@ def main_page_load(request):
         "news_block": True,
         "username": auth.get_user(request).username,
         "total_politics": render_news_politics(request),
+        "photo": User.objects.get(username=auth.get_user(request).username).profile.user_photo,
     }
     args.update(csrf(request))
 
     if User.objects.get(username=auth.get_user(request).username).is_active:
-        return render_to_response("index.html", args)
+        return render_to_response("index_new.html", args)
     else:
         return HttpResponseRedirect("/auth/preferences=categories")
 
@@ -108,7 +109,6 @@ def get_user_news_by_portals(request):
     total_news_2 = list(News.objects.filter(Q(news_portal_name_id=inst[cur_id])).order_by("-news_post_date") for cur_id in range(len(inst)-1))
 
     return total_news_2
-
 
 
 def test(request):
