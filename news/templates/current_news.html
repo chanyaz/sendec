@@ -164,7 +164,13 @@
                             {{ dislike_amount }}
                         </span>
                     </li>&nbsp;|
-                    <li><a href="#">share</a></li>&nbsp;|
+                    <li>
+                        <div class="sharing">
+                            <a onclick="javascript:SharePopUpShow();">
+                                SHARE
+                            </a>
+                        </div>
+                    </li>&nbsp;|
                     <li>
                         {% if current_news_values.news_post_date.day < current_day %}
                             {{ current_news_values.news_post_date.date }}
@@ -421,5 +427,8 @@
                         </script>
         </div>
     </div>
+
+
+
 
 {% endblock %}

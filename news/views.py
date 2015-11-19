@@ -124,9 +124,19 @@ def test(request):
     #     (News.objects.order_by("-news_post_date"))
     #     )
 
+    check = False
 
-    return [News.objects.filter(Q(news_category_id=inst_categories[cur_cat_id])).filter(Q(news_portal_name_id=inst_portals[cur_id]))
-            for cur_cat_id in range(len(inst_categories)-1) for cur_id in range(len(inst_portals)-1)]
+    test_new = sorted(
+        chain(
+            News.objects.filter(news_category_id=1),
+            News.objects.filter(news_category_id=i for i in range(1)),#6 if check == True else 0),
+        ),
+        key=attrgetter("news_post_date"),
+        reverse=True
+    )
+    return test_new
+    #return [News.objects.filter(Q(news_category_id=inst_categories[cur_cat_id])).filter(Q(news_portal_name_id=inst_portals[cur_id]))
+     #       for cur_cat_id in range(len(inst_categories)-1) for cur_id in range(len(inst_portals)-1)]
 
 
 

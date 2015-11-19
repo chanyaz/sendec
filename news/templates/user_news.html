@@ -4,9 +4,17 @@
 {% block user_news %}
 
     TEST:<br>
-    {% for i in deftest %}
-        {% if i %}{{ i }}{% endif %}
-    {% endfor %}
+    <div class="test">
+        {% for i in deftest %}
+            {% if i %}
+                <div class="cur_i" style="border: solid 1px red; width: 20em; float:left; height: 10em;">
+                    {{ i.news_title }}<br>
+                    {{ i.news_text_post|safe|truncatewords:"15" }}<br>
+                    {{ i.news_post_date.date }}
+                    {{ i.news_post_date.time }}
+                </div>
+            {% endif %}
+        {% endfor %}
 
     <div class="container-fluid">
         <div class="row">
