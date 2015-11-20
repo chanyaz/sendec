@@ -40,26 +40,33 @@
             border-radius:5px;
             box-shadow: 0 0 10px #000;
         }
+        .li-cat{
+            float: left;
+            margin-left: 1%;
+        }
+
     </style>
 
 
 </head>
 
-{% if username %}
-    <body>
-{% else %}
-    <body style="background: url('{% static 'static/img/sea-lion.jpg' %}') no-repeat fixed; background-size: cover;">
-{% endif %}
+<body>
 
-    <div class="top-navigation" style="background-color: red; height: 6%; border: black solid 1px; position: relative;">
+    <div class="top-navigation" style="height: 3%; position: relative;">
         <!-- TOP PANEL FOR SEARCH AND LOGO -->
-        <div class="logo-name" style="float: left;">
-            <div class="logo-title" onclick="location.href='/';" onmouseover="style.cursor='pointer';">
+        <div style="float: left; margin-left: 11%;" class="top-left-bar" onmouseover="style.cursor='pointer';">
+            <span onclick="$('.left-panel').show().focus();">SECTIONS</span>&nbsp;|&nbsp;
+            <span class="search-span" onclick="$('.search-bar').show()">SEARCH</span>
+        </div>
+        <div class="title-bar" style="float: left; margin-left: 20%;">
+            <div class="internacionalization">
+                US | RU | CH
+            </div>
+            <div class="title-name" style="text-align: center;" onclick="location.href='/';">
                 SENDEC
             </div>
         </div>
-        <div class="title-name" style="float: left; z-index: 999; margin-left: 40%;">TITLE</div>
-        <div class="search-panel" style="float: left; width: 300px; margin-left: 23%;">
+        <!--<div class="search-panel" style="float: left; width: 300px; margin-left: 23%;">
             <form action="/search/" method="get" name="search_form" onsubmit="return validate_form();">
                         <input name="q"
                                type="text"
@@ -67,18 +74,38 @@
                                placeholder="Search"
                                style="float: left; width: 200px;"> <input type="submit" value="Search">
                     </form>
-        </div>
-        <div class="logout" style="float: right; margin-right: 1%;">
-            <a href="/auth/logout/"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-        </div>
+        </div>-->
+        {% if username %}
+            <div class="logout" style="float: left; margin-right: 1%; margin-left: 42%;">
+                <a href="/auth/logout/"><i class="fa fa-fw fa-power-off"></i>Log Out</a>
+            </div>
+        {% else %}
+            <div class="auth" style="margin-left: 90%; border: solid 1px red;">
+                <div class="signin" onclick="location.href='/auth/login/';" style="float: left;">
+                    Sign In&nbsp;|&nbsp;
+                </div>
+                <div class="signup" onclick="location.href='/auth/register/';">
+                    Sign up
+                </div>
+            </div>
+        {% endif %}
     </div>
 
 
     <div id="wrapper-new">
-    {% if username %}
         <div id="page-wrapper">
             <div class="row">
-                <div class="left-panel" style="background-color: #5bc0de; float: left; border: solid 1px red; width: 10%; height: 80em; margin-top: -0.9%; padding-left: 0.5%;">
+                <div hidden
+                     class="left-panel"
+                     style="position: fixed; box-shadow: 0 0 5px black; float: left; width: 10%; height: 103%; margin-top: -3%; padding-left: 0.5%;">
+
+                    <div class="logo-left-bar" style="margin-top: 10%; text-align: center;">
+                        <span onclick="location.href='/';">
+                            SENDEC
+                        </span>
+                    </div>
+
+                    {% if username %}
                     <div class="profile">
                         <img src="/media/{{ photo }}" width="64" />
                         <ul style="list-style-type: none;">
@@ -111,11 +138,21 @@
                             </li>
                         </ul>
                     </div>
+                    {% endif %}
+                    <div class="categories" style="margin-top: 10%;">
+                        <ul class="categories" style="list-style-type: none;">
+                            <li>Tech</li>
+                            <li>Cars</li>
+                            <li>Space</li>
+                            <li>Bio</li>
+                            <li>Entertainment</li>
+                        </ul>
+                    </div>
                     <div class="navigation">
                         <ul style="list-style-type: none;">
-                            <li>My news</li>
-                            <li>Top news</li>
-                            <li>navi</li>
+                            <li>Top News</li>
+                            <li>Podcasts</li>
+                            <li>Reviews</li>
                         </ul>
                     </div>
                     <div class="founders">
@@ -127,9 +164,34 @@
                     </div>
                 </div>
                 <div class="other" style="margin-left: 10%; position: absolute; height: 100%;">
+                    <div class="top-navigation">
+                        <ul style="list-style-type: none;">
+                            <li class="li-cat"><a href="news/latest/">LATEST</a></li>
+                            <li class="li-cat"><a href="news/technology/">TECHNOLOGY</a></li>
+                            <li class="li-cat"><a href="news/entertainment/">ENTERTAINMENT</a></li>
+                            <li class="li-cat"><a href="news/auto/">AUTO</a></li>
+                            <li class="li-cat"><a href="news/space/">SPACE</a></li>
+                            <li class="li-cat"><a href="news/bit/">BIT</a></li>
+                            <li class="li-cat"><a href="news/companies/">COMPANIES</a></li>
+                            <li class="li-cat"><a href="news/reviews/">REVIEWS</a></li>
+                        </ul>
+                    </div>
+                <br>
+                    <div class="search-bar" hidden style="margin-left: 15%;">
+                        <form action="/search/" method="get" name="search_form" onsubmit="return validate_form();">
+                            <input name="q"
+                               type="text"
+                               class="form-control"
+                               placeholder="Search"
+                               style="float: left; width: 60%;">
+                            <input type="submit" value="Search">
+                        </form>
+                    </div>
+                <br>
+                <hr width="98%">
                     {% if news_block == True %}
-                        {% include 'news_block.html' %}
-                        <div class="footer-div" style="background-color: #23527c; margin-left: -11%;">
+                        {% include 'news_block_new.html' %}
+                        <div class="footer-div" style="background-color: #23527c; width: 95%; margin-left: 1%;">
                             <div class="container-fluid">
                                 <h4 style="text-align: center;">FOOTER</h4>
                                 <ul style="color: white;">
@@ -143,7 +205,6 @@
                         </div>
                     {% endif %}
                     {% block user_profile %}{% endblock %}
-                    {% block settings %}{% endblock %}
                     {% block favourite %}{% endblock %}
                     {% block notify %}{% endblock %}
                     {% block current_news %}{% endblock %}
@@ -151,15 +212,16 @@
                     {% block current_category %}{% endblock %}
                     {% block user_news %}{% endblock %}
                     {% block top_news %}{% endblock %}
+                    {% block login %}{% endblock %}
+                    {% block register %}{% endblock %}
                 </div>
+
+                {% block settings %}{% endblock %}
                 <!-- /#page-wrapper -->
             </div>
         </div>
     </div>
-    {% else %}
-            {% block login %}{% endblock %}
-            {% block register %}{% endblock %}
-    {% endif %}
+
     <!-- /#wrapper -->
 
     <script src="{% static 'static/js/jquery.js' %}" type="javascript"></script>

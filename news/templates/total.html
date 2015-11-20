@@ -1,0 +1,132 @@
+{% load staticfiles %}
+{% block politics %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="ash" style="width: 95%; margin-left: 1%;">
+                <div class="panel panel-default">
+                    <div class="345" style="width: 100%;">
+                        <div class="breaking-news">
+                            <div class="bn" style="border: solid 1px blue; height: 600px;">
+                                breaking news
+                                <br>
+                                <div class="bn-left" style="float: left; border: solid 1px red; width: 80%;">
+                                    <div class="image" style="width:100%; height: 575px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;">
+                                    <!--<img src=""
+                                         style="background-position: center center; background-size: cover;"
+                                         width="100%"
+                                         onclick="location.href='/news/1/3/';"
+                                         onmouseover="style.cursor='pointer';"/>-->
+                                    </div>
+                                    <div class="bn-title" style="z-index: 999; position: absolute; margin-top: -5%; width: 30%; background-color: #a6e1ec; opacity: 0.75;">
+                                        <span class="bn-title-text" style="margin-left: 5%; font-size: 20px;">
+                                            Twitter заработал после глобального сбоя
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="bn-right-nav" style="float: right; border: solid 1px lawngreen; width: 20%;">
+                                    <div class="image" style="width:100%; height: 115px; background: url('{% static 'static/img/bn-nav-1.png' %}') no-repeat center center;  background-size: cover;"></div>
+                                    <div class="image" style="width:100%; height: 115px; background: url('{% static 'static/img/bn-nav-2.png' %}') no-repeat center center;  background-size: cover;"></div>
+                                    <div class="image" style="width:100%; height: 115px; background: url('{% static 'static/img/bn-nav-3.png' %}') no-repeat center center;  background-size: cover;"></div>
+                                    <div class="image" style="width:100%; height: 115px; background: url('{% static 'static/img/bn-nav-4.png' %}') no-repeat center center;  background-size: cover;"></div>
+                                    <div class="image" style="width:100%; height: 115px; background: url('{% static 'static/img/bn-nav-5.png' %}') no-repeat center center;  background-size: cover;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recently-news" style="border: solid 1px orange;">
+                            RECENTLY NEWS: 6 items<br>
+                            {% for current_news_politics in total_politics %}
+                                <div class="sect" style="width: 31%; height: 25%; border: solid 1px red; margin-top: 1%;">
+                                    <div class="current_news"
+                                         style="border: none;"
+                                         onmouseover="style.border='solid 0.2px blue';"
+                                         onmouseout="style.border='';"
+                                         onclick="location.href='/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/';">
+                                        <div class="col-xs-5">
+                                            <img class="img-responsive" src="http://placehold.it/400x400">
+                                        </div>
+                                        <div class="text">
+                                            <h4>{{ current_news_politics.news_title|truncatewords:"3" }}<hr/></h4>
+                                            {{ current_news_politics.news_post_text|safe|truncatewords:"9" }}
+                                            <a href="/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/">See&nbsp;more</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="media" style="border: solid 1px greenyellow; height: inherit;">
+                            <div class="latest-reviews" style="border: solid 1px hotpink; height: 500px;">
+                                REVIEWS<br>
+                            </div>
+                            <div class="recently-news" style="border: solid 1px orange;">
+                                RECENTLY NEWS: 18 other items and load more<br>
+                                {% for current_news_politics in total_politics %}
+                                    <div class="sect" style="width: 32%; height: 25%; border: solid 1px red; margin-top: 1%;">
+                                        <div class="current_news"
+                                             style="border: none;"
+                                             onmouseover="style.border='solid 0.2px blue';"
+                                             onmouseout="style.border='';"
+                                             onclick="location.href='/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/';">
+                                            <div class="col-xs-5">
+                                                <img class="img-responsive" src="http://placehold.it/400x400">
+                                            </div>
+                                            <div class="text">
+                                                <h4>{{ current_news_politics.news_title|truncatewords:"3" }}<hr/></h4>
+                                                {{ current_news_politics.news_post_text|safe|truncatewords:"9" }}
+                                                <a href="/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/">See&nbsp;more</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <hr>
+                                {% for current_news_politics in total_politics %}
+                                    <div class="sect" style="width: 32%; height: 25%; border: solid 1px red; margin-top: 1%;">
+                                        <div class="current_news"
+                                             style="border: none;"
+                                             onmouseover="style.border='solid 0.2px blue';"
+                                             onmouseout="style.border='';"
+                                             onclick="location.href='/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/';">
+                                            <div class="col-xs-5">
+                                                <img class="img-responsive" src="http://placehold.it/400x400">
+                                            </div>
+                                            <div class="text">
+                                                <h4>{{ current_news_politics.news_title|truncatewords:"3" }}<hr/></h4>
+                                                {{ current_news_politics.news_post_text|safe|truncatewords:"9" }}
+                                                <a href="/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/">See&nbsp;more</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <div class="interested-news" style="border: solid 1px deepskyblue; ">
+                                    <h3>Interested</h3>only 4-6
+                                    <div class="interests">
+                                            <div class="sect" style="float: left; width: 48%; height: 25%; margin: 1% 1%;">
+                                                <div class="image" style="opacity:1; width: 100%; height: 400px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;"></div>
+                                                <div class="bn-title" style="z-index: 999; position: absolute; margin-top: -5%; width: 30%; background-color: #a6e1ec; opacity: 0.75;">
+                                                    <span class="bn-title-text" style="margin-left: 5%; font-size: 20px; color: blue;">
+                                                        Facebook ble-ble
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="sect" style="width: 48%; height: 25%; margin: 1% 0;">
+                                                <div class="image" style="width: 100%; height: 400px; background: url('{% static 'static/img/bn-1.png' %}') no-repeat center;"></div>
+                                                <div class="bn-title" style="z-index: 999; position: absolute; margin-top: -5%; width: 30%; background-color: #a6e1ec; opacity: 0.75;">
+                                                    <span class="bn-title-text" style="margin-left: 5%; font-size: 20px;">
+                                                        Twitter заработал после глобального сбоя
+                                                    </span>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="load-more" style="text-align: center; margin: 1% 0;">
+                                    <button>Load More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

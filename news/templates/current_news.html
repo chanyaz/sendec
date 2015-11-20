@@ -110,13 +110,16 @@
     <div class="container-fluid" data-news-id="{{ current_news_values.id }}" style="width: 64.5%; border: solid 1px lawngreen; float: left;">
 
         <div class="tre" style="border: solid 1px red; width: 100%;">
-            <h5>{{ current_news_values.news_post_date.date }}</h5>
-            <h1 class="page-header" style="margin-top: 0">{{ current_news_values.news_title }}</h1>
 
-            <div class="news-post-text">
+            <h1 class="page-header" style="margin: 0 5%;">
+                {{ current_news_values.news_title }}
+            </h1>
+            <div class="date-and-author" style="margin-left: 5%;">
+                <h5>By&nbsp;<a href="/search/?q={{ current_news_values.news_portal_name }}">{{ current_news_values.news_portal_name }}</a>&nbsp;{{ current_news_values.news_post_date.date }}</h5>
+            </div>
+            <div class="news-post-text" style="margin: 0 15%;">
                 {{ current_news_values.news_post_text|safe|linebreaks }}
             </div>
-
             <div class="nav-bar" style="margin-left: 63%;">
                 <ul class="list-inline">
                     <li><span
@@ -427,8 +430,6 @@
                         </script>
         </div>
     </div>
-
-
 
 
 {% endblock %}

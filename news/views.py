@@ -13,21 +13,21 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .models import News, NewsPortal, NewsCategory
 
 
-@login_required(login_url='/auth/login/')
+#@login_required(login_url='/auth/login/')
 def main_page_load(request):
     args = {
         "title": "| Home",
         "news_block": True,
         "username": auth.get_user(request).username,
         "total_politics": render_news_politics(request),
-        "photo": User.objects.get(username=auth.get_user(request).username).profile.user_photo,
+        #"photo": User.objects.get(username=auth.get_user(request).username).profile.user_photo,
     }
     args.update(csrf(request))
 
-    if User.objects.get(username=auth.get_user(request).username).is_active:
-        return render_to_response("index_new.html", args)
-    else:
-        return HttpResponseRedirect("/auth/preferences=categories")
+    #if User.objects.get(username=auth.get_user(request).username).is_active:
+    return render_to_response("index_new.html", args)
+    #else:
+    #    return HttpResponseRedirect("/auth/preferences=categories")
 
 
 def render_news_politics(request):
@@ -38,7 +38,7 @@ def get_latest_news_total(request):
     return latest_10_news
 
 
-@login_required(login_url='/auth/login/')
+#@login_required(login_url='/auth/login/')
 def render_current_news(request, category_id, news_id):
     import datetime
     from userprofile.models import UserLikesNews
@@ -145,18 +145,24 @@ def test(request):
 
 def check_like(request, news_id):
     from userprofile.models import UserLikesNews
-    if UserLikesNews.objects.filter(user_id=User.objects.get(username=auth.get_user(request).username).id).filter(news_id=news_id).filter(like=True).exists():
-        return True
+    if auth.get_user(request).is_authenticated():
+        if UserLikesNews.objects.filter(user_id=User.objects.get(username=auth.get_user(request).username).id).filter(news_id=news_id).filter(like=True).exists():
+            return True
+        else:
+            return False
     else:
-        return False
+        pass
 
 
 def check_dislike(request, news_id):
     from userprofile.models import UserLikesNews
-    if UserLikesNews.objects.filter(user_id=User.objects.get(username=auth.get_user(request).username).id).filter(news_id=news_id).filter(dislike=True  ).exists():
-        return True
+    if auth.get_user(request).is_authenticated():
+        if UserLikesNews.objects.filter(user_id=User.objects.get(username=auth.get_user(request).username).id).filter(news_id=news_id).filter(dislike=True  ).exists():
+            return True
+        else:
+            return False
     else:
-        return False
+        pass
 
 
 def update_latest_news(request):
@@ -231,17 +237,99 @@ def render_current_news_comments(request, category_id, news_id):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-@login_required(login_url="/auth/login/")
+#@login_required(login_url="/auth/login/")
 def render_current_category(request, category_name):
     args = {
         "title": "| Politics",
         "username": auth.get_user(request).username,
         "latest_news": get_latest_news_total(request),
         "category_title": category_name.capitalize(),
-        "cat_news": News.objects.filter(news_category_id=NewsCategory.objects.get(category_name=category_name.capitalize()).id),
+        #"cat_news": News.objects.filter(news_category_id=NewsCategory.objects.get(category_name=category_name.capitalize()).id),
     }
     args.update(csrf(request))
     return render_to_response("current_category.html", args)
+
+############################################################################
+###################### CATEGORIES ##########################################
+############################################################################
+def render_technology_news(request):
+    args = {
+        "title": "| Technology",
+        "latest_news": get_latest_news_total(request),
+        "category_title": "TECHNOLOGY",
+    }
+    args.update(csrf(request))
+    return render_to_response("technology.html", args)
+
+
+def render_auto_news(request):
+    args = {
+        "title": "| Auto",
+        "latest_news": get_latest_news_total(request),
+        "category_title": "AUTO",
+    }
+    args.update(csrf(request))
+    return render_to_response("auto.html", args)
+
+
+def render_bit_news(request):
+    args = {
+        "title": "| BIT",
+        "latest_news": get_latest_news_total(request),
+        "category_title": "BIT",
+    }
+    args.update(csrf(request))
+    return render_to_response("bit.html", args)
+
+
+def render_companies_news(request):
+    args = {
+        "title": "| Companies",
+        "latest_news": get_latest_news_total(request),
+        "category_title": "COMPANIES",
+    }
+    args.update(csrf(request))
+    return render_to_response("companies.html", args)
+
+
+def render_entertainment_news(request):
+    args = {
+        "title": "| Entertainment",
+        "latest_news": get_latest_news_total(request),
+        "category_title": "ENTERTAINMENT",
+    }
+    args.update(csrf(request))
+    return render_to_response("entertainment.html", args)
+
+
+def render_latest_news(request):
+    args = {
+        "title": "| Latest",
+        "latest_news": get_latest_news_total(request),
+        "category_title": "LATEST",
+    }
+    args.update(csrf(request))
+    return render_to_response("latest.html", args)
+
+
+def render_reviews_news(request):
+    args = {
+        "title": "| Reviews",
+        "latest_news": get_latest_news_total(request),
+        "category_title": "REVIEWS",
+    }
+    args.update(csrf(request))
+    return render_to_response("reviews.html", args)
+
+
+def render_space_news(request):
+    args = {
+        "title": "| Space",
+        "latest_news": get_latest_news_total(request),
+        "category_title": "SPACE",
+    }
+    args.update(csrf(request))
+    return render_to_response("space.html", args)
 
 
 @login_required(login_url="/auth/login")

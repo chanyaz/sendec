@@ -1,14 +1,17 @@
-{% extends 'index_new.html' %}
 {% load staticfiles %}
 {% load my %}
 {% block top_news %}
 
-    <div id="top_news">
-        <div class="title" style="text-align: center;">
-            TOP&nbsp;NEWS<br>
-            {% for current_top_news in top_news %}
-                {{ current_top_news.id }}
-            {% endfor %}
+    <div class="container-fluid">
+        <div class="row">
+            <div id="top_news">
+                <div class="title" style="text-align: center;">
+                    TOP&nbsp;NEWS<br>
+                    {% for current_top_news in top_news %}
+                        {{ current_top_news.id }}
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 

@@ -8,10 +8,10 @@ from django.db.models import Q
 
 # Create your views here.
 
-@login_required(login_url="/auth/login/")
+#@login_required(login_url="/auth/login/")
 def render_search_page(request):
     args = {
-        "username": User.objects.get(username=auth.get_user(request).username),
+        #"username": User.objects.get(username=auth.get_user(request).username),
         "latest_news": get_latest_news_total(request),
     }
 
@@ -35,18 +35,18 @@ def get_latest_news_total(request):
     return latest_10_news
 
 
-@login_required(login_url="/auth/login/")
+#@login_required(login_url="/auth/login/")
 def get_search_result(request, search_word):
     from news.models import News
     return News.objects.filter(Q(news_title__contains=search_word) | Q(news_post_text__contains=search_word)).values()
 
 
-@login_required(login_url="/auth/login/")
+#@login_required(login_url="/auth/login/")
 def get_search_result_text(request, search_word):
     from news.models import News
     return News.objects.filter(news_post_text__contains=search_word).order_by("-news_post_date").values()
 
-@login_required(login_url="/auth/login/")
+#@login_required(login_url="/auth/login/")
 def get_matches_amount(request, search_word):
     from news.models import News
     return News.objects.filter(Q(news_title__contains=search_word) | Q(news_post_text__contains=search_word)).count()

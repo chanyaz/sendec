@@ -33,6 +33,14 @@ urlpatterns = [
     url(r'^usernews/', 'news.views.render_user_news'),
 
     url(r'^(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_news'),
-    url(r'^(?P<category_name>\w+)/', 'news.views.render_current_category'),
+    #url(r'^(?P<category_name>\w+)/', 'news.views.render_current_category'),
+    url(r'^auto/', 'news.views.render_auto_news'),
+    url(r'^bit/', 'news.views.render_bit_news'),
+    url(r'^companies/', 'news.views.render_companies_news'),
+    url(r'^entertainment/', 'news.views.render_entertainment_news'),
+    url(r'^technology/', 'news.views.render_technology_news'),
+    url(r'^latest/', 'news.views.render_latest_news'),
+    url(r'^reviews/', 'news.views.render_reviews_news'),
+    url(r'^space/', 'news.views.render_space_news'),
 
 ]
