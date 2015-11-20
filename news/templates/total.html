@@ -34,22 +34,17 @@
                             </div>
                         </div>
                         <div class="recently-news" style="border: solid 1px orange;">
-                            RECENTLY NEWS: 6 items<br>
                             {% for current_news_politics in total_politics %}
-                                <div class="sect" style="width: 31%; height: 25%; border: solid 1px red; margin-top: 1%;">
+                                <div class="sect" style="width: 41%; height: 25%; border: solid 1px red; margin-top: 1%;">
                                     <div class="current_news"
-                                         style="border: none;"
+                                         style="border: none; float: left;"
                                          onmouseover="style.border='solid 0.2px blue';"
                                          onmouseout="style.border='';"
                                          onclick="location.href='/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/';">
                                         <div class="col-xs-5">
                                             <img class="img-responsive" src="http://placehold.it/400x400">
                                         </div>
-                                        <div class="text">
-                                            <h4>{{ current_news_politics.news_title|truncatewords:"3" }}<hr/></h4>
-                                            {{ current_news_politics.news_post_text|safe|truncatewords:"9" }}
-                                            <a href="/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/">See&nbsp;more</a>
-                                        </div>
+
                                     </div>
                                 </div>
                             {% endfor %}
@@ -61,7 +56,7 @@
                             <div class="recently-news" style="border: solid 1px orange;">
                                 RECENTLY NEWS: 18 other items and load more<br>
                                 {% for current_news_politics in total_politics %}
-                                    <div class="sect" style="width: 32%; height: 25%; border: solid 1px red; margin-top: 1%;">
+                                    <div class="sect" style="width: 31%; height: 25%; border: solid 1px red; margin-top: 1%;">
                                         <div class="current_news"
                                              style="border: none;"
                                              onmouseover="style.border='solid 0.2px blue';"
@@ -71,32 +66,15 @@
                                                 <img class="img-responsive" src="http://placehold.it/400x400">
                                             </div>
                                             <div class="text">
-                                                <h4>{{ current_news_politics.news_title|truncatewords:"3" }}<hr/></h4>
-                                                {{ current_news_politics.news_post_text|safe|truncatewords:"9" }}
+                                                <h4>{{ current_news_politics.news_title|truncatechars:"20" }}<hr/></h4>
+                                                {{ current_news_politics.news_post_text|safe|truncatechars:"50" }}
                                                 <a href="/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/">See&nbsp;more</a>
                                             </div>
                                         </div>
                                     </div>
                                 {% endfor %}
                                 <hr>
-                                {% for current_news_politics in total_politics %}
-                                    <div class="sect" style="width: 32%; height: 25%; border: solid 1px red; margin-top: 1%;">
-                                        <div class="current_news"
-                                             style="border: none;"
-                                             onmouseover="style.border='solid 0.2px blue';"
-                                             onmouseout="style.border='';"
-                                             onclick="location.href='/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/';">
-                                            <div class="col-xs-5">
-                                                <img class="img-responsive" src="http://placehold.it/400x400">
-                                            </div>
-                                            <div class="text">
-                                                <h4>{{ current_news_politics.news_title|truncatewords:"3" }}<hr/></h4>
-                                                {{ current_news_politics.news_post_text|safe|truncatewords:"9" }}
-                                                <a href="/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/">See&nbsp;more</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
+
                                 <div class="interested-news" style="border: solid 1px deepskyblue; ">
                                     <h3>Interested</h3>only 4-6
                                     <div class="interests">

@@ -366,7 +366,7 @@
             Other&nbsp;materials&nbsp;of&nbsp;{{ current_news_values.news_category }}
             <div class="other-materials" style="border: solid 1px red;">
                 {% for current_other in other_materials %}
-                    <ul style="list-style-type: none; height: inherit; margin-left: -6%;">
+                    <ul style="list-style-type: none; height: auto; margin-left: -6%;">
                         <li style="float: left; margin-left: 1%; margin-top: 1%;">
                             <div class="current_other"
                                  onclick="location.href='/news/{{ current_other.news_category_id }}/{{ current_other.id }}/';"
@@ -412,22 +412,7 @@
             </div>
         </div>
         <div class="video-and-subs">
-                    <a class="twitter-timeline"
-                       href="https://twitter.com/SendecNews"
-                       data-widget-id="663274878636834816">
-                        Твиты от @SendecNews
-                    </a>
-                        <script>
-                            !function(d,s,id){
-                                var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-                                if(!d.getElementById(id)){
-                                    js=d.createElement(s);
-                                    js.id=id;
-                                    js.src=p+"://platform.twitter.com/widgets.js";
-                                    fjs.parentNode.insertBefore(js,fjs);
-                                }
-                            }(document,"script","twitter-wjs");
-                        </script>
+            {% include 'twitter.html' %}
         </div>
     </div>
 

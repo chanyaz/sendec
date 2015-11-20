@@ -34,7 +34,7 @@ def render_news_politics(request):
     return News.objects.filter(news_category_id=NewsCategory.objects.get(category_name="Politics").id)
 
 def get_latest_news_total(request):
-    latest_10_news = News.objects.all().order_by("-news_post_date")[:10]
+    latest_10_news = News.objects.all().order_by("-news_post_date")
     return latest_10_news
 
 
@@ -48,7 +48,7 @@ def render_current_news(request, category_id, news_id):
         "username": auth.get_user(request).username,
         "current_news_values": News.objects.get(id=news_id),
         "other_materials": render_news_politics(request).exclude(id=news_id)[:12],
-        "latest_news": get_latest_news_total(request),
+        "latest_news": get_latest_news_total(request)[:10],
         "current_day": datetime.datetime.now().day,
         "comments_form": NewsCommentsForm,
         "replies_form": NewsCommentsRepliesForm,
@@ -255,57 +255,87 @@ def render_current_category(request, category_name):
 def render_technology_news(request):
     args = {
         "title": "| Technology",
-        "latest_news": get_latest_news_total(request),
+        "top_technology": get_technology_news(request)[0],
+        "technology_news": get_technology_news(request)[1:],
         "category_title": "TECHNOLOGY",
     }
     args.update(csrf(request))
     return render_to_response("technology.html", args)
 
 
+def get_technology_news(request):
+    from news.models import News
+    return News.objects.all().filter(news_category_id=2)
+##########3#################### END TECHNOLOGY #######################################
+
+
 def render_auto_news(request):
     args = {
         "title": "| Auto",
-        "latest_news": get_latest_news_total(request),
+        "top_auto_news": get_auto_news(request)[0],
+        "auto_news": get_auto_news(request)[1:],
         "category_title": "AUTO",
     }
     args.update(csrf(request))
     return render_to_response("auto.html", args)
 
 
+def get_auto_news(request):
+    return News.objects.all().filter(news_category_id=4)
+################################### END AUTO #########################################
+
+
 def render_bit_news(request):
     args = {
         "title": "| BIT",
-        "latest_news": get_latest_news_total(request),
+        "top_bit_news": get_bit_news(request)[0],
+        "bit_news": get_bit_news(request)[1:],
         "category_title": "BIT",
     }
     args.update(csrf(request))
     return render_to_response("bit.html", args)
 
 
+def get_bit_news(request):
+    return News.objects.all().filter(news_category_id=6)
+################################### END BIT #########################################
+
 def render_companies_news(request):
     args = {
         "title": "| Companies",
-        "latest_news": get_latest_news_total(request),
+        "top_companies_news": get_companies_news(request)[0],
+        "companies_news": get_companies_news(request)[1:],
         "category_title": "COMPANIES",
     }
     args.update(csrf(request))
     return render_to_response("companies.html", args)
 
 
+def get_companies_news(request):
+    return News.objects.all().filter(news_category_id=7)
+############################## END COMPANIES ###################################
+
 def render_entertainment_news(request):
     args = {
         "title": "| Entertainment",
-        "latest_news": get_latest_news_total(request),
+        "top_entertainment_news": get_entertainment_news(request)[0],
+        "entertainment_news": get_entertainment_news(request)[1:],
         "category_title": "ENTERTAINMENT",
     }
     args.update(csrf(request))
     return render_to_response("entertainment.html", args)
 
 
+def get_entertainment_news(request):
+    return News.objects.all().filter(news_category_id=3)
+
+################### END ENTERTAINMENT ######################################3333
+
 def render_latest_news(request):
     args = {
         "title": "| Latest",
-        "latest_news": get_latest_news_total(request),
+        "top_latest_news": get_latest_news_total(request)[0],
+        "latest_news": get_latest_news_total(request)[1:10],
         "category_title": "LATEST",
     }
     args.update(csrf(request))
@@ -325,11 +355,19 @@ def render_reviews_news(request):
 def render_space_news(request):
     args = {
         "title": "| Space",
-        "latest_news": get_latest_news_total(request),
+        "top_space_news": get_space_news(request)[0],
+        "space_news": get_space_news(request)[1:],
         "category_title": "SPACE",
     }
     args.update(csrf(request))
     return render_to_response("space.html", args)
+
+
+def get_space_news(request):
+    return News.objects.all().filter(news_category_id=5)
+
+
+#################################### END SPACE ##############################3
 
 
 @login_required(login_url="/auth/login")

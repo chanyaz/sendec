@@ -15,92 +15,101 @@
         }
     </script>
 
+    <div class="search-block">
+        <div class="search" style="width: 100%; border: solid 1px red; height: 100%;">
+            <div class="left-side-search" style="width: 80%; height: inherit; float: left;">
+                {% if empty_result %}
+                    <div class="search-error-text" style="text-align: center;">
+                        No&nbsp;one&nbsp;matches.&nbsp;Please,&nbsp;try&nbsp;another&nbsp;request&nbsp;word<br><br>
+                    </div>
+                    <div class="no_results" style="margin-left: 25%;">
+                        <form action="/search/" method="get" name="search" onsubmit="return validate_form();">
+                            <input autocomplete="off"
+                                   autofocus
+                                   name="q"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="Search"
+                                   style="width: 60%; float: left;">
+                            <input type="submit" value="Search" style="margin-left: 1%;">
+                        </form>
+                    </div>
 
-    <div class="search" style="float: left; width: 64.5%; border: solid 1px red;">
-        {% if empty_result %}
-            <div class="search-error-text" style="text-align: center;">
-                No&nbsp;one&nbsp;matches.&nbsp;Please,&nbsp;try&nbsp;another&nbsp;request&nbsp;word<br><br>
-            </div>
-            <div class="no_results">
-                <form action="/search/" method="get" name="search" onsubmit="return validate_form();">
-                    <input autocomplete="off"
-                           autofocus
-                           name="q"
-                           type="text"
-                           class="form-control"
-                           placeholder="Search"
-                           style="width: 50%; float: left;">
-                    <input type="submit" value="Search" style="margin-left: 1%;">
-                </form>
-            </div>
-        {% endif %}
-        {% if results|length > 0 %}
-            <div id="among_title">
-                <div style="text-align: left; font-size: 20px;"><b>Found&nbsp;{{ matches_amount }}&nbsp;{% if matches_amount > 1 %}matches
-                    {% else %}match
-                    {% endif %}</b><hr></div>
-                    {% for current_result in results %}
-                            <div class="current_searched" style="border: solid 1px red; margin-top: 2%; margin-left: 0.25%; margin-right: 0.25%; margin-bottom: 0.25%;"
-                            onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"
-                            onmouseover="this.style.cursor='pointer';
-                            this.style.backgroundColor='grey';"
-                            onmouseout="this.style.backgroundColor='';">
-                                <div class="portal" style="float: left;">
-                                    <b>{{ current_result.news_portal_name_id|get_news_portal }}</b>
+                    <div class="popular-news" style="margin-top: 3%; height: auto;">
+                        <div class="text-top-popular" style="text-align: center;">
+                            Popular&nbsp;news
+                        </div>
+                                <div id="space-news" style="border: solid 1px red; width: 90%; margin-left: 1%; height: auto; float: left;">
+                                    {% for current_popular_news in popular_news %}
+                                        <div id="news-{{ current_popular_news.id }}" style="float: left; width: 48%; height: 300px; border: solid 1px blue; margin: 0 1%;">
+                                            <div class="title">
+                                                {{ current_popular_news.news_title }}
+                                            </div>
+                                            <div class="date-author">
+                                                By&nbsp;<a href="/search/?q={{ current_popular_news.news_portal_name }}">{{ current_popular_news.news_portal_name }}</a>&nbsp;|&nbsp;
+                                                {{ current_popular_news.news_post_date }}
+                                            </div>
+                                            <div class="image" style="opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;"></div>
+                                            <div class="text">
+                                                {{ current_popular_news.news_post_text|safe|truncatewords:"12" }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                <div class="date">
-                                    &nbsp;|&nbsp;{{ current_result.news_post_date.date }}
-                                </div>
-                                <div class="title">
-                                    {{ current_result.news_title }}
-                                </div>
-                                <div class="post">
-                                    {{ current_result.news_post_text|safe|truncatewords:"15" }}
-                                </div>
-                            </div>
-                    {% endfor %}
-            </div>
-        {% endif %}
-    </div>
+                    </div>
 
-
-    <div class="right-side-block" style="border: solid 1px red; margin-left: 65%; margin-right: 5%;">
-        <div class="latest-news"
-        style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
-            <div class="latest-header" style="text-align: center;">
-                Latest&nbsp;news
+                {% endif %}
+                {% if results|length > 0 %}
+                    <div id="among_title">
+                        <div style="text-align: left; font-size: 20px;"><b>Found&nbsp;{{ matches_amount }}&nbsp;{% if matches_amount > 1 %}matches
+                            {% else %}match
+                            {% endif %}</b><hr></div>
+                            {% for current_result in results %}
+                                    <div class="current_searched" style="border: solid 1px red; margin-top: 2%; margin-left: 0.25%; margin-right: 0.25%; margin-bottom: 0.25%;"
+                                    onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"
+                                    onmouseover="this.style.cursor='pointer';
+                                    this.style.backgroundColor='grey';"
+                                    onmouseout="this.style.backgroundColor='';">
+                                        <div class="portal" style="float: left;">
+                                            <b>{{ current_result.news_portal_name_id|get_news_portal }}</b>
+                                        </div>
+                                        <div class="date">
+                                            &nbsp;|&nbsp;{{ current_result.news_post_date.date }}
+                                        </div>
+                                        <div class="title">
+                                            {{ current_result.news_title }}
+                                        </div>
+                                        <div class="post">
+                                            {{ current_result.news_post_text|safe|truncatewords:"15" }}
+                                        </div>
+                                    </div>
+                            {% endfor %}
+                    </div>
+                {% endif %}
             </div>
-            <div class="latest-titles">
-                    {% for i in latest_news %}
-                                <span class="time" style="color: blue;">
-                                    {{ i.news_post_date.time }}
-                                </span>
-                                <span class="title"
-                                      onmouseover="this.style.color='blue'; style.cursor='pointer';"
-                                      onmouseout="this.style.color='black';"
-                                      onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                    {{ i.news_title }}
-                                </span><br>
-                    {% endfor %}
+            <div class="right-side-block" style="border: solid 1px red; width: 20%; margin-left: 80%;">
+                <div class="latest-news" style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
+                    <div class="latest-header" style="text-align: center;">
+                        Latest&nbsp;news
+                    </div>
+                    <div class="latest-titles">
+                        {% for i in latest_news %}
+                            <span class="time" style="color: blue;">
+                                {{ i.news_post_date.time }}
+                            </span>
+                            <span class="title"
+                                  onmouseover="this.style.color='blue'; style.cursor='pointer';"
+                                  onmouseout="this.style.color='black';"
+                                  onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                {{ i.news_title }}
+                            </span><br>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="video-and-subs">
+                    {% include 'twitter.html' %}
+                </div>
             </div>
-        </div>
-        <div class="video-and-subs">
-                    <a class="twitter-timeline"
-                       href="https://twitter.com/SendecNews"
-                       data-widget-id="663274878636834816">
-                        Твиты от @SendecNews
-                    </a>
-                        <script>
-                            !function(d,s,id){
-                                var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-                                if(!d.getElementById(id)){
-                                    js=d.createElement(s);
-                                    js.id=id;
-                                    js.src=p+"://platform.twitter.com/widgets.js";
-                                    fjs.parentNode.insertBefore(js,fjs);
-                                }
-                            }(document,"script","twitter-wjs");
-                        </script>
         </div>
     </div>
 

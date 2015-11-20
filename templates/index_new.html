@@ -19,7 +19,13 @@
                         valid = false;
                 }
                 return valid;
-        }
+        };
+
+        function SearchClick(){
+            $('.search-bar').show();
+            $(".news-block").opacity = 0.6;
+        };
+
     </script>
     <!-- Styles -->
     <style>
@@ -56,7 +62,7 @@
         <!-- TOP PANEL FOR SEARCH AND LOGO -->
         <div style="float: left; margin-left: 11%;" class="top-left-bar" onmouseover="style.cursor='pointer';">
             <span onclick="$('.left-panel').show().focus();">SECTIONS</span>&nbsp;|&nbsp;
-            <span class="search-span" onclick="$('.search-bar').show()">SEARCH</span>
+            <span class="search-span" onclick="SearchClick();">SEARCH</span>
         </div>
         <div class="title-bar" style="float: left; margin-left: 20%;">
             <div class="internacionalization">
@@ -80,7 +86,7 @@
                 <a href="/auth/logout/"><i class="fa fa-fw fa-power-off"></i>Log Out</a>
             </div>
         {% else %}
-            <div class="auth" style="margin-left: 90%; border: solid 1px red;">
+            <div class="auth" style="margin-left: 87%; border: solid 1px red;">
                 <div class="signin" onclick="location.href='/auth/login/';" style="float: left;">
                     Sign In&nbsp;|&nbsp;
                 </div>
@@ -94,7 +100,7 @@
 
     <div id="wrapper-new">
         <div id="page-wrapper">
-            <div class="row">
+            <div class="ro234w">
                 <div hidden
                      class="left-panel"
                      style="position: fixed; box-shadow: 0 0 5px black; float: left; width: 10%; height: 103%; margin-top: -3%; padding-left: 0.5%;">
@@ -163,27 +169,27 @@
                         </ul>
                     </div>
                 </div>
-                <div class="other" style="margin-left: 10%; position: absolute; height: 100%;">
-                    <div class="top-navigation">
+                <div class="other" style="margin-left: 10%; height: 100%;">
+                    <div class="top-navigation" style="margin-left: 10%;">
                         <ul style="list-style-type: none;">
-                            <li class="li-cat"><a href="news/latest/">LATEST</a></li>
-                            <li class="li-cat"><a href="news/technology/">TECHNOLOGY</a></li>
-                            <li class="li-cat"><a href="news/entertainment/">ENTERTAINMENT</a></li>
-                            <li class="li-cat"><a href="news/auto/">AUTO</a></li>
-                            <li class="li-cat"><a href="news/space/">SPACE</a></li>
-                            <li class="li-cat"><a href="news/bit/">BIT</a></li>
-                            <li class="li-cat"><a href="news/companies/">COMPANIES</a></li>
-                            <li class="li-cat"><a href="news/reviews/">REVIEWS</a></li>
+                            <li class="li-cat"><a href="/news/latest/">LATEST</a></li>
+                            <li class="li-cat"><a href="/news/technology/">TECHNOLOGY</a></li>
+                            <li class="li-cat"><a href="/news/entertainment/">ENTERTAINMENT</a></li>
+                            <li class="li-cat"><a href="/news/auto/">AUTO</a></li>
+                            <li class="li-cat"><a href="/news/space/">SPACE</a></li>
+                            <li class="li-cat"><a href="/news/bit/">BIT</a></li>
+                            <li class="li-cat"><a href="/news/companies/">COMPANIES</a></li>
+                            <li class="li-cat"><a href="/news/reviews/">REVIEWS</a></li>
                         </ul>
                     </div>
                 <br>
-                    <div class="search-bar" hidden style="margin-left: 15%;">
-                        <form action="/search/" method="get" name="search_form" onsubmit="return validate_form();">
+                    <div class="search-bar" hidden style="margin-left: 12%;">
+                        <form id="search-form" action="/search/" method="get" name="search_form" onsubmit="return validate_form();">
                             <input name="q"
                                type="text"
                                class="form-control"
                                placeholder="Search"
-                               style="float: left; width: 60%;">
+                               style="float: left; width: 58%;">
                             <input type="submit" value="Search">
                         </form>
                     </div>
@@ -191,29 +197,31 @@
                 <hr width="98%">
                     {% if news_block == True %}
                         {% include 'news_block_new.html' %}
-                        <div class="footer-div" style="background-color: #23527c; width: 95%; margin-left: 1%;">
-                            <div class="container-fluid">
-                                <h4 style="text-align: center;">FOOTER</h4>
-                                <ul style="color: white;">
-                                    <li class="footer-list-element"><div id="one">NEWS</div></li>
-                                    <li class="footer-list-element"><div id="two">REGIONS</div></li>
-                                    <li class="footer-list-element"><div id="three"></div></li>
-                                    <li class="footer-list-element"><div id="four">PROJECTS</div></li>
-                                    <li class="footer-list-element"><div id="five">ABOUT&nbsp;US</div></li>
-                                </ul>
-                            </div>
-                        </div>
+                        {% include 'footer.html' %}
                     {% endif %}
                     {% block user_profile %}{% endblock %}
                     {% block favourite %}{% endblock %}
                     {% block notify %}{% endblock %}
                     {% block current_news %}{% endblock %}
-                    {% block search %}{% endblock %}
                     {% block current_category %}{% endblock %}
                     {% block user_news %}{% endblock %}
                     {% block top_news %}{% endblock %}
                     {% block login %}{% endblock %}
                     {% block register %}{% endblock %}
+                    {% block search %}{% endblock %}
+
+
+                    <!-- new blocks -->
+                    <div class="news-block" id="news-block">
+                        {% block latest %}{% endblock %}
+                        {% block technology %}{% endblock %}
+                        {% block entertainment %}{% endblock %}
+                        {% block auto %}{% endblock %}
+                        {% block space %}{% endblock %}
+                        {% block bit %}{% endblock %}
+                        {% block companies %}{% endblock %}
+                        {% block reviews %}{% endblock %}
+                    </div>
                 </div>
 
                 {% block settings %}{% endblock %}
