@@ -30,7 +30,8 @@ urlpatterns = [
     url(r'^top/', "news.views.render_top_news_page"),
 
     # User news
-    url(r'^usernews/', 'news.views.render_user_news'),
+    #url(r'^usernews/', 'news.views.render_user_news'),
+    url(r'^usernews/page=(\d+)/$', 'news.views.render_user_news'),
 
     url(r'^(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_news'),
     #url(r'^(?P<category_name>\w+)/', 'news.views.render_current_category'),

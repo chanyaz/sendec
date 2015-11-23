@@ -122,11 +122,11 @@
             </div>
             <div class="nav-bar" style="margin-left: 63%;">
                 <ul class="list-inline">
-                    <li><span
-                            data-news-id="{{ current_news_values.id }}"
-                            class="news_likes"
-                            id="add_like_{{ current_news_values.id }}"
-                            onclick="add_like_news('{{ current_news_values.id }}');">
+                    <li>
+                        <span data-news-id="{{ current_news_values.id }}"
+                              class="news_likes"
+                              id="add_like_{{ current_news_values.id }}"
+                              onclick="add_like_news('{{ current_news_values.id }}');">
                             <div class="liked" style="float: left;">
                                 {% if liked == False %}
                                     Likes:
@@ -194,136 +194,87 @@
                 </ul>
             </div>
 
-            <button
+            <!--<button
                     id="comments-load-button"
                     style="margin-left: 45%;"
                     data-category="{{ current_news_values.news_category_id }}"
                     data-news="{{ current_news_values.id }}">
             Comments
-            </button>
+            </button>-->
 
             <div id="comments-here" style="display: block;">
 
 
                 <div class="comments-block">
-                <!-- COMMENTS -->
-                <form
-                        id="comments_form"
-                        style="margin-top: 1%; margin-left: 4%;"
-                        action="/news/send/cat={{ current_news_values.news_category_id }}&id={{ current_news_values.id }}/"
-                        method="post">
-                    {% csrf_token %}
-                    <div class="user-photo" style="float: left; width: 3em; height: 3em; border-radius: 5px; background-color: orange;">
-                        &nbsp;
-                    </div>
-                    <textarea
-                            id="id_comments_text"
-                            name="comments_text"
-                            maxlength="512"
-                            rows="12"
-                            placeholder="Leave&nbsp;your&nbsp;comment..."
-                            onfocus="document.getElementById('id_comments_text_submit').style.display='block';
-                            this.style.height='5em'"
-                            onblur="this.style.height='3em'; document.getElementById('id_comments_text_submit').style.display='none'"
-                            onkeydown="if(event.keyCode == 13 && !event.shiftKey){
-                                event.preventDefault();
-                                $('#comments_form').submit();
-                            }
-                            else{
-                                if(event.keyCode == 27){
-                                    this.onblur();
-                                }
-                            }"
-                    ></textarea>
-                    <input id="id_comments_text_submit" type="submit" value="Send" style="margin-left: 91.5%; display: none;">
-                </form>
+                    {% if username %}
+                    <!-- COMMENTS -->
+                        <form
+                                id="comments_form"
+                                style="margin-top: 1%; margin-left: 4%;"
+                                action="/news/send/cat={{ current_news_values.news_category_id }}&id={{ current_news_values.id }}/"
+                                method="post">
+                            {% csrf_token %}
+                            <div class="user-photo" style="float: left; width: 3em; height: 3em; border-radius: 5px; background-color: orange;">
+                                &nbsp;
+                            </div>
 
-
-                <div class="comments" style="border: solid 1px lawngreen; width: 87.5%; margin-left: 4%;">
-                    {% for current_comment in comments_total %}
-                        <div class="current_comment" style="border: solid 1px red;">
-                            <div class="current_comment_auhor">
-                                {{ current_comment.comments_author_id|get_username }}
-                            </div>
-                            <div class="current_comment_text" style="margin-left: 5%;">
-                                {{ current_comment.comments_text|safe|linebreaks }}
-                            </div>
-                            <div class="current_comment_info" style="margin-left: 60%;">
-                                <span
-                                        id="span_show_reply_form"
-                                    onclick="document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='block';
-                                            document.getElementById('reply_form__comment_{{ current_comment.id }}').onfocus();"
-                                >Reply</span>&nbsp;|
-                                Likes:&nbsp;{{ current_comment.comments_likes }}&nbsp;|
-                                Dislikes:&nbsp;{{ current_comment.comments_dislikes }}&nbsp;|
-                                {{ current_comment.comments_post_date.date }}
-                            </div>
-                            <form
-                                    id="reply_form_comment_{{ current_comment.id }}"
-                                    style="display: none;"
-                                    action="/news/reply/nid={{ current_news_values.id }}&cid={{ current_comment.id }}/"
-                                    method="post">
-                                    {% csrf_token %}
-                                    <textarea
-                                            autofocus
-                                            id="id_reply_text"
-                                            cols="83"
-                                            rows="10"
-                                            name="reply_text"
-                                            maxlength="512"
-                                            wrap="soft"
-                                            placeholder="Leave&nbsp;your&nbsp;reply..."
-                                            onfocus="document.getElementById('id_reply_text_submit_{{ current_comment.id }}').style.display='block';
-                                                     this.style.height='5em'"
-                                                    onblur="document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='none'"
-                                            onkeydown="if(event.keyCode == 13 && !event.shiftKey){
-                                                event.preventDefault();
-                                                $('#reply_form_comment_'+'{{ current_comment.id }}').submit();
-                                            }
-                                            else{
-                                                if(event.keyCode == 27){
-                                                    this.onblur();
-                                                }
-                                            }"
-                                    >{{ current_comment.comments_author_id|get_username }},&nbsp;</textarea>
-                                    <input id="id_reply_text_submit_{{ current_comment.id }}" type="submit" value="Reply" style="margin-left: 92%;">
-                                </form>
+                            <textarea
+                                    id="id_comments_text"
+                                    name="comments_text"
+                                    maxlength="512"
+                                    rows="12"
+                                    placeholder="Leave&nbsp;your&nbsp;comment..."
+                                    onfocus="document.getElementById('id_comments_text_submit').style.display='block';
+                                    this.style.height='5em'"
+                                    onblur="this.style.height='3em'; document.getElementById('id_comments_text_submit').style.display='none'"
+                                    onkeydown="if(event.keyCode == 13 && !event.shiftKey){
+                                        event.preventDefault();
+                                        $('#comments_form').submit();
+                                    }
+                                    else{
+                                        if(event.keyCode == 27){
+                                            this.onblur();
+                                        }
+                                    }"
+                            ></textarea>
+                            <input id="id_comments_text_submit" type="submit" value="Send" style="margin-left: 91.5%; display: none;">
+                        </form>
+                    {% else %}
+                        <div class="announce" style="text-align: center">
+                            To&nbsp;leave&nbsp;comments&nbsp;you&nbsp;have&nbsp;to&nbsp;
+                            <span onclick="location.href='/auth/login/'"
+                                  class="sign-in-to-comments"
+                                  style="color: #5bc0de;"
+                                  onmouseover="this.style.cursor='pointer';">
+                                sign&nbsp;in
+                            </span>
                         </div>
+                    {% endif %}
 
-                        <!-- REPLIES -->
-                        <div class="replies" style="margin-left: 5%;">
-                            {% for current_reply in replies_total %}
-                                {% if current_reply.comment_attached_id == current_comment.id %}
-                                    <div class="current_reply" style="margin-top: 1%; border: solid 1px blue;">
-                                        <div class="reply_author">
-                                            {{ current_reply.reply_author_id|get_username }}
-                                        </div>
-                                        <div class="reply_text" style="margin-left: 5%;">
-                                            {{ current_reply.reply_text|safe|linebreaks }}
-                                        </div>
-                                        <div class="reply_configs" style="margin-left: 58%;">
-                                            <span
-                                            onclick="document.getElementById('reply_form_{{ current_reply.id }}').style.display='block'"
-                                            >Reply</span>&nbsp;|
-                                            Likes:&nbsp;{{ current_reply.reply_likes }}&nbsp;|
-                                            Dislikes:&nbsp;{{ current_reply.reply_dislikes }}&nbsp;|
-                                            {% if current_reply.reply_post_date.day == current_day %}
-                                                {{ current_reply.reply_post_date.time }}
-                                            {% else %}
-                                                {{ current_reply.reply_post_date.date }}
-                                            {% endif %}
-                                            <span
-                                                    name="delete-reply"
-                                                    onclick="location.href='/news/rd={{ current_reply.id }}/';">
-                                                <a>delete</a></span>
-                                        </div>
-                                    </div>
 
-                                    <form
-                                        id="reply_form_{{ current_reply.id }}"
-                                        style="display: none;"
-                                        action="/news/reply/nid={{ current_news_values.id }}&cid={{ current_comment.id }}/"
-                                        method="post">
+                    <div class="comments" style="border: solid 1px lawngreen; width: 87.5%; margin-left: 4%;">
+                        {% for current_comment in comments_total %}
+                            <div class="current_comment" style="border: solid 1px red;">
+                                <div class="current_comment_auhor">
+                                    {{ current_comment.comments_author_id|get_username }}
+                                </div>
+                                <div class="current_comment_text" style="margin-left: 5%;">
+                                    {{ current_comment.comments_text|safe|linebreaks }}
+                                </div>
+                                <div class="current_comment_info" style="margin-left: 60%;">
+                                    <span
+                                            id="span_show_reply_form"
+                                        onclick="document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='block';
+                                                document.getElementById('reply_form__comment_{{ current_comment.id }}').onfocus();"
+                                    >Reply</span>&nbsp;|
+                                    Likes:&nbsp;{{ current_comment.comments_likes }}&nbsp;|
+                                    Dislikes:&nbsp;{{ current_comment.comments_dislikes }}&nbsp;|
+                                    {{ current_comment.comments_post_date.date }}
+                                </div>
+                                <form id="reply_form_comment_{{ current_comment.id }}"
+                                      style="display: none;"
+                                      action="/news/reply/nid={{ current_news_values.id }}&cid={{ current_comment.id }}/"
+                                      method="post">
                                         {% csrf_token %}
                                         <textarea
                                                 autofocus
@@ -333,44 +284,103 @@
                                                 name="reply_text"
                                                 maxlength="512"
                                                 wrap="soft"
-                                                onfocus="document.getElementById('reply_form_second_{{ current_reply.id }}').style.display='block';
-                                                     this.style.height='5em'"
-                                            onblur="document.getElementById('reply_form_second_{{ current_reply.id }}').style.display='none';
-                                                    document.getElementById('reply_form_{{ current_reply.id }}').style.display='none'"
-                                            onkeydown="if(event.keyCode == 13 && !event.shiftKey){
-                                                event.preventDefault();
-                                                $('#reply_form_'+'{{ current_reply.id }}').submit();
-                                            }
-                                            else{
-                                                if(event.keyCode == 27){
-                                                    this.onblur();
+                                                placeholder="Leave&nbsp;your&nbsp;reply..."
+                                                onfocus="document.getElementById('id_reply_text_submit_{{ current_comment.id }}').style.display='block';
+                                                         this.style.height='5em'"
+                                                        onblur="document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='none'"
+                                                onkeydown="if(event.keyCode == 13 && !event.shiftKey){
+                                                    event.preventDefault();
+                                                    $('#reply_form_comment_'+'{{ current_comment.id }}').submit();
                                                 }
-                                            }"
-                                        >{{ current_reply.reply_author_id|get_username }},&nbsp;</textarea>
-                                        <input id="reply_form_second_{{ current_reply.id }}" type="submit" value="Reply" style="margin-left: 92%;">
+                                                else{
+                                                    if(event.keyCode == 27){
+                                                        this.onblur();
+                                                    }
+                                                }"
+                                        >{{ current_comment.comments_author_id|get_username }},&nbsp;</textarea>
+                                        <input id="id_reply_text_submit_{{ current_comment.id }}" type="submit" value="Reply" style="margin-left: 92%;">
                                     </form>
-                                {% endif %}
+                            </div>
 
-                            {% endfor %}
-                        </div>
+                            <!-- REPLIES -->
+                            <div class="replies" style="margin-left: 5%;">
+                                {% for current_reply in replies_total %}
+                                    {% if current_reply.comment_attached_id == current_comment.id %}
+                                        <div class="current_reply" style="margin-top: 1%; border: solid 1px blue;">
+                                            <div class="reply_author">
+                                                {{ current_reply.reply_author_id|get_username }}
+                                            </div>
+                                            <div class="reply_text" style="margin-left: 5%;">
+                                                {{ current_reply.reply_text|safe|linebreaks }}
+                                            </div>
+                                            <div class="reply_configs" style="margin-left: 58%;">
+                                                <span
+                                                onclick="document.getElementById('reply_form_{{ current_reply.id }}').style.display='block'"
+                                                >Reply</span>&nbsp;|
+                                                Likes:&nbsp;{{ current_reply.reply_likes }}&nbsp;|
+                                                Dislikes:&nbsp;{{ current_reply.reply_dislikes }}&nbsp;|
+                                                {% if current_reply.reply_post_date.day == current_day %}
+                                                    {{ current_reply.reply_post_date.time }}
+                                                {% else %}
+                                                    {{ current_reply.reply_post_date.date }}
+                                                {% endif %}
+                                                <span
+                                                        name="delete-reply"
+                                                        onclick="location.href='/news/rd={{ current_reply.id }}/';">
+                                                    <a>delete</a></span>
+                                            </div>
+                                        </div>
 
-                        <hr>
-                    {% endfor %}
+                                        <form
+                                            id="reply_form_{{ current_reply.id }}"
+                                            style="display: none;"
+                                            action="/news/reply/nid={{ current_news_values.id }}&cid={{ current_comment.id }}/"
+                                            method="post">
+                                            {% csrf_token %}
+                                            <textarea
+                                                    autofocus
+                                                    id="id_reply_text"
+                                                    cols="83"
+                                                    rows="10"
+                                                    name="reply_text"
+                                                    maxlength="512"
+                                                    wrap="soft"
+                                                    onfocus="document.getElementById('reply_form_second_{{ current_reply.id }}').style.display='block';
+                                                         this.style.height='5em'"
+                                                onblur="document.getElementById('reply_form_second_{{ current_reply.id }}').style.display='none';
+                                                        document.getElementById('reply_form_{{ current_reply.id }}').style.display='none'"
+                                                onkeydown="if(event.keyCode == 13 && !event.shiftKey){
+                                                    event.preventDefault();
+                                                    $('#reply_form_'+'{{ current_reply.id }}').submit();
+                                                }
+                                                else{
+                                                    if(event.keyCode == 27){
+                                                        this.onblur();
+                                                    }
+                                                }"
+                                            >{{ current_reply.reply_author_id|get_username }},&nbsp;</textarea>
+                                            <input id="reply_form_second_{{ current_reply.id }}" type="submit" value="Reply" style="margin-left: 92%;">
+                                        </form>
+                                    {% endif %}
+
+                                {% endfor %}
+                            </div>
+                            <hr>
+                        {% endfor %}
+                    </div>
                 </div>
-
-            </div>
             </div>
 
 
             <hr style="height: 2px;" color="red" width="100%">
             Other&nbsp;materials&nbsp;of&nbsp;{{ current_news_values.news_category }}
-            <div class="other-materials" style="border: solid 1px red;">
+            <div class="other-materials" style="border: solid 1px red; height: 600px;">
                 {% for current_other in other_materials %}
-                    <ul style="list-style-type: none; height: auto; margin-left: -6%;">
+                    <ul style="list-style-type: none; margin-left: -6%;">
                         <li style="float: left; margin-left: 1%; margin-top: 1%;">
                             <div class="current_other"
                                  onclick="location.href='/news/{{ current_other.news_category_id }}/{{ current_other.id }}/';"
-                            style="border: solid 1px blue; width: 17em; height: 20em;">
+                                 style="border: solid 1px blue; width: 17em; height: 20em;">
                                 <div class="current_other_date">
                                     {{ current_other.news_post_date.date }}
                                 </div>

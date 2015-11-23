@@ -38,7 +38,7 @@ class News(models.Model):
     news_title = models.CharField(max_length=128)
     news_category = models.ForeignKey(NewsCategory)
     news_post_date = models.DateTimeField(auto_now_add=True)
-    news_post_text = models.TextField(max_length=2048)
+    news_post_text = models.TextField(max_length=4096)
     news_portal_name = models.ForeignKey(NewsPortal)
 
     news_latest_shown = models.BooleanField(default=False)
@@ -142,3 +142,15 @@ class NewsCommentsReplies(models.Model):
             "replies_likes": self.reply_likes,
             "replies_dislikes": self.reply_dislikes
         }
+
+
+class RssNews(models.Model):
+    class Meta:
+        db_table = "news_rss"
+
+    title = models.CharField(max_length=128)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    post_text = models.TextField(max_length=4096)
+    portal_name = models.ForeignKey(NewsPortal)
+    category = models.ForeignKey(NewsCategory)
+    link = models.URLField(max_length=128)

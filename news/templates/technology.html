@@ -15,13 +15,15 @@
                 {% for current_tech_news in technology_news %}
                     <div id="news-{{ current_tech_news.id }}" style="float: left; width: 48%; height: 300px; border: solid 1px blue; margin: 0 1%;">
                         <div class="title">
-                            {{ current_tech_news.news_title }}
+                            <a href="/news/{{ current_tech_news.news_category_id }}/{{ current_tech_news.id }}/">
+                                {{ current_tech_news.news_title }}
+                            </a>
                         </div>
                         <div class="date-author">
                             By&nbsp;<a href="/search/?q={{ current_tech_news.news_portal_name }}">{{ current_tech_news.news_portal_name }}</a>&nbsp;|&nbsp;
                             {{ current_tech_news.news_post_date }}
                         </div>
-                        <div class="image" style="opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;"></div>
+                        <div onmouseover="this.style.cursor='pointer';" onclick="location.href='/news/{{ current_tech_news.news_category_id }}/{{ current_tech_news.id }}/';" class="image" style="opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;"></div>
                         <div class="text">
                             {{ current_tech_news.news_post_text|safe|truncatewords:"12" }}
                         </div>

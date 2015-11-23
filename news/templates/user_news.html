@@ -3,68 +3,66 @@
 {% load my %}
 {% block user_news %}
 
-    <div class="choose-filter">
-        <div class="tabs">
-            <ul class="filters">
-                <li>
-                    Categories
-                </li>
-                <li>
-                    Portals
-                </li>
-            </ul>
-        </div>
-    </div>
-
-
-    TEST:<br>
-    <div class="test">
-        {% for i in deftest %}
-            {% if i %}
-                <div class="cur_i" style="border: solid 1px red; width: 20em; float:left; height: 10em;">
-                    {{ i.news_title }}<br>
-                    {{ i.news_text_post|safe|truncatewords:"15" }}<br>
-                    {{ i.news_post_date.date }}
-                    {{ i.news_post_date.time }}
-                </div>
-            {% endif %}
-        {% endfor %}
+    <style>
+        ul{
+            list-style-type: none;
+        }
+        li{
+            margin-left: 1%;
+            margin-right: 1%;
+            float: left;
+        }
+    </style>
 
     <div class="container-fluid">
-        <div class="row">
-            User&nbsp;news.<br>
-            <div class="news">
-                {% for i in usernews %}
-                    {% for j in i %}
-                        <div class="current_user_news"
-                             id="current_user_news"
-                             onmouseover="style.cursor='pointer';"
-                             data-user-news-id="{{ j.id }}">
-                            <div
-                                onclick="location.href='/news/{{ j.news_category_id }}/{{ j.id }}/';"
-                                class="current_fav_news_id{{ j.news_id }}"
-                                style="float: left; width: 20em; height: 20em; border: solid 1px red; margin-left: 1%;">
-                                <div class="title" id="title_{{ j.id }}">
-                                    {{ j.news_title }}
-                                </div>
-                                <div class="category">
-                                    {{ j.news_category_id }}
-                                </div>
-                                <div class="portal">
-                                    {{ j.news_portal_id }}
-                                </div>
-                                <div class="text">
-                                    {{ j.news_post_text|safe|truncatewords_html:"15" }}
-                                </div>
-                                <div class="date">
-                                    {{ j.news_post_date }}
-                                </div>
+        <div id="rss-news" style="border: solid 1px red; width: 70%; margin-left: 1%; float: left;">
+                    RSS:<br>
+                    {% for i in rss_news %}
+                        <div class="current_rss_news_{{ i.id }}"
+                             style="width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; border: solid 1px red; float: left;">
+                            <div class="title">{{ i.title }}</div>
+                            <div class="portal" style="float: left;">By <a href="/search/?q=">%portal name%</a></div>
+                            <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>
+
+                            <div class="news-image" style="background-color: red; width: 100%; height: 50%;">
+
                             </div>
+
+                            <div class="description">{{ i.post_text|safe|truncatewords:"9" }}</div>
+                            <div class="navigation" style="float: right;">Share&nbsp;|&nbsp;Like</div>
                         </div>
-                    {% endfor %}
-                {% endfor %}
-            </div>
+                    {% endfor %}<br>
+
+                <div class="pagination" style="margin-top: 5%; width: 200px; border: solid 1px red; ">
+                    <ul>
+                        {% if rss_news.has_previous %}
+                            <li class="arrow"><a href="/news/usernews/page={{ rss_news.previous_page_number }}/">&laquo;</a></li>
+                        {% else %}
+                            <li class="arrow unavailable"><a href="">&laquo;</a></li>
+                        {% endif %}
+                        {% for page in rss_news.paginator.page_range %}
+                            {% if page == rss_news.number %}
+                                <li class="current"><a href="/news/usernews/page={{ page }}/">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="/news/usernews/page={{ page }}/">{{ page }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if rss_news.has_next %}
+                            <li class="arrow"><a href="/news/usernews/page={{ rss_news.next_page_number }}/">&raquo;</a></li>
+                        {% else %}
+                            <li class="arrow unavailable"><a href="">&raquo;</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+
+
+        </div>
+        <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
+            {% include 'twitter.html' %}
         </div>
     </div>
+
+    {% include 'footer.html' %}
 
 {% endblock %}

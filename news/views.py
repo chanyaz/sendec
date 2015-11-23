@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -65,19 +66,31 @@ def render_current_news(request, category_id, news_id):
     return render_to_response("current_news.html", args)
 
 
-@login_required(login_url="/auth/login/")
-def render_user_news(request):
+#@login_required(login_url="/auth/login/")
+def render_user_news(request, page_number=1):
     args = {
         "title": "| My news",
-        "username": auth.get_user(request).username,
-        "usernews": get_user_news_by_portals(request),
-        "deftest": test(request),
+        #"username": auth.get_user(request).username,
+        #"usernews": get_user_news_by_portals(request),
+       # "deftest": test(request),
+        #"rss_news": get_rss_news(request),
     }
     args.update(csrf(request))
+
+    from news.models import RssNews
+    all_rss_news = RssNews.objects.all().values()
+    current_page = Paginator(object_list=all_rss_news, per_page=12)
+    args["rss_news"] = current_page.page(page_number)
     return render_to_response("user_news.html", args)
 
 
-@login_required(login_url="/auth/login/")
+
+def get_rss_news(request):
+    from news.models import RssNews
+    return RssNews.objects.all().values()
+
+
+#@login_required(login_url="/auth/login/")
 def render_top_news_page(request):
     from .models import NewsWatches
     args = {
@@ -224,7 +237,7 @@ def get_top_news(request):
     return top_news
 
 
-@login_required(login_url="/auth/login/")
+#@login_required(login_url="/auth/login/")
 def render_current_news_comments(request, category_id, news_id):
     from .models import NewsComments, NewsCommentsReplies
     import json
@@ -469,14 +482,14 @@ def add_dislike_news(request, news_id):
     return HttpResponse()
 
 
-@login_required(login_url="/auth/login/")
+#@login_required(login_url="/auth/login/")
 def check_like_amount(request, news_id):
     from userprofile.models import UserLikesNews
     import json
     return HttpResponse(json.dumps({"likes": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count()}), content_type="application/json")
 
 
-@login_required(login_url="/auth/login/")
+#@login_required(login_url="/auth/login/")
 def check_dislike_amount(request, news_id):
     from userprofile.models import UserLikesNews
     import json
