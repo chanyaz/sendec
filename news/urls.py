@@ -3,6 +3,11 @@ from django.contrib import admin
 
 
 urlpatterns = [
+
+    # External Transitions
+    url(r"^trans/(?P<cat_id>\w+)/(?P<news_id>\w+)/", 'news.views.external_transition'),
+
+
     # Likes
     url(r'^add_like/n=(?P<news_id>\w+)', 'news.views.add_like_news'),
     url(r'^check_like/n=(?P<news_id>\w+)', 'news.views.check_like_amount'),

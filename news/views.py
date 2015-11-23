@@ -60,6 +60,9 @@ def render_current_news(request, category_id, news_id):
         "like_amount": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count(),
         "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count(),
         "current_news_title": News.objects.get(id=news_id).news_title,
+
+        "external_link": shared_news_link(request, news_id),
+
     }
     addition_news_watches(request, news_id)
     args.update(csrf(request))
@@ -519,3 +522,18 @@ def delete_reply(request, reply_id):
     else:
         pass
     return HttpResponseRedirect("/news/%s/%s/" % (news_instance.news_category_id, news_instance.id), args)
+
+
+#@login_required(login_url="/auth/login/")
+def shared_news_link(request, news_id):
+    news = News.objects.get(id=news_id)
+    shared_link = "http://127.0.0.1:8000/ext/trans/{0}/{1}/".format(news.news_category_id, news.id)
+    return shared_link
+
+
+def external_transition(request, cat_id, news_id):
+    from news.models import NewsWatches
+    news_instance = NewsWatches.objects.get(news_id=news_id)
+    news_instance.external_transition += 1
+    news_instance.save()
+    return HttpResponseRedirect("/news/%s/%s/" % (cat_id, news_id))

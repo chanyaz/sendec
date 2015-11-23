@@ -20,7 +20,7 @@
                     {% for i in rss_news %}
                         <div class="current_rss_news_{{ i.id }}"
                              style="width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; border: solid 1px red; float: left;">
-                            <div class="title">{{ i.title }}</div>
+                            <div class="title"><a href="{{ i.link }}">{{ i.title }}</a></div>
                             <div class="portal" style="float: left;">By <a href="/search/?q=">%portal name%</a></div>
                             <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>
 
@@ -28,7 +28,7 @@
 
                             </div>
 
-                            <div class="description">{{ i.post_text|safe|truncatewords:"9" }}</div>
+                            <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>
                             <div class="navigation" style="float: right;">Share&nbsp;|&nbsp;Like</div>
                         </div>
                     {% endfor %}<br>
@@ -62,7 +62,5 @@
             {% include 'twitter.html' %}
         </div>
     </div>
-
-    {% include 'footer.html' %}
 
 {% endblock %}

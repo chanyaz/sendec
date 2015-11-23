@@ -181,7 +181,7 @@
                             <li class="li-cat"><a href="/news/bit/">BIT</a></li>
                             <li class="li-cat"><a href="/news/companies/">COMPANIES</a></li>
                             <li class="li-cat"><a href="/news/reviews/">REVIEWS</a></li>
-                            <li class="li-cat"><a href="/news/usernews/">MyNews</a></li>
+                            <li class="li-cat"><a href="/news/usernews/page=1/">MyNews</a></li>
                         </ul>
                     </div>
                 <br>
@@ -217,7 +217,7 @@
 
 
                     <!-- new blocks -->
-                    <div class="news-block" id="news-block">
+                    <div class="news-block" id="news-block" style="height: 100%;">
                         {% block latest %}{% endblock %}
                         {% block technology %}{% endblock %}
                         {% block entertainment %}{% endblock %}
@@ -228,6 +228,8 @@
                         {% block reviews %}{% endblock %}
                         {% block user_news %}{% endblock %}
                     </div>
+
+
                 </div>
 
                 {% block settings %}{% endblock %}
@@ -243,7 +245,9 @@
 
     <div class="popup-user-window" hidden>
         <div class="popup-user-window-content">
-            <div class="user-image">1</div>
+            <div class="user-image">
+                <input type="text" contenteditable="false" style="width: 80%;" value="{{ external_link }}">
+            </div>
             <!--High Hopes In Velvet The Cab-->
             <div class="user-info">
                 <button onclick="javascript:SharePopUpHide();">SHARE</button>

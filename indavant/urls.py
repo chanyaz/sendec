@@ -22,6 +22,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^auth/', include('loginsys.urls')),
+    url(r'^ext/', include("news.urls")),
     url(r'^favourite/', include('favourite.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^notify/', include('notify.urls')),

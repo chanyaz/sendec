@@ -54,6 +54,8 @@ class News(models.Model):
     news_event = models.BooleanField(default=False)
     news_event_date = models.DateTimeField(auto_now_add=True)
 
+
+
     def __str__(self):
         return self.news_title
 
@@ -87,6 +89,7 @@ class NewsWatches(models.Model):
 
     news = models.ForeignKey(News, related_name="watches")
     watches = models.IntegerField(default=0)
+    external_transition = models.IntegerField(default=0)
 
 
 class NewsComments(models.Model):

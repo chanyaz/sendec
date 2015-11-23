@@ -31,22 +31,31 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="recently-news" style="border: solid 1px orange;">
-                            {% for current_news_politics in total_politics %}
-                                <div class="sect" style="width: 41%; height: 25%; border: solid 1px red; margin-top: 1%;">
-                                    <div class="current_news"
-                                         style="border: none; float: left;"
-                                         onmouseover="style.border='solid 0.2px blue';"
-                                         onmouseout="style.border='';"
-                                         onclick="location.href='/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/';">
-                                        <div class="col-xs-5">
-                                            <img class="img-responsive" src="http://placehold.it/400x400">
+                        <div class="recently-news" style="border: solid 1px orange; width: 100%; height: 700px;">
+                            <div class="left" style="float: left; width: 80%;">
+                                {% for current_news_politics in total_politics %}
+                                    <div class="sect" style="width: 47%; height: 25%; border: solid 1px red; margin-top: 1%;">
+                                        <div class="current_news"
+                                             style="border: none; float: left;"
+                                             onmouseover="style.border='solid 0.2px blue';"
+                                             onmouseout="style.border='';"
+                                             onclick="location.href='/news/{{ current_news_politics.news_category_id }}/{{ current_news_politics.id }}/';">
+                                            <div class="col-xs-5">
+                                                <img class="img-responsive" src="http://placehold.it/400x400">
+                                            </div>
                                         </div>
-
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
+
+                             <div class="" style="border: solid 1px firebrick; width: 20%; float: right;">
+                                {% include 'twitter.html' %}
+                            </div>
+
                         </div>
+
+
+
                         <div class="media" style="border: solid 1px greenyellow; height: inherit;">
                             <div class="latest-reviews" style="border: solid 1px hotpink; height: 500px;">
                                 REVIEWS<br>
