@@ -1,13 +1,14 @@
 from django.db import models
 from loginsys.models import UserProfile
 from django.contrib.auth.models import User
-from tinymce.models import HTMLField
+
+
+def generate_unique_name():
+    return "abc"
 
 
 def upload_news_cover(instance, filename):
         return "/".join(["content", "news", "covers", filename])
-
-
 
 
 class NewsCategory(models.Model):
@@ -60,6 +61,8 @@ class News(models.Model):
     news_event = models.BooleanField(default=False)
     news_event_date = models.DateTimeField(auto_now_add=True)
 
+    def get_news_id(self):
+        return self.id
 
     def __str__(self):
         return self.news_title

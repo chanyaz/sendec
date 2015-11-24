@@ -23,7 +23,7 @@ def last_element(feed):
 def connect_to_db(urls):
     #urls = ["http://appleinsider.ru/feed"]
     for url in urls:
-        db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+        db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/db.sqlite3")
         cursor = db.cursor()
         #print(url)
         data = last_element(parse_current_url(url=url))

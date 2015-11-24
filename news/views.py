@@ -19,8 +19,10 @@ def main_page_load(request):
     args = {
         "title": "| Home",
         "news_block": True,
-        "username": auth.get_user(request).username,
-        "total_politics": render_news_by_sendec(request),
+        "username": User.objects.get(username=auth.get_user(request).username),
+        "breaking_news": render_news_by_sendec(request)[0],
+        "total_middle_news": render_news_by_sendec(request)[1:4],
+        "total_bottom_news": render_news_by_sendec(request)[4:5],
         #"photo": User.objects.get(username=auth.get_user(request).username).profile.user_photo,
     }
     args.update(csrf(request))
@@ -46,7 +48,7 @@ def render_current_news(request, category_id, news_id):
     from .forms import NewsCommentsForm, NewsCommentsRepliesForm
     args = {
         "title": "| %s" % News.objects.get(id=news_id).news_title,
-        "username": auth.get_user(request).username,
+        "username": User.objects.get(username=auth.get_user(request).username),
         "current_news_values": News.objects.get(id=news_id),
         "other_materials": render_news_by_sendec(request).exclude(id=news_id)[:12],
         "latest_news": get_latest_news_total(request)[:10],
@@ -73,7 +75,7 @@ def render_current_news(request, category_id, news_id):
 def render_user_news(request, page_number=1):
     args = {
         "title": "| My news",
-        #"username": auth.get_user(request).username,
+        "username": User.objects.get(username=auth.get_user(request).username),
         #"usernews": get_user_news_by_portals(request),
        # "deftest": test(request),
         #"rss_news": get_rss_news(request),
@@ -97,7 +99,7 @@ def get_rss_news(request):
 def render_top_news_page(request):
     from .models import NewsWatches
     args = {
-        "username": auth.get_user(request).username,
+        "username": User.objects.get(username=auth.get_user(request).username),
         "top_news": get_top_news(request),
     }
     args.update(csrf(request))
@@ -257,7 +259,7 @@ def render_current_news_comments(request, category_id, news_id):
 def render_current_category(request, category_name):
     args = {
         "title": "| Politics",
-        "username": auth.get_user(request).username,
+        "username": User.objects.get(username=auth.get_user(request).username),
         "latest_news": get_latest_news_total(request),
         "category_title": category_name.capitalize(),
         #"cat_news": News.objects.filter(news_category_id=NewsCategory.objects.get(category_name=category_name.capitalize()).id),
@@ -270,6 +272,7 @@ def render_current_category(request, category_name):
 ############################################################################
 def render_technology_news(request):
     args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| Technology",
         "top_technology": get_technology_news(request)[0],
         "technology_news": get_technology_news(request)[1:],
@@ -287,6 +290,7 @@ def get_technology_news(request):
 
 def render_auto_news(request):
     args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| Auto",
         "top_auto_news": get_auto_news(request)[0],
         "auto_news": get_auto_news(request)[1:],
@@ -303,6 +307,7 @@ def get_auto_news(request):
 
 def render_bit_news(request):
     args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| BIT",
         "top_bit_news": get_bit_news(request)[0],
         "bit_news": get_bit_news(request)[1:],
@@ -316,8 +321,10 @@ def get_bit_news(request):
     return News.objects.all().filter(news_category_id=6)
 ################################### END BIT #########################################
 
+
 def render_companies_news(request):
     args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| Companies",
         "top_companies_news": get_companies_news(request)[0],
         "companies_news": get_companies_news(request)[1:],
@@ -333,6 +340,7 @@ def get_companies_news(request):
 
 def render_entertainment_news(request):
     args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| Entertainment",
         "top_entertainment_news": get_entertainment_news(request)[0],
         "entertainment_news": get_entertainment_news(request)[1:],
@@ -349,6 +357,7 @@ def get_entertainment_news(request):
 
 def render_latest_news(request):
     args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| Latest",
         "top_latest_news": get_latest_news_total(request)[0],
         "latest_news": get_latest_news_total(request)[1:10],
@@ -360,6 +369,7 @@ def render_latest_news(request):
 
 def render_reviews_news(request):
     args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| Reviews",
         "latest_news": get_latest_news_total(request),
         "category_title": "REVIEWS",
@@ -370,6 +380,7 @@ def render_reviews_news(request):
 
 def render_space_news(request):
     args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| Space",
         "top_space_news": get_space_news(request)[0],
         "space_news": get_space_news(request)[1:],
@@ -391,8 +402,7 @@ def comment_send(request, category_id, news_id):
     from .forms import NewsCommentsForm
     from userprofile.models import UserProfile
     args = {
-        "username": auth.get_user(request).username,
-
+        "username": User.objects.get(username=auth.get_user(request).username),
     }
     args.update(csrf(request))
 
@@ -417,7 +427,7 @@ def reply_send(request, news_id, comment_id):
     from .forms import NewsCommentsRepliesForm
     from .models import NewsComments
     args = {
-        "username": auth.get_user(request).username,
+        "username": User.objects.get(username=auth.get_user(request).username),
     }
     args.update(csrf(request))
 

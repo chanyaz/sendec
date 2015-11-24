@@ -11,11 +11,19 @@
     <!-- Scripts -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
-    <!-- TinyMCE -->
-    <script src="//tinymce.cachefly.net/4.3/tinymce.min.js"></script>
-    <script>
 
+
+
+    <!-- START STOCKS -->
+    <script>
+        var companytick = ["AAPL","FB","GOOG","MSFT","TSLA","AMZN","TWTR"];
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script src="http://static.amigobulls.com/js/highstock-2.0.1.min.js.gz"></script>
+    <script src="http://static.amigobulls.com/js/chart-widget.min.js.gz"></script>
+    <link rel="stylesheet" type="text/css" href="http://static.amigobulls.com/css/chart-widget.min.css.gz" />
+    <!-- END STOCKS -->
 
 
     <script type="text/javascript">
@@ -30,10 +38,8 @@
         }
 
         function SearchClick(){
-            $('.search-bar').show();
+            $('.search-bar').fadeIn("fast");
             $('#textplace-search').focus();
-            $('.block-news').show();
-            $("html").css("overflow", "hidden");
         }
 
     </script>
@@ -41,24 +47,26 @@
         $(document).ready(function(){
             var $sb = $('.search-bar');
             $sb.focusout(function(){
-                $sb.hide();
-                $(".block-news").hide();
-                $("html").removeAttr("style");
+                $sb.fadeOut("fast");
             })
         })
     </script>
+    <script>
+        function showLeftBar() {
+            $('.left-panel').show();
+            document.getElementById('arrow-to-show-sections').style.marginLeft = '11%';
+            $('#arrow-to-show-sections').delay(200).fadeOut("fast");
+            $('#arrow-to-hide-sections').delay(210).fadeIn("fast");
+        }
+        function hideLeftBar(){
+            $('.left-panel').hide();
+            document.getElementById('arrow-to-show-sections').style.marginLeft = '0';
+            $('#arrow-to-hide-sections').delay(200).fadeOut("fast");
+            $('#arrow-to-show-sections').delay(210).fadeIn("fast");
+        }
+    </script>
     <!-- Styles -->
     <style>
-
-        .block-news{
-            width: 100%;
-            height: 80%;
-            background-color: rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            position: fixed;
-            top: 23%;
-        }
-
         .popup-user-window {
             width: 100%;
             height: 100%;
@@ -80,18 +88,16 @@
             float: left;
             margin-left: 1%;
         }
-
     </style>
 
 
 </head>
-
 <body>
 
-    <div class="top-navigation" style="position: relative; border: solid 1px lightcyan; height: 8%;">
+    <div class="top-navigation" style="position: relative; height: 8%;">
         <!-- TOP PANEL FOR SEARCH AND LOGO -->
         <div style="float: left; margin-left: 11%;" class="top-left-bar" onmouseover="style.cursor='pointer';">
-            <span onclick="$('.left-panel').show().focus();">SECTIONS</span>&nbsp;|&nbsp;
+            <span onclick="showLeftBar();">SECTIONS</span>&nbsp;|&nbsp;
             <span class="search-span" onclick="SearchClick();">SEARCH</span>
         </div>
         <div class="title-bar" style="float: left; margin-left: 18%;">
@@ -108,7 +114,7 @@
                     <a href="/auth/logout/"><i class="fa fa-fw fa-power-off"></i>Log Out</a>
                 </div>
             {% else %}
-                <div class="auth" style="margin-left: 87%; border: solid 1px red;">
+                <div class="auth" style="margin-left: 87%;">
                     <div class="signin" onclick="location.href='/auth/login/';" style="float: left;">
                         Sign In&nbsp;|&nbsp;
                     </div>
@@ -119,12 +125,6 @@
             {% endif %}
         </div>
     </div>
-    <div class="currency" style="border: solid 1px red; margin-top: 0.4%; text-align: center;">
-        <div class="location" style="">
-            Location:&nbsp;St.&nbsp;Petersburg&nbsp;USD:10.10&nbsp;EURO:&nbsp;20.20&nbsp;GOOGLL:&nbsp;30.30&nbsp;AAPL:&nbsp40.40
-        </div>
-    </div>
-
 
     <div id="wrapper-new">
         <div id="page-wrapper">
@@ -132,50 +132,65 @@
                 <div hidden
                      class="left-panel"
                      style="float: left; position: fixed; box-shadow: 0 0 5px black; width: 12%; height: 104%; margin-top: -8%; margin-left: -2%;">
-                    <div class="logo-left-bar" style="margin-top: 10%; text-align: center;">
+                    <div class="logo-left-bar" style="margin-top: 20%; margin-left: 15%; text-align: center;">
                         <span onclick="location.href='/';">
                             SENDEC
                         </span>
                     </div>
 
                     {% if username %}
-                    <div class="profile">
-                        <div class="image-user">
-                            <img src="/media/{{ photo }}" width="64" />
+                        <div class="profile">
+                            <div class="image-user" style="margin-left: 13%;">
+                                <img src="/media/{{ username.profile.user_photo }}" width="128" />
+                            </div>
+                            <div class="navigation-profile" style="margin-left: 26%;">
+                                <span class="fa fa-fw fa-user" aria-hidden="true" onclick="location.href='/profile/';"></span>|&nbsp;<span class="fa fa-bell" aria-hidden="true" onclick="location.href='/notify/';"></span>
+                                &nbsp;|&nbsp;<span class="glyphicon glyphicon-star" aria-hidden="true" onclick="location.href='/favourite/';"></span>|&nbsp;<span class="fa fa-fw fa-gear" aria-hidden="true" onclick="location.href='/profile/settings/';"></span>
+                            </div>
                         </div>
-                        <div class="navigation-profile" style="margin-left: 20%;">
-                            <span class="fa fa-fw fa-user" aria-hidden="true" onclick="location.href='/profile/';"></span>|&nbsp;<span class="fa fa-bell" aria-hidden="true" onclick="location.href='/notify/';"></span>
-                            &nbsp;|&nbsp;<span class="glyphicon glyphicon-star" aria-hidden="true" onclick="location.href='/favourite/';"></span>|&nbsp;<span class="fa fa-fw fa-gear" aria-hidden="true" onclick="location.href='/profile/settings/';"></span>
-                        </div>
-                    </div>
                     {% endif %}
                     <div class="categories" style="margin-top: 10%;">
                         <ul class="categories" style="list-style-type: none;">
-                            <li>Tech</li>
-                            <li>Cars</li>
-                            <li>Space</li>
-                            <li>Bio</li>
-                            <li>Entertainment</li>
+                            <li>LATEST</li>
+                            <li>TECHNOLOGY</li>
+                            <li>ENTRTAINMENT</li>
+                            <li>AUTO</li>
+                            <li>SPACE</li>
+                            <li>BIT</li>
+                            <li>COMPANIES</li>
                         </ul>
                     </div>
                     <div class="navigation">
                         <ul style="list-style-type: none;">
-                            <li>Top News</li>
-                            <li>Podcasts</li>
-                            <li>Reviews</li>
+                            <li>TOP&nbsp;NEWS</li>
+                            <li>PODCASTS</li>
+                            <li>REVIEWS</li>
                         </ul>
                     </div>
                     <div class="founders">
                         <ul style="list-style-type: none;">
-                            <li>About Us</li>
-                            <li>Contacts</li>
-                            <li>Sth else</li>
+                            <li>ABOUT&nbsp;US</li>
+                            <li>CONTACTS</li>
+                            <li>STH&nbsp;ELSE</li>
                         </ul>
                     </div>
                 </div>
-                <div class="left-showing-bar" style="border: solid 1px blue; width: 2%; height: 105%; position: fixed; margin-left: -0.9%; margin-top: -8%;">
-                    <span class="arrow-to-show-sections" style="border: solid 1px red; margin-left: 0.3%; width: 1%; position: fixed; margin-top: 20%;">
+                <div class="left-showing-bar"
+                     style="width: 2%; height: 105%; position: fixed; margin-left: -0.9%; margin-top: -8%;">
+                    <span id="arrow-to-show-sections"
+                          class="arrow-to-show-sections"
+                          style="width: 1%; position: fixed; margin-top: 20%;"
+                          onclick="showLeftBar();">
                         >
+                    </span>
+                    <span id="arrow-to-hide-sections"
+                          class="arrow-to-hide-sections"
+                          style="margin-left: 11%; width: 1%; position: fixed; margin-top: 20%;"
+                          onclick="hideLeftBar();"
+                          hidden>
+                        <<br>
+                        <<br>
+                        <<br>
                     </span>
                 </div>
                 <div class="other" style="margin-left: 10%; height: 100%;">
@@ -261,10 +276,6 @@
                 <button onclick="javascript:SharePopUpHide();">SHARE</button>
             </div>
         </div>
-    </div>
-
-    <div class="block-news" hidden>
-
     </div>
 
     <script>

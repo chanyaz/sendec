@@ -55,7 +55,9 @@ CKEDITOR_CONFIGS = {
             ['Bold', 'Italic', 'Underline'],
             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
             ['Link', 'Unlink'],
-            ['RemoveFormat', 'Source']
+            ['RemoveFormat', 'Source'],
+            ['Image', ],
+            ['Video', ],
         ]
     }
 }
@@ -74,6 +76,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'indavant.urls'
+
 
 TEMPLATES = [
     {
