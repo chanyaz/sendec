@@ -29,5 +29,6 @@ urlpatterns = patterns('',
     url(r'^profile/', include('userprofile.urls')),
     url(r'^search/', include('search.urls')),
     url(r'^pref/', include('loginsys.urls')),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^$', 'news.views.main_page_load'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

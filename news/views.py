@@ -20,7 +20,7 @@ def main_page_load(request):
         "title": "| Home",
         "news_block": True,
         "username": auth.get_user(request).username,
-        "total_politics": render_news_politics(request),
+        "total_politics": render_news_by_sendec(request),
         #"photo": User.objects.get(username=auth.get_user(request).username).profile.user_photo,
     }
     args.update(csrf(request))
@@ -31,8 +31,8 @@ def main_page_load(request):
     #    return HttpResponseRedirect("/auth/preferences=categories")
 
 
-def render_news_politics(request):
-    return News.objects.filter(news_category_id=NewsCategory.objects.get(category_name="Politics").id)
+def render_news_by_sendec(request):
+    return News.objects.all().values()
 
 def get_latest_news_total(request):
     latest_10_news = News.objects.all().order_by("-news_post_date")
@@ -48,7 +48,7 @@ def render_current_news(request, category_id, news_id):
         "title": "| %s" % News.objects.get(id=news_id).news_title,
         "username": auth.get_user(request).username,
         "current_news_values": News.objects.get(id=news_id),
-        "other_materials": render_news_politics(request).exclude(id=news_id)[:12],
+        "other_materials": render_news_by_sendec(request).exclude(id=news_id)[:12],
         "latest_news": get_latest_news_total(request)[:10],
         "current_day": datetime.datetime.now().day,
         "comments_form": NewsCommentsForm,

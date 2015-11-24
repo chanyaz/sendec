@@ -43,6 +43,6 @@ def connect_to_db(urls):
 urls_of_portals = get_feed_urls()
 while True:
     connect_to_db(urls=urls_of_portals)
-    time.sleep(60)
+    time.sleep(1)
 
 

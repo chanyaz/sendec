@@ -1,5 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
@@ -49,4 +51,4 @@ urlpatterns = [
     url(r'^reviews/', 'news.views.render_reviews_news'),
     url(r'^space/', 'news.views.render_space_news'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

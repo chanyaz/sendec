@@ -1,8 +1,13 @@
 from django.db import models
 from loginsys.models import UserProfile
 from django.contrib.auth.models import User
+from tinymce.models import HTMLField
 
-# Create your models here.
+
+def upload_news_cover(instance, filename):
+        return "/".join(["content", "news", "covers", filename])
+
+
 
 
 class NewsCategory(models.Model):
@@ -29,6 +34,7 @@ class NewsPortal(models.Model):
         return self.portal_name
 
 
+
 class News(models.Model):
     class Meta:
         db_table = "news"
@@ -45,7 +51,7 @@ class News(models.Model):
     news_currently_showing = models.BooleanField(default=False)
 
     # Media
-    # news_main_cover = models.FileField(upload_to='', storage=None)
+    news_main_cover = models.FileField(upload_to=upload_news_cover)
 
     # Information
     news_likes = models.IntegerField(default=0)
@@ -53,7 +59,6 @@ class News(models.Model):
 
     news_event = models.BooleanField(default=False)
     news_event_date = models.DateTimeField(auto_now_add=True)
-
 
 
     def __str__(self):
@@ -157,3 +162,6 @@ class RssNews(models.Model):
     portal_name = models.ForeignKey(NewsPortal)
     category = models.ForeignKey(NewsCategory)
     link = models.URLField(max_length=128)
+
+
+# Test WYSIWYG
