@@ -1,13 +1,11 @@
 from django import forms
 from django.contrib import admin
 from .models import News, NewsPortal, NewsCategory
+from ckeditor.widgets import CKEditorWidget
 
-# Register your models here.
 admin.site.register(NewsCategory)
 admin.site.register(NewsPortal)
-#admin.s# ite.register(News)
-
-from ckeditor.widgets import CKEditorWidget
+#admin.site.register(News)
 
 
 class PostAdminForm(forms.ModelForm):

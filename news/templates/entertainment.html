@@ -4,7 +4,7 @@
 
     <div class="container-fluid">
         <div id="entertainment-news" style="border: solid 1px red; width: 95%; margin-left: 1%;">
-            <div class="top-entertainment-content" style="opacity:1; width: 80%; height: 300px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;"></div>
+            <div class="top-entertainment-content" onclick="location.href='/news/{{ top_entertainment_news.news_category_id }}/{{ top_entertainment_news.id }}/';" style="opacity:1; width: 80%; height: 300px; background: url('/media/{{ top_entertainment_news.news_main_cover }}') no-repeat center;"></div>
             <div class="bn-title" style="z-index: 999; position: absolute; margin-top: -8%; width: 50%; background-color: #a6e1ec; opacity: 0.75;">
                 <span class="bn-title-text" style="margin-left: 5%; font-size: 20px; color: blue;">
                     {{ top_entertainment_news.news_title }}

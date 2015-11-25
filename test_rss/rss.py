@@ -46,3 +46,44 @@ while True:
     time.sleep(1)
 
 
+def fill_rss_table():
+    import json
+
+
+    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/db.sqlite3")
+    cursor = db.cursor()
+
+    with open("dictionary_portals.json") as json_file:
+        json_data = json.load(json_file)
+
+    print(json_data)
+
+    cursor.execute("SELECT * FROM news_portal")
+    list = cursor.fetchall()
+    print("ID_list: ", list[0][0])
+
+    cursor.execute("SELECT * FROM news_rss")
+    rss = cursor.fetchall()
+    print("ID_rss: ", rss[0][0])
+    print("LINK_rss: ", rss[0][6])
+    print("len_list: ", len(list))
+    print("len_rss: ", len(rss))
+    print(rss[2][0])
+
+
+
+    end = len(rss)*len(list)
+    cur_iter = 0
+    for i in range(len(rss)):
+        for j in range(len(list)):
+            cur_iter += 1
+            if str(list[j][2]) in str(rss[i][6]):
+                id = str(rss[i][0])
+                cursor.execute("UPDATE news_rss SET portal_name_id=? WHERE id=?", (str(list[j][0]), id))
+                db.commit()
+                print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "When total end is ", end)
+            else:
+                continue
+    db.close()
+
+#fill_rss_table()

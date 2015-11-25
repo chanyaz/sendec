@@ -2,16 +2,49 @@
 {% load staticfiles %}
 {% block technology %}
 
+    <style>
+        #technologies-news{
+            border: solid 1px red;
+            width: 70%;
+            margin-left: 1%;
+        }
+        .top-technologies-content{
+            opacity:1;
+            width: 100%;
+            height: 300px;
+            background: url('/media/{{ top_technology.news_main_cover }}') no-repeat center;
+        }
+        .bn-title{
+            z-index: 999;
+            position: absolute;
+            margin-top: -8%;
+            width: 50%;
+            background-color: #a6e1ec;
+            opacity: 0.75;
+        }
+        .bn-title-text{
+            margin-left: 5%;
+            font-size: 20px;
+            color: blue;
+        }
+        #technology-news{
+            border: solid 1px red;
+            width: 70%;
+            margin-left: 1%;
+            float: left;
+        }
+    </style>
+
     <div class="container-fluid">
-        <div id="technologies-news" style="border: solid 1px red; width: 95%; margin-left: 1%;">
-            <div class="top-technologies-content" style="opacity:1; width: 80%; height: 300px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;"></div>
-            <div class="bn-title" style="z-index: 999; position: absolute; margin-top: -8%; width: 50%; background-color: #a6e1ec; opacity: 0.75;">
-                <span class="bn-title-text" style="margin-left: 5%; font-size: 20px; color: blue;">
+        <div id="technologies-news">
+            <div class="top-technologies-content" onclick="location.href='/news/{{ top_technology.news_category_id }}/{{ top_technology.id }}/';"></div>
+            <div class="bn-title">
+                <span class="bn-title-text">
                     {{ top_technology.news_title }}
                 </span>
             </div>
         </div>
-            <div id="technology-news" style="border: solid 1px red; width: 70%; margin-left: 1%; height: auto; float: left;">
+            <div id="technology-news">
                 {% for current_tech_news in technology_news %}
                     <div id="news-{{ current_tech_news.id }}" style="float: left; width: 48%; height: 300px; border: solid 1px blue; margin: 0 1%;">
                         <div class="title">
@@ -23,19 +56,21 @@
                             By&nbsp;<a href="/search/?q={{ current_tech_news.news_portal_name }}">{{ current_tech_news.news_portal_name }}</a>&nbsp;|&nbsp;
                             {{ current_tech_news.news_post_date }}
                         </div>
-                        <div onmouseover="this.style.cursor='pointer';" onclick="location.href='/news/{{ current_tech_news.news_category_id }}/{{ current_tech_news.id }}/';" class="image" style="opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;"></div>
+                        <div onmouseover="this.style.cursor='pointer';"
+                             onclick="location.href='/news/{{ current_tech_news.news_category_id }}/{{ current_tech_news.id }}/';"
+                             class="image-current-technology"
+                             style="opacity:1; width: 100%; height: 150px;  background: url('/media/{{ current_tech_news.news_main_cover }}') no-repeat center;"></div>
                         <div class="text">
-                            {{ current_tech_news.news_post_text|safe|truncatewords:"12" }}
+                            {{ current_tech_news.news_post_text|striptags|safe|truncatewords:"8" }}
                         </div>
                     </div>
                 {% endfor %}
             </div>
-            <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
-                {% include 'twitter.html' %}
-            </div>
-    </div>
 
-    {% include 'footer.html' %}
+    <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
+        {% include 'twitter.html' %}
+    </div>
+</div>
 
 
 {% endblock %}

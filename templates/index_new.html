@@ -83,11 +83,79 @@
             background-color: #c5c5c5;
             border-radius:5px;
             box-shadow: 0 0 10px #000;
+            z-index: 10000;
         }
+
+        .popup-user-auth {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+        }
+        .popup-user-auth .popup-user-auth-content{
+            margin: 5% auto 0 32.5%;
+            width:  30%;
+            height: 70%;
+            padding: 10px;
+            background-color: #c5c5c5;
+            border-radius:5px;
+            box-shadow: 0 0 10px #000;
+        }
+
         .li-cat{
             float: left;
             margin-left: 1%;
         }
+        .navigation-profile:hover .fa-user{
+            color: yellow;
+        }
+
+
+
+
+
+        .signin{
+            position:relative;
+            z-index:1;
+            overflow:hidden;
+            text-align:center;
+        }
+        .signin:before,
+        .signin:after{
+            content: '';
+            display: inline-block;
+            width: 22%;
+            height: 1px;
+            background: black;
+            z-index: -1;
+            position: relative;
+            vertical-align: middle;
+        }
+        .signin:before {
+            right:10px;
+            margin:0 0 0 -26%;
+        }
+        .signin:after{
+            left:10px;
+            margin:0 -30% 0 0;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </style>
 
 
@@ -101,11 +169,11 @@
             <span class="search-span" onclick="SearchClick();">SEARCH</span>
         </div>
         <div class="title-bar" style="float: left; margin-left: 18%;">
-            <div class="internacionalization" style="text-align: center;">
+            <div class="internacionalization" style="text-align: center; font-size: 10px;">
                 US | RU | CH
             </div>
             <div onmouseover="this.style.cursor='pointer';" class="title-name" style="text-align: center; font-size: 2em;" onclick="location.href='/';">
-                SENDEC&nbsp;NEWS
+                SEVERY&nbsp;NEWS
             </div>
         </div>
         <div class="right-block">
@@ -115,7 +183,7 @@
                 </div>
             {% else %}
                 <div class="auth" style="margin-left: 87%;">
-                    <div class="signin" onclick="location.href='/auth/login/';" style="float: left;">
+                    <div class="signin" onclick="javascript:UserAuthPopUpShow();" style="float: left;">
                         Sign In&nbsp;|&nbsp;
                     </div>
                     <div class="signup" onclick="location.href='/auth/register/';">
@@ -141,7 +209,10 @@
                     {% if username %}
                         <div class="profile">
                             <div class="image-user" style="margin-left: 13%;">
-                                <img src="/media/{{ username.profile.user_photo }}" width="128" />
+                                <img src="/media/{{ username.profile.user_photo }}"
+                                     onclick="location.href='/profile/';"
+                                     onmouseover="this.style.cursor='pointer';"
+                                     width="128" />
                             </div>
                             <div class="navigation-profile" style="margin-left: 26%;">
                                 <span class="fa fa-fw fa-user" aria-hidden="true" onclick="location.href='/profile/';"></span>|&nbsp;<span class="fa fa-bell" aria-hidden="true" onclick="location.href='/notify/';"></span>
@@ -217,7 +288,7 @@
                                    id="textplace-search"
                                type="text"
                                class="form-control"
-                               placeholder="Search"
+                               placeholder="What&nbsp;are&nbsp;you&nbsp;looking&nbsp;for?"
                                style="float: left; width: 61%;">
                             <input type="submit" value="Search">
                         </form>
@@ -277,6 +348,94 @@
             </div>
         </div>
     </div>
+
+    <div class="popup-user-auth" hidden>
+        <div class="popup-user-auth-content">
+            <div id="login-tab">
+                <div class = 'no' style="width: 100%;">
+
+                    <div id="choice" style="height: inherit;">
+                        <div class="service-name" style="text-align: center; margin-top: 5%;">
+                            %SERVICE&nbsp;NAME%
+                        </div>
+                        <div class="sign-in-center-data" style="text-align: center; margin-top: 5%;">
+                            <span class="signin">SIGN&nbsp;IN</span>
+                        </div>
+                    </div>
+
+                    <div id="sign-in"  onblur="this.style.border='solid 1px red';">
+                        <form action="/auth/login/" method="POST" autocomplete="off">
+                            {% csrf_token %}
+                            <input type="text"
+                                   name="username"
+                                   id="username"
+                                   placeholder="username"
+                                   style="width: 64%; margin-left: 20%;">
+                            <input type="password"
+                                   name="password"
+                                   id="password"
+                                   placeholder="password"
+                                   style="width: 64%; margin-left: 20%; margin-top: 2%;">
+                            {% if login_error %}
+                                <label class="error"> {{ login_error }} </label>
+                            {% endif %}
+                            <button type="submit" style="margin-top: 2%; height: 40px; width: 64%; margin-left: 20%;">
+                                <div class="button-text" style="margin-top: -3%;">
+                                    Log&nbsp;in
+                                </div>
+                            </button>
+                            <label id="remembering" style="margin-left: 20%;">
+                                <input type="checkbox"
+                                       id="check-remember"
+                                       name="remember-true"
+                                       value="remember-true">
+                                Remember&nbsp;me
+                            </label>
+
+                            <hr>
+                            <span class="signin" style="margin-left: 45%;">Sign&nbsp;in&nbsp;with:</span><br>
+                            <div class="external-systems-auth" style="border: solid 1px red;">
+                                <div class="systems-list" style="margin-left: 40%;">
+                                    facebook<br>
+                                    Twitter<br>
+                                    Google+<br>
+                                    VK
+                                </div>
+                            </div>
+
+
+                            <div class="forget-password" style="text-align: center; margin-top: 5%;">
+                                <a href="/auth/recovery/" id="remember-password">Forget&nbsp;password</a>
+                            </div>
+
+                            <hr width="65%" style="margin-left: 20%;">
+                            <div style="width: 100%; height: 50px; margin-left: 20%;">
+                                <div class="">
+                                    Don't&nbsp;have&nbsp;an&nbsp;account?
+                                    <a href="/auth/register/" style="margin-left: 1em;">Registration</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            //Скрыть PopUp при загрузке страницы
+            UserAuthPopUpHide();
+        });
+        //Функция отображения PopUp
+        function UserAuthPopUpShow(){
+            $(".popup-user-auth").show().onfocus();
+        }
+        //Функция скрытия PopUp
+        function UserAuthPopUpHide(){
+            $(".popup-user-window").hide();
+        }
+    </script>
 
     <script>
         $(document).ready(function(){

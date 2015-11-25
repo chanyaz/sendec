@@ -12,4 +12,5 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(User, related_name="profile")
     user_photo = models.FileField(upload_to=upload_user_photo)
+    user_cell_number = models.TextField(max_length=11)
 

@@ -18,6 +18,13 @@ def render_user_profile_page(request):
     }
     args.update(csrf(request))
 
+    if not UserProfile.objects.filter(user_id=User.objects.get(username=auth.get_user(request).username).id).exists():
+        UserProfile.objects.create(
+            user_id=User.objects.get(username=auth.get_user(request).username).id,
+            user_photo="",
+            user_cell_number=""
+        )
+
     return render_to_response("profile.html", args)
 
 
@@ -83,6 +90,8 @@ def change_profile_data(request):
         instance.first_name = request.POST["first_name"]
         instance.last_name = request.POST["last_name"]
         instance.email = request.POST["email"]
+        instance.profile.user_cell_number = request.POST["cell"]
+        instance.profile.save()
         instance.save()
     return HttpResponseRedirect("/profile/", args)
 

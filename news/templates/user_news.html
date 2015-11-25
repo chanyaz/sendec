@@ -3,6 +3,16 @@
 {% load my %}
 {% block user_news %}
 
+
+    <script>
+        function loadPage() {
+            alert("in");
+            $.get('/news/new_page/cp=1&np=2/').done(function (data) {
+                alert("get ok");
+            });
+        }
+    </script>
+
     <style>
         ul{
             list-style-type: none;
@@ -54,6 +64,13 @@
                         {% endif %}
                     </ul>
                 </div>
+
+            <div class="load_button" >
+                <button id="button_load_more"
+                        onclick="loadPage();"
+                        data-current-page="1"
+                        data-next-page="2">Load&nbsp;more</button>
+            </div>
 
 
 

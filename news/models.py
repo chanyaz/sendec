@@ -30,6 +30,7 @@ class NewsPortal(models.Model):
         verbose_name_plural = "Portals"
 
     portal_name = models.CharField(max_length=32)
+    portal_base_link = models.CharField(max_length=128)
 
     def __str__(self):
         return self.portal_name
@@ -166,5 +167,16 @@ class RssNews(models.Model):
     category = models.ForeignKey(NewsCategory)
     link = models.URLField(max_length=128)
 
+    def __str__(self):
+        return self.title
 
-# Test WYSIWYG
+    def get_json_rss(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "date": self.date_posted,
+            "text": self.post_text,
+            "portal": self.portal_name,
+            "category": self.category,
+            "link": self.link
+        }

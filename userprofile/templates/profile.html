@@ -26,6 +26,17 @@
                             <!--<span aria-hidden="true"></span>-->
                         <input type="submit" value="Change&nbsp;photo">
                     </form>
+
+                </div>
+            <hr width="100%">
+                <div class="user-chars">
+                    <div id="user-rate">
+                        <label class="col-md-3">Rate:&nbsp;0.65</label>
+                    </div>
+                    <hr width="100%">
+                    <div id="user-articles">
+                        <label class="col-md-3">Articles:&nbsp;57</label>
+                    </div>
                 </div>
             </div>
             <!-- edit form column -->
@@ -54,7 +65,8 @@
                         <div class="col-lg-8">
                             <input
                                     name="first_name"
-                                    class="form-control" type="text"
+                                    class="form-control"
+                                    type="text"
                                     placeholder="First&nbsp;name"
                                     value="{{ username.first_name }}">
                         </div>
@@ -76,9 +88,20 @@
                             <input
                                     name="email"
                                     class="form-control"
-                                    type="text"
+                                    type="email"
                                     placeholder="example@gmail.com"
                                     value="{{ username.email }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Cell:</label>
+                        <div class="col-lg-8">
+                            <input
+                                    name="cell"
+                                    class="form-control"
+                                    type="tel"
+                                    placeholder="Your&nbsp;phone&nbsp;number"
+                                    value="{{ username.profile.user_cell_number }}">
                         </div>
                     </div>
 
