@@ -59,3 +59,8 @@ def get_article_author(value):
     first_name = User.objects.get(id=value).first_name
     second_name = User.objects.get(id=value).last_name
     return first_name.capitalize()+" "+second_name.capitalize()
+
+@register.filter(name="get_portal_name")
+def get_portal_name(value):
+    from news.models import NewsPortal
+    return NewsPortal.objects.get(id=int(value)).portal_name

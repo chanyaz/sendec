@@ -23,8 +23,8 @@ def last_element(feed):
 def connect_to_db(urls):
     #urls = ["http://appleinsider.ru/feed"]
 
-    #db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/db.sqlite3")
-    db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
     for url in urls:
         #print(url)
@@ -53,8 +53,8 @@ def fill_rss_table():
     import json
 
 
-    #db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/db.sqlite3")
-    db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
 
     with open("dictionary_portals.json") as json_file:

@@ -1,5 +1,4 @@
 http://appleinsider.ru/feed
-http://teslanews.com/feed/
 http://android-robot.com/feed/
 http://ria.ru/export/rss2/technology/index.xml
 http://zisk.net/feed/
@@ -36,3 +35,5 @@ http://www.cnet.com/rss/car-tech/
 http://www.cnet.com/rss/iphone-update/
 http://gamerant.com/feed/
 http://dailykanban.com/feed/
+http://teslanews.com/feed/
+

@@ -77,6 +77,7 @@ def render_current_news(request, category_id, news_id):
 def render_user_news(request, page_number=1):
     args = {
         "title": "| My news",
+        "portals": get_user_chosen_portals(request),
         #"usernews": get_user_news_by_portals(request),
        # "deftest": test(request),
         #"rss_news": get_rss_news(request),
@@ -90,6 +91,10 @@ def render_user_news(request, page_number=1):
     args["rss_news"] = current_page.page(page_number)
     return render_to_response("user_news.html", args)
 
+
+def get_user_chosen_portals(request):
+    from userprofile.models import UserSettings
+    return UserSettings.objects.get(user_id=User.objects.get(username=auth.get_user(request).username).id).portals_to_show.split(",")
 
 def get_rss_news_pagination(request, current_page, next_page):
     from news.models import RssNews

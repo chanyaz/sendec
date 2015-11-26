@@ -84,7 +84,10 @@ def register(request):
                 )
 
 
+                user_email = request.POST["registration-email"]
 
+
+                from django.conf import settings
 
                 mail_subject = "Confirm your account on Severy, %s" % new_user_form.cleaned_data['username']
                 mail_message = """%s,
@@ -92,12 +95,13 @@ Last step of registration.
 Please, confirm your account by clicking button below this text.
 <button>Confirm now</button>
 
-Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/uuid=%s</a>""" % \
+Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/c/ucid=%s&uid=%s</a>""" % \
                                (new_user_form.cleaned_data['username'],
-                                UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code)
+                                UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
+                                User.objects.get(username=new_user_form.cleaned_data['username']).id)
                 mail_from = "saqel@yandex.ru"
-                mail_to = User.objects.get(username=new_user_form.cleaned_data['username']).email
-                send_mail(mail_subject, mail_message, mail_from, [mail_to], fail_silently=False)
+                mail_to = user_email#User.objects.get(username=new_user_form.cleaned_data['username']).email
+                send_mail(mail_subject, mail_message, settings.EMAIL_HOST_USER, [mail_to], fail_silently=False)
 
 
 
@@ -106,6 +110,7 @@ Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/uuid=%s</a>"
 
                 instance = User.objects.get(username=auth.get_user(request).username)
                 instance.is_active = False
+                instance.email = user_email
                 instance.save()
                 return redirect('/')
             else:
@@ -186,3 +191,10 @@ def pref_portals_save(request):
     user_instance.save()
     return HttpResponseRedirect("/")
 
+
+def confirm_email(request, confirm_code, user_id):
+    user_instance = User.objects.get(id=user_id)
+    if confirm_code == user_instance.profile.confirmation_code:
+        user_instance.is_active = True
+        user_instance.save()
+    return HttpResponseRedirect('/')

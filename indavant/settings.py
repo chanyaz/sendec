@@ -106,6 +106,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'indavant.wsgi.application'
 
 
+
+
+
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -142,3 +145,13 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# E-mail
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'saqel@yandex.ru'
+EMAIL_HOST_PASSWORD = 'trytosteal3359'
+DEFAULT_FROM_EMAIL = 'saqel@yandex.ru'
+DEFAULT_TO_EMAIL = DEFAULT_FROM_EMAIL

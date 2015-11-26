@@ -76,7 +76,17 @@
 
         </div>
         <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
-            {% include 'twitter.html' %}
+            <div class="choosen-portals" style="border: solid 1px red;">
+                <button>Add&nbsp;content</button>
+                <hr width="100%">
+                User&nbsp;contents
+                {% for i in portals %}
+                    <span class="user-portals">{{ i|get_portal_name }}</span>
+                {% endfor %}
+            </div>
+            <div class="twitter" style="border: solid 1px lawngreen;">
+                {% include 'twitter.html' %}
+            </div>
         </div>
     </div>
 
