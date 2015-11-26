@@ -71,6 +71,8 @@
             <div style="width: 30em; margin-left: 13%;">
                 {% csrf_token %}
                 {{ form }}
+                <br><label for="registration-email">E-mail:</label><br>
+                <input type="email" id="registration-email" placeholder="example@gmail.com" name="registration-email">
                 <button type="submit" class="tiny" style="height: 40px; width: 64%; margin-left: 20%; margin-top: 4%;">
                     Sign&nbsp;Up
                 </button>

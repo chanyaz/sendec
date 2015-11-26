@@ -49,6 +49,8 @@ class News(models.Model):
     news_post_text = models.TextField(max_length=4096)
     news_portal_name = models.ForeignKey(NewsPortal)
 
+    news_author = models.ForeignKey(User)
+
     news_latest_shown = models.BooleanField(default=False)
     news_currently_showing = models.BooleanField(default=False)
 

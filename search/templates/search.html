@@ -71,7 +71,7 @@
                                     this.style.backgroundColor='grey';"
                                     onmouseout="this.style.backgroundColor='';">
                                         <div class="portal" style="float: left;">
-                                            <b>{{ current_result.news_portal_name_id|get_news_portal }}</b>
+                                            <b><!-- current_result.news_portal_name_id|get_news_portal--> </b>
                                         </div>
                                         <div class="date">
                                             &nbsp;|&nbsp;{{ current_result.news_post_date.date }}
@@ -86,6 +86,11 @@
                             {% endfor %}
                     </div>
                 {% endif %}
+            {% if users_matches|length > 0 %}
+                {% for current_user in users_matches %}
+                    <a href="">{{ current_user.username }}</a>
+                {% endfor %}
+            {% endif %}
             </div>
             <div class="right-side-block" style="border: solid 1px red; width: 20%; margin-left: 80%;">
                 <div class="latest-news" style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">

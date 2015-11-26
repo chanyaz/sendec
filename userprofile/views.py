@@ -28,6 +28,11 @@ def render_user_profile_page(request):
     return render_to_response("profile.html", args)
 
 
+def get_user_articles(request, **kwargs):
+    from loginsys.models import UserProfile
+    return UserProfile.objects.get(user_id=User.objects.get(username=kwargs["looking_username"]).id).written_articles
+
+
 @login_required(login_url="/auth/login/")
 def render_settings(request):
     args = {

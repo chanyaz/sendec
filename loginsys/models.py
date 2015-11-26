@@ -13,4 +13,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name="profile")
     user_photo = models.FileField(upload_to=upload_user_photo)
     user_cell_number = models.TextField(max_length=11)
+    written_articles = models.IntegerField(default=0)
+    user_rate = models.FloatField(default=0.0)
 
+    confirmation_code = models.CharField(max_length=33)

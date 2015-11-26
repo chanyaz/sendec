@@ -6,6 +6,8 @@ from django.template.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+from django.core.mail import send_mail
+
 import os
 import datetime
 from django.db.models import F
@@ -53,6 +55,10 @@ def logout(request):
 def register(request):
     from userprofile.models import UserSettings
     from .models import UserProfile
+
+    import string
+    from random import choice
+
     if auth.get_user(request).is_authenticated():
         return redirect("/")
     else:
@@ -71,18 +77,37 @@ def register(request):
                 UserSettings.objects.create(
                     user_id=User.objects.get(username=auth.get_user(request).username).id,
                 )
-
+                # User Profile
                 UserProfile.objects.create(
                     user_id=User.objects.get(username=auth.get_user(request).username).id,
+                    confirmation_code=''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for x in range(33))
                 )
-                #new_user_profile = auth.get_user(request)
-                #new_user_profile.birthday = "1900-01-01"
-                #new_user_profile.phone = "+1-234-567-89-90"
-                #new_user_profile.save()
+
+
+
+
+                mail_subject = "Confirm your account on Severy, %s" % new_user_form.cleaned_data['username']
+                mail_message = """%s,
+Last step of registration.
+Please, confirm your account by clicking button below this text.
+<button>Confirm now</button>
+
+Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/uuid=%s</a>""" % \
+                               (new_user_form.cleaned_data['username'],
+                                UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code)
+                mail_from = "saqel@yandex.ru"
+                mail_to = User.objects.get(username=new_user_form.cleaned_data['username']).email
+                send_mail(mail_subject, mail_message, mail_from, [mail_to], fail_silently=False)
+
+
+
+
+
+
                 instance = User.objects.get(username=auth.get_user(request).username)
                 instance.is_active = False
                 instance.save()
-                return redirect('/auth/preferences=categories')
+                return redirect('/')
             else:
                 args['form'] = new_user_form
         return render_to_response('register.html', args)

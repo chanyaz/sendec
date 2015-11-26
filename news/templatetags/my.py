@@ -52,3 +52,10 @@ def check_reading_category(value_cid, value_username):
         return True
     else:
         return False
+
+@register.filter(name="get_article_author")
+def get_article_author(value):
+    from django.contrib.auth.models import User
+    first_name = User.objects.get(id=value).first_name
+    second_name = User.objects.get(id=value).last_name
+    return first_name.capitalize()+" "+second_name.capitalize()

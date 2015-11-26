@@ -3,6 +3,13 @@
 {% load staticfiles %}
 
     <div class="container-fluid">
+
+        <div class="confirm-email">
+            <label style="color: red;">
+                Information about confirmation. Will be here..
+            </label>
+        </div>
+
         <h1 class="page-header">Profile:&nbsp;{{ username.username }}</h1>
         <div class="row">
             <!-- left column -->
@@ -31,11 +38,11 @@
             <hr width="100%">
                 <div class="user-chars">
                     <div id="user-rate">
-                        <label class="col-md-3">Rate:&nbsp;0.65</label>
+                        <label class="col-md-3">Rate:&nbsp;{{ username.profile.user_rate }}</label>
                     </div>
                     <hr width="100%">
                     <div id="user-articles">
-                        <label class="col-md-3">Articles:&nbsp;57</label>
+                        <label class="col-md-3">Articles:&nbsp;{{ username.profile.written_articles }}</label>
                     </div>
                 </div>
             </div>

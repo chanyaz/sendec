@@ -22,9 +22,11 @@ def last_element(feed):
 
 def connect_to_db(urls):
     #urls = ["http://appleinsider.ru/feed"]
+
+    #db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/db.sqlite3")
+    db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    cursor = db.cursor()
     for url in urls:
-        db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/db.sqlite3")
-        cursor = db.cursor()
         #print(url)
         data = last_element(parse_current_url(url=url))
         new_date = data["date"].split()
@@ -34,11 +36,12 @@ def connect_to_db(urls):
         if len(count) == 0:
             cursor.execute("""INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id) VALUES(?, ?, ?, ?, ?, ?)""",(data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], 1, 1))
             db.commit()
-            db.close()
+
             print("Inserted from: ", url)
         else:
             print("Already exists: ", url)
-    print("================END ONE MORE LOOP====================")            
+    print("================END ONE MORE LOOP====================")
+    db.close()
 
 urls_of_portals = get_feed_urls()
 while True:
@@ -50,7 +53,8 @@ def fill_rss_table():
     import json
 
 
-    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/db.sqlite3")
+    #db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/db.sqlite3")
+    db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
 
     with open("dictionary_portals.json") as json_file:

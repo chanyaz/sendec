@@ -160,7 +160,13 @@
                 {{ current_news_values.news_title }}
             </h1>
             <div class="date-and-author" style="margin-left: 5%;">
-                <h5>By&nbsp;<a href="/search/?q={{ current_news_values.news_portal_name }}">{{ current_news_values.news_portal_name }}</a>&nbsp;{{ current_news_values.news_post_date.date }}</h5>
+                <h5>By
+                    {% if current_news_values.id|get_news_portal == "SEVERY" %}
+                        <a href="/search/?q={{ current_news_values.news_author }}">{{ current_news_values.news_author_id|get_article_author }}</a>
+                    {% else %}
+                        <a href="/search/?q={{ current_news_values.news_portal_name }}">{{ current_news_values.news_portal_name }}</a>
+                    {% endif %}
+                    &nbsp;{{ current_news_values.news_post_date.date }}</h5>
             </div>
         <div class="news-settings" style="height: 2em; width: 100%; border: solid 1px blueviolet;">
             <div class="shares" style="margin-left: -6%; margin-top: -1%;">
