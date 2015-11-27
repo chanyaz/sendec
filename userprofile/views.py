@@ -141,3 +141,45 @@ def addition_portals_show(request):
                 settings_instance.save()
 
     return HttpResponseRedirect("/profile/settings/", args)
+
+
+def send_confirm_email(request, user_id):
+    from django.core.mail import EmailMultiAlternatives
+
+    user_instance = User.objects.get(id=user_id)
+
+    mail_subject = "Confirm your account on <service-name>, %s" % user_instance.username
+    mail_message = """%s,
+Last step of registration.
+Please, confirm your account by clicking button below this text.
+<button>Confirm now</button>
+
+Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/c/ucid=%s&uid=%s</a>""" % \
+                   (user_instance.username,
+                    user_instance.profile.confirmation_code,
+                    user_instance.id)
+
+    mail_from = "saqel@yandex.ru"
+    mail_to = user_instance.email#User.objects.get(username=new_user_form.cleaned_data['username']).email
+    #send_mail(mail_subject, mail_message, settings.EMAIL_HOST_USER, [mail_to], fail_silently=Fals
+    text_content = 'This is an important message.'
+    html_content = """%s,
+\nThank you for registration at <service-name>
+\n
+\nTo confirm your account, you have to press this button.
+\n<button style='margin-left: 30%%; width: 150px; height: 50px; background-color: #5bc0de; color: white;'
+onclick="location.href='http://127.0.0.1:8000/c/ucid=%s&uid=%s';">Confirm&nbsp;now</button>
+\n
+\nOr you can do it via clicking url: <a href="http://127.0.0.1:8000/c/ucid=%s&uid=%s">http://127.0.0.1:8000/c/ucid=%s&uid=%s</a>""" % \
+                   (user_instance.username,
+                    user_instance.profile.confirmation_code,
+                    user_instance.id,
+                    user_instance.profile.confirmation_code,
+                    user_instance.id,
+                    user_instance.profile.confirmation_code,
+                    user_instance.id)
+
+    msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+    return HttpResponse()

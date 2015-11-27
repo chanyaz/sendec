@@ -6,7 +6,7 @@ from django.template.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 
 import os
 import datetime
@@ -77,19 +77,23 @@ def register(request):
                 UserSettings.objects.create(
                     user_id=User.objects.get(username=auth.get_user(request).username).id,
                 )
-                # User Profile
-                UserProfile.objects.create(
-                    user_id=User.objects.get(username=auth.get_user(request).username).id,
-                    confirmation_code=''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for x in range(33))
-                )
-
 
                 user_email = request.POST["registration-email"]
+                user_phone = request.POST["registration-phone"]
+
+
+                # User Profile creating
+                UserProfile.objects.create(
+                    user_id=User.objects.get(username=auth.get_user(request).username).id,
+                    confirmation_code=''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for x in range(33)),
+                    user_cell_number=user_phone
+                )
 
 
                 from django.conf import settings
 
-                mail_subject = "Confirm your account on Severy, %s" % new_user_form.cleaned_data['username']
+
+                mail_subject = "Confirm your account on <service-name>, %s" % new_user_form.cleaned_data['username']
                 mail_message = """%s,
 Last step of registration.
 Please, confirm your account by clicking button below this text.
@@ -101,9 +105,35 @@ Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/c/ucid=%s&ui
                                 User.objects.get(username=new_user_form.cleaned_data['username']).id)
                 mail_from = "saqel@yandex.ru"
                 mail_to = user_email#User.objects.get(username=new_user_form.cleaned_data['username']).email
-                send_mail(mail_subject, mail_message, settings.EMAIL_HOST_USER, [mail_to], fail_silently=False)
+                #send_mail(mail_subject, mail_message, settings.EMAIL_HOST_USER, [mail_to], fail_silently=False)
 
 
+                text_content = 'This is an important message.'
+                html_content = """%s,
+\nThank you for registration at <service-name>
+\n
+\nTo confirm your account, you have to press this button.
+\n<button style='margin-left: 30%%; width: 150px; height: 50px; background-color: #5bc0de; color: white;'
+onclick="location.href='http://127.0.0.1:8000/c/ucid=%s&uid=%s';">Confirm&nbsp;now</button>
+\n
+\nOr you can do it via clicking url: <a href="http://127.0.0.1:8000/c/ucid=%s&uid=%s">http://127.0.0.1:8000/c/ucid=%s&uid=%s</a>""" % \
+                               (new_user_form.cleaned_data['username'],
+                                UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
+                                User.objects.get(username=new_user_form.cleaned_data['username']).id,
+                                UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
+                                User.objects.get(username=new_user_form.cleaned_data['username']).id,
+                                UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
+                                User.objects.get(username=new_user_form.cleaned_data['username']).id)
+                msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
+
+
+
+                # Sending verification code via SMS.
+                # send_message_via_sms(request,
+                #                      verify_code=UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
+                #                      phone_number=user_phone)
 
 
 
@@ -198,3 +228,28 @@ def confirm_email(request, confirm_code, user_id):
         user_instance.is_active = True
         user_instance.save()
     return HttpResponseRedirect('/')
+
+
+import random
+from django.core.cache import cache
+from django.http.response import HttpResponse
+from twilio.rest import TwilioRestClient
+
+
+################################### SMS PIN #########################################
+
+def send_message_via_sms(request, verify_code, phone_number):
+
+    # Download the twilio-python library from http://twilio.com/docs/libraries
+    from twilio.rest import TwilioRestClient
+
+    # Find these values at https://twilio.com/user/account
+    account_sid = "AC23d3af9ee2f38d74d4217e1ddb7b4c1c"
+    auth_token = "6037a6a6474cf31ff68cf0b13146da45"
+    client = TwilioRestClient(account_sid, auth_token)
+
+    text = "Stanislav, thank you for registration. Your verification code: %s" % verify_code
+
+    client.messages.create(to=phone_number, from_="+12166001832", body=text,)
+
+

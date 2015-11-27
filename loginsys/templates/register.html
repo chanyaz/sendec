@@ -54,6 +54,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 
+
     <div id="register-block">
         <form action="/auth/register/" method="post" id="global-reg-block">
         {% csrf_token %}
@@ -73,6 +74,13 @@
                 {{ form }}
                 <br><label for="registration-email">E-mail:</label><br>
                 <input type="email" id="registration-email" placeholder="example@gmail.com" name="registration-email">
+
+                <!-- SMS VERIFICATIOM -->
+                <hr>
+                <br><label for="registration-phone">E-mail:</label><br>
+                <input type="tel" id="registration-phone" placeholder="+15555555555" name="registration-phone">
+
+
                 <button type="submit" class="tiny" style="height: 40px; width: 64%; margin-left: 20%; margin-top: 4%;">
                     Sign&nbsp;Up
                 </button>

@@ -4,11 +4,14 @@
 
     <div class="container-fluid">
 
-        <div class="confirm-email">
-            <label style="color: red;">
-                Information about confirmation. Will be here..
-            </label>
-        </div>
+        <!-- Confirmation user's email -->
+        {% if username.is_active == False %}
+            <div class="confirm-email">
+                <label style="color: red;">
+                    <a href="/profile/sce={{ username.id }}">Send</a>&nbsp;new&nbsp;email&nbsp;with&nbsp;confirmation&nbsp;code.
+                </label>
+            </div>
+        {% endif %}
 
         <h1 class="page-header">Profile:&nbsp;{{ username.username }}</h1>
         <div class="row">
@@ -45,6 +48,14 @@
                         <label class="col-md-3">Articles:&nbsp;{{ username.profile.written_articles }}</label>
                     </div>
                 </div>
+            <hr width="100%">
+            <div class="requests">
+                <div class="request-deleting">
+                    <span style="color: red; ">show popup windows</span><br>
+                    <span class="del-acc">Delete Account</span><br>
+                    <span class="del-articles">Delete All Articles</span>
+                </div>
+            </div>
             </div>
             <!-- edit form column -->
             <div class="col-md-7 col-sm-6 col-xs-12 personal-info">

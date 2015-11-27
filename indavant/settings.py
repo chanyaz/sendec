@@ -147,11 +147,19 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+
+import json
+with open("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\indavant\\admin_data_mail") as json_file:
+    json_data = json.load(json_file)
+
+
 # E-mail
 EMAIL_USE_SSL = True
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-DEFAULT_FROM_EMAIL = 'saqel@yandex.ru'
+EMAIL_HOST = json_data["host"]
+EMAIL_PORT = json_data["port"]
+EMAIL_HOST_USER = json_data["email"]
+EMAIL_HOST_PASSWORD = json_data["password"]
+DEFAULT_FROM_EMAIL = json_data["email"]
 DEFAULT_TO_EMAIL = DEFAULT_FROM_EMAIL
+
+
