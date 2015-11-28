@@ -353,10 +353,10 @@ def get_bit_news(request):
 
 
 def render_companies_news(request):
+    from news.models import Companies
     args = {
         "title": "| Companies",
-        "top_companies_news": get_companies_news(request)[0],
-        "companies_news": get_companies_news(request)[1:],
+        "companies": get_companies(request),
         "category_title": "COMPANIES",
     }
     if auth.get_user(request).username:
@@ -365,8 +365,9 @@ def render_companies_news(request):
     return render_to_response("companies.html", args)
 
 
-def get_companies_news(request):
-    return News.objects.all().filter(news_category_id=7)
+def get_companies(request):
+    from news.models import Companies
+    return Companies.objects.all()
 ############################## END COMPANIES ###################################
 
 def render_entertainment_news(request):

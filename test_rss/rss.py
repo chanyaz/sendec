@@ -47,11 +47,11 @@ def connect_to_db(urls):
     db.close()
 
 urls_of_portals = get_feed_urls()
-while True:
+#while True:
 #last_element(parse_current_url(url="http://appleinsider.ru/feed/"))
 #print(last_element(parse_current_url(url="http://appleinsider.ru/feed/")))
-    connect_to_db(urls=urls_of_portals)
-    time.sleep(1)
+    #connect_to_db(urls=urls_of_portals)
+    #time.sleep(1)
 
 
 def fill_rss_table():
@@ -95,4 +95,4 @@ def fill_rss_table():
                 continue
     db.close()
 
-#fill_rss_table()
+fill_rss_table()

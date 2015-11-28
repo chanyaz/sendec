@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib import admin
-from .models import News, NewsPortal, NewsCategory
+from .models import News, NewsPortal, NewsCategory, Companies
 from ckeditor.widgets import CKEditorWidget
+
+admin.site.register(Companies)
 
 admin.site.register(NewsCategory)
 admin.site.register(NewsPortal)

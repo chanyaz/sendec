@@ -28,6 +28,8 @@ def render_search_page(request):
             args["results"] = get_search_result(request, search_word)
             args["matches_amount"] = get_matches_amount(request, search_word)
             args["users_matches"] = get_search_among_users(request, search_word)
+
+    args["search_word"] = search_word
     args.update(csrf(request))
     return render_to_response("search.html", args)
 

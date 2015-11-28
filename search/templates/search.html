@@ -16,8 +16,8 @@
     </script>
 
     <div class="search-block">
-        <div class="search" style="width: 100%; border: solid 1px red; height: 100%;">
-            <div class="left-side-search" style="width: 80%; height: inherit; float: left;">
+        <div class="search" style="width: 100%; height: 100%;">
+            <div class="left-side-search" style="width: 70%; height: inherit; float: left;">
                 {% if empty_result %}
                     <div class="search-error-text" style="text-align: center;">
                         No&nbsp;one&nbsp;matches.&nbsp;Please,&nbsp;try&nbsp;another&nbsp;request&nbsp;word<br><br>
@@ -61,26 +61,30 @@
                 {% endif %}
                 {% if results|length > 0 %}
                     <div id="among_title">
-                        <div style="text-align: left; font-size: 20px;"><b>Found&nbsp;{{ matches_amount }}&nbsp;{% if matches_amount > 1 %}matches
+                        <div style="text-align: left; font-size: 20px;"><b>Results&nbsp;for &laquo;{{ search_word }}&raquo;</b>&nbsp;<h5>&#40;{{ matches_amount }}&nbsp;{% if matches_amount > 1 %}matches
                             {% else %}match
-                            {% endif %}</b><hr></div>
+                            {% endif %}&#41;</h5><hr></div>
                             {% for current_result in results %}
-                                    <div class="current_searched" style="border: solid 1px red; margin-top: 2%; margin-left: 0.25%; margin-right: 0.25%; margin-bottom: 0.25%;"
+                                    <div class="current_searched" style="height: 82px; border: solid 1px red; margin-top: 2%; margin-left: 0.25%; margin-right: 0.25%; margin-bottom: 0.25%;"
                                     onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"
                                     onmouseover="this.style.cursor='pointer';
                                     this.style.backgroundColor='grey';"
                                     onmouseout="this.style.backgroundColor='';">
-                                        <div class="portal" style="float: left;">
-                                            <b><!-- current_result.news_portal_name_id|get_news_portal--> </b>
-                                        </div>
-                                        <div class="date">
-                                            &nbsp;|&nbsp;{{ current_result.news_post_date.date }}
-                                        </div>
-                                        <div class="title">
-                                            {{ current_result.news_title }}
-                                        </div>
-                                        <div class="post">
-                                            {{ current_result.news_post_text|safe|truncatewords:"15" }}
+                                        <div class="current_searched_cover"
+                                             style="width: 20%; height: 80px; float: left; background: url('/media/{{ current_result.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                        <div class="current_searched_content">
+                                            <div class="portal" style="float: left;">
+                                                <b><!-- current_result.news_portal_name_id|get_news_portal--> </b>
+                                            </div>
+                                            <div class="date">
+                                                &nbsp;|&nbsp;{{ current_result.news_post_date.date }}
+                                            </div>
+                                            <div class="title">
+                                                {{ current_result.news_title }}
+                                            </div>
+                                            <div class="post">
+                                                {{ current_result.news_post_text|safe|truncatewords:"15" }}
+                                            </div>
                                         </div>
                                     </div>
                             {% endfor %}
@@ -92,7 +96,8 @@
                 {% endfor %}
             {% endif %}
             </div>
-            <div class="right-side-block" style="border: solid 1px red; width: 20%; margin-left: 80%;">
+        </div>
+        <div class="right-side-block" style="border: solid 1px red; width: 28%; float: right;">
                 <div class="latest-news" style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
                     <div class="latest-header" style="text-align: center;">
                         Latest&nbsp;news
@@ -115,7 +120,6 @@
                     {% include 'twitter.html' %}
                 </div>
             </div>
-        </div>
     </div>
 
 

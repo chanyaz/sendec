@@ -10,6 +10,8 @@ def generate_unique_name():
 def upload_news_cover(instance, filename):
         return "/".join(["content", "news", "covers", filename])
 
+def upload_company_cover(instance, filename):
+    return "/".join(["content", "companies", "logo", filename])
 
 class NewsCategory(models.Model):
     class Meta:
@@ -187,3 +189,16 @@ class RssNews(models.Model):
             "content": self.content_value,
             "author": self.author,
         }
+
+
+class Companies(models.Model):
+    class Meta:
+        db_table = 'companies'
+        verbose_name = 'Company'
+        verbose_name_plural = 'Companies'
+
+    name = models.CharField(max_length=32)
+    logo = models.FileField(upload_to=upload_company_cover, blank=True)
+
+    def __str__(self):
+        return self.name
