@@ -1,8 +1,8 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
 {% load my %}
+{% load jsonate_tags %}
 {% block user_news %}
-
 
     <script>
         function loadPage() {
@@ -12,6 +12,7 @@
             });
         }
     </script>
+
 
     <style>
         ul{
@@ -29,8 +30,11 @@
                     RSS:<br>
                     {% for i in rss_news %}
                         <div class="current_rss_news_{{ i.id }}"
+                             id="rss_id_{{ i.id }}"
+                             data-current-rss-news-id="{{ i.id }}"
+                             onclick="RssPreviewPopUpShow('{{ i|jsonate }}')"
                              style="width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; border: solid 1px red; float: left;">
-                            <div class="title"><a href="{{ i.link }}">{{ i.title }}</a></div>
+                            <div class="title">{{ i.title }}</div>
                             <div class="portal" style="float: left;">By <a href="/search/?q=">%portal name%</a></div>
                             <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>
 
@@ -81,7 +85,7 @@
                 <hr width="100%">
                 User&nbsp;contents
                 {% for i in portals %}
-                    <span class="user-portals">{{ i|get_portal_name }}</span>
+                    <span class="user-portals">{{ i.id }}</span>
                 {% endfor %}
             </div>
             <div class="twitter" style="border: solid 1px lawngreen;">

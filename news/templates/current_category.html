@@ -72,31 +72,21 @@
                     </div>
                     <div class="latest-titles">
                         {% for i in latest_news %}
-                            <span class="time" style="color: blue;">
-                                {{ i.news_post_date.time }}
-                            </span>
-                            <span class="title" onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                {{ i.news_title }}
-                            </span><br>
+                            <div class="latest-news">
+                                <div class="last-news-image"
+                                     style="background: url('/media/{{ i.main_news_cover }}') no-repeat center; background-size: cover;"></div>
+                                <span class="time" style="color: blue;">
+                                    {{ i.news_post_date.time }}
+                                </span>
+                                <span class="title" onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                    {{ i.news_title }}
+                                </span>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
                 <div class="video-and-subs">
-                    <a class="twitter-timeline"
-                       href="https://twitter.com/SendecNews"
-                       data-widget-id="663274878636834816">Твиты от @SendecNews
-                    </a>
-                    <script>
-                        !function(d,s,id){
-                            var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-                            if(!d.getElementById(id)){
-                                js=d.createElement(s);
-                                js.id=id;
-                                js.src=p+"://platform.twitter.com/widgets.js";
-                                fjs.parentNode.insertBefore(js,fjs);
-                            }
-                        }(document,"script","twitter-wjs");
-                    </script>
+                    {% include 'twitter.html' %}
                 </div>
             </div>
         </div>

@@ -17,7 +17,9 @@ def parse_current_url(url=''):
 
 
 def last_element(feed):
-    return {"title": feed[0].title, "date": feed[0].published, "description": feed[0].description, "link": feed[0].link}
+    return {"title": feed[0].title, "date": feed[0].published, "description": feed[0].description,
+            "link": feed[0].link, "content": feed[0].content[0]["value"], "author": feed[0].author}
+    #return feed[0].content
 
 
 def connect_to_db(urls):
@@ -33,8 +35,9 @@ def connect_to_db(urls):
         time = new_date[4].split(":")
         cursor.execute("SELECT rowid FROM news_rss WHERE link=?", [data["link"]])
         count = cursor.fetchall()
+        data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<")
         if len(count) == 0:
-            cursor.execute("""INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id) VALUES(?, ?, ?, ?, ?, ?)""",(data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], 1, 1))
+            cursor.execute("""INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""",(data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], 1, 1, data["content"], data["author"]))
             db.commit()
 
             print("Inserted from: ", url)
@@ -45,6 +48,8 @@ def connect_to_db(urls):
 
 urls_of_portals = get_feed_urls()
 while True:
+#last_element(parse_current_url(url="http://appleinsider.ru/feed/"))
+#print(last_element(parse_current_url(url="http://appleinsider.ru/feed/")))
     connect_to_db(urls=urls_of_portals)
     time.sleep(1)
 

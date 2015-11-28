@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 {% load staticfiles %}
+{% load jsonate_tags %}
 <head>
     <meta charset="utf-8">
     <title>Sendec&nbsp;{{ title }}</title>
@@ -10,8 +11,6 @@
     <link rel="shortcut icon" href="{% static 'static/img/favicon.ico' %}" type="image/x-icon">
     <!-- Scripts -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
-
 
 
     <!-- START STOCKS -->
@@ -65,6 +64,28 @@
             $('#arrow-to-show-sections').delay(210).fadeIn("fast");
         }
     </script>
+    <script>
+        jQuery(function($){
+            $(document).mouseup(function (e){
+                var div = $(".preview-rss-news-content");
+                if (!div.is(e.target)
+                    && div.has(e.target).length === 0) {
+                    $(".preview-rss-news").hide();
+                    $("html").css("overflowY", "auto");
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $(this).keydown(function(eventObject){
+                if (eventObject.which == 27)
+                    $('.preview-rss-news').hide();
+                    hideLeftBar();
+                    $("html").css("overflowY", "auto");
+            });
+        });
+    </script>
     <!-- Styles -->
     <style>
         .popup-user-window {
@@ -104,6 +125,26 @@
             box-shadow: 0 0 10px #000;
         }
 
+
+        .preview-rss-news {
+            width: 100%;
+            height: inherit;
+            background-color: rgba(0, 0, 0, 0.1);
+            overflow: auto;
+            position: fixed;
+            top: 0;
+        }
+        .preview-rss-news .preview-rss-news-content{
+            margin: 0 auto 0 22%;
+            width:  50%;
+            height: auto;
+            padding: 0;
+            background-color: white;
+            border-radius:5px;
+            box-shadow: 0 0 10px #000;
+        }
+
+
         .li-cat{
             float: left;
             margin-left: 1%;
@@ -112,9 +153,30 @@
             color: yellow;
         }
 
+        /* RSS POP UP WINDOW */
+        .rss-body img{
+            height: 100%;
+            width: 111%;
+            margin-left: -5.5%;
+        }
+
+        .left-bar-item{
+            width: 120%;
+            margin-left: -20%;
+        }
+        .left-bar-item:hover{
+            background-color: rgba(55, 81, 141, 0.48);
+            cursor: pointer;
+        }
+
+        .left-bar-link{
+            width: 100%;
+        }
 
 
-
+        .news-post-text img{
+            width: 100px;
+        }
 
         .signin{
             position:relative;
@@ -208,12 +270,14 @@
 
                     {% if username %}
                         <div class="profile">
-                            <div class="image-user" style="margin-left: 13%;">
-                                <img src="/media/{{ username.profile.user_photo }}"
-                                     onclick="location.href='/profile/';"
-                                     onmouseover="this.style.cursor='pointer';"
-                                     width="128" />
-                            </div>
+                            {% if username.profile.user_photo != '' %}
+                                <div class="image-user" style="margin-left: 13%;">
+                                    <img src="/media/{{ username.profile.user_photo }}"
+                                         onclick="location.href='/profile/';"
+                                         onmouseover="this.style.cursor='pointer';"
+                                         width="128" />
+                                </div>
+                            {% endif %}
                             <div class="navigation-profile" style="margin-left: 26%;">
                                 <span class="fa fa-fw fa-user" aria-hidden="true" onclick="location.href='/profile/';"></span>|&nbsp;<span class="fa fa-bell" aria-hidden="true" onclick="location.href='/notify/';"></span>
                                 &nbsp;|&nbsp;<span class="glyphicon glyphicon-star" aria-hidden="true" onclick="location.href='/favourite/';"></span>|&nbsp;<span class="fa fa-fw fa-gear" aria-hidden="true" onclick="location.href='/profile/settings/';"></span>
@@ -222,27 +286,27 @@
                     {% endif %}
                     <div class="categories" style="margin-top: 10%;">
                         <ul class="categories" style="list-style-type: none;">
-                            <li>LATEST</li>
-                            <li>TECHNOLOGY</li>
-                            <li>ENTRTAINMENT</li>
-                            <li>AUTO</li>
-                            <li>SPACE</li>
-                            <li>BIT</li>
-                            <li>COMPANIES</li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/latest/';">LATEST</span></li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/technology/';">TECHNOLOGY</span></li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/entertainment/';">ENTRTAINMENT</span></li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/auto/';">AUTO</span></li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/space/';">SPACE</span></li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/bit/';">BIT</span></li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/companies/';">COMPANIES</span></li>
                         </ul>
                     </div>
                     <div class="navigation">
                         <ul style="list-style-type: none;">
-                            <li>TOP&nbsp;NEWS</li>
-                            <li>PODCASTS</li>
-                            <li>REVIEWS</li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/top/';">TOP&nbsp;NEWS</span></li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/podcasts/';">PODCASTS</span></li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/reviews/';">REVIEWS</span></li>
                         </ul>
                     </div>
                     <div class="founders">
                         <ul style="list-style-type: none;">
-                            <li>ABOUT&nbsp;US</li>
-                            <li>CONTACTS</li>
-                            <li>STH&nbsp;ELSE</li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/about/';">ABOUT&nbsp;US</span></li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/contacts/';">CONTACTS</span></li>
+                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/';">STH&nbsp;ELSE</span></li>
                         </ul>
                     </div>
                 </div>
@@ -275,7 +339,9 @@
                             <li class="li-cat"><a href="/news/bit/">BIT</a></li>
                             <li class="li-cat"><a href="/news/companies/">COMPANIES</a></li>
                             <li class="li-cat"><a href="/news/reviews/">REVIEWS</a></li>
-                            <li class="li-cat"><a href="/news/usernews/page=1/">MyNews</a></li>
+                            {% if username.username and username.is_active == True %}
+                                <li class="li-cat"><a href="/news/usernews/page=1/">MyNews</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 <br>
@@ -348,7 +414,6 @@
             </div>
         </div>
     </div>
-
     <div class="popup-user-auth" hidden>
         <div class="popup-user-auth-content">
             <div id="login-tab">
@@ -421,7 +486,36 @@
             </div>
         </div>
     </div>
-
+    <div id="preview-rss-news"
+         hidden
+         class="preview-rss-news"
+         onkeydown="if(event.keyCode == 27){RssPreviewPopUpHide();}">
+        <div class="preview-rss-news-content">
+            <div class="total-body" style="padding-top: 2%;">
+                <div class="closer"
+                     onclick="javascript:RssPreviewPopUpHide();"
+                     onmouseover="this.style.background='red';"
+                     onmouseout="this.style.background='whitesmoke';"
+                     style="margin-left: 100%; width: 3%; background: whitesmoke; border: solid 1px blue;">
+                    <span class="close-rss-preview">
+                        X
+                    </span>
+                </div>
+                <div class="rss-title"></div>
+                <div class="rss-author" style="float: left;"></div>
+                <div class="rss-date-published"></div>
+                <div class="rss-parent-link" style="float: right; margin-top: -3%;"></div>
+                <div class="rss-shares" style="border: solid 1px darkred; height: 2%;">
+                    <button>facebook</button>
+                    <button>Twitter</button>
+                    <button>Linkedin</button>
+                    <button>VK</button>
+                    <button>Google+</button>
+                </div>
+                <div class="rss-body" style="padding: 0 5%;"></div>
+            </div>
+        </div>
+    </div>
     <script>
         $(document).ready(function(){
             //Скрыть PopUp при загрузке страницы
@@ -436,7 +530,6 @@
             $(".popup-user-window").hide();
         }
     </script>
-
     <script>
         $(document).ready(function(){
             //Скрыть PopUp при загрузке страницы
@@ -444,12 +537,35 @@
         });
         //Функция отображения PopUp
         function SharePopUpShow(){
-            $(".popup-user-window").show().onfocus();
+            $(".popup-user-window").show();
             //$("span").append(data.music_track_name);
         }
         //Функция скрытия PopUp
         function SharePopUpHide(){
             $(".popup-user-window").hide();
+        }
+    </script>
+    <script>
+        $(document).ready(function(){
+            //Скрыть PopUp при загрузке страницы
+            RssPreviewPopUpHide();
+        });
+        //Функция отображения PopUp
+        function RssPreviewPopUpShow(i){
+            //alert($.parseJSON(i).content_value);
+            $("html").css("overflowY", "hidden");
+            $(".rss-title").html("<h3>"+$.parseJSON(i).title+"</h3>");
+            $(".rss-author").html($.parseJSON(i).author);
+            $(".rss-parent-link").html("<a href='"+$.parseJSON(i).link+"'>Original article</a>");
+            $(".rss-date-published").html("&nbsp;|&nbsp;"+$.parseJSON(i).date_posted);
+            $(".rss-body").html($.parseJSON(i).content_value);
+           // alert("b");
+            $(".preview-rss-news").show();
+        }
+        //Функция скрытия PopUp
+        function RssPreviewPopUpHide(){
+            $(".preview-rss-news").hide();
+            $("html").css("overflowY", "auto");
         }
     </script>
 </body>

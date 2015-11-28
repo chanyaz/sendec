@@ -1,9 +1,6 @@
 http://appleinsider.ru/feed
 http://android-robot.com/feed/
-http://ria.ru/export/rss2/technology/index.xml
-http://zisk.net/feed/
 http://hi-news.ru/feed
-http://www.computerweekly.com/rss/All-Computer-Weekly-content.xml
 http://www.forbes.com/technology/feed/
 http://feeds.skynews.com/feeds/rss/technology.xml
 http://tech.firstpost.com/feed
@@ -36,4 +33,6 @@ http://www.cnet.com/rss/iphone-update/
 http://gamerant.com/feed/
 http://dailykanban.com/feed/
 http://teslanews.com/feed/
-
+http://ria.ru/export/rss2/technology/index.xml
+http://zisk.net/feed/
+http://www.computerweekly.com/rss/All-Computer-Weekly-content.xml

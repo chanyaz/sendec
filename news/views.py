@@ -73,13 +73,13 @@ def render_current_news(request, category_id, news_id):
     return render_to_response("current_news.html", args)
 
 
-#@login_required(login_url="/auth/login/")
+@login_required(login_url="/auth/login/")
 def render_user_news(request, page_number=1):
     args = {
         "title": "| My news",
         "portals": get_user_chosen_portals(request),
         #"usernews": get_user_news_by_portals(request),
-       # "deftest": test(request),
+       # "deftest": test.html(request),
         #"rss_news": get_rss_news(request),
     }
     args.update(csrf(request))
@@ -107,6 +107,13 @@ def get_rss_news_pagination(request, current_page, next_page):
     }
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+def get_current_rss_news(request, news_id):
+    from news.models import RssNews
+    import json
+    return HttpResponse(json.dumps({"rss_news": RssNews.objects.get(id=news_id).get_json_rss()}), content_type="application/json")
+
 
 
 def get_rss_news(request):

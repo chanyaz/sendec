@@ -55,7 +55,7 @@ class News(models.Model):
     news_currently_showing = models.BooleanField(default=False)
 
     # Media
-    news_main_cover = models.FileField(upload_to=upload_news_cover)
+    news_main_cover = models.FileField(upload_to=upload_news_cover, blank=True)
 
     # Information
     news_likes = models.IntegerField(default=0)
@@ -168,6 +168,9 @@ class RssNews(models.Model):
     portal_name = models.ForeignKey(NewsPortal)
     category = models.ForeignKey(NewsCategory)
     link = models.URLField(max_length=128)
+    author = models.CharField(max_length=128)
+    content_value = models.TextField(max_length=16384)
+
 
     def __str__(self):
         return self.title
@@ -180,5 +183,7 @@ class RssNews(models.Model):
             "text": self.post_text,
             "portal": self.portal_name,
             "category": self.category,
-            "link": self.link
+            "link": self.link,
+            "content": self.content_value,
+            "author": self.author,
         }

@@ -132,6 +132,14 @@
         });
     </script>
 
+
+    <script>
+    $(document).ready(function(){
+        $("img").style.width='100px';
+    })
+    </script>
+
+
     <style>
         #id_comments_text{
             height: 3em;
@@ -149,6 +157,7 @@
             margin-left: 1%;
             border: solid 1px red;
         }
+
 
     </style>
 
@@ -473,6 +482,12 @@
             </div>
             <div class="latest-titles">
                     {% for i in latest_news %}
+                        <div class="latest-news"
+                             onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                            <div class="latest-news-cover"
+                                 style="float: left; height:70px; width: 100px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
+                            </div>
+                            <div class="latest-news-content">
                                 <span class="time" style="color: blue;">
                                     {{ i.news_post_date.time }}
                                 </span>
@@ -481,7 +496,10 @@
                                       onmouseout="this.style.color='black';"
                                       onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
                                     {{ i.news_title }}
-                                </span><br>
+                                </span>
+                            </div>
+                        </div>
+                        <hr width="100%">
                     {% endfor %}
             </div>
         </div>

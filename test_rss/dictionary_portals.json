@@ -1,8 +1,6 @@
 {
 "http://appleinsider": "Appleinsider",
 "http://teslanews": "TeslaNews",
-"http://android-robot": "Новости Hi-Tech",
-"http://ria.ru": "РИА",
 "http://zisk.net": "zisk",
 "http://hi-news.ru": "Hi-News.ru",
 "http://computerweekly.com": "ComputerWeekly.com",
@@ -28,5 +26,8 @@
 "http://spacenews.com": "SPACENEWS",
 "http://extremetech.com": "ExtremeTech",
 "http://cnet.com": "Cnet",
-"http://gamerant.com": "GAMERANT"
+"http://gamerant.com": "GAMERANT",
+"http://android-robot": "Новости Hi-Tech",
+  "http://ria.ru": "РИА",
+
 }

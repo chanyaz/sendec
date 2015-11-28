@@ -15,7 +15,10 @@ class PostAdminForm(forms.ModelForm):
         fields = "__all__"
 
 
+
+
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
+
 
 admin.site.register(News, PostAdmin)
