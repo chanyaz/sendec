@@ -8,6 +8,7 @@ from django.contrib import auth
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -367,7 +368,18 @@ def render_companies_news(request):
 
 def get_companies(request):
     from news.models import Companies
-    return Companies.objects.all()
+    return Companies.objects.all().order_by("id")
+
+
+def render_current_company(request, company_name):
+    from news.models import Companies
+    args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
+        "company": Companies.objects.get(Q(name=company_name) | Q(verbose_name=company_name))
+    }
+    args.update(csrf(request))
+    return render_to_response("current_company.html", args)
+
 ############################## END COMPANIES ###################################
 
 def render_entertainment_news(request):

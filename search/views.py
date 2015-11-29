@@ -28,6 +28,7 @@ def render_search_page(request):
             args["results"] = get_search_result(request, search_word)
             args["matches_amount"] = get_matches_amount(request, search_word)
             args["users_matches"] = get_search_among_users(request, search_word)
+            args["companies_matches"] = get_company(request, search_word)
 
     args["search_word"] = search_word
     args.update(csrf(request))
@@ -68,3 +69,7 @@ def get_popular_news(request):
 
 def get_search_among_users(request, search_word):
     return User.objects.filter(Q(username__contains=search_word)).values()
+
+def get_company(request, search_word):
+    from news.models import Companies
+    return Companies.objects.filter(Q(name__contains=search_word)).values()

@@ -5,9 +5,11 @@
     <div class="container-fluid">
             <div id="companies" style="border: solid 1px red; width: 70%; margin-left: 1%; height: auto; float: left;">
                 {% for current_company in companies %}
-                    <div class="current_company">
-                        <div style="float: left; width: 30%; height: 200px;" class="current_company_logo"><img width="200px" src="/media/{{ current_company.logo }}"/></div>
-                        <div class="current_company_name">{{ current_company.name }}</div>
+                    <div class="current_company" onclick="location.href='/news/companies/{{ current_company.name }}/';">
+                        <div class="current_company_name">
+                            {{ current_company.id }}
+                            {{ current_company.name }}
+                        </div><br>
                     </div>
                 {% endfor %}
             </div>

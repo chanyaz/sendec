@@ -59,6 +59,41 @@
                 <div class="top-block" style="background-color: #4cae4c; text-align: center; margin-top: -1%;">
                     <h3>SETTINGS</h3>
                 </div>
+                <div class="notify-choose">
+                    Choose what companies you want to be notified by.
+                    <form>
+                        <div class="chooser" style="float: left;">
+                            <label for="source-ignore">Choose</label><br>
+                            <select multiple
+                                    id="source-ignore"
+                                    size="10"
+                                    style="width: 300px;">
+                                {% for company in companies %}
+                                    <option value="{{ company.id }}" id="id{{ company.id }}">{{ company.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="buttons-to-choose" style="float: left;">
+                            <br><br><br>
+                            <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData();">
+                            <br>
+                            <input type="button" id="moveout" name="moveout" value="<<" onclick="return removeSelectedData();">
+                        </div>
+                        <div class="choosen">
+                            <label for="source-to-show">Chosen</label><br>
+                            <select  multiple
+                                     id="source-to-show"
+                                     name="source-to-show"
+                                     size="10"
+                                     style="width: 300px;">
+                                {% for i in test_2 %}
+                                    <option value="{{ i.id }}" id="id{{ i.id }}">{{ i.portal_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            <hr width="100%">
                 <div class="left-side" style="float: left; width: 30em; height: 500px;">
                     123
                 </div>

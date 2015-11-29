@@ -1,6 +1,9 @@
 {
   "1": {
     "name": "Apple Inc.",
+    "verbose": "Apple",
+    "site": "http://www.apple.com/",
+    "category": "technology",
     "logo": "/static/img/companies/logo/apple.png"
   },
   "2": {
@@ -338,5 +341,206 @@
   },
   "113":{
     "name": "WB Games"
+  },
+  "114":{
+    "name": "Adobe"
+  },
+  "115":{
+    "name": "AMD"
+  },
+  "116":{
+    "name": "AT&T"
+  },
+  "117":{
+    "name": "Boeing"
+  },
+  "118":{
+    "name": "ebay"
+  },
+  "119":{
+    "name": "HTC"
+  },
+  "120":{
+    "name": "Instagram"
+  },
+  "121":{
+    "name": "Intel"
+  },
+  "122":{
+    "name": "Microsoft"
+  },
+  "123":{
+    "name": "Nokia"
+  },
+  "124":{
+    "name": "PayPal"
+  },
+  "125":{
+    "name": "Sprint"
+  },
+  "126":{
+    "name": "Telegram"
+  },
+  "127":{
+    "name": "Verizon"
+  },
+  "128":{
+    "name": "Xerox"
+  },
+  "129":{
+    "name": "Toshiba"
+  },
+  "130":{
+    "name": "Qualcomm"
+  },
+  "131":{
+    "name": "TSMC"
+  },
+  "132":{
+    "name": "Canon"
+  },
+  "133":{
+    "name": "Alibaba"
+  },
+  "134":{
+    "name": "SK Hynix"
+  },
+  "135":{
+    "name": "Micron"
+  },
+  "136":{
+    "name": "Lenovo"
+  },
+  "137":{
+    "name": "Volkswagen Group"
+  },
+  "138":{
+    "name": "Siemens"
+  },
+  "139":{
+    "name": "Honda Motor"
+  },
+  "140":{
+    "name": "Nissan Motor"
+  },
+  "141":{
+    "name": "Hyundai Motor"
+  },
+  "142":{
+    "name": "Mitsubishi Motor"
+  },
+  "143":{
+    "name": "Renault"
+  },
+  "144":{
+    "name": "Visa"
+  },
+  "145":{
+    "name": "Medtronic"
+  },
+  "146":{
+    "name": "MasterCard"
+  },
+  "147":{
+    "name": "Biogen Idec"
+  },
+  "148":{
+    "name": "CVS Health"
+  },
+  "149":{
+    "name": "Биософт-М"
+  },
+  "150":{
+    "name": "Аурига"
+  },
+  "151":{
+    "name": "Dr. Web"
+  },
+  "152":{
+    "name": "Kaspersky Lab."
+  },
+  "153":{
+    "name": "КРОНТ"
+  },
+  "154":{
+    "name": "ASUS"
+  },
+  "155":{
+    "name": "Cyrix"
+  },
+  "156":{
+    "name": "FUJITSU"
+  },
+  "157":{
+    "name": "NEC"
+  },
+  "158":{
+    "name": "Virgin Galactic"
+  },
+  "159":{
+    "name": "Pumpkin Inc."
+  },
+  "160":{
+    "name": "Хcor Aerospace"
+  },
+  "161":{
+    "name": "Space Adventures"
+  },
+  "162":{
+    "name": "Bigelow Aerospace"
+  },
+  "163":{
+    "name": "Astrobotic Technology"
+  },
+  "164":{
+    "name": "Blue Origin"
+  },
+  "165":{
+    "name": "Орбитальные Технологии"
+  },
+  "166":{
+    "name": "Spaceport America"
+  },
+  "167":{
+    "name": "Mars One"
+  },
+  "168":{
+    "name": "Audi"
+  },
+  "169":{
+    "name": "Porsche"
+  },
+  "170":{
+    "name": "Chevrolet"
+  },
+  "171":{
+    "name": "Cadilac"
+  },
+  "172":{
+    "name": "Lexus"
+  },
+  "173":{
+    "name": "Kia"
+  },
+  "174":{
+    "name": "Suzuki"
+  },
+  "175":{
+    "name": "Fiat"
+  },
+  "176":{
+    "name": "Dropbox"
+  },
+  "177":{
+    "name": "Square Enix"
+  },
+  "178":{
+    "name": "Bigpoint"
+  },
+  "179":{
+    "name": "Nintendo"
+  },
+  "180":{
+    "name": "Nvidia"
   }
 }

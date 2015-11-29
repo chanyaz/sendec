@@ -198,6 +198,9 @@ class Companies(models.Model):
         verbose_name_plural = 'Companies'
 
     name = models.CharField(max_length=32)
+    verbose_name = models.CharField(max_length=32)
+    site = models.URLField(max_length=32)
+    category = models.ForeignKey(NewsCategory)
     logo = models.FileField(upload_to=upload_company_cover, blank=True)
 
     def __str__(self):

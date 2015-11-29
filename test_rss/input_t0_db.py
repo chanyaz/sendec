@@ -25,5 +25,27 @@ def input_to_db():
             continue
     db.close()
 
-input_to_db()
+
+def input_companies():
+    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    cursor = db.cursor()
+    with open("dictionary_companies.json") as json_file_list:
+        json_data_list = list(json.load(json_file_list))
+    with open("dictionary_companies.json") as json_file:
+        json_data = json.load(json_file)
+    for i in range(len(json_data)):
+        cursor.execute("""SELECT * FROM companies WHERE name=?""", [json_data[json_data_list[i]]["name"]])
+        count = cursor.fetchall()
+        if len(count) == 0:
+            cursor.execute("""INSERT INTO companies(name, verbose_name, site, category_id, logo) VALUES(?, ?, ?, ?, ?)""", (json_data[json_data_list[i]]["name"], "verbose", "site", "category_id", "logo"))
+            db.commit()
+            print("Added: ", json_data[json_data_list[i]]["name"])
+        else:
+            continue
+    print("Companies amount: ", len(json_data_list))
+    db.close()
+
+input_companies()
+#input_to_db()
 

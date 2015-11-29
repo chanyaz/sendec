@@ -18,6 +18,16 @@
     <div class="search-block">
         <div class="search" style="width: 100%; height: 100%;">
             <div class="left-side-search" style="width: 70%; height: inherit; float: left;">
+            News | Companies | Users
+                    {% if companies_matches|length > 0 %}
+                        <div id="among_companies">
+                            {% for current_company in companies_matches %}
+                                <div class="searched_company" onclick="location.href='/news/companies/{{ current_company.verbose_name }}/';">
+                                    {{ current_company.name }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 {% if empty_result %}
                     <div class="search-error-text" style="text-align: center;">
                         No&nbsp;one&nbsp;matches.&nbsp;Please,&nbsp;try&nbsp;another&nbsp;request&nbsp;word<br><br>

@@ -11,6 +11,9 @@ urlpatterns = [
     url(r'^new_page/cp=(?P<current_page>\w+)&np=(?P<next_page>\w+)/', 'news.views.get_rss_news_pagination'),
 
 
+    url(r'^companies/(?P<company_name>\w+)/', 'news.views.render_current_company'),
+
+
     # Likes
     url(r'^add_like/n=(?P<news_id>\w+)', 'news.views.add_like_news'),
     url(r'^check_like/n=(?P<news_id>\w+)', 'news.views.check_like_amount'),

@@ -1,0 +1,17 @@
+{% extends 'index_new.html' %}
+{% load staticfiles %}
+{% load my %}
+{% load jsonate_tags %}
+{% block current_company %}
+
+    <div class="current_company" style="border: solid 1px red;">
+        <div class="current_company_content">
+            <div class="company-title" style="text-align: center; margin-left: -15%;">
+                <h2>{{ company.name }}</h2>
+            </div>
+            <div class="current_company_logo" style="width: 100px; height: 100px; background: url('/media/{{ company.logo }}') no-repeat center; background-size: 100px;">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

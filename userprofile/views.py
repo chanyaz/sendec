@@ -43,11 +43,16 @@ def render_settings(request):
         "test": get_portals_to_add(request)[0],
         "test_2": get_added_portals_name(request),
         "categories": get_categories_names(request),
+        "companies": get_companies(request),
     }
     args.update(csrf(request))
 
     return render_to_response("settings.html", args)
 
+
+def get_companies(request):
+    from news.models import Companies
+    return Companies.objects.all().values("name")
 
 def get_categories_names(request):
     from news.models import NewsCategory
