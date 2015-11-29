@@ -1,0 +1,342 @@
+{
+  "1": {
+    "name": "Apple Inc.",
+    "logo": "/static/img/companies/logo/apple.png"
+  },
+  "2": {
+    "name": "Samsung Electronics"
+  },
+  "3": {
+    "name": "Foxconn"
+  },
+  "4":{
+    "name": "HP"
+  },
+  "5":{
+    "name": "IBM"
+  },
+  "6":{
+    "name": "Amazon"
+  },
+  "7":{
+    "name": "Microsoft"
+  },
+  "8":{
+    "name": "Sony"
+  },
+  "9":{
+    "name": "Google"
+  },
+  "10":{
+    "name": "Panasonic"
+  },
+  "11":{
+    "name": "Dell"
+  },
+  "12":{
+    "name": "Intel"
+  },
+  "13":{
+    "name": "LG Electronics"
+  },
+  "14":{
+    "name": "Toshiba"
+  },
+  "15":{
+    "name": "EMC"
+  },
+  "16":{
+    "name": "Cisco"
+  },
+  "17":{
+    "name": "Unisys"
+  },
+  "18":{
+    "name": "Sun Microsystems"
+  },
+  "19":{
+    "name": "Oracle"
+  },
+  "20":{
+    "name": "SAP"
+  },
+  "21":{
+    "name": "Tata Consultancy Services"
+  },
+  "22":{
+    "name": "Infosys Technologies"
+  },
+  "23":{
+    "name": "Experian"
+  },
+  "24":{
+    "name": "Dimension Data"
+  },
+  "25":{
+    "name": "Wipro Limited"
+  },
+  "26":{
+    "name": "SunGard"
+  },
+  "27":{
+    "name": "Capita"
+  },
+  "28":{
+    "name": "Fiserv"
+  },
+  "29":{
+    "name": "BearingPoint"
+  },
+  "30":{
+    "name": "CGI Group"
+  },
+  "31":{
+    "name": "Amdocs"
+  },
+  "32":{
+    "name": "Cognizant"
+  },
+  "33":{
+    "name": "Perot Systems"
+  },
+  "34":{
+    "name": "KPN (Getronics)"
+  },
+  "35":{
+    "name": "Digital China Holdings"
+  },
+  "36":{
+    "name": "Convergys"
+  },
+  "37":{
+    "name": "TietoEnator"
+  },
+  "38":{
+    "name": "Caci International"
+  },
+  "39":{
+    "name": "Steria Group"
+  },
+  "40":{
+    "name": "Facebook"
+  },
+  "41":{
+    "name": "Twitter"
+  },
+  "42":{
+    "name": "Linkedin"
+  },
+  "43":{
+    "name": "VK"
+  },
+  "44":{
+    "name": "Yandex"
+  },
+  "45":{
+    "name": "Yahoo!"
+  },
+  "46":{
+    "name": "Rambler"
+  },
+  "47":{
+    "name": "Mail.Ru"
+  },
+  "48":{
+    "name": "Tesla"
+  },
+  "49":{
+    "name": "BMW"
+  },
+  "50":{
+    "name": "Mercedes-Benz"
+  },
+  "51":{
+    "name": "Toyota"
+  },
+  "52":{
+    "name": "Lada"
+  },
+  "53":{
+    "name": "Aston Martin"
+  },
+  "54":{
+    "name": "Ferrari"
+  },
+  "55":{
+    "name": "GitHub"
+  },
+  "56":{
+    "name": "Huawai"
+  },
+  "57":{
+    "name": "NASA"
+  },
+  "58":{
+    "name": "Space-X"
+  },
+  "59":{
+    "name": "CryTek"
+  },
+  "60":{
+    "name": "Activision"
+  },
+  "61":{
+    "name": "Akella"
+  },
+  "62":{
+    "name": "Atari"
+  },
+  "63":{
+    "name": "Bethesda Softworks"
+  },
+  "64":{
+    "name": "BioWare"
+  },
+  "65":{
+    "name": "Blizzard Entertainment"
+  },
+  "66":{
+    "name": "Capcom"
+  },
+  "67":{
+    "name": "Eidos Interactive"
+  },
+  "68":{
+    "name": "Electronic Arts/EA Games"
+  },
+  "69":{
+    "name": "Epic Games"
+  },
+  "70":{
+    "name": "Firaxis Games"
+  },
+  "71":{
+    "name": "Firefly Studios"
+  },
+  "72":{
+    "name": "From Software"
+  },
+  "73":{
+    "name": "Gaijin Entertainment"
+  },
+  "74":{
+    "name": "Gameloft"
+  },
+  "75":{
+    "name": "Gravity"
+  },
+  "76":{
+    "name": "GSC Game World"
+  },
+  "77":{
+    "name": "Halfbrick"
+  },
+  "78":{
+    "name": "High Moon Studios"
+  },
+  "79":{
+    "name": "Human Head Studios"
+  },
+  "80":{
+    "name": "Interceptor Entertainment"
+  },
+  "81":{
+    "name": "Eidos Interactive"
+  },
+  "82":{
+    "name": "2K Games"
+  },
+  "83":{
+    "name": "LEGO Group"
+  },
+  "84":{
+    "name": "MachineGames"
+  },
+  "85":{
+    "name": "Maxis Software"
+  },
+  "86":{
+    "name": "Media Molecule"
+  },
+  "87":{
+    "name": "Midway Games"
+  },
+  "88":{
+    "name": "Mojang AB"
+  },
+  "89":{
+    "name": "NCsoft"
+  },
+  "90":{
+    "name": "Neversoft"
+  },
+  "91":{
+    "name": "Obsidian Entertainment"
+  },
+  "92":{
+    "name": "Overkill Software"
+  },
+  "93":{
+    "name": "Pandemic Studios"
+  },
+  "94":{
+    "name": "Perfect World"
+  },
+  "95":{
+    "name": "Phenomic Game Development"
+  },
+  "96":{
+    "name": "Piranha Bytes"
+  },
+  "97":{
+    "name": "Playdead"
+  },
+  "98":{
+    "name": "Playground Games"
+  },
+  "99":{
+    "name": "PopCap Games"
+  },
+  "100":{
+    "name": "Pyro Studios"
+  },
+  "101":{
+    "name": "Radical Entertainment"
+  },
+  "102":{
+    "name": "Raven Software"
+  },
+  "103":{
+    "name": "Red Storm Entertainment"
+  },
+  "104":{
+    "name": "Relic Entertainment"
+  },
+  "105":{
+    "name": "Rockstar Games"
+  },
+  "106":{
+    "name": "Rocksteady Studios"
+  },
+  "107":{
+    "name": "Rovio Entertainment"
+  },
+  "108":{
+    "name": "The Chinese Room"
+  },
+  "109":{
+    "name": "Turtle Rock Studios"
+  },
+  "110":{
+    "name": "Ubisoft"
+  },
+  "111":{
+    "name": "Valve Corporation"
+  },
+  "112":{
+    "name": "Wargaming"
+  },
+  "113":{
+    "name": "WB Games"
+  }
+}
