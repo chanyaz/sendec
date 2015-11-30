@@ -5,12 +5,21 @@
 
 
     <script>
-        function exchangeSelectData(){
-            var n = document.getElementById("source-ignore").options.selectedIndex;
-            var val = document.getElementById("source-ignore").options[n].value;
-            var text = document.getElementById("source-ignore").options[n].text;
-            document.getElementById("source-to-show").options.add(new Option(text, val));
-            document.getElementById("source-ignore").options.remove(n);
+        function exchangeSelectData(value){
+            if(value === "source-ignore") {
+                var n = document.getElementById("source-ignore").options.selectedIndex;
+                var val = document.getElementById("source-ignore").options[n].value;
+                var text = document.getElementById("source-ignore").options[n].text;
+                document.getElementById("source-to-show").options.add(new Option(text, val));
+                document.getElementById("source-ignore").options.remove(n);
+            }
+            else if(value === "source-ignore-2"){
+                var n_2 = document.getElementById("source-ignore-2").options.selectedIndex;
+                var val_2 = document.getElementById("source-ignore-2").options[n_2].value;
+                var text_2 = document.getElementById("source-ignore-2").options[n_2].text;
+                document.getElementById("source-to-show-2").options.add(new Option(text_2, val_2));
+                document.getElementById("source-ignore-2").options.remove(n_2);
+            }
         }
 
         function removeSelectedData(){
@@ -61,11 +70,15 @@
                 </div>
                 <div class="notify-choose">
                     Choose what companies you want to be notified by.
-                    <form>
+                    <form id="settings-form"
+                          action="/profile/settings/add_portals"
+                          method="get"
+                          onsubmit="selectAllOptions('source-to-show');">
+                        {% csrf_token %}
                         <div class="chooser" style="float: left;">
                             <label for="source-ignore">Choose</label><br>
                             <select multiple
-                                    id="source-ignore"
+                                    id="source-ignore-2"
                                     size="10"
                                     style="width: 300px;">
                                 {% for company in companies %}
@@ -75,15 +88,15 @@
                         </div>
                         <div class="buttons-to-choose" style="float: left;">
                             <br><br><br>
-                            <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData();">
+                            <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData('source-ignore-2');">
                             <br>
                             <input type="button" id="moveout" name="moveout" value="<<" onclick="return removeSelectedData();">
                         </div>
                         <div class="choosen">
                             <label for="source-to-show">Chosen</label><br>
                             <select  multiple
-                                     id="source-to-show"
-                                     name="source-to-show"
+                                     id="source-to-show-2"
+                                     name="source-to-show-2"
                                      size="10"
                                      style="width: 300px;">
                                 {% for i in test_2 %}
@@ -98,12 +111,6 @@
                     123
                 </div>
                 <div class="other-side" style="background-color: lightcyan; height: 500px;">
-                    <form id="settings-form"
-                          action="/profile/settings/add_portals"
-                          method="get"
-                          onsubmit="selectAllOptions('source-to-show');">
-                        {% csrf_token %}
-
                     <div class="choice-category">
                         Choose&nbsp;categories&nbsp;which&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
                         <br>
@@ -134,7 +141,7 @@
                                 </div>
                                 <div class="buttons-to-choose" style="float: left;">
                                     <br><br><br>
-                                    <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData();">
+                                    <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData('source-ignore');">
                                     <br>
                                     <input type="button" id="moveout" name="moveout" value="<<" onclick="return removeSelectedData();">
                                 </div>

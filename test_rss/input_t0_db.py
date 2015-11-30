@@ -27,8 +27,8 @@ def input_to_db():
 
 
 def input_companies():
-    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
-    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    #db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+    db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
     with open("dictionary_companies.json") as json_file_list:
         json_data_list = list(json.load(json_file_list))

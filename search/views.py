@@ -13,15 +13,19 @@ from news.models import NewsWatches, News
 #   @login_required(login_url="/auth/login/")
 def render_search_page(request):
     args = {
-        # "username": User.objects.get(username=auth.get_user(request).username),
         "latest_news": get_latest_news_total(request),
     }
+
+    if auth.get_user(request).username:
+        args["username"] = User.objects.get(username=auth.get_user(request).username)
+
 
     if "q" in request.GET and request.GET["q"]:
         search_word = request.GET["q"]
         if search_word is "":
             args["erorr_empty_field"] = True
-        elif len(get_search_result_text(request,search_word)) < 1 and len(get_search_result_text(request, search_word)) < 1:
+        elif len(get_search_result_text(request, search_word)) < 1 and len(get_search_result_text(request, search_word)) < 1\
+                and len(get_search_among_users(request, search_word)) < 1 and len(get_company(request, search_word)) < 1:
             args["empty_result"] = True
             args["popular_news"] = get_popular_news(request)
         else:

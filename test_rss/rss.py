@@ -25,8 +25,8 @@ def last_element(feed):
 def connect_to_db(urls):
     #urls = ["http://appleinsider.ru/feed"]
 
-    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
-    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    #db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+    db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
     for url in urls:
         #print(url)
@@ -35,7 +35,7 @@ def connect_to_db(urls):
         time = new_date[4].split(":")
         cursor.execute("SELECT rowid FROM news_rss WHERE link=?", [data["link"]])
         count = cursor.fetchall()
-        data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<")
+        data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", "")
         if len(count) == 0:
             cursor.execute("""INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""",(data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], 1, 1, data["content"], data["author"]))
             db.commit()
@@ -47,12 +47,11 @@ def connect_to_db(urls):
     db.close()
 
 urls_of_portals = get_feed_urls()
-#while True:
+while True:
 #last_element(parse_current_url(url="http://appleinsider.ru/feed/"))
 #print(last_element(parse_current_url(url="http://appleinsider.ru/feed/")))
-    #connect_to_db(urls=urls_of_portals)
-    #time.sleep(1)
-
+    connect_to_db(urls=urls_of_portals)
+    time.sleep(1)
 
 def fill_rss_table():
     import json
@@ -95,4 +94,4 @@ def fill_rss_table():
                 continue
     db.close()
 
-fill_rss_table()
+#fill_rss_table()
