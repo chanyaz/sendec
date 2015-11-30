@@ -49,7 +49,7 @@ def login(request):
 @login_required(login_url='/auth/login/')
 def logout(request):
     auth.logout(request)
-    return redirect('/auth/login/')
+    return redirect('/')
 
 
 def register(request):

@@ -2,6 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 {% load staticfiles %}
 {% load jsonate_tags %}
+{% load i18n %}
 <head>
     <meta charset="utf-8">
     <title>Sendec&nbsp;{{ title }}</title>
@@ -11,6 +12,23 @@
     <link rel="shortcut icon" href="{% static 'static/img/favicon.ico' %}" type="image/x-icon">
     <!-- Scripts -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <!-- VK sharing -->
+    <script type="text/javascript" src="http://vk.com/js/api/share.js?93" charset="windows-1251"></script>
+    <!-- VK AUTH -->
+    <script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
+    <script type="text/javascript">VK.init({apiId: 111});</script>
+
+    <!-- FACEBOOK sharing -->
+    <script>
+                                    (function(d, s, id) {
+                                        var js, fjs = d.getElementsByTagName(s)[0];
+                                        if (d.getElementById(id)) return;
+                                        js = d.createElement(s); js.id = id;
+                                        js.src = "//connect.facebook.net/en_EN/sdk.js#xfbml=1&version=v2.5";
+                                        fjs.parentNode.insertBefore(js, fjs);
+                                    }(document, 'script', 'facebook-jssdk'));
+                                </script>
+
 
 
     <!-- START STOCKS -->
@@ -75,6 +93,15 @@
                 }
             });
         });
+        jQuery(function($){
+            $(document).mouseup(function (e){
+                var div = $(".popup-user-auth-content");
+                if (!div.is(e.target)
+                    && div.has(e.target).length === 0) {
+                    $(".popup-user-auth").hide();
+                }
+            });
+        });
     </script>
     <script>
         $(document).ready(function(){
@@ -82,6 +109,7 @@
                 if (eventObject.which == 27)
                     $('.preview-rss-news').hide();
                     hideLeftBar();
+                    $(".popup-user-auth").hide();
                     $("html").css("overflowY", "auto");
             });
         });
@@ -235,7 +263,7 @@
                 US | RU | CH
             </div>
             <div onmouseover="this.style.cursor='pointer';" class="title-name" style="text-align: center; font-size: 2em;" onclick="location.href='/';">
-                SEVERY&nbsp;NEWS
+                THE&nbsp;SENDEC
             </div>
         </div>
         <div class="right-block">
@@ -465,7 +493,10 @@
                                     facebook<br>
                                     Twitter<br>
                                     Google+<br>
-                                    VK
+                                    <div id="vk_auth"></div>
+                                    <script type="text/javascript">
+                                        VK.Widgets.Auth("vk_auth", {width: "100px", authUrl: '/dev/Auth'});
+                                    </script>
                                 </div>
                             </div>
 

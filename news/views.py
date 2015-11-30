@@ -10,6 +10,10 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Q
 
+
+from django.utils.translation import ugettext as _
+
+
 from django.contrib.admin.views.decorators import staff_member_required
 
 from .models import News, NewsPortal, NewsCategory
@@ -25,6 +29,11 @@ def main_page_load(request):
         "total_bottom_news": render_news_by_sendec(request)[4:22],
         #"photo": User.objects.get(username=auth.get_user(request).username).profile.user_photo,
     }
+
+    # LOCALIZATION
+    args["latest"] = _("Latest")
+
+
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"]=User.objects.get(username=auth.get_user(request).username)
@@ -439,7 +448,7 @@ def render_space_news(request):
 
 
 def get_space_news(request):
-    return News.objects.all().filter(news_category_id=5)
+    return News.objects.all().filter(news_category_id=4)
 
 
 #################################### END SPACE ##############################3

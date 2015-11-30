@@ -1,5 +1,6 @@
 from django import template
 from django.utils.importlib import import_module
+from django.contrib.auth.models import User
 
 
 register = template.Library()
@@ -44,7 +45,6 @@ def get_news_category(value, get_id=False):
 
 @register.filter(name="check_reading_category")
 def check_reading_category(value_cid, value_username):
-    from django.contrib.auth.models import User
     from news.models import NewsCategory, News
     from userprofile.models import UserSettings
     user_settings_categories = UserSettings.objects.get(user_id=User.objects.get(username=value_username).id).categories_to_show.split(",")
@@ -64,3 +64,8 @@ def get_article_author(value):
 def get_portal_name(value):
     from news.models import NewsPortal
     return NewsPortal.objects.get(id=int(value)).portal_name
+
+
+@register.filter(name="get_user_photo")
+def get_user_photo(value):
+    return User.objects.get(id=int(value)).profile.user_photo

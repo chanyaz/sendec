@@ -155,15 +155,14 @@
         .share-list-item{
             float: left;
             margin-left: 1%;
-            border: solid 1px red;
         }
 
 
     </style>
 
-    <div class="container-fluid" data-news-id="{{ current_news_values.id }}" style="width: 64.5%; border: solid 1px lawngreen; float: left;">
+    <div class="container-fluid" data-news-id="{{ current_news_values.id }}" style="width: 64.5%; border: solid 1px lightgrey; float: left;">
 
-        <div class="tre" style="border: solid 1px red; width: 100%;">
+        <div class="tre" style="width: 100%;">
 
             <h1 class="page-header" style="margin: 0 5%;">
                 {{ current_news_values.news_title }}
@@ -177,14 +176,31 @@
                     {% endif %}
                     &nbsp;{{ current_news_values.news_post_date.date }}</h5>
             </div>
-        <div class="news-settings" style="height: 2em; width: 100%; border: solid 1px blueviolet;">
+        <div class="news-settings" style="height: 2em; width: 100%;">
             <div class="shares" style="margin-left: -6%; margin-top: -1%;">
                 <ul style="list-style-type: none;">
-                    <li class="share-list-item"><span class="share-facebook">facebook</span></li>
-                    <li class="share-list-item"><span class="share-vk">VK</span></li>
-                    <li class="share-list-item"><span class="share-googl+">Google+</span></li>
-                    <li class="share-list-item"><span class="share-twitter">Twitter</span></li>
-                    <li class="share-list-item"><span class="share-linkedin">Linkedin</span></li>
+                    <li class="share-list-item">
+                        <div class="fb-share-button" data-layout="button"></div>
+                    </li>
+                    <li class="share-list-item">
+                        <span class="share-vk">
+                            <script type="text/javascript">
+                                document.write(VK.Share.button(false,{type: "round_nocount", text: "Share on VK", eng: 1}));
+                            </script>
+                        </span>
+                    </li>
+                    <li class="share-list-item">
+                        <span class="share-twitter">
+                            <a href="https://twitter.com/share" class="twitter-share-button"{count} data-via="SendecNews">Tweet</a>
+                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                        </span>
+                    </li>
+                    <li class="share-list-item">
+                        <span class="share-linkedin">
+                            <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                            <script type="IN/Share" data-counter=""></script>
+                        </span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -326,13 +342,15 @@
                     {% endif %}
 
                     {% if comments_total|length > 0 %}
-                        <div id="comments_block" data-current-news-id="{{ current_news_values.id }}" class="comments" style="border: solid 1px lawngreen; width: 87.5%; margin-left: 4%;">
+                        <div id="comments_block" data-current-news-id="{{ current_news_values.id }}" class="comments" style="width: 87.5%; margin-left: 4%;">
                             {% for current_comment in comments_total %}
-                                <div class="current_comment" style="border: solid 1px red;">
+                                <div class="current_comment" style="">
+                                    <div class="current_comment_author_photo"
+                                         style="width: 3em; height: 3em; border-radius: 5px; float: left; background: url('/media/{{ current_comment.comments_author_id|get_user_photo }}') no-repeat center; background-size: cover;"></div>
                                     <div class="current_comment_auhor">
-                                        {{ current_comment.comments_author_id|get_username }}
+                                        {{ current_comment.comments_author_id|get_username }}&nbsp;|&nbsp;{{ current_comment.comments_post_date.date }}
                                     </div>
-                                    <div class="current_comment_text" style="margin-left: 5%;">
+                                    <div class="current_comment_text" style="margin-left: 10%;">
                                         {{ current_comment.comments_text|safe|linebreaks }}
                                     </div>
                                     <div class="current_comment_info" style="margin-left: 60%;">
@@ -343,8 +361,7 @@
                                                     document.getElementById('reply_form__comment_{{ current_comment.id }}').onfocus();"
                                         >Reply</span>&nbsp;|
                                         Likes:&nbsp;{{ current_comment.comments_likes }}&nbsp;|
-                                        Dislikes:&nbsp;{{ current_comment.comments_dislikes }}&nbsp;|
-                                        {{ current_comment.comments_post_date.date }}
+                                        Dislikes:&nbsp;{{ current_comment.comments_dislikes }}
                                     </div>
                                     <form id="reply_form_comment_{{ current_comment.id }}"
                                           style="display: none;"
@@ -452,12 +469,12 @@
                 <hr style="height: 2px;" color="red" width="100%">
                 Other&nbsp;materials&nbsp;of&nbsp;{{ current_news_values.news_category }}
                 <div class="other-materials"
-                     style="border: solid 1px red; height: {% if other_materials|length <= 3 %} 25em {% elif other_materials|length <= 6 %} 52em {% elif other_materials|length <= 9 %} 77em {% elif other_materials|length <= 12 %} 103em {% endif %}">
+                     style="height: {% if other_materials|length <= 3 %} 25em {% elif other_materials|length <= 6 %} 52em {% elif other_materials|length <= 9 %} 77em {% elif other_materials|length <= 12 %} 103em {% endif %}">
                     {% for current_other in other_materials %}
                         <div class="current_rss_news_{{ i.id }}"
-                                 style="width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; border: solid 1px red; float: left;">
+                                 style="width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; float: left;">
                                 <div class="title"><a href="/news/{{ current_other.news_category_id }}/{{ current_other.id }}/">{{ current_other.news_title }}</a></div>
-                                <div class="portal" style="float: left;">By <a href="/search/?q=">%portal name%</a></div>
+                                <div class="portal" style="float: left;">By <a href="/search/?q={{ current_other.news_portal_name_id|get_portal_name }}">{{ current_other.news_portal_name_id|get_portal_name }}</a></div>
                                 <div class="published">&nbsp;|&nbsp;{{ current_other.news_post_date.time }}</div>
 
                                 <div class="news-image" style="background: url('/media/{{ current_other.news_main_cover }}') no-repeat center; width: 100%; height: 50%;">
@@ -474,7 +491,7 @@
     </div>
 
 
-    <div class="right-side-block" style="border: solid 1px red; margin-left: 65%; margin-right: 5%;">
+    <div class="right-side-block" style="margin-left: 65%; margin-right: 5%;">
         <div class="latest-news"
         style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
             <div class="latest-header" style="text-align: center;">
