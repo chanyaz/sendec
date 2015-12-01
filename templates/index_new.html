@@ -5,7 +5,7 @@
 {% load i18n %}
 <head>
     <meta charset="utf-8">
-    <title>Sendec&nbsp;{{ title }}</title>
+    <title>Insydia&nbsp;{{ title }}</title>
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css">
@@ -277,7 +277,7 @@
                 US | RU | CH
             </div>
             <div onmouseover="this.style.cursor='pointer';" class="title-name" style="text-align: center; font-size: 2em;" onclick="location.href='/';">
-                THE&nbsp;SENDEC
+                INSYDIA
             </div>
         </div>
         <div class="right-block">
@@ -372,8 +372,9 @@
                         <<br>
                     </span>
                 </div>
-                <div class="other" style="margin-left: 10%; height: 100%;">
-                    <div class="top-navigation" style="margin-left: 13%; margin-top: 0;">
+
+                <div class="top-navigation" style="margin-top: 0;">
+                    <div class="" style="margin-left: 16%;">
                         <ul style="list-style-type: none;">
                             <li class="li-cat"><a href="/news/latest/">LATEST</a></li>
                             <li class="li-cat"><a href="/news/technology/">TECHNOLOGY</a></li>
@@ -388,6 +389,9 @@
                             {% endif %}
                         </ul>
                     </div>
+                </div>
+
+                <div class="other" style="margin-left: 10%; height: 100%;">
                 <br>
                     <div class="search-bar" hidden
                          onkeydown="if(event.keyCode == 27){$('.search-bar').hide(); $('.block-news').hide();}"
@@ -554,11 +558,30 @@
                 <div class="rss-date-published"></div>
                 <div class="rss-parent-link" style="float: right; margin-top: -3%;"></div>
                 <div class="rss-shares" style="border: solid 1px darkred; height: 2%;">
-                    <button>facebook</button>
-                    <button>Twitter</button>
-                    <button>Linkedin</button>
-                    <button>VK</button>
-                    <button>Google+</button>
+                    <ul style="list-style-type: none;">
+                        <li class="share-list-item">
+                            <div class="fb-share-button" data-layout="button"></div>
+                        </li>
+                        <li class="share-list-item">
+                            <span class="share-vk">
+                                <script type="text/javascript">
+                                    document.write(VK.Share.button(false,{type: "round_nocount", text: "Share on VK", eng: 1}));
+                                </script>
+                            </span>
+                        </li>
+                        <li class="share-list-item">
+                            <span class="share-twitter">
+                                <a href="https://twitter.com/share" class="twitter-share-button"{count} data-via="SendecNews">Tweet</a>
+                                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                            </span>
+                        </li>
+                        <li class="share-list-item">
+                            <span class="share- linkedin">
+                                <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                                <script type="IN/Share" data-counter=""></script>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
                 <div class="rss-body" style="padding: 0 5%;"></div>
             </div>

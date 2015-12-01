@@ -91,12 +91,13 @@ def render_user_news(request, page_number=1):
         #"usernews": get_user_news_by_portals(request),
        # "deftest": test.html(request),
         #"rss_news": get_rss_news(request),
+        "test": set_rss_for_user_test(request),
     }
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     from news.models import RssNews
-    all_rss_news = RssNews.objects.all().values()
+    all_rss_news = set_rss_for_user_test(request) #RssNews.objects.all().values()
     current_page = Paginator(object_list=all_rss_news, per_page=12)
     args["rss_news"] = current_page.page(page_number)
     return render_to_response("user_news.html", args)
@@ -448,7 +449,7 @@ def render_space_news(request):
 
 
 def get_space_news(request):
-    return News.objects.all().filter(news_category_id=4)
+    return News.objects.all().filter(news_category_id=NewsCategory.objects.get(category_name="Space").id)
 
 
 #################################### END SPACE ##############################3
@@ -604,3 +605,19 @@ def external_transition(request, cat_id, news_id):
     news_instance.external_transition += 1
     news_instance.save()
     return HttpResponseRedirect("/news/%s/%s/" % (cat_id, news_id))
+
+
+def set_rss_for_user_test(request):
+    from news.models import News, NewsPortal, RssNews
+    from userprofile.models import UserSettings, UserRssPortals
+    from itertools import chain, groupby
+    from operator import attrgetter
+    from django.db.models import Q
+
+
+    user = User.objects.get(username=auth.get_user(request).username)
+    portals_user_list = UserRssPortals.objects.filter(user_id=user.id).filter(check=True).values()
+
+    test_new = RssNews.objects.filter(portal_name_id__in=(portals_user_list[i]["portal_id"] for i in range(len(portals_user_list)))).values()
+
+    return test_new

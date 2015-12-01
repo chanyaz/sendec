@@ -95,3 +95,13 @@ def fill_rss_table():
     db.close()
 
 #fill_rss_table()
+
+
+def fill_user_rss_table():
+    import json
+    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    cursor = db.cursor()
+
+    cursor.execute("SELECT portal_name FROM news_portal")
+    list_portals = cursor.fetchall()

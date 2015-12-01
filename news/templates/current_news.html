@@ -102,9 +102,10 @@
                     url: $form.attr('action'),
                     data: $form.serialize(),
                     success: function(result){
-                        var window = $('html').html("");
+                        var window = $('html');//.html("");
                         window.html(result);
-                        $(".current_comment").trigger("reset");
+                        $($form).find('input[type=text], textarea').val('');
+                        //$(".current_comment").trigger("reset");
                         //alert("success");
                     },
                     error: function(data){
@@ -347,8 +348,10 @@
                         <div id="comments_block" data-current-news-id="{{ current_news_values.id }}" class="comments" style="width: 87.5%; margin-left: 4%;">
                             {% for current_comment in comments_total %}
                                 <div class="current_comment" style="">
-                                    <div class="current_comment_author_photo"
-                                         style="width: 3em; height: 3em; border-radius: 5px; float: left; background: url('/media/{{ current_comment.comments_author_id|get_user_photo }}') no-repeat center; background-size: cover;"></div>
+                                    {% if current_comment.comments_author_id|get_user_photo != '' %}
+                                        <div class="current_comment_author_photo"
+                                             style="width: 3em; height: 3em; border-radius: 5px; float: left; background: url('/media/{{ current_comment.comments_author_id|get_user_photo }}') no-repeat center; background-size: cover;"></div>
+                                    {% endif %}
                                     <div class="current_comment_auhor">
                                         {{ current_comment.comments_author_id|get_username }}&nbsp;|&nbsp;{{ current_comment.comments_post_date.date }}
                                     </div>

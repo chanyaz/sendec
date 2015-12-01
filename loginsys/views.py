@@ -53,8 +53,10 @@ def logout(request):
 
 
 def register(request):
-    from userprofile.models import UserSettings
+    from userprofile.models import UserSettings, UserRssPortals
     from .models import UserProfile
+
+    from news.models import NewsPortal
 
     import string
     from random import choice
@@ -89,6 +91,14 @@ def register(request):
                     user_cell_number=user_phone
                 )
 
+                from news.models import RssNews, RssPortals
+
+                list_portals = RssPortals.objects.all().values()
+                [UserRssPortals.objects.create(
+                    user_id=User.objects.get(username=auth.get_user(request).username).id,
+                    portal_id=int(list_portals[i]["id"]),
+                    check=False
+                ) for i in range(len(list_portals))]
 
                 from django.conf import settings
 

@@ -27,3 +27,12 @@ class UserLikesNews(models.Model):
     news = models.ForeignKey(News)
     like = models.BooleanField(default=False)
     dislike = models.BooleanField(default=False)
+
+
+class UserRssPortals(models.Model):
+    class Meta:
+        db_table = "user_rss_news"
+
+    user = models.ForeignKey(User)
+    portal = models.ForeignKey(NewsPortal)
+    check = models.BooleanField(default=False)

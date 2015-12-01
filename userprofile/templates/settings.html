@@ -94,7 +94,7 @@
                         </div>
                         <div class="choosen">
                             <label for="source-to-show">Chosen</label><br>
-                            <select  multiple
+                            <select multiple
                                      id="source-to-show-2"
                                      name="source-to-show-2"
                                      size="10"
@@ -104,69 +104,64 @@
                                 {% endfor %}
                             </select>
                         </div>
-                    </form>
-                </div>
-            <hr width="100%">
-                <div class="left-side" style="float: left; width: 30em; height: 500px;">
-                    123
-                </div>
-                <div class="other-side" style="background-color: lightcyan; height: 500px;">
-                    <div class="choice-category">
-                        Choose&nbsp;categories&nbsp;which&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
-                        <br>
-                        <div class="categories-list">
-                            <input type="checkbox" name="check_all_categories" id="check_all_categories">
-                            <label for="check_all_categories">Check&nbsp;all</label><br>
-                            {% for category in categories %}
-                                <input class="currently_category_check" type="checkbox" id="cid{{ category.id }}" name="categories[]" value="{{ category.id }}"
-                                       {% if category.id|check_reading_category:username == True %}checked{% endif %}>
-                                <label for="cid{{ category.id }}">{{ category.category_name }}</label><br>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <div class="choice-portal">
-                        Choose&nbsp;portals&nbsp;which&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
-                        <div class="form-to-choose">
-                                <div class="chooser" style="float: left;">
-                                    <label for="source-ignore">Choose</label><br>
-                                    <select multiple
-                                            id="source-ignore"
-                                            size="10"
-                                            style="width: 300px;">
-                                        {% for portal in portals %}
-                                            <option value="{{ portal.id }}" id="id{{ portal.id }}">{{ portal.portal_name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="buttons-to-choose" style="float: left;">
-                                    <br><br><br>
-                                    <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData('source-ignore');">
-                                    <br>
-                                    <input type="button" id="moveout" name="moveout" value="<<" onclick="return removeSelectedData();">
-                                </div>
-                                <div class="choosen">
-                                    <label for="source-to-show">Chosen</label><br>
-                                    <select  multiple
-                                             id="source-to-show"
-                                             name="source-to-show"
-                                             size="10"
-                                             style="width: 300px;">
-                                            {% for i in test_2 %}
-                                                <option value="{{ i.id }}" id="id{{ i.id }}">{{ i.portal_name }}</option>
-                                            {% endfor %}
-                                    </select>
-                                    <div class="maintenance" style="color: red; font-size: 20px;">
-                                        {{ choosen_portals }}<br>
-                                        test(not added & waits to add):{{ test }}<br>
-                                        test_2(already added):{{ test_2 }}
-                                    </div>
-                                </div>
+                        <hr width="100%">
+                        <div class="other-side" style="background-color: lightcyan; height: 500px;">
+                            <div class="choice-category">
+                                Choose&nbsp;categories&nbsp;which&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
                                 <br>
-                                <input type="submit" value="Save">
-                        </div>
-                    </div>
+                                <div class="categories-list">
+                                    <input type="checkbox" name="check_all_categories" id="check_all_categories">
+                                    <label for="check_all_categories">Check&nbsp;all</label><br>
+                                    {% for category in categories %}
+                                        <input class="currently_category_check" type="checkbox" id="cid{{ category.id }}" name="categories[]" value="{{ category.id }}"
+                                               {% if category.id|check_reading_category:username == True %}checked{% endif %}>
+                                        <label for="cid{{ category.id }}">{{ category.category_name }}</label><br>
+                                    {% endfor %}
+                                </div>
+                            </div>
 
+                            <div class="choice-portal">
+                                Choose&nbsp;portals&nbsp;which&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
+                                <div class="form-to-choose">
+                                        <div class="chooser" style="float: left;">
+                                            <label for="source-ignore">Choose</label><br>
+                                            <select multiple
+                                                    id="source-ignore"
+                                                    size="10"
+                                                    style="width: 300px;">
+                                                {% for portal in test %}
+                                                    <option value="{{ portal.portal_id }}" id="id{{ portal.portal_id }}">{{ portal.portal_id|get_portal_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="buttons-to-choose" style="float: left;">
+                                            <br><br><br>
+                                            <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData('source-ignore');">
+                                            <br>
+                                            <input type="button" id="moveout" name="moveout" value="<<" onclick="return removeSelectedData();">
+                                        </div>
+                                        <div class="choosen">
+                                            <label for="source-to-show">Chosen</label><br>
+                                            <select  multiple
+                                                     id="source-to-show"
+                                                     name="source-to-show"
+                                                     size="10"
+                                                     style="width: 300px;">
+                                                    {% for i in test_2 %}
+                                                        <option value="{{ i.portal_id }}" id="id{{ i.portal_id }}">{{ i.portal_id|get_portal_name }}</option>
+                                                    {% endfor %}
+                                            </select>
+                                            <div class="maintenance" style="color: red; font-size: 20px;">
+                                                {{ choosen_portals }}<br>
+                                                test(not added & waits to add):{{ test }}<br>
+                                                test_2(already added):{{ test_2 }}
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <input type="submit" value="Save">
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

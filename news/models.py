@@ -39,6 +39,22 @@ class NewsPortal(models.Model):
 
 
 
+class Companies(models.Model):
+    class Meta:
+        db_table = 'companies'
+        verbose_name = 'Company'
+        verbose_name_plural = 'Companies'
+
+    name = models.CharField(max_length=32)
+    verbose_name = models.CharField(max_length=32)
+    site = models.URLField(max_length=32)
+    category = models.ForeignKey(NewsCategory)
+    logo = models.FileField(upload_to=upload_company_cover, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class News(models.Model):
     class Meta:
         db_table = "news"
@@ -51,7 +67,9 @@ class News(models.Model):
     news_post_text = models.TextField(max_length=4096)
     news_portal_name = models.ForeignKey(NewsPortal)
 
-    news_author = models.ForeignKey(User)
+    news_company_owner = models.ForeignKey(Companies, blank=True)
+
+    news_author = models.ForeignKey(User, blank=True)
 
     news_latest_shown = models.BooleanField(default=False)
     news_currently_showing = models.BooleanField(default=False)
@@ -191,17 +209,9 @@ class RssNews(models.Model):
         }
 
 
-class Companies(models.Model):
+class RssPortals(models.Model):
     class Meta:
-        db_table = 'companies'
-        verbose_name = 'Company'
-        verbose_name_plural = 'Companies'
+        db_table = "rss_portals"
 
-    name = models.CharField(max_length=32)
-    verbose_name = models.CharField(max_length=32)
-    site = models.URLField(max_length=32)
-    category = models.ForeignKey(NewsCategory)
-    logo = models.FileField(upload_to=upload_company_cover, blank=True)
-
-    def __str__(self):
-        return self.name
+    portal = models.CharField(max_length=32)
+    portal_base_link = models.URLField()

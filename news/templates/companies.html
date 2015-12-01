@@ -3,7 +3,12 @@
 {% block companies %}
 
     <div class="container-fluid">
-            <div id="companies" style="border: solid 1px red; width: 70%; margin-left: 1%; height: auto; float: left;">
+        <div id="companies" style="border: solid 1px red; width: 70%; margin-left: 1%; height: auto; float: left;">
+            <div class="company-top-title" style="text-align: center;">Companies</div>
+            <div class="companies-total-description">
+                Here you can search news of the certain company which do you want.
+            </div>
+            <div class="companies-list">
                 {% for current_company in companies %}
                     <div class="current_company" onclick="location.href='/news/companies/{{ current_company.name }}/';">
                         <div class="current_company_name">
@@ -12,6 +17,7 @@
                         </div><br>
                     </div>
                 {% endfor %}
+            </div>
             </div>
             <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
                 {% include 'twitter.html' %}
