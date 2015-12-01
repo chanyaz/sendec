@@ -83,6 +83,7 @@
         }
     </script>
     <script>
+        // PopUp RSS NEWS
         jQuery(function($){
             $(document).mouseup(function (e){
                 var div = $(".preview-rss-news-content");
@@ -93,12 +94,25 @@
                 }
             });
         });
+
+        // PopUp Authentication
         jQuery(function($){
             $(document).mouseup(function (e){
                 var div = $(".popup-user-auth-content");
                 if (!div.is(e.target)
                     && div.has(e.target).length === 0) {
                     $(".popup-user-auth").hide();
+                }
+            });
+        });
+
+        // LEFT PANEL
+        jQuery(function($){
+            $(document).mouseup(function (e){
+                var div = $(".left-panel");
+                if (!div.is(e.target)
+                    && div.has(e.target).length === 0) {
+                    hideLeftBar();
                 }
             });
         });
@@ -312,30 +326,32 @@
                             </div>
                         </div>
                     {% endif %}
-                    <div class="categories" style="margin-top: 10%;">
-                        <ul class="categories" style="list-style-type: none;">
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/latest/';">LATEST</span></li>
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/technology/';">TECHNOLOGY</span></li>
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/entertainment/';">ENTRTAINMENT</span></li>
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/auto/';">AUTO</span></li>
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/space/';">SPACE</span></li>
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/bit/';">BIT</span></li>
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/companies/';">COMPANIES</span></li>
-                        </ul>
-                    </div>
-                    <div class="navigation">
-                        <ul style="list-style-type: none;">
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/top/';">TOP&nbsp;NEWS</span></li>
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/podcasts/';">PODCASTS</span></li>
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/reviews/';">REVIEWS</span></li>
-                        </ul>
-                    </div>
-                    <div class="founders">
-                        <ul style="list-style-type: none;">
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/about/';">ABOUT&nbsp;US</span></li>
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/contacts/';">CONTACTS</span></li>
-                            <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/';">STH&nbsp;ELSE</span></li>
-                        </ul>
+                    <div class="lists" style="margin-left: 10%;">
+                        <div class="categories" style="margin-top: 10%;">
+                            <ul class="categories" style="list-style-type: none;">
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/latest/';">LATEST</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/technology/';">TECHNOLOGY</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/entertainment/';">ENTRTAINMENT</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/auto/';">AUTO</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/space/';">SPACE</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/bit/';">BIT</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/companies/';">COMPANIES</span></li>
+                            </ul>
+                        </div>
+                        <div class="navigation">
+                            <ul style="list-style-type: none;">
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/top/';">TOP&nbsp;NEWS</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/podcasts/';">PODCASTS</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/reviews/';">REVIEWS</span></li>
+                            </ul>
+                        </div>
+                        <div class="founders">
+                            <ul style="list-style-type: none;">
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/about/';">ABOUT&nbsp;US</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/contacts/';">CONTACTS</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/';">STH&nbsp;ELSE</span></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="left-showing-bar"
