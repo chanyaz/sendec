@@ -15,6 +15,7 @@ def render_user_profile_page(request):
         "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| Profile",
         "user_profile_page": True,
+        "user_articles": 100#get_user_articles_amount(User.objects.get(username=auth.get_user(request).username).id),
     }
     args.update(csrf(request))
 
@@ -35,15 +36,22 @@ def get_user_articles(request, **kwargs):
 
 @login_required(login_url="/auth/login/")
 def render_settings(request):
+
+    from news.models import RssNews, RssPortals
+
     args = {
         "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| Settings",
         #"portals": get_portal_names(request),
-        "choosen_portals": get_currently_shown_portals(request),
+        #"choosen_portals": get_currently_shown_portals(request),
         "test": get_portals_to_add(request),
         "test_2": get_added_portals_name(request),
         "categories": get_categories_names(request),
         "companies": get_companies(request),
+
+        "hui": RssPortals.objects.all(),
+
+
     }
     args.update(csrf(request))
 
@@ -67,14 +75,6 @@ def get_portal_names(request):
 
 def get_portals_to_add(request):
     from userprofile.models import UserSettings, UserRssPortals
-    from news.models import News, NewsPortal
-    #user_setting_instance = UserSettings.objects.get(user_id=User.objects.get(username=auth.get_user(request).username).id).portals_to_show.split(",")
-    #list_of_portals_to_choose_by_user = NewsPortal.objects.all().values("id")
-    #new_user_list = []
-    #for i in list_of_portals_to_choose_by_user:
-    #    if str(i["id"]) not in user_setting_instance:
-    #        new_user_list.append(i["id"])
-    #return new_user_list, user_setting_instance
 
     current_user = User.objects.get(username=auth.get_user(request).username)
     return UserRssPortals.objects.filter(user_id=current_user.id).filter(check=False).values("portal_id")
@@ -201,3 +201,8 @@ onclick="location.href='http://127.0.0.1:8000/c/ucid=%s&uid=%s';">Confirm&nbsp;n
     msg.attach_alternative(html_content, "text/html")
     msg.send()
     return HttpResponse()
+
+
+def get_user_articles_amount(user_id):
+    from news.models import News
+    return News.objects.filter(news_author_id=user_id).count()

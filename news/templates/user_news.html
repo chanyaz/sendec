@@ -36,7 +36,7 @@
                              onclick="RssPreviewPopUpShow('{{ i|jsonate }}')"
                              style="width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; border: solid 1px red; float: left;">
                             <div class="title">{{ i.title }}</div>
-                            <div class="portal" style="float: left;">By <a href="/search/?q={{ i.portal_name_id|get_portal_name }}">{{ i.portal_name_id|get_portal_name }}</a></div>
+                            <div class="portal" style="float: left;">By <a href="/search/?q={{ i.portal_name_id|get_rss_portal_name }}">{{ i.portal_name_id|get_rss_portal_name }}</a></div>
                             <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>
 
                             <div class="news-image" style="background-color: red; width: 100%; height: 50%;">
@@ -85,9 +85,11 @@
                 <button>Add&nbsp;content</button>
                 <hr width="100%">
                 User&nbsp;contents
-                {% for i in portals %}
-                    <span class="user-portals">{{ i.id }}</span>
-                {% endfor %}
+                {% if portals != '' %}
+                    {% for i in portals %}
+                        <span class="user-portals">{{ i.id }}</span>
+                    {% endfor %}
+                {% endif %}
             </div>
             <div class="twitter" style="border: solid 1px lawngreen;">
                 {% include 'twitter.html' %}

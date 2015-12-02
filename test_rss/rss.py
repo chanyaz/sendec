@@ -47,11 +47,11 @@ def connect_to_db(urls):
     db.close()
 
 urls_of_portals = get_feed_urls()
-while True:
+#while True:
 #last_element(parse_current_url(url="http://appleinsider.ru/feed/"))
 #print(last_element(parse_current_url(url="http://appleinsider.ru/feed/")))
-    connect_to_db(urls=urls_of_portals)
-    time.sleep(1)
+ #   connect_to_db(urls=urls_of_portals)
+  #  time.sleep(1)
 
 def fill_rss_table():
     import json
@@ -61,40 +61,37 @@ def fill_rss_table():
     #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
 
+    with open("dictionary_portals.json") as json_file_list:
+        json_data_list = list(json.load(json_file_list))
     with open("dictionary_portals.json") as json_file:
         json_data = json.load(json_file)
 
-    print(json_data)
+    print(json_data[json_data_list[0]])
 
     cursor.execute("SELECT * FROM news_portal")
-    list = cursor.fetchall()
-    print("ID_list: ", list[0][0])
+    list_cur = cursor.fetchall()
 
     cursor.execute("SELECT * FROM news_rss")
     rss = cursor.fetchall()
-    print("ID_rss: ", rss[0][0])
-    print("LINK_rss: ", rss[0][6])
-    print("len_list: ", len(list))
-    print("len_rss: ", len(rss))
-    print(rss[2][0])
+    #print(rss[2][0])
 
 
 
-    end = len(rss)*len(list)
+    end = len(rss)*len(list_cur)
     cur_iter = 0
     for i in range(len(rss)):
-        for j in range(len(list)):
+        for j in range(len(list_cur)):
             cur_iter += 1
-            if str(list[j][2]) in str(rss[i][6]):
+            if str(list_cur[j][2]) in str(rss[i][6]):
                 id = str(rss[i][0])
-                cursor.execute("UPDATE news_rss SET portal_name_id=? WHERE id=?", (str(list[j][0]), id))
+                cursor.execute("UPDATE news_rss SET portal_name_id=? WHERE id=?", (str(list_cur[j][0]), id))
                 db.commit()
                 print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "When total end is ", end)
             else:
                 continue
     db.close()
 
-#fill_rss_table()
+fill_rss_table()
 
 
 def fill_user_rss_table():

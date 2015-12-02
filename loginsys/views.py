@@ -55,6 +55,7 @@ def logout(request):
 def register(request):
     from userprofile.models import UserSettings, UserRssPortals
     from .models import UserProfile
+    import uuid
 
     from news.models import NewsPortal
 
@@ -88,8 +89,12 @@ def register(request):
                 UserProfile.objects.create(
                     user_id=User.objects.get(username=auth.get_user(request).username).id,
                     confirmation_code=''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for x in range(33)),
-                    user_cell_number=user_phone
+                    user_cell_number=user_phone,
+                    uuid=set_uuid(User.objects.get(username=auth.get_user(request).username).id)
                 )
+
+                #uuid_string = str(User.objects.get(username=new_user_form.cleaned_data['username']).profile.uuid).replace('-', '')
+                uuid_string = User.objects.get(username=new_user_form.cleaned_data['username']).profile.uuid
 
                 from news.models import RssNews, RssPortals
 
@@ -109,10 +114,10 @@ Last step of registration.
 Please, confirm your account by clicking button below this text.
 <button>Confirm now</button>
 
-Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/c/ucid=%s&uid=%s</a>""" % \
+Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/c/ucid=%s&uuid=%s/</a>""" % \
                                (new_user_form.cleaned_data['username'],
                                 UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
-                                User.objects.get(username=new_user_form.cleaned_data['username']).id)
+                                User.objects.get(username=new_user_form.cleaned_data['username']).profile.uuid)
                 mail_from = "saqel@yandex.ru"
                 mail_to = user_email#User.objects.get(username=new_user_form.cleaned_data['username']).email
                 #send_mail(mail_subject, mail_message, settings.EMAIL_HOST_USER, [mail_to], fail_silently=False)
@@ -124,16 +129,16 @@ Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/c/ucid=%s&ui
 \n
 \nTo confirm your account, you have to press this button.
 \n<button style='margin-left: 30%%; width: 150px; height: 50px; background-color: #5bc0de; color: white;'
-onclick="location.href='http://127.0.0.1:8000/c/ucid=%s&uid=%s';">Confirm&nbsp;now</button>
+onclick="location.href='http://127.0.0.1:8000/c/ucid=%s&uuid=%s/';">Confirm&nbsp;now</button>
 \n
-\nOr you can do it via clicking url: <a href="http://127.0.0.1:8000/c/ucid=%s&uid=%s">http://127.0.0.1:8000/c/ucid=%s&uid=%s</a>""" % \
+\nOr you can do it via clicking url: <a href="http://127.0.0.1:8000/c/ucid=%s&uuid=%s/">http://127.0.0.1:8000/c/ucid=%s&uuid=%s</a>""" % \
                                (new_user_form.cleaned_data['username'],
                                 UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
-                                User.objects.get(username=new_user_form.cleaned_data['username']).id,
+                                uuid_string,
                                 UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
-                                User.objects.get(username=new_user_form.cleaned_data['username']).id,
+                                uuid_string,
                                 UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
-                                User.objects.get(username=new_user_form.cleaned_data['username']).id)
+                                uuid_string)
                 msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
                 msg.attach_alternative(html_content, "text/html")
                 msg.send()
@@ -232,8 +237,10 @@ def pref_portals_save(request):
     return HttpResponseRedirect("/")
 
 
-def confirm_email(request, confirm_code, user_id):
-    user_instance = User.objects.get(id=user_id)
+def confirm_email(request, confirm_code, user_uuid):
+    from loginsys.models import UserProfile
+    user_take = UserProfile.objects.get(uuid=user_uuid.replace('-',''))
+    user_instance = User.objects.get(id=user_take.user_id)
     if confirm_code == user_instance.profile.confirmation_code:
         user_instance.is_active = True
         user_instance.save()
@@ -263,3 +270,7 @@ def send_message_via_sms(request, verify_code, phone_number):
     client.messages.create(to=phone_number, from_="+12166001832", body=text,)
 
 
+def set_uuid(user_id):
+    user_instance = User.objects.get(id=user_id)
+    import uuid
+    return uuid.uuid3(uuid.NAMESPACE_DNS, "%s %s" % (user_instance.username, datetime.datetime.now()))

@@ -3,6 +3,7 @@
 {% load staticfiles %}
 {% load jsonate_tags %}
 {% load i18n %}
+{% load cache %}
 <head>
     <meta charset="utf-8">
     <title>Insydia&nbsp;{{ title }}</title>
@@ -326,6 +327,7 @@
                             </div>
                         </div>
                     {% endif %}
+                {% cache 600 lists %}
                     <div class="lists" style="margin-left: 10%;">
                         <div class="categories" style="margin-top: 10%;">
                             <ul class="categories" style="list-style-type: none;">
@@ -353,6 +355,7 @@
                             </ul>
                         </div>
                     </div>
+                {% endcache %}
                 </div>
                 <div class="left-showing-bar"
                      style="width: 2%; height: 105%; position: fixed; margin-left: -0.9%; margin-top: -8%;">

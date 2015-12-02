@@ -67,6 +67,7 @@
             <div class="user-settings" style="">
                 <div class="top-block" style="background-color: #4cae4c; text-align: center; margin-top: -1%;">
                     <h3>SETTINGS</h3>
+                    {{ hui.0.id }}
                 </div>
                 <div class="notify-choose">
                     Choose what companies you want to be notified by.
@@ -130,7 +131,7 @@
                                                     size="10"
                                                     style="width: 300px;">
                                                 {% for portal in test %}
-                                                    <option value="{{ portal.portal_id }}" id="id{{ portal.portal_id }}">{{ portal.portal_id|get_portal_name }}</option>
+                                                    <option value="{{ portal.portal_id }}" id="id{{ portal.portal_id }}">{{ portal.portal_id|get_rss_portal_name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -148,7 +149,7 @@
                                                      size="10"
                                                      style="width: 300px;">
                                                     {% for i in test_2 %}
-                                                        <option value="{{ i.portal_id }}" id="id{{ i.portal_id }}">{{ i.portal_id|get_portal_name }}</option>
+                                                        <option value="{{ i.portal_id }}" id="id{{ i.portal_id }}">{{ i.portal_id|get_rss_portal_name }}</option>
                                                     {% endfor %}
                                             </select>
                                             <div class="maintenance" style="color: red; font-size: 20px;">

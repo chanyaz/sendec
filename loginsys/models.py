@@ -17,3 +17,4 @@ class UserProfile(models.Model):
     user_rate = models.FloatField(default=0.0)
 
     confirmation_code = models.CharField(max_length=33)
+    uuid = models.UUIDField()

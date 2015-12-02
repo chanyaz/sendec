@@ -45,7 +45,12 @@
                     </div>
                     <hr width="100%">
                     <div id="user-articles">
-                        <label class="col-md-3">Articles:&nbsp;{{ username.profile.written_articles }}</label>
+                        <label class="col-md-5">Articles:&nbsp;{{ user_articles }}</label>
+                        <div class="looking-article">
+                            {% if user_articles > 0 %}
+                                &nbsp;<i><a href="">See all</a></i>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             <hr width="100%">

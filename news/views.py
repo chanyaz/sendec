@@ -87,7 +87,7 @@ def render_current_news(request, category_id, news_id):
 def render_user_news(request, page_number=1):
     args = {
         "title": "| My news",
-        "portals": get_user_chosen_portals(request),
+        #"portals": get_user_chosen_portals(request),
         #"usernews": get_user_news_by_portals(request),
        # "deftest": test.html(request),
         #"rss_news": get_rss_news(request),
