@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% block current_news %}
 {% load my %}
-
     <!-- REFRESH LATEST NEWS -->
     <script>
     // Refresh latest news
@@ -164,6 +163,8 @@
     <div class="container-fluid" data-news-id="{{ current_news_values.id }}" style="width: 64.5%; border: solid 1px lightgrey; float: left;">
 
         <div class="tre" style="width: 100%;">
+
+
 
             <h1 class="page-header" style="margin: 0 5%;">
                 {{ current_news_values.news_title }}
@@ -470,6 +471,34 @@
                 </div>
             </div>
 
+
+
+
+
+<div id="disqus_thread"></div>
+<script>
+/**
+* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+
+s.src = '//indavant.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
             {% if other_materials|length > 0 %}
                 <hr style="height: 2px;" color="red" width="100%">
                 Other&nbsp;materials&nbsp;of&nbsp;{{ current_news_values.news_category }}
@@ -505,6 +534,7 @@
             <div class="latest-titles">
                     {% for i in latest_news %}
                         <div class="latest-news"
+                             style="height: 70px;"
                              onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
                             <div class="latest-news-cover"
                                  style="float: left; height:70px; width: 100px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
@@ -521,7 +551,7 @@
                                 </span>
                             </div>
                         </div>
-                        <hr width="100%">
+                        <hr>
                     {% endfor %}
             </div>
         </div>

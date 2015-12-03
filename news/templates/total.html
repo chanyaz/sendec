@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load cache %}
 {% block politics %}
 
 
@@ -115,7 +114,6 @@
                         </div>
                         <hr width="100%">
                         <div class="media" style="height: inherit;">
-                        {% cache 600 latest-reviews %}
                             <div class="latest-reviews" style="height: 500px;">
                                 <div class="left-bar-videos" style="margin-left: 0.9%; float: left; width: 70%; height: 100%;">
                                     <iframe width="100%" height="90%" src="https://www.youtube.com/embed/t4OEsI0Sc_s" frameborder="0" allowfullscreen></iframe>
@@ -126,7 +124,6 @@
                                     <iframe style="margin-top: -1.3%;" width="100%" height="20%" src="https://www.youtube.com/embed/lm35rHZPG30" frameborder="0" allowfullscreen></iframe>
                                 </div>
                             </div>
-                        {% endcache %}
                             <hr width="100%">
                             <div class="recently-news" style="">
                                 RECENTLY NEWS: 18 other items and load more<br>

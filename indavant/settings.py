@@ -46,6 +46,8 @@ INSTALLED_APPS = (
     "ckeditor",
 )
 
+
+
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
@@ -74,9 +76,6 @@ MIDDLEWARE_CLASSES = (
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
 
-    'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'indavant.urls'
@@ -110,16 +109,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'indavant.wsgi.application'
 
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/var/tmp/django_cache',
-        'TIMEOUT': 60,
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000
-        }
-    }
-}
+
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -164,8 +154,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 import json
-#with open("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\indavant\\admin_data_mail") as json_file:
-with open("/home/eprivalov/PycharmProjects/sendec/sendec/indavant/admin_data_mail.json") as json_file:
+with open("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\indavant\\admin_data_mail") as json_file:
+#with open("/home/eprivalov/PycharmProjects/sendec/sendec/indavant/admin_data_mail.json") as json_file:
     json_data = json.load(json_file)
 
 
