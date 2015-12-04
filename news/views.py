@@ -16,17 +16,20 @@ from django.utils.translation import ugettext as _
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from .models import News, NewsPortal, NewsCategory
+from .models import News, NewsPortal, NewsCategory, Companies
 
+
+import datetime
 
 #@login_required(login_url='/auth/login/')
 def main_page_load(request):
     args = {
+        "current_year": datetime.datetime.now().year,
         "title": "| Home",
         "news_block": True,
         "breaking_news": render_news_by_sendec(request)[0],
         "total_middle_news": render_news_by_sendec(request)[1:4],
-        "total_bottom_news": render_news_by_sendec(request)[4:22],
+        "total_bottom_news": render_news_by_sendec(request)[4:13],
         #"photo": User.objects.get(username=auth.get_user(request).username).profile.user_photo,
     }
 
@@ -49,6 +52,14 @@ def render_news_by_sendec(request, **kwargs):
     else:
         return News.objects.all().values()
 
+
+def get_company_news(request, news_id, company_id):
+    current_company_news = News.objects.filter(news_company_owner=company_id).exclude(id=news_id).order_by("-news_post_date")
+    #latest_10_news = News.objects.all().order_by("-news_post_date")
+    #return latest_10_news
+    return current_company_news
+
+
 def get_latest_news_total(request):
     latest_10_news = News.objects.all().order_by("-news_post_date")
     return latest_10_news
@@ -59,21 +70,23 @@ def render_current_news(request, category_id, news_id):
     import datetime
     from userprofile.models import UserLikesNews
     from .forms import NewsCommentsForm, NewsCommentsRepliesForm
+    current_news = News.objects.get(id=news_id)
     args = {
-        "title": "| %s" % News.objects.get(id=news_id).news_title,
-        "current_news_values": News.objects.get(id=news_id),
+        "title": "| %s" % current_news.news_title,
+        "current_news_values": current_news,
         "other_materials": render_news_by_sendec(request, news_id=news_id, category_id=category_id).exclude(id=news_id)[:12],
-        "latest_news": get_latest_news_total(request)[:10],
+        "latest_news": get_company_news(request, news_id, current_news.news_company_owner_id)[:5],
+        "company_name": str(Companies.objects.get(id=current_news.news_company_owner_id)).capitalize(),
         "current_day": datetime.datetime.now().day,
-        "comments_form": NewsCommentsForm,
-        "replies_form": NewsCommentsRepliesForm,
+        #"comments_form": NewsCommentsForm,
+        #"replies_form": NewsCommentsRepliesForm,
         "comments_total": comments_load(request, news_id),
         "replies_total": replies_load(request, news_id),
         "liked": check_like(request, news_id),
         "disliked": check_dislike(request, news_id),
         "like_amount": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count(),
         "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count(),
-        "current_news_title": News.objects.get(id=news_id).news_title,
+        "current_news_title": current_news.news_title,
         "external_link": shared_news_link(request, news_id),
     }
     if auth.get_user(request).username:
@@ -608,16 +621,9 @@ def external_transition(request, cat_id, news_id):
 
 
 def set_rss_for_user_test(request):
-    from news.models import News, NewsPortal, RssNews
-    from userprofile.models import UserSettings, UserRssPortals
-    from itertools import chain, groupby
-    from operator import attrgetter
-    from django.db.models import Q
-
-
+    from news.models import RssNews
+    from userprofile.models import UserRssPortals
     user = User.objects.get(username=auth.get_user(request).username)
     portals_user_list = UserRssPortals.objects.filter(user_id=user.id).filter(check=True).values()
-
-    test_new = RssNews.objects.filter(portal_name_id__in=(portals_user_list[i]["portal_id"] for i in range(len(portals_user_list)))).values()
-
+    test_new = RssNews.objects.filter(portal_name_id__in=(1,)).values()#portals_user_list[i]["portal_id"] for i in range(len(portals_user_list)))).values()
     return test_new

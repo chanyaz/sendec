@@ -74,3 +74,8 @@ def get_rss_portal_name(value):
 @register.filter(name="get_user_photo")
 def get_user_photo(value):
     return User.objects.get(id=int(value)).profile.user_photo
+
+@register.filter(name="get_rss_news_cover")
+def get_rss_news_cover(value):
+    from news.models import RssNewsCovers
+    return RssNewsCovers.objects.get(id=int(value)).main_cover

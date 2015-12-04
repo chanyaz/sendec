@@ -18,7 +18,8 @@ def parse_current_url(url=''):
 
 def last_element(feed):
     return {"title": feed[0].title, "date": feed[0].published, "description": feed[0].description,
-            "link": feed[0].link, "content": feed[0].content[0]["value"], "author": feed[0].author}
+            "link": feed[0].link, "content": feed[0].content[0]["value"], "author": feed[0].author,
+            "main_cover": ""}
     #return feed[0].content
 
 
@@ -35,11 +36,31 @@ def connect_to_db(urls):
         time = new_date[4].split(":")
         cursor.execute("SELECT rowid FROM news_rss WHERE link=?", [data["link"]])
         count = cursor.fetchall()
+
+        import re
+        match_2 = re.findall(r'src=(.*?)\s.*/>', data["content"])
+        if len(match_2) >= 1:
+            data["main_cover"] = str(match_2[0])
+        else:
+            data["main_cover"] = str(match_2)
+
         data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", "")
+        match = re.findall(r'<.*?>', data["description"])
+        for i in match:
+            data["description"] = data["description"].replace(i, "")
+        data["description"] = data["description"].replace("\n", "")
+
+
+
         if len(count) == 0:
             cursor.execute("""INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""",(data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], 1, 1, data["content"], data["author"]))
-            db.commit()
 
+            cursor.execute("SELECT rowid FROM news_rss WHERE title=?", [data["title"]])
+            current_rss_id = cursor.fetchone()[0]
+
+            cursor.execute("INSERT INTO rss_news_covers(rss_news_id, main_cover) VALUES (?, ?)", (int(current_rss_id), data["main_cover"]))
+
+            db.commit()
             print("Inserted from: ", url)
         else:
             print("Already exists: ", url)
@@ -47,11 +68,11 @@ def connect_to_db(urls):
     db.close()
 
 urls_of_portals = get_feed_urls()
-#while True:
+while True:
 #last_element(parse_current_url(url="http://appleinsider.ru/feed/"))
 #print(last_element(parse_current_url(url="http://appleinsider.ru/feed/")))
- #   connect_to_db(urls=urls_of_portals)
-  #  time.sleep(1)
+    connect_to_db(urls=urls_of_portals)
+    time.sleep(1)
 
 def fill_rss_table():
     import json
@@ -91,7 +112,7 @@ def fill_rss_table():
                 continue
     db.close()
 
-fill_rss_table()
+#fill_rss_table()
 
 
 def fill_user_rss_table():
@@ -100,5 +121,17 @@ def fill_user_rss_table():
     #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
 
+    with open("dictionary_portals.json") as file_list:
+        file_list = list(json.load(file_list))
+    with open("dictionary_portals.json") as file:
+        portals = json.load(file)
+
     cursor.execute("SELECT portal_name FROM news_portal")
     list_portals = cursor.fetchall()
+    for i in range(len(portals)):
+        cursor.execute("INSERT INTO rss_portals(portal, portal_base_link) VALUES(?, ?)", (portals[file_list[i]]["name"], portals[file_list[i]]["base_link"]))
+        db.commit()
+
+    db.close()
+
+#fill_user_rss_table()

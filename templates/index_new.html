@@ -74,13 +74,13 @@
             $('.left-panel').show();
             document.getElementById('arrow-to-show-sections').style.marginLeft = '11%';
             $('#arrow-to-show-sections').delay(200).fadeOut("fast");
-            $('#arrow-to-hide-sections').delay(210).fadeIn("fast");
+            $('#arrow-to-hide-sections').delay(201).fadeIn("fast");
         }
         function hideLeftBar(){
             $('.left-panel').hide();
             document.getElementById('arrow-to-show-sections').style.marginLeft = '0';
             $('#arrow-to-hide-sections').delay(200).fadeOut("fast");
-            $('#arrow-to-show-sections').delay(210).fadeIn("fast");
+            $('#arrow-to-show-sections').delay(201).fadeIn("fast");
         }
     </script>
     <script>
@@ -358,21 +358,30 @@
                 {% endcache %}
                 </div>
                 <div class="left-showing-bar"
+                     onmouseover="$(this).css('backgroundColor', 'rgba(0, 0, 0, 0.61');"
+                     onmouseout="$(this).css('backgroundColor', 'rgba(0, 0, 0, 0'); $('#image-arrow-to-expand').css('opacity', 0.2);"
                      style="width: 2%; height: 105%; position: fixed; margin-left: -0.9%; margin-top: -8%;">
                     <span id="arrow-to-show-sections"
                           class="arrow-to-show-sections"
                           style="width: 1%; position: fixed; margin-top: 20%;"
                           onclick="showLeftBar();">
-                        >
+                        <img id="image-arrow-to-expand"
+                             src="{% static 'static/img/arrow.png' %}"
+                             style="opacity: 0.2;"
+                             width="30px"
+                             height="100%"/>
                     </span>
+
                     <span id="arrow-to-hide-sections"
                           class="arrow-to-hide-sections"
-                          style="margin-left: 11%; width: 1%; position: fixed; margin-top: 20%;"
+                          style="margin-left: 10%; width: 1%; position: fixed; margin-top: 20%;"
                           onclick="hideLeftBar();"
                           hidden>
-                        <<br>
-                        <<br>
-                        <<br>
+                        <img id="image-arrow-to-hide"
+                             src="{% static 'static/img/arrow-hide.png' %}"
+                             style="opacity: 0.2;"
+                             width="30px"
+                             height="100%"/>
                     </span>
                 </div>
 
@@ -413,13 +422,13 @@
                     </div>
                 <br>
                 <div class="service-media" style="border: solid 1px red; float: right; margin-right: 4%;">
-                    <img onclick="location.href='http://facebook.com';"
+                    <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"
                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png" width="30px"/>
-                    <img onclick="location.href='http://vk.com';"
+                    <img onclick="location.href='http://vk.com/insydianews';"
                          src="https://cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/vkontakte-256.png" width="30px"/>
-                    <img onclick="location.href='http://twitter.com';"
+                    <img onclick="location.href='https://twitter.com/insydianews';"
                          src="https://g.twimg.com/Twitter_logo_blue.png" width="30px"/>
-                    <img onclick="location.href='http://linkedin.com';"
+                    <img onclick="location.href='http://linkedin.com/';"
                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/768px-LinkedIn_logo_initials.png" width="30px"/>
                     <img onclick="location.href='http://youtube.com';"
                          src="https://trashbox.ru/files/292867_8be151/youtube-logo.png" width="30px"/>
@@ -634,7 +643,7 @@
             $(".popup-user-window").hide();
         }
     </script>
-    <script>
+    <script >
         $(document).ready(function(){
             //Скрыть PopUp при загрузке страницы
             RssPreviewPopUpHide();

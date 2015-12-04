@@ -47,8 +47,8 @@ def get_latest_news_total(request):
 
 #   @login_required(login_url="/auth/login/")
 def get_search_result(request, search_word):
-    from news.models import News
-    return News.objects.filter(Q(news_title__contains=search_word) | Q(news_post_text__contains=search_word)).values()
+    from news.models import News, NewsPortal
+    return News.objects.filter(Q(news_title__contains=search_word) | Q(news_post_text__contains=search_word) | Q(news_portal_name_id=NewsPortal.objects.get(portal_name=search_word).id)).values()
 
 
 #   @login_required(login_url="/auth/login/")

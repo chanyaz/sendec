@@ -192,6 +192,7 @@ class RssNews(models.Model):
     content_value = models.TextField(max_length=16384)
 
 
+
     def __str__(self):
         return self.title
 
@@ -208,6 +209,12 @@ class RssNews(models.Model):
             "author": self.author,
         }
 
+
+class RssNewsCovers(models.Model):
+    class Meta:
+        db_table = "rss_news_covers"
+    rss_news = models.ForeignKey(RssNews)
+    main_cover = models.TextField(max_length=512)
 
 class RssPortals(models.Model):
     class Meta:
