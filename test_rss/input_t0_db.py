@@ -12,8 +12,6 @@ def input_to_db():
     with open("dictionary_portals.json") as json_file:
         json_data = json.load(json_file)
 
-
-
     for i in range(len(json_data)):
         cursor.execute("""SELECT rowid FROM news_portal WHERE portal_name=?""", [json_data[json_data_list[i]]["name"]])
         count = cursor.fetchall()

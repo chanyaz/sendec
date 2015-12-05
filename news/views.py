@@ -18,7 +18,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from .models import News, NewsPortal, NewsCategory, Companies
 
-
+from news.models import RssNews
+from userprofile.models import UserRssPortals
 import datetime
 
 #@login_required(login_url='/auth/login/')
@@ -98,6 +99,9 @@ def render_current_news(request, category_id, news_id):
 
 @login_required(login_url="/auth/login/")
 def render_user_news(request, page_number=1):
+
+    user = User.objects.get(username=auth.get_user(request).username)
+
     args = {
         "title": "| My news",
         #"portals": get_user_chosen_portals(request),
@@ -105,6 +109,7 @@ def render_user_news(request, page_number=1):
        # "deftest": test.html(request),
         #"rss_news": get_rss_news(request),
         "test": set_rss_for_user_test(request),
+        "user_rss": get_user_rss_news(request, user_id=user.id)
     }
     args.update(csrf(request))
     if auth.get_user(request).username:
@@ -620,10 +625,12 @@ def external_transition(request, cat_id, news_id):
     return HttpResponseRedirect("/news/%s/%s/" % (cat_id, news_id))
 
 
+def get_user_rss_news(request, user_id):
+    return UserRssPortals.objects.filter(user_id=user_id).filter(check=True).values()
+
+
 def set_rss_for_user_test(request):
-    from news.models import RssNews
-    from userprofile.models import UserRssPortals
     user = User.objects.get(username=auth.get_user(request).username)
-    portals_user_list = UserRssPortals.objects.filter(user_id=user.id).filter(check=True).values()
-    test_new = RssNews.objects.filter(portal_name_id__in=(1,)).values()#portals_user_list[i]["portal_id"] for i in range(len(portals_user_list)))).values()
+    portals_user_list = get_user_rss_news(request, user_id=user.id)
+    test_new = RssNews.objects.filter(portal_name_id__in=(portals_user_list[i]["portal_id"] for i in range(len(portals_user_list)))).values()
     return test_new
