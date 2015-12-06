@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.shortcuts import render_to_response, render, HttpResponseRedirect, RequestContext, HttpResponse
+from django.shortcuts import render_to_response, render, HttpResponseRedirect, RequestContext, HttpResponse, Http404
 from django.template.context_processors import csrf
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -15,7 +15,11 @@ def render_user_profile_page(request):
         "username": User.objects.get(username=auth.get_user(request).username),
         "title": "| Profile",
         "user_profile_page": True,
-        "user_articles": 100#get_user_articles_amount(User.objects.get(username=auth.get_user(request).username).id),
+        "user_articles": 100,#get_user_articles_amount(User.objects.get(username=auth.get_user(request).username).id),
+        "test": get_portals_to_add(request),
+        "test_2": get_added_portals_name(request),
+        "categories": get_categories_names(request),
+        "companies": get_companies(request),
     }
     args.update(csrf(request))
 
@@ -29,33 +33,23 @@ def render_user_profile_page(request):
     return render_to_response("profile.html", args)
 
 
+def render_moderator_profile_page(request, username):
+    args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
+    }
+    args.update(csrf(request))
+    if User.objects.filter(username=username).exists():
+        if User.objects.get(username=username).is_staff:
+            return render_to_response("moderator_profile.html", args)
+        else:
+            raise Http404()
+    else:
+        raise Http404()
+
+
 def get_user_articles(request, **kwargs):
     from loginsys.models import UserProfile
     return UserProfile.objects.get(user_id=User.objects.get(username=kwargs["looking_username"]).id).written_articles
-
-
-@login_required(login_url="/auth/login/")
-def render_settings(request):
-
-    from news.models import RssNews, RssPortals
-
-    args = {
-        "username": User.objects.get(username=auth.get_user(request).username),
-        "title": "| Settings",
-        #"portals": get_portal_names(request),
-        #"choosen_portals": get_currently_shown_portals(request),
-        "test": get_portals_to_add(request),
-        "test_2": get_added_portals_name(request),
-        "categories": get_categories_names(request),
-        "companies": get_companies(request),
-
-        "hui": RssPortals.objects.all(),
-
-
-    }
-    args.update(csrf(request))
-
-    return render_to_response("settings.html", args)
 
 
 def get_companies(request):
@@ -158,11 +152,12 @@ def addition_portals_show(request):
                 settings_instance.categories_to_show = settings_instance.categories_to_show.replace("%s," % j, "")
                 settings_instance.save()
 
-    return HttpResponseRedirect("/profile/settings/", args)
+    return HttpResponseRedirect("/profile/", args)
 
 
 def send_confirm_email(request, user_id):
     from django.core.mail import EmailMultiAlternatives
+    from django.conf import settings
 
     user_instance = User.objects.get(id=user_id)
 
@@ -172,10 +167,11 @@ Last step of registration.
 Please, confirm your account by clicking button below this text.
 <button>Confirm now</button>
 
-Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/c/ucid=%s&uid=%s</a>""" % \
+Or you can do it by use this link: <a href=''>%sc/ucid=%s&uid=%s</a>""" % \
                    (user_instance.username,
+                    settings.MAIN_URL,
                     user_instance.profile.confirmation_code,
-                    user_instance.id)
+                    user_instance.profile.uuid)
 
     mail_from = "saqel@yandex.ru"
     mail_to = user_instance.email#User.objects.get(username=new_user_form.cleaned_data['username']).email
@@ -186,16 +182,19 @@ Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/c/ucid=%s&ui
 \n
 \nTo confirm your account, you have to press this button.
 \n<button style='margin-left: 30%%; width: 150px; height: 50px; background-color: #5bc0de; color: white;'
-onclick="location.href='http://127.0.0.1:8000/c/ucid=%s&uid=%s';">Confirm&nbsp;now</button>
+onclick="location.href='%sc/ucid=%s&uid=%s';">Confirm&nbsp;now</button>
 \n
-\nOr you can do it via clicking url: <a href="http://127.0.0.1:8000/c/ucid=%s&uid=%s">http://127.0.0.1:8000/c/ucid=%s&uid=%s</a>""" % \
+\nOr you can do it via clicking url: <a href="%sc/ucid=%s&uuid=%s">%sc/ucid=%s&uuid=%s</a>""" % \
                    (user_instance.username,
+                    settings.MAIN_URL,
                     user_instance.profile.confirmation_code,
-                    user_instance.id,
+                    user_instance.profile.uuid,
+                    settings.MAIN_URL,
                     user_instance.profile.confirmation_code,
-                    user_instance.id,
+                    user_instance.profile.uuid,
+                    settings.MAIN_URL,
                     user_instance.profile.confirmation_code,
-                    user_instance.id)
+                    user_instance.profile.uuid)
 
     msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
     msg.attach_alternative(html_content, "text/html")

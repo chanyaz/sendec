@@ -1,31 +1,41 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
 {% load my %}
+{% load jsonate_tags %}
 {% block favourite %}
 
+    <style>
+        .current_rss_news{
+            width: 32%;
+            height: 25em;
+            margin-left: 1%;
+            margin-top: 1%;
+            border-radius: 5px;
+            box-shadow: 0 0 5px black;
+            float: left;
+        }
+        .current_rss_news:hover{
+            box-shadow: 0 0 5px blue;
+        }
+    </style>
+
     <div class="container-fluid">
-            {% for current_fav_news in favourites %}
-                    <div
-                            onclick="location.href='/news/{{ current_fav_news.news_id|get_news_category:'True' }}/{{ current_fav_news.news_id }}/';"
-                            class="current_fav_news_id{{ current_fav_news.news_id }}"
-                            style="float: left; width: 20em; height: 20em; border: solid 1px red; margin-left: 1%;">
-                        <div class="title">
-                            {{ current_fav_news.news_id|get_news_title }}
-                        </div>
-                        <div class="category">
-                            {{ current_fav_news.news_id|get_news_category }}
-                        </div>
-                        <div class="portal">
-                            {{ current_fav_news.news_id|get_news_portal }}
-                        </div>
-                        <div class="text">
-                            {{ current_fav_news.news_id|get_news_text|safe|truncatewords_html:"15" }}
-                        </div>
-                        <div class="date">
-                            {{ current_fav_news.news_id|get_news_date }}
-                        </div>
-                    </div>
+        <div id="rss-news" style="border: solid 1px red; width: 70%; margin-left: 1%; float: left;">
+            {% for i in rss_news %}
+                <div class="current_rss_news"
+                     id="rss_id_{{ i.id }}"
+                     data-current-rss-news-id="{{ i.id }}"
+                     onclick="RssPreviewPopUpShow('{{ i|jsonate }}')"
+                     style="">
+                    <div class="title">{{ i.title }}</div>
+                    <div class="portal" style="float: left;">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id }}</a></div>
+                    <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>
+                    <div class="news-image" style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;"></div>
+                    <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>
+                    <div class="navigation" style="float: right;">Share&nbsp;|&nbsp;Like</div>
+                </div>
             {% endfor %}
+        </div>
     </div>
 
 {% endblock %}

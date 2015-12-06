@@ -4,7 +4,6 @@
     <style>
         .background-line{
             position:relative;
-            z-index:1;
             overflow:hidden;
             text-align:center;
         }
@@ -49,17 +48,84 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
+
+        #progress-popup-window{
+            z-index: 900;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            margin: -10% 0 auto -0.7%;
+        }
+        #progress-popup-window-content {
+            z-index: 800;
+            width:  48.5%;
+            margin: 15% auto 0 20.5%;
+            height: 30%;
+            background-color: #d5d5d5;
+        }
+        #progress-bar{
+            margin-left: 30%;
+            width: 40%;
+            height: 5%;
+        }
+        .text{
+            padding-top: 5%;
+            text-align: center;
+            padding-bottom: 3%;
+        }
+
+
+
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
+
+    <script>
+        $(document).ready(function(){
+            //Скрыть PopUp при загрузке страницы
+            ProgressBarPopUpHide();
+        });
+        //Функция отображения PopUp
+        function ProgressBarPopUpShow(){
+            $("#progress-popup-window").show();
+            //$("span").append(data.music_track_name);
+        }
+        //Функция скрытия PopUp
+        function ProgressBarPopUpHide(){
+            $("#progress-popup-window").hide();
+        }
+    </script>
+
+
+    <div id="progress-popup-window">
+        <div id="progress-popup-window-content">
+            <div class="text">
+                Please,&nbsp;wait&nbsp;while&nbsp;we&nbsp;are&nbsp;preparing&nbsp;your&nbsp;profile.
+                <br>
+                You&nbsp;will&nbsp;be&nbsp;able&nbsp;to&nbsp;use&nbsp;service&nbsp;in&nbsp;a&nbsp;minute.
+            </div>
+            <div id="progress-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#progress-bar").progressbar({
+                value: false
+            });
+        })
+    </script>
 
 
     <div id="register-block">
         <form action="/auth/register/" method="post" id="global-reg-block">
         {% csrf_token %}
             <div class="service-name" style="text-align: center;">
-                %SERVICE&nbsp;NAME%
+                INSYDIA
             </div>
 
             <div id="welcome-text" style="margin-left: 40%;">
@@ -81,7 +147,7 @@
                 <input type="tel" id="registration-phone" placeholder="+15555555555" name="registration-phone">
 
 
-                <button type="submit" class="tiny" style="height: 40px; width: 64%; margin-left: 20%; margin-top: 4%;">
+                <button onclick="ProgressBarPopUpShow();" type="submit" class="tiny" style="height: 40px; width: 64%; margin-left: 20%; margin-top: 4%;">
                     Sign&nbsp;Up
                 </button>
             </div>
@@ -89,7 +155,7 @@
                 Please&nbsp;fill&nbsp;out&nbsp;all&nbsp;required&#040;<span style="color: red; ">&#042;</span>&#041;&nbsp;fields.
             </div>
             <div class="" style="height: 5em; width: 25em; text-align: center; margin-left: 17%; margin-top: 10%;">
-                By&nbsp;clicking&nbsp;&laquo;Sign&nbsp;Up&raquo;,you&nbsp;agree&nbsp;to&nbsp;%SERVICE&nbsp;NAME%&#39;s&nbsp;
+                By&nbsp;clicking&nbsp;&laquo;Sign&nbsp;Up&raquo;,you&nbsp;agree&nbsp;to&nbsp;INSYDIA&#39;s&nbsp;
                 <a href="">
                     Terms&nbsp;and&nbsp;Conditions&nbsp;
                 </a>

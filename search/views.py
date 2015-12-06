@@ -8,6 +8,7 @@ from django.db.models import Q
 
 
 from news.models import NewsWatches, News
+from search.models import UserRequests
 
 
 #   @login_required(login_url="/auth/login/")
@@ -35,6 +36,12 @@ def render_search_page(request):
             args["companies_matches"] = get_company(request, search_word).values()
 
         args["search_word"] = search_word
+
+        UserRequests.objects.create(
+            user_id=User.objects.get(username=auth.get_user(request).username).id,
+            request=search_word
+        )
+
     args.update(csrf(request))
     return render_to_response("search.html", args)
 
@@ -48,7 +55,7 @@ def get_latest_news_total(request):
 #   @login_required(login_url="/auth/login/")
 def get_search_result(request, search_word):
     from news.models import News, NewsPortal
-    return News.objects.filter(Q(news_title__contains=search_word) | Q(news_post_text__contains=search_word) | Q(news_portal_name_id=NewsPortal.objects.get(portal_name=search_word).id)).values()
+    return News.objects.filter(Q(news_title__contains=search_word) | Q(news_post_text__contains=search_word)).values()
 
 
 #   @login_required(login_url="/auth/login/")
@@ -75,7 +82,7 @@ def get_popular_news(request):
 
 
 def get_search_among_users(request, search_word):
-    return User.objects.filter(Q(username__contains=search_word))
+    return User.objects.filter(is_staff=True).filter(Q(username__contains=search_word))
 
 
 def get_company(request, search_word):

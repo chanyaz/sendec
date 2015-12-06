@@ -1,6 +1,47 @@
 {% extends 'index_new.html' %}
-{% block user_profile %}
 {% load staticfiles %}
+{% load my %}
+{% block user_profile %}
+
+
+    <script>
+        function exchangeSelectData(value){
+            if(value === "source-ignore") {
+                var n = document.getElementById("source-ignore").options.selectedIndex;
+                var val = document.getElementById("source-ignore").options[n].value;
+                var text = document.getElementById("source-ignore").options[n].text;
+                document.getElementById("source-to-show").options.add(new Option(text, val));
+                document.getElementById("source-ignore").options.remove(n);
+            }
+            else if(value === "source-ignore-2"){
+                var n_2 = document.getElementById("source-ignore-2").options.selectedIndex;
+                var val_2 = document.getElementById("source-ignore-2").options[n_2].value;
+                var text_2 = document.getElementById("source-ignore-2").options[n_2].text;
+                document.getElementById("source-to-show-2").options.add(new Option(text_2, val_2));
+                document.getElementById("source-ignore-2").options.remove(n_2);
+            }
+        }
+
+        function removeSelectedData(){
+            var n = document.getElementById("source-to-show").options.selectedIndex;
+            var val = document.getElementById("source-to-show").options[n].value;
+            var text = document.getElementById("source-to-show").options[n].text;
+            document.getElementById("source-ignore").options.add(new Option(text, val));
+            document.getElementById("source-to-show").options.remove(n);
+        }
+
+        function selectAllOptions(selStr)
+        {
+            // Select ALL options on submit form.
+            var selObj = document.getElementById(selStr);
+            for (var i=0; i<selObj.options.length; i++) {
+                selObj.options[i].selected = true;
+            }
+        }
+    </script>
+
+
+
 
     <div class="container-fluid">
 
@@ -65,7 +106,7 @@
             <!-- edit form column -->
             <div class="col-md-7 col-sm-6 col-xs-12 personal-info">
                 <h3>Personal info</h3>
-                <form
+                <form   style="border: solid 1px red;"
                         action="/profile/change/"
                         method="POST"
                         class="form-horizontal"
@@ -74,13 +115,13 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label">Username:</label>
                         <div class="col-md-8">
-                            <input
+                            <input  readonly
                                     name="username"
                                     class="form-control"
                                     type="text"
                                     placeholder="Username"
                                     value="{{ username.username }}"
-                            spellcheck="true">
+                                    spellcheck="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -138,23 +179,81 @@
                     </div>
                 </form>
 
-                <div class="settings col-lg-10">
-                    <h3>Settings</h3>
-                    <div class="col-md-offset-0">
-                        Password:&nbsp;
-                        <form class="col-lg-offset-1">
-                            <label for="new_password">New&nbsp;password</label>
-                            <input id="new_password" type="password"><br><br>
-                            <label for="confirm_new_password">Confirm&nbsp;new&nbsp;password</label>
-                            <input id="confirm_new_password" type="password">
-                        </form>
+                <h3>Settings</h3>
+                <div class="special-info" style="height: 6em;">
+                    <div class="special-info-speech" style="">
+                        To get special information you can enter key word here and we will try to find and provide
+                        you with this information.
+                    </div>
+                    <label class="col-md-2 control-label">Key&nbsp;word:</label>
+                    <div class="col-md-8" style="float: left;">
+                        <input name="keyword"
+                               class="form-control"
+                               type="text"
+                               placeholder="Enter&nbsp;key&nbsp;word"
+                               spellcheck="true"
+                               style="float: left">
+                    </div>
+                    <div class="col-md-1">
+                        <input type="submit" value="Search">
                     </div>
                 </div>
 
+
+                <form   id="settings-form"
+                        style="border: solid 1px red;"
+                        action="/profile/add_portals"
+                        method="get"
+                        class="form-horizontal"
+                        role="form"
+                        onsubmit="selectAllOptions('source-to-show');">
+                    {% csrf_token %}
+
+                    <div id="chooser">
+                        <div class="other-side" style="height: 500px;">
+                            <div class="choice-portal">
+                                Choose&nbsp;portals&nbsp;which&nbsp;news&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
+                                <div class="form-to-choose">
+                                        <div class="chooser" style="float: left;">
+                                            <label for="source-ignore">Choose</label><br>
+                                            <select multiple
+                                                    id="source-ignore"
+                                                    size="10"
+                                                    style="width: 300px;">
+                                                {% for portal in test %}
+                                                    <option value="{{ portal.portal_id }}" id="id{{ portal.portal_id }}">{{ portal.portal_id|get_rss_portal_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="buttons-to-choose" style="float: left;">
+                                            <br><br><br>
+                                            <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData('source-ignore');">
+                                            <br>
+                                            <input type="button" id="moveout" name="moveout" value="<<" onclick="return removeSelectedData();">
+                                        </div>
+                                        <div class="choosen">
+                                            <label for="source-to-show">Chosen</label><br>
+                                            <select  multiple
+                                                     id="source-to-show"
+                                                     name="source-to-show"
+                                                     size="10"
+                                                     style="width: 300px;">
+                                                    {% for i in test_2 %}
+                                                        <option value="{{ i.portal_id }}" id="id{{ i.portal_id }}">{{ i.portal_id|get_rss_portal_name }}</option>
+                                                    {% endfor %}
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <input class="btn btn-primary" type="submit" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-
         </div>
     </div>
+
+    {% include 'footer.html' %}
 
 {% endblock %}

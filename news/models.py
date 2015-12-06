@@ -51,6 +51,8 @@ class Companies(models.Model):
     category = models.ForeignKey(NewsCategory)
     logo = models.FileField(upload_to=upload_company_cover, blank=True)
 
+    description = models.TextField(max_length=4096)
+
     def __str__(self):
         return self.name
 
@@ -76,6 +78,7 @@ class News(models.Model):
 
     # Media
     news_main_cover = models.FileField(upload_to=upload_news_cover, blank=True)
+
 
     # Information
     news_likes = models.IntegerField(default=0)
@@ -216,9 +219,17 @@ class RssNewsCovers(models.Model):
     rss_news = models.ForeignKey(RssNews)
     main_cover = models.TextField(max_length=512)
 
+
 class RssPortals(models.Model):
     class Meta:
         db_table = "rss_portals"
 
     portal = models.CharField(max_length=32)
     portal_base_link = models.URLField()
+
+
+class RssSaveNews(models.Model):
+    class Meta:
+        db_table = "rss_save"
+    user = models.ForeignKey(User)
+    news = models.ForeignKey(RssNews)

@@ -72,7 +72,7 @@ urls_of_portals = get_feed_urls()
 #last_element(parse_current_url(url="http://appleinsider.ru/feed/"))
 #print(last_element(parse_current_url(url="http://appleinsider.ru/feed/")))
 #    connect_to_db(urls=urls_of_portals)
- #   time.sleep(1)
+#    time.sleep(1)
 
 def fill_rss_table():
     import json
@@ -112,7 +112,7 @@ def fill_rss_table():
                 continue
     db.close()
 
-fill_rss_table()
+#fill_rss_table()
 
 
 def fill_user_rss_table():
@@ -126,11 +126,20 @@ def fill_user_rss_table():
     with open("dictionary_portals.json") as file:
         portals = json.load(file)
 
+
+    import re
+    import urllib.request
+
+    end = len(portals)
+    cur_iter = 0
     cursor.execute("SELECT portal_name FROM news_portal")
     list_portals = cursor.fetchall()
     for i in range(len(portals)):
+        cur_iter += 1
         cursor.execute("INSERT INTO rss_portals(portal, portal_base_link) VALUES(?, ?)", (portals[file_list[i]]["name"], portals[file_list[i]]["base_link"]))
         db.commit()
+        print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "When total end is ", end)
+
 
     db.close()
 

@@ -114,8 +114,9 @@ Last step of registration.
 Please, confirm your account by clicking button below this text.
 <button>Confirm now</button>
 
-Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/c/ucid=%s&uuid=%s/</a>""" % \
+Or you can do it by use this link: <a href=''>%sc/ucid=%s&uuid=%s/</a>""" % \
                                (new_user_form.cleaned_data['username'],
+                                settings.MAIN_URL,
                                 UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
                                 User.objects.get(username=new_user_form.cleaned_data['username']).profile.uuid)
                 mail_from = "saqel@yandex.ru"
@@ -129,14 +130,17 @@ Or you can do it by use this link: <a href=''>http://127.0.0.1:8000/c/ucid=%s&uu
 \n
 \nTo confirm your account, you have to press this button.
 \n<button style='margin-left: 30%%; width: 150px; height: 50px; background-color: #5bc0de; color: white;'
-onclick="location.href='http://127.0.0.1:8000/c/ucid=%s&uuid=%s/';">Confirm&nbsp;now</button>
+onclick="location.href='%sc/ucid=%s&uuid=%s/';">Confirm&nbsp;now</button>
 \n
-\nOr you can do it via clicking url: <a href="http://127.0.0.1:8000/c/ucid=%s&uuid=%s/">http://127.0.0.1:8000/c/ucid=%s&uuid=%s</a>""" % \
+\nOr you can do it via clicking url: <a href="%sc/ucid=%s&uuid=%s/">%sc/ucid=%s&uuid=%s</a>""" % \
                                (new_user_form.cleaned_data['username'],
+                                settings.MAIN_URL,
                                 UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
                                 uuid_string,
+                                settings.MAIN_URL,
                                 UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
                                 uuid_string,
+                                settings.MAIN_URL,
                                 UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
                                 uuid_string)
                 msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])

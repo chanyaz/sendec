@@ -12,6 +12,67 @@
             });
         }
     </script>
+    <script>
+
+        String.prototype.format = function(placeholders) {
+                var s = this;
+                for(var propertyName in placeholders) {
+                    var re = new RegExp('{' + propertyName + '}', 'gm');
+                    s = s.replace(re, placeholders[propertyName]);
+                }
+                return s;
+            };
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+
+        function updateUserRssPortals() {
+                $.get("/news/update_user_rss/").done(function (data) {
+                    var table = $(".user-chosen-portals").val("");
+                    data.portals.forEach(function(portal){
+                        var sstring = "<span onclick='removeUserRssPortal({uuid}, {pid});'>X</span>".format({uuid:portal.cur_user, pid:portal.id});
+                        table.val(portal.name+" + "+ sstring +"<br>");
+                    })
+                });
+            return true;
+            }
+
+            //updateUserRssPortals();
+            //setInterval(updateUserRssPortals, 100);
+
+
+        function removeUserRssPortal(uuid,pid){
+            var $link = "/news/update_user_rss/";
+            var csrftoken = getCookie('csrftoken');
+            $.ajax({
+                url: "/news/rrp&uid="+uuid+"&pid="+pid+"/",
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(result){
+                    updateUserRssPortals();
+                }
+            })
+        }
+
+
+
+    </script>
 
 
     <style>
@@ -23,20 +84,33 @@
             margin-right: 1%;
             float: left;
         }
+        .current_rss_news{
+            width: 32%;
+            height: 25em;
+            margin-left: 1%;
+            margin-top: 1%;
+            border-radius: 5px;
+            box-shadow: 0 0 5px black;
+            float: left;
+        }
+        .current_rss_news:hover{
+            box-shadow: 0 0 5px blue;
+        }
     </style>
 
     <div class="container-fluid">
         <div id="rss-news" style="border: solid 1px red; width: 70%; margin-left: 1%; float: left;">
-            RSS:<br>
-
+            <div id="rss-title" style="text-align: center;">
+                All news which are your interested in
+            </div>
             {% for i in rss_news %}
-                <div class="current_rss_news_{{ i.id }}"
+                <div class="current_rss_news"
                      id="rss_id_{{ i.id }}"
                      data-current-rss-news-id="{{ i.id }}"
                      onclick="RssPreviewPopUpShow('{{ i|jsonate }}')"
-                     style="width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; border: solid 1px red; float: left;">
+                     style="">
                     <div class="title">{{ i.title }}</div>
-                    <div class="portal" style="float: left;">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id }}</a></div>
+                    <div class="portal" style="float: left;">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id|get_rss_portal_name }}</a></div>
                     <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>
                     <div class="news-image" style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;"></div>
                     <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>
@@ -77,22 +151,36 @@
         </div>
         <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
             <div class="choosen-portals" style="border: solid 1px red;">
-                <button onclick="location.href='/profile/settings/#source-ignore';">Add&nbsp;content</button>
-                <hr width="100%">
-                User&nbsp;contents
-                <div class="user-chosen-portals" style="border: solid 1px red; height: 10em; overflow-y: auto;">
+                <div class="user-rss-portals" style="text-align: center">
+                    Your&nbsp;current&nbsp;portals
+
+                </div>
+                <div class="user-chosen-portals" style="border: solid 1px red; height: 20em; overflow-y: auto;">
                     {% for i in user_rss %}
                         <span class="user-portals">{{ i.portal_id|get_rss_portal_name }}</span>
                         <a href="">+</a>
-                        <a href="">X</a>
+                        <!--<a href="/news/rrp&uid={{ username.profile.uuid }}&pid={{ i.portal_id }}/">X</a>-->
+                        <span onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}');">X</span>
                         <hr width="100%">
                     {% endfor %}
                 </div>
             </div>
-            <div class="twitter" style="border: solid 1px lawngreen;">
-                {% include 'twitter.html' %}
+
+            <div class="subscribe">
+                <div class="subscribe-speech">
+                    Would you like to get notification about latest news and reviews?
+                    <br>
+                    To take it just write your email and we will send you a link to continue.
+                </div>
+                <form>
+                    <input type="email" name="sub-email" autocomplete="off" id="sub-email" placeholder="Enter your email">
+                    <input type="submit" value="Accept">
+                </form>
             </div>
+
         </div>
     </div>
+
+    {% include 'footer.html' %}
 
 {% endblock %}

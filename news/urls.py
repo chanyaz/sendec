@@ -6,6 +6,9 @@ from django.conf import settings
 
 urlpatterns = [
 
+
+    url(r'^update_user_rss/', 'news.views.get_updated_user_rss'),
+
     # External Transitions
     url(r"^trans/(?P<cat_id>\w+)/(?P<news_id>\w+)/", 'news.views.external_transition'),
     url(r'^new_page/cp=(?P<current_page>\w+)&np=(?P<next_page>\w+)/', 'news.views.get_rss_news_pagination'),
@@ -16,6 +19,7 @@ urlpatterns = [
 
     # Likes
     url(r'^add_like/n=(?P<news_id>\w+)', 'news.views.add_like_news'),
+    url(r'^add_like_rss/r=(?P<rss_id>\w+)', 'news.views.save_rss_news'),
     url(r'^check_like/n=(?P<news_id>\w+)', 'news.views.check_like_amount'),
 
     # Dislikes
@@ -40,9 +44,11 @@ urlpatterns = [
     # Top news
     url(r'^top/', "news.views.render_top_news_page"),
 
-    # User news
+    # User RSS news
     #url(r'^usernews/', 'news.views.render_user_news'),
     url(r'^usernews/page=(\d+)/$', 'news.views.render_user_news'),
+
+
 
     url(r'^(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_news'),
     #url(r'^(?P<category_name>\w+)/', 'news.views.render_current_category'),
@@ -53,6 +59,7 @@ urlpatterns = [
     url(r'^technology/', 'news.views.render_technology_news'),
     url(r'^latest/', 'news.views.render_latest_news'),
     url(r'^reviews/', 'news.views.render_reviews_news'),
+    url(r'^rrp&uid=(?P<uuid>[^/]+)&pid=(?P<pid>\w+)/', 'news.views.remove_rss_portal_from_feed'),
     url(r'^space/', 'news.views.render_space_news'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

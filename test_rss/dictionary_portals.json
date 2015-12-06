@@ -8,7 +8,7 @@
   "http://skynews.com": {"name": "Skynews", "base_link": "skynews.com"},
   "http://firstpost.com": {"name": "Firstpost", "base_link": "firstpost.com"},
   "http://digitaltrends.com": {"name": "Digitaltrends", "base_link": "digitaltrends.com"},
-  "http://technorati.com": {"name": "Technorati", "base_link": "techorati.com"},
+  "http://technorati.com": {"name": "Technorati", "base_link": "technorati.com"},
   "https://techunblocked.org": {"name": "Tech Unblocked", "base_link": "techunblocked.org"},
   "https://iguides.ru": {"name": "iGuides", "base_link": "iguides.ru"},
   "http://iphones.ru": {"name": "iPhones", "base_link": "iphones.ru"},
@@ -28,5 +28,6 @@
   "http://cnet.com": {"name": "Cnet", "base_link": "cnet.com"},
   "http://gamerant.com": {"name": "GAMERANT", "base_link": "gamerant.com"},
   "http://android-robot": {"name": "Новости Hi-Tech", "base_link": "android-robot"},
-  "http://ria.ru": {"name": "РИА", "base_link": "ria.ru"}
+  "http://ria.ru": {"name": "РИА", "base_link": "ria.ru"},
+  "http://dailykanban.com": {"name": "DailyKanban", "base_link": "dailykanban.com"}
 }

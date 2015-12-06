@@ -1,7 +1,7 @@
 from django.db import models
 from loginsys.models import UserProfile
 from django.contrib.auth.models import User
-from news.models import News, NewsCategory, NewsPortal
+from news.models import News, NewsCategory, NewsPortal, RssPortals
 
 
 class UserSettings(models.Model):
@@ -34,5 +34,14 @@ class UserRssPortals(models.Model):
         db_table = "user_rss_news"
 
     user = models.ForeignKey(User)
-    portal = models.ForeignKey(NewsPortal)
+    portal = models.ForeignKey(RssPortals)
     check = models.BooleanField(default=False)
+
+    def get_json_portal(self):
+        return {
+            "id": self.portal_id,
+            "cur_user": str(self.user.profile.serializable_value("uuid")),
+            "del_item": "<span onclick='/news/rrp&uid=%s&pid=%s/'>X</span>" % (self.user.profile.uuid, self.id),
+            "name": RssPortals.objects.get(id=self.portal_id).portal,
+            "check": self.check
+        }

@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import News, NewsPortal, NewsCategory, Companies
 from ckeditor.widgets import CKEditorWidget
 
-admin.site.register(Companies)
+#admin.site.register(Companies)
 
 admin.site.register(NewsCategory)
 admin.site.register(NewsPortal)
@@ -16,11 +16,19 @@ class PostAdminForm(forms.ModelForm):
         model = News
         fields = "__all__"
 
-
-
-
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
 
 
+class CompaniesEditorFormAdmin(forms.ModelForm):
+    description = forms.CharField(widget=CKEditorWidget())
+    class Meta:
+        model = Companies
+        fields = "__all__"
+
+class AompaniesEditorAdmin(admin.ModelAdmin):
+    form = CompaniesEditorFormAdmin
+
+
 admin.site.register(News, PostAdmin)
+admin.site.register(Companies, AompaniesEditorAdmin)

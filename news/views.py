@@ -1,7 +1,7 @@
 # -*-coding: utf-8 -*-
 
 from django.shortcuts import render
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render_to_response, render, RequestContext
 from django.template.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
@@ -22,6 +22,7 @@ from news.models import RssNews
 from userprofile.models import UserRssPortals
 import datetime
 
+
 #@login_required(login_url='/auth/login/')
 def main_page_load(request):
     args = {
@@ -31,12 +32,11 @@ def main_page_load(request):
         "breaking_news": render_news_by_sendec(request)[0],
         "total_middle_news": render_news_by_sendec(request)[1:4],
         "total_bottom_news": render_news_by_sendec(request)[4:13],
-        #"photo": User.objects.get(username=auth.get_user(request).username).profile.user_photo,
+        "interest": get_interesting_news(request)[:3],
     }
 
     # LOCALIZATION
     args["latest"] = _("Latest")
-
 
     args.update(csrf(request))
     if auth.get_user(request).username:
@@ -403,10 +403,15 @@ def render_current_company(request, company_name):
     from news.models import Companies
     args = {
         "username": User.objects.get(username=auth.get_user(request).username),
-        "company": Companies.objects.get(Q(name=company_name) | Q(verbose_name=company_name))
+        "company": Companies.objects.get(verbose_name=company_name),
+        "news": get_companies_news(request, Companies.objects.get(verbose_name=company_name).id),
     }
     args.update(csrf(request))
     return render_to_response("current_company.html", args)
+
+
+def get_companies_news(request, company_id):
+    return News.objects.filter(news_company_owner_id=company_id).order_by("-news_post_date").values()
 
 ############################## END COMPANIES ###################################
 
@@ -629,8 +634,53 @@ def get_user_rss_news(request, user_id):
     return UserRssPortals.objects.filter(user_id=user_id).filter(check=True).values()
 
 
+def get_updated_user_rss(request):
+    import json
+
+    user = User.objects.get(username=auth.get_user(request).username)
+
+    portals = UserRssPortals.objects.filter(user_id=user.id).filter(check=True)
+    data = [portal.get_json_portal() for portal in portals.all()]
+
+    response_data = {
+        "portals": data,
+    }
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
 def set_rss_for_user_test(request):
     user = User.objects.get(username=auth.get_user(request).username)
     portals_user_list = get_user_rss_news(request, user_id=user.id)
     test_new = RssNews.objects.filter(portal_name_id__in=(portals_user_list[i]["portal_id"] for i in range(len(portals_user_list)))).values()
     return test_new
+
+
+def remove_rss_portal_from_feed(request, uuid, pid):
+    from news.models import RssNews, RssPortals
+    from userprofile.models import UserProfile
+    args = {}
+    args.update(csrf(request))
+    user = User.objects.get(id=UserProfile.objects.get(uuid=uuid).user_id)
+    user_rss_instance = UserRssPortals.objects.get(portal_id=pid, user_id=user.id)
+    user_rss_instance.check = False
+    user_rss_instance.save()
+    return render_to_response("user_news.html", args, context_instance=RequestContext(request))
+
+
+def save_rss_news(request, rss_id):
+    from .models import RssSaveNews, RssNews
+    user = User.objects.get(username=auth.get_user(request).username)
+    if RssSaveNews.objects.filter(user_id=user.id).filter(news_id=rss_id).exists() == False:
+        RssSaveNews.objects.create(
+            user_id=user.id,
+            news_id=rss_id
+        )
+    else:
+        pass
+    return HttpResponse()
+
+
+def get_interesting_news(request):
+    from news.models import NewsWatches
+    interest_news = NewsWatches.objects.all().order_by("-watches").values("news_id")
+    return News.objects.filter(id__in=interest_news).values()
