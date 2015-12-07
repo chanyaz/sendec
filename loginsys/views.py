@@ -1,4 +1,5 @@
 from django.contrib import auth
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect, render_to_response, HttpResponseRedirect
 from django.http import request
 from django.template.context_processors import csrf
@@ -46,9 +47,9 @@ def login(request):
             return render_to_response('login.html', args)
 
 
-@login_required(login_url='/auth/login/')
-def logout(request):
-    auth.logout(request)
+#@login_required(login_url='/auth/login/')
+def user_logout(request):
+    logout(request)
     return redirect('/')
 
 

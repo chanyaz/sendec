@@ -162,9 +162,9 @@
 
     </style>
 
-    <div class="container-fluid" data-news-id="{{ current_news_values.id }}" style="width: 64.5%; border: solid 1px lightgrey; float: left;">
+    <div class="container-fluid" data-news-id="{{ current_news_values.id }}" style="border: solid 1px lightgrey;">
 
-        <div class="tre" style="width: 100%;">
+        <div class="tre" style=" float: left; width: 70%;">
 
             <h1 class="page-header" style="margin: 0 5%;">
                 {{ current_news_values.news_title }}
@@ -322,44 +322,50 @@
 
 
         </div>
+
+
+        <div class="right-side-block" style="width: 28%; float: right;">
+            <div class="latest-news"
+            style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
+                <div class="latest-header" style="text-align: center;">
+                    News of {{ company_name }}
+                </div>
+                <div class="latest-titles">
+                        {% for i in latest_news %}
+                            <div class="latest-news"
+                                 style="height: 70px;"
+                                 onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                <div class="latest-news-cover"
+                                     style="float: left; height:70px; width: 100px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
+                                </div>
+                                <div class="latest-news-content">
+                                    <span class="time" style="color: blue;">
+                                        {{ i.news_post_date.time }}
+                                    </span>
+                                    <span class="title"
+                                          onmouseover="this.style.color='blue'; style.cursor='pointer';"
+                                          onmouseout="this.style.color='black';"
+                                          onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                        {{ i.news_title }}
+                                    </span>
+                                </div>
+                            </div>
+                            <hr>
+                        {% endfor %}
+                </div>
+            </div>
+
+            <div class="video-and-subs">
+                {% include 'twitter.html' %}
+            </div>
+
     </div>
 
 
-    <div class="right-side-block" style="margin-left: 65%; margin-right: 5%;">
-        <div class="latest-news"
-        style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
-            <div class="latest-header" style="text-align: center;">
-                News of {{ company_name }}
-            </div>
-            <div class="latest-titles">
-                    {% for i in latest_news %}
-                        <div class="latest-news"
-                             style="height: 70px;"
-                             onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                            <div class="latest-news-cover"
-                                 style="float: left; height:70px; width: 100px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
-                            </div>
-                            <div class="latest-news-content">
-                                <span class="time" style="color: blue;">
-                                    {{ i.news_post_date.time }}
-                                </span>
-                                <span class="title"
-                                      onmouseover="this.style.color='blue'; style.cursor='pointer';"
-                                      onmouseout="this.style.color='black';"
-                                      onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                    {{ i.news_title }}
-                                </span>
-                            </div>
-                        </div>
-                        <hr>
-                    {% endfor %}
-            </div>
-        </div>
-        <div class="video-and-subs">
-            {% include 'twitter.html' %}
-        </div>
-
     </div>
 
+
+
+{% include 'footer.html' %}
 
 {% endblock %}

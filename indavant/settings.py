@@ -47,8 +47,8 @@ INSTALLED_APPS = (
     "notify",
     "search",
     "ckeditor",
+    "endless_pagination",
 )
-
 
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
@@ -108,6 +108,8 @@ TEMPLATES = [
         },
     },
 ]
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+TEMPLATE_CONTEXT_PROCESSORS += ('django.core.context_processors.request',)
 
 WSGI_APPLICATION = 'indavant.wsgi.application'
 

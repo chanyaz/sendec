@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% block reviews %}
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="border: solid 1px lightgrey;">
         <div class="row">
             <div id="reviews-news" style="border: solid 1px red; width: 95%; margin-left: 1%;">
                 <div class="panel panel-default">
@@ -13,5 +13,8 @@
             </div>
         </div>
     </div>
+
+
+    {% include 'footer.html' %}
 
 {% endblock %}

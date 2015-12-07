@@ -13,6 +13,12 @@
     <link rel="shortcut icon" href="{% static 'static/img/favicon.ico' %}" type="image/x-icon">
 
 
+    <!-- LAZY SCROLLING -->
+    <script src="jquery.js"></script>
+    <script src="jquery.lazyload.js"></script>
+
+
+
     <!-- PROGRESS BAR -->
 
     <!-- Scripts -->
@@ -128,10 +134,16 @@
                 if (eventObject.which == 27)
                     $('.preview-rss-news').hide();
                     hideLeftBar();
-                    $(".popup-user-auth").hide();
                     $("html").css("overflowY", "auto");
             });
         });
+        $(document).ready(function(){
+            $(this).keydown(function(eventObject){
+                if(eventObject.which == 27){
+                    $(".popup-user-auth").hide();
+                }
+            })
+        })
     </script>
 
 
@@ -299,7 +311,6 @@
 </head>
 <body>
 
-    {% cache 600 top-navigation %}
     <div class="top-navigation" style="position: relative; height: 8%;">
         <!-- TOP PANEL FOR SEARCH AND LOGO -->
         <div style="float: left; margin-left: 11%;" class="top-left-bar" onmouseover="style.cursor='pointer';">
@@ -331,7 +342,6 @@
             {% endif %}
         </div>
     </div>
-    {% endcache %}
 
     <div id="wrapper-new">
         <div id="page-wrapper">
@@ -395,6 +405,7 @@
                      style="width: 2%; height: 105%; position: fixed; margin-left: -0.9%; margin-top: -8%;">
                     <span id="arrow-to-show-sections"
                           class="arrow-to-show-sections"
+                          onclick="showLeftBar();"
                           style="width: 1%; position: fixed; margin-top: 20%;">
                         <img id="image-arrow-to-expand"
                              src="{% static 'static/img/arrow.png' %}"
@@ -480,8 +491,6 @@
                     {% block current_news %}{% endblock %}
                     {% block current_category %}{% endblock %}
                     {% block top_news %}{% endblock %}
-                    {% block login %}{% endblock %}
-                    {% block register %}{% endblock %}
                     {% block search %}{% endblock %}
 
 
@@ -524,14 +533,15 @@
             </div>
         </div>
     </div>
+
+
     <div class="popup-user-auth" hidden>
         <div class="popup-user-auth-content">
             <div id="login-tab">
                 <div class = 'no' style="width: 100%;">
-
                     <div id="choice" style="height: inherit;">
                         <div class="service-name" style="text-align: center; margin-top: 5%;">
-                            %SERVICE&nbsp;NAME%
+                            INSYDIA
                         </div>
                         <div class="sign-in-center-data" style="text-align: center; margin-top: 5%;">
                             <span class="signin">SIGN&nbsp;IN</span>
@@ -574,10 +584,6 @@
                                     facebook<br>
                                     Twitter<br>
                                     Google+<br>
-                                    <div id="vk_auth"></div>
-                                    <script type="text/javascript">
-                                        VK.Widgets.Auth("vk_auth", {width: "100px", authUrl: '/dev/Auth'});
-                                    </script>
                                 </div>
                             </div>
 
@@ -593,12 +599,17 @@
                                     <a href="/auth/register/" style="margin-left: 1em;">Registration</a>
                                 </div>
                             </div>
+
+                            <input type="submit">
+
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
     <div id="preview-rss-news"
          hidden
          class="preview-rss-news"

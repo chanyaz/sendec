@@ -35,7 +35,7 @@
         }
     </style>
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="border: solid 1px lightgrey;">
         <div id="technologies-news">
             <div class="top-technologies-content" onclick="location.href='/news/{{ top_technology.news_category_id }}/{{ top_technology.id }}/';"></div>
             <div class="bn-title">
@@ -72,5 +72,6 @@
     </div>
 </div>
 
+    {% include 'footer.html' %}
 
 {% endblock %}

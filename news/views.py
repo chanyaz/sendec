@@ -33,18 +33,23 @@ def main_page_load(request):
         "total_middle_news": render_news_by_sendec(request)[1:4],
         "total_bottom_news": render_news_by_sendec(request)[4:13],
         "interest": get_interesting_news(request)[:3],
+        #"total_news": render_news_by_sendec(request)[13:],
+        "total_news": get_total_news,
     }
 
-    # LOCALIZATION
-    args["latest"] = _("Latest")
 
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"]=User.objects.get(username=auth.get_user(request).username)
     #if User.objects.get(username=auth.get_user(request).username).is_active:
-    return render_to_response("index_new.html", args)
+    return render_to_response('index_new.html', args, context_instance=RequestContext(request))
     #else:
     #    return HttpResponseRedirect("/auth/preferences=categories")
+
+
+def get_total_news():
+    return News.objects.all().values()
+
 
 
 def render_news_by_sendec(request, **kwargs):
@@ -341,7 +346,7 @@ def render_technology_news(request):
 
 def get_technology_news(request):
     from news.models import News
-    return News.objects.all().filter(news_category_id=2)
+    return News.objects.all().filter(news_category_id=NewsCategory.objects.get(category_name="Technology").id)
 ##########3#################### END TECHNOLOGY #######################################
 
 
@@ -359,7 +364,7 @@ def render_auto_news(request):
 
 
 def get_auto_news(request):
-    return News.objects.all().filter(news_category_id=4)
+    return News.objects.all().filter(news_category_id=NewsCategory.objects.get(category_name="Auto").id)
 ################################### END AUTO #########################################
 
 
@@ -377,7 +382,7 @@ def render_bit_news(request):
 
 
 def get_bit_news(request):
-    return News.objects.all().filter(news_category_id=6)
+    return News.objects.all().filter(news_category_id=NewsCategory.objects.get(category_name="BIT").id)
 ################################### END BIT #########################################
 
 
@@ -429,7 +434,7 @@ def render_entertainment_news(request):
 
 
 def get_entertainment_news(request):
-    return News.objects.all().filter(news_category_id=3)
+    return News.objects.all().filter(news_category_id=NewsCategory.objects.get(category_name="Entertainment").id)
 
 ################### END ENTERTAINMENT ######################################3333
 

@@ -67,6 +67,9 @@ class News(models.Model):
     news_category = models.ForeignKey(NewsCategory)
     news_post_date = models.DateTimeField(auto_now_add=True)
     news_post_text = models.TextField(max_length=4096)
+    #news_post_text_translate = models.TextField(max_length=4096)
+
+
     news_portal_name = models.ForeignKey(NewsPortal)
 
     news_company_owner = models.ForeignKey(Companies, blank=True)
