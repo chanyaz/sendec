@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load my %}
 {% load jsonate_tags %}
+{% load endless %}
 {% block user_news %}
 
     <script>
@@ -55,7 +56,7 @@
             //setInterval(updateUserRssPortals, 100);
 
 
-        function removeUserRssPortal(uuid,pid){
+        function removeUserRssPortal(uuid,pid, id){
             var $link = "/news/update_user_rss/";
             var csrftoken = getCookie('csrftoken');
             $.ajax({
@@ -66,6 +67,7 @@
                 },
                 success: function(result){
                     updateUserRssPortals();
+                    $("#curp-"+id).fadeOut();
                 }
             })
         }
@@ -76,10 +78,10 @@
 
 
     <style>
-        ul{
+        .pagination ul{
             list-style-type: none;
         }
-        li{
+        .pagination li{
             margin-left: 1%;
             margin-right: 1%;
             float: left;
@@ -100,10 +102,15 @@
 
     <div class="container-fluid">
         <div id="rss-news" style="border: solid 1px red; width: 70%; margin-left: 1%; float: left;">
+
+
+        {% if user_rss|length >= 1 %}
             <div id="rss-title" style="text-align: center;">
                 All news which are your interested in
             </div>
-            {% for i in rss_news %}
+
+            {% lazy_paginate 12 test %}
+            {% for i in test %}
                 <div class="current_rss_news"
                      id="rss_id_{{ i.id }}"
                      data-current-rss-news-id="{{ i.id }}"
@@ -117,7 +124,11 @@
                     <div class="navigation" style="float: right;">Share&nbsp;|&nbsp;Like</div>
                 </div>
             {% endfor %}
+            {% show_more %}
             <hr width="100%">
+
+
+            <!-- PAGINATION -->
             <div class="pagination" style="margin-top: 5%; width: 200px; border: solid 1px red; ">
                     <ul>
                         {% if rss_news.has_previous %}
@@ -139,31 +150,73 @@
                         {% endif %}
                     </ul>
                 </div>
+
+
+
             <div class="load_button" >
                 <button id="button_load_more"
                         onclick="loadPage();"
                         data-current-page="1"
                         data-next-page="2">Load&nbsp;more</button>
             </div>
+        {% else %}
+            <div class="user_rss_missing" style="text-align: center;">
+                At this time you have no one portals to syndicate for you.
+                <br>
+                Would you like to choose any one? <a href="/profile/#settings-form">Click</a> to set your own preferences.
+            </div>
+            <div class="most-popular">
+                <div class="title">The most popular portals.</div>
+                <div class="most-popular-portals">
+                    {% for current_popular_rss in popular_rss %}
+                        <div class="sect-rss" style="float: left; width: 31%; margin-top: 1%; margin-left: 2%;">
+                            <div class="current_rss_popular_portal"
+                                 style="box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 100px; width: 100%;"
+                                 onmouseover="style.border='solid 0.2px blue';"
+                                 onmouseout="style.border='';"
+                                 onclick="location.href='/news/{{ current_popular_rss.news_category_id }}/{{ current_interest.id }}/';">
+                                <div class="">
+                                    {{ current_popular_rss.portal }}
+                                    <div class="add-current" style="position: static; margin-top: 18%; margin-left: 90%;">
+                                        <img src="{% static 'static/img/plus.png' %}" width="20px" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
 
 
 
         </div>
         <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
             <div class="choosen-portals" style="border: solid 1px red;">
-                <div class="user-rss-portals" style="text-align: center">
-                    Your&nbsp;current&nbsp;portals
 
-                </div>
-                <div class="user-chosen-portals" style="border: solid 1px red; height: 20em; overflow-y: auto;">
-                    {% for i in user_rss %}
-                        <span class="user-portals">{{ i.portal_id|get_rss_portal_name }}</span>
-                        <a href="">+</a>
-                        <!--<a href="/news/rrp&uid={{ username.profile.uuid }}&pid={{ i.portal_id }}/">X</a>-->
-                        <span onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}');">X</span>
-                        <hr width="100%">
-                    {% endfor %}
-                </div>
+                {% if user_rss|length < 1 %}
+                    Recommended&nbsp;portals
+                    <div class="recommendations" style="border: solid 1px red; height: 20em; overflow-y: auto;">
+                        {% for cur_rss_portal in popular_rss_right %}
+                            <span class="">{{ cur_rss_portal.portal }}</span><br>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="user-rss-portals" style="text-align: center">
+                        Your&nbsp;current&nbsp;portals
+                    </div>
+                    <div class="user-chosen-portals" style="border: solid 1px red; height: 20em; overflow-y: auto;">
+                            {% for i in user_rss %}
+                                <div id="curp-{{ i.id }}">
+                                    <span class="user-portals">{{ i.portal_id|get_rss_portal_name }}</span>
+                                    <a href="">+</a>
+                                    <!--<a href="/news/rrp&uid={{ username.profile.uuid }}&pid={{ i.portal_id }}/">X</a>-->
+                                    <span onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}', '{{ i.id }}');">X</span>
+                                    <hr width="100%">
+                                </div>
+                            {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="subscribe">

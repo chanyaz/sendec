@@ -29,9 +29,9 @@ def main_page_load(request):
         "current_year": datetime.datetime.now().year,
         "title": "| Home",
         "news_block": True,
-        "breaking_news": render_news_by_sendec(request)[0],
-        "total_middle_news": render_news_by_sendec(request)[1:4],
-        "total_bottom_news": render_news_by_sendec(request)[4:13],
+        "breaking_news": render_news_by_sendec(request).order_by("-news_post_date")[0],
+        "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[1:4],
+        "total_bottom_news": render_news_by_sendec(request).order_by("-news_post_date")[4:13],
         "interest": get_interesting_news(request)[:3],
         #"total_news": render_news_by_sendec(request)[13:],
         "total_news": get_total_news,
@@ -106,7 +106,7 @@ def render_current_news(request, category_id, news_id):
 def render_user_news(request, page_number=1):
 
     user = User.objects.get(username=auth.get_user(request).username)
-
+    user_rss_list = UserRssPortals.objects.filter(user_id=user.id).filter(check=True).values("id")
     args = {
         "title": "| My news",
         #"portals": get_user_chosen_portals(request),
@@ -114,16 +114,23 @@ def render_user_news(request, page_number=1):
        # "deftest": test.html(request),
         #"rss_news": get_rss_news(request),
         "test": set_rss_for_user_test(request),
-        "user_rss": get_user_rss_news(request, user_id=user.id)
+        "user_rss": get_user_rss_news(request, user_id=user.id),
+        "popular_rss": get_most_popular_rss_portals(request)[:9],
+        "popular_rss_right": get_most_popular_rss_portals(request)[:3],
+        "test_2": RssNews.objects.filter(portal_name_id__in=user_rss_list).values(),
     }
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
-    from news.models import RssNews
     all_rss_news = set_rss_for_user_test(request) #RssNews.objects.all().values()
     current_page = Paginator(object_list=all_rss_news, per_page=12)
     args["rss_news"] = current_page.page(page_number)
-    return render_to_response("user_news.html", args)
+    return render_to_response("user_news.html", args, context_instance=RequestContext(request))
+
+
+def get_most_popular_rss_portals(request):
+    from news.models import RssPortals
+    return RssPortals.objects.all().order_by("follows").values()
 
 
 def get_user_chosen_portals(request):

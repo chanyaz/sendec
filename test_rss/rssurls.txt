@@ -1,3 +1,4 @@
+https://www.iguides.ru/rss/main.rss
 http://appleinsider.ru/feed
 http://android-robot.com/feed/
 http://hi-news.ru/feed
@@ -36,3 +37,6 @@ http://teslanews.com/feed/
 http://ria.ru/export/rss2/technology/index.xml
 http://zisk.net/feed/
 http://www.computerweekly.com/rss/All-Computer-Weekly-content.xml
+
+For a limited time, Lenovo is selling the 14-inch IdeaPad Y700 gaming laptop at a whopping 41%% discount. When you use today&rsquo;s coupon code in your shopping cart, you&rsquo;ll get a  portable gaming
+rig with a new Skylake CPU and an AMD Radeon R9 M375 graphics card for under 700 bucks.

@@ -120,38 +120,22 @@ def change_profile_photo(request):
 
 @login_required(login_url="/auth/login/")
 def addition_portals_show(request):
-    from news.models import NewsPortal
-    from .models import UserSettings, UserRssPortals
+    from .models import UserRssPortals, RssPortals
     args = {}
     args.update(csrf(request))
-
-    settings_instance = UserSettings.objects.get(user_id=User.objects.get(username=auth.get_user(request).username).id)
-
-
     if request.GET:
         portals_list = request.GET.getlist("source-to-show")
         for i in portals_list:
 
             rss_instance = UserRssPortals.objects.get(user_id=User.objects.get(username=auth.get_user(request).username).id,
                                                       portal_id=int(i))
+            rss_portal_instance = RssPortals.objects.get(id=int(i))
+
+            rss_portal_instance.follows += 1
+            rss_portal_instance.save()
+
             rss_instance.check = True
             rss_instance.save()
-
-            #if i not in settings_instance.portals_to_show:
-             #   settings_instance.portals_to_show += "%s," % i
-              #  settings_instance.save()
-
-        categories_list = request.GET.getlist("categories[]")
-        for i in categories_list:
-            if i not in settings_instance.categories_to_show.split(",")[:-1]:
-                settings_instance.categories_to_show += "%s," % i
-                settings_instance.save()
-
-        for j in settings_instance.categories_to_show.split(",")[:-1]:
-            if j not in categories_list:
-                settings_instance.categories_to_show = settings_instance.categories_to_show.replace("%s," % j, "")
-                settings_instance.save()
-
     return HttpResponseRedirect("/profile/", args)
 
 

@@ -67,28 +67,19 @@ class News(models.Model):
     news_category = models.ForeignKey(NewsCategory)
     news_post_date = models.DateTimeField(auto_now_add=True)
     news_post_text = models.TextField(max_length=4096)
-    #news_post_text_translate = models.TextField(max_length=4096)
+    news_post_text_translate = models.TextField(max_length=4096)
 
 
-    news_portal_name = models.ForeignKey(NewsPortal)
-
+    news_portal_name = models.ForeignKey(NewsPortal, blank=True)
     news_company_owner = models.ForeignKey(Companies, blank=True)
-
     news_author = models.ForeignKey(User, blank=True)
-
-    news_latest_shown = models.BooleanField(default=False)
-    news_currently_showing = models.BooleanField(default=False)
 
     # Media
     news_main_cover = models.FileField(upload_to=upload_news_cover, blank=True)
 
-
     # Information
     news_likes = models.IntegerField(default=0)
     news_dislikes = models.IntegerField(default=0)
-
-    news_event = models.BooleanField(default=False)
-    news_event_date = models.DateTimeField(auto_now_add=True)
 
     def get_news_id(self):
         return self.id
@@ -229,6 +220,7 @@ class RssPortals(models.Model):
 
     portal = models.CharField(max_length=32)
     portal_base_link = models.URLField()
+    follows = models.IntegerField(default=0)
 
 
 class RssSaveNews(models.Model):

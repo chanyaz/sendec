@@ -17,10 +17,20 @@ def parse_current_url(url=''):
 
 
 def last_element(feed):
-    return {"title": feed[0].title, "date": feed[0].published, "description": feed[0].description,
-            "link": feed[0].link, "content": feed[0].content[0]["value"], "author": feed[0].author,
-            "main_cover": ""}
-    #return feed[0].content
+    args = {"title": feed[0].title, "date": feed[0].published, "description": feed[0].description,
+            "link": feed[0].link, "main_cover": ""}
+
+    print(feed[0].keys())
+    keys = feed[0].keys()
+
+    # AUTHOR
+    if "author" in keys: args["author"] = feed[0].author
+    else: args["author"] = ""
+    # CONTENT
+    if "content" in keys: args["content"] = feed[0].content[0]["value"]
+    else: args["content"] = ""
+
+    return args
 
 
 def connect_to_db(urls):
@@ -44,7 +54,7 @@ def connect_to_db(urls):
         else:
             data["main_cover"] = str(match_2)
 
-        data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", "")
+        data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", "").replace("'", "&rsquo;")
         match = re.findall(r'<.*?>', data["description"])
         for i in match:
             data["description"] = data["description"].replace(i, "")
@@ -115,32 +125,24 @@ def fill_rss_table():
 #fill_rss_table()
 
 
-def fill_user_rss_table():
+def fill_rss_portals():
     import json
     db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
     #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
-
     with open("dictionary_portals.json") as file_list:
         file_list = list(json.load(file_list))
     with open("dictionary_portals.json") as file:
         portals = json.load(file)
-
-
-    import re
-    import urllib.request
-
     end = len(portals)
     cur_iter = 0
     cursor.execute("SELECT portal_name FROM news_portal")
     list_portals = cursor.fetchall()
     for i in range(len(portals)):
         cur_iter += 1
-        cursor.execute("INSERT INTO rss_portals(portal, portal_base_link) VALUES(?, ?)", (portals[file_list[i]]["name"], portals[file_list[i]]["base_link"]))
+        cursor.execute("INSERT INTO rss_portals(portal, portal_base_link, follows) VALUES(?, ?, ?)", (portals[file_list[i]]["name"], portals[file_list[i]]["base_link"], 0))
         db.commit()
         print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "When total end is ", end)
-
-
     db.close()
 
-#fill_user_rss_table()
+#fill_rss_portals()

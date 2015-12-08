@@ -33,7 +33,7 @@ class UserRssPortals(models.Model):
     class Meta:
         db_table = "user_rss_news"
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name="user_rss")
     portal = models.ForeignKey(RssPortals)
     check = models.BooleanField(default=False)
 

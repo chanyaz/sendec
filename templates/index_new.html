@@ -163,6 +163,14 @@
             }
     </script>
 
+    <script>
+        $(document).ready(function(){
+            $(".copy-to-cb").сlick(function(){
+                alert("123");
+            })
+        })
+    </script>
+
 
     <!-- Styles -->
     <style>
@@ -243,6 +251,16 @@
             max-height: 30em;
             margin-left: -5.5%;
         }
+        #rss-share-list li{
+            float:left;
+        }
+        #rss-properties-list li{
+            float: left;
+        }
+
+
+
+
 
         .left-bar-item{
             width: 120%;
@@ -374,7 +392,7 @@
                     <div class="lists" style="margin-left: 10%;">
                         <div class="categories" style="margin-top: 10%;">
                             <ul class="categories" style="list-style-type: none;">
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/latest/';">LATEST</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/';">LATEST</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/technology/';">TECHNOLOGY</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/entertainment/';">ENTRTAINMENT</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/auto/';">AUTO</span></li>
@@ -430,7 +448,7 @@
                 <div class="top-navigation" style="margin-top: 0;">
                     <div class="" style="margin-left: 16%;">
                         <ul style="list-style-type: none;">
-                            <li class="li-cat"><a href="/news/latest/">LATEST</a></li>
+                            <li class="li-cat"><a href="/">LATEST</a></li>
                             <li class="li-cat"><a href="/news/technology/">TECHNOLOGY</a></li>
                             <li class="li-cat"><a href="/news/entertainment/">ENTERTAINMENT</a></li>
                             <li class="li-cat"><a href="/news/auto/">AUTO</a></li>
@@ -444,7 +462,6 @@
                         </ul>
                     </div>
                 </div>
-
 
                 <div class="other" style="margin-left: 10%; height: 100%;">
                 <br>
@@ -464,7 +481,7 @@
                     </div>
                 <br>
                 {% cache 600 service-media %}
-                <div class="service-media" style="border: solid 1px red; float: right; margin-right: 4%;">
+                <div class="service-media" style="float: right; margin-right: 4%;">
                     <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"
                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png" width="30px"/>
                     <img onclick="location.href='http://vk.com/insydianews';"
@@ -599,9 +616,6 @@
                                     <a href="/auth/register/" style="margin-left: 1em;">Registration</a>
                                 </div>
                             </div>
-
-                            <input type="submit">
-
                         </form>
                     </div>
                 </div>
@@ -662,8 +676,8 @@
                         <li>
                             <img src="{% static 'static/img/mail.png' %}" width="30px" />
                         </li>
-                        <li>
-                            <img src="{% static 'static/img/chain.png' %}" width="30px" alt="Copy&nbsp;to&nbsp;clipboard"/>
+                        <li class="rss-item-copy">
+
                         </li>
                     </ul>
 
@@ -714,15 +728,31 @@
         function RssPreviewPopUpShow(i){
             //alert($.parseJSON(i).content_value);
             $("html").css("overflowY", "hidden");
-            $(".rss-title").html("<h3>"+$.parseJSON(i).title+"</h3>");
-            $(".rss-author").html($.parseJSON(i).author);
-            $(".rss-parent-link").html("<a href='"+$.parseJSON(i).link+"'>To&nbsp;original<img src='{% static 'static/img/arrow.png' %}'; style='margin-top:-5%;' width=18px'; /></a>");
-            $(".rss-date-published").html("&nbsp;|&nbsp;"+$.parseJSON(i).date_posted);
-            $(".rss-body").html($.parseJSON(i).content_value);
+
+            $parsedData = $.parseJSON(i);
+            var $current_link = $parsedData.link;
+
+
+            $(".rss-title").html("<h3>"+$parsedData.title+"</h3>");
+            $(".rss-author").html($parsedData.author);
+            $(".rss-parent-link").html("<a href='"+$parsedData.link+"'>To&nbsp;original<img src='{% static 'static/img/arrow.png' %}'; style='margin-top:-5%;' width=18px'; /></a>");
+            $(".rss-date-published").html("&nbsp;|&nbsp;"+$parsedData.date_posted);
+
+
+            if($parsedData.content_value.length < 1) {
+                $(".rss-body").html($parsedData.post_text);
+            }
+            else {
+                $(".rss-body").html($parsedData.content_value);
+            }
+
+
            // alert("b");
             $(".rss-item-save").html(
-                    "<img onclick='add_like_rss("+$.parseJSON(i).id+")' class='rss-save' src='{% static 'static/img/save.png' %}' width='30px' alt='Save' />"
+                    "<img onclick='add_like_rss("+$parsedData.id+")' class='rss-save' src='{% static 'static/img/save.png' %}' width='30px' alt='Save' />"
             );
+            $(".rss-item-copy").html(
+                    "<img class='copy-to-cb' id='copy-"+$parsedData.id+"' src='{% static 'static/img/chain.png' %}' width='30px'/>");
             $(".preview-rss-news").show();
         }
         //Функция скрытия PopUp

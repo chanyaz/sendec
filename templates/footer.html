@@ -1,39 +1,35 @@
-
-
 <style>
     ul#footer-list .footer-list-element{
         list-style-type: none;
         display: inline;
         width: 100%;
     }
-
     .list-element-block{
         float: left;
         width: 20%;
     }
-
     .first-content-element{
         list-style-type: none;
         margin-left: -13%;
     }
-
 </style>
-
 
 <div class="footer-div" style="background-color: #23527c; width: 99.99%;">
     <div class="container-fluid">
-        <h4 style="text-align: left;" onclick="location.href='/';">INSYDIA</h4>
+        <h4 style="text-align: left;"
+            onclick="location.href='/';"
+            onmouseover="this.style.cursor='pointer';">INSYDIA</h4>
         <div class="large-text-center row">
-                <!--<hr width="100%">-->
-                <div class="bottom-footer" style="text-align: center">
-                    <a href="">Соглашения</a>&nbsp;
-                    <a href="">Политика&nbsp;конфиденциальности</a>&nbsp;
-                    <a href="">Авторское право</a>&nbsp;
-                    <a href="">Контакты</a>
-                    <div style="text-align: center; color: white">
-                        &#169;Insydia,&nbsp;2015{% if current_year != 2015 %}-{% now "Y" %}{% endif %}
-                    </div>
+            <!--<hr width="100%">-->
+            <div class="bottom-footer" style="text-align: center">
+                <a href="">Terms&nbsp;and&nbsp;Conditions</a>&nbsp;
+                <a href="">Privacy&nbsp;Policy</a>&nbsp;
+                <a href="">Advertiser</a>&nbsp;
+                <a href="">Contacts</a>
+                <div style="text-align: center; color: white">
+                    &#169;Insydia,&nbsp;2015{% if current_year != 2015 %}-{% now "Y" %}{% endif %}
                 </div>
             </div>
+        </div>
     </div>
 </div>
