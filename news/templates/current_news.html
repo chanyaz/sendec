@@ -169,6 +169,10 @@
             <h1 class="page-header" style="margin: 0 5%;">
                 {{ current_news_values.news_title }}
             </h1>
+            <button id="translate-button"
+                    onclick="$('.news-post-text').fadeOut();
+                        $('.news-post-text-translate').delay(100).show();"
+                    style="float: right; border: solid 1px red;">Translate</button>
             <div class="date-and-author" style="margin-left: 5%;">
                 <h5>By
                     {% if current_news_values.id|get_news_portal == "SEVERY" %}
@@ -178,7 +182,7 @@
                     {% endif %}
                     &nbsp;{{ current_news_values.news_post_date.date }}</h5>
             </div>
-        {% cache 600 newe-settings %}
+        {% cache 600 news-settings %}
         <div class="news-settings" style="height: 2em; width: 100%;">
             <div class="shares" style="margin-left: -6%; margin-top: -1%;">
                 <ul style="list-style-type: none;">
@@ -214,6 +218,9 @@
             {% endif %}
             <div class="news-post-text" style="margin: 0 15%;">
                 {{ current_news_values.news_post_text|safe|linebreaks }}
+            </div>
+            <div class="news-post-text-translate" style="margin: 0 15%;" hidden>
+                {{ current_news_values.news_post_text_translate|safe|linebreaks }}
             </div>
             <div class="nav-bar" style="margin-left: 63%;">
                 <ul class="list-inline">

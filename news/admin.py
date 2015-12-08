@@ -16,6 +16,7 @@ admin.site.register(NewsPortal)
 
 class PostAdminForm(forms.ModelForm):
     news_post_text = forms.CharField(widget=CKEditorWidget())
+    news_post_text_translate = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = News
         fields = "__all__"

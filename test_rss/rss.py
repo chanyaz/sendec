@@ -2,6 +2,24 @@ import feedparser
 import sqlite3
 import datetime, time
 
+db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+cursor = db.cursor()
+id = 1
+news_title = "Test news"
+news_category_id = 1
+news_post_date = datetime.datetime.now()
+news_post_text = "Test news text"
+news_post_text_translate = "Test news text translate"
+news_portal_name_id = 1
+news_company_owner_id = 1
+news_author_id = 1
+news_main_cover = ""
+news_likes = 0
+news_dislikes = 0
+cursor.execute("INSERT INTO news(news_title, news_category_id, news_post_date, news_post_text, news_post_text_translate, news_portal_name_id, news_company_owner_id, news_author_id, news_main_cover, news_likes, news_dislikes) VALUES(?,?,?,?,?,?,?,?,?,?,?)", (news_title, news_category_id, news_post_date, news_post_text, news_post_text_translate, news_portal_name_id, news_company_owner_id, news_author_id, news_main_cover, news_likes, news_dislikes))
+db.commit()
+db.close()
+
 def get_feed_urls():
     with open("rssurls.txt", "r") as file:
         url_feeds = file.readlines()
@@ -17,10 +35,20 @@ def parse_current_url(url=''):
 
 
 def last_element(feed):
-    return {"title": feed[0].title, "date": feed[0].published, "description": feed[0].description,
-            "link": feed[0].link, "content": feed[0].content[0]["value"], "author": feed[0].author,
-            "main_cover": ""}
-    #return feed[0].content
+    args = {"title": feed[0].title, "date": feed[0].published, "description": feed[0].description,
+            "link": feed[0].link, "main_cover": ""}
+
+    #print(feed[0].keys())
+    keys = feed[0].keys()
+
+    # AUTHOR
+    if "author" in keys: args["author"] = feed[0].author
+    else: args["author"] = ""
+    # CONTENT
+    if "content" in keys: args["content"] = feed[0].content[0]["value"]
+    else: args["content"] = ""
+
+    return args
 
 
 def connect_to_db(urls):
@@ -44,7 +72,7 @@ def connect_to_db(urls):
         else:
             data["main_cover"] = str(match_2)
 
-        data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", "")
+        data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
         match = re.findall(r'<.*?>', data["description"])
         for i in match:
             data["description"] = data["description"].replace(i, "")
@@ -67,7 +95,6 @@ def connect_to_db(urls):
     print("================END ONE MORE LOOP====================")
     db.close()
 
-urls_of_portals = get_feed_urls()
 #while True:
 #last_element(parse_current_url(url="http://appleinsider.ru/feed/"))
 #print(last_element(parse_current_url(url="http://appleinsider.ru/feed/")))
@@ -115,32 +142,44 @@ def fill_rss_table():
 #fill_rss_table()
 
 
-def fill_user_rss_table():
+def fill_rss_portals():
     import json
     db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
     #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
-
     with open("dictionary_portals.json") as file_list:
         file_list = list(json.load(file_list))
     with open("dictionary_portals.json") as file:
         portals = json.load(file)
-
-
-    import re
-    import urllib.request
-
     end = len(portals)
     cur_iter = 0
     cursor.execute("SELECT portal_name FROM news_portal")
     list_portals = cursor.fetchall()
     for i in range(len(portals)):
         cur_iter += 1
-        cursor.execute("INSERT INTO rss_portals(portal, portal_base_link) VALUES(?, ?)", (portals[file_list[i]]["name"], portals[file_list[i]]["base_link"]))
+        cursor.execute("INSERT INTO rss_portals(portal, portal_base_link, follows) VALUES(?, ?, ?)", (portals[file_list[i]]["name"], portals[file_list[i]]["base_link"], 0))
         db.commit()
         print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "When total end is ", end)
-
-
     db.close()
 
-#fill_user_rss_table()
+#fill_rss_portals()
+
+
+def work_func():
+    urls_of_portals = get_feed_urls()
+    print("1. Syndicate news\n2.Fill Rss Portals\n3.Update rss-news portals")
+    x = int(input("What can I help you? Enter number: "))
+    if x == 1:
+        while True:
+            try:
+                connect_to_db(urls=urls_of_portals)
+            except IndexError:
+                break
+    elif x == 2:
+        fill_rss_portals()
+    elif x == 3:
+        fill_rss_table()
+    else:
+        pass
+while True:
+    work_func()

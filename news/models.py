@@ -3,15 +3,13 @@ from loginsys.models import UserProfile
 from django.contrib.auth.models import User
 
 
-def generate_unique_name():
-    return "abc"
-
-
 def upload_news_cover(instance, filename):
         return "/".join(["content", "news", "covers", filename])
 
+
 def upload_company_cover(instance, filename):
     return "/".join(["content", "companies", "logo", filename])
+
 
 class NewsCategory(models.Model):
     class Meta:
@@ -36,7 +34,6 @@ class NewsPortal(models.Model):
 
     def __str__(self):
         return self.portal_name
-
 
 
 class Companies(models.Model):
@@ -67,28 +64,18 @@ class News(models.Model):
     news_category = models.ForeignKey(NewsCategory)
     news_post_date = models.DateTimeField(auto_now_add=True)
     news_post_text = models.TextField(max_length=4096)
-    #news_post_text_translate = models.TextField(max_length=4096)
+    news_post_text_translate = models.TextField(max_length=4096)
 
-
-    news_portal_name = models.ForeignKey(NewsPortal)
-
+    news_portal_name = models.ForeignKey(NewsPortal, blank=True)
     news_company_owner = models.ForeignKey(Companies, blank=True)
-
     news_author = models.ForeignKey(User, blank=True)
-
-    news_latest_shown = models.BooleanField(default=False)
-    news_currently_showing = models.BooleanField(default=False)
 
     # Media
     news_main_cover = models.FileField(upload_to=upload_news_cover, blank=True)
 
-
     # Information
     news_likes = models.IntegerField(default=0)
     news_dislikes = models.IntegerField(default=0)
-
-    news_event = models.BooleanField(default=False)
-    news_event_date = models.DateTimeField(auto_now_add=True)
 
     def get_news_id(self):
         return self.id
@@ -101,7 +88,6 @@ class News(models.Model):
 
     def get_category_name(self, category_id):
         return NewsCategory.objects.get(id=category_id).category_name
-
 
     def get_json_comments_replies(self):
         return {
@@ -142,7 +128,6 @@ class NewsComments(models.Model):
     comments_likes = models.IntegerField(default=0)
     comments_dislikes = models.IntegerField(default=0)
 
-
     def get_json_comments(self):
         return {
             "comments_id": self.id,
@@ -169,7 +154,6 @@ class NewsCommentsReplies(models.Model):
     reply_likes = models.IntegerField(default=0)
     reply_dislikes = models.IntegerField(default=0)
 
-
     def get_json_replies(self):
         return {
             "replies_id": self.id,
@@ -184,6 +168,15 @@ class NewsCommentsReplies(models.Model):
         }
 
 
+class RssPortals(models.Model):
+    class Meta:
+        db_table = "rss_portals"
+
+    portal = models.CharField(max_length=32)
+    portal_base_link = models.URLField()
+    follows = models.IntegerField(default=0)
+
+
 class RssNews(models.Model):
     class Meta:
         db_table = "news_rss"
@@ -191,27 +184,31 @@ class RssNews(models.Model):
     title = models.CharField(max_length=128)
     date_posted = models.DateTimeField(auto_now_add=True)
     post_text = models.TextField(max_length=4096)
-    portal_name = models.ForeignKey(NewsPortal)
+    portal_name = models.ForeignKey(RssPortals)
     category = models.ForeignKey(NewsCategory)
     link = models.URLField(max_length=128)
     author = models.CharField(max_length=128)
     content_value = models.TextField(max_length=16384)
 
-
-
     def __str__(self):
         return self.title
+
+    #def __unicode__(self):
+    #    return self.post_text, self.content_value
+
+    #def __repr__(self):
+    #    return self.post_text.encode("utf-8")
 
     def get_json_rss(self):
         return {
             "id": self.id,
             "title": self.title,
-            "date": self.date_posted,
+            "date": self.date_posted.isoformat(),
             "text": self.post_text,
-            "portal": self.portal_name,
-            "category": self.category,
+            "portal": self.portal_name_id,
+            "category": self.category_id,
             "link": self.link,
-            "content": self.content_value,
+            "content": self.content_value,#.replace("\u2019", "&rsquo;"),
             "author": self.author,
         }
 
@@ -221,14 +218,6 @@ class RssNewsCovers(models.Model):
         db_table = "rss_news_covers"
     rss_news = models.ForeignKey(RssNews)
     main_cover = models.TextField(max_length=512)
-
-
-class RssPortals(models.Model):
-    class Meta:
-        db_table = "rss_portals"
-
-    portal = models.CharField(max_length=32)
-    portal_base_link = models.URLField()
 
 
 class RssSaveNews(models.Model):

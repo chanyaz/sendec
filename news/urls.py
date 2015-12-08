@@ -6,7 +6,9 @@ from django.conf import settings
 
 urlpatterns = [
 
+    url(r"^test_rendering/", "news.views.test_rendering"),
 
+    url(r'^update_user_rss_news/', 'news.views.get_updated_rss'),
     url(r'^update_user_rss/', 'news.views.get_updated_user_rss'),
 
     # External Transitions

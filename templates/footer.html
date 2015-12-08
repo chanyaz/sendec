@@ -1,4 +1,4 @@
-
+{% load staticfiles %}
 
 <style>
     ul#footer-list .footer-list-element{
@@ -20,20 +20,31 @@
 </style>
 
 
-<div class="footer-div" style="background-color: #23527c; width: 99.99%;">
+<div class="footer-div" style="width: 95%; margin-left: 1%;">
     <div class="container-fluid">
-        <h4 style="text-align: left;" onclick="location.href='/';">INSYDIA</h4>
-        <div class="large-text-center row">
-                <!--<hr width="100%">-->
-                <div class="bottom-footer" style="text-align: center">
-                    <a href="">Соглашения</a>&nbsp;
-                    <a href="">Политика&nbsp;конфиденциальности</a>&nbsp;
-                    <a href="">Авторское право</a>&nbsp;
-                    <a href="">Контакты</a>
-                    <div style="text-align: center; color: white">
-                        &#169;Insydia,&nbsp;2015{% if current_year != 2015 %}-{% now "Y" %}{% endif %}
-                    </div>
-                </div>
+        <div class="footer-top-block" style="height: 5em;">
+            <div class="footer-title" style="float: left; height: 2%;">
+                <h4 style="text-align: left; font-size: 30px; border: solid 1px blue;" onclick="location.href='/';">INSYDIA</h4>
             </div>
+            <div class="mobile-apps" style="border: solid 1px red; float: right; color: red; width: 35%;">
+                Soon
+                <a href=""><img src="{% static 'static/img/app_store.png' %}" width="40%" /></a>
+                <a href=""><img src="{% static 'static/img/app_android.png' %}" width="44%" /></a>
+            </div>
+        </div>
+        <div class="footer-bottom-block" style="text-align: center; border: solid 1px red;">
+            <div class="ftr btm top" style="text-align: left;">
+                <div class="ftr btm top left" style="float: left; margin-right: 2%; font-size: 85%;">
+                    Copyright&nbsp;&#0169;&nbsp;2015{% if current_year != 2015 %}-{% now "Y" %}{% endif %}&nbsp;Insydia&nbsp;All&nbsp;rights&nbsp;reserved.
+                </div>
+                <a href="">Terms&nbsp;and&nbsp;Conditions</a>&nbsp;|
+                <a href="">Privacy&nbsp;Policy</a>&nbsp;|
+                <a href="">Advertiser</a>&nbsp;|
+                <a href="">Contacts</a>
+            </div>
+            <div class="in8n">
+                International&nbsp;Editions:&nbsp;RU&nbsp;|&nbsp;EN&nbsp;|&nbsp;CH
+            </div>
+        </div>
     </div>
 </div>
