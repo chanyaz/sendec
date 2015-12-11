@@ -203,7 +203,8 @@ class RssNews(models.Model):
         return {
             "id": self.id,
             "title": self.title,
-            "date": self.date_posted.isoformat(),
+            "date": self.date_posted.date().isoformat(),
+            "time": self.date_posted.time().isoformat(),
             "text": self.post_text,
             "portal": self.portal_name_id,
             "category": self.category_id,

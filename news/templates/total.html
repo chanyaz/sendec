@@ -183,28 +183,32 @@
                                     </div>
                                 </div>
                                 <div class="load-more" style="text-align: center;">
-                                    <button>Load More</button>
-                                    {% lazy_paginate 3 total_news %}
-                                        {% for i in total_news %}
-                                            <div class="news_lay_load"
-                                                 style="box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;"
-                                                 onmouseover="style.border='solid 0.2px blue';"
-                                                 onmouseout="style.border='';"
-                                                 onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                                <div class="title">
-                                                    <h4 class="page-header" style="margin-top: 1.5%;">
-                                                        {{ i.news_title }}
-                                                    </h4>
-                                                </div>
-                                                {% if i.news_main_cover != '' %}
-                                                    <div class="main-page-news-cover" style="height: 200px; background: url('/media/{{ i.news_main_cover }}') no-repeat center;"></div>
-                                                {% endif %}
-                                                <div class="text_post" style="width: 100%;">
-                                                    {{ i.news_post_text|safe|truncatewords:"10" }}
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    {% show_more %}
+
+
+                                    <div class="endless_page_template">
+
+
+                                        {% block js %}
+                                            <script src="http://code.jquery.com/jquery-latest.js"></script>
+                                            <script src="{% static 'static/js/endless-pagination.js' %}"></script>
+                                            <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $.endlessPaginate({
+                                                        paginateOnScroll: true,
+                                                        paginateOnScrollChunkSize: 1
+                                                    });
+                                                });
+                                            </script>
+                                        {% endblock %}
+
+                                        {% include page_template %}
+
+                                    </div>
+
+
+
+
 
                                 </div>
                             </div>

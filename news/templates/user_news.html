@@ -72,7 +72,7 @@
                 success: function(result){
                     updateUserRssPortals();
                     $("#curp-"+id).slideToggle();
-                    $("body").html("<img src='{% static 'static/img/ajax-loader.gif' %}' alt='Loading...' />").load("/news/usernews/page=1/");
+                    $("body").load("/news/usernews/page=1/");
                     $("#ajax-preloader").hide();
                     $("html").css("overflowY", "auto");
                 }
@@ -212,7 +212,7 @@
                     </div>
                 {% else %}
                     <div class="user-rss-portals" style="text-align: center">
-                        Your&nbsp;current&nbsp;portals
+                        Your&nbsp;current&nbsp;portals&nbsp;<a href="/profile/#settings-form">add&nbsp;another</a>
                     </div>
                     <div class="user-chosen-portals" style="border: solid 1px red; height: 20em; overflow-y: auto;">
                             {% for i in user_rss %}
@@ -242,6 +242,8 @@
 
         </div>
     </div>
+
+    <hr width="100%">
 
     {% include 'footer.html' %}
 

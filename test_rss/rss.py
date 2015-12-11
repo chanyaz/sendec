@@ -73,6 +73,7 @@ def connect_to_db(urls):
             data["main_cover"] = str(match_2)
 
         data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
+        data["description"] = data["description"].replace('"', '&#quot;').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
         match = re.findall(r'<.*?>', data["description"])
         for i in match:
             data["description"] = data["description"].replace(i, "")

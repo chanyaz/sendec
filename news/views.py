@@ -23,8 +23,7 @@ from userprofile.models import UserRssPortals
 import datetime
 
 
-#@login_required(login_url='/auth/login/')
-def main_page_load(request):
+def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None):
     args = {
         "current_year": datetime.datetime.now().year,
         "title": "| Home",
@@ -35,14 +34,18 @@ def main_page_load(request):
         "interest": get_interesting_news(request)[:3],
         #"total_news": render_news_by_sendec(request)[13:],
         "total_news": get_total_news,
+
+        "page_template": page_template,
     }
 
+    if request.is_ajax():
+        template = page_template
 
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"]=User.objects.get(username=auth.get_user(request).username)
     #if User.objects.get(username=auth.get_user(request).username).is_active:
-    return render_to_response('index_new.html', args, context_instance=RequestContext(request))
+    return render_to_response(template, context=args, context_instance=RequestContext(request))
     #else:
     #    return HttpResponseRedirect("/auth/preferences=categories")
 

@@ -16,7 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-MAIN_URL = "http://127.0.0.1:8002/"
+MAIN_URL = "http://127.0.0.1:8000/"
 
 
 # Quick-start development settings - unsuitable for production

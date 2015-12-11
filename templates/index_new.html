@@ -18,6 +18,7 @@
     <script src="jquery.lazyload.js"></script>
 
 
+    <!-- SIDE BAR -->
 
     <!-- PROGRESS BAR -->
 
@@ -31,14 +32,14 @@
 
     <!-- FACEBOOK sharing -->
     <script>
-                                    (function(d, s, id) {
-                                        var js, fjs = d.getElementsByTagName(s)[0];
-                                        if (d.getElementById(id)) return;
-                                        js = d.createElement(s); js.id = id;
-                                        js.src = "//connect.facebook.net/en_EN/sdk.js#xfbml=1&version=v2.5";
-                                        fjs.parentNode.insertBefore(js, fjs);
-                                    }(document, 'script', 'facebook-jssdk'));
-                                </script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_EN/sdk.js#xfbml=1&version=v2.5";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 
 
 
@@ -236,7 +237,7 @@
 
         .preview-rss-news {
             width: 100%;
-            height: inherit;
+            height: 100%;
             background-color: rgba(0, 0, 0, 0.1);
             overflow: auto;
             position: fixed;
@@ -246,6 +247,7 @@
             margin: 0 auto 0 22%;
             width:  50%;
             height: auto;
+            min-height:98%;
             padding: 0;
             background-color: white;
             border-radius:5px;
@@ -279,6 +281,18 @@
         #rss-properties-list li{
             float: left;
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -346,7 +360,6 @@
 
 
     </style>
-
 
 </head>
 <body>
@@ -556,6 +569,8 @@
         </div>
     </div>
 
+
+
     <!-- /#wrapper -->
 
     <script src="{% static 'static/js/jquery.js' %}" type="javascript"></script>
@@ -572,8 +587,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="popup-user-auth" hidden>
         <div class="popup-user-auth-content">
             <div id="login-tab">
@@ -644,8 +657,6 @@
             </div>
         </div>
     </div>
-
-
     <div id="preview-rss-news"
          hidden
          class="preview-rss-news"
@@ -708,8 +719,6 @@
             </div>
         </div>
     </div>
-
-
     <div id="ajax-preloader" hidden>
         <div id="ajax-preloader-content">
             <img src='{% static 'static/img/ajax-loader.gif' %}' alt='Loading...' />
@@ -763,11 +772,12 @@
             $(".rss-title").html("<h3>"+$parsedData.title+"</h3>");
             $(".rss-author").html($parsedData.author);
             $(".rss-parent-link").html("<a href='"+$parsedData.link+"'>To&nbsp;original<img src='{% static 'static/img/arrow.png' %}'; style='margin-top:-5%;' width=18px'; /></a>");
-            $(".rss-date-published").html("&nbsp;|&nbsp;"+$parsedData.date_posted);
+            var d = new Date($parsedData.date_posted);
+            $(".rss-date-published").html("&nbsp;|&nbsp;"+ d.toDateString().substring(4)+"&nbsp;"+d.toTimeString().substring(0,5));
 
 
             if($parsedData.content_value.length < 1) {
-                $(".rss-body").html($parsedData.post_text);
+                $(".rss-body").html($parsedData.post_text+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%;' class='btn btn-primary'>See&nbsp;original</button></a>");
             }
             else {
                 $(".rss-body").html($parsedData.content_value);
@@ -788,5 +798,7 @@
             $("html").css("overflowY", "auto");
         }
     </script>
+
+
 </body>
 </html>
