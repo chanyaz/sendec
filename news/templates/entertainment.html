@@ -4,7 +4,7 @@
 
     <style>
         #latest-news{
-            border: solid 1px red;
+{#            border: solid 1px red;#}
             width: 70%;
             margin-left: 1%;
         }
@@ -28,28 +28,46 @@
             color: blue;
         }
         #entertainment-news{
-            border: solid 1px red;
+{#            border: solid 1px red;#}
             width: 70%;
             margin-left: 1%;
             float: left;
+        }
+        .current_ent_news{
+            float: left;
+            width: 48%;
+            height: 300px;
+{#            border: solid 1px blue; #}
+            margin: 0 1%;
+        }
+        .right-side{
+            width: 28%;
+{#            border: solid 1px orange; #}
+            float: right;
+        }
+        .image{
+            opacity:1;
+            width: 100%;
+            height: 150px;
+            background: url('/media/{{ current_bit_news.news_main_cover }}') no-repeat center;
         }
     </style>
 
 
 
     <div class="container-fluid" style="border: solid 1px lightgrey;">
-        <div id="latest-news">
-            <div class="top-entertainment-content" onclick="location.href='/news/{{ top_entertainment_news.news_category_id }}/{{ top_entertainment_news.id }}/';"></div>
-            <div class="bn-title">
-                <span class="bn-title-text">
-                    {{ top_entertainment_news.news_title }}
-                </span>
+        <div class="row">
+            <div id="latest-news">
+                <div class="top-entertainment-content" onclick="location.href='/news/{{ top_entertainment_news.news_category_id }}/{{ top_entertainment_news.id }}/';"></div>
+                <div class="bn-title">
+                    <span class="bn-title-text">
+                        {{ top_entertainment_news.news_title }}
+                    </span>
+                </div>
             </div>
-        </div>
-
-        <div id="entertainment-news" style="border: solid 1px red; width: 70%; margin-left: 1%; height: auto; float: left;">
+            <div id="entertainment-news">
                 {% for current_entertainment_news in entertainment_news %}
-                    <div id="news-{{ current_entertainment_news.id }}" style="float: left; width: 48%; height: 300px; border: solid 1px blue; margin: 0 1%;">
+                    <div class="current_ent_news" id="news-{{ current_entertainment_news.id }}">
                         <div class="title">
                             <a href="/news/{{ current_entertainment_news.news_category_id }}/{{ current_entertainment_news.id }}/">
                                 {{ current_entertainment_news.news_title }}
@@ -59,7 +77,7 @@
                             By&nbsp;<a href="/search/?q={{ current_entertainment_news.news_portal_name }}">{{ current_entertainment_news.news_portal_name }}</a>&nbsp;|&nbsp;
                             {{ current_entertainment_news.news_post_date }}
                         </div>
-                        <div onmouseover="this.style.cursor='pointer';" onclick="location.href='/news/{{ current_entertainment_news.news_category_id }}/{{ current_entertainment_news.id }}/';" class="image" style="opacity:1; width: 100%; height: 150px; background: url('/media/{{ current_bit_news.news_main_cover }}') no-repeat center;"></div>
+                        <div onmouseover="this.style.cursor='pointer';" onclick="location.href='/news/{{ current_entertainment_news.news_category_id }}/{{ current_entertainment_news.id }}/';" class="image"></div>
                         <div class="text">
                             {{ current_entertainment_news.news_post_text|striptags|safe|truncatewords:"12" }}
                             <a href="/news/{{ current_entertainment_news.news_category_id }}/{{ current_entertainment_news.id }}/">Read&nbsp;more</a>
@@ -67,11 +85,9 @@
                     </div>
                 {% endfor %}
             </div>
-
-        <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
-            {% include 'twitter.html' %}
+            <div class="right-side">
+                {% include 'twitter.html' %}
+            </div>
         </div>
     </div>
-    {% include 'footer.html' %}
-
 {% endblock %}

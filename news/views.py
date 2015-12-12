@@ -728,3 +728,28 @@ def test_rendering(request):
     }
     args.update(csrf(request))
     return render_to_response("test_rss_news.html", args, context_instance=RequestContext(request))
+
+
+def render_contacts_page(request):
+    args = {}
+    args.update(csrf(request))
+    if auth.get_user(request).username:
+        args["username"] = User.objects.get(username=auth.get_user(request).username)
+
+    return render_to_response("contacts.html", args)
+
+
+def set_user_portals(request):
+    args = {}
+    args.update(csrf(request))
+
+    from userprofile.models import UserRssPortals
+
+    user = User.objects.get(username=auth.get_user(request).username)
+    if request.POST:
+        portals_list = request.POST.getlist("portals[]")
+        for i in portals_list:
+            rss_instance = UserRssPortals.objects.get(user_id=user.id, portal_id=int(i))
+            rss_instance.check = True
+            rss_instance.save()
+    return HttpResponseRedirect("/news/usernews/page=1/")

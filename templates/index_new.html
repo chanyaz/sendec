@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="{% static 'static/img/favicon.ico' %}" type="image/x-icon">
 
 
+
     <!-- LAZY SCROLLING -->
     <script src="jquery.js"></script>
     <script src="jquery.lazyload.js"></script>
@@ -198,7 +199,7 @@
         .popup-user-auth {
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.1);
             overflow: hidden;
             position: fixed;
             top: 0;
@@ -208,7 +209,7 @@
             width:  30%;
             height: 70%;
             padding: 10px;
-            background-color: #c5c5c5;
+            background-color: #ffffff;
             border-radius:5px;
             box-shadow: 0 0 10px #000;
         }
@@ -364,6 +365,12 @@
 </head>
 <body>
 
+
+
+
+
+
+
     <div class="top-navigation" style="position: relative; height: 8%;">
         <!-- TOP PANEL FOR SEARCH AND LOGO -->
         <div style="float: left; margin-left: 11%;" class="top-left-bar" onmouseover="style.cursor='pointer';">
@@ -371,11 +378,11 @@
             <span class="search-span" onclick="SearchClick();">SEARCH</span>
         </div>
         <div class="title-bar" style="float: left; margin-left: 18%;">
-            <div class="internacionalization" style="text-align: center; font-size: 10px;">
-                US | RU | CH
+            <div class="internacionalization" style="margin-left: -20%; text-align: center; font-size: 10px;">
+                US&nbsp;|&nbsp;RU&nbsp;|&nbsp;CH
             </div>
             <div onmouseover="this.style.cursor='pointer';" class="title-name" style="text-align: center; font-size: 2em;" onclick="location.href='/';">
-                INSYDIA
+                <img src="{% static 'static/img/logo-light.png' %}" width="100%" />
             </div>
         </div>
         <div class="right-block">
@@ -396,7 +403,7 @@
         </div>
     </div>
 
-    <div id="wrapper-new">
+    <div id="wrapper-new" style="min-height: 100%;">
         <div id="page-wrapper">
             <div class="ro234w">
                 <div hidden
@@ -446,7 +453,7 @@
                         <div class="founders">
                             <ul style="list-style-type: none;">
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/about/';">ABOUT&nbsp;US</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/contacts/';">CONTACTS</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/about/contacts/';">CONTACTS</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/';">STH&nbsp;ELSE</span></li>
                             </ul>
                         </div>
@@ -498,7 +505,7 @@
                     </div>
                 </div>
 
-                <div class="other" style="margin-left: 10%; height: 100%;">
+                <div class="other" style="min-height: 100%; margin-left: 10%; height: 100%;">
                 <br>
                     <div class="search-bar" hidden
                          onkeydown="if(event.keyCode == 27){$('.search-bar').hide(); $('.block-news').hide();}"
@@ -534,7 +541,6 @@
                 <hr width="98%">
                     {% if news_block == True %}
                         {% include 'news_block_new.html' %}
-                        {% include 'footer.html' %}
                     {% endif %}
                     {% block user_profile %}{% endblock %}
                         {% block moderator %}{% endblock %}
@@ -543,7 +549,7 @@
                     {% block current_news %}{% endblock %}
                     {% block current_category %}{% endblock %}
                     {% block top_news %}{% endblock %}
-                    {% block search %}{% endblock %}
+
 
 
                     <!-- new blocks -->
@@ -558,6 +564,8 @@
                             {% block current_company %}{% endblock %}
                         {% block reviews %}{% endblock %}
                         {% block user_news %}{% endblock %}
+                        {% block contacts %}{% endblock %}
+                        {% block search %}{% endblock %}
                     </div>
 
 
@@ -568,6 +576,8 @@
             </div>
         </div>
     </div>
+
+    {% include 'footer.html' %}
 
 
 
@@ -593,7 +603,7 @@
                 <div class = 'no' style="width: 100%;">
                     <div id="choice" style="height: inherit;">
                         <div class="service-name" style="text-align: center; margin-top: 5%;">
-                            INSYDIA
+                            <img src="{% static 'static/img/logo-light.png' %}" width="30%" />
                         </div>
                         <div class="sign-in-center-data" style="text-align: center; margin-top: 5%;">
                             <span class="signin">SIGN&nbsp;IN</span>
@@ -601,9 +611,10 @@
                     </div>
 
                     <div id="sign-in"  onblur="this.style.border='solid 1px red';">
-                        <form action="/auth/login/" method="POST" autocomplete="off">
+                        <form action="/auth/login/" method="POST">
                             {% csrf_token %}
                             <input type="text"
+                                   autocomplete="off"
                                    name="username"
                                    id="username"
                                    placeholder="username"
@@ -631,11 +642,9 @@
 
                             <hr>
                             <span class="signin" style="margin-left: 45%;">Sign&nbsp;in&nbsp;with:</span><br>
-                            <div class="external-systems-auth" style="border: solid 1px red;">
+                            <div class="external-systems-auth" style="">
                                 <div class="systems-list" style="margin-left: 40%;">
-                                    facebook<br>
-                                    Twitter<br>
-                                    Google+<br>
+
                                 </div>
                             </div>
 

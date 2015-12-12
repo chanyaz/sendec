@@ -36,14 +36,15 @@
     </style>
 
     <div class="container-fluid" style="border: solid 1px lightgrey;">
-        <div id="technologies-news">
-            <div class="top-technologies-content" onclick="location.href='/news/{{ top_technology.news_category_id }}/{{ top_technology.id }}/';"></div>
-            <div class="bn-title">
-                <span class="bn-title-text">
-                    {{ top_technology.news_title }}
-                </span>
+        <div class="row">
+            <div id="technologies-news">
+                <div class="top-technologies-content" onclick="location.href='/news/{{ top_technology.news_category_id }}/{{ top_technology.id }}/';"></div>
+                <div class="bn-title">
+                    <span class="bn-title-text">
+                        {{ top_technology.news_title }}
+                    </span>
+                </div>
             </div>
-        </div>
             <div id="technology-news">
                 {% for current_tech_news in technology_news %}
                     <div id="news-{{ current_tech_news.id }}" style="float: left; width: 48%; height: 300px; border: solid 1px blue; margin: 0 1%;">
@@ -66,12 +67,11 @@
                     </div>
                 {% endfor %}
             </div>
-
-    <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
-        {% include 'twitter.html' %}
+            <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
+                {% include 'twitter.html' %}
+            </div>
+        </div>
     </div>
-</div>
 
-    {% include 'footer.html' %}
 
 {% endblock %}

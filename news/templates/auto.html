@@ -4,7 +4,7 @@
 
     <style>
         #latest-news{
-            border: solid 1px red;
+{#            border: solid 1px red;#}
             width: 70%;
             margin-left: 1%;
         }
@@ -28,26 +28,29 @@
             color: blue;
         }
         #auto-news{
-            border: solid 1px red;
+{#            border: solid 1px red;#}
             width: 70%;
             margin-left: 1%;
             float: left;
         }
+    .right-side{
+        width: 28%;
+{#        border: solid 1px orange; #}
+        float: right;
+    }
     </style>
 
-
-
     <div class="container-fluid" style="border: solid 1px lightgrey;">
-        <div id="latest-news">
-            <div class="top-auto-content" onclick="location.href='/news/{{ top_auto_news.news_category_id }}/{{ top_auto_news.id }}/';"></div>
-            <div class="bn-title">
-                <span class="bn-title-text">
-                    {{ top_auto_news.news_title }}
-                </span>
+        <div class="row">
+            <div id="latest-news">
+                <div class="top-auto-content" onclick="location.href='/news/{{ top_auto_news.news_category_id }}/{{ top_auto_news.id }}/';"></div>
+                <div class="bn-title">
+                    <span class="bn-title-text">
+                        {{ top_auto_news.news_title }}
+                    </span>
+                </div>
             </div>
-        </div>
-
-        <div id="auto-news" style="border: solid 1px red; width: 70%; margin-left: 1%; height: auto; float: left;">
+            <div id="auto-news">
                 {% for current_auto_news in auto_news %}
                     <div id="news-{{ current_auto_news.id }}" style="float: left; width: 48%; height: 300px; border: solid 1px blue; margin: 0 1%;">
                         <div class="title">
@@ -67,13 +70,9 @@
                     </div>
                 {% endfor %}
             </div>
-
-        <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
-            {% include 'twitter.html' %}
+            <div class="right-side">
+                {% include 'twitter.html' %}
+            </div>
         </div>
     </div>
-
-    {% include 'footer.html' %}
-
-
 {% endblock %}

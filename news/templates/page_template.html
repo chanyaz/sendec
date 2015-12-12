@@ -2,7 +2,7 @@
 {% paginate total_news %}
 {% for i in total_news %}
     <div class="news_lay_load"
-         style="box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;"
+         style="box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 30%; margin-left: 1%; float: left;"
          onmouseover="style.border='solid 0.2px blue';"
          onmouseout="style.border='';"
          onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">

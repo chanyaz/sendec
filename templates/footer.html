@@ -1,49 +1,118 @@
 {% load staticfiles %}
 
 <style>
-    ul#footer-list .footer-list-element{
+    #footer-div{
+        -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        width: 100%;
+    }
+
+    .footer-list-top .footer-list-element{
         list-style-type: none;
         display: inline;
         width: 100%;
     }
 
-    .list-element-block{
-        float: left;
-        width: 20%;
+    .footer-bottom-block{
+{#        border: solid 1px red;#}
     }
 
-    .first-content-element{
-        list-style-type: none;
-        margin-left: -13%;
+    .global-left{
+        float: left;
+{#        border: solid 1px blue;#}
+        width: 50%;
+        margin-left: 10%;
+    }
+
+    .ftr-lf{
+{#        border: solid 1px purple;#}
+        float: left;
+        font-size: 45px;
+        margin-right: 1%;
+    }
+
+    .ftr-rt{
+        margin-top: 0;
+    }
+
+    .ftr-rt-bottom{
+        margin-top: -1%;
+    }
+
+    #copyrights{
+        margin-top: -1%;
+    }
+
+    .global-right{
+{#        border: solid 1px red;#}
+        height: 5em;
+        margin-right: 20%;
+    }
+
+    #mobile-apps{
+{#        border: solid 1px red;#}
+        float: right;
+        color: red;
+{#        width: 20%;#}
+    }
+
+    .main-logo-title, .main-logo-title:hover{
+        text-decoration: none;
     }
 
 </style>
 
 
-<div class="footer-div" style="width: 95%; margin-left: 1%;">
+<div id="footer-div">
     <div class="container-fluid">
-        <div class="footer-top-block" style="height: 5em;">
-            <div class="footer-title" style="float: left; height: 2%;">
-                <h4 style="text-align: left; font-size: 30px; border: solid 1px blue;" onclick="location.href='/';">INSYDIA</h4>
-            </div>
-            <div class="mobile-apps" style="border: solid 1px red; float: right; color: red; width: 35%;">
-                Soon
-                <a href=""><img src="{% static 'static/img/app_store.png' %}" width="40%" /></a>
-                <a href=""><img src="{% static 'static/img/app_android.png' %}" width="44%" /></a>
-            </div>
-        </div>
-        <div class="footer-bottom-block" style="text-align: center; border: solid 1px red;">
-            <div class="ftr btm top" style="text-align: left;">
-                <div class="ftr btm top left" style="float: left; margin-right: 2%; font-size: 85%;">
-                    Copyright&nbsp;&#0169;&nbsp;2015{% if current_year != 2015 %}-{% now "Y" %}{% endif %}&nbsp;Insydia&nbsp;All&nbsp;rights&nbsp;reserved.
+        <div class="footer-bottom-block">
+            <div class="global-left">
+                <div class="ftr-lf">
+                    <a class="main-logo-title" href="/">INSYDIA</a>
                 </div>
-                <a href="">Terms&nbsp;and&nbsp;Conditions</a>&nbsp;|
-                <a href="">Privacy&nbsp;Policy</a>&nbsp;|
-                <a href="">Advertiser</a>&nbsp;|
-                <a href="">Contacts</a>
+                <div class="ftr-rt">
+                    <div id="ftr-rt-top">
+                        <ul class="footer-list-top">
+                            <li class="footer-list-element">
+                                <a href="">Terms&nbsp;and&nbsp;Conditions</a>
+                            </li>&nbsp;|&nbsp;
+                            <li class="footer-list-element">
+                                <a href="">Privacy&nbsp;Policy</a>
+                            </li>&nbsp;|&nbsp;
+                            <li class="footer-list-element">
+                                <a href="">Advertiser</a>
+                            </li>&nbsp;|&nbsp;
+                            <li class="footer-list-element">
+                                <a href="/about/contacts/">Contacts</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="ftr-rt-bottom">
+                        <ul class="footer-list-top">
+                                International&nbsp;Editions:&nbsp;
+                            <li class="footer-list-element">
+                                <a href="">EN</a>
+                            </li>&nbsp;|&nbsp;
+                            <li class="footer-list-element">
+                                <a href="">RU</a>
+                            </li>&nbsp;|&nbsp;
+                            <li class="footer-list-element">
+                                <a href="">CH</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="copyrights">
+                        &#169;INSYDIA, 2015{% now "Y" as current_year %}{% if current_year != '2015' %}-{% now "Y" %}{% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="in8n">
-                International&nbsp;Editions:&nbsp;RU&nbsp;|&nbsp;EN&nbsp;|&nbsp;CH
+            <div class="global-right">
+                <div id="mobile-apps">
+                    Soon<br>
+                    <a href=""><img src="{% static 'static/img/app_store.png' %}" width="100em" /></a>
+                    <a href=""><img src="{% static 'static/img/app_android.png' %}" width="108em" /></a>
+                </div>
             </div>
         </div>
     </div>

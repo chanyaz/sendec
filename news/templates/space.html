@@ -2,21 +2,66 @@
 {% load staticfiles %}
 {% block space %}
 
+    <style>
+    #space-news{
+{#        border: solid 1px red; #}
+        width: 70%;
+        margin-left: 1%;
+    }
+    .top-technologies-content{
+        opacity:1;
+        width: 100%;
+        height: 300px;
+        background: url('/media/{{ top_space_news.news_main_cover }}') no-repeat center;
+    }
+    .bn-title{
+        z-index: 999;
+        position: absolute;
+        margin-top: -8%;
+        width: 50%;
+        background-color: #a6e1ec;
+        opacity: 0.75;
+    }
+    .bn-title-text{
+        margin-left: 5%;
+        font-size: 20px;
+        color: blue;
+    }
+    #space-news{
+{#        border: solid 1px red;#}
+        width: 70%;
+        margin-left: 1%;
+        height: auto;
+        float: left;
+    }
+    .cur_sp_news{
+        float: left;
+        width: 48%;
+        height: 300px;
+{#        border: solid 1px blue; #}
+        margin: 0 1%;
+    }
+    .right-side{
+        width: 28%;
+{#        border: solid 1px orange; #}
+        float: right;
+    }
+    </style>
+
     <div class="container-fluid" style="border: solid 1px lightgrey;">
+        <div class="row">
             <div id="space-news"
-                 style="border: solid 1px red; width: 70%; margin-left: 1%;"
                  onclick="location.href='/news/{{ top_space_news.news_category_id }}/{{ top_space_news.id }}/';">
-                <div class="top-technologies-content" style="opacity:1; width: 100%; height: 300px; background: url('/media/{{ top_space_news.news_main_cover }}') no-repeat center;"></div>
-                <div class="bn-title" style="z-index: 999; position: absolute; margin-top: -8%; width: 50%; background-color: #a6e1ec; opacity: 0.75;">
-                    <span class="bn-title-text" style="margin-left: 5%; font-size: 20px; color: blue;">
+                <div class="top-technologies-content"></div>
+                <div class="bn-title">
+                    <span class="bn-title-text">
                         {{ top_space_news.news_title }}
                     </span>
                 </div>
             </div>
-
-            <div id="space-news" style="border: solid 1px red; width: 70%; margin-left: 1%; height: auto; float: left;">
+            <div id="space-news">
                 {% for current_space_news in space_news %}
-                    <div id="news-{{ current_space_news.id }}" style="float: left; width: 48%; height: 300px; border: solid 1px blue; margin: 0 1%;">
+                    <div class="cur_sp_news" id="news-{{ current_space_news.id }}">
                         <div class="title">
                             <a href="/news/{{ current_space_news.news_category_id }}/{{ current_space_news.id }}/">
                                 {{ current_space_news.news_title }}
@@ -33,11 +78,9 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
+            <div class="right-side">
                 {% include 'twitter.html' %}
             </div>
+        </div>
     </div>
-
-    {% include 'footer.html' %}
-
 {% endblock %}

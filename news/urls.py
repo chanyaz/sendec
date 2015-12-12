@@ -5,7 +5,8 @@ from django.conf import settings
 
 
 urlpatterns = [
-
+    url(r'^add_portals/', 'news.views.set_user_portals'),
+    url(r'^contacts/$', 'news.views.render_contacts_page'),
     url(r"^test_rendering/", "news.views.test_rendering"),
 
     url(r'^update_user_rss_news/', 'news.views.get_updated_rss'),
@@ -23,6 +24,7 @@ urlpatterns = [
     url(r'^add_like/n=(?P<news_id>\w+)', 'news.views.add_like_news'),
     url(r'^add_like_rss/r=(?P<rss_id>\w+)', 'news.views.save_rss_news'),
     url(r'^check_like/n=(?P<news_id>\w+)', 'news.views.check_like_amount'),
+
 
     # Dislikes
     url(r'^add_dislike/n=(?P<news_id>\w+)', 'news.views.add_dislike_news'),

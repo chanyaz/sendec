@@ -2,28 +2,46 @@
 {% load staticfiles %}
 {% block companies %}
 
-    <div class="container-fluid" style="border: solid 1px lightgrey;">
-        <div id="companies" style="border: solid 1px red; width: 70%; margin-left: 1%; height: auto; float: left;">
-            <div class="company-top-title" style="text-align: center;">Companies</div>
-            <div class="companies-total-description">
-                Here you can search news of the certain company which do you want.
+    <style>
+        #companies{
+{#            border: solid 1px red; #}
+            width: 70%;
+            margin-left: 1%;
+            height: auto;
+            float: left;
+        }
+        .company-top-title{
+            text-align: center
+        }
+        .right-side{
+            width: 28%;
+{#            border: solid 1px orange; #}
+            float: right;
+        }
+    </style>
+
+
+    <div class="container-fluid" style="">
+        <div class="row">
+            <div id="companies">
+                <div class="company-top-title">Companies</div>
+                <div class="companies-total-description">
+                    Here you can search news of the certain company which do you want.
+                </div>
+                <div class="companies-list">
+                    {% for current_company in companies %}
+                        <div class="current_company" onclick="location.href='/news/companies/{{ current_company.verbose_name }}/';">
+                            <div class="current_company_name">
+                                {{ current_company.id }}
+                                {{ current_company.name }}
+                            </div><br>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="companies-list">
-                {% for current_company in companies %}
-                    <div class="current_company" onclick="location.href='/news/companies/{{ current_company.verbose_name }}/';">
-                        <div class="current_company_name">
-                            {{ current_company.id }}
-                            {{ current_company.name }}
-                        </div><br>
-                    </div>
-                {% endfor %}
-            </div>
-            </div>
-            <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
+            <div class="right-side">
                 {% include 'twitter.html' %}
             </div>
+        </div>
     </div>
-
-    {% include 'footer.html' %}
-
 {% endblock %}
