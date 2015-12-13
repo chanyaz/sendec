@@ -30,16 +30,26 @@ def render_user_profile_page(request):
             user_cell_number=""
         )
 
+    args["special_text"] = "To get special information you can enter key-word here and we will try to find and provide " \
+                           "you with this information."
+
     return render_to_response("profile.html", args)
 
 
 def render_moderator_profile_page(request, username):
-    args = {
-        "username": User.objects.get(username=auth.get_user(request).username),
-    }
-    args.update(csrf(request))
     if User.objects.filter(username=username).exists():
         if User.objects.get(username=username).is_staff:
+
+            from news.models import News
+            user_moderator = User.objects.get(username=username),
+            user = User.objects.get(username=auth.get_user(request).username),
+            args = {
+                "username": user,
+                "moderator": user_moderator,
+                "articles": News.objects.filter(news_author_id=1).values(),
+            }
+            args.update(csrf(request))
+
             return render_to_response("moderator_profile.html", args)
         else:
             raise Http404()

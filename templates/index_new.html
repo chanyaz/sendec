@@ -13,6 +13,11 @@
     <link rel="shortcut icon" href="{% static 'static/img/favicon.ico' %}" type="image/x-icon">
 
 
+    <!-- COOCKIES -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="{% static 'static/js/jquery.cookie.js' %}"></script>
+
+
 
     <!-- LAZY SCROLLING -->
     <script src="jquery.js"></script>
@@ -173,6 +178,13 @@
         })
     </script>
 
+    <script>
+        function pageState(){
+            $('#beta-announce').slideUp();
+            document.cookie = "announce=hide";
+        }
+    </script>
+
 
     <!-- Styles -->
     <style>
@@ -269,12 +281,15 @@
         }
 
         /* RSS POP UP WINDOW */
-        .rss-body img{
+        .rss-body img {
+            margin-left: auto;
+            margin-right: auto;
             height: 100%;
             width: inherit;
-            max-width: 111%;
+            max-width: 100%;
             max-height: 30em;
-            margin-left: -5.5%;
+            display: block;
+        {#            margin-left: -5.5%;#}
         }
         #rss-share-list li{
             float:left;
@@ -378,10 +393,10 @@
             <span class="search-span" onclick="SearchClick();">SEARCH</span>
         </div>
         <div class="title-bar" style="float: left; margin-left: 18%;">
-            <div class="internacionalization" style="margin-left: -20%; text-align: center; font-size: 10px;">
+            <!--<div class="internacionalization" style="margin-left: -20%; text-align: center; font-size: 10px;">
                 US&nbsp;|&nbsp;RU&nbsp;|&nbsp;CH
-            </div>
-            <div onmouseover="this.style.cursor='pointer';" class="title-name" style="text-align: center; font-size: 2em;" onclick="location.href='/';">
+            </div>-->
+            <div onmouseover="this.style.cursor='pointer';" class="title-name" style="margin-top: 5%; text-align: center; font-size: 2em;" onclick="location.href='/';">
                 <img src="{% static 'static/img/logo-light.png' %}" width="100%" />
             </div>
         </div>
@@ -402,6 +417,19 @@
             {% endif %}
         </div>
     </div>
+    {% if hide == True %}
+        <div id="beta-announce" style="display: block; margin-left: 25%; width: 50%; border: solid 1px lightgrey;">
+            <span class="announce-close" style="float: left; width: 2%;">
+                <img src="{% static 'static/img/close.png' %}"
+                     onclick="pageState();"
+                     width="100%"
+                     style="margin-top: -50%;"/>
+            </span>
+            <div class="announce-content" style="text-align: center">
+                {{ beta_announce|safe }}
+            </div>
+        </div>
+    {% endif %}
 
     <div id="wrapper-new" style="min-height: 100%;">
         <div id="page-wrapper">
@@ -543,7 +571,7 @@
                         {% include 'news_block_new.html' %}
                     {% endif %}
                     {% block user_profile %}{% endblock %}
-                        {% block moderator %}{% endblock %}
+                        {% block moderator_page %}{% endblock %}
                     {% block favourite %}{% endblock %}
                     {% block notify %}{% endblock %}
                     {% block current_news %}{% endblock %}
@@ -810,4 +838,34 @@
 
 
 </body>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter34186215 = new Ya.Metrika({
+                    id:34186215,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true,
+                    trackHash:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/34186215" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </html>

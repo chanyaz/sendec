@@ -41,6 +41,17 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
     if request.is_ajax():
         template = page_template
 
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """Currently version is only for beta testing. We have hidden/disabled some functions and blocks.
+<br>Beta test continues till 21.12.15 17:00 GMT(UTC) +0300
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+"""
+
+
+
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"]=User.objects.get(username=auth.get_user(request).username)
@@ -731,7 +742,11 @@ def test_rendering(request):
 
 
 def render_contacts_page(request):
-    args = {}
+    args = {
+        "email": "insydia@yandex.ru",
+        "phone": "+7-931-579-06-96",
+        "cooperation": "saqel@yandex.ru",
+    }
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
@@ -753,3 +768,17 @@ def set_user_portals(request):
             rss_instance.check = True
             rss_instance.save()
     return HttpResponseRedirect("/news/usernews/page=1/")
+
+
+def send_report(request):
+    from django.core.mail import EmailMultiAlternatives, send_mail
+
+    mail_subject = "[REPORT] I have found error"
+    if request.POST:
+        text_content = request.POST["message"] + "\nE-mail: "+request.POST["email"]+"\nName: "+request.POST["username"]
+        mail_from = "saqel@yandex.ru"#request.POST["email"]
+        mail_to = "insydia@yandex.ru"
+        send_mail(mail_subject, text_content, mail_from, [mail_to])
+        #msg.attach_alternative(html_content, "text/html")
+        #msg.send()
+    return HttpResponseRedirect("/about/contacts/")

@@ -1,0 +1,213 @@
+{% extends 'index_new.html' %}
+{% load my %}
+{% load staticfiles %}
+{% block contacts %}
+
+    <script>
+        function changeState() {
+            var element = document.getElementById('user-message');
+            if(element.style.display == 'block'){element.style.display = 'none';}
+            else {element.style.display = 'block';}
+
+        }
+    </script>
+
+    <style xmlns="http://www.w3.org/1999/html">
+        .contact-list{
+            list-style-type: none;
+        }
+        .team-list{
+            margin-left: -10%;
+            list-style-type: none;
+        }
+        .team-list-item{
+            width: 45%;
+            float: left;
+            margin-left: 5%;
+            border: solid 1px mediumpurple;
+        }
+        .contact-link{
+            color: #3036ff;
+        }
+        .contact-link:hover{
+            text-decoration: none;
+            color: #79daff;
+        }
+        .team-link{
+            text-decoration: none;
+        }
+        .team-link:hover{
+            text-decoration: none;
+        }
+        .photo{
+            height: 50px;
+            float: left;
+            width: 25%;
+            border: solid 1px red;
+        }
+        .content{
+            float: right;
+            width: 75%;
+            height: auto;
+            border: solid 1px purple;
+        }
+    </style>
+
+    <div class="container-fluid">
+        <div class="row">
+            <span class="contact-title">
+                <h3>CONTACT&nbsp;INFORMATION</h3>
+            </span>
+            <div id="contacts">
+                <div class="contacts-left" style="float: left; width: 70%">
+                    <div class="contacts-left-top">
+                        <div class="contacts-left-top-left" style="">
+                            Address:<br>
+                            St. Petersburg...<br>
+                            Cell:&nbsp;{{ phone }}<br>
+                            E-mail:&nbsp;<a href="mailto:{{ email }}">{{ email }}</a><br>
+                            On&nbsp;cooperation:&nbsp;<a href="mailto:{{ cooperation }}?subject=[Cooperation] ">{{ cooperation }}</a>
+                            <hr width="1%">
+                            <span style="color: lightblue" onmouseover="this.style.cursor='pointer';" onclick="changeState();">Contact with us</span>
+                            <div  id="user-message" style="display: none;">
+                                <form class="form-horizontal"
+                                      role="form"
+                                      method="POST"
+                                      action="/about/send_report/">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="user-message-name">Name:</label>
+                                        <div class="col-md-5">
+                                            <input  name="username"
+                                                    required="required"
+                                                    id="user-message-name"
+                                                    class="form-control"
+                                                    type="text"
+                                                    placeholder="Username">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="user-message-email">Email:</label>
+                                        <div class="col-md-5">
+                                            <input  name="email"
+                                                    required="required"
+                                                    id="user-message-email"
+                                                    class="form-control"
+                                                    type="text"
+                                                    placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="user-message-message">Message:</label>
+                                        <div class="col-md-5">
+                                            <textarea class="form-control"
+                                                      name="message"
+                                                      required="required"
+                                                      id="user-message-message"
+                                                      rows="10"
+                                                      placeholder="Message"
+                                                      style="resize: none"
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                    <!--<label for="user-message-name">Name:</label>
+                                    <input type="text" id="user-message-name"/>
+                                    <br>
+                                    <label for="user-message-email">Email:</label>
+                                    <input type="email" id="user-message-email"/>
+                                    <br>
+                                    <label for="user-message-message">Message:</label>
+                                    <textarea id="user-message-message"></textarea>
+                                    <br>-->
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label"></label>
+                                        <div class="col-md-8">
+                                            <input type="submit"
+                                                   class="btn btn-primary"
+                                                   style="margin-left: 38%;"
+                                                   value="Send">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <hr width="1%">
+                            Post address:<br>
+                            St.Petersburg...
+                            <hr width="100%">
+                        </div>
+                    </div>
+                    <div class="contacts-left-bottom">
+                        Our&nbsp;Team<br>
+                        <ul class="team-list">
+                            <li class="team-list-item">
+                                <div class="Founder">
+                                    <div class="photo"></div>
+                                    <div class="content">
+                                        <b>Founder</b>:<br>
+                                        Evgeniy Privalov<br>
+                                        ITMO University'17<br>
+                                        St. Petersburg<br>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="team-list-item">
+                                <div class="CTO">
+                                    <div class="photo"></div>
+                                    <div class="content">
+                                        <b>Co-Founder</b>:<br>
+                                        Anton Tinishov<br>
+                                        ITMO University'17<br>
+                                        St.Petersburg<br>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <hr width="100%">
+                        <span class="join-team">
+                            <a class="team-link" href="">Join&nbsp;to&nbsp;us</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="contacts-right" style="float: right; width: 30%;">
+                    Social&nbsp;Networks
+                    <hr width="100%">
+
+                    <ul class="contact-list">
+                        <li>
+                            <a class="contact-link" href="">
+                                <img src="{% static 'static/img/vk.png' %}" width="8%" alt="VK"/>VK
+                            </a>
+                        </li>
+                        <li>
+                            <a class="contact-link" href="">
+                                <img src="{% static 'static/img/facebook.png' %}" width="8%" alt="Facebook"/>Facebook
+                            </a>
+                        </li>
+                        <li>
+                            <a class="contact-link" href="">
+                                <img src="{% static 'static/img/linkedin.png' %}" width="8%" alt="Linkedin"/>Linkedin
+                            </a>
+                        </li>
+                        <li>
+                            <a class="contact-link" href="http://www.youtube.com/channel/UCbF570qpf1uJUef5y_l3OkA">
+                                <img src="{% static 'static/img/youtube.png' %}" width="8%" alt="YoutTube"/>YouTube
+                            </a>
+                        </li>
+                        <li>
+                            <a class="contact-link" href="https://twitter.com/insydianews">
+                                <img src="{% static 'static/img/twitter.png' %}" width="8%" alt="Twitter"/>Twitter
+                            </a>
+                        </li>
+                        <li>
+                            <a class="contact-link" href="https://plus.google.com/u/0/b/113571107578727495097/113571107578727495097">
+                                <img src="{% static 'static/img/google+.png' %}" width="8%" alt="Google+"/>Google+
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

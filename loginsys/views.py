@@ -36,6 +36,7 @@ def login(request):
                 if "remember-true" in request.POST:
                     request.session.set_expiry(SESSION_LIFE_TIME_REMEMBERED)
                     request.session["pause"] = True
+
                 else:
                     request.session.set_expiry(SESSION_LIFE_TIME)
                     request.session["pause"] = True

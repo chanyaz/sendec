@@ -1,11 +1,46 @@
 {% extends 'index_new.html' %}
 {% load my %}
 {% load staticfiles %}
-{% block moderator %}
+{% block moderator_page %}
 
     <div class="container-fluid">
         <div class="row">
-            123
+             <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="text-center">
+                    {% if moderator.username.profile.user_photo != '' %}
+                        <img id="moderator-photo" src="/media/{{ moderator.username.profile.user_photo }}" alt="avatar" width="200" />
+                    {% else %}
+                        <img id="moderator-photo" src="{% static 'static/img/default_profile.png' %}" width="80%" />
+                    {% endif %}
+                </div>
+            <hr width="100%">
+                <div class="moderator-chars">
+                    <div id="moderator-rate">
+                        <label class="col-md-3">Rate:&nbsp;{{ moderator.profile.user_rate }}</label>
+                    </div>
+                    <hr width="100%">
+                    <div id="moderator-articles">
+                        <label class="col-md-5">Articles:&nbsp;{{ moderator.profile.written_articles }}</label>
+                        <div class="looking-article">
+                            {% if user_articles > 0 %}
+                                &nbsp;<i><a href="">See all</a></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="moderator-data">
+
+                    </div>
+                </div>
+            <hr width="100%">
+            </div>
+            <!-- edit form column -->
+            <div class="col-md-7 col-sm-6 col-xs-12 personal-info">
+                <h3>Articles</h3>
+            {{ moderator }}
+                {% for i in articles %}
+                    {{ i.title }}
+                {% endfor %}
+            </div>
         </div>
     </div>
 

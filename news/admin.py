@@ -1,14 +1,14 @@
 from django import forms
 from django.contrib import admin
-from .models import News, NewsPortal, NewsCategory, Companies
+from .models import News, NewsPortal, NewsCategory, Companies, RssNews, RssPortals
 from ckeditor.widgets import CKEditorWidget
-
 
 
 #admin.site.register(Companies)
 
 
-
+admin.site.register(RssNews)
+admin.site.register(RssPortals)
 admin.site.register(NewsCategory)
 admin.site.register(NewsPortal)
 #admin.site.register(News)

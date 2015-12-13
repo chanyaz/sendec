@@ -1,5 +1,5 @@
 {% load staticfiles %}
-
+{% load cache %}
 <style>
     #footer-div{
         -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -63,7 +63,6 @@
 
 </style>
 
-
 <div id="footer-div">
     <div class="container-fluid">
         <div class="footer-bottom-block">
@@ -75,13 +74,13 @@
                     <div id="ftr-rt-top">
                         <ul class="footer-list-top">
                             <li class="footer-list-element">
-                                <a href="">Terms&nbsp;and&nbsp;Conditions</a>
+                                <a href="/about/rules/">Terms&nbsp;and&nbsp;Conditions</a>
                             </li>&nbsp;|&nbsp;
                             <li class="footer-list-element">
-                                <a href="">Privacy&nbsp;Policy</a>
+                                <a href="/about/privacy/">Privacy&nbsp;Policy</a>
                             </li>&nbsp;|&nbsp;
                             <li class="footer-list-element">
-                                <a href="">Advertiser</a>
+                                <a href="/about/advertiser/">Advertiser</a>
                             </li>&nbsp;|&nbsp;
                             <li class="footer-list-element">
                                 <a href="/about/contacts/">Contacts</a>

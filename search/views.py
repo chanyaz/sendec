@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.template.context_processors import csrf
-from django.shortcuts import render_to_response, render, HttpResponseRedirect
+from django.shortcuts import render_to_response, render, HttpResponseRedirect, HttpResponse
 from django.db.models import Q
 
 
@@ -32,7 +32,7 @@ def render_search_page(request):
         else:
             args["results"] = get_search_result(request, search_word)
             args["matches_amount"] = get_matches_amount(request, search_word)
-            args["users_matches"] = get_search_among_users(request, search_word).values()
+            args["users_matches"] = get_search_among_users(request, search_word)
             args["companies_matches"] = get_company(request, search_word).values()
 
         args["search_word"] = search_word
