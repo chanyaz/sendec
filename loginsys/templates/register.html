@@ -100,7 +100,7 @@
               class="form-horizontal">
             {% csrf_token %}
             <div class="service-name" style="text-align: center;">
-                INSYDIA
+                <img src="{% static 'static/img/logo-light.png' %}" />
             </div>
             <br>
             <div class="reg-title">
@@ -159,7 +159,8 @@
                                 id="user-register-phone"
                                 class="form-control"
                                 type="tel"
-                                placeholder="Confirm&nbsp;password">
+                                disabled="disabled"
+                                placeholder="Cell&nbsp;number">
                     </div>
                 </div>
                 <!-- Buttons -->

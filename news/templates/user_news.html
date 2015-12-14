@@ -33,9 +33,6 @@
 
     </style>
 
-
-
-
     <script>
         function loadPage() {
             alert("in");
@@ -105,8 +102,6 @@
 
     </script>
 
-
-
     <div class="container-fluid">
         <div class="row">
             <div id="rss-news" style="border: solid 1px red; width: 70%; margin-left: 1%; float: left;">
@@ -117,48 +112,28 @@
                     All news which are your interested in
                 </div>
 
-                <div id="rss-news-total-list">
-                    {% lazy_paginate 12 test %}
-                    {% for i in test %}
-                        <div class="current_rss_news"
-                             id="rss_id_{{ i.id }}"
-                             data-current-rss-news-id="{{ i.id }}"
-                             onclick="RssPreviewPopUpShow('{{ i|jsonate }}')"
-                             style="">
-                            <div class="title">{{ i.title }}</div>
-                            <div class="portal" style="float: left;">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id|get_rss_portal_name }}</a></div>
-                            <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>
-                            <div class="news-image" style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;"></div>
-                            <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>
-                            <div class="navigation" style="float: right;">Share&nbsp;|&nbsp;Like</div>
-                        </div>
-                    {% endfor %}
-                    {% show_more %}
+                <div class="load-more" style="">
+                    <div class="endless_page_template">
+                        {% block js %}
+                            <script src="http://code.jquery.com/jquery-latest.js"></script>
+                            <script src="{% static 'static/js/endless-pagination.js' %}"></script>
+                            <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+                            <script>
+                                $(document).ready(function() {
+                                    $.endlessPaginate({
+                                        paginateOnScroll: true,
+                                        paginateOnScrollChunkSize: 1
+                                    });
+                                });
+                            </script>
+                        {% endblock %}
+                        {% include rss_template %}
+                    </div>
                 </div>
+
+
                 <hr width="100%">
 
-                <!-- PAGINATION -->
-                <div class="pagination" style="margin-top: 5%; width: 200px; border: solid 1px red; ">
-                        <ul>
-                            {% if rss_news.has_previous %}
-                                <li class="arrow"><a href="/news/usernews/page={{ rss_news.previous_page_number }}/">&laquo;</a></li>
-                            {% else %}
-                                <li class="arrow unavailable"><a href="">&laquo;</a></li>
-                            {% endif %}
-                            {% for page in rss_news.paginator.page_range %}
-                                {% if page == rss_news.number %}
-                                    <li class="current"><a href="/news/usernews/page={{ page }}/">{{ page }}</a></li>
-                                {% else %}
-                                    <li><a href="/news/usernews/page={{ page }}/">{{ page }}</a></li>
-                                {% endif %}
-                            {% endfor %}
-                            {% if rss_news.has_next %}
-                                <li class="arrow"><a href="/news/usernews/page={{ rss_news.next_page_number }}/">&raquo;</a></li>
-                            {% else %}
-                                <li class="arrow unavailable"><a href="">&raquo;</a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
 
                 <div class="load_button" >
                     <button id="button_load_more"
@@ -243,7 +218,7 @@
                     To take it just write your email and we will send you a link to continue.
                 </div>
                 <form>
-                    <input type="email" name="sub-email" autocomplete="off" id="sub-email" placeholder="Enter your email">
+                    <input disabled="disabled" type="email" name="sub-email" autocomplete="off" id="sub-email" placeholder="Enter your email">
                     <input type="submit" value="Accept">
                 </form>
             </div>

@@ -5,5 +5,5 @@ from django.conf import settings
 
 
 urlpatterns = [
-    url(r'^', 'search.views.render_search_page'),
+    url(r'^$', 'search.views.render_search_page'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

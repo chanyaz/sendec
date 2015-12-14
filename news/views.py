@@ -45,9 +45,10 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         args["hide"] = False
     else:
         args["hide"] = True
-    args["beta_announce"] = """Currently version is only for beta testing. We have hidden/disabled some functions and blocks.
-<br>Beta test continues till 21.12.15 17:00 GMT(UTC) +0300
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
 <br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
 """
 
 
@@ -113,11 +114,22 @@ def render_current_news(request, category_id, news_id):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     addition_news_watches(request, news_id)
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
+
     return render_to_response("current_news.html", args)
 
 
 @login_required(login_url="/auth/login/")
-def render_user_news(request, page_number=1):
+def render_user_news(request, template="user_news.html", rss_template="rss_template.html", extra_context=None):
 
     user = User.objects.get(username=auth.get_user(request).username)
     user_rss_list = UserRssPortals.objects.filter(user_id=user.id).filter(check=True).values("id")
@@ -132,14 +144,28 @@ def render_user_news(request, page_number=1):
         "popular_rss": get_most_popular_rss_portals(request)[:9],
         "popular_rss_right": get_most_popular_rss_portals(request)[:3],
         "test_2": RssNews.objects.filter(portal_name_id__in=user_rss_list).values(),
+        "rss_template": rss_template
     }
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
-    all_rss_news = set_rss_for_user_test(request) #RssNews.objects.all().values()
-    current_page = Paginator(object_list=all_rss_news, per_page=12)
-    args["rss_news"] = current_page.page(page_number)
-    return render_to_response("user_news.html", args, context_instance=RequestContext(request))
+    args["rss_news"] = set_rss_for_user_test(request)
+
+    if request.is_ajax():
+        template = rss_template
+
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
+
+    return render_to_response(template, context=args, context_instance=RequestContext(request))
 
 
 def get_most_popular_rss_portals(request):
@@ -185,6 +211,16 @@ def render_top_news_page(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("top_news.html", args)
 
 
@@ -347,6 +383,16 @@ def render_current_category(request, category_name):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("current_category.html", args)
 
 ############################################################################
@@ -362,6 +408,16 @@ def render_technology_news(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("technology.html", args)
 
 
@@ -381,6 +437,16 @@ def render_auto_news(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("auto.html", args)
 
 
@@ -399,6 +465,16 @@ def render_bit_news(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("bit.html", args)
 
 
@@ -417,6 +493,16 @@ def render_companies_news(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("companies.html", args)
 
 
@@ -433,6 +519,16 @@ def render_current_company(request, company_name):
         "news": get_companies_news(request, Companies.objects.get(verbose_name=company_name).id),
     }
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("current_company.html", args)
 
 
@@ -451,6 +547,16 @@ def render_entertainment_news(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("entertainment.html", args)
 
 
@@ -469,6 +575,16 @@ def render_latest_news(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("latest.html", args)
 
 
@@ -481,6 +597,16 @@ def render_reviews_news(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("reviews.html", args)
 
 
@@ -494,6 +620,16 @@ def render_space_news(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("space.html", args)
 
 
@@ -738,6 +874,16 @@ def test_rendering(request):
         "test_2": RssNews.objects.filter(portal_name_id__in=user_rss_list).values(),
     }
     args.update(csrf(request))
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("test_rss_news.html", args, context_instance=RequestContext(request))
 
 
@@ -747,10 +893,21 @@ def render_contacts_page(request):
         "phone": "+7-931-579-06-96",
         "cooperation": "saqel@yandex.ru",
     }
+
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
 
+
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
+Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
+<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
+"""
     return render_to_response("contacts.html", args)
 
 
