@@ -168,8 +168,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 import json
-#with open("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\indavant\\admin_data_mail") as json_file:
-with open("/home/eprivalov/PycharmProjects/sendec/sendec/indavant/admin_data_mail.json") as json_file:
+with open("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\indavant\\admin_data_mail") as json_file:
+#with open("/home/eprivalov/PycharmProjects/sendec/sendec/indavant/admin_data_mail.json") as json_file:
     json_data = json.load(json_file)
 
 

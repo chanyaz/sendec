@@ -2,7 +2,8 @@ import feedparser
 import sqlite3
 import datetime, time
 
-db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+#db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
 cursor = db.cursor()
 id = 1
 news_title = "Test news"
@@ -54,8 +55,8 @@ def last_element(feed):
 def connect_to_db(urls):
     #urls = ["http://appleinsider.ru/feed"]
 
-    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
-    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    #db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+    db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
     for url in urls:
         #print(url)
@@ -106,13 +107,13 @@ def fill_rss_table():
     import json
 
 
-    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
-    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    #db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+    db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
 
-    with open("dictionary_portals.json") as json_file_list:
+    with open("dictionary_portals.json", encoding="utf-8-sig") as json_file_list:
         json_data_list = list(json.load(json_file_list))
-    with open("dictionary_portals.json") as json_file:
+    with open("dictionary_portals.json", encoding="utf-8-sig") as json_file:
         json_data = json.load(json_file)
 
     print(json_data[json_data_list[0]])
@@ -145,12 +146,12 @@ def fill_rss_table():
 
 def fill_rss_portals():
     import json
-    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
-    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    #db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
+    db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
     cursor = db.cursor()
-    with open("dictionary_portals.json") as file_list:
+    with open("dictionary_portals.json", encoding="utf-8-sig") as file_list:
         file_list = list(json.load(file_list))
-    with open("dictionary_portals.json") as file:
+    with open("dictionary_portals.json", encoding="utf-8-sig") as file:
         portals = json.load(file)
     end = len(portals)
     cur_iter = 0

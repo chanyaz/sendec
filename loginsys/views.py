@@ -16,6 +16,9 @@ from django.http.request import HttpRequest
 from django.contrib.auth.decorators import login_required
 
 
+from .forms import UserCreationFormNew
+
+
 SESSION_LIFE_TIME = 86400
 SESSION_LIFE_TIME_REMEMBERED = 31536000
 
@@ -69,65 +72,56 @@ def register(request):
     else:
         args = {}
         args.update(csrf(request))
-        args['form'] = UserCreationForm()
+        args['form'] = UserCreationFormNew()
         if request.POST:
-            new_user_form = UserCreationForm(request.POST)
+            new_user_form = UserCreationFormNew(request.POST)
+            user_name = request.POST['username']
             if new_user_form.is_valid():
                 new_user_form.save()
-                new_user = auth.authenticate(username=new_user_form.cleaned_data['username'],
-                                             password=new_user_form.clean_password2())
-                auth.login(request, new_user)
-
-                # User settings
-                UserSettings.objects.create(
-                    user_id=User.objects.get(username=auth.get_user(request).username).id,
-                )
-
-                user_email = request.POST["registration-email"]
-                user_phone = request.POST["registration-phone"]
-
-
-                # User Profile creating
-                UserProfile.objects.create(
-                    user_id=User.objects.get(username=auth.get_user(request).username).id,
-                    confirmation_code=''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for x in range(33)),
-                    user_cell_number=user_phone,
-                    uuid=set_uuid(User.objects.get(username=auth.get_user(request).username).id)
-                )
-
-                #uuid_string = str(User.objects.get(username=new_user_form.cleaned_data['username']).profile.uuid).replace('-', '')
-                uuid_string = User.objects.get(username=new_user_form.cleaned_data['username']).profile.uuid
-
-                from news.models import RssNews, RssPortals
-
-                list_portals = RssPortals.objects.all().values()
-                [UserRssPortals.objects.create(
-                    user_id=User.objects.get(username=auth.get_user(request).username).id,
-                    portal_id=int(list_portals[i]["id"]),
-                    check=False
-                ) for i in range(len(list_portals))]
-
-                from django.conf import settings
-
-
-                mail_subject = "Confirm your account on <service-name>, %s" % new_user_form.cleaned_data['username']
-                mail_message = """%s,
+            new_user = auth.authenticate(username=user_name,
+                                         password=request.POST['password1'])
+            auth.login(request, new_user)
+            # User settings
+            UserSettings.objects.create(
+                user_id=User.objects.get(username=auth.get_user(request).username).id,
+            )
+            user_email = request.POST["email"]
+            user_phone = request.POST["phone"]
+            # User Profile creating
+            UserProfile.objects.create(
+                user_id=User.objects.get(username=auth.get_user(request).username).id,
+                confirmation_code=''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for x in range(33)),
+                user_cell_number=user_phone,
+                uuid=set_uuid(User.objects.get(username=auth.get_user(request).username).id)
+            )
+            #uuid_string = str(User.objects.get(username=new_user_form.cleaned_data['username']).profile.uuid).replace('-', '')
+            uuid_string = User.objects.get(username=user_name).profile.uuid
+            from news.models import RssNews, RssPortals
+            list_portals = RssPortals.objects.all().values()
+            [UserRssPortals.objects.create(
+                user_id=User.objects.get(username=auth.get_user(request).username).id,
+                portal_id=int(list_portals[i]["id"]),
+                check=False
+            ) for i in range(len(list_portals))]
+            from django.conf import settings
+            mail_subject = "Confirm your account on <service-name>, %s" % user_name
+            mail_message = """%s,
 Last step of registration.
 Please, confirm your account by clicking button below this text.
 <button>Confirm now</button>
 
 Or you can do it by use this link: <a href=''>%sc/ucid=%s&uuid=%s/</a>""" % \
-                               (new_user_form.cleaned_data['username'],
-                                settings.MAIN_URL,
-                                UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
-                                User.objects.get(username=new_user_form.cleaned_data['username']).profile.uuid)
-                mail_from = "saqel@yandex.ru"
-                mail_to = user_email#User.objects.get(username=new_user_form.cleaned_data['username']).email
-                #send_mail(mail_subject, mail_message, settings.EMAIL_HOST_USER, [mail_to], fail_silently=False)
+                           (user_name,
+                            settings.MAIN_URL,
+                            UserProfile.objects.get(user_id=User.objects.get(username=user_name).id).confirmation_code,
+                            User.objects.get(username=user_name).profile.uuid)
+            mail_from = "saqel@yandex.ru"
+            mail_to = user_email#User.objects.get(username=new_user_form.cleaned_data['username']).email
+            #send_mail(mail_subject, mail_message, settings.EMAIL_HOST_USER, [mail_to], fail_silently=False)
 
 
-                text_content = 'This is an important message.'
-                html_content = """%s,
+            text_content = 'This is an important message.'
+            html_content = """%s,
 \nThank you for registration at <service-name>
 \n
 \nTo confirm your account, you have to press this button.
@@ -135,37 +129,30 @@ Or you can do it by use this link: <a href=''>%sc/ucid=%s&uuid=%s/</a>""" % \
 onclick="location.href='%sc/ucid=%s&uuid=%s/';">Confirm&nbsp;now</button>
 \n
 \nOr you can do it via clicking url: <a href="%sc/ucid=%s&uuid=%s/">%sc/ucid=%s&uuid=%s</a>""" % \
-                               (new_user_form.cleaned_data['username'],
-                                settings.MAIN_URL,
-                                UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
-                                uuid_string,
-                                settings.MAIN_URL,
-                                UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
-                                uuid_string,
-                                settings.MAIN_URL,
-                                UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
-                                uuid_string)
-                msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
-                msg.attach_alternative(html_content, "text/html")
-                msg.send()
-
-
-
-                # Sending verification code via SMS.
-                # send_message_via_sms(request,
-                #                      verify_code=UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
-                #                      phone_number=user_phone)
-
-
-
-
-                instance = User.objects.get(username=auth.get_user(request).username)
-                instance.is_active = False
-                instance.email = user_email
-                instance.save()
-                return redirect('/')
-            else:
-                args['form'] = new_user_form
+                           (user_name,
+                            settings.MAIN_URL,
+                            UserProfile.objects.get(user_id=User.objects.get(username=user_name).id).confirmation_code,
+                            uuid_string,
+                            settings.MAIN_URL,
+                            UserProfile.objects.get(user_id=User.objects.get(username=user_name).id).confirmation_code,
+                            uuid_string,
+                            settings.MAIN_URL,
+                            UserProfile.objects.get(user_id=User.objects.get(username=user_name).id).confirmation_code,
+                            uuid_string)
+            msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+            # Sending verification code via SMS.
+            # send_message_via_sms(request,
+            #                      verify_code=UserProfile.objects.get(user_id=User.objects.get(username=new_user_form.cleaned_data['username']).id).confirmation_code,
+            #                      phone_number=user_phone)
+            instance = User.objects.get(username=auth.get_user(request).username)
+            instance.is_active = False
+            instance.email = user_email
+            instance.save()
+            return redirect('/')
+            #else:
+            #    args['form'] = new_user_form
         return render_to_response('register.html', args)
 
 
