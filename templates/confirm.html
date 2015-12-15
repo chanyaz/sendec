@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrapper{
+            width: 100%;
+            height: 25em;
+            border: solid 1px red;
+        }
+        #top{
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            height: 10%;
+            text-align: right;
+            border: solid 1px blue;
+        }
+        .content{
+            margin-left: 10%;
+        }
+        .title{
+
+        }
+        #middle{
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            height: 60%;
+            border: solid 1px greenyellow;
+        }
+        .welcome{
+            border: solid 1px red;
+            height: 20%;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button-cofirm{
+            border: solid 1px orange;
+            height: 40%;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        .button-cofirm button{
+            margin-top: 7%;
+        }
+        .signature{
+            border: solid 1px royalblue;
+            height: 40%;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #bottom{
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            height: 30%;
+            border: solid 1px lightblue;
+        }
+        .social{
+            border: solid 1px red;
+            height: 20%;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .text{
+            border: solid 1px black;
+            height: 40%;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .copyrights{
+            border: solid 1px red;
+            height: 40%;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .social-list{
+            list-style-type: none;
+        }
+        .social-list-item{
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="top">
+            <span class="title"><h3>%title%</h3></span>
+        </div>
+        <div id="middle">
+            <div class="welcome">
+                <div class="content">
+                    <span>Hi,&nbsp;%user%,</span>
+                    <br>
+                    <span>Please&nbsp;confirm&nbsp;<a href="emailto:">%email%</a>&nbsp;.&nbsp;Thank&nbsp;you&nbsp;and&nbsp;happy&nbsp;reading.</span>
+                </div>
+            </div>
+            <div class="button-cofirm">
+                <button onclick="location.href=''">Confirm&nbsp;e-mail</button>
+            </div>
+            <div class="signature">
+                <div class="content">
+                    <span>Cheers,</span>
+                    <br>
+                    <span>Your&nbsp;%title%&nbsp;Team</span>
+                    <span>If&nbsp;you&nbsp;did&nbsp;not&nbsp;sign&nbsp;up&nbsp;or&nbsp;request&nbsp;for&nbsp;email&nbsp;confirmation,&nbsp;please&nbsp;ignore&nbsp;this&nbsp;email.</span>
+                </div>
+            </div>
+        </div>
+        <div id="bottom">
+            <div class="social">
+                <ul class="social-list">
+                    <li class="social-list-item"><img src="" width="10px"/></li>
+                    <li class="social-list-item"><img src="" width="10px"/></li>
+                    <li class="social-list-item"><img src="" width="10px"/></li>
+                </ul>
+            </div>
+            <div class="text">text</div>
+            <div class="copyrights">
+                <span>
+                    Copyright&nbsp;&#169;&nbsp;%years%&nbsp;%title%.&nbsp;%address%
+                </span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
