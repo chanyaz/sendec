@@ -55,9 +55,9 @@ Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
                 return redirect('/')
             else:
                 args['login_error'] = 'User not found.'
-                return render_to_response('login.html', args)
+                return render_to_response('index_new.html', args)
         else:
-            return render_to_response('login.html', args)
+            return render_to_response('index_new.html', args)
 
 
 #@login_required(login_url='/auth/login/')
@@ -135,14 +135,14 @@ Or you can do it by use this link: <a href=''>%sc/ucid=%s&uuid=%s/</a>""" % \
                             settings.MAIN_URL,
                             UserProfile.objects.get(user_id=User.objects.get(username=user_name).id).confirmation_code,
                             User.objects.get(username=user_name).profile.uuid)
-            mail_from = "saqel@yandex.ru"
+            mail_from = "insydia@yandex.ru"
             mail_to = user_email#User.objects.get(username=new_user_form.cleaned_data['username']).email
             #send_mail(mail_subject, mail_message, settings.EMAIL_HOST_USER, [mail_to], fail_silently=False)
 
 
             text_content = 'This is an important message.'
             html_content = """%s,
-\nThank you for registration at <service-name>
+\nThank you for registration at
 \n
 \nTo confirm your account, you have to press this button.
 \n<button style='margin-left: 30%%; width: 150px; height: 50px; background-color: #5bc0de; color: white;'

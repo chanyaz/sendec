@@ -1,25 +1,29 @@
+from django.conf import settings
+from indavant.settings import BASE_DIR
+
 import feedparser
 import sqlite3
 import datetime, time
 
-db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
-#db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
-cursor = db.cursor()
-id = 1
-news_title = "Test news"
-news_category_id = 1
-news_post_date = datetime.datetime.now()
-news_post_text = "Test news text"
-news_post_text_translate = "Test news text translate"
-news_portal_name_id = 1
-news_company_owner_id = 1
-news_author_id = 1
-news_main_cover = ""
-news_likes = 0
-news_dislikes = 0
-cursor.execute("INSERT INTO news(news_title, news_category_id, news_post_date, news_post_text, news_post_text_translate, news_portal_name_id, news_company_owner_id, news_author_id, news_main_cover, news_likes, news_dislikes) VALUES(?,?,?,?,?,?,?,?,?,?,?)", (news_title, news_category_id, news_post_date, news_post_text, news_post_text_translate, news_portal_name_id, news_company_owner_id, news_author_id, news_main_cover, news_likes, news_dislikes))
-db.commit()
-db.close()
+def fill_start_data_news():
+    db = sqlite3.connect(BASE_DIR+"\\db.sqlite3")
+    cursor = db.cursor()
+    id = 1
+    news_title = "Test news"
+    news_category_id = 1
+    news_post_date = datetime.datetime.now()
+    news_post_text = "Test news text"
+    news_post_text_translate = "Test news text translate"
+    news_portal_name_id = 1
+    news_company_owner_id = 1
+    news_author_id = 1
+    news_main_cover = ""
+    news_likes = 0
+    news_dislikes = 0
+    cursor.execute("""INSERT INTO news(news_title, news_category_id, news_post_date, news_post_text, news_post_text_translate, news_portal_name_id, news_company_owner_id, news_author_id, news_main_cover, news_likes, news_dislikes) VALUES(?,?,?,?,?,?,?,?,?,?,?)""", (news_title, news_category_id, news_post_date, news_post_text, news_post_text_translate, news_portal_name_id, news_company_owner_id, news_author_id, news_main_cover, news_likes, news_dislikes))
+    db.commit()
+    db.close()
+
 
 def get_feed_urls():
     with open("rssurls.txt", "r") as file:
@@ -38,8 +42,6 @@ def parse_current_url(url=''):
 def last_element(feed):
     args = {"title": feed[0].title, "date": feed[0].published, "description": feed[0].description,
             "link": feed[0].link, "main_cover": ""}
-
-    #print(feed[0].keys())
     keys = feed[0].keys()
 
     # AUTHOR
@@ -53,13 +55,9 @@ def last_element(feed):
 
 
 def connect_to_db(urls):
-    #urls = ["http://appleinsider.ru/feed"]
-
-    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
-    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    db = sqlite3.connect(BASE_DIR+"\\db.sqlite3")
     cursor = db.cursor()
     for url in urls:
-        #print(url)
         data = last_element(parse_current_url(url=url))
         new_date = data["date"].split()
         time = new_date[4].split(":")
@@ -81,7 +79,6 @@ def connect_to_db(urls):
         data["description"] = data["description"].replace("\n", "")
 
 
-
         if len(count) == 0:
             cursor.execute("""INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""",(data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], 1, 1, data["content"], data["author"]))
 
@@ -97,18 +94,10 @@ def connect_to_db(urls):
     print("================END ONE MORE LOOP====================")
     db.close()
 
-#while True:
-#last_element(parse_current_url(url="http://appleinsider.ru/feed/"))
-#print(last_element(parse_current_url(url="http://appleinsider.ru/feed/")))
-#    connect_to_db(urls=urls_of_portals)
-#    time.sleep(1)
 
 def fill_rss_table():
     import json
-
-
-    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
-    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    db = sqlite3.connect(BASE_DIR+"\\db.sqlite3")
     cursor = db.cursor()
 
     with open("dictionary_portals.json", encoding="utf-8-sig") as json_file_list:
@@ -116,16 +105,11 @@ def fill_rss_table():
     with open("dictionary_portals.json", encoding="utf-8-sig") as json_file:
         json_data = json.load(json_file)
 
-    print(json_data[json_data_list[0]])
-
     cursor.execute("SELECT * FROM rss_portals")
     list_cur = cursor.fetchall()
 
     cursor.execute("SELECT * FROM news_rss")
     rss = cursor.fetchall()
-    #print(rss[2][0])
-
-
 
     end = len(rss)*len(list_cur)
     cur_iter = 0
@@ -141,13 +125,10 @@ def fill_rss_table():
                 continue
     db.close()
 
-#fill_rss_table()
-
 
 def fill_rss_portals():
     import json
-    db = sqlite3.connect("/home/eprivalov/PycharmProjects/sendec/sendec/db.sqlite3")
-    #db = sqlite3.connect("C:\\Users\\eprivalov\\PycharmProjects\\sendec\\sendec\\db.sqlite3")
+    db = sqlite3.connect(BASE_DIR+"\\db.sqlite3")
     cursor = db.cursor()
     with open("dictionary_portals.json", encoding="utf-8-sig") as file_list:
         file_list = list(json.load(file_list))
@@ -163,8 +144,6 @@ def fill_rss_portals():
         db.commit()
         print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "When total end is ", end)
     db.close()
-
-#fill_rss_portals()
 
 
 def work_func():
@@ -182,6 +161,10 @@ def work_func():
     elif x == 3:
         fill_rss_table()
     else:
-        pass
+        import sys
+        print("Good bye!")
+        sys.exit(0)
+
+fill_start_data_news()
 while True:
     work_func()
