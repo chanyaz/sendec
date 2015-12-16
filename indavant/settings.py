@@ -55,15 +55,8 @@ CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.j
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            ['Bold', 'Italic', 'Underline'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink'],
-            ['RemoveFormat', 'Source'],
-            ['Image', ],
-            ['Video', ],
-        ]
+        'toolbar': 'full',
+
     }
 }
 
@@ -168,7 +161,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 import json
-with open(BASE_DIR+"\\indavant\\admin_data_mail") as json_file:
+with open(BASE_DIR+"/indavant/admin_data_mail.json") as json_file:
 #with open(BASE_DIR+"indavant/admin_data_mail.json") as json_file:
     json_data = json.load(json_file)
 

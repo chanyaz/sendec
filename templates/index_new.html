@@ -14,14 +14,14 @@
 
 
     <!-- COOCKIES -->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="{% static 'static/js/jquery.cookie.js' %}"></script>
+    <!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>-->
+    <!--<script type="text/javascript" src="{% static 'static/js/jquery.cookie.js' %}"></script>-->
 
 
 
     <!-- LAZY SCROLLING -->
-    <script src="jquery.js"></script>
-    <script src="jquery.lazyload.js"></script>
+    <!--<script src="jquery.js"></script>
+    <script src="jquery.lazyload.js"></script>-->
 
 
     <!-- SIDE BAR -->
@@ -527,7 +527,7 @@
                             <li class="li-cat"><a href="/news/companies/">COMPANIES</a></li>
                             <li class="li-cat"><a href="/news/reviews/">REVIEWS</a></li>
                             {% if username.username and username.is_active == True %}
-                                <li class="li-cat"><a href="/news/usernews/page=1/">MyNews</a></li>
+                                <li class="li-cat"><a href="/news/usernews/">MyNews</a></li>
                             {% endif %}
                         </ul>
                     </div>

@@ -94,10 +94,19 @@
                 success: function(result){
                     $("#curp-"+id).slideToggle();
                     updateUserRssPortals();
-                    $("body").load("/news/usernews/page=1/");
+                    $("#rss-news").load("/news/usernews/");
                     $("#ajax-preloader").hide();
                 }
             })
+        }
+
+        function userPortalsListEdit(){
+            $('.user-portals-edit-done').fadeIn();
+            $('.user-cur-p-edit').fadeIn();
+        }
+        function userPortalsListDoneEdit(){
+            $('.user-cur-p-edit').fadeOut();
+            $('.user-portals-edit-done').fadeOut();
         }
 
     </script>
@@ -107,7 +116,7 @@
             <div id="rss-news" style="border: solid 1px red; width: 70%; margin-left: 1%; float: left;">
 
 
-            {% if user_rss|length >= 1 %}
+            {% if user_rss|length > 0 %}
                 <div id="rss-title" style="text-align: center;">
                     All news which are your interested in
                 </div>
@@ -121,7 +130,7 @@
                             <script>
                                 $(document).ready(function() {
                                     $.endlessPaginate({
-                                        paginateOnScroll: true,
+                                        paginateOnScroll: false,
                                         paginateOnScrollChunkSize: 1
                                     });
                                 });
@@ -131,9 +140,7 @@
                     </div>
                 </div>
 
-
                 <hr width="100%">
-
 
                 <div class="load_button" >
                     <button id="button_load_more"
@@ -195,18 +202,33 @@
                     </div>
                 {% else %}
                     <div class="user-rss-portals" style="text-align: center">
-                        Your&nbsp;current&nbsp;portals&nbsp;<a href="/profile/#settings-form">add&nbsp;another</a>
+                        Your&nbsp;current&nbsp;portals&nbsp;
                     </div>
                     <div class="user-chosen-portals" style="border: solid 1px red; height: 20em; overflow-y: auto;">
+                            <div class="user-portals-edit-done"
+                                 onclick="userPortalsListDoneEdit();"
+                                 style="text-align: right; display: none;">
+                                Done
+                            </div>
                             {% for i in user_rss %}
                                 <div id="curp-{{ i.id }}">
                                     <span class="user-portals">{{ i.portal_id|get_rss_portal_name }}</span>
-                                    <a href="">+</a>
-                                    <!--<a href="/news/rrp&uid={{ username.profile.uuid }}&pid={{ i.portal_id }}/">X</a>-->
-                                    <span onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}', '{{ i.id }}');">X</span>
+                                    <span class="user-cur-p-edit" style="display: none;">
+                                        <a href="">+</a>
+                                        <!--<a href="/news/rrp&uid={{ username.profile.uuid }}&pid={{ i.portal_id }}/">X</a>-->
+                                        <span onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}', '{{ i.id }}');">X</span>
+                                    </span>
                                     <hr width="100%">
                                 </div>
                             {% endfor %}
+                    </div>
+                    <div class="bottom-panel-edit-portals" style="text-align: right;">
+                        <a href="/profile/#settings-form">add</a>
+                        <span class="edit-portals-panel"
+                              onclick="userPortalsListEdit();"
+                              onmouseover="this.style.cursor='pointer'">
+                            edit
+                        </span>
                     </div>
                 {% endif %}
             </div>

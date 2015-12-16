@@ -224,5 +224,21 @@ class RssNewsCovers(models.Model):
 class RssSaveNews(models.Model):
     class Meta:
         db_table = "rss_save"
+        verbose_name = "RSS"
+        verbose_name_plural = "RSS"
+
     user = models.ForeignKey(User)
     news = models.ForeignKey(RssNews)
+
+
+class TopVideoContent(models.Model):
+    class Meta:
+        db_table = "video_top"
+        verbose_name = "video"
+        verbose_name_plural = "videos"
+
+    video = models.URLField()
+    name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.name

@@ -190,24 +190,76 @@ Or you can do it by use this link: <a href=''>%sc/ucid=%s&uid=%s</a>""" % \
     mail_to = user_instance.email#User.objects.get(username=new_user_form.cleaned_data['username']).email
     #send_mail(mail_subject, mail_message, settings.EMAIL_HOST_USER, [mail_to], fail_silently=Fals
     text_content = 'This is an important message.'
-    html_content = """%s,
-\nThank you for registration at <service-name>
-\n
-\nTo confirm your account, you have to press this button.
-\n<button style='margin-left: 30%%; width: 150px; height: 50px; background-color: #5bc0de; color: white;'
-onclick="location.href='%sc/ucid=%s&uid=%s';">Confirm&nbsp;now</button>
-\n
-\nOr you can do it via clicking url: <a href="%sc/ucid=%s&uuid=%s">%sc/ucid=%s&uuid=%s</a>""" % \
-                   (user_instance.username,
-                    settings.MAIN_URL,
-                    user_instance.profile.confirmation_code,
-                    user_instance.profile.uuid,
-                    settings.MAIN_URL,
-                    user_instance.profile.confirmation_code,
-                    user_instance.profile.uuid,
-                    settings.MAIN_URL,
-                    user_instance.profile.confirmation_code,
-                    user_instance.profile.uuid)
+    html_content = """<div id="wrapper" style="background-color: rgba(28, 28, 28, 0.17); width: 50%; margin-left: auto; margin-right: auto;">
+        <div class="row" style=" width: 90%; margin-left: auto; margin-right: auto;">
+            <table style="width: 600px">
+                <tr>
+                    <td>
+                        <div class="" style="float: right">INSYDIA</div>
+                    </td>
+                </tr>
+            </table>
+            <table style="border:1px solid #dddddd;
+                   background-color:#ffffff;"
+                   width="600" cellpadding="0" border="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="padding:30px 30px 0 30px;color:#444444;font-size:14px;line-height:1.5em;" align="left" valign="top">
+                            <div style="font-size:14px;line-height:1.6em;color:#444444;">
+                                Hi&nbsp;%s,
+                                <p>
+                                    Please confirm &nbsp;
+                                    <a href="">
+                                        %s
+                                    </a>
+                                    <span>
+                                        .&nbsp;Thank&nbsp;you!
+                                    </span>
+                                </p>
+                                <p style="text-align:center;">
+                                    <a href="http://127.0.0.1:8004/c/ucid=%s&uuid=%s/" class="">
+                                        <span style="font-size:16px;min-width:200px;background-color:#19ab58;line-height:42px;display:inline-block;color:white;border-radius:4px;text-align:center;margin-top:10px;padding:0 8px;">
+                                            Confirm&nbsp;your&nbsp;e-mail&nbsp;»
+                                        </span>
+                                    </a>
+                                </p>
+                                <p>
+                                    Cheers,
+                                    <br>
+                                    Your&nbsp;Insydia&nbsp;Team
+                                    <br><br>
+                                </p>
+                                <p>
+
+                                </p>
+                                <div style="font-size:12px;color:#808080;">
+                                    If&nbsp;you&nbsp;did&nbsp;not&nbsp;sign&nbsp;up&nbsp;or&nbsp;request&nbsp;for&nbsp;
+                                    email&nbsp;confirmation,&nbsp;please&nbsp;ignore&nbsp;this&nbsp;email.
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table width="600px">
+                <tr>
+                    <td style="padding:5% 5% 0 5%; color:#444444; font-size:14px; line-height:1.5em; text-align: center;">
+                        <div class="">
+                            You&nbsp;are&nbsp;receiving&nbsp;this&nbsp;email&nbsp;because&nbsp;%s&nbsp;is&nbsp;registered&nbsp;on&nbsp;Insydia.
+                            <br>Please&nbsp;do&nbsp;not&nbsp;reply&nbsp;directly&nbsp;to&nbsp;this&nbsp;email.&nbsp;If&nbsp;you&nbsp;have&nbsp;any&nbsp;questions&nbsp;or&nbsp;feedback,&nbsp;please&nbsp;visit&nbsp;our&nbsp;contact&nbsp;page.
+                            <br>Copyright&nbsp;&#169;&nbsp;2015&nbsp;Insydia,&nbsp;|&nbsp;St.&nbsp;Petersburg,&nbsp;Russia
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>""" % \
+                           (user_instance.username,
+                            user_instance.email,
+                            settings.MAIN_URL,
+                            user_instance.profile.confirmation_code,
+                            user_instance.profile.uuid,
+                            user_instance.email)
 
     msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
     msg.attach_alternative(html_content, "text/html")

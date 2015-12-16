@@ -7,7 +7,12 @@ from django.template.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
+from django.template.loader import get_template
+from django.template.loader import render_to_string
+
+from django.template import Context
+
 
 import os
 import datetime
@@ -124,41 +129,24 @@ Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
                 check=False
             ) for i in range(len(list_portals))]
             from django.conf import settings
-            mail_subject = "Confirm your account on <service-name>, %s" % user_name
-            mail_message = """%s,
-Last step of registration.
-Please, confirm your account by clicking button below this text.
-<button>Confirm now</button>
-
-Or you can do it by use this link: <a href=''>%sc/ucid=%s&uuid=%s/</a>""" % \
-                           (user_name,
-                            settings.MAIN_URL,
-                            UserProfile.objects.get(user_id=User.objects.get(username=user_name).id).confirmation_code,
-                            User.objects.get(username=user_name).profile.uuid)
-            mail_from = "insydia@yandex.ru"
-            mail_to = user_email#User.objects.get(username=new_user_form.cleaned_data['username']).email
-            #send_mail(mail_subject, mail_message, settings.EMAIL_HOST_USER, [mail_to], fail_silently=False)
+            
+            mail_subject = "Confirm your account on Insydia, %s" % user_name
 
 
+            user_instance = User.objects.get(username=user_name)
             text_content = 'This is an important message.'
-            html_content = """%s,
-\nThank you for registration at
-\n
-\nTo confirm your account, you have to press this button.
-\n<button style='margin-left: 30%%; width: 150px; height: 50px; background-color: #5bc0de; color: white;'
-onclick="location.href='%sc/ucid=%s&uuid=%s/';">Confirm&nbsp;now</button>
-\n
-\nOr you can do it via clicking url: <a href="%sc/ucid=%s&uuid=%s/">%sc/ucid=%s&uuid=%s</a>""" % \
-                           (user_name,
-                            settings.MAIN_URL,
-                            UserProfile.objects.get(user_id=User.objects.get(username=user_name).id).confirmation_code,
-                            uuid_string,
-                            settings.MAIN_URL,
-                            UserProfile.objects.get(user_id=User.objects.get(username=user_name).id).confirmation_code,
-                            uuid_string,
-                            settings.MAIN_URL,
-                            UserProfile.objects.get(user_id=User.objects.get(username=user_name).id).confirmation_code,
-                            uuid_string)
+            htmly = render_to_string("confirm.html", {'username': user_instance.username,
+                         'email': user_email,
+                         'ucid': user_instance.profile.confirmation_code,
+                         'uuid': user_instance.profile.uuid})
+            #d = Context({'username': user_instance.username,
+            #             'email': user_instance.email,
+            #             'ucid': user_instance.profile.confirmation_code,
+            #             'uuid': user_instance.profile.uuid})
+            html_content = htmly
+
+            mail_from = "insydia@yandex.ru"
+            mail_to = user_email
             msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
             msg.attach_alternative(html_content, "text/html")
             msg.send()

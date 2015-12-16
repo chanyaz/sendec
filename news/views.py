@@ -16,7 +16,7 @@ from django.utils.translation import ugettext as _
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from .models import News, NewsPortal, NewsCategory, Companies
+from .models import News, NewsPortal, NewsCategory, Companies, TopVideoContent
 
 from news.models import RssNews
 from userprofile.models import UserRssPortals
@@ -25,6 +25,7 @@ import datetime
 
 def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None):
     args = {
+        "video_top": TopVideoContent.objects.all().values()[:3],
         "current_year": datetime.datetime.now().year,
         "title": "| Home",
         "news_block": True,
@@ -924,7 +925,7 @@ def set_user_portals(request):
             rss_instance = UserRssPortals.objects.get(user_id=user.id, portal_id=int(i))
             rss_instance.check = True
             rss_instance.save()
-    return HttpResponseRedirect("/news/usernews/page=1/")
+    return HttpResponseRedirect("/news/usernews/")
 
 
 def send_report(request):
