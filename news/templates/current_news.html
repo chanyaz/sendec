@@ -213,7 +213,7 @@
         </div>
         {% endcache %}
             {% if current_news_values.news_main_cover != '' %}
-                <div class="news-cover" style="margin-top: 0; height: 400px; background: url('/media/{{ current_news_values.news_main_cover }}') no-repeat center;">
+                <div class="news-cover" style="max-width: 100%; max-height: 100%; margin-top: 0; height: 400px; background: url('/media/{{ current_news_values.news_main_cover }}') no-repeat center; background-size: cover;">
                 </div>
             {% endif %}
             <div class="news-post-text" style="margin: 0 15%;">

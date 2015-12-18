@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     "search",
     "ckeditor",
     "endless_pagination",
+    "maintenancemode",
 )
 
 
@@ -65,14 +66,18 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    "maintenancemode.middleware.MaintenanceModeMiddleware",
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
-
 )
+MAINTENANCE_MODE = False
+MAINTENANCE_URL = "503.html"
+MAINTENANCE_FILE = "503.html"
+
 
 ROOT_URLCONF = 'indavant.urls'
 

@@ -90,7 +90,6 @@
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
-                contentType: "application/x-www-form-urlencoded;charset=utf-8",
                 success: function(result){
                     $("#curp-"+id).slideToggle();
                     updateUserRssPortals();
@@ -115,8 +114,8 @@
         <div class="row">
             <div id="rss-news" style="border: solid 1px red; width: 70%; margin-left: 1%; float: left;">
 
-
-            {% if user_rss|length > 0 %}
+            {{ zero }}
+            {% if rss_news|length != 0 %}
                 <div id="rss-title" style="text-align: center;">
                     All news which are your interested in
                 </div>

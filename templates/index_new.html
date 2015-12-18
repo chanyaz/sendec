@@ -6,7 +6,7 @@
 {% load cache %}
 <head>
     <meta charset="UTF-8">
-    <title>Insydia&nbsp;{{ title }}</title>
+    <title>{{ title }}&nbsp;Insydia</title>
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css">
@@ -380,12 +380,6 @@
 </head>
 <body>
 
-
-
-
-
-
-
     <div class="top-navigation" style="position: relative; height: 8%;">
         <!-- TOP PANEL FOR SEARCH AND LOGO -->
         <div style="float: left; margin-left: 11%;" class="top-left-bar" onmouseover="style.cursor='pointer';">
@@ -467,7 +461,7 @@
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/entertainment/';">ENTRTAINMENT</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/auto/';">AUTO</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/space/';">SPACE</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/bit/';">BIT</span></li>
+                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/bio/';">BIO</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/companies/';">COMPANIES</span></li>
                             </ul>
                         </div>
@@ -523,7 +517,7 @@
                             <li class="li-cat"><a href="/news/entertainment/">ENTERTAINMENT</a></li>
                             <li class="li-cat"><a href="/news/auto/">AUTO</a></li>
                             <li class="li-cat"><a href="/news/space/">SPACE</a></li>
-                            <li class="li-cat"><a href="/news/bit/">BIT</a></li>
+                            <li class="li-cat"><a href="/news/bio/">BIO</a></li>
                             <li class="li-cat"><a href="/news/companies/">COMPANIES</a></li>
                             <li class="li-cat"><a href="/news/reviews/">REVIEWS</a></li>
                             {% if username.username and username.is_active == True %}
@@ -839,33 +833,5 @@
 
 </body>
 <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function (d, w, c) {
-        (w[c] = w[c] || []).push(function() {
-            try {
-                w.yaCounter34186215 = new Ya.Metrika({
-                    id:34186215,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true,
-                    webvisor:true,
-                    trackHash:true
-                });
-            } catch(e) { }
-        });
-
-        var n = d.getElementsByTagName("script")[0],
-            s = d.createElement("script"),
-            f = function () { n.parentNode.insertBefore(s, n); };
-        s.type = "text/javascript";
-        s.async = true;
-        s.src = "https://mc.yandex.ru/metrika/watch.js";
-
-        if (w.opera == "[object Opera]") {
-            d.addEventListener("DOMContentLoaded", f, false);
-        } else { f(); }
-    })(document, window, "yandex_metrika_callbacks");
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/34186215" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 </html>

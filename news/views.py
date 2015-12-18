@@ -27,7 +27,7 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
     args = {
         "video_top": TopVideoContent.objects.all().values()[:3],
         "current_year": datetime.datetime.now().year,
-        "title": "| Home",
+        "title": "Home Page | ",
         "news_block": True,
         "breaking_news": render_news_by_sendec(request).order_by("-news_post_date")[0],
         "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[1:4],
@@ -94,7 +94,7 @@ def render_current_news(request, category_id, news_id):
     from .forms import NewsCommentsForm, NewsCommentsRepliesForm
     current_news = News.objects.get(id=news_id)
     args = {
-        "title": "| %s" % current_news.news_title,
+        "title": "%s | " % current_news.news_title,
         "current_news_values": current_news,
         "other_materials": render_news_by_sendec(request, news_id=news_id, category_id=category_id).exclude(id=news_id)[:12],
         "latest_news": get_company_news(request, news_id, current_news.news_company_owner_id)[:5],
@@ -135,7 +135,7 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
     user = User.objects.get(username=auth.get_user(request).username)
     user_rss_list = UserRssPortals.objects.filter(user_id=user.id).filter(check=True).values("id")
     args = {
-        "title": "| My news",
+        "title": "My news | ",
         #"portals": get_user_chosen_portals(request),
         #"usernews": get_user_news_by_portals(request),
        # "deftest": test.html(request),
@@ -155,7 +155,6 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
     if request.is_ajax():
         template = rss_template
 
-
     if request.COOKIES.get("announce"):
         args["hide"] = False
     else:
@@ -165,9 +164,14 @@ Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
 <br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
 <br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
 """
-
+    if len(get_user_rss_news(request, user_id=user.id)) == 0:
+        args["zero"] = True
+    else:
+        args["zero"] = False
     return render_to_response(template, context=args, context_instance=RequestContext(request))
 
+def get_user_rss_portals(request, user_id):
+    return UserRssPortals.objects.filter(user_id=user_id).filter(check=True).values()
 
 def get_most_popular_rss_portals(request):
     from news.models import RssPortals
@@ -376,7 +380,7 @@ def render_current_news_comments(request, category_id, news_id):
 #@login_required(login_url="/auth/login/")
 def render_current_category(request, category_name):
     args = {
-        "title": "| Politics",
+        "title": "Politics | ",
         "latest_news": get_latest_news_total(request),
         "category_title": category_name.capitalize(),
         #"cat_news": News.objects.filter(news_category_id=NewsCategory.objects.get(category_name=category_name.capitalize()).id),
@@ -401,7 +405,7 @@ Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
 ############################################################################
 def render_technology_news(request):
     args = {
-        "title": "| Technology",
+        "title": "Technology | ",
         "top_technology": get_technology_news(request)[0],
         "technology_news": get_technology_news(request)[1:],
         "category_title": "TECHNOLOGY",
@@ -430,7 +434,7 @@ def get_technology_news(request):
 
 def render_auto_news(request):
     args = {
-        "title": "| Auto",
+        "title": "Auto | ",
         "top_auto_news": get_auto_news(request)[0],
         "auto_news": get_auto_news(request)[1:],
         "category_title": "AUTO",
@@ -458,10 +462,10 @@ def get_auto_news(request):
 
 def render_bit_news(request):
     args = {
-        "title": "| BIT",
+        "title": "Bio Technology | ",
         "top_bit_news": get_bit_news(request)[0],
         "bit_news": get_bit_news(request)[1:],
-        "category_title": "BIT",
+        "category_title": "Bio Technology",
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
@@ -480,14 +484,14 @@ Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
 
 
 def get_bit_news(request):
-    return News.objects.all().filter(news_category_id=NewsCategory.objects.get(category_name="BIT").id)
+    return News.objects.all().filter(news_category_id=NewsCategory.objects.get(category_name="BIO").id)
 ################################### END BIT #########################################
 
 
 def render_companies_news(request):
     from news.models import Companies
     args = {
-        "title": "| Companies",
+        "title": "Companies | ",
         "companies": get_companies(request),
         "category_title": "COMPANIES",
     }
@@ -540,7 +544,7 @@ def get_companies_news(request, company_id):
 
 def render_entertainment_news(request):
     args = {
-        "title": "| Entertainment",
+        "title": "Entertainment | ",
         "top_entertainment_news": get_entertainment_news(request)[0],
         "entertainment_news": get_entertainment_news(request)[1:],
         "category_title": "ENTERTAINMENT",
@@ -568,7 +572,7 @@ def get_entertainment_news(request):
 
 def render_latest_news(request):
     args = {
-        "title": "| Latest",
+        "title": "Latest | ",
         "top_latest_news": get_latest_news_total(request)[0],
         "latest_news": get_latest_news_total(request)[1:10],
         "category_title": "LATEST",
@@ -591,7 +595,7 @@ Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
 
 def render_reviews_news(request):
     args = {
-        "title": "| Reviews",
+        "title": "Reviews | ",
         "latest_news": get_latest_news_total(request),
         "category_title": "REVIEWS",
     }
@@ -613,7 +617,7 @@ Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
 
 def render_space_news(request):
     args = {
-        "title": "| Space",
+        "title": "Space | ",
         "top_space_news": get_space_news(request)[0],
         "space_news": get_space_news(request)[1:],
         "category_title": "SPACE",
@@ -863,7 +867,7 @@ def test_rendering(request):
     user = User.objects.get(username=auth.get_user(request).username)
     user_rss_list = UserRssPortals.objects.filter(user_id=user.id).filter(check=True).values("id")
     args = {
-        "title": "| My news",
+        "title": "My news | ",
         #"portals": get_user_chosen_portals(request),
         #"usernews": get_user_news_by_portals(request),
        # "deftest": test.html(request),
@@ -934,7 +938,7 @@ def send_report(request):
     mail_subject = "[REPORT] I have found error"
     if request.POST:
         text_content = request.POST["message"] + "\nE-mail: "+request.POST["email"]+"\nName: "+request.POST["username"]
-        mail_from = "saqel@yandex.ru"#request.POST["email"]
+        mail_from = "insydia@yandex.ru"#request.POST["email"]
         mail_to = "insydia@yandex.ru"
         send_mail(mail_subject, text_content, mail_from, [mail_to])
         #msg.attach_alternative(html_content, "text/html")
