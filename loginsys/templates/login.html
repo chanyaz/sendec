@@ -54,11 +54,7 @@
         #choice{
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
-
-
-
     </style>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -68,10 +64,8 @@
             });
         });
     </script>
-
         <div id="login-tab">
             <div class = 'no' style="width: 50em;">
-
                 <div id="choice" style="width: 30em; margin: 10% 70%; height: inherit;">
                     <div class="service-name" style="margin-left: 37.5%; margin-top: 5%;">
                         %SERVICE&nbsp;NAME%
@@ -87,7 +81,6 @@
                         </a>
                     </div>
                 </div>
-
                 <div id="sign-in" hidden onblur="this.style.border='solid 1px red';">
                     <form action="/auth/login/" method="POST" autocomplete="off">
                         {% csrf_token %}
@@ -107,11 +100,9 @@
                             <input type="checkbox" id="check-remember" name="remember-true" value="remember-true">
                             Remember&nbsp;me
                         </label>
-
-                    <div class="forget-password" style="text-align: center; margin-top: 5%;">
-                        <a href="/auth/recovery/" id="remember-password">Forget&nbsp;password</a>
-                    </div>
-
+                        <div class="forget-password" style="text-align: center; margin-top: 5%;">
+                            <a href="/auth/recovery/" id="remember-password">Forget&nbsp;password</a>
+                        </div>
                         <hr width="65%" style="margin-left: 20%;">
                         <div style="width: 100%; height: 50px; margin-left: 20%;">
                             <div class="">
@@ -120,10 +111,7 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
-
             </div>
         </div>
-
 {% endblock %}

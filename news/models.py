@@ -60,7 +60,7 @@ class News(models.Model):
         verbose_name = "News"
         verbose_name_plural = "News"
 
-    news_title = models.CharField(max_length=128)
+    news_title = models.CharField(max_length=512)
     news_category = models.ForeignKey(NewsCategory)
     news_post_date = models.DateTimeField(auto_now_add=True)
     news_post_text = models.TextField(max_length=4096)
@@ -172,7 +172,7 @@ class RssPortals(models.Model):
     class Meta:
         db_table = "rss_portals"
 
-    portal = models.CharField(max_length=32)
+    portal = models.CharField(max_length=128)
     portal_base_link = models.URLField()
     follows = models.IntegerField(default=0)
 
@@ -181,13 +181,13 @@ class RssNews(models.Model):
     class Meta:
         db_table = "news_rss"
 
-    title = models.CharField(max_length=128)
+    title = models.CharField(max_length=512)
     date_posted = models.DateTimeField(auto_now_add=True)
     post_text = models.TextField(max_length=4096)
     portal_name = models.ForeignKey(RssPortals)
     category = models.ForeignKey(NewsCategory)
-    link = models.URLField(max_length=128)
-    author = models.CharField(max_length=128)
+    link = models.URLField(max_length=512)
+    author = models.CharField(max_length=512)
     content_value = models.TextField(max_length=16384)
 
     def __str__(self):

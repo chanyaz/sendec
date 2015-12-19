@@ -128,8 +128,12 @@ CACHES = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'test',
+        'USER': 'testuser',
+        "PASSWORD": 'test',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -179,5 +183,3 @@ EMAIL_HOST_USER = json_data["email"]
 EMAIL_HOST_PASSWORD = json_data["password"]
 DEFAULT_FROM_EMAIL = json_data["email"]
 DEFAULT_TO_EMAIL = DEFAULT_FROM_EMAIL
-
-

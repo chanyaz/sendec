@@ -4,7 +4,6 @@
 {% load jsonate_tags %}
 {% block current_company %}
 
-
     <style>
         .current_news {
             height: 82px;
@@ -18,14 +17,10 @@
         #current_company_left{
             float: left;
             width: 70%;
-{#            border: solid 1px blue;#}
         }
         .current_news{
             height: 80px;
-            margin-top: 2%;
-            margin-left: 0.25%;
-            margin-right: 0.25%;
-            margin-bottom: 0.25%;
+            margin: 2% 0.25% 0.25% 0.25%;
         }
         .current_searched_cover{
             width: 20%;
@@ -38,15 +33,12 @@
             float: left;
             margin-left: 1%;
         }
-
         #current_company_right{
-{#            border: solid 1px green; #}
             height: auto;
             float: right;
             width: 30%;
         }
         .company-right-top{
-{#            border: solid 1px purple; #}
             height: 110px;
         }
         .current_company_logo{
@@ -60,17 +52,13 @@
             text-align: center;
             margin-left: -15%;
         }
-
     </style>
-
-
     <div class="current_company">
         <div class="row">
             <div class="current_company_content">
                 <div class="company-title">
                     <h2>{{ company.name }}</h2>
                 </div>
-                <!-- LEFT -->
                 <div id="current_company_left">
                     <div class="current_company_news">
                         <div class="" style="text-align: center;">
@@ -100,7 +88,6 @@
                         {% endfor %}
                     </div>
                 </div>
-                <!-- RIGHT -->
                 <div id="current_company_right">
                 <div class="company-right-top">
                     <div class="current_company_logo">

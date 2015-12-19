@@ -26,13 +26,10 @@
         .current_rss_news:hover{
             box-shadow: 0 0 5px blue;
         }
-
         .most-popular-portals input[type=checkbox]:checked + .lab  .sect-rss{
             background-color: red;
         }
-
     </style>
-
     <script>
         function loadPage() {
             alert("in");
@@ -42,7 +39,6 @@
         }
     </script>
     <script>
-
         String.prototype.format = function(placeholders) {
                 var s = this;
                 for(var propertyName in placeholders) {
@@ -76,10 +72,6 @@
                 });
             return true;
             }
-            //updateUserRssPortals();
-            //setInterval(updateUserRssPortals, 100);
-
-
         function removeUserRssPortal(uuid,pid, id){
             $("#ajax-preloader").show();
             var $link = "/news/update_user_rss_news/";
@@ -98,7 +90,6 @@
                 }
             })
         }
-
         function userPortalsListEdit(){
             $('.user-portals-edit-done').fadeIn();
             $('.user-cur-p-edit').fadeIn();
@@ -107,19 +98,14 @@
             $('.user-cur-p-edit').fadeOut();
             $('.user-portals-edit-done').fadeOut();
         }
-
     </script>
-
     <div class="container-fluid">
         <div class="row">
             <div id="rss-news" style="border: solid 1px red; width: 70%; margin-left: 1%; float: left;">
-
-            {{ zero }}
             {% if rss_news|length != 0 %}
                 <div id="rss-title" style="text-align: center;">
                     All news which are your interested in
                 </div>
-
                 <div class="load-more" style="">
                     <div class="endless_page_template">
                         {% block js %}
@@ -138,9 +124,7 @@
                         {% include rss_template %}
                     </div>
                 </div>
-
                 <hr width="100%">
-
                 <div class="load_button" >
                     <button id="button_load_more"
                             onclick="loadPage();"
@@ -155,12 +139,10 @@
                 </div>
                 <div class="most-popular">
                     <div class="title">The most popular portals.</div>
-
-
                     <div class="most-popular-portals">
-                        <form   action="/news/add_portals/"
-                                id="set_portals_new_user"
-                                method="post">
+                        <form action="/news/add_portals/"
+                              id="set_portals_new_user"
+                              method="post">
                             {% csrf_token %}
                             {% for current_popular_rss in popular_rss %}
                                 <input value="{{ current_popular_rss.id }}" type="checkbox" name="portals[]" style="display: none;" id="cb{{ current_popular_rss.id }}" />
@@ -185,13 +167,9 @@
                     </div>
                 </div>
             {% endif %}
-
-
-
             </div>
             <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
             <div class="choosen-portals" style="border: solid 1px red;">
-
                 {% if user_rss|length < 1 %}
                     Recommended&nbsp;portals
                     <div class="recommendations" style="border: solid 1px red; height: 20em; overflow-y: auto;">
@@ -204,22 +182,21 @@
                         Your&nbsp;current&nbsp;portals&nbsp;
                     </div>
                     <div class="user-chosen-portals" style="border: solid 1px red; height: 20em; overflow-y: auto;">
-                            <div class="user-portals-edit-done"
-                                 onclick="userPortalsListDoneEdit();"
-                                 style="text-align: right; display: none;">
-                                Done
+                        <div class="user-portals-edit-done"
+                             onclick="userPortalsListDoneEdit();"
+                             style="text-align: right; display: none;">
+                            <a href="">Done</a>
+                        </div>
+                        {% for i in user_rss %}
+                            <div id="curp-{{ i.id }}">
+                                <span class="user-portals">{{ i.portal_id|get_rss_portal_name }}</span>
+                                <span class="user-cur-p-edit" style="display: none;">
+                                    <a href="">+</a>
+                                    <span onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}', '{{ i.id }}');">X</span>
+                                </span>
+                                <hr width="100%">
                             </div>
-                            {% for i in user_rss %}
-                                <div id="curp-{{ i.id }}">
-                                    <span class="user-portals">{{ i.portal_id|get_rss_portal_name }}</span>
-                                    <span class="user-cur-p-edit" style="display: none;">
-                                        <a href="">+</a>
-                                        <!--<a href="/news/rrp&uid={{ username.profile.uuid }}&pid={{ i.portal_id }}/">X</a>-->
-                                        <span onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}', '{{ i.id }}');">X</span>
-                                    </span>
-                                    <hr width="100%">
-                                </div>
-                            {% endfor %}
+                        {% endfor %}
                     </div>
                     <div class="bottom-panel-edit-portals" style="text-align: right;">
                         <a href="/profile/#settings-form">add</a>
@@ -231,7 +208,6 @@
                     </div>
                 {% endif %}
             </div>
-
             <div class="subscribe">
                 <div class="subscribe-speech">
                     Would you like to get notification about latest news and reviews?
@@ -243,12 +219,8 @@
                     <input type="submit" value="Accept">
                 </form>
             </div>
-
         </div>
         </div>
     </div>
-
     <hr width="100%">
-
-
 {% endblock %}

@@ -1,10 +1,8 @@
 {% load staticfiles %}
 {% load cache %}
 {% block register %}
-
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -19,8 +17,6 @@
             margin-top: 10%;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
-
-
         #progress-popup-window{
             z-index: 900;
             width: 100%;
@@ -45,9 +41,6 @@
             text-align: center;
             padding-bottom: 3%;
         }
-
-
-
         .fancy{
             line-height: 0.5;
             text-align: center;
@@ -77,10 +70,7 @@
         .subtitle {
             margin: 0 0 2em 0;
         }
-
-
     </style>
-
     <div id="progress-popup-window">
         <div id="progress-popup-window-content">
             <div class="text">
@@ -91,8 +81,6 @@
             <div id="progress-bar"></div>
         </div>
     </div>
-
-
     <div id="register-block" style="">
         <form action="/auth/register/"
               method="post"
@@ -110,10 +98,7 @@
                     </span>
                 </p>
             </div>
-
-
             <div id="user-register-fields" style="width: 30em; margin-left: 13%;">
-                <!-- Username -->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="user-register-name">Name:</label>
                     <div class="col-md-7">
@@ -125,7 +110,6 @@
                                 placeholder="Username">
                     </div>
                 </div>
-                <!-- Email-->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="user-register-email">Email:</label>
                     <div class="col-md-7">
@@ -137,21 +121,18 @@
                                 placeholder="Email">
                     </div>
                 </div>
-                <!-- Password -->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="user-register-password">Password:</label>
                     <div class="col-md-7">
                         {{ form.password1 }}
                     </div>
                 </div>
-                <!-- Confirm password -->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="user-register-password-confirm">Confirm:</label>
                     <div class="col-md-7">
                         {{ form.password2 }}
                     </div>
                 </div>
-                <!-- Phone -->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="user-register-phone">Cell:</label>
                     <div class="col-md-7">
@@ -163,7 +144,6 @@
                                 placeholder="Cell&nbsp;number">
                     </div>
                 </div>
-                <!-- Buttons -->
                 <div class="form-group">
                     <label class="col-md-4 control-label"></label>
                     <div class="col-md-8">
@@ -172,22 +152,7 @@
                         <input class="btn btn-info" value="Cancel" type="reset">
                     </div>
                 </div>
-
-                <!-- SMS VERIFICATIOM -->
-                <!--<hr>
-                <br><label for="registration-phone">E-mail:</label><br>
-                <input type="tel"
-                       autocomplete="off"
-                       id="registration-phone"
-                       placeholder="+15555555555"
-                       name="registration-phone">-->
-                <!--<button onclick="ProgressBarPopUpShow();" type="submit" class="tiny" style="height: 40px; width: 64%; margin-left: 20%; margin-top: 4%;">
-                    Sign&nbsp;Up
-                </button>-->
             </div>
-            <!--<div class="notice" style="text-align: center; margin-left: 5%;">
-                Please&nbsp;fill&nbsp;out&nbsp;all&nbsp;required&#040;<span style="color: red; ">&#042;</span>&#041;&nbsp;fields.
-            </div>-->
             <div class="bottom-info" style="height: 5em; text-align: center; margin-top: 10%;">
                 By&nbsp;clicking&nbsp;&laquo;Sign&nbsp;Up&raquo;,you&nbsp;agree&nbsp;to&nbsp;INSYDIA&#39;s&nbsp;
                 <br><a href="/about/rules/">

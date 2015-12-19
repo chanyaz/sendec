@@ -2,7 +2,6 @@
 {% load my %}
 {% load jsonate_tags %}
 {% paginate rss_news %}
-
 {% for i in rss_news %}
     <div class="current_rss_news"
          id="rss_id_{{ i.id }}"

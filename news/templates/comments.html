@@ -1,157 +1,138 @@
 {% block comments %}
     <div id="comments-here" style="display: block;">
-
-
-                <div class="comments-block">
-                    {% if username %}
-                    <!-- COMMENTS -->
-                        <form
-                                id="comments_form"
-                                style="margin-top: 1%; margin-left: 4%;"
-                                action="/news/send/cat={{ current_news_values.news_category_id }}&id={{ current_news_values.id }}/"
-                                method="post"
-                                onblur="document.getElementById('id_comments_text_submit').style.display='none';">
-                            {% csrf_token %}
-                            <div class="user-photo" style="float: left; width: 3em; height: 3em; border-radius: 5px; background: url('/media/{{ username.profile.user_photo }}') no-repeat center; background-size:cover;">
+        <div class="comments-block">
+            {% if username %}
+                <form id="comments_form"
+                      style="margin-top: 1%; margin-left: 4%;"
+                      action="/news/send/cat={{ current_news_values.news_category_id }}&id={{ current_news_values.id }}/"
+                      method="post"
+                      onblur="document.getElementById('id_comments_text_submit').style.display='none';">
+                    {% csrf_token %}
+                    <div class="user-photo" style="float: left; width: 3em; height: 3em; border-radius: 5px; background: url('/media/{{ username.profile.user_photo }}') no-repeat center; background-size:cover;"></div>
+                    <textarea id="id_comments_text"
+                              name="comments_text"
+                              maxlength="512"
+                              rows="12"
+                              placeholder="Leave&nbsp;your&nbsp;comment..."
+                              onfocus="document.getElementById('id_comments_text_submit').style.display='block';
+                              this.style.height='5em'"
+                              onblur="this.style.height='3em';"
+                              onkeydown="if(event.keyCode == 13 && !event.shiftKey){
+                                  event.preventDefault();
+                                  $('#comments_form').submit();
+                              }
+                              else{
+                                  if(event.keyCode == 27){
+                                    this.onblur();
+                                  }
+                              }"></textarea>
+                    <input id="id_comments_text_submit" type="submit" value="Send" style="margin-left: 85%; display: none;">
+                </form>
+            {% else %}
+                <div class="announce" style="text-align: center">
+                    To&nbsp;leave&nbsp;comments&nbsp;you&nbsp;have&nbsp;to&nbsp;
+                    <span onclick="javascript:UserAuthPopUpShow();"
+                          class="sign-in-to-comments"
+                          style="color: #5bc0de;"
+                          onmouseover="this.style.cursor='pointer';">
+                        sign&nbsp;in
+                    </span>
+                </div>
+            {% endif %}
+            {% if comments_total|length > 0 %}
+                <div id="comments_block" data-current-news-id="{{ current_news_values.id }}" class="comments" style="width: 87.5%; margin-left: 4%;">
+                    {% for current_comment in comments_total %}
+                        <div class="current_comment" style="">
+                            {% if current_comment.comments_author_id|get_user_photo != '' %}
+                                <div class="current_comment_author_photo"
+                                     style="width: 3em; height: 3em; border-radius: 5px; float: left; background: url('/media/{{ current_comment.comments_author_id|get_user_photo }}') no-repeat center; background-size: cover;"></div>
+                            {% endif %}
+                            <div class="current_comment_auhor">
+                                {{ current_comment.comments_author_id|get_username }}&nbsp;|&nbsp;{{ current_comment.comments_post_date.date }}
                             </div>
-
-                            <textarea
-                                    id="id_comments_text"
-                                    name="comments_text"
-                                    maxlength="512"
-                                    rows="12"
-                                    placeholder="Leave&nbsp;your&nbsp;comment..."
-                                    onfocus="document.getElementById('id_comments_text_submit').style.display='block';
-                                    this.style.height='5em'"
-                                    onblur="this.style.height='3em';"
-                                    onkeydown="if(event.keyCode == 13 && !event.shiftKey){
-                                        event.preventDefault();
-                                        $('#comments_form').submit();
-                                    }
-                                    else{
-                                        if(event.keyCode == 27){
-                                            this.onblur();
-                                        }
-                                    }"
-                            ></textarea>
-                            <input id="id_comments_text_submit" type="submit" value="Send" style="margin-left: 85%; display: none;">
-                        </form>
-                    {% else %}
-                        <div class="announce" style="text-align: center">
-                            To&nbsp;leave&nbsp;comments&nbsp;you&nbsp;have&nbsp;to&nbsp;
-                            <span onclick="javascript:UserAuthPopUpShow();"
-                                  class="sign-in-to-comments"
-                                  style="color: #5bc0de;"
-                                  onmouseover="this.style.cursor='pointer';">
-                                sign&nbsp;in
-                            </span>
-                        </div>
-                    {% endif %}
-
-                    {% if comments_total|length > 0 %}
-                        <div id="comments_block" data-current-news-id="{{ current_news_values.id }}" class="comments" style="width: 87.5%; margin-left: 4%;">
-                            {% for current_comment in comments_total %}
-                                <div class="current_comment" style="">
-                                    {% if current_comment.comments_author_id|get_user_photo != '' %}
-                                        <div class="current_comment_author_photo"
-                                             style="width: 3em; height: 3em; border-radius: 5px; float: left; background: url('/media/{{ current_comment.comments_author_id|get_user_photo }}') no-repeat center; background-size: cover;"></div>
-                                    {% endif %}
-                                    <div class="current_comment_auhor">
-                                        {{ current_comment.comments_author_id|get_username }}&nbsp;|&nbsp;{{ current_comment.comments_post_date.date }}
-                                    </div>
-                                    <div class="current_comment_text" style="margin-left: 10%;">
-                                        {{ current_comment.comments_text|safe|linebreaks }}
-                                    </div>
-                                    <div class="current_comment_info" style="margin-left: 60%;">
-                                        <span
-                                                id="span_show_reply_form"
-                                            onclick="$('#id_reply_text').val('{{ current_comment.comments_author_id|get_username }},&nbsp;');
-                                                    document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='block';
-                                                    document.getElementById('reply_form__comment_{{ current_comment.id }}').onfocus();"
-                                        >Reply</span>&nbsp;|
-                                        Likes:&nbsp;{{ current_comment.comments_likes }}&nbsp;|
-                                        Dislikes:&nbsp;{{ current_comment.comments_dislikes }}
-                                    </div>
-                                    <form id="reply_form_comment_{{ current_comment.id }}"
-                                          style="display: none;"
-                                          action="/news/reply/nid={{ current_news_values.id }}&cid={{ current_comment.id }}/"
-                                          method="post">
-                                            {% csrf_token %}
-                                            <textarea
-                                                    autofocus
-                                                    id="id_reply_text"
-                                                    cols="83"
-                                                    rows="10"
-                                                    name="reply_text"
-                                                    maxlength="512"
-                                                    wrap="soft"
-                                                    placeholder="Leave&nbsp;your&nbsp;reply..."
-                                                    onfocus="document.getElementById('id_reply_text_submit_{{ current_comment.id }}').style.display='block';
-                                                             this.style.height='5em'"
-                                                            onblur="document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='none'"
-                                                    onkeydown="if(event.keyCode == 13 && !event.shiftKey){
-                                                        event.preventDefault();
-                                                        $('#reply_form_comment_'+'{{ current_comment.id }}').submit();
-                                                    }
-                                                    else{
+                            <div class="current_comment_text" style="margin-left: 10%;">
+                                {{ current_comment.comments_text|safe|linebreaks }}
+                            </div>
+                            <div class="current_comment_info" style="margin-left: 60%;">
+                                <span id="span_show_reply_form"
+                                      onclick="$('#id_reply_text').val('{{ current_comment.comments_author_id|get_username }},&nbsp;');
+                                              document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='block';
+                                              document.getElementById('reply_form__comment_{{ current_comment.id }}').onfocus();"
+                                >Reply</span>&nbsp;|
+                                Likes:&nbsp;{{ current_comment.comments_likes }}&nbsp;|
+                                Dislikes:&nbsp;{{ current_comment.comments_dislikes }}
+                            </div>
+                            <form id="reply_form_comment_{{ current_comment.id }}"
+                                  style="display: none;"
+                                  action="/news/reply/nid={{ current_news_values.id }}&cid={{ current_comment.id }}/"
+                                  method="post">
+                                {% csrf_token %}
+                                <textarea autofocus
+                                          id="id_reply_text"
+                                          cols="83"
+                                          rows="10"
+                                          name="reply_text"
+                                          maxlength="512"
+                                          wrap="soft"
+                                          placeholder="Leave&nbsp;your&nbsp;reply..."
+                                          onfocus="document.getElementById('id_reply_text_submit_{{ current_comment.id }}').style.display='block';
+                                                  this.style.height='5em'"
+                                          onblur="document.getElementById('reply_form_comment_{{ current_comment.id }}').style.display='none'"
+                                          onkeydown="if(event.keyCode == 13 && !event.shiftKey){
+                                                  event.preventDefault();
+                                                  $('#reply_form_comment_'+'{{ current_comment.id }}').submit();
+                                                  }
+                                                  else{
                                                         if(event.keyCode == 27){
                                                             this.onblur();
                                                         }
-                                                    }"
-                                            ></textarea>
-                                            <input id="id_reply_text_submit_{{ current_comment.id }}" type="submit" value="Reply" style="margin-left: 92%;">
-                                        </form>
-                                </div>
-
-                                <!-- REPLIES -->
-                                <div class="replies" style="margin-left: 5%;">
-                                    {% for current_reply in replies_total %}
-                                        {% if current_reply.comment_attached_id == current_comment.id %}
-                                            <div class="current_reply" style="margin-top: 1%; border: solid 1px blue;">
-                                                <div class="reply_author">
-                                                    {{ current_reply.reply_author_id|get_username }}
-                                                </div>
-                                                <div class="reply_text" style="margin-left: 5%;">
-                                                    {{ current_reply.reply_text|safe|linebreaks }}
-                                                </div>
-                                                <div class="reply_configs" style="margin-left: 58%;">
-                                                    <span
-                                                    onclick="$('id_reply_textarea').val('123');
-                                                            document.getElementById('reply_form_{{ current_reply.id }}').style.display='block';"
-                                                    >Reply</span>&nbsp;|
-                                                    Likes:&nbsp;{{ current_reply.reply_likes }}&nbsp;|
-                                                    Dislikes:&nbsp;{{ current_reply.reply_dislikes }}&nbsp;|
-                                                    {% if current_reply.reply_post_date.day == current_day %}
-                                                        {{ current_reply.reply_post_date.time }}
-                                                    {% else %}
-                                                        {{ current_reply.reply_post_date.date }}
-                                                    {% endif %}
-                                                    <span
-                                                            name="delete-reply"
-                                                            onclick="location.href='/news/rd={{ current_reply.id }}/';">
-                                                        <a>delete</a></span>
-                                                </div>
-                                            </div>
-
-                                            <form
-                                                id="reply_form_{{ current_reply.id }}"
-                                                style="display: none;"
-                                                action="/news/reply/nid={{ current_news_values.id }}&cid={{ current_comment.id }}/"
-                                                method="post">
-                                                {% csrf_token %}
-                                                <textarea
-                                                        autofocus
-                                                        id="id_reply_textarea"
-                                                        cols="83"
-                                                        rows="10"
-                                                        name="reply_text"
-                                                        maxlength="512"
-                                                        wrap="soft"
-                                                        onfocus="document.getElementById('reply_form_second_{{ current_reply.id }}').style.display='block';
+                                                    }"></textarea>
+                                <input id="id_reply_text_submit_{{ current_comment.id }}" type="submit" value="Reply" style="margin-left: 92%;">
+                            </form>
+                        </div>
+                        <div class="replies" style="margin-left: 5%;">
+                            {% for current_reply in replies_total %}
+                                {% if current_reply.comment_attached_id == current_comment.id %}
+                                    <div class="current_reply" style="margin-top: 1%; border: solid 1px blue;">
+                                        <div class="reply_author">
+                                            {{ current_reply.reply_author_id|get_username }}
+                                        </div>
+                                        <div class="reply_text" style="margin-left: 5%;">
+                                            {{ current_reply.reply_text|safe|linebreaks }}
+                                        </div>
+                                        <div class="reply_configs" style="margin-left: 58%;">
+                                            <span onclick="$('id_reply_textarea').val('123');
+                                                    document.getElementById('reply_form_{{ current_reply.id }}').style.display='block';"
+                                            >Reply</span>&nbsp;|
+                                            Likes:&nbsp;{{ current_reply.reply_likes }}&nbsp;|
+                                            Dislikes:&nbsp;{{ current_reply.reply_dislikes }}&nbsp;|
+                                            {% if current_reply.reply_post_date.day == current_day %}
+                                                {{ current_reply.reply_post_date.time }}
+                                            {% else %}
+                                                {{ current_reply.reply_post_date.date }}
+                                            {% endif %}
+                                            <span name="delete-reply"
+                                                  onclick="location.href='/news/rd={{ current_reply.id }}/';">
+                                                <a>delete</a></span>
+                                        </div>
+                                    </div>
+                                    <form id="reply_form_{{ current_reply.id }}"
+                                          style="display: none;"
+                                          action="/news/reply/nid={{ current_news_values.id }}&cid={{ current_comment.id }}/"
+                                          method="post">
+                                        {% csrf_token %}
+                                        <textarea autofocus
+                                                  id="id_reply_textarea"
+                                                  cols="83"
+                                                  rows="10"
+                                                  name="reply_text"
+                                                  maxlength="512"
+                                                  wrap="soft"
+                                                  onfocus="document.getElementById('reply_form_second_{{ current_reply.id }}').style.display='block';
                                                              this.style.height='5em'"
-                                                    onblur="document.getElementById('reply_form_second_{{ current_reply.id }}').style.display='none';
+                                                  onblur="document.getElementById('reply_form_second_{{ current_reply.id }}').style.display='none';
                                                             document.getElementById('reply_form_{{ current_reply.id }}').style.display='none'"
-                                                    onkeydown="if(event.keyCode == 13 && !event.shiftKey){
+                                                  onkeydown="if(event.keyCode == 13 && !event.shiftKey){
                                                         event.preventDefault();
                                                         $('#reply_form_'+'{{ current_reply.id }}').submit();
                                                     }
@@ -159,18 +140,16 @@
                                                         if(event.keyCode == 27){
                                                             this.onblur();
                                                         }
-                                                    }"
-                                                ></textarea>
-                                                <input id="reply_form_second_{{ current_reply.id }}" type="submit" value="Reply" style="margin-left: 92%;">
-                                            </form>
-                                        {% endif %}
-
-                                    {% endfor %}
-                                </div>
-                                <hr>
+                                                    }"></textarea>
+                                        <input id="reply_form_second_{{ current_reply.id }}" type="submit" value="Reply" style="margin-left: 92%;">
+                                    </form>
+                                {% endif %}
                             {% endfor %}
                         </div>
-                {% endif %}
+                        <hr>
+                    {% endfor %}
                 </div>
-            </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

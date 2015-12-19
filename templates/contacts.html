@@ -2,16 +2,13 @@
 {% load my %}
 {% load staticfiles %}
 {% block contacts %}
-
     <script>
         function changeState() {
             var element = document.getElementById('user-message');
             if(element.style.display == 'block'){element.style.display = 'none';}
             else {element.style.display = 'block';}
-
         }
     </script>
-
     <style xmlns="http://www.w3.org/1999/html">
         .contact-list{
             list-style-type: none;
@@ -52,7 +49,6 @@
             border: solid 1px purple;
         }
     </style>
-
     <div class="container-fluid">
         <div class="row">
             <span class="contact-title">
@@ -78,24 +74,24 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="user-message-name">Name:</label>
                                         <div class="col-md-5">
-                                            <input  name="username"
-                                                    required="required"
-                                                    id="user-message-name"
-                                                    class="form-control"
-                                                    type="text"
-                                                    placeholder="username">
+                                            <input name="username"
+                                                   required="required"
+                                                   id="user-message-name"
+                                                   class="form-control"
+                                                   type="text"
+                                                   placeholder="username">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="user-message-email">Email:</label>
                                         <div class="col-md-5">
-                                            <input  name="email"
-                                                    required="required"
-                                                    pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"
-                                                    id="user-message-email"
-                                                    class="form-control"
-                                                    type="text"
-                                                    placeholder="email@example.com">
+                                            <input name="email"
+                                                   required="required"
+                                                   pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"
+                                                   id="user-message-email"
+                                                   class="form-control"
+                                                   type="text"
+                                                   placeholder="email@example.com">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -111,15 +107,6 @@
                                             ></textarea>
                                         </div>
                                     </div>
-                                    <!--<label for="user-message-name">Name:</label>
-                                    <input type="text" id="user-message-name"/>
-                                    <br>
-                                    <label for="user-message-email">Email:</label>
-                                    <input type="email" id="user-message-email"/>
-                                    <br>
-                                    <label for="user-message-message">Message:</label>
-                                    <textarea id="user-message-message"></textarea>
-                                    <br>-->
                                     <div class="form-group">
                                         <label class="col-lg-4 control-label"></label>
                                         <div class="col-md-8">
@@ -172,7 +159,6 @@
                 <div class="contacts-right" style="float: right; width: 30%;">
                     Social&nbsp;Networks
                     <hr width="100%">
-
                     <ul class="contact-list">
                         <li>
                             <a class="contact-link" href="">
@@ -209,6 +195,4 @@
             </div>
         </div>
     </div>
-
-
 {% endblock %}

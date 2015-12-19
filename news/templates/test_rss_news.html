@@ -4,15 +4,15 @@
 {% load my %}
 {% block user_rss_news %}
     <div class="current_rss_news"
-                         id="rss_id_{{ i.id }}"
-                         data-current-rss-news-id="{{ i.id }}"
-                         onclick="RssPreviewPopUpShow('{{ i|jsonate }}')"
-                         style="">
-                        <div class="title">{{ i.title }}</div>
-                        <div class="portal" style="float: left;">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id|get_rss_portal_name }}</a></div>
-                        <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>
-                        <div class="news-image" style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;"></div>
-                        <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>
-                        <div class="navigation" style="float: right;">Share&nbsp;|&nbsp;Like</div>
-                    </div>
+         id="rss_id_{{ i.id }}"
+         data-current-rss-news-id="{{ i.id }}"
+         onclick="RssPreviewPopUpShow('{{ i|jsonate }}')"
+         style="">
+        <div class="title">{{ i.title }}</div>
+        <div class="portal" style="float: left;">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id|get_rss_portal_name }}</a></div>
+        <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>
+        <div class="news-image" style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;"></div>
+        <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>
+        <div class="navigation" style="float: right;">Share&nbsp;|&nbsp;Like</div>
+    </div>
 {% endblock %}

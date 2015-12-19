@@ -27,21 +27,16 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="moderator-data">
-
-                    </div>
+                    <div class="moderator-data"></div>
                 </div>
             <hr width="100%">
             </div>
-            <!-- edit form column -->
             <div class="col-md-7 col-sm-6 col-xs-12 personal-info">
                 <h3>Articles</h3>
-            {{ moderator }}
                 {% for i in articles %}
                     {{ i.title }}
                 {% endfor %}
             </div>
         </div>
     </div>
-
 {% endblock %}

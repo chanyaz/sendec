@@ -35,5 +35,5 @@ http://www.cnet.com/rss/car-tech/
 http://www.cnet.com/rss/iphone-update/
 http://teslanews.com/feed/
 http://ria.ru/export/rss2/technology/index.xml
-http://zisk.net/feed/
 http://www.computerweekly.com/rss/All-Computer-Weekly-content.xml
+http://zisk.net/feed/

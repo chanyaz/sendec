@@ -1,10 +1,8 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
 {% block bit %}
-
     <style>
         #latest-news{
-{#            border: solid 1px red;#}
             width: 70%;
             margin-left: 1%;
         }
@@ -31,27 +29,21 @@
             color: blue;
         }
         #bit-news{
-{#            border: solid 1px red;#}
             width: 70%;
             margin-left: 1%;
             float: left;
         }
-    .cur_bit_news{
-        float: left;
-        width: 48%;
-        height: 300px;
-{#        border: solid 1px blue; #}
-        margin: 0 1%;
-    }
-    .right-side{
-        width: 28%;
-{#        border: solid 1px orange; #}
-        float: right;
-    }
+        .cur_bit_news{
+            float: left;
+            width: 48%;
+            height: 300px;
+            margin: 0 1%;
+        }
+        .right-side{
+            width: 28%;
+            float: right;
+        }
     </style>
-
-
-
     <div class="container-fluid" style="border: solid 1px lightgrey;">
         <div class="row">
             <div id="latest-news">

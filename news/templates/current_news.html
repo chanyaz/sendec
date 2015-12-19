@@ -4,72 +4,30 @@
 {% load cache %}
 {% block current_news %}
 
-    <!-- REFRESH LATEST NEWS -->
     <script>
-    /* Refresh latest news
-        function load_latest_news() {
+        function add_like_news(news_id) {
             $.ajax({
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 type: "POST",
-                url: "/news/update_latest/",
-                success: $.get("/news/update_latest/").done(function (data) {
-                    //$(".latest-title-list").prepend(data.string[0]);
-                    data.latest_news.forEach(function (cur_lat_news) {
-                        if(cur_lat_news.shown == false) {
-                            $(".latest-titles-list").prepend(data.string[0]);
-
-                            $.get("/news/ss=" + cur_lat_news.news_id).done(function () {
-                            });
-                        }
-                    });
+                url: "/news/add_like/n=" + news_id,
+                success: $.get("/news/check_like/n=" + news_id).done(function (data) {
+                    $(".news_likes_amount_"+news_id).text(data.likes);
+                    $(".liked").text("Liked");
+                    $(".disliked").text("Dislikes:")
                 })
             });
         }
-
-            function refresh_latest_news(){
-                $.get("/news/update_latest/").done(function(data){
-                    //$(".latest-titles-list").prepend(data.string);
-
-                    data.latest_news.forEach(function(cur_lat_news){
-                        if(cur_lat_news.shown == false) {
-                            $(".latest-titles-list").prepend(data.string[0]);
-                            $.get("/news/ss="+cur_lat_news.news_id).done(function(){});
-                        }
-                    });
-                });
-                return true;
-            }
-            refresh_latest_news();
-            setInterval(refresh_latest_news, 1000);*/
-
+        function reload_likes(){
+            var url = location.href.split("/");
+            $.get("/news/check_like/n="+url[url.length-2]).done(function(data){
+                $(".news_likes_amount_"+url[url.length-2]).text(data.likes);
+            });
+            return true;
+        }
+        reload_likes();
+        setInterval(reload_likes, 1000);
     </script>
-    <!-- LIKES -->
     <script>
-    // Likes
-            function add_like_news(news_id) {
-                $.ajax({
-                    data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                    type: "POST",
-                    url: "/news/add_like/n=" + news_id,
-                    success: $.get("/news/check_like/n=" + news_id).done(function (data) {
-                        $(".news_likes_amount_"+news_id).text(data.likes);
-                        $(".liked").text("Liked");
-                        $(".disliked").text("Dislikes:")
-                    })
-                });
-            }
-            function reload_likes(){
-                var url = location.href.split("/");
-                $.get("/news/check_like/n="+url[url.length-2]).done(function(data){
-                    $(".news_likes_amount_"+url[url.length-2]).text(data.likes);
-                });
-                return true;
-            }
-            reload_likes();
-            setInterval(reload_likes, 1000);
-    </script>
-    <!-- DISLIKES -->
-    <script>
-    // Dislikes
         function add_dislike_news(news_id) {
                 $.ajax({
                     data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
@@ -92,9 +50,7 @@
             reload_dislikes();
             setInterval(reload_dislikes, 1000);
     </script>
-    <!-- SEND COMMENTS & REPLIES -->
     <script>
-    // SEND COMMENTS VIA AJAX
         $(document).ready(function(){
             var $form = $("#comments_form");
             $form.submit(function(){
@@ -106,8 +62,6 @@
                         var window = $('html');//.html("");
                         window.html(result);
                         $($form).find('input[type=text], textarea').val('');
-                        //$(".current_comment").trigger("reset");
-                        //alert("success");
                     },
                     error: function(data){
                         alert("error");
@@ -117,7 +71,6 @@
             });
         });
     </script>
-    <!-- REFRESH COMMENTS AND REPLIES AFTER SEND BY CURRENT USER -->
     <script>
         $(document).ready(function(){
             function refreshContent(){
@@ -133,39 +86,20 @@
             }
         });
     </script>
-
-
     <script>
-    $(document).ready(function(){
-        $("img").style.width='100px';
-    })
+        $(document).ready(function(){
+            $("img").style.width='100px';
+        })
     </script>
-
-
     <style>
-        #id_comments_text{
-            height: 3em;
-            resize: none;
-            margin-left: 1%;
-            width: 85%;
-        }
-        #id_reply_text{
-            height: 3em;
-            resize: none;
-            margin-left: 5%;
-        }
         .share-list-item{
             float: left;
             margin-left: 1%;
         }
-
-
     </style>
 
     <div class="container-fluid" data-news-id="{{ current_news_values.id }}" style="border: solid 1px lightgrey;">
-
         <div class="tre" style=" float: left; width: 70%;">
-
             <h1 class="page-header" style="margin: 0 5%;">
                 {{ current_news_values.news_title }}
             </h1>
@@ -233,7 +167,6 @@
                                 {% if liked == False %}
                                     Likes:
                                 {% else %}
-                                    <!-- Break like -->
                                     <span
                                         data-news-id="{{ current_news_values.id }}"
                                         class="break_like"
@@ -278,8 +211,6 @@
                     </li>
                 </ul>
             </div>
-
-
             {% if other_materials|length > 0 %}
                 <hr width="100%">
                 Other&nbsp;materials&nbsp;of&nbsp;{{ current_news_values.news_category }}
@@ -305,32 +236,16 @@
             <div id="comments-block">
                 <div id="disqus_thread"></div>
                 <script>
-                /**
-                * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-                */
-                /*
-                var disqus_config = function () {
-                this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                };
-                */
-                (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document, s = d.createElement('script');
-
-                s.src = '//indavant.disqus.com/embed.js';
-
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-                })();
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = '//indavant.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
                 </script>
                 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
             </div>
-
-
         </div>
-
-
         <div class="right-side-block" style="width: 28%; float: right;">
             <div class="latest-news"
             style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
@@ -338,38 +253,32 @@
                     News of {{ company_name }}
                 </div>
                 <div class="latest-titles">
-                        {% for i in latest_news %}
-                            <div class="latest-news"
-                                 style="height: 70px;"
-                                 onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                <div class="latest-news-cover"
-                                     style="float: left; height:70px; width: 100px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
-                                </div>
-                                <div class="latest-news-content">
-                                    <span class="time" style="color: blue;">
-                                        {{ i.news_post_date.time }}
-                                    </span>
-                                    <span class="title"
-                                          onmouseover="this.style.color='blue'; style.cursor='pointer';"
-                                          onmouseout="this.style.color='black';"
-                                          onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                        {{ i.news_title }}
-                                    </span>
-                                </div>
+                    {% for i in latest_news %}
+                        <div class="latest-news"
+                             style="height: 70px;"
+                             onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                            <div class="latest-news-cover"
+                                 style="float: left; height:70px; width: 100px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
                             </div>
-                            <hr>
-                        {% endfor %}
+                            <div class="latest-news-content">
+                                <span class="time" style="color: blue;">
+                                    {{ i.news_post_date.time }}
+                                </span>
+                                <span class="title"
+                                      onmouseover="this.style.color='blue'; style.cursor='pointer';"
+                                      onmouseout="this.style.color='black';"
+                                      onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                    {{ i.news_title }}
+                                </span>
+                            </div>
+                        </div>
+                        <hr>
+                    {% endfor %}
                 </div>
             </div>
-
             <div class="video-and-subs">
                 {% include 'twitter.html' %}
             </div>
-
+        </div>
     </div>
-
-
-    </div>
-
-
 {% endblock %}

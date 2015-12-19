@@ -3,7 +3,6 @@
 {% load my %}
 {% block user_profile %}
 
-
     <script>
         function exchangeSelectData(value){
             if(value === "source-ignore") {
@@ -21,7 +20,6 @@
                 document.getElementById("source-ignore-2").options.remove(n_2);
             }
         }
-
         function removeSelectedData(){
             var n = document.getElementById("source-to-show").options.selectedIndex;
             var val = document.getElementById("source-to-show").options[n].value;
@@ -29,17 +27,13 @@
             document.getElementById("source-ignore").options.add(new Option(text, val));
             document.getElementById("source-to-show").options.remove(n);
         }
-
         function selectAllOptions(selStr)
         {
-            // Select ALL options on submit form.
             var selObj = document.getElementById(selStr);
             for (var i=0; i<selObj.options.length; i++) {
                 selObj.options[i].selected = true;
             }
         }
-
-        // Validation image
         var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
         function Validate(oForm) {
             var arrInputs = oForm.getElementsByTagName("input");
@@ -56,7 +50,6 @@
                                 break;
                             }
                         }
-
                         if (!blnValid) {
                             alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
                             return false;
@@ -66,33 +59,22 @@
             }
             return true;
         }
-
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-
                 reader.onload = function (e) {
                     $('#user-photo').attr('src', e.target.result);
                 };
-
                 $("#save-image").slideDown();
-
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
         $("#chooser-avatar").change(function(){
             readURL(this);
         });
-
     </script>
 
-
-
-
     <div class="container-fluid">
-
-        <!-- Confirmation user's email -->
         {% if username.is_active == False %}
             <div class="confirm-email">
                 <label style="color: red;">
@@ -100,27 +82,23 @@
                 </label>
             </div>
         {% endif %}
-
         <h1 class="page-header">Profile:&nbsp;{{ username.username }}</h1>
         <div class="row">
-            <!-- left column -->
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="text-center">
-                    <form
-                            id="change-photo"
-                            onsubmit="return Validate(this);"
-                            action="/profile/photo_upload/"
-                            method="POST"
-                            enctype="multipart/form-data">
+                    <form id="change-photo"
+                          onsubmit="return Validate(this);"
+                          action="/profile/photo_upload/"
+                          method="POST"
+                          enctype="multipart/form-data">
                         {% csrf_token %}
                         <input style="display: none;"
                                onchange="readURL(this);"
                                id="chooser-avatar"
-                                name="username_photo"
-                                type="file"
-                                class="btn btn-default btn-block"
-                                value="Upload&nbsp;photo">
-                            <!--<span aria-hidden="true"></span>-->
+                               name="username_photo"
+                               type="file"
+                               class="btn btn-default btn-block"
+                               value="Upload&nbsp;photo">
                         <label for="chooser-avatar">
                             {% if username.profile.user_photo != '' %}
                                 <img id="user-photo" src="/media/{{ username.profile.user_photo }}" alt="avatar" width="200" />
@@ -131,7 +109,6 @@
                     <br>
                         <input hidden id="save-image" type="submit" value="Save">
                     </form>
-
                 </div>
             <hr width="100%">
                 <div class="user-chars">
@@ -157,14 +134,13 @@
                 </div>
             </div>
             </div>
-            <!-- edit form column -->
             <div class="col-md-7 col-sm-6 col-xs-12 personal-info">
                 <h3>Personal info</h3>
-                <form   style="border: solid 1px lightgrey;"
-                        action="/profile/change/"
-                        method="POST"
-                        class="form-horizontal"
-                        role="form">
+                <form style="border: solid 1px lightgrey;"
+                      action="/profile/change/"
+                      method="POST"
+                      class="form-horizontal"
+                      role="form">
                     {% csrf_token %}
                     <div class="form-group">
                         <label class="col-md-3 control-label">Username:</label>
@@ -181,48 +157,43 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">First name:</label>
                         <div class="col-lg-8">
-                            <input
-                                    name="first_name"
-                                    class="form-control"
-                                    type="text"
-                                    placeholder="First&nbsp;name"
-                                    value="{{ username.first_name }}">
+                            <input name="first_name"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="First&nbsp;name"
+                                   value="{{ username.first_name }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Last name:</label>
                         <div class="col-lg-8">
-                            <input
-                                    name="last_name"
-                                    class="form-control"
-                                    type="text"
-                                    placeholder="Last&nbsp;name"
-                                    value="{{ username.last_name }}">
+                            <input name="last_name"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="Last&nbsp;name"
+                                   value="{{ username.last_name }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Email:</label>
                         <div class="col-lg-8">
-                            <input
-                                    name="email"
-                                    class="form-control"
-                                    type="email"
-                                    placeholder="example@gmail.com"
-                                    value="{{ username.email }}">
+                            <input name="email"
+                                   class="form-control"
+                                   type="email"
+                                   placeholder="example@gmail.com"
+                                   value="{{ username.email }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Cell:</label>
                         <div class="col-lg-8">
-                            <input
-                                    name="cell"
-                                    class="form-control"
-                                    type="tel"
-                                    placeholder="Your&nbsp;phone&nbsp;number"
-                                    value="{{ username.profile.user_cell_number }}">
+                            <input name="cell"
+                                   class="form-control"
+                                   type="tel"
+                                   placeholder="Your&nbsp;phone&nbsp;number"
+                                   value="{{ username.profile.user_cell_number }}">
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
@@ -232,7 +203,6 @@
                         </div>
                     </div>
                 </form>
-
                 <h3>Settings</h3>
                 <div class="special-info" style="height: 6em;">
                     <div class="special-info-speech" style="">
@@ -252,53 +222,50 @@
                         <input type="submit" value="Search">
                     </div>
                 </div>
-
-
-                <form   id="settings-form"
-                        style="border: solid 1px lightgrey;"
-                        action="/profile/add_portals"
-                        method="get"
-                        class="form-horizontal"
-                        role="form"
-                        onsubmit="selectAllOptions('source-to-show');">
+                <form id="settings-form"
+                      style="border: solid 1px lightgrey;"
+                      action="/profile/add_portals"
+                      method="get"
+                      class="form-horizontal"
+                      role="form"
+                      onsubmit="selectAllOptions('source-to-show');">
                     {% csrf_token %}
-
                     <div id="chooser">
                         <div class="other-side" style="height: 500px;">
                             <div class="choice-portal">
                                 Choose&nbsp;portals&nbsp;which&nbsp;news&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
                                 <div class="form-to-choose">
-                                        <div class="chooser" style="float: left;">
-                                            <label for="source-ignore">Choose</label><br>
-                                            <select multiple
-                                                    id="source-ignore"
-                                                    size="10"
-                                                    style="width: 300px;">
-                                                {% for portal in test %}
-                                                    <option value="{{ portal.portal_id }}" id="id{{ portal.portal_id }}">{{ portal.portal_id|get_rss_portal_name }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="buttons-to-choose" style="float: left;">
-                                            <br><br><br>
-                                            <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData('source-ignore');">
-                                            <br>
-                                            <input type="button" id="moveout" name="moveout" value="<<" onclick="return removeSelectedData();">
-                                        </div>
-                                        <div class="choosen">
-                                            <label for="source-to-show">Chosen</label><br>
-                                            <select  multiple
-                                                     id="source-to-show"
-                                                     name="source-to-show"
-                                                     size="10"
-                                                     style="width: 300px;">
-                                                    {% for i in test_2 %}
-                                                        <option value="{{ i.portal_id }}" id="id{{ i.portal_id }}">{{ i.portal_id|get_rss_portal_name }}</option>
-                                                    {% endfor %}
-                                            </select>
-                                        </div>
+                                    <div class="chooser" style="float: left;">
+                                        <label for="source-ignore">Choose</label><br>
+                                        <select multiple
+                                                id="source-ignore"
+                                                size="10"
+                                                style="width: 300px;">
+                                            {% for portal in test %}
+                                                <option value="{{ portal.portal_id }}" id="id{{ portal.portal_id }}">{{ portal.portal_id|get_rss_portal_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="buttons-to-choose" style="float: left;">
+                                        <br><br><br>
+                                        <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData('source-ignore');">
                                         <br>
-                                        <input class="btn btn-primary" type="submit" value="Save">
+                                        <input type="button" id="moveout" name="moveout" value="<<" onclick="return removeSelectedData();">
+                                    </div>
+                                    <div class="choosen">
+                                        <label for="source-to-show">Chosen</label><br>
+                                        <select  multiple
+                                                 id="source-to-show"
+                                                 name="source-to-show"
+                                                 size="10"
+                                                 style="width: 300px;">
+                                            {% for i in test_2 %}
+                                                <option value="{{ i.portal_id }}" id="id{{ i.portal_id }}">{{ i.portal_id|get_rss_portal_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <input class="btn btn-primary" type="submit" value="Save">
                                 </div>
                             </div>
                         </div>
