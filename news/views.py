@@ -112,11 +112,13 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
     args = {
         "title": "My news | ",
         "test": set_rss_for_user_test(request),
-        "user_rss": get_user_rss_news(request, user_id=user.id),
+        "user_rss": get_user_rss_news(request, user_id=user.id).order_by("position"),
         "popular_rss": get_most_popular_rss_portals(request)[:9],
         "popular_rss_right": get_most_popular_rss_portals(request)[:3],
         "test_2": RssNews.objects.filter(portal_name_id__in=user_rss_list).values(),
-        "rss_template": rss_template
+        "rss_template": rss_template,
+        "un_us_p": get_user_unselceted_portals(request, user_id=user.id),
+        "new_user_news": get_rss_filterd(request, user.id),
     }
     args.update(csrf(request))
     if auth.get_user(request).username:
@@ -138,6 +140,16 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
     else:
         args["zero"] = False
     return render_to_response(template, context=args, context_instance=RequestContext(request))
+
+
+def get_rss_filterd(request, user_id):
+    user_portals_ids = UserRssPortals.objects.filter(user_id=user_id).filter(check=True).values("id")
+    return RssNews.objects.filter(portal_name_id__in=user_portals_ids).order_by("-date_posted").order_by("-portal_name__userrssportals__rate").values()
+    #return user_portals_ids
+
+
+def get_user_unselceted_portals(request, user_id):
+    return UserRssPortals.objects.filter(user_id=user_id).filter(check=False).values()
 
 
 def get_user_rss_portals(request, user_id):
@@ -787,10 +799,12 @@ def test_rendering(request):
 
 
 def render_contacts_page(request):
+    from news.forms import SendReportForm
     args = {
         "email": "insydia@yandex.ru",
         "phone": "+7-931-579-06-96",
         "cooperation": "saqel@yandex.ru",
+        "form": SendReportForm,
     }
     args.update(csrf(request))
     if auth.get_user(request).username:
@@ -804,6 +818,10 @@ def render_contacts_page(request):
 <br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
 <br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
 """
+
+    args["expression"] = """We express our gratitude for the financial and moral support to Afanasyev M.J.
+(Associate Professor of "Instrumentation Technology")."""
+
     return render_to_response("contacts.html", args)
 
 
@@ -820,11 +838,63 @@ def set_user_portals(request):
     return HttpResponseRedirect("/news/usernews/")
 
 
+def change_rates(request):
+    args = {}
+    args.update(csrf(request))
+    if request.POST:# or request.is_ajax():
+        dataArray = request.POST.getlist("dataArray")
+        print(dataArray)
+        a = json.loads(dataArray[0])
+        for i in range(len(a["dict"])):
+            print("a")
+            current_id = int(a["dict"]["%s"%i]["id"][5:])
+            current_position = a["dict"]["%s"%i]["pos"]
+            print(i, ": {")
+            print("\tid: ", current_id)
+            print("\tpos: ", current_position)
+            print("}")
+            instance = UserRssPortals.objects.get(id=current_id)
+            prev_position = instance.position
+            instance.position = current_position
+            #instance.rate = 1 + (1 * (abs(prev_position-instance.position)/100))
+            if abs(instance.position-prev_position) != 0:
+                instance.rate = (1 * (((100/instance.position)/abs(instance.position-prev_position))/100)) * (prev_position/instance.position)
+            else:
+                instance.rate = (1 * (((100/instance.position)/100)) * (prev_position/instance.position))
+            instance.save()
+    return HttpResponseRedirect("/news/usernews/")
+
+
 def send_report(request):
     mail_subject = "[REPORT] I have found error"
-    if request.POST:
-        text_content = request.POST["message"] + "\nE-mail: "+request.POST["email"]+"\nName: "+request.POST["username"]
-        mail_from = "insydia@yandex.ru"
-        mail_to = "insydia@yandex.ru"
-        send_mail(mail_subject, text_content, mail_from, [mail_to])
+
+    import requests
+    from django.conf import settings
+    response = {}
+    data = request.POST
+    captcha_rs = data.get('g-recaptcha-response')
+    url = "https://www.google.com/recaptcha/api/siteverify"
+    params = {
+        'secret': settings.NORECAPTCHA_SECRET_KEY,
+        'response': captcha_rs,
+        #'remoteip': get_client_ip(request)
+    }
+    verify_rs = requests.get(url, params=params, verify=True)
+    verify_rs = verify_rs.json()
+    response["status"] = verify_rs.get("success", False)
+    response['message'] = verify_rs.get('error-codes', None) or "Unspecified error."
+
+    if response["status"]:
+        if request.POST:
+            text_content = request.POST["message"] + "\nE-mail: "+request.POST["email"]+"\nName: "+request.POST["username"]
+            mail_from = "insydia@yandex.ru"
+            mail_to = "insydia@yandex.ru"
+            send_mail(mail_subject, text_content, mail_from, [mail_to])
+
     return HttpResponseRedirect("/about/contacts/")
+
+
+def page_not_found(request):
+    response = render_to_response("404.html", context_instance=RequestContext(request))
+    response.status_code = 404
+    return response

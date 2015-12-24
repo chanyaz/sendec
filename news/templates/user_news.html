@@ -29,7 +29,22 @@
         .most-popular-portals input[type=checkbox]:checked + .lab  .sect-rss{
             background-color: red;
         }
+        .current_portal_item{
+            border: solid 1px red;
+            height: 2em;
+        }
+        #add-portals-image{
+            height: 2em;
+        }
     </style>
+
+
+    <script src="//code.jquery.com/jquery-latest.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="{% static 'static/js/jquery-ui.js' %}"></script>
+
+
+
     <script>
         function loadPage() {
             alert("in");
@@ -92,11 +107,29 @@
         }
         function userPortalsListEdit(){
             $('.user-portals-edit-done').fadeIn();
+            $('#add-portals-image').fadeIn();
             $('.user-cur-p-edit').fadeIn();
+            $('#sortContainer').sortable();
         }
         function userPortalsListDoneEdit(){
             $('.user-cur-p-edit').fadeOut();
             $('.user-portals-edit-done').fadeOut();
+            $('#add-portals-image').fadeOut();
+            var $order = $('#sortContainer').sortable('toArray');
+            var dict = {};
+            for(var i=0; i<$order.length; i++){
+                dict[i] = {id: $order[i], pos: i+1};
+            }
+            //var csrftoken = getCookie('csrftoken');
+            //var ser = $('#sortContainer').sortable().sortable("serialize");
+            $.ajax({
+                type: "POST",
+                url: "/news/change_portals_order/",
+                data: {
+                    dataArray: decodeURIComponent(JSON.stringify({"dict": dict})),
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                }
+            });
         }
     </script>
     <div class="container-fluid">
@@ -106,10 +139,12 @@
                 <div id="rss-title" style="text-align: center;">
                     All news which are your interested in
                 </div>
+                {% for i in new_user_news %}
+                    {{ i.title }}<br>
+                {% endfor %}
                 <div class="load-more" style="">
                     <div class="endless_page_template">
                         {% block js %}
-                            <script src="http://code.jquery.com/jquery-latest.js"></script>
                             <script src="{% static 'static/js/endless-pagination.js' %}"></script>
                             <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
                             <script>
@@ -185,18 +220,25 @@
                         <div class="user-portals-edit-done"
                              onclick="userPortalsListDoneEdit();"
                              style="text-align: right; display: none;">
-                            <a href="">Done</a>
+                            Done
                         </div>
-                        {% for i in user_rss %}
-                            <div id="curp-{{ i.id }}">
-                                <span class="user-portals">{{ i.portal_id|get_rss_portal_name }}</span>
-                                <span class="user-cur-p-edit" style="display: none;">
-                                    <a href="">+</a>
-                                    <span onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}', '{{ i.id }}');">X</span>
-                                </span>
-                                <hr width="100%">
-                            </div>
-                        {% endfor %}
+                        <div id="add-portals-image" style="display: none;">
+                            <img src="{% static 'static/img/add.png' %}"
+                                 onclick="PortalsAdditionPopUpShow();"
+                                 width="20em" />
+                        </div>
+                        <div id="sortContainer">
+                            {% for i in user_rss %}
+                                <div id="curp-{{ i.id }}" class="current_portal_item">
+                                    <span class="user-cur-p-edit" style="display: none;">
+                                        <span style="height: 2em;" onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}', '{{ i.id }}');">
+                                            <img src="{% static 'static/img/remove.png' %}" width="20em" />
+                                        </span>
+                                    </span>
+                                    <span class="user-portals">{{ i.portal_id|get_rss_portal_name }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                     <div class="bottom-panel-edit-portals" style="text-align: right;">
                         <a href="/profile/#settings-form">add</a>

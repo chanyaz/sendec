@@ -1,0 +1,639 @@
+{
+"90":{
+    "name": "Neversoft",
+    "verbose": "neversoft",
+    "site": "https://www.activision.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/neversoft.png"
+  },
+  "91":{
+    "name": "Obsidian Entertainment",
+    "verbose": "obsidian",
+    "site": "http://www.obsidian.net/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/obsidian.png"
+  },
+  "92":{
+    "name": "Overkill Software",
+    "verbose": "overkillsoftware",
+    "site": "http://www.overkillsoftware.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/overkillsoftware.png"
+  },
+  "93":{
+    "name": "Pandemic Studios",
+	"verbose": "pandemic",
+    "site": "None",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/pandemic.png"
+  },
+  "94":{
+    "name": "Beijing Perfect World",
+    "verbose": "bpw",
+    "site": "http://www.perfectworld.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/perfectworld.png"
+  },
+  "95":{
+    "name": "Phenomic Game Development",
+    "verbose": "pgd",
+    "site": "http://www.ea.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/pgd.png"
+  },
+  "96":{
+    "name": "Piranha Bytes",
+    "verbose": "piranha",
+    "site": "http://www.pluto13.de/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/piranha.png"
+  },
+  "97":{
+    "name": "Playdead",
+    "verbose": "playdead",
+    "site": "http://www.playdead.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/playdead.png"
+  },
+  "98":{
+    "name": "Playground Games",
+	"verbose": "playground",
+    "site": "http://www.playground-games.com/",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/playground.png"
+  },
+  "99":{
+    "name": "PopCap Games",
+    "verbose": "popcap",
+    "site": "http:www.popcap.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/popcap.png"
+  },
+  "100":{
+    "name": "Pyro Studios",
+    "verbose": "pyro",
+    "site": "http://www.pyromobilegames.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/pyro.png"
+  },
+  "101":{
+    "name": "Radical Entertainment",
+    "verbose": "radical",
+    "site": "http://www.radical.ca/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/radical.png"
+  },
+  "102":{
+    "name": "Raven Software",
+    "verbose": "raven",
+    "site": "http://www.ravensoft.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/raven.png"
+  },
+  "103":{
+    "name": "Red Storm Entertainment",
+	"verbose": "rse",
+    "site": "http://redstorm.com/",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/rse.png"
+  },
+  "104":{
+    "name": "Relic Entertainment",
+    "verbose": "relic",
+    "site": "http://www.relic.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/relic.png"
+  },
+  "105":{
+    "name": "Rockstar Games",
+    "verbose": "rockstar",
+    "site": "http://www.rockstargames.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/rocktar.png"
+  },
+  "106":{
+    "name": "Rocksteady Studios",
+    "verbose": "rocksteady",
+    "site": "http://rocksteadyltd.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/rocksteady.png"
+  },
+  "107":{
+    "name": "Rovio Entertainment",
+    "verbose": "rovio",
+    "site": "http://www.rovio.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/rovio.png"
+  },
+  "108":{
+    "name": "The Chinese Room",
+	"verbose": "chineseroom",
+    "site": "http://www.thechineseroom.co.uk/",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/chineseroom.png"
+  },
+  "109":{
+    "name": "Turtle Rock Studios",
+    "verbose": "turtlerock",
+    "site": "https://www.turtlerockstudios.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/trs.png"
+  },
+  "110":{
+    "name": "Ubisoft",
+    "verbose": "ubisoft",
+    "site": "https://www.ubisoft.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/ubisoft.png"
+  },
+  "111":{
+    "name": "Valve Corporation",
+    "verbose": "valve",
+    "site": "http://www.valvesoftware.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/valve.png"
+  },
+  "112":{
+    "name": "Wargaming",
+    "verbose": "wargaming",
+    "site": "http://www.ru.wargaming.net/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/wargaming.png"
+  },
+  "113":{
+    "name": "WB Games",
+	"verbose": "wb",
+    "site": "http://community.wbgames.com/",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/wb.png"
+  },
+  "114":{
+    "name": "Adobe",
+    "verbose": "adobe",
+    "site": "http://www.adobe.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/adobe.png"
+  },
+  "115":{
+    "name": "AMD",
+    "verbose": "amd",
+    "site": "http://www.amd.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/amd.png"
+  },
+  "116":{
+    "name": "AT&T",
+    "verbose": "att",
+    "site": "http://www.att.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/att.png"
+  },
+  "117":{
+    "name": "Boeing",
+    "verbose": "boeing",
+    "site": "http://www.boeing.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/boeing.png"
+  },
+  "118":{
+    "name": "ebay",
+	"verbose": "ebay",
+    "site": "http://www.ebay.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/ebay.png"
+  },
+  "119":{
+    "name": "HTC",
+    "verbose": "htc",
+    "site": "http://www.htc.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/htc.png"
+  },
+  "120":{
+    "name": "Instagram",
+    "verbose": "instagram",
+    "site": "https://www.instagram.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/instagram.png"
+  },
+  "121":{
+    "name": "Intel",
+    "verbose": "intel",
+    "site": "http://www.intel.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/intel.png"
+  },
+  "122":{
+    "name": "Microsoft",
+    "verbose": "microsoft",
+    "site": "https://www.microsoft.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/microsoft.png"
+  },
+  "123":{
+    "name": "Nokia",
+	"verbose": "nokia",
+    "site": "http://www.nokia.com/ru_int",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/nokia.png"
+  },
+  "124":{
+    "name": "PayPal",
+    "verbose": "paypal",
+    "site": "https://www.paypal.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/paypal.png"
+  },
+  "125":{
+    "name": "Sprint",
+    "verbose": "sprint",
+    "site": "https://www.sprint.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/sprint.png"
+  },
+  "126":{
+    "name": "Telegram",
+    "verbose": "telegram",
+    "site": "https://telergam.org/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/telegram.png"
+  },
+  "127":{
+    "name": "Verizon",
+    "verbose": "verizon",
+    "site": "http://www.verizonwireless.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/verizon.png"
+  },
+  "128":{
+    "name": "Xerox",
+	"verbose": "xerox",
+    "site": "http://www.xerox.ru/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/xerox.png"
+  },
+  "129":{
+    "name": "Toshiba",
+    "verbose": "toshiba",
+    "site": "http://www.toshiba.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/toshiba.png"
+  },
+  "130":{
+    "name": "Qualcomm",
+    "verbose": "qualcomm",
+    "site": "https://www.qualcomm.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/qualcomm.png"
+  },
+  "131":{
+    "name": "TSMC",
+    "verbose": "tsmc",
+    "site": "http://www.tsmc.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/tsmc.png"
+  },
+  "132":{
+    "name": "Canon",
+    "verbose": "canon",
+    "site": "http://www.canon.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/canon.png"
+  },
+  "133":{
+    "name": "Alibaba",
+	"verbose": "alibaba",
+    "site": "http://www.alibaba.com",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/alibaba.png"
+  },
+  "134":{
+    "name": "SK Hynix",
+    "verbose": "skhynix",
+    "site": "http://www.skhynix.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/skhynix.png"
+  },
+  "135":{
+    "name": "Micron",
+    "verbose": "micron",
+    "site": "https://www.micron.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/micron.png"
+  },
+  "136":{
+    "name": "Lenovo",
+    "verbose": "lenovo",
+    "site": "http://www.lenovo.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/lenovo.png"
+  },
+  "137":{
+    "name": "Volkswagen Group",
+    "verbose": "volkswagen",
+    "site": "http;//en.volkswagen.com/en.html",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/volkswagen.png"
+  },
+  "138":{
+    "name": "Siemens",
+	"verbose": "siemens",
+    "site": "http://www.siemens.com",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/siemens.png"
+  },
+  "139":{
+    "name": "Honda Motor",
+    "verbose": "honda",
+    "site": "http://www.honda.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/honda.png"
+  },
+  "140":{
+    "name": "Nissan Motor",
+    "verbose": "nissan",
+    "site": "http://www.nissan-global.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/nissan.png"
+  },
+  "141":{
+    "name": "Hyundai Motor",
+    "verbose": "hyundai",
+    "site": "http://worldwide.hyundai.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/hyundai.png"
+  },
+  "142":{
+    "name": "Mitsubishi Motor",
+    "verbose": "mitsubishi",
+    "site": "https://www.mitsubishi.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/mitsubishi.png"
+  },
+  "143":{
+    "name": "Renault",
+	"verbose": "renault",
+    "site": "https://www.renault.ru/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/renault.png"
+  },
+  "144":{
+    "name": "Visa",
+    "verbose": "visa",
+    "site": "http://www.visa.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/visa.png"
+  },
+  "145":{
+    "name": "Medtronic",
+    "verbose": "medtronic",
+    "site": "http://www.medtronic.ru/",
+    "category": "bit",
+    "logo": "/static/img/companies/logo/medtronic.png"
+  },
+  "146":{
+    "name": "MasterCard",
+    "verbose": "mastercard",
+    "site": "http://www.mastercard.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/mastercard.png"
+  },
+  "147":{
+    "name": "Biogen Idec",
+    "verbose": "biogen",
+    "site": "https://www.biogen.com/",
+    "category": "bit",
+    "logo": "/static/img/companies/logo/biogen.png"
+  },
+  "148":{
+    "name": "CVS Health",
+	"verbose": "CVS",
+    "site": "https://www.cvshealth.com/",
+    "category": "bit",
+    "logo": "/static/img/companies/logo/cvs.png"
+  },
+  "149":{
+    "name": "Биософт-М",
+    "verbose": "biosoft-m",
+    "site": "http://www.biosoft-m.ru/",
+    "category": "bit",
+    "logo": "/static/img/companies/logo/биософт.png"
+  },
+  "150":{
+    "name": "Аурига",
+    "verbose": "аурига",
+    "site": "http://www.auriga.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/аурига.png"
+  },
+  "151":{
+    "name": "Dr. Web",
+    "verbose": "drweb",
+    "site": "http://www.drweb.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/drweb.png"
+  },
+  "152":{
+    "name": "Kaspersky Lab.",
+    "verbose": "kaspersky",
+    "site": "http://www.laspersky.ru/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/kaspersky.png"
+  },
+  "153":{
+    "name": "КРОНТ",
+	"verbose": "kront",
+    "site": "http://www.kront.com/",
+    "category": "bit",
+    "logo": "/static/img/companies/logo/kront.png"
+  },
+  "154":{
+    "name": "ASUS",
+    "verbose": "asus",
+    "site": "https://www.asus.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/asus.png"
+  },
+  "155":{
+    "name": "Cyrix",
+    "verbose": "cyrix",
+    "site": "None",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/cyrix.png"
+  },
+  "156":{
+    "name": "FUJITSU",
+    "verbose": "fujitsu",
+    "site": "http://www.fujitsu.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/fujitsu.png"
+  },
+  "157":{
+    "name": "NEC",
+    "verbose": "nec",
+    "site": "http://www.nec.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/nec.png"
+  },
+  "158":{
+    "name": "Virgin Galactic",
+	"verbose": "virgingalactic",
+    "site": "http://www.virgingalactic.com/",
+    "category": "space",
+    "logo": "/static/img/companies/logo/virgingalactica.png"
+  },
+  "159":{
+    "name": "Pumpkin Inc.",
+    "verbose": "pumpkin",
+    "site": "http://www.pumpkininc.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/pumpkin.png"
+  },
+  "160":{
+    "name": "Хcor Aerospace",
+    "verbose": "xcor",
+    "site": "http://www.xcor.com/",
+    "category": "space",
+    "logo": "/static/img/companies/logo/xcor.png"
+  },
+  "161":{
+    "name": "Space Adventures",
+    "verbose": "space-adventures",
+    "site": "http;//www.spaceadventures.com/",
+    "category": "space",
+    "logo": "/static/img/companies/logo/space-adventures.png"
+  },
+  "162":{
+    "name": "Bigelow Aerospace",
+    "verbose": "bigelow",
+    "site": "http://www.bigelowaerospace.com/",
+    "category": "space",
+    "logo": "/static/img/companies/logo/bigelowaerospace.png"
+  },
+  "163":{
+    "name": "Astrobotic Technology",
+	"verbose": "astrobotic",
+    "site": "http://astrobotic.net/",
+    "category": "space",
+    "logo": "/static/img/companies/logo/astrobotic.png"
+  },
+  "164":{
+    "name": "Blue Origin",
+    "verbose": "blueorigin",
+    "site": "https://www.blueorigin.com",
+    "category": "space",
+    "logo": "/static/img/companies/logo/blueorigin.png"
+  },
+  "165":{
+    "name": "Орбитальные Технологии",
+    "verbose": "орбитальные_технологии",
+    "site": "http://orbitaltechnologies.ru/",
+    "category": "space",
+    "logo": "/static/img/companies/logo/орбитальные-технологии.png"
+  },
+  "166":{
+    "name": "Spaceport America",
+    "verbose": "spaceport",
+    "site": "http://www.spaceportamerica.com/",
+    "category": "space",
+    "logo": "/static/img/companies/logo/spaceport.png"
+  },
+  "167":{
+    "name": "Mars One",
+    "verbose": "marsone",
+    "site": "http://www.mars-one.com/",
+    "category": "space",
+    "logo": "/static/img/companies/logo/marsone.png"
+  },
+  "168":{
+    "name": "Audi",
+	"verbose": "audi",
+    "site": "http://www.audi.ru",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/audi.png"
+  },
+  "169":{
+    "name": "Porsche",
+    "verbose": "porsche",
+    "site": "http://www.porsche.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/porsche.png"
+  },
+  "170":{
+    "name": "Chevrolet",
+    "verbose": "chevrolet",
+    "site": "http://www.chevrolet.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/chevrolet.png"
+  },
+  "171":{
+    "name": "Cadillac",
+    "verbose": "cadillac",
+    "site": "http://www.cadillac.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/cadillac.png"
+  },
+  "172":{
+    "name": "Lexus",
+    "verbose": "lexus",
+    "site": "http://www.lexus.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/lexus.png"
+  },
+  "173":{
+    "name": "Kia",
+	"verbose": "kia",
+    "site": "http://www.kia.ru",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/kia.png"
+  },
+  "174":{
+    "name": "Suzuki",
+    "verbose": "suzuki",
+    "site": "http://www.suzuki.com",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/suzuki.png"
+  },
+  "175":{
+    "name": "Fiat",
+    "verbose": "fiat",
+    "site": "http://www.fiat.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/fiat.png"
+  },
+  "176":{
+    "name": "Dropbox",
+    "verbose": "dropbox",
+    "site": "http://www.dropbox.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/dropbox.png"
+  },
+  "177":{
+    "name": "Square Enix",
+    "verbose": "squareenix",
+    "site": "http://www.square-enix.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/squareenix.png"
+  },
+  "178":{
+    "name": "Bigpoint",
+	"verbose": "bigpoint",
+    "site": "http://ru.bigpoint.com/",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/bigpoint.png"
+  },
+  "179":{
+    "name": "Nintendo",
+    "verbose": "nintendo",
+    "site": "http://www.nintendo.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/nintendo.png"
+  },
+  "180":{
+    "name": "Nvidia",
+    "verbose": "nvidia",
+    "site": "http://www.nvidia.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/nvidia.png"
+  }
+}

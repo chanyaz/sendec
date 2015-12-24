@@ -32,10 +32,13 @@ class UserLikesNews(models.Model):
 class UserRssPortals(models.Model):
     class Meta:
         db_table = "user_rss_news"
+        ordering = ['rate']
 
     user = models.ForeignKey(User)
     portal = models.ForeignKey(RssPortals)
     check = models.BooleanField(default=False)
+    position = models.IntegerField(default=0)
+    rate = models.FloatField(default=0.0)
 
     def get_json_portal(self):
         return {

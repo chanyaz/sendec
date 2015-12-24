@@ -4,10 +4,12 @@
 {% load jsonate_tags %}
 {% load i18n %}
 {% load cache %}
+{% load my %}
 <head>
     <meta charset="UTF-8">
     <meta name='yandex-verification' content='5e44980913d08dad' />
     <meta name="google-site-verification" content="y6Xw9KEH5CLn8NGw7Q2xWyettWl8PNt06hQVCjG2EBs" />
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <title>{{ title }}&nbsp;Insydia</title>
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
@@ -211,6 +213,27 @@
             border-radius:5px;
             box-shadow: 0 0 10px #000;
         }
+
+
+        #portals-addition-window {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.1);
+            overflow: auto;
+            position: fixed;
+            top: 0;
+        }
+        #portals-addition-window #portals-addition-window-content{
+            margin: 10% auto 0 auto;
+            width:  50%;
+            height: 50%;
+            min-height:30%;
+            padding: 0;
+            background-color: white;
+            border-radius:5px;
+            box-shadow: 0 0 10px #000;
+        }
+
         .li-cat{
             float: left;
             margin-left: 1%;
@@ -282,6 +305,11 @@
             float: right;
             margin-top: -1.5%;
             list-style-type: none;
+        }
+        .cur_unsel_portal{
+            width: 20%;
+            height: 5em;
+            border: solid 1px red;
         }
     </style>
 </head>
@@ -481,6 +509,7 @@
                         {% block user_news %}{% endblock %}
                         {% block contacts %}{% endblock %}
                         {% block search %}{% endblock %}
+                        {% block page_not_found %}{% endblock %}
                     </div>
                 </div>
                 {% block settings %}{% endblock %}
@@ -623,6 +652,30 @@
             <img src='{% static 'static/img/ajax-loader.gif' %}' alt='Loading...' />
         </div>
     </div>
+    <div id="portals-addition-window" hidden>
+        <div id="portals-addition-window-content">
+            <div class="content-text" style="text-align: center;">Hello</div>
+            <div class="content-portals" style="width: 70%; margin-left: auto; margin-right: auto;">
+                {% for i in un_us_p %}
+                    <div id="{{ i.id }}" class="cur_unsel_portal" style="width: 25%; float: left;">
+                        {{ i.portal_id|get_rss_portal_name }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="content-search"></div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            PortalsAdditionPopUpHide();
+        });
+        function PortalsAdditionPopUpShow(){
+            $("#portals-addition-window").show().onfocus();
+        }
+        function PortalsAdditionPopUpHide(){
+            $("#portals-addition-window").hide();
+        }
+    </script>
     <script>
         $(document).ready(function(){
             UserAuthPopUpHide();
@@ -677,37 +730,6 @@
         }
     </script>
     <div id="live" style="display: none;">
-        <!--LiveInternet counter--><script type="text/javascript">document.write("<a href='//www.liveinternet.ru/click' target=_blank><img src='//counter.yad$er.yadro.ru/hit?t44.6;r" + escape(top.document.referrer) + ((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.c$olorDepth?screen.colorDepth:screen.pixelDepth)) + ";u" + escape(document.URL) +";h"+escape(document.title.substring(0,80)) +  ";" + Math.random() + m() + "' border=0 width=31 height=31 alt='' title='LiveInternet'><\/a>")</script><!--/LiveInternet-->
     </div>
 </body>
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function (d, w, c) {
-        (w[c] = w[c] || []).push(function() {
-            try {
-                w.yaCounter34186215 = new Ya.Metrika({
-                    id:34186215,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true,
-                    webvisor:true,
-                    trackHash:true
-                });
-            } catch(e) { }
-        });
-
-        var n = d.getElementsByTagName("script")[0],
-            s = d.createElement("script"),
-            f = function () { n.parentNode.insertBefore(s, n); };
-        s.type = "text/javascript";
-        s.async = true;
-        s.src = "https://mc.yandex.ru/metrika/watch.js";
-
-        if (w.opera == "[object Opera]") {
-            d.addEventListener("DOMContentLoaded", f, false);
-        } else { f(); }
-    })(document, window, "yandex_metrika_callbacks");
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/34186215" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
 </html>

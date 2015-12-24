@@ -5,6 +5,7 @@ from django.conf import settings
 
 
 urlpatterns = [
+    url(r'^change_portals_order/', 'news.views.change_rates'),
     url(r'^add_portals/', 'news.views.set_user_portals'),
     url(r'^contacts/', 'news.views.render_contacts_page'),
     url(r'^send_report/', 'news.views.send_report'),

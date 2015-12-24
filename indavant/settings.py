@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    "suit",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,7 +50,11 @@ INSTALLED_APPS = (
     "ckeditor",
     "endless_pagination",
     "maintenancemode",
+    "nocaptcha_recaptcha",
 )
+
+NORECAPTCHA_SITE_KEY = "6Lc1dhMTAAAAACgdoXQlzfJSkghbnkZuONW_P3xj"
+NORECAPTCHA_SECRET_KEY = "6Lc1dhMTAAAAAKjKI4WP8wmvsowHxSAyuE0isjyp"
 
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'

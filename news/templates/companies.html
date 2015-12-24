@@ -25,6 +25,7 @@
                     Here you can search news of the certain company which do you want.
                 </div>
                 <div class="companies-list">
+                {{ companies|length }}
                     {% for current_company in companies %}
                         <div class="current_company" onclick="location.href='/news/companies/{{ current_company.verbose_name }}/';">
                             <div class="current_company_name">

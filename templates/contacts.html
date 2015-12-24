@@ -21,7 +21,8 @@
             width: 45%;
             float: left;
             margin-left: 5%;
-            border: solid 1px mediumpurple;
+{#            border: solid 1px mediumpurple;#}
+            box-shadow: 0 0 10px black;
         }
         .contact-link{
             color: #3036ff;
@@ -37,7 +38,7 @@
             text-decoration: none;
         }
         .photo{
-            height: 50px;
+            height: 77px;
             float: left;
             width: 25%;
             border: solid 1px red;
@@ -46,7 +47,8 @@
             float: right;
             width: 75%;
             height: auto;
-            border: solid 1px purple;
+            padding-left: 5%;
+{#            border: solid 1px purple;#}
         }
     </style>
     <div class="container-fluid">
@@ -74,24 +76,26 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="user-message-name">Name:</label>
                                         <div class="col-md-5">
-                                            <input name="username"
+                                            <!--<input name="username"
                                                    required="required"
                                                    id="user-message-name"
                                                    class="form-control"
                                                    type="text"
-                                                   placeholder="username">
+                                                   placeholder="username">-->
+                                            {{ form.username }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="user-message-email">Email:</label>
                                         <div class="col-md-5">
-                                            <input name="email"
+                                            <!--<input name="email"
                                                    required="required"
                                                    pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"
                                                    id="user-message-email"
                                                    class="form-control"
                                                    type="text"
-                                                   placeholder="email@example.com">
+                                                   placeholder="email@example.com">-->
+                                            {{ form.email }}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -107,6 +111,19 @@
                                             ></textarea>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="user-message-message"></label>
+                                        <div class="col-md-5">
+                                            <div class="captcha" style="margin-left: 5%;">
+                                                {{ form.captcha }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="g-recaptcha" data-sitekey="6Lc1dhMTAAAAACgdoXQlzfJSkghbnkZuONW_P3xj"></div>-->
+                                    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
                                     <div class="form-group">
                                         <label class="col-lg-4 control-label"></label>
                                         <div class="col-md-8">
@@ -125,7 +142,9 @@
                         </div>
                     </div>
                     <div class="contacts-left-bottom">
-                        Our&nbsp;Team<br>
+                        <div class="team-title">
+                            <h2>OUR&nbsp;TEAM</h2>
+                        </div>
                         <ul class="team-list">
                             <li class="team-list-item">
                                 <div class="Founder">
@@ -154,6 +173,16 @@
                         <span class="join-team">
                             <a class="team-link" href="">Join&nbsp;to&nbsp;us</a>
                         </span>
+                        <hr width="100%">
+                        <div class="gratitude-title">
+                            <h2>GRATITUDE</h2>
+                        </div>
+                        <div class="expression-logo">
+                            <img src="{% static 'static/img/logo-itmo-end.png' %}" width="15%" style="float: left;" />
+                            <div class="expression" style="margin-top: 5%; text-align: left; margin-left: auto; margin-right: auto; width: 65%;">
+                            {{ expression }}
+                        </div>
+                        </div>
                     </div>
                 </div>
                 <div class="contacts-right" style="float: right; width: 30%;">
@@ -161,7 +190,7 @@
                     <hr width="100%">
                     <ul class="contact-list">
                         <li>
-                            <a class="contact-link" href="">
+                            <a class="contact-link" href="https://vk.com/insydianews/">
                                 <img src="{% static 'static/img/vk.png' %}" width="8%" alt="VK"/>VK
                             </a>
                         </li>
@@ -171,7 +200,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="contact-link" href="">
+                            <a class="contact-link" href="https://www.linkedin.com/groups/8442725">
                                 <img src="{% static 'static/img/linkedin.png' %}" width="8%" alt="Linkedin"/>Linkedin
                             </a>
                         </li>

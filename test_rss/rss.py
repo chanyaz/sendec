@@ -83,10 +83,18 @@ def connect_to_db(urls):
             data["description"] = data["description"].replace(i, "")
         data["description"] = data["description"].replace("\n", "")
 
+        query_for_rss = "SELECT * FROM rss_portals"
+        cursor.execute(query_for_rss)
+        portals_list = cursor.fetchall()
+
+        for current_portal in portals_list:
+            if current_portal[2] in data["link"]:
+                current_rss_news_id = current_portal[0]
+
         if len(count) == 0:
             #cursor.execute("""INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""",(data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], 1, 1, data["content"], data["author"]))
             query = """INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"""
-            data_query = (data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], 1, 1, data["content"], data["author"])
+            data_query = (data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], current_rss_news_id, 1, data["content"], data["author"])
             cursor.execute(query, data_query)
             query_2 = "SELECT ID FROM news_rss WHERE title=%s"
             data_query_2 = [data["title"]]
@@ -159,9 +167,92 @@ def fill_rss_portals():
     db.close()
 
 
+def fill_companies():
+    import json
+    db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+    cursor = db.cursor()
+    with open("c_2.json", encoding="utf-8-sig") as file_list:
+        file_list = list(json.load(file_list))
+    with open("c_2.json", encoding="utf-8-sig") as file:
+        companies = json.load(file)
+
+    end = len(companies)
+    cur_iter = 0
+    current_category_id = 0
+    for i in range(end):
+        if companies[file_list[i]]['category'] == "technology": current_category_id = 1
+        if companies[file_list[i]]['category'] == "entertainment": current_category_id = 2
+        if companies[file_list[i]]['category'] == "auto": current_category_id = 3
+        if companies[file_list[i]]['category'] == "space": current_category_id = 4
+        if companies[file_list[i]]['category'] == "bio" or companies[file_list[i]]['category'] == "bit" : current_category_id = 5
+        description = ""
+
+        cur_iter += 1
+
+        query_check = "SELECT * FROM companies WHERE site=%s"
+        data_query_check = [companies[file_list[i]]['site']]
+        cursor.execute(query_check, data_query_check)
+        check = cursor.fetchall()
+        print(check)
+        print(len(check))
+        if len(check) > 0:
+            pass
+        else:
+            query = "INSERT INTO companies(name, verbose_name, site, category_id, logo, description) VALUES(%s, %s, %s, %s, %s, %s)"
+            data_query = (companies[file_list[i]]['name'], companies[file_list[i]]['verbose'],
+                          companies[file_list[i]]['site'], current_category_id,
+                          companies[file_list[i]]['logo'], description)
+            cursor.execute(query, data_query)
+            db.commit()
+        print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "Dealed with ", companies[file_list[i]]['name'])
+    db.close()
+
+
+def fill_news():
+    import json
+    db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+    cursor = db.cursor()
+    with open("news_kristina_2.json", encoding="utf-8-sig") as file_list:
+        file_list = list(json.load(file_list))
+    with open("news_kristina_2.json", encoding="utf-8-sig") as file:
+        news = json.load(file)
+
+    end = len(news)
+    cur_iter = 0
+
+    for i in range(end):
+        try:
+            if news[file_list[i]]['category'] == "technology" and news[file_list[i]]['date'] != "date":
+                cur_iter += 1
+                news_title = news[file_list[i]]["title"]
+                news_category_id = 1    # Technology
+                news_post_date = news[file_list[i]]["date"]
+                news_post_text = news[file_list[i]]["text"]
+                news_post_text_translate = ""
+                news_portal_name_id = 2    # Insydia
+                news_company_owner_id = 178    # Insydia
+                news_author_id = 2    # Saqel
+                news_main_cover = ""    # None
+                news_likes = 0
+                news_dislikes = 0
+
+                query_set = "INSERT INTO news(news_title, news_category_id, news_post_date, news_post_text, " \
+                            "news_post_text_translate, news_portal_name_id, news_company_owner_id, news_author_id, " \
+                            "news_main_cover, news_likes, news_dislikes) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                data_query_set = (news_title, news_category_id, news_post_date, news_post_text, news_post_text_translate,
+                                  news_portal_name_id, news_company_owner_id, news_author_id, news_main_cover, news_likes, news_dislikes)
+                cursor.execute(query_set, data_query_set)
+                db.commit()
+                #print(cur_iter, data_query_set)
+                print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "Dealed with ", news_title)
+        except KeyError:
+            print(news[file_list[i]])
+    db.close()
+
+
 def work_func():
     urls_of_portals = get_feed_urls()
-    print("1. Fill Rss Portals\n2. Syndicate news")
+    print("1. Fill Rss Portals\n2. Syndicate news\n3. Fill Companies\n4. Fill news")
     x = int(input("What can I help you? Enter number: "))
     if x == 1:
         fill_rss_portals()
@@ -172,6 +263,10 @@ def work_func():
                 time.sleep(1)
             except IndexError:
                 pass
+    elif x == 3:
+        fill_companies()
+    elif x == 4:
+        fill_news()
     else:
         import sys
         print("Good bye!")

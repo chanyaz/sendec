@@ -1,0 +1,16 @@
+{
+  "object-1":{
+    "title": "title",
+    "category": "technology",
+    "portal": "portal",
+    "date": "2015-10-10 10:10",
+    "text": "text"
+  },
+  "object-2":{
+    "title": "title-2",
+    "category": "technology",
+    "portal": "portal-2",
+    "date": "2015-10-10 10:10",
+    "text": "text-2"
+  }
+}

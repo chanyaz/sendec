@@ -1,0 +1,625 @@
+{
+  "1": {
+    "name": "Apple Inc.",
+    "verbose": "Apple",
+    "site": "http://www.apple.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/apple.png"
+  },
+  "2": {
+    "name": "Samsung Electronics",
+    "verbose": "samsung",
+    "site": "http://www.samsung.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/samsung.png"
+  },
+  "3": {
+    "name": "Foxconn",
+    "verbose": "foxconn",
+    "site": "http://foxconn.ru/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/foxconn.png"
+  },
+  "4": {
+    "name": "HP",
+    "verbose": "hp",
+    "site": "http://www.hp.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/hp.png"
+  },
+  "5": {
+    "name": "IBM",
+    "verbose": "International",
+    "site": "http://www.ibm.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/ibm.png"
+  },
+  "6": {
+    "name": "Amazon",
+    "verbose": "amazon",
+    "site": "http://www.amazon.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/amazon.png"
+  },
+  "7": {
+    "name": "Microsoft",
+    "verbose": "microsoft",
+    "site": "http://www.microsoft.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/microsoft.png"
+  },
+  "8": {
+    "name": "Sony",
+    "verbose": "sony",
+    "site": "http://www.sony.ru/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/sony.png"
+  },
+  "9": {
+    "name": "Google",
+    "verbose": "google",
+    "site": "http://www.google.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/google.png"
+  },
+  "10": {
+    "name": "Panasonic",
+    "verbose": "panasonic",
+    "site": "http://www.panasonic.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/panasonic.png"
+  },
+  "11": {
+    "name": "Dell",
+    "verbose": "dell",
+    "site": "http://www.dell.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/dell.png"
+  },
+  "12": {
+    "name": "Intel",
+    "verbose": "intel",
+    "site": "http://www.intel.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/intel.png"
+  },
+  "13": {
+    "name": "LG Electronics",
+    "verbose": "LG",
+    "site": "http://www.lg.com/ru",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/lg.png"
+  },
+  "14": {
+    "name": "Toshiba",
+    "verbose": "toshiba",
+    "site": "http://www.toshiba.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/toshiba.png"
+  },
+  "15": {
+    "name": "EMC",
+    "verbose": "EMC",
+    "site": "http://www.emc.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/emc.png"
+  },
+  "16": {
+    "name": "Cisco",
+    "verbose": "cisco",
+    "site": "http://www.cisco.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/cisco.png"
+  },
+  "17": {
+    "name": "Unisys",
+    "verbose": "unisys",
+    "site": "http://www.unisys.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/unisys.png"
+  },
+  "18": {
+    "name": "Sun Microsystems",
+    "verbose": "sun",
+    "site": "https://www.oracle.com/sun/index.html",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/sun.png"
+  },
+  "19": {
+    "name": "Oracle",
+    "verbose": "oracle",
+    "site": "http://www.oracle.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/oracle.png"
+  },
+  "20": {
+    "name": "SAP",
+    "verbose": "SAP",
+    "site": "http://go.sap.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/sap.png"
+  },
+  "21": {
+    "name": "Tata Consultancy Services",
+    "verbose": "tcs",
+    "site": "http://www.tcs.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/tcs.png"
+  },
+  "22": {
+    "name": "Infosys Technologies",
+    "verbose": "infosys",
+    "site": "http://www.infosys.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/infosys.png"
+  },
+  "23": {
+    "name": "Experian",
+    "verbose": "experian",
+    "site": "http://www.experian.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/experian.png"
+  },
+  "24": {
+    "name": "Dimension Data",
+    "verbose": "dimension",
+    "site": "http://www.dimensiondata.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/dimension.png"
+  },
+  "25": {
+    "name": "Wipro Limited",
+    "verbose": "Wipro",
+    "site": "http://www.wipro.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/wipro.png"
+  },
+  "26": {
+    "name": "SunGard",
+    "verbose": "sungard",
+    "site": "http://www.sungard.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/sungard.png"
+  },
+  "27": {
+    "name": "Capita",
+    "verbose": "capita",
+    "site": "http://www.capita-ites.co.uk/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/capita.png"
+  },
+  "28": {
+    "name": "Fiserv",
+    "verbose": "fiserv",
+    "site": "https://www.fiserv.com/index.aspx",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/fisery.png"
+  },
+  "29": {
+    "name": "BearingPoint",
+    "verbose": "bearingpoint",
+    "site": "http://www.bearingpoint.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/bearingpoint.png"
+  },
+  "30": {
+    "name": "CGI Group",
+    "verbose": "cgi_Group",
+    "site": "http://www.cgi.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/cgigroup.png"
+  },
+  "31": {
+    "name": "Amdocs",
+    "verbose": "amdocs",
+    "site": "http://www.amdocs.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/amdocs.png"
+  },
+  "32": {
+    "name": "Cognizant",
+    "verbose": " cognizant",
+    "site": "http://www.cognizant.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/cognizant.png"
+  },
+  "33": {
+    "name": "Perot Systems",
+    "verbose": "perot",
+    "site": "http://www.perot.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/perot.png"
+  },
+  "34": {
+    "name": "KPN (Getronics)",
+    "verbose": "kpn",
+    "site": "http://www.kpngroup.co.th/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/kpn.png"
+  },
+  "35": {
+    "name": "Digital China Holdings",
+    "verbose": "DCH",
+    "site": "http://www.digitalchina.com.hk/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/dch.png"
+  },
+  "36": {
+    "name": "Convergys",
+    "verbose": "convergys",
+    "site": "http://www.convergys.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/convergys.png"
+  },
+  "37": {
+    "name": "TietoEnator",
+    "verbose": "tieto",
+    "site": "http://www.tieto.com/",
+    "category": "techology",
+    "logo": "/static/img/companies/logo/tiestoenator.png"
+  },
+  "38": {
+    "name": "Caci International",
+    "verbose": "caci",
+    "site": "http://www.caci.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/caci.png"
+  },
+  "39": {
+    "name": "Steria Group",
+    "verbose": "steria",
+    "site": "http://www.soprasteria.com/en",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/steria.png"
+  },
+  "40": {
+    "name": "Facebook",
+    "verbose": "facebook",
+    "site": "https://www.facebook.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/facebook.png"
+  },
+  "41": {
+    "name": "Twitter",
+    "verbose": "twitter",
+    "site": "http://www.twitter.com/",
+    "category": "techology",
+    "logo": "/static/img/companies/logo/twitter.png"
+  },
+  "42": {
+    "name": "Linkedin",
+    "verbose": "linkedin",
+    "site": "https://www.linkedin.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/linkedin.png"
+  },
+  "43": {
+    "name": "VK",
+    "verbose": "vk",
+    "site": "https://vk.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/vk.png"
+  },
+  "44": {
+    "name": "Yandex",
+    "verbose": "yandex",
+    "site": "http://www.yandex.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/yandex.png"
+  },
+  "45": {
+    "name": "Yahoo!",
+    "verbose": "yahoo",
+    "site": "https://www.yahoo.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/yahoo.png"
+  },
+  "46": {
+    "name": "Rambler",
+    "verbose": "rambler",
+    "site": "http://www.rambler.ru/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/rambler.png"
+  },
+  "47": {
+    "name": "Mail.Ru",
+    "verbose": "mailru",
+    "site": "https://www.mail.ru/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/mailru.png"
+  },
+  "48": {
+    "name": "Tesla",
+    "verbose": "tesla",
+    "site": "https://www.teslamotors.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/tesla.png"
+  },
+  "49": {
+    "name": "BMW",
+    "verbose": "bmw",
+    "site": "http://www.bmw.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/bmw.png"
+  },
+  "50": {
+    "name": "Mercedes-Benz",
+    "verbose": "mercedes-benz",
+    "site": "http://www.mercedes-benz.ru/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/mercedes.png"
+  },
+  "51": {
+    "name": "Toyota",
+    "verbose": "toyota",
+    "site": "http://www.toyota-global.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/toyota.png"
+  },
+  "52": {
+    "name": "Lada",
+    "verbose": "lada",
+    "site": "http://www.lada.ru/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/lada.png"
+  },
+  "53": {
+    "name": "Aston Martin",
+    "verbose": "aston",
+    "site": "http://www.astonmartin.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/aston.png"
+  },
+  "54": {
+    "name": "Ferrari",
+    "verbose": "ferrari",
+    "site": "http://www.ferrari.com/",
+    "category": "auto",
+    "logo": "/static/img/companies/logo/ferrari.png"
+  },
+  "55": {
+    "name": "GitHub",
+    "verbose": "github",
+    "site": "https://github.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/github.png"
+  },
+  "56": {
+    "name": "Huawei",
+    "verbose": "huawei",
+    "site": "http://www.huawei.com/",
+    "category": "technology",
+    "logo": "/static/img/companies/logo/huawei.png"
+  },
+  "57": {
+    "name": "NASA",
+    "verbose": "nasa",
+    "site": "https://www.nasa.gov/",
+    "category": "space",
+    "logo": "/static/img/companies/logo/nasa.png"
+  },
+  "58": {
+    "name": "Space-X",
+    "verbose": "spacex",
+    "site": "http://www.spacex.com/",
+    "category": "space",
+    "logo": "/static/img/companies/logo/spacex.png"
+  },
+  "59": {
+    "name": "CryTek",
+    "verbose": "crytek",
+    "site": "http://www.crytek.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/crytek.png"
+  },
+  "60": {
+    "name": "Activision",
+    "verbose": "activision",
+    "site": "https://www.activision.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/activision.png"
+  },
+  "61": {
+    "name": "Akella",
+    "verbose": "akella",
+    "site": "http://www.akella.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/akella.png"
+  },
+  "62": {
+    "name": "Atari",
+    "verbose": "atari",
+    "site": "https://www.atari.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/atari.png"
+  },
+  "63": {
+    "name": "Bethesda Softworks",
+    "verbose": "bethesda",
+    "site": "http://bethsoft.com",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/bethesda.png"
+  },
+  "64": {
+    "name": "BioWare",
+    "verbose": "bioware",
+    "site": "http://www.bioware.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/bioware.png"
+  },
+  "65": {
+    "name": "Blizzard Entertainment",
+    "verbose": "blizzard",
+    "site": "http://eu.blizzard.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/blizzard.png"
+  },
+  "66": {
+    "name": "Capcom",
+    "verbose": "capcom",
+    "site": "http://www.capcom.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/capcom.png"
+  },
+  "67": {
+    "name": "Eidos Interactive",
+    "verbose": "eidos",
+    "site": "http://eu.square-enix.com/en",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/eidos.png"
+  },
+  "68": {
+    "name": "Electronic Arts/EA Games",
+    "verbose": "ea",
+    "site": "http://www.ea.com/ru",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/ea.png"
+  },
+  "69": {
+    "name": "Epic Games",
+    "verbose": "epic",
+    "site": "https://epicgames.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/epic.png"
+  },
+  "70": {
+    "name": "Firaxis Games",
+    "verbose": "firaxis",
+    "site": "http://www.firaxis.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/firaxis.png"
+  },
+  "71": {
+    "name": "Firefly Studios",
+    "verbose": "fs",
+    "site": "http://www.fireflyworlds.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/fs.png"
+  },
+  "72": {
+    "name": "From Software",
+    "verbose": "fromsoftware",
+    "site": "http://www.fromsoftware.jp/pc_en/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/from.png"
+  },
+  "73": {
+    "name": "Gaijin Entertainment",
+    "verbose": "gaijin",
+    "site": "http://www.gaijinent.com/",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/gaijin.png"
+  },
+  "74": {
+    "name": "Gameloft",
+    "verbose": "gameloft",
+    "site": "http://www.gameloft.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/gameloft.png"
+  },
+  "75": {
+    "name": "Gravity",
+    "verbose": "gravity",
+    "site": "http://www.gravity.co.kr/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/gravity.png"
+  },
+  "76": {
+    "name": "GSC Game World",
+    "verbose": "gsc",
+    "site": "http://www.gsc-game.ru/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/gsc.png"
+  },
+  "77": {
+    "name": "Halfbrick",
+    "verbose": "halfbrick",
+    "site": "http://www.halfbrick.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/halfbrick.png"
+  },
+  "78": {
+    "name": "High Moon Studios",
+    "verbose": "hms",
+    "site": "http://www.highmoonstudios.com/",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/hms.png"
+  },
+  "79": {
+    "name": "Human Head Studios",
+    "verbose": "humanhead",
+    "site": "http://www.humanhead.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/hhs.png"
+  },
+  "80": {
+    "name": "Interceptor Entertainment",
+    "verbose": "interceptor",
+    "site": "http://interceptor-entertainment.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/interceptor.png"
+  },
+  "81": {
+    "name": "Eidos Interactive",
+    "verbose": "eidos",
+    "site": "http;//www.ign.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/eidos.png"
+  },
+  "82": {
+    "name": "2K Games",
+    "verbose": "2kgames",
+    "site": "https://www.2k.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/2kgames.png"
+  },
+  "83": {
+    "name": "LEGO Group",
+    "verbose": "LEGO",
+    "site": "http://www.lego.com/ru-ru",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/lego.png"
+  },
+  "84": {
+    "name": "MachineGames",
+    "verbose": "machinegames",
+    "site": "http://www.machinegames.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/machinegames.png"
+  },
+  "85": {
+    "name": "Maxis Software",
+    "verbose": "maxis",
+    "site": "http://www.maxis.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/maxis.png"
+  },
+  "86": {
+    "name": "Media Molecule",
+    "verbose": "media-molecule",
+    "site": "http://www.mediamolecule.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/media-molecule.png"
+  },
+  "87": {
+    "name": "Midway Games",
+    "verbose": "midway",
+    "site": "http://www.midway.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/midway.png"
+  },
+  "88": {
+    "name": "Mojang AB",
+    "verbose": "mojang",
+    "site": "https://mojang.com/",
+    "category": "entrtainment",
+    "logo": "/static/img/companies/logo/mojang.png"
+  },
+  "89": {
+    "name": "NCsoft",
+    "verbose": "ncsoft",
+    "site": "https://www.ncsoft.com/",
+    "category": "entertainment",
+    "logo": "/static/img/companies/logo/ncsoft.png"
+  }
+}

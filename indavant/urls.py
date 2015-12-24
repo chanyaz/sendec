@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
+from django.conf.urls import handler404
+handler404 = 'news.views.page_not_found'
+
 urlpatterns = patterns('',
     url(r'^about/', include('news.urls')),
     url(r'^admin/', include(admin.site.urls)),

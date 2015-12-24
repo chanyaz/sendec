@@ -42,9 +42,9 @@ class Companies(models.Model):
         verbose_name = 'Company'
         verbose_name_plural = 'Companies'
 
-    name = models.CharField(max_length=32)
-    verbose_name = models.CharField(max_length=32)
-    site = models.URLField(max_length=32)
+    name = models.CharField(max_length=64)
+    verbose_name = models.CharField(max_length=64)
+    site = models.URLField(max_length=64)
     category = models.ForeignKey(NewsCategory)
     logo = models.FileField(upload_to=upload_company_cover, blank=True)
 
@@ -185,6 +185,7 @@ class RssNews(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
     post_text = models.TextField(max_length=4096)
     portal_name = models.ForeignKey(RssPortals)
+    #portal_name_rate = models.ForeignKey(RssPortals, related_name="rate")
     category = models.ForeignKey(NewsCategory)
     link = models.URLField(max_length=512)
     author = models.CharField(max_length=512)
