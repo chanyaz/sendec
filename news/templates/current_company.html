@@ -3,25 +3,11 @@
 {% load my %}
 {% load jsonate_tags %}
 {% block current_company %}
-
     <style>
-        .current_news {
-            height: 82px;
-            box-shadow: 0 0 5px #5e5e5e;
-            margin: 2% 0.25% 0.25% 0.25%;
-        }
-        .company-title{
-            text-align: center;
-            margin-left: -15%;
-        }
-        #current_company_left{
-            float: left;
-            width: 70%;
-        }
-        .current_news{
-            height: 80px;
-            margin: 2% 0.25% 0.25% 0.25%;
-        }
+        .current_news{height: 82px;box-shadow: 0 0 5px #5e5e5e;margin: 2% 0.25% 0.25% 0.25%;}
+        .company-title{text-align: center;margin-left: -15%;}
+        #current_company_left{float: left;width: 70%;}
+        .current_news{height: 80px;margin: 2% 0.25% 0.25% 0.25%;}
         .current_searched_cover{
             width: 20%;
             height: 80px;
@@ -29,18 +15,9 @@
             background: url('/media/{{ current_news.news_main_cover }}') no-repeat center;
             background-size: cover;
         }
-        .current_searched_content_portal{
-            float: left;
-            margin-left: 1%;
-        }
-        #current_company_right{
-            height: auto;
-            float: right;
-            width: 30%;
-        }
-        .company-right-top{
-            height: 110px;
-        }
+        .current_searched_content_portal{float: left;margin-left: 1%;}
+        #current_company_right{height: auto;float: right;width: 30%;}
+        .company-right-top{height: 110px;}
         .current_company_logo{
             float: left;
             width: 100px;
@@ -48,10 +25,8 @@
             background: url('/media/{{ company.logo }}') no-repeat center;
             background-size: 100px;
         }
-        .company-title{
-            text-align: center;
-            margin-left: -15%;
-        }
+        .company-title{text-align: center;margin-left: -15%;}
+        .current-company-title{text-align: center;}
     </style>
     <div class="current_company">
         <div class="row">
@@ -61,7 +36,7 @@
                 </div>
                 <div id="current_company_left">
                     <div class="current_company_news">
-                        <div class="" style="text-align: center;">
+                        <div class="current-company-title">
                             All&nbsp;{{ company.name }}'s&nbsp;news
                         </div>
                         {% for current_news in news %}

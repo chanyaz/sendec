@@ -1,12 +1,16 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
 {% block reviews %}
-
-    <div class="container-fluid" style="border: solid 1px lightgrey;">
+    <style>
+        .container-fluid{border: solid 1px lightgrey;}
+        #reviews-news{border: solid 1px red; width: 95%; margin-left: 1%;}
+        .reviews-content{width: 100%;}
+    </style>
+    <div class="container-fluid">
         <div class="row">
-            <div id="reviews-news" style="border: solid 1px red; width: 95%; margin-left: 1%;">
+            <div id="reviews-news">
                 <div class="panel panel-default">
-                    <div class="345" style="width: 100%;">
+                    <div class="reviews-content">
                         reviews
                     </div>
                 </div>

@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% load my %}
 {% block user_profile %}
-
     <script>
         function exchangeSelectData(value){
             if(value === "source-ignore") {
@@ -73,11 +72,23 @@
             readURL(this);
         });
     </script>
-
+    <style>
+        #confirm-email-label{color: red;}
+        #chooser-avatar{display: none;}
+        form{border: solid 1px lightgrey;}
+        .special-info{height: 6em;}
+        #keywords{float: left;}
+        #settings-form{border: solid 1px lightgrey;}
+        .other-side{height: 500px;}
+        .chooser{float: left;}
+        #source-ignore{width: 300px;}
+        .buttons-to-choose{float: left;}
+        #source-to-show{width: 300px;}
+    </style>
     <div class="container-fluid">
         {% if username.is_active == False %}
             <div class="confirm-email">
-                <label style="color: red;">
+                <label id="confirm-email-label">
                     <a href="/profile/sce={{ username.id }}">Send</a>&nbsp;new&nbsp;email&nbsp;with&nbsp;confirmation&nbsp;code.
                 </label>
             </div>
@@ -92,8 +103,7 @@
                           method="POST"
                           enctype="multipart/form-data">
                         {% csrf_token %}
-                        <input style="display: none;"
-                               onchange="readURL(this);"
+                        <input onchange="readURL(this);"
                                id="chooser-avatar"
                                name="username_photo"
                                type="file"
@@ -128,7 +138,7 @@
             <hr width="100%">
             <div class="requests">
                 <div class="request-deleting">
-                    <span style="color: red; ">show popup windows</span><br>
+                    <span style="color: red;">show popup windows</span><br>
                     <span class="del-acc">Delete Account</span><br>
                     <span class="del-articles">Delete All Articles</span>
                 </div>
@@ -136,8 +146,7 @@
             </div>
             <div class="col-md-7 col-sm-6 col-xs-12 personal-info">
                 <h3>Personal info</h3>
-                <form style="border: solid 1px lightgrey;"
-                      action="/profile/change/"
+                <form action="/profile/change/"
                       method="POST"
                       class="form-horizontal"
                       role="form">
@@ -204,26 +213,24 @@
                     </div>
                 </form>
                 <h3>Settings</h3>
-                <div class="special-info" style="height: 6em;">
-                    <div class="special-info-speech" style="">
+                <div class="special-info">
+                    <div class="special-info-speech">
                         {{ special_text }}
                     </div>
                     <label class="col-md-2 control-label">Key&nbsp;word:</label>
-                    <div class="col-md-8" style="float: left;">
+                    <div class="col-md-8" id="keywords">
                         <input name="keyword"
                                disabled="disabled"
                                class="form-control"
                                type="text"
                                placeholder="Enter&nbsp;key&nbsp;word"
-                               spellcheck="true"
-                               style="float: left">
+                               spellcheck="true">
                     </div>
                     <div class="col-md-1">
                         <input type="submit" value="Search">
                     </div>
                 </div>
                 <form id="settings-form"
-                      style="border: solid 1px lightgrey;"
                       action="/profile/add_portals"
                       method="get"
                       class="form-horizontal"
@@ -231,22 +238,21 @@
                       onsubmit="selectAllOptions('source-to-show');">
                     {% csrf_token %}
                     <div id="chooser">
-                        <div class="other-side" style="height: 500px;">
+                        <div class="other-side">
                             <div class="choice-portal">
                                 Choose&nbsp;portals&nbsp;which&nbsp;news&nbsp;would&nbsp;you&nbsp;like&nbsp;to&nbsp;view.
                                 <div class="form-to-choose">
-                                    <div class="chooser" style="float: left;">
+                                    <div class="chooser">
                                         <label for="source-ignore">Choose</label><br>
                                         <select multiple
                                                 id="source-ignore"
-                                                size="10"
-                                                style="width: 300px;">
+                                                size="10">
                                             {% for portal in test %}
                                                 <option value="{{ portal.portal_id }}" id="id{{ portal.portal_id }}">{{ portal.portal_id|get_rss_portal_name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
-                                    <div class="buttons-to-choose" style="float: left;">
+                                    <div class="buttons-to-choose">
                                         <br><br><br>
                                         <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData('source-ignore');">
                                         <br>
@@ -257,8 +263,7 @@
                                         <select  multiple
                                                  id="source-to-show"
                                                  name="source-to-show"
-                                                 size="10"
-                                                 style="width: 300px;">
+                                                 size="10">
                                             {% for i in test_2 %}
                                                 <option value="{{ i.portal_id }}" id="id{{ i.portal_id }}">{{ i.portal_id|get_rss_portal_name }}</option>
                                             {% endfor %}

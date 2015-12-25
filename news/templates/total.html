@@ -2,31 +2,53 @@
 {% load my %}
 {% load endless %}
 {% block politics %}
-
-
+    <!-- class names for covers -->
+    <style>
+        .ash{width: 95%; margin-left: 1%;}
+        .total-news-block{width: 100%;}
+        .bn{height: 456px;}
+        .bn-left{float: left; width: 70%;}
+        #image-main-news{max-width:100%; max-height:100%; height: 450px; background: url('/media/{{ breaking_news.news_main_cover }}') no-repeat center; background-size: cover;}
+        .bn-title{text-align: left; position: relative; margin-top: -15%; width: 60%; background-color: #a6e1ec; opacity: 0.75;}
+        .bn-title-text{text-align: left; font-size: 20px;}
+        .bn-right-nav{float: right; width: 30%;}
+        #main-container{width:325px;}
+        #container{width:325px;height:120px;}
+        .recently-news{width: 100%;}
+        .sect{width: 31%; margin-top: 1%;}
+        .current_news{box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;}
+        .page-header{margin-top: 1.5%;}
+{#        .main-page-news-cover{max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;}#}
+        .text_post{width: 100%;}
+        .media{height: inherit;}
+        .latest-reviews{height: 500px;}
+        .left-bar-videos{margin-left: 0.9%; float: left; width: 70%; height: 100%;}
+        .right-bar-videos{width: 29%; float: right;}
+        .recently-news-other{width: 100%;}
+        .sect{width: 31%; margin-top: 1%;}
+        .current_news{box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;}
+        h4 .page-header{margin-top: 1.5%;}
+    </style>
     <div class="container-fluid">
         <div class="row">
-            <div class="ash" style="width: 95%; margin-left: 1%;">
+            <div class="ash">
                 <div class="panel panel-default">
-                    <div class="345" style="width: 100%;">
-                        <div class="breaking-news"
-                             style="">
-                            <div class="bn"
-                                 style="height: 456px;">
+                    <div class="total-news-block" >
+                        <div class="breaking-news">
+                            <div class="bn">
                                 <div class="bn-left"
-                                     style="float: left; width: 70%;"
                                      onclick="location.href='/news/{{ breaking_news.news_category_id }}/{{ breaking_news.id }}/';"
                                      onmouseover="this.style.cursor='pointer';">
-                                    <div id="image-main-news" style="max-width:100%; max-height:100%; height: 450px; background: url('/media/{{ breaking_news.news_main_cover }}') no-repeat center; background-size: cover;"></div>
-                                    <div class="bn-title" style="text-align: left; position: relative; margin-top: -15%; width: 60%; background-color: #a6e1ec; opacity: 0.75;">
-                                        <span class="bn-title-text" style="text-align: left; font-size: 20px;">
+                                    <div id="image-main-news"></div>
+                                    <div class="bn-title">
+                                        <span class="bn-title-text">
                                             {{ breaking_news.news_title }}
                                         </span>
                                     </div>
                                 </div>
-                                <div class="bn-right-nav" style="float: right; width: 30%;">
-				                    <div id='main-container' style="width:325px;">
-					                    <div id="container" style="width:325px;height:120px;"></div>
+                                <div class="bn-right-nav">
+				                    <div id='main-container'>
+					                    <div id="container"></div>
                                         <a id='adv_AAPL' class='adv_link' rel='nofollow' href='http://amigobulls.com/stocks/AAPL/stockcharts' title='advanced AAPL stock chart'></a>
                                         <a id='adv_FB' class='adv_link' rel='nofollow' href='http://amigobulls.com/stocks/FB/stockcharts' title='advanced FB stock chart'></a>
                                         <a id='adv_GOOG' class='adv_link' rel='nofollow' href='http://amigobulls.com/stocks/GOOG/stockcharts' title='advanced GOOG stock chart'></a>
@@ -94,62 +116,60 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="recently-news" style="width: 100%;">
+                        <div class="recently-news">
                             {% for current_middle_news in total_middle_news %}
-                                <div class="sect" style="width: 31%; margin-top: 1%;">
+                                <div class="sect">
                                     <div class="current_news"
-                                         style="box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;"
                                          onmouseover="style.border='solid 0.2px blue';"
                                          onmouseout="style.border='';"
                                          onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
                                         <div class="title">
-                                            <h4 class="page-header" style="margin-top: 1.5%;">
+                                            <h4 class="page-header">
                                                 {{ current_middle_news.news_title|safe }}
                                             </h4>
                                         </div>
                                         {% if current_middle_news.news_main_cover != None %}
-                                            <div class="main-page-news-cover" style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                            <div class="main-page-news-cover"></div>
                                         {% endif %}
-                                        <div class="text_post" style="width: 100%;">
+                                        <div class="text_post">
                                         </div>
                                     </div>
                                 </div>
                             {% endfor %}
                         </div>
                         <hr width="100%">
-                        <div class="media" style="height: inherit;">
-                            <div class="latest-reviews" style="height: 500px;">
-                                <div class="left-bar-videos" style="margin-left: 0.9%; float: left; width: 70%; height: 100%;">
+                        <div class="media">
+                            <div class="latest-reviews">
+                                <div class="left-bar-videos">
                                     <iframe width="100%" height="90%" src="https://www.youtube.com/embed/t4OEsI0Sc_s" frameborder="0" allowfullscreen></iframe>
                                 </div>
-                                <div class="right-bar-videos" style="width: 29%; float: right;">
+                                <div class="right-bar-videos">
                                     {% for current_video in video_top %}
                                         <iframe width="100%" height="20%" src="{{ current_video.video }}" frameborder="0" allowfullscreen></iframe>
                                     {% endfor %}
                                 </div>
                             </div>
                             <hr width="100%">
-                            <div class="recently-news" style="">
-                                RECENTLY NEWS<br>
+                            <div class="recently-news">
+                                RECENTLY&nbsp;NEWS<br>
                                 <div class="">
                                     {% if total_bottom_news|length > 0 %}
-                                        <div class="recently-news-other" style="width: 100%;">
+                                        <div class="recently-news-other">
                                             {% for current_bottom_news in total_bottom_news %}
-                                                <div class="sect" style="width: 31%; margin-top: 1%;">
+                                                <div class="sect">
                                                     <div class="current_news"
-                                                         style="box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;"
                                                          onmouseover="style.border='solid 0.2px blue';"
                                                          onmouseout="style.border='';"
                                                          onclick="location.href='/news/{{ current_bottom_news.news_category_id }}/{{ current_bottom_news.id }}/';">
                                                         <div class="title">
-                                                            <h4 class="page-header" style="margin-top: 1.5%;">
+                                                            <h4 class="page-header">
                                                                 {{ current_bottom_news.news_title|safe }}
                                                             </h4>
                                                         </div>
                                                         {% if current_bottom_news.news_main_cover != '' %}
-                                                            <div class="main-page-news-cover" style="max-height: 100%; max-width: 100%; height: 200px; background: url('/media/{{ current_bottom_news.news_main_cover }}') no-repeat center; background-size:cover;"></div>
+                                                            <div class="main-page-news-cover"></div>
                                                         {% endif %}
-                                                        <div class="text_post" style="width: 100%;">
+                                                        <div class="text_post">
                                                             {{ current_bottom_news.news_post_text|safe|striptags|truncatewords_html:"8" }}
                                                         </div>
                                                     </div>
@@ -163,21 +183,20 @@
                                     <h4>Interesting&nbsp;articles</h4>
                                     <div id="interests">
                                         {% for current_interest in interest %}
-                                            <div class="sect" style="width: 31%; margin-top: 1%;">
+                                            <div class="sect">
                                                 <div class="current_news"
-                                                     style="box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;"
                                                      onmouseover="style.border='solid 0.2px blue';"
                                                      onmouseout="style.border='';"
                                                      onclick="location.href='/news/{{ current_interest.news_category_id }}/{{ current_interest.id }}/';">
                                                     <div class="title">
-                                                        <h4 class="page-header" style="margin-top: 1.5%;">
+                                                        <h4 class="page-header">
                                                             {{ current_interest.news_title|safe }}
                                                         </h4>
                                                     </div>
                                                     {% if current_interest.news_main_cover != '' %}
                                                         <div class="main-page-news-cover" style="max-height: 100%; max-width: 100%; height: 200px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size:cover;"></div>
                                                     {% endif %}
-                                                    <div class="text_post" style="width: 100%;">
+                                                    <div class="text_post">
                                                         {{ current_interest.news_post_text|safe|striptags|truncatewords_html:"8" }}
                                                     </div>
                                                 </div>
@@ -186,16 +205,16 @@
                                     </div>
                                 </div>
                                 <hr width="100%">
-                                <div class="load-more" style="">
+                                <div class="load-more">
                                     <div class="endless_page_template">
                                         {% block js %}
-                                            <script src="http://code.jquery.com/jquery-latest.js"></script>
+                                            <script src="{% static 'static/js/jquery-latest.js' %}"></script>
                                             <script src="{% static 'static/js/endless-pagination.js' %}"></script>
                                             <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
                                             <script>
                                                 $(document).ready(function() {
                                                     $.endlessPaginate({
-                                                        paginateOnScroll: true,
+                                                        paginateOnScroll: false,
                                                         paginateOnScrollChunkSize: 1
                                                     });
                                                 });

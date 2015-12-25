@@ -1,13 +1,8 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
 {% block technology %}
-
     <style>
-        #technologies-news{
-            border: solid 1px red;
-            width: 70%;
-            margin-left: 1%;
-        }
+        #technologies-news{border: solid 1px red;width: 70%;margin-left: 1%;}
         .top-technologies-content{
             opacity:1;
             width: 100%;
@@ -25,20 +20,14 @@
             background-color: #a6e1ec;
             opacity: 0.75;
         }
-        .bn-title-text{
-            margin-left: 5%;
-            font-size: 20px;
-            color: blue;
-        }
-        #technology-news{
-            border: solid 1px red;
-            width: 70%;
-            margin-left: 1%;
-            float: left;
-        }
+        .bn-title-text{margin-left: 5%;font-size: 20px;color: blue;}
+        #technology-news{border: solid 1px red;width: 70%;margin-left: 1%;float: left;}
+        .container-fluid{border: solid 1px lightgrey;}
+        .current-tech-news{float: left; width: 48%; height: 300px; border: solid 1px blue; margin: 0 1%;}
+        .image-current-technology{max-width: 100%; max-height: 100%; opacity:1; width: 100%; height: 150px;  background: url('/media/{{ current_tech_news.news_main_cover }}') no-repeat center; background-size: cover;}
+        .right-side{width: 28%; border: solid 1px orange; float: right;}
     </style>
-
-    <div class="container-fluid" style="border: solid 1px lightgrey;">
+    <div class="container-fluid">
         <div class="row">
             <div id="technologies-news">
                 <div class="top-technologies-content" onclick="location.href='/news/{{ top_technology.news_category_id }}/{{ top_technology.id }}/';"></div>
@@ -50,7 +39,7 @@
             </div>
             <div id="technology-news">
                 {% for current_tech_news in technology_news %}
-                    <div id="news-{{ current_tech_news.id }}" style="float: left; width: 48%; height: 300px; border: solid 1px blue; margin: 0 1%;">
+                    <div id="news-{{ current_tech_news.id }}" class="current-tech-news">
                         <div class="title">
                             <a href="/news/{{ current_tech_news.news_category_id }}/{{ current_tech_news.id }}/">
                                 {{ current_tech_news.news_title }}
@@ -62,19 +51,16 @@
                         </div>
                         <div onmouseover="this.style.cursor='pointer';"
                              onclick="location.href='/news/{{ current_tech_news.news_category_id }}/{{ current_tech_news.id }}/';"
-                             class="image-current-technology"
-                             style="max-width: 100%; max-height: 100%; opacity:1; width: 100%; height: 150px;  background: url('/media/{{ current_tech_news.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                             class="image-current-technology"></div>
                         <div class="text">
                             {{ current_tech_news.news_post_text|striptags|safe|truncatewords:"8" }}
                         </div>
                     </div>
                 {% endfor %}
             </div>
-            <div class="right-side" style="width: 28%; border: solid 1px orange; float: right;">
+            <div class="right-side">
                 {% include 'twitter.html' %}
             </div>
         </div>
     </div>
-
-
 {% endblock %}

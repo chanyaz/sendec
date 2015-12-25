@@ -2,6 +2,19 @@
 {% load staticfiles %}
 {% load my %}
 {% block current_category %}
+    <style>
+        #category-title{text-align: center; font-size: 30px;}
+        .left-side-bar{float: left; width: 40em; background-color: #5bc0de;}
+        .current_cat_news{float: left; border: solid 1px darkblue; height: 15em; width: 18em; margin-left: 1%; margin-top: 1%;}
+        .portal{float: left;}
+        .center-block{float: left; width: 25em; background-color: #507ebe;}
+        .right-side-bar{margin-right: 0; background-color: #bce8f1;}
+        .right-side-block{border: solid 1px red; margin-left: 65%; margin-right: 5%;}
+        .latest-news{border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);}
+        .latest-header{text-align: center;}
+        .last-news-image{background: url('/media/{{ i.main_news_cover }}') no-repeat center; background-size: cover;}
+        .time{color: blue;}
+    </style>
     <script>
         function load_latest_news() {
             $.ajax({
@@ -33,37 +46,34 @@
         setInterval(refresh_latest_news, 1000);
     </script>
     <div class="row" style="">
-        <div style="text-align: center; font-size: 30px;">
+        <div id="category-title">
             {{ category_title }}<br><hr style="height: 2px;" color="red" width="70%">
         </div>
-        <div class="left-side-bar" style="float: left; width: 40em; background-color: #5bc0de">
+        <div class="left-side-bar">
             {% for cur_cat_news in cat_news %}
                 <div class="current_cat_news"
-                     onclick="location.href='/news/{{ cur_cat_news.news_category_id }}/{{ cur_cat_news.id }}/';"
-                     style="float: left; border: solid 1px darkblue; height: 15em; width: 18em; margin-left: 1%; margin-top: 1%;">
-                    <div class="portal" style="float: left;">{{ cur_cat_news.news_category_id|get_news_portal }}</div>
+                     onclick="location.href='/news/{{ cur_cat_news.news_category_id }}/{{ cur_cat_news.id }}/';">
+                    <div class="portal">{{ cur_cat_news.news_category_id|get_news_portal }}</div>
                     <div class="date">&nbsp;|&nbsp;{{ cur_cat_news.news_post_date }}</div>
                     <div class="cover"><img src="" width="100" /></div>
                     <div class="title">{{ cur_cat_news.news_title }}</div>
                 </div>
             {% endfor %}
         </div>
-        <div class="center-block" style="float: left; width: 25em; background-color: #507ebe; ">
+        <div class="center-block">
             123
         </div>
-        <div class="right-side-bar" style="margin-right: 0; background-color: #bce8f1;">
-            <div class="right-side-block" style="border: solid 1px red; margin-left: 65%; margin-right: 5%;">
-                <div class="latest-news"
-                style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
-                    <div class="latest-header" style="text-align: center;">
+        <div class="right-side-bar">
+            <div class="right-side-block">
+                <div class="latest-news">
+                    <div class="latest-header">
                         Latest&nbsp;news
                     </div>
                     <div class="latest-titles">
                         {% for i in latest_news %}
                             <div class="latest-news">
-                                <div class="last-news-image"
-                                     style="background: url('/media/{{ i.main_news_cover }}') no-repeat center; background-size: cover;"></div>
-                                <span class="time" style="color: blue;">
+                                <div class="last-news-image"></div>
+                                <span class="time">
                                     {{ i.news_post_date.time }}
                                 </span>
                                 <span class="title" onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
@@ -79,8 +89,4 @@
             </div>
         </div>
     </div>
-
-
-
-
 {% endblock %}

@@ -2,8 +2,8 @@
 {% load staticfiles %}
 {% load my %}
 {% block search %}
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="{% static 'static/js/jquery.js' %}"></script>
+    <script src="{% static 'static/js/jquery-ui.js' %}"></script>
     <script type="text/javascript">
         function validate_form ( ) {
         	valid = true;
@@ -20,94 +20,75 @@
         });
     </script>
     <style>
-        ul.tabs {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-        ul.tabs li {
+        ul.tabs{list-style-type: none;margin: 0;padding: 0;}
+        ul.tabs li{
             border: gray solid 1px;
             border-bottom: none;
             float: left;
             margin: 0 .25em 0 0;
             padding: .25em .5em;
         }
-        ul.tabs li a {
-            color: gray;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        ul.tabs li.active {
-            background: gray;
-        }
-        ul.tabs li.active a {
-            color: white;
-        }
-        .clr {
-            clear: both;
-        }
-        .current_searched {
-            height: 82px;
-            box-shadow: 0 0 5px #5e5e5e;
-            margin: 2% 0.25% 0.25% 0.25%;
-        }
-        .moderator{
-            width: 50%;
-            height: auto;
-            padding-bottom: 4em;
-        }
-        .photo{
-            height: 50px;
-            float: left;
-            width: 25%;
-            border: solid 1px red;
-        }
-        .content{
-            float: right;
-            width: 75%;
-            height: 50px;
-            border: solid 1px purple;
-        }
-        .moderator-info{
-            margin-left: -12%;
-            list-style-type: none;
-        }
-        .moderator-info-item{
-            float: left;
-        }
+        ul.tabs li a{color: gray;font-weight: bold;text-decoration: none;}
+        ul.tabs li.active{background: gray;}
+        ul.tabs li.active a{color: white;}
+        .clr{clear: both;}
+        .current_searched{height: 82px;box-shadow: 0 0 5px #5e5e5e;margin: 2% 0.25% 0.25% 0.25%;}
+        .moderator{width: 50%;height: auto;padding-bottom: 4em;}
+        .photo{height: 50px;float: left;width: 25%;border: solid 1px red;}
+        .content{float: right;width: 75%;height: 50px;border: solid 1px purple;}
+        .moderator-info{margin-left: -12%;list-style-type: none;}
+        .moderator-info-item{float: left;}
+        .search{width: 100%; height: 100%;}
+        .left-side-search{width: 70%; height: inherit; float: left;}
+        .search-error-text{text-align: center;}
+        .no_results{margin-left: 25%;}
+        #input-search-field{width: 60%; float: left;}
+        #input-search-submit{margin-left: 1%;}
+        .popular-news{margin-top: 3%; height: auto;}
+        .text-top-popular{text-align: center;}
+        #pop-news{width: 90%; margin-left: 1%; height: auto; float: left;}
+        .cur_pop_news{float: left; width: 48%; height: 300px; margin: 0 1%;}
+        .image{opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;}
+        #match-variation{text-align: left; font-size: 20px;}
+        .current_searched{height: 80px; margin: 2% 0.25% 0.25% 0.25%;}
+        .current_searched_cover{width: 20%; height: 80px; float: left; background: url('/media/{{ current_result.news_main_cover }}') no-repeat center; background-size: cover;}
+        .current_searched_content_portal{float: left; margin-left: 1%;}
+        .right-side-block{width: 28%; float: right;}
+        .latest-news{box-shadow: 0 0 10px rgba(0,0,0,5); margin-bottom: 1%;}
+        .latest-header{text-align: center;}
+        .time{color: blue;}
     </style>
-
     <div class="container-fluid">
         <div class="row">
             <div class="search-block">
-                <div class="search" style="width: 100%; height: 100%;">
-                    <div class="left-side-search" style="width: 70%; height: inherit; float: left;">
+                <div class="search">
+                    <div class="left-side-search">
                         {% if empty_result %}
-                            <div class="search-error-text" style="text-align: center;">
+                            <div class="search-error-text">
                                 No&nbsp;one&nbsp;matches.&nbsp;Please,&nbsp;try&nbsp;another&nbsp;request&nbsp;word<br><br>
                             </div>
-                            <div class="no_results" style="margin-left: 25%;">
+                            <div class="no_results">
                                 <form action="/search/" method="get" name="search" onsubmit="return validate_form();">
                                     <input autocomplete="off"
                                            autofocus
                                            name="q"
+                                           id="input-search-field"
                                            type="text"
-                                           style="width: 60%; float: left;"
                                            class="form-control"
                                            placeholder="What&nbsp;are&nbsp;you&nbsp;looking&nbsp;for?">
                                     <input type="submit"
-                                           style="margin-left: 1%;"
+                                           id="input-search-submit"
                                            value="Search"
                                            class="search-submit-button">
                                 </form>
                             </div>
-                            <div class="popular-news" style="margin-top: 3%; height: auto;">
-                                <div class="text-top-popular" style="text-align: center;">
+                            <div class="popular-news">
+                                <div class="text-top-popular">
                                     Popular&nbsp;news
                                 </div>
-                                <div id="pop-news" style="width: 90%; margin-left: 1%; height: auto; float: left;">
+                                <div id="pop-news">
                                     {% for current_popular_news in popular_news %}
-                                        <div class="cur_pop_news"  style="float: left; width: 48%; height: 300px; margin: 0 1%;" id="news-{{ current_popular_news.id }}">
+                                        <div class="cur_pop_news" id="news-{{ current_popular_news.id }}">
                                             <div class="title">
                                                 {{ current_popular_news.news_title }}
                                             </div>
@@ -115,7 +96,7 @@
                                                 By&nbsp;<a href="/search/?q={{ current_popular_news.news_portal_name }}">{{ current_popular_news.news_portal_name }}</a>&nbsp;|&nbsp;
                                                 {{ current_popular_news.news_post_date }}
                                             </div>
-                                            <div class="image" style="opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;"></div>
+                                            <div class="image"></div>
                                             <div class="text">
                                                 {{ current_popular_news.news_post_text|safe|truncatewords:"12" }}
                                             </div>
@@ -124,8 +105,8 @@
                                 </div>
                             </div>
                         {% else %}
-                            <div style="text-align: left; font-size: 20px;">
-                                <b>Results&nbsp;for &laquo;{{ search_word }}&raquo;</b>
+                            <div id="match-variation">
+                                <b>Results&nbsp;for&nbsp;&laquo;{{ search_word }}&raquo;</b>
                                 &nbsp;<h5>&#40;{{ matches_amount }}&nbsp;{% if matches_amount > 1 %}matches
                             {% else %}match
                             {% endif %}&#41;</h5><hr>
@@ -142,13 +123,12 @@
                                     {% if results|length > 0 %}
                                         {% for current_result in results %}
                                             <div class="current_searched"
-                                                 style="height: 80px; margin-top: 2%; margin-left: 0.25%; margin-right: 0.25%; margin-bottom: 0.25%;"
                                                  onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"
                                                  onmouseover="this.style.cursor='pointer'; this.style.backgroundColor='grey';"
                                                  onmouseout="this.style.backgroundColor='';">
                                                 <div class="current_searched_content">
-                                                    <div class="current_searched_cover" style="width: 20%; height: 80px; float: left; background: url('/media/{{ current_result.news_main_cover }}') no-repeat center; background-size: cover;"></div>
-                                                    <div class="current_searched_content_portal" style="float: left; margin-left: 1%;">
+                                                    <div class="current_searched_cover"></div>
+                                                    <div class="current_searched_content_portal">
                                                         {{ current_result.news_portal_name_id|get_portal_name }}
                                                     </div>
                                                     <div class="current_searched_content_date">
@@ -201,14 +181,14 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="right-side-block" style="width: 28%; float: right;">
-                    <div class="latest-news" style="box-shadow: 0 0 10px rgba(0,0,0,5); margin-bottom: 1%;">
-                        <div class="latest-header" style="text-align: center;">
+                <div class="right-side-block">
+                    <div class="latest-news">
+                        <div class="latest-header">
                             Latest&nbsp;news
                         </div>
                         <div class="latest-titles">
                             {% for i in latest_news %}
-                                <span class="time" style="color: blue;">
+                                <span class="time">
                                     {{ i.news_post_date.time }}
                                 </span>
                                 <span class="title"

@@ -3,7 +3,6 @@
 {% load my %}
 {% load cache %}
 {% block current_news %}
-
     <script>
         function add_like_news(news_id) {
             $.ajax({
@@ -92,22 +91,41 @@
         })
     </script>
     <style>
-        .share-list-item{
-            float: left;
-            margin-left: 1%;
-        }
+        .share-list-item{float: left;margin-left: 1%;}
+        .container-fluid{border: solid 1px lightgrey;}
+        .tre{float: left; width: 70%;}
+        .page-header{margin: 0 5%;}
+        #translate-button{float: right; border: solid 1px red;}
+        .date-and-author{margin-left: 5%;}
+        .news-settings{height: 2em; width: 100%;}
+        .shares{margin-left: -6%; margin-top: -1%;}
+        ul{list-style-type: none;}
+        .news-cover{max-width: 100%; max-height: 100%; margin-top: 0; height: 400px; background: url('/media/{{ current_news_values.news_main_cover }}') no-repeat center; background-size: cover;}
+        .news-post-text{margin: 0 15%;}
+        .news-post-text-translate{margin: 0 15%;}
+        .nav-bar{margin-left: 63%;}
+        .liked{float: left;}
+        .disliked{float: left;}
+        .other-materials{height: {% if other_materials|length <= 3 %} 25em {% elif other_materials|length <= 6 %} 52em {% elif other_materials|length <= 9 %} 77em {% elif other_materials|length <= 12 %} 103em {% endif %}}
+        .portal{float: left;}
+        .current-rss-news{width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; float: left;}
+        .news-image{background: url('/media/{{ current_other.news_main_cover }}') no-repeat center; width: 100%; height: 50%;}
+        .right-side-block{width: 28%; float: right;}
+        .latest-news{border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);}
+        .latest-news-cover{float: left; height:70px; width: 100px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;}
+        .time{color: blue;}
+        .latest-news{height: 70px;}
+        .latest-header{text-align: center;}
     </style>
-
-    <div class="container-fluid" data-news-id="{{ current_news_values.id }}" style="border: solid 1px lightgrey;">
-        <div class="tre" style=" float: left; width: 70%;">
-            <h1 class="page-header" style="margin: 0 5%;">
+    <div class="container-fluid" data-news-id="{{ current_news_values.id }}">
+        <div class="tre">
+            <h1 class="page-header">
                 {{ current_news_values.news_title }}
             </h1>
             <button id="translate-button"
                     onclick="$('.news-post-text').fadeOut();
-                        $('.news-post-text-translate').delay(100).show();"
-                    style="float: right; border: solid 1px red;">Translate</button>
-            <div class="date-and-author" style="margin-left: 5%;">
+                        $('.news-post-text-translate').delay(100).show();">Translate</button>
+            <div class="date-and-author">
                 <h5>By
                     {% if current_news_values.id|get_news_portal == "SEVERY" %}
                         <a href="/search/?q={{ current_news_values.news_author }}">{{ current_news_values.news_author_id|get_article_author }}</a>
@@ -117,9 +135,9 @@
                     &nbsp;{{ current_news_values.news_post_date.date }}</h5>
             </div>
         {% cache 600 news-settings %}
-        <div class="news-settings" style="height: 2em; width: 100%;">
-            <div class="shares" style="margin-left: -6%; margin-top: -1%;">
-                <ul style="list-style-type: none;">
+        <div class="news-settings">
+            <div class="shares">
+                <ul>
                     <li class="share-list-item">
                         <div class="fb-share-button" data-layout="button"></div>
                     </li>
@@ -147,23 +165,23 @@
         </div>
         {% endcache %}
             {% if current_news_values.news_main_cover != '' %}
-                <div class="news-cover" style="max-width: 100%; max-height: 100%; margin-top: 0; height: 400px; background: url('/media/{{ current_news_values.news_main_cover }}') no-repeat center; background-size: cover;">
+                <div class="news-cover">
                 </div>
             {% endif %}
-            <div class="news-post-text" style="margin: 0 15%;">
+            <div class="news-post-text">
                 {{ current_news_values.news_post_text|safe|linebreaks }}
             </div>
-            <div class="news-post-text-translate" style="margin: 0 15%;" hidden>
+            <div class="news-post-text-translate" hidden>
                 {{ current_news_values.news_post_text_translate|safe|linebreaks }}
             </div>
-            <div class="nav-bar" style="margin-left: 63%;">
+            <div class="nav-bar">
                 <ul class="list-inline">
                     <li>
                         <span data-news-id="{{ current_news_values.id }}"
                               class="news_likes"
                               id="add_like_{{ current_news_values.id }}"
                               onclick="add_like_news('{{ current_news_values.id }}');">
-                            <div class="liked" style="float: left;">
+                            <div class="liked">
                                 {% if liked == False %}
                                     Likes:
                                 {% else %}
@@ -185,7 +203,7 @@
                                 class="news_dislikes"
                                 id="add_dislike_{{ current_news_values.id }}"
                                 onclick="add_dislike_news('{{ current_news_values.id }}');">
-                            <div class="disliked" style="float: left;">
+                            <div class="disliked">
                                 {% if disliked == False %}
                                     Dislikes:
                                 {% else %}
@@ -214,16 +232,15 @@
             {% if other_materials|length > 0 %}
                 <hr width="100%">
                 Other&nbsp;materials&nbsp;of&nbsp;{{ current_news_values.news_category }}
-                <div class="other-materials"
-                     style="height: {% if other_materials|length <= 3 %} 25em {% elif other_materials|length <= 6 %} 52em {% elif other_materials|length <= 9 %} 77em {% elif other_materials|length <= 12 %} 103em {% endif %}">
+                <div class="other-materials">
                     {% for current_other in other_materials %}
-                        <div class="current_rss_news_{{ i.id }}"
-                                 style="width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; float: left;">
+                        <div id="current_rss_news_{{ i.id }}"
+                             class="current-rss-news">
                                 <div class="title"><a href="/news/{{ current_other.news_category_id }}/{{ current_other.id }}/">{{ current_other.news_title }}</a></div>
-                                <div class="portal" style="float: left;">By <a href="/search/?q={{ current_other.news_portal_name_id|get_portal_name }}">{{ current_other.news_portal_name_id|get_portal_name }}</a></div>
+                                <div class="portal">By <a href="/search/?q={{ current_other.news_portal_name_id|get_portal_name }}">{{ current_other.news_portal_name_id|get_portal_name }}</a></div>
                                 <div class="published">&nbsp;|&nbsp;{{ current_other.news_post_date.time }}</div>
 
-                                <div class="news-image" style="background: url('/media/{{ current_other.news_main_cover }}') no-repeat center; width: 100%; height: 50%;">
+                                <div class="news-image">
 
                                 </div>
 
@@ -236,7 +253,7 @@
             <div id="comments-block">
                 <div id="disqus_thread"></div>
                 <script>
-                    (function() { // DON'T EDIT BELOW THIS LINE
+                    (function(){
                         var d = document, s = d.createElement('script');
                         s.src = '//indavant.disqus.com/embed.js';
                         s.setAttribute('data-timestamp', +new Date());
@@ -246,22 +263,19 @@
                 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
             </div>
         </div>
-        <div class="right-side-block" style="width: 28%; float: right;">
-            <div class="latest-news"
-            style="border: 1px solid blue; box-shadow: 2px 2px 2px rgba(0,0,0,5);">
-                <div class="latest-header" style="text-align: center;">
-                    News of {{ company_name }}
+        <div class="right-side-block">
+            <div class="latest-news">
+                <div class="latest-header">
+                    News&nbsp;of&nbsp;{{ company_name }}
                 </div>
                 <div class="latest-titles">
                     {% for i in latest_news %}
                         <div class="latest-news"
-                             style="height: 70px;"
                              onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                            <div class="latest-news-cover"
-                                 style="float: left; height:70px; width: 100px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
+                            <div class="latest-news-cover">
                             </div>
                             <div class="latest-news-content">
-                                <span class="time" style="color: blue;">
+                                <span class="time">
                                     {{ i.news_post_date.time }}
                                 </span>
                                 <span class="title"

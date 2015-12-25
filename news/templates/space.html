@@ -1,13 +1,9 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
 {% block space %}
-
     <style>
-    #space-news{
-        width: 70%;
-        margin-left: 1%;
-    }
-    .top-technologies-content{
+        #space-news{width: 70%;margin-left: 1%;}
+        .top-technologies-content{
         opacity:1;
         width: 100%;
         height: 400px;
@@ -16,7 +12,7 @@
         max-width: 100%;
         max-height: 100%;
     }
-    .bn-title{
+        .bn-title{
         z-index: 999;
         position: absolute;
         margin-top: -8%;
@@ -24,30 +20,14 @@
         background-color: #a6e1ec;
         opacity: 0.75;
     }
-    .bn-title-text{
-        margin-left: 5%;
-        font-size: 20px;
-        color: blue;
-    }
-    #space-news{
-        width: 70%;
-        margin-left: 1%;
-        height: auto;
-        float: left;
-    }
-    .cur_sp_news{
-        float: left;
-        width: 48%;
-        height: 300px;
-        margin: 0 1%;
-    }
-    .right-side{
-        width: 28%;
-        float: right;
-    }
+        .bn-title-text{margin-left: 5%;font-size: 20px;color: blue;}
+        #space-news{width: 70%;margin-left: 1%;height: auto;float: left;}
+        .cur_sp_news{float: left;width: 48%;height: 300px;margin: 0 1%;}
+        .right-side{width: 28%;float: right;}
+        .container-fluid{border: solid 1px lightgrey;}
+        .image{opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;}
     </style>
-
-    <div class="container-fluid" style="border: solid 1px lightgrey;">
+    <div class="container-fluid">
         <div class="row">
             <div id="space-news"
                  onclick="location.href='/news/{{ top_space_news.news_category_id }}/{{ top_space_news.id }}/';">
@@ -70,7 +50,7 @@
                             By&nbsp;<a href="/search/?q={{ current_space_news.news_portal_name }}">{{ current_space_news.news_portal_name }}</a>&nbsp;|&nbsp;
                             {{ current_space_news.news_post_date }}
                         </div>
-                        <div onmouseover="this.style.cursor='pointer';" onclick="location.href='/news/{{ current_space_news.news_category_id }}/{{ current_space_news.id }}/';" class="image" style="opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;"></div>
+                        <div onmouseover="this.style.cursor='pointer';" onclick="location.href='/news/{{ current_space_news.news_category_id }}/{{ current_space_news.id }}/';" class="image"></div>
                         <div class="text">
                             {{ current_space_news.news_post_text|safe|truncatewords:"12" }}
                         </div>

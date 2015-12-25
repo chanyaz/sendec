@@ -1,19 +1,6 @@
 {% load staticfiles %}
 {% block login %}
     <style>
-        video-back {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -100;
-            transform: translateX(-50%) translateY(-50%);
-            background-size: cover;
-            transition: 1s opacity;
-        }
         span{
             position:relative;
             z-index:1;
@@ -31,31 +18,33 @@
             position: relative;
             vertical-align: middle;
         }
-        span:before {
-            right:10px;
-            margin:0 0 0 -26%;
-        }
-        span:after{
-            left:10px;
-            margin:0 -30% 0 0;
-        }
-        #login-tab a{
-            color: #201EBE;
-        }
-        #login-tab a:hover{
-            color: #507ebe;
-        }
-        #username:focus{
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        #password:focus{
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        #choice{
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
+        span:before{right:10px;margin:0 0 0 -26%;}
+        span:after{left:10px;margin:0 -30% 0 0;}
+        #login-tab a{color: #201EBE;}
+        #login-tab a:hover{color: #507ebe;}
+        #username:focus{box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);}
+        #password:focus{box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);}
+        #choice{box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);}
+        .no{width: 50em;}
+        #choice{width: 30em; margin: 10% 70%; height: inherit;}
+        .service-name{margin-left: 37.5%; margin-top: 5%;}
+        .sign-in-center-data{text-align: center; margin-top: 5%;}
+        #buttons-choice{margin-left: 20%; margin-top: 5%;}
+        #sign-in-button{width: 28em;}
+        #sign-up-button{width: 28em; margin-bottom: 10%;}
+        #username{width: 64%; margin-left: 20%;}
+        #for-username{width: 64%; margin-left: 20%;}
+        #for-password{width: 64%; margin-left: 20%;}
+        #password{width: 64%; margin-left: 20%;}
+        #log-in-submit{height: 40px; width: 64%; margin-left: 20%;}
+        .button-text{margin-top: -3%;}
+        #remembering{margin-left: 20%;}
+        .forget-password{text-align: center; margin-top: 5%;}
+        #bottom-asks{width: 100%; height: 50px; margin-left: 20%;}
+        #registration-link{margin-left: 10%;}
+        #hr-before-asks{margin-left: 20%;}
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static 'static/js/jquery.min.js' %}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $("#sign-in-button").click(function(){
@@ -65,49 +54,49 @@
         });
     </script>
         <div id="login-tab">
-            <div class = 'no' style="width: 50em;">
-                <div id="choice" style="width: 30em; margin: 10% 70%; height: inherit;">
-                    <div class="service-name" style="margin-left: 37.5%; margin-top: 5%;">
+            <div class = 'no'>
+                <div id="choice">
+                    <div class="service-name">
                         %SERVICE&nbsp;NAME%
                     </div>
-                    <div class="sign-in-center-data" style="text-align: center; margin-top: 5%;">
+                    <div class="sign-in-center-data">
                         <span>SIGN&nbsp;IN</span>
                     </div>
-                    <div id="buttons-choice" style="margin-left: 20%; margin-top: 5%;">
-                        <button id="sign-in-button" class="tiny" style="width: 28em;">SIGN&nbsp;IN</button>
+                    <div id="buttons-choice">
+                        <button id="sign-in-button" class="tiny">SIGN&nbsp;IN</button>
                         <br>
                         <a href="/auth/register/">
-                            <button id="sign-up-button" class="tiny" style="width: 28em; margin-bottom: 10%;">SIGN&nbsp;UP</button>
+                            <button id="sign-up-button" class="tiny">SIGN&nbsp;UP</button>
                         </a>
                     </div>
                 </div>
                 <div id="sign-in" hidden onblur="this.style.border='solid 1px red';">
                     <form action="/auth/login/" method="POST" autocomplete="off">
                         {% csrf_token %}
-                        <label for="username" style="width: 64%; margin-left: 20%;">Username</label>
-                        <input type="text" name="username" id="username" style="width: 64%; margin-left: 20%;">
-                        <label for="password" style="width: 64%; margin-left: 20%;">Password</label>
-                        <input type="password" name="password" id="password" style="width: 64%; margin-left: 20%;">
+                        <label id="for-username" for="username">Username</label>
+                        <input type="text" name="username" id="username">
+                        <label id="for-password" for="password">Password</label>
+                        <input type="password" name="password" id="password">
                         {% if login_error %}
                             <label class="error"> {{ login_error }} </label>
                         {% endif %}
-                        <button type="submit" style="height: 40px; width: 64%; margin-left: 20%;">
-                            <div class="button-text" style="margin-top: -3%;">
+                        <button type="submit" id="log-in-submit">
+                            <div class="button-text">
                                 Log&nbsp;in
                             </div>
                         </button>
-                        <label id="remembering" style="margin-left: 20%;">
+                        <label id="remembering">
                             <input type="checkbox" id="check-remember" name="remember-true" value="remember-true">
                             Remember&nbsp;me
                         </label>
-                        <div class="forget-password" style="text-align: center; margin-top: 5%;">
+                        <div class="forget-password">
                             <a href="/auth/recovery/" id="remember-password">Forget&nbsp;password</a>
                         </div>
-                        <hr width="65%" style="margin-left: 20%;">
-                        <div style="width: 100%; height: 50px; margin-left: 20%;">
+                        <hr id="hr-before-asks" width="65%">
+                        <div id="bottom-asks">
                             <div class="">
                                 Don't&nbsp;have&nbsp;an&nbsp;account?
-                                <a href="/auth/register/" style="margin-left: 10%;">Registration</a>
+                                <a href="/auth/register/" id="registration-link">Registration</a>
                             </div>
                         </div>
                     </form>

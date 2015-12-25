@@ -15,7 +15,7 @@
     <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="{% static 'static/img/favicon.ico' %}" type="image/x-icon">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="{% static 'static/js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="http://vk.com/js/api/share.js?93" charset="windows-1251"></script>
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
     <script type="text/javascript">VK.init({apiId: 111});</script>
@@ -29,8 +29,8 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
     <script>var companytick = ["AAPL","FB","GOOG","MSFT","TSLA","AMZN","TWTR"];</script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script src="{% static 'static/js/jquery.min.js' %}"></script>
+    <script src="{% static 'static/js/jquery-ui.min.js' %}"></script>
     <script src="http://static.amigobulls.com/js/highstock-2.0.1.min.js.gz"></script>
     <script src="http://static.amigobulls.com/js/chart-widget.min.js.gz"></script>
     <link rel="stylesheet" type="text/css" href="http://static.amigobulls.com/css/chart-widget.min.css.gz" />
@@ -213,8 +213,6 @@
             border-radius:5px;
             box-shadow: 0 0 10px #000;
         }
-
-
         #portals-addition-window {
             width: 100%;
             height: 100%;
@@ -233,14 +231,8 @@
             border-radius:5px;
             box-shadow: 0 0 10px #000;
         }
-
-        .li-cat{
-            float: left;
-            margin-left: 1%;
-        }
-        .navigation-profile:hover .fa-user{
-            color: yellow;
-        }
+        .li-cat{float: left;margin-left: 1%;}
+        .navigation-profile:hover .fa-user{color: yellow;}
         .rss-body img {
             margin-left: auto;
             margin-right: auto;
@@ -250,32 +242,13 @@
             max-height: 30em;
             display: block;
         }
-        #rss-share-list li{
-            float:left;
-        }
-        #rss-properties-list li{
-            float: left;
-        }
-        .left-bar-item{
-            width: 120%;
-            margin-left: -20%;
-        }
-        .left-bar-item:hover{
-            background-color: rgba(55, 81, 141, 0.48);
-            cursor: pointer;
-        }
-        .left-bar-link{
-            width: 100%;
-        }
-        .news-post-text img{
-            width: 100px;
-        }
-        .signin{
-            position:relative;
-            z-index:1;
-            overflow:hidden;
-            text-align:center;
-        }
+        #rss-share-list li{float:left;}
+        #rss-properties-list li{float: left;}
+        .left-bar-item{width: 120%;margin-left: -20%;}
+        .left-bar-item:hover{background-color: rgba(55, 81, 141, 0.48);cursor: pointer;}
+        .left-bar-link{width: 100%;}
+        .news-post-text img{width: 100px;}
+        .signin{position:relative;z-index:1;overflow:hidden;text-align:center;}
         .signin:before,
         .signin:after{
             content: '';
@@ -287,18 +260,9 @@
             position: relative;
             vertical-align: middle;
         }
-        .signin:before {
-            right:10px;
-            margin:0 0 0 -26%;
-        }
-        .signin:after{
-            left:10px;
-            margin:0 -30% 0 0;
-        }
-        .rss-share-item{
-            margin-bottom:0;
-            margin-left: 0;
-        }
+        .signin:before {right:10px;margin:0 0 0 -26%;}
+        .signin:after{left:10px;margin:0 -30% 0 0;}
+        .rss-share-item{margin-bottom:0;margin-left: 0;}
         #rss-properties-list{
             width: 25%;
             margin-right: -3%;
@@ -306,32 +270,88 @@
             margin-top: -1.5%;
             list-style-type: none;
         }
-        .cur_unsel_portal{
-            width: 20%;
-            height: 5em;
-            border: solid 1px red;
-        }
+        .cur_unsel_portal{width: 20%;height: 5em;border: solid 1px red;}
+        .top-navigation{position: relative; height: 8%;}
+        .top-left-bar{float: left; margin-left: 11%;}
+        .title-bar{float: left; margin-left: 18%;}
+        .title-name{margin-top: 5%; text-align: center; font-size: 2em;}
+        .logout{float: left; margin-right: 1%; margin-left: 35%;}
+        .auth{margin-left: 87%;}
+        .signin{float: left;}
+        #beta-announce{display: block; margin-left: auto;margin-right: auto;  width: 60%; border: solid 1px lightgrey;}
+        .announce-close{float: left; width: 2%;}
+        .announce-close img{margin-top: -50%;}
+        .announce-content{text-align: center}
+        #wrapper-new{min-height: 100%;}
+        .left-panel{float: left; position: fixed; box-shadow: 0 0 5px black; width: 12%; height: 104%; margin-top: -8%; margin-left: -2%;}
+        .logo-left-bar{margin-top: 20%; margin-left: 15%; text-align: center;}
+        .image-user{margin-left: 13%;}
+        .navigation-profile{margin-left: 26%;}
+        .lists{margin-left: 10%;}
+        .categories{margin-top: 10%;}
+        .categories-ul{list-style-type: none;}
+        .left-showing-bar{width: 2%; height: 105%; position: fixed; margin-left: -0.9%; margin-top: -8%;}
+        #arrow-to-show-sections{width: 1%; position: fixed; margin-top: 20%;}
+        #image-arrow-to-expand{opacity: 0.2;}
+        #arrow-to-hide-sections{margin-left: 10%; width: 1%; position: fixed; margin-top: 20%;}
+        #image-arrow-to-hide{opacity: 0.2;}
+        .top-navigation-menu{margin-top: 0;}
+        .top-navi-menu-content{margin-left: 16%;}
+        .top-navi-menu-content ul{list-style-type: none;}
+        .search-bar{margin-left: 14%;}
+        #textplace-search{float: left; width: 61%;}
+        .service-media{float: right; margin-right: 4%;}
+        #news-block{height: 100%;}
+        .user-image input[type='text']{width: 80%;}
+        .no{width: 100%;}
+        #choice{height: inherit;}
+        .service-name{text-align: center; margin-top: 5%;}
+        .sign-in-center-data{text-align: center; margin-top: 5%;}
+        #username{width: 64%; margin-left: 20%;}
+        #password{width: 64%; margin-left: 20%; margin-top: 2%;}
+        #sign-in-submit{margin-top: 2%; height: 40px; width: 64%; margin-left: 20%;}
+        .button-text{margin-top: -3%;}
+        #remembering{margin-left: 20%;}
+        .signin-with{margin-left: 45%;}
+        .systems-list{margin-left: 40%;}
+        .forget-password{text-align: center; margin-top: 5%;}
+        #auth-bottom-text{width: 100%; height: 50px; margin-left: 20%;}
+        #auth-botton-reg-link{margin-left: 1em;}
+        .total-body{padding-top: 2%;}
+        .total-body-closer{margin-left: 100%; width: 3%; background: whitesmoke; border: solid 1px blue;}
+        .rss-title{margin-top: -8%; margin-left: 2%;}
+        .rss-author{float: left;}
+        .rss-parent-link{float: right; margin-top: -3%;}
+        .rss-shares{border: solid 1px darkred; height: 2.5em;}
+        #rss-share-list{margin-left: -5%; list-style-type: none;}
+        .rss-body{padding: 0 5%; margin-top: 2%;}
+        .content-text{text-align: center;}
+        .content-portals{width: 70%; margin-left: auto; margin-right: auto;}
+        .cur_unsel_portal{width: 25%; float: left;}
+        #live{display: none;}
+        ul{list-style-type: none;}
+        .other{min-height: 100%; margin-left: 10%; height: 100%;}
     </style>
 </head>
 <body>
-    <div class="top-navigation" style="position: relative; height: 8%;">
-        <div style="float: left; margin-left: 11%;" class="top-left-bar" onmouseover="style.cursor='pointer';">
+    <div class="top-navigation">
+        <div class="top-left-bar" onmouseover="style.cursor='pointer';">
             <span onclick="showLeftBar();">SECTIONS</span>&nbsp;|&nbsp;
             <span class="search-span" onclick="SearchClick();">SEARCH</span>
         </div>
-        <div class="title-bar" style="float: left; margin-left: 18%;">
-            <div onmouseover="this.style.cursor='pointer';" class="title-name" style="margin-top: 5%; text-align: center; font-size: 2em;" onclick="location.href='/';">
+        <div class="title-bar">
+            <div onmouseover="this.style.cursor='pointer';" class="title-name" onclick="location.href='/';">
                 <img src="{% static 'static/img/logo-light.png' %}" width="100%" />
             </div>
         </div>
         <div class="right-block">
             {% if username %}
-                <div class="logout" style="float: left; margin-right: 1%; margin-left: 35%;">
+                <div class="logout">
                     <a href="/auth/logout/"><i class="fa fa-fw fa-power-off"></i>Log Out</a>
                 </div>
             {% else %}
-                <div class="auth" style="margin-left: 87%;">
-                    <div class="signin" onclick="javascript:UserAuthPopUpShow();" style="float: left;">
+                <div class="auth">
+                    <div class="signin" onclick="javascript:UserAuthPopUpShow();">
                         Sign In&nbsp;|&nbsp;
                     </div>
                     <div class="signup" onclick="location.href='/auth/register/';">
@@ -342,25 +362,23 @@
         </div>
     </div>
     {% if hide == True %}
-        <div id="beta-announce" style="display: block; margin-left: auto;margin-right: auto;  width: 60%; border: solid 1px lightgrey;">
-            <span class="announce-close" style="float: left; width: 2%;">
+        <div id="beta-announce">
+            <span class="announce-close">
                 <img src="{% static 'static/img/close.png' %}"
                      onclick="pageState();"
-                     width="100%"
-                     style="margin-top: -50%;"/>
+                     width="100%"/>
             </span>
-            <div class="announce-content" style="text-align: center">
+            <div class="announce-content">
                 {{ beta_announce|safe }}
             </div>
         </div>
     {% endif %}
-    <div id="wrapper-new" style="min-height: 100%;">
+    <div id="wrapper-new">
         <div id="page-wrapper">
             <div class="ro234w">
                 <div hidden
-                     class="left-panel"
-                     style="float: left; position: fixed; box-shadow: 0 0 5px black; width: 12%; height: 104%; margin-top: -8%; margin-left: -2%;">
-                    <div class="logo-left-bar" style="margin-top: 20%; margin-left: 15%; text-align: center;">
+                     class="left-panel">
+                    <div class="logo-left-bar">
                         <span onclick="location.href='/';">
                             SENDEC
                         </span>
@@ -368,22 +386,22 @@
                     {% if username %}
                         <div class="profile">
                             {% if username.profile.user_photo != '' %}
-                                <div class="image-user" style="margin-left: 13%;">
+                                <div class="image-user">
                                     <img src="/media/{{ username.profile.user_photo }}"
                                          onclick="location.href='/profile/';"
                                          onmouseover="this.style.cursor='pointer';"
                                          width="128" />
                                 </div>
                             {% endif %}
-                            <div class="navigation-profile" style="margin-left: 26%;">
+                            <div class="navigation-profile">
                                 <span class="fa fa-fw fa-user" aria-hidden="true" onclick="location.href='/profile/';"></span>|&nbsp;<span class="fa fa-bell" aria-hidden="true" onclick="location.href='/notify/';"></span>
                                  &nbsp;|&nbsp;<span class="glyphicon glyphicon-star" aria-hidden="true" onclick="location.href='/favourite/';"></span>
                             </div>
                         </div>
                     {% endif %}
-                    <div class="lists" style="margin-left: 10%;">
-                        <div class="categories" style="margin-top: 10%;">
-                            <ul class="categories" style="list-style-type: none;">
+                    <div class="lists">
+                        <div class="categories">
+                            <ul class="categories-ul">
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/';">LATEST</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/technology/';">TECHNOLOGY</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/entertainment/';">ENTRTAINMENT</span></li>
@@ -394,14 +412,14 @@
                             </ul>
                         </div>
                         <div class="navigation">
-                            <ul style="list-style-type: none;">
+                            <ul>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/top/';">TOP&nbsp;NEWS</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/podcasts/';">PODCASTS</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/reviews/';">REVIEWS</span></li>
                             </ul>
                         </div>
                         <div class="founders">
-                            <ul style="list-style-type: none;">
+                            <ul class="founders-list">
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/about/';">ABOUT&nbsp;US</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/about/contacts/';">CONTACTS</span></li>
                                 <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/';">STH&nbsp;ELSE</span></li>
@@ -411,33 +429,28 @@
                 </div>
                 <div class="left-showing-bar"
                      onmouseover="$(this).css('backgroundColor', 'rgba(0, 0, 0, 0.61');"
-                     onmouseout="$(this).css('backgroundColor', 'rgba(0, 0, 0, 0'); $('#image-arrow-to-expand').css('opacity', 0.2);"
-                     style="width: 2%; height: 105%; position: fixed; margin-left: -0.9%; margin-top: -8%;">
+                     onmouseout="$(this).css('backgroundColor', 'rgba(0, 0, 0, 0'); $('#image-arrow-to-expand').css('opacity', 0.2);">
                     <span id="arrow-to-show-sections"
                           class="arrow-to-show-sections"
-                          onclick="showLeftBar();"
-                          style="width: 1%; position: fixed; margin-top: 20%;">
+                          onclick="showLeftBar();">
                         <img id="image-arrow-to-expand"
                              src="{% static 'static/img/arrow.png' %}"
-                             style="opacity: 0.2;"
                              width="30px"
                              height="100%"/>
                     </span>
                     <span id="arrow-to-hide-sections"
                           class="arrow-to-hide-sections"
-                          style="margin-left: 10%; width: 1%; position: fixed; margin-top: 20%;"
                           onclick="hideLeftBar();"
                           hidden>
                         <img id="image-arrow-to-hide"
                              src="{% static 'static/img/arrow-hide.png' %}"
-                             style="opacity: 0.2;"
                              width="30px"
                              height="100%"/>
                     </span>
                 </div>
-                <div class="top-navigation" style="margin-top: 0;">
-                    <div class="" style="margin-left: 16%;">
-                        <ul style="list-style-type: none;">
+                <div class="top-navigation-menu">
+                    <div class="top-navi-menu-content">
+                        <ul>
                             <li class="li-cat"><a href="/">LATEST</a></li>
                             <li class="li-cat"><a href="/news/technology/">TECHNOLOGY</a></li>
                             <li class="li-cat"><a href="/news/entertainment/">ENTERTAINMENT</a></li>
@@ -452,25 +465,23 @@
                         </ul>
                     </div>
                 </div>
-                <div class="other" style="min-height: 100%; margin-left: 10%; height: 100%;">
+                <div class="other">
                 <br>
                     <div class="search-bar" hidden
-                         onkeydown="if(event.keyCode == 27){$('.search-bar').hide(); $('.block-news').hide();}"
-                         style="margin-left: 14%;">
+                         onkeydown="if(event.keyCode == 27){$('.search-bar').hide(); $('.block-news').hide();}">
                         <form id="search-form" action="/search/" method="get" name="search_form" onsubmit="return validate_form();">
                             <input name="q"
                                    autocomplete="off"
                                    id="textplace-search"
-                               type="text"
-                               class="form-control"
-                               placeholder="What&nbsp;are&nbsp;you&nbsp;looking&nbsp;for?"
-                               style="float: left; width: 61%;">
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="What&nbsp;are&nbsp;you&nbsp;looking&nbsp;for?">
                             <input type="submit" value="Search">
                         </form>
                     </div>
                 <br>
                 {% cache 600 service-media %}
-                <div class="service-media" style="float: right; margin-right: 4%;">
+                <div class="service-media">
                     <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"
                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png" width="30px"/>
                     <img onclick="location.href='http://vk.com/insydianews';"
@@ -496,7 +507,7 @@
                     {% block current_news %}{% endblock %}
                     {% block current_category %}{% endblock %}
                     {% block top_news %}{% endblock %}
-                    <div class="news-block" id="news-block" style="height: 100%;">
+                    <div class="news-block" id="news-block">
                         {% block latest %}{% endblock %}
                         {% block technology %}{% endblock %}
                         {% block entertainment %}{% endblock %}
@@ -522,7 +533,7 @@
     <div class="popup-user-window" hidden>
         <div class="popup-user-window-content">
             <div class="user-image">
-                <input type="text" contenteditable="false" style="width: 80%;" value="{{ external_link }}">
+                <input type="text" contenteditable="false" value="{{ external_link }}">
             </div>
             <div class="user-info">
                 <button onclick="javascript:SharePopUpHide();">SHARE</button>
@@ -532,38 +543,36 @@
     <div class="popup-user-auth" hidden>
         <div class="popup-user-auth-content">
             <div id="login-tab">
-                <div class = 'no' style="width: 100%;">
-                    <div id="choice" style="height: inherit;">
-                        <div class="service-name" style="text-align: center; margin-top: 5%;">
+                <div class = 'no'>
+                    <div id="choice">
+                        <div class="service-name">
                             <img src="{% static 'static/img/logo-light.png' %}" width="30%" />
                         </div>
-                        <div class="sign-in-center-data" style="text-align: center; margin-top: 5%;">
+                        <div class="sign-in-center-data">
                             <span class="signin">SIGN&nbsp;IN</span>
                         </div>
                     </div>
-                    <div id="sign-in"  onblur="this.style.border='solid 1px red';">
+                    <div id="sign-in" onblur="this.style.border='solid 1px red';">
                         <form action="/auth/login/" method="POST">
                             {% csrf_token %}
                             <input type="text"
                                    autocomplete="off"
                                    name="username"
                                    id="username"
-                                   placeholder="username"
-                                   style="width: 64%; margin-left: 20%;">
+                                   placeholder="username">
                             <input type="password"
                                    name="password"
                                    id="password"
-                                   placeholder="password"
-                                   style="width: 64%; margin-left: 20%; margin-top: 2%;">
+                                   placeholder="password">
                             {% if login_error %}
                                 <label class="error"> {{ login_error }} </label>
                             {% endif %}
-                            <button type="submit" style="margin-top: 2%; height: 40px; width: 64%; margin-left: 20%;">
-                                <div class="button-text" style="margin-top: -3%;">
+                            <button type="submit" id="sign-in-submit">
+                                <div class="button-text">
                                     Log&nbsp;in
                                 </div>
                             </button>
-                            <label id="remembering" style="margin-left: 20%;">
+                            <label id="remembering">
                                 <input type="checkbox"
                                        id="check-remember"
                                        name="remember-true"
@@ -571,18 +580,18 @@
                                 Remember&nbsp;me
                             </label>
                             <hr>
-                            <span class="signin" style="margin-left: 45%;">Sign&nbsp;in&nbsp;with:</span><br>
+                            <span class="signin-with">Sign&nbsp;in&nbsp;with:</span><br>
                             <div class="external-systems-auth" style="">
-                                <div class="systems-list" style="margin-left: 40%;"></div>
+                                <div class="systems-list"></div>
                             </div>
-                            <div class="forget-password" style="text-align: center; margin-top: 5%;">
+                            <div class="forget-password">
                                 <a href="/auth/recovery/" id="remember-password">Forget&nbsp;password</a>
                             </div>
                             <hr width="65%" style="margin-left: 20%;">
-                            <div style="width: 100%; height: 50px; margin-left: 20%;">
+                            <div id="auth-bottom-text">
                                 <div class="">
                                     Don't&nbsp;have&nbsp;an&nbsp;account?
-                                    <a href="/auth/register/" style="margin-left: 1em;">Registration</a>
+                                    <a href="/auth/register/" id="auth-botton-reg-link">Registration</a>
                                 </div>
                             </div>
                         </form>
@@ -596,22 +605,21 @@
          class="preview-rss-news"
          onkeydown="if(event.keyCode == 27){RssPreviewPopUpHide();}">
         <div class="preview-rss-news-content">
-            <div class="total-body" style="padding-top: 2%;">
-                <div class="closer"
+            <div class="total-body">
+                <div class="total-body-closer"
                      onclick="javascript:RssPreviewPopUpHide();"
                      onmouseover="this.style.background='red';"
-                     onmouseout="this.style.background='whitesmoke';"
-                     style="margin-left: 100%; width: 3%; background: whitesmoke; border: solid 1px blue;">
+                     onmouseout="this.style.background='whitesmoke';">
                     <span class="close-rss-preview">
                         X
                     </span>
                 </div>
-                <div class="rss-title" style="margin-top: -8%; margin-left: 2%;"></div>
-                <div class="rss-author" style="float: left;"></div>
+                <div class="rss-title"></div>
+                <div class="rss-author"></div>
                 <div class="rss-date-published"></div>
-                <div class="rss-parent-link" style="float: right; margin-top: -3%;"></div>
-                <div class="rss-shares" style="border: solid 1px darkred; height: 2.5em;">
-                    <ul id="rss-share-list" style="margin-left: -5%; list-style-type: none;">
+                <div class="rss-parent-link"></div>
+                <div class="rss-shares">
+                    <ul id="rss-share-list">
                         <li class="rss-share-item">
                             <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"
                                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png"
@@ -634,8 +642,7 @@
                         </li>
                     </ul>
                     <ul id="rss-properties-list"
-                        data-rss-id=""
-                        style="">
+                        data-rss-id="">
                          <li class="rss-item-save"></li>
                         <li>
                             <img src="{% static 'static/img/mail.png' %}" width="30px" />
@@ -643,7 +650,7 @@
                         <li class="rss-item-copy"></li>
                     </ul>
                 </div>
-                <div class="rss-body" style="padding: 0 5%; margin-top: 2%;"></div>
+                <div class="rss-body"></div>
             </div>
         </div>
     </div>
@@ -654,10 +661,10 @@
     </div>
     <div id="portals-addition-window" hidden>
         <div id="portals-addition-window-content">
-            <div class="content-text" style="text-align: center;">Hello</div>
-            <div class="content-portals" style="width: 70%; margin-left: auto; margin-right: auto;">
+            <div class="content-text">Hello</div>
+            <div class="content-portals">
                 {% for i in un_us_p %}
-                    <div id="{{ i.id }}" class="cur_unsel_portal" style="width: 25%; float: left;">
+                    <div id="{{ i.id }}" class="cur_unsel_portal">
                         {{ i.portal_id|get_rss_portal_name }}
                     </div>
                 {% endfor %}
@@ -705,7 +712,6 @@
         function RssPreviewPopUpShow(i){
             $("html").css("overflowY", "hidden");
             $parsedData = $.parseJSON(i);
-            var $current_link = $parsedData.link;
             $(".rss-title").html("<h3>"+$parsedData.title+"</h3>");
             $(".rss-author").html($parsedData.author);
             $(".rss-parent-link").html("<a href='"+$parsedData.link+"'>To&nbsp;original<img src='{% static 'static/img/arrow.png' %}'; style='margin-top:-5%;' width=18px'; /></a>");
@@ -729,7 +735,6 @@
             $("html").css("overflowY", "auto");
         }
     </script>
-    <div id="live" style="display: none;">
-    </div>
+    <div id="live"></div>
 </body>
 </html>
