@@ -1,6 +1,7 @@
 {% load staticfiles %}
 {% load my %}
 {% load endless %}
+{% load cache %}
 {% block politics %}
     <!-- class names for covers -->
     <style>
@@ -18,7 +19,9 @@
         .sect{width: 31%; margin-top: 1%;}
         .current_news{box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;}
         .page-header{margin-top: 1.5%;}
-{#        .main-page-news-cover{max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;}#}
+{#        .middle-news-cover{max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;}#}
+{#        .interest-news-cover{max-height: 100%; max-width: 100%; height: 200px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size:cover;}#}
+{#        .bottom-news-cover{max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_bottom_news.news_main_cover }}') no-repeat center; background-size: cover;}#}
         .text_post{width: 100%;}
         .media{height: inherit;}
         .latest-reviews{height: 500px;}
@@ -46,6 +49,7 @@
                                         </span>
                                     </div>
                                 </div>
+                                {% cache 600 bn-right-nav %}
                                 <div class="bn-right-nav">
 				                    <div id='main-container'>
 					                    <div id="container"></div>
@@ -114,6 +118,7 @@
                                         </table>
                                     </div>
                                 </div>
+                                {% endcache %}
                             </div>
                         </div>
                         <div class="recently-news">
@@ -129,7 +134,8 @@
                                             </h4>
                                         </div>
                                         {% if current_middle_news.news_main_cover != None %}
-                                            <div class="main-page-news-cover"></div>
+                                            <div class="middle-news-cover"
+                                                 style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;"></div>
                                         {% endif %}
                                         <div class="text_post">
                                         </div>
@@ -139,6 +145,7 @@
                         </div>
                         <hr width="100%">
                         <div class="media">
+                        {% cache 86400 latest-reviews %}
                             <div class="latest-reviews">
                                 <div class="left-bar-videos">
                                     <iframe width="100%" height="90%" src="https://www.youtube.com/embed/t4OEsI0Sc_s" frameborder="0" allowfullscreen></iframe>
@@ -149,12 +156,12 @@
                                     {% endfor %}
                                 </div>
                             </div>
+                        {% endcache %}
                             <hr width="100%">
                             <div class="recently-news">
                                 RECENTLY&nbsp;NEWS<br>
                                 <div class="">
-                                    {% if total_bottom_news|length > 0 %}
-                                        <div class="recently-news-other">
+                                    <div class="recently-news-other">
                                             {% for current_bottom_news in total_bottom_news %}
                                                 <div class="sect">
                                                     <div class="current_news"
@@ -167,7 +174,8 @@
                                                             </h4>
                                                         </div>
                                                         {% if current_bottom_news.news_main_cover != '' %}
-                                                            <div class="main-page-news-cover"></div>
+                                                            <div class="bottom-news-cover"
+                                                                 style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_bottom_news.news_main_cover }}') no-repeat center; background-size: cover;"></div>
                                                         {% endif %}
                                                         <div class="text_post">
                                                             {{ current_bottom_news.news_post_text|safe|striptags|truncatewords_html:"8" }}
@@ -176,7 +184,6 @@
                                                 </div>
                                             {% endfor %}
                                         </div>
-                                    {% endif %}
                                 </div>
                                 <hr width="100%">
                                 <div class="interested-news">
@@ -194,7 +201,8 @@
                                                         </h4>
                                                     </div>
                                                     {% if current_interest.news_main_cover != '' %}
-                                                        <div class="main-page-news-cover" style="max-height: 100%; max-width: 100%; height: 200px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size:cover;"></div>
+                                                        <div class="interest-news-cover"
+                                                             style="max-height: 100%; max-width: 100%; height: 200px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size:cover;"></div>
                                                     {% endif %}
                                                     <div class="text_post">
                                                         {{ current_interest.news_post_text|safe|striptags|truncatewords_html:"8" }}

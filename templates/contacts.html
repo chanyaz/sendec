@@ -11,13 +11,14 @@
     </script>
     <style xmlns="http://www.w3.org/1999/html">
         .contact-list{list-style-type: none;}
+        .contact-list-item{margin-top:2%;}
         .team-list{margin-left: -10%;list-style-type: none;}
-        .team-list-item{width: 45%;float: left;margin-left: 5%;box-shadow: 0 0 10px black;}
+        .team-list-item{width: 45%;float: left;margin-left: 5%;box-shadow: 0 0 5px black; border-radius: 3px;}
         .contact-link{color: #3036ff;}
         .contact-link:hover{text-decoration: none;color: #79daff;}
         .team-link{text-decoration: none;}
         .team-link:hover{text-decoration: none;}
-        .photo{height: 77px;float: left;width: 25%;border: solid 1px red;}
+        .photo{height: 77px;float: left;width: 25%;background: url('{% static 'static/img/default_profile.png' %}') no-repeat center; background-size: cover;}
         .content{float: right;width: 75%;height: auto;padding-left: 5%;}
         .contacts-left{float: left; width: 70%;}
         .contact-us-text{color: lightblue;}
@@ -111,7 +112,7 @@
                                     <div class="content">
                                         <b>Founder</b>:<br>
                                         Evgeniy Privalov<br>
-                                        ITMO University'17<br>
+                                        <a href="email:saqel@yandex.ru">saqel@yandex.ru</a><br>
                                         St. Petersburg<br>
                                     </div>
                                 </div>
@@ -122,7 +123,7 @@
                                     <div class="content">
                                         <b>Co-Founder</b>:<br>
                                         Anton Tinishov<br>
-                                        ITMO University'17<br>
+                                        <a href="mailto:anton.tinishov@gmail.com">anton.tinishov@gmail.com</a><br>
                                         St.Petersburg<br>
                                     </div>
                                 </div>
@@ -148,32 +149,32 @@
                     Social&nbsp;Networks
                     <hr width="100%">
                     <ul class="contact-list">
-                        <li>
+                        <li class="contact-list-item">
                             <a class="contact-link" href="https://vk.com/insydianews/">
                                 <img src="{% static 'static/img/vk.png' %}" width="8%" alt="VK"/>VK
                             </a>
                         </li>
-                        <li>
+                        <li class="contact-list-item">
                             <a class="contact-link" href="">
                                 <img src="{% static 'static/img/facebook.png' %}" width="8%" alt="Facebook"/>Facebook
                             </a>
                         </li>
-                        <li>
+                        <li class="contact-list-item">
                             <a class="contact-link" href="https://www.linkedin.com/groups/8442725">
                                 <img src="{% static 'static/img/linkedin.png' %}" width="8%" alt="Linkedin"/>Linkedin
                             </a>
                         </li>
-                        <li>
+                        <li class="contact-list-item">
                             <a class="contact-link" href="http://www.youtube.com/channel/UCbF570qpf1uJUef5y_l3OkA">
                                 <img src="{% static 'static/img/youtube.png' %}" width="8%" alt="YoutTube"/>YouTube
                             </a>
                         </li>
-                        <li>
+                        <li class="contact-list-item">
                             <a class="contact-link" href="https://twitter.com/insydianews">
                                 <img src="{% static 'static/img/twitter.png' %}" width="8%" alt="Twitter"/>Twitter
                             </a>
                         </li>
-                        <li>
+                        <li class="contact-list-item">
                             <a class="contact-link" href="https://plus.google.com/u/0/b/113571107578727495097/113571107578727495097">
                                 <img src="{% static 'static/img/google+.png' %}" width="8%" alt="Google+"/>Google+
                             </a>

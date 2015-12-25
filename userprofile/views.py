@@ -16,7 +16,7 @@ def render_user_profile_page(request):
 
     args = {
         "username": user_instance,
-        "title": "| Profile",
+        "title": "Profile |",
         "user_profile_page": True,
         "user_articles": get_user_articles_amount(user_instance.id),
         "test": get_portals_to_add(request),

@@ -23,11 +23,12 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         "news_block": True,
         "breaking_news": render_news_by_sendec(request).order_by("-news_post_date")[0],
         "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[1:4],
-        "total_bottom_news": render_news_by_sendec(request).order_by("-news_post_date")[4:13],
         "interest": get_interesting_news(request)[:3],
         "total_news": get_total_news,
         "page_template": page_template,
     }
+    if render_news_by_sendec(request).order_by("-news_post_date")[4:13].count() > 0:
+        args["total_bottom_news"] = render_news_by_sendec(request).order_by("-news_post_date")[4:13]
 
     if request.is_ajax():
         template = page_template
@@ -44,7 +45,10 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
-    return render_to_response(template, context=args, context_instance=RequestContext(request))
+
+    return render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
+
+
 
 
 def get_total_news():
@@ -446,13 +450,15 @@ def get_companies(request):
 
 
 def render_current_company(request, company_name):
+    company = Companies.objects.get(verbose_name=company_name)
     args = {
-        "username": User.objects.get(username=auth.get_user(request).username),
-        "company": Companies.objects.get(verbose_name=company_name),
+        "title": company.name+" |",
+        "company": company,
         "news": get_companies_news(request, Companies.objects.get(verbose_name=company_name).id),
     }
     args.update(csrf(request))
-
+    if auth.get_user(request).username:
+        args["username"] = User.objects.get(username=auth.get_user(request).username)
     if request.COOKIES.get("announce"):
         args["hide"] = False
     else:
@@ -801,6 +807,7 @@ def test_rendering(request):
 def render_contacts_page(request):
     from news.forms import SendReportForm
     args = {
+        "title": "Contacts |",
         "email": "insydia@yandex.ru",
         "phone": "+7-931-579-06-96",
         "cooperation": "saqel@yandex.ru",

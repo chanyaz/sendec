@@ -29,7 +29,7 @@
         .current_rss_popular_portal{box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 100px; width: 100%;}
         .add-current{position: static; margin-top: 18%; margin-left: 90%;}
         .right-side{width: 28%; border: solid 1px orange; float: right;}
-        .choosen-portals{border: solid 1px red;}
+        .choosen-portals{border: solid 1px red; font-family: Georgia, Times, "Times New Roman", serif}
         .recommendations{border: solid 1px red; height: 20em; overflow-y: auto;}
         .user-rss-portals{text-align: center}
         .user-chosen-portals{border: solid 1px red; height: 20em; overflow-y: auto;}
@@ -136,12 +136,10 @@
                 <div id="rss-title">
                     All news which are your interested in
                 </div>
-                {% for i in new_user_news %}
-                    {{ i.title }}<br>
-                {% endfor %}
                 <div class="load-more">
                     <div class="endless_page_template">
                         {% block js %}
+                            <script src="{% static 'static/js/jquery.js' %}"></script>
                             <script src="{% static 'static/js/endless-pagination.js' %}"></script>
                             <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
                             <script>
@@ -157,12 +155,6 @@
                     </div>
                 </div>
                 <hr width="100%">
-                <div class="load_button" >
-                    <button id="button_load_more"
-                            onclick="loadPage();"
-                            data-current-page="1"
-                            data-next-page="2">Load&nbsp;more</button>
-                </div>
             {% else %}
                 <div class="user_rss_missing">
                     At this time you have no one portals to syndicate for you.
@@ -220,7 +212,7 @@
                         <div id="add-portals-image">
                             <img src="{% static 'static/img/add.png' %}"
                                  onclick="PortalsAdditionPopUpShow();"
-                                 width="20em" />
+                                 width="20em" />&nbsp;Add&nbsp;portal
                         </div>
                         <div id="sortContainer">
                             {% for i in user_rss %}

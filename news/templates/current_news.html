@@ -16,15 +16,6 @@
                 })
             });
         }
-        function reload_likes(){
-            var url = location.href.split("/");
-            $.get("/news/check_like/n="+url[url.length-2]).done(function(data){
-                $(".news_likes_amount_"+url[url.length-2]).text(data.likes);
-            });
-            return true;
-        }
-        reload_likes();
-        setInterval(reload_likes, 1000);
     </script>
     <script>
         function add_dislike_news(news_id) {
@@ -39,15 +30,6 @@
                     })
                 });
             }
-            function reload_dislikes(){
-                var url = location.href.split("/");
-                $.get("/news/check_dislike/n="+url[url.length-2]).done(function(data){
-                    $(".news_dislikes_amount_"+url[url.length-2]).text(data.dislikes);
-                });
-                return true;
-            }
-            reload_dislikes();
-            setInterval(reload_dislikes, 1000);
     </script>
     <script>
         $(document).ready(function(){
@@ -72,36 +54,22 @@
     </script>
     <script>
         $(document).ready(function(){
-            function refreshContent(){
-                var currentCommentsBlock = $("#comments_block");
-                $.get("/news/load="+currentCommentsBlock.attr("data-current-news-id")).done(function(data){
-                    var messages = $(".current_comment");
-                    data.comments.forEach(function(comment){
-                        messages.prepend("SUCCESS COMMENTS LOAD");
-                    })
-                });
-                refreshContent();
-                setInterval(refreshContent, 2000);
-            }
-        });
-    </script>
-    <script>
-        $(document).ready(function(){
             $("img").style.width='100px';
         })
     </script>
     <style>
-        .share-list-item{float: left;margin-left: 1%;}
+        .share-list-item{float: left;margin-left: 1%; width: 24%; height:1.5em;}
         .container-fluid{border: solid 1px lightgrey;}
         .tre{float: left; width: 70%;}
-        .page-header{margin: 0 5%;}
+        .page-header{margin: 0 5%;font-family: Georgia, Times, "Times New Roman", serif}
         #translate-button{float: right; border: solid 1px red;}
         .date-and-author{margin-left: 5%;}
-        .news-settings{height: 2em; width: 100%;}
+        .news-settings{height: 2em; width: 100%; text-transform: uppercase;}
         .shares{margin-left: -6%; margin-top: -1%;}
+        .share-title{font-family: Arial, Helvetica, sans-serif}
         ul{list-style-type: none;}
         .news-cover{max-width: 100%; max-height: 100%; margin-top: 0; height: 400px; background: url('/media/{{ current_news_values.news_main_cover }}') no-repeat center; background-size: cover;}
-        .news-post-text{margin: 0 15%;}
+        .news-post-text{margin: 0 15%; font-family: Georgia,Times,sans-serif; font-size: 19px;}
         .news-post-text-translate{margin: 0 15%;}
         .nav-bar{margin-left: 63%;}
         .liked{float: left;}
@@ -127,43 +95,60 @@
                         $('.news-post-text-translate').delay(100).show();">Translate</button>
             <div class="date-and-author">
                 <h5>By
-                    {% if current_news_values.id|get_news_portal == "SEVERY" %}
+                    {% if current_news_values.id|get_news_portal == "insydia" %}
                         <a href="/search/?q={{ current_news_values.news_author }}">{{ current_news_values.news_author_id|get_article_author }}</a>
                     {% else %}
                         <a href="/search/?q={{ current_news_values.news_portal_name }}">{{ current_news_values.news_portal_name }}</a>
                     {% endif %}
                     &nbsp;{{ current_news_values.news_post_date.date }}</h5>
             </div>
-        {% cache 600 news-settings %}
         <div class="news-settings">
             <div class="shares">
                 <ul>
                     <li class="share-list-item">
-                        <div class="fb-share-button" data-layout="button"></div>
+                        <div id="fb-share"
+                             style="background-color: #3B5998;border-radius: 3px; color: white;"
+                             onmouseover="this.style.backgroundColor='#3B7298'; this.style.cursor='pointer';"
+                             onmouseout="this.style.backgroundColor='#3B5998';"
+                             onclick="window.open('http://facebook.com/sharer/sharer.php?u='+window.location.href,
+                             'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
+                            <div class="fb-share-icon" style="float: left; background: url('{% static 'static/img/facebook-white.png' %}') no-repeat center; background-size: cover; width: 1.3em; height: 1.3em;"></div>
+                            <div class="share-title" style="margin-left: 10%;">facebook</div>
+                        </div>
                     </li>
                     <li class="share-list-item">
-                        <span class="share-vk">
-                            <script type="text/javascript">
-                                document.write(VK.Share.button(false,{type: "round_nocount", text: "Share on VK", eng: 1}));
-                            </script>
-                        </span>
+                        <div id="vk-share" style="background-color: #45668e; border-radius: 3px; color: white;"
+                             onmouseover="this.style.backgroundColor='#457998'; this.style.cursor='pointer';"
+                             onmouseout="this.style.backgroundColor='#45668e';"
+                             onclick="window.open('https://twitter.com/intent/tweet?original_referer='+window.location.href+'&ref_src=twsrc%5Etfw&text='+'{{ current_news_values.news_title }}'+'%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+window.location.href+'&via=InsydiaNews',
+                             'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
+                            <div class="vk-share-icon" style="float: left; background: url('{% static 'static/img/vk-white.png' %}') no-repeat center; background-size: cover; width: 1em; height: 1em;"></div>
+                            <div class="share-title" style="margin-left: 10%;">VK</div>
+                        </div>
                     </li>
                     <li class="share-list-item">
-                        <span class="share-twitter">
-                            <a href="https://twitter.com/share" class="twitter-share-button"{count} data-via="InsydiaNews">Tweet</a>
-                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-                        </span>
+                        <div id="twitter-share" style="background-color: #55acee; border-radius: 3px; color: white;"
+                             onmouseover="this.style.backgroundColor='#55bdee';this.style.cursor='pointer';"
+                             onmouseout="this.style.backgroundColor='#55acee';"
+                             onclick="window.open('https://twitter.com/intent/tweet?original_referer='+window.location.href+'&ref_src=twsrc%5Etfw&text='+'{{ current_news_values.news_title }}'+'%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+window.location.href+'&via=InsydiaNews',
+                             'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
+                            <div class="twitter-share-icon" style="float: left; background: url('{% static 'static/img/twitter-white.png' %}') no-repeat center; background-size: cover; width: 1.3em; height: 1.3em;"></div>
+                            <div class="share-title" style="margin-left: 10%;">Twitter</div>
+                        </div>
                     </li>
                     <li class="share-list-item">
-                        <span class="share-linkedin">
-                            <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-                            <script type="IN/Share" data-counter=""></script>
-                        </span>
+                        <div id="linkedin-share" style="background-color: #0077b5; border-radius: 3px; color: white;"
+                             onmouseover="this.style.backgroundColor='#0088b5';this.style.cursor='pointer';"
+                             onmouseout="this.style.backgroundColor='#0077b5';"
+                             onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+window.location.href+'&title='+'{{ current_news_values.news_title }}'+'&summary='+'summary',
+                             'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
+                            <div class="linkedin-share-icon" style="float: left; background: url('{% static 'static/img/linkedin-white.png' %}') no-repeat center; background-size: cover; width: 1.3em; height: 1.3em;"></div>
+                            <div class="share-title" style="margin-left: 10%;">Linkedin</div>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
-        {% endcache %}
             {% if current_news_values.news_main_cover != '' %}
                 <div class="news-cover">
                 </div>

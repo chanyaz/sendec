@@ -9,31 +9,17 @@
     <meta charset="UTF-8">
     <meta name='yandex-verification' content='5e44980913d08dad' />
     <meta name="google-site-verification" content="y6Xw9KEH5CLn8NGw7Q2xWyettWl8PNt06hQVCjG2EBs" />
-    <script src='https://www.google.com/recaptcha/api.js'></script>
     <title>{{ title }}&nbsp;Insydia</title>
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="{% static 'static/img/favicon.ico' %}" type="image/x-icon">
-    <script src="{% static 'static/js/jquery.min.js' %}"></script>
-    <script type="text/javascript" src="http://vk.com/js/api/share.js?93" charset="windows-1251"></script>
-    <script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
-    <script type="text/javascript">VK.init({apiId: 111});</script>
-    <script>
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_EN/sdk.js#xfbml=1&version=v2.5";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
+    <!--<script type="text/javascript" src="http://vk.com/js/api/share.js?93" charset="windows-1251"></script>-->
     <script>var companytick = ["AAPL","FB","GOOG","MSFT","TSLA","AMZN","TWTR"];</script>
     <script src="{% static 'static/js/jquery.min.js' %}"></script>
     <script src="{% static 'static/js/jquery-ui.min.js' %}"></script>
-    <script src="http://static.amigobulls.com/js/highstock-2.0.1.min.js.gz"></script>
-    <script src="http://static.amigobulls.com/js/chart-widget.min.js.gz"></script>
-    <link rel="stylesheet" type="text/css" href="http://static.amigobulls.com/css/chart-widget.min.css.gz" />
+    <!--<link rel="stylesheet" type="text/css" href="http://static.amigobulls.com/css/chart-widget.min.css.gz" />-->
+    <link rel="stylesheet" type="text/css" href="{% static 'static/css/chart-widget.css' %}" />
     <script type="text/javascript">
         function validate_form ( ) {
         	valid = true;
@@ -224,7 +210,7 @@
         #portals-addition-window #portals-addition-window-content{
             margin: 10% auto 0 auto;
             width:  50%;
-            height: 50%;
+            height: 70%;
             min-height:30%;
             padding: 0;
             background-color: white;
@@ -271,7 +257,7 @@
             list-style-type: none;
         }
         .cur_unsel_portal{width: 20%;height: 5em;border: solid 1px red;}
-        .top-navigation{position: relative; height: 8%;}
+        .top-navigation{position: relative; height: 8%;font-family: Georgia, Times, "Times New Roman", serif}
         .top-left-bar{float: left; margin-left: 11%;}
         .title-bar{float: left; margin-left: 18%;}
         .title-name{margin-top: 5%; text-align: center; font-size: 2em;}
@@ -295,7 +281,7 @@
         #image-arrow-to-expand{opacity: 0.2;}
         #arrow-to-hide-sections{margin-left: 10%; width: 1%; position: fixed; margin-top: 20%;}
         #image-arrow-to-hide{opacity: 0.2;}
-        .top-navigation-menu{margin-top: 0;}
+        .top-navigation-menu{margin-top: 0;font-family: Georgia, Times, "Times New Roman", serif}
         .top-navi-menu-content{margin-left: 16%;}
         .top-navi-menu-content ul{list-style-type: none;}
         .search-bar{margin-left: 14%;}
@@ -324,7 +310,7 @@
         .rss-parent-link{float: right; margin-top: -3%;}
         .rss-shares{border: solid 1px darkred; height: 2.5em;}
         #rss-share-list{margin-left: -5%; list-style-type: none;}
-        .rss-body{padding: 0 5%; margin-top: 2%;}
+        .rss-body{padding: 0 5%; margin-top: 2%; font-family: Georgia,Times,sans-serif; font-size: 17px;}
         .content-text{text-align: center;}
         .content-portals{width: 70%; margin-left: auto; margin-right: auto;}
         .cur_unsel_portal{width: 25%; float: left;}
@@ -334,6 +320,7 @@
     </style>
 </head>
 <body>
+
     <div class="top-navigation">
         <div class="top-left-bar" onmouseover="style.cursor='pointer';">
             <span onclick="showLeftBar();">SECTIONS</span>&nbsp;|&nbsp;
@@ -362,6 +349,7 @@
         </div>
     </div>
     {% if hide == True %}
+        {% cache 86400 beta-announce %}
         <div id="beta-announce">
             <span class="announce-close">
                 <img src="{% static 'static/img/close.png' %}"
@@ -372,6 +360,7 @@
                 {{ beta_announce|safe }}
             </div>
         </div>
+        {% endcache %}
     {% endif %}
     <div id="wrapper-new">
         <div id="page-wrapper">
@@ -380,7 +369,7 @@
                      class="left-panel">
                     <div class="logo-left-bar">
                         <span onclick="location.href='/';">
-                            SENDEC
+                            INSYDIA
                         </span>
                     </div>
                     {% if username %}
@@ -399,6 +388,7 @@
                             </div>
                         </div>
                     {% endif %}
+                    {% cache 86400 lists %}
                     <div class="lists">
                         <div class="categories">
                             <ul class="categories-ul">
@@ -426,7 +416,9 @@
                             </ul>
                         </div>
                     </div>
+                {% endcache %}
                 </div>
+            {% cache 86400 left-showing-bar %}
                 <div class="left-showing-bar"
                      onmouseover="$(this).css('backgroundColor', 'rgba(0, 0, 0, 0.61');"
                      onmouseout="$(this).css('backgroundColor', 'rgba(0, 0, 0, 0'); $('#image-arrow-to-expand').css('opacity', 0.2);">
@@ -448,20 +440,27 @@
                              height="100%"/>
                     </span>
                 </div>
+            {% endcache %}
                 <div class="top-navigation-menu">
                     <div class="top-navi-menu-content">
                         <ul>
-                            <li class="li-cat"><a href="/">LATEST</a></li>
-                            <li class="li-cat"><a href="/news/technology/">TECHNOLOGY</a></li>
-                            <li class="li-cat"><a href="/news/entertainment/">ENTERTAINMENT</a></li>
-                            <li class="li-cat"><a href="/news/auto/">AUTO</a></li>
-                            <li class="li-cat"><a href="/news/space/">SPACE</a></li>
-                            <li class="li-cat"><a href="/news/bio/">BIO</a></li>
-                            <li class="li-cat"><a href="/news/companies/">COMPANIES</a></li>
-                            <li class="li-cat"><a href="/news/reviews/">REVIEWS</a></li>
-                            {% if username.username and username.is_active == True %}
-                                <li class="li-cat"><a href="/news/usernews/">MyNews</a></li>
-                            {% endif %}
+                        {% cache 86400 everyone %}
+                            <div id="everyone">
+                                <li class="li-cat"><a href="/">LATEST</a></li>
+                                <li class="li-cat"><a href="/news/technology/">TECHNOLOGY</a></li>
+                                <li class="li-cat"><a href="/news/entertainment/">ENTERTAINMENT</a></li>
+                                <li class="li-cat"><a href="/news/auto/">AUTO</a></li>
+                                <li class="li-cat"><a href="/news/space/">SPACE</a></li>
+                                <li class="li-cat"><a href="/news/bio/">BIO</a></li>
+                                <li class="li-cat"><a href="/news/companies/">COMPANIES</a></li>
+                                <li class="li-cat"><a href="/news/reviews/">REVIEWS</a></li>
+                            </div>
+                        {% endcache %}
+                            <div id="personal">
+                                {% if username.username and username.is_active == True %}
+                                    <li class="li-cat"><a href="/news/usernews/">MyNews</a></li>
+                                {% endif %}
+                            </div>
                         </ul>
                     </div>
                 </div>
@@ -480,7 +479,7 @@
                         </form>
                     </div>
                 <br>
-                {% cache 600 service-media %}
+                {% cache 86400 service-media %}
                 <div class="service-media">
                     <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"
                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png" width="30px"/>
@@ -506,7 +505,6 @@
                     {% block notify %}{% endblock %}
                     {% block current_news %}{% endblock %}
                     {% block current_category %}{% endblock %}
-                    {% block top_news %}{% endblock %}
                     <div class="news-block" id="news-block">
                         {% block latest %}{% endblock %}
                         {% block technology %}{% endblock %}
@@ -527,7 +525,11 @@
             </div>
         </div>
     </div>
-    {% include 'footer.html' %}
+    {% cache 86400 footer %}
+    <div class="footer">
+        {% include 'footer.html' %}
+    </div>
+    {% endcache %}
     <script src="{% static 'static/js/jquery.js' %}" type="javascript"></script>
     <script src="{% static 'static/js/bootstrap.min.js' %}" type="javascript"></script>
     <div class="popup-user-window" hidden>
@@ -661,15 +663,37 @@
     </div>
     <div id="portals-addition-window" hidden>
         <div id="portals-addition-window-content">
-            <div class="content-text">Hello</div>
-            <div class="content-portals">
-                {% for i in un_us_p %}
-                    <div id="{{ i.id }}" class="cur_unsel_portal">
-                        {{ i.portal_id|get_rss_portal_name }}
-                    </div>
-                {% endfor %}
+            <div id="portals-top-block" style="min-height: 90%;">
+                <div class="content-text">Hello</div>
+                <div id="content-portals" style="margin-top: 5%; border: solid 1px blue; height: 20em; overflow-y: auto;">
+                    {% for i in un_us_p %}
+                        <div id="{{ i.id }}" class="cur_unsel_portal">
+                            {{ i.portal_id|get_rss_portal_name }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="content-search" style="margin-top: 2%;">
+                    <textarea class="form-control"
+                              name="portals"
+                              required="required"
+                              id="portals-choser"
+                              rows="1"
+                              style="width: 93%; resize: none;"
+                              placeholder="Your&nbsp;portals"></textarea>
+                </div>
             </div>
-            <div class="content-search"></div>
+            <div id="bottom-buttons" style="margin-left: 80%;">
+                <div id="content-save" style="float: left;">
+                    <button class="btn btn-primary">
+                        Save
+                    </button>
+                </div>
+                <div id="content-cancel">
+                    <button class="btn">
+                        Cancel
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -736,5 +760,20 @@
         }
     </script>
     <div id="live"></div>
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!--<script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
+    <script type="text/javascript">VK.init({apiId: 111});</script>-->
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_EN/sdk.js#xfbml=1&version=v2.5";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="{% static 'static/js/highstock.js' %}"></script>
+    <script src="{% static 'static/js/chart-widget.js' %}"></script>
 </body>
 </html>

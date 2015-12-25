@@ -1,8 +1,8 @@
 {% load endless %}
 {% load my %}
 {% load jsonate_tags %}
-{% paginate rss_news %}
-{% for i in rss_news %}
+{% paginate new_user_news %} <!-- rss_news -->
+{% for i in new_user_news %}
     <div class="current_rss_news"
          id="rss_id_{{ i.id }}"
          data-current-rss-news-id="{{ i.id }}"
