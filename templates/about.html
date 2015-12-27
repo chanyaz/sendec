@@ -1,0 +1,27 @@
+{% extends 'index_new.html' %}
+{% load staticfiles %}
+{% block about %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div id="about">
+                <div id="about-title"><h2>ABOUT</h2></div>
+                <div class="about-content">
+                    Insydia is a ...
+                </div>
+                <div class="gratitude">
+                    <div class="gratitude-title">
+                        <h2>GRATITUDE</h2>
+                    </div>
+                    <div class="expression-logo">
+                        <img src="{% static 'static/img/logo-itmo-end.png' %}" width="15%" />
+                        <div class="expression">
+                            {{ expression }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

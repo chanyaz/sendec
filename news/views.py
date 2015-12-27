@@ -49,8 +49,6 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
     return render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
 
 
-
-
 def get_total_news():
     return News.objects.all().values()
 
@@ -80,6 +78,8 @@ def render_current_news(request, category_id, news_id):
         "current_news_values": current_news,
         "other_materials": render_news_by_sendec(request, news_id=news_id,
                                                  category_id=category_id).exclude(id=news_id)[:12],
+        "other_materials_count": render_news_by_sendec(request, news_id=news_id,
+                                                 category_id=category_id).exclude(id=news_id)[:12].count(),
         "latest_news": get_company_news(request, news_id, current_news.news_company_owner_id)[:5],
         "company_name": str(Companies.objects.get(id=current_news.news_company_owner_id)).capitalize(),
         "current_day": datetime.datetime.now().day,
@@ -90,8 +90,11 @@ def render_current_news(request, category_id, news_id):
         "like_amount": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count(),
         "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count(),
         "current_news_title": current_news.news_title,
-        "external_link": shared_news_link(request, news_id),
+        #"external_link": shared_news_link(request, news_id),
     }
+
+    args.update(check_english(current_news))
+
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     addition_news_watches(request, news_id)
@@ -109,17 +112,29 @@ def render_current_news(request, category_id, news_id):
     return render_to_response("current_news.html", args)
 
 
+def check_english(news):
+    args = {}
+    if news.news_post_text_english != "":
+        args["eng"] = True
+    if news.news_post_text_russian != "":
+        args["rus"] = True
+    if news.news_post_text_chinese != "":
+        args["ch"] = True
+    return args
+
+
 @login_required(login_url="/auth/login/")
 def render_user_news(request, template="user_news.html", rss_template="rss_template.html", extra_context=None):
     user = User.objects.get(username=auth.get_user(request).username)
     user_rss_list = UserRssPortals.objects.filter(user_id=user.id).filter(check=True).values("id")
     args = {
         "title": "My news | ",
-        "test": set_rss_for_user_test(request),
+        #"test": set_rss_for_user_test(request),
         "user_rss": get_user_rss_news(request, user_id=user.id).order_by("position"),
+        "user_rss_count": get_user_rss_news(request, user_id=user.id).order_by("position").count(),
         "popular_rss": get_most_popular_rss_portals(request)[:9],
         "popular_rss_right": get_most_popular_rss_portals(request)[:3],
-        "test_2": RssNews.objects.filter(portal_name_id__in=user_rss_list).values(),
+        #"test_2": RssNews.objects.filter(portal_name_id__in=user_rss_list).values(),
         "rss_template": rss_template,
         "un_us_p": get_user_unselceted_portals(request, user_id=user.id),
         "new_user_news": get_rss_filterd(request, user.id),
@@ -128,6 +143,7 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
     args["rss_news"] = set_rss_for_user_test(request)
+    args["rss_news_count"] = set_rss_for_user_test(request).count()
     if request.is_ajax():
         template = rss_template
     if request.COOKIES.get("announce"):
@@ -149,7 +165,6 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
 def get_rss_filterd(request, user_id):
     user_portals_ids = UserRssPortals.objects.filter(user_id=user_id).filter(check=True).values("id")
     return RssNews.objects.filter(portal_name_id__in=user_portals_ids).order_by("-date_posted").order_by("-portal_name__userrssportals__rate").values()
-    #return user_portals_ids
 
 
 def get_user_unselceted_portals(request, user_id):
@@ -303,14 +318,14 @@ def get_top_news(request):
     return top_news
 
 
-def render_current_news_comments(request, news_id):
-    news_comments = NewsComments.objects.filter(news_attached=int(news_id))
-    news_replies = NewsCommentsReplies.objects.filter(news_attached=int(news_id))
-    response_data = {
-        "content_comments": [data_comments.get_json_comments() for data_comments in news_comments.all()],
-        "content_replies": [data_replies.get_json_replies() for data_replies in news_replies.all()]
-    }
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
+#def render_current_news_comments(request, news_id):
+#    news_comments = NewsComments.objects.filter(news_attached=int(news_id))
+#    news_replies = NewsCommentsReplies.objects.filter(news_attached=int(news_id))
+#    response_data = {
+#        "content_comments": [data_comments.get_json_comments() for data_comments in news_comments.all()],
+#        "content_replies": [data_replies.get_json_replies() for data_replies in news_replies.all()]
+#    }
+#    return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
 def render_current_category(request, category_name):
@@ -454,7 +469,7 @@ def render_current_company(request, company_name):
     args = {
         "title": company.name+" |",
         "company": company,
-        "news": get_companies_news(request, Companies.objects.get(verbose_name=company_name).id),
+        "news": get_companies_news(request, company.id),
     }
     args.update(csrf(request))
     if auth.get_user(request).username:
@@ -484,6 +499,7 @@ def render_entertainment_news(request):
         "top_entertainment_news": get_entertainment_news(request)[0],
         "entertainment_news": get_entertainment_news(request)[1:],
         "category_title": "ENTERTAINMENT",
+        "category_flag": "ent",
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
@@ -678,41 +694,41 @@ def check_dislike_amount(request, news_id):
                         content_type="application/json")
 
 
-def delete_comment(request, comment_id):
-    args = {}
-    args.update(csrf(request))
-    news_instance = News.objects.get(id=NewsComments.objects.get(id=int(comment_id)).news_attached_id)
-    if User.objects.get(username=auth.get_user(request).username).is_staff:
-        instance = NewsComments.objects.get(id=int(comment_id))
-        instance.delete()
-    else:
-        pass
-    return HttpResponseRedirect("/news/%s/%s/" % (news_instance.news_category_id, news_instance.id), args)
+#def delete_comment(request, comment_id):
+#    args = {}
+#    args.update(csrf(request))
+#    news_instance = News.objects.get(id=NewsComments.objects.get(id=int(comment_id)).news_attached_id)
+#    if User.objects.get(username=auth.get_user(request).username).is_staff:
+#        instance = NewsComments.objects.get(id=int(comment_id))
+#        instance.delete()
+#    else:
+#        pass
+#    return HttpResponseRedirect("/news/%s/%s/" % (news_instance.news_category_id, news_instance.id), args)
 
 
-def delete_reply(request, reply_id):
-    args = {}
-    args.update(csrf(request))
-    news_instance = News.objects.get(id=NewsCommentsReplies.objects.get(id=int(reply_id)).news_attached_id)
-    if User.objects.get(username=auth.get_user(request).username).is_staff:
-        instance = NewsCommentsReplies.objects.get(id=int(reply_id))
-        instance.delete()
-    else:
-        pass
-    return HttpResponseRedirect("/news/%s/%s/" % (news_instance.news_category_id, news_instance.id), args)
+#def delete_reply(request, reply_id):
+#    args = {}
+#    args.update(csrf(request))
+#    news_instance = News.objects.get(id=NewsCommentsReplies.objects.get(id=int(reply_id)).news_attached_id)
+#    if User.objects.get(username=auth.get_user(request).username).is_staff:
+#        instance = NewsCommentsReplies.objects.get(id=int(reply_id))
+#        instance.delete()
+#    else:
+#        pass
+#    return HttpResponseRedirect("/news/%s/%s/" % (news_instance.news_category_id, news_instance.id), args)
 
 
-def shared_news_link(request, news_id):
-    news = News.objects.get(id=news_id)
-    shared_link = "http://127.0.0.1:8000/ext/trans/{0}/{1}/".format(news.news_category_id, news.id)
-    return shared_link
+#def shared_news_link(request, news_id):
+#    news = News.objects.get(id=news_id)
+#    shared_link = "http://127.0.0.1:8000/ext/trans/{0}/{1}/".format(news.news_category_id, news.id)
+#    return shared_link
 
 
-def external_transition(request, cat_id, news_id):
-    news_instance = NewsWatches.objects.get(news_id=news_id)
-    news_instance.external_transition += 1
-    news_instance.save()
-    return HttpResponseRedirect("/news/%s/%s/" % (cat_id, news_id))
+#def external_transition(request, cat_id, news_id):
+#    news_instance = NewsWatches.objects.get(news_id=news_id)
+#    news_instance.external_transition += 1
+#    news_instance.save()
+#    return HttpResponseRedirect("/news/%s/%s/" % (cat_id, news_id))
 
 
 def get_user_rss_news(request, user_id):
@@ -826,10 +842,28 @@ def render_contacts_page(request):
 <br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
 """
 
+    return render_to_response("contacts.html", args)
+
+
+def render_about_page(request):
+    args = {
+        "title": "About |"
+    }
+    args.update(csrf(request))
+    if auth.get_user(request).username:
+        args["username"] = User.objects.get(username=auth.get_user(request).username)
+    if request.COOKIES.get("announce"):
+        args["hide"] = False
+    else:
+        args["hide"] = True
+    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
+<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
+<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
+<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
+"""
     args["expression"] = """We express our gratitude for the financial and moral support to Afanasyev M.J.
 (Associate Professor of "Instrumentation Technology")."""
-
-    return render_to_response("contacts.html", args)
+    return render_to_response("about.html", args)
 
 
 def set_user_portals(request):
@@ -850,16 +884,16 @@ def change_rates(request):
     args.update(csrf(request))
     if request.POST:# or request.is_ajax():
         dataArray = request.POST.getlist("dataArray")
-        print(dataArray)
+        #print(dataArray)
         a = json.loads(dataArray[0])
         for i in range(len(a["dict"])):
-            print("a")
+            #print("a")
             current_id = int(a["dict"]["%s"%i]["id"][5:])
             current_position = a["dict"]["%s"%i]["pos"]
-            print(i, ": {")
-            print("\tid: ", current_id)
-            print("\tpos: ", current_position)
-            print("}")
+            #print(i, ": {")
+            #print("\tid: ", current_id)
+            #print("\tpos: ", current_position)
+            #print("}")
             instance = UserRssPortals.objects.get(id=current_id)
             prev_position = instance.position
             instance.position = current_position
@@ -905,3 +939,19 @@ def page_not_found(request):
     response = render_to_response("404.html", context_instance=RequestContext(request))
     response.status_code = 404
     return response
+
+
+def change_languages(request, news_id, lang_code):
+    instance = News.objects.get(id=news_id)
+    if lang_code == 'rus':
+        data = instance.news_post_text_russian
+    elif lang_code == "eng":
+        data = instance.news_post_text_english
+    elif lang_code == "ch":
+        data = instance.news_post_text_chinese
+    else:
+        data = "Currently post has not any translation versions."
+    response_data = {
+        "data": [data],
+    }
+    return HttpResponse(json.dumps(response_data), content_type="application/json")

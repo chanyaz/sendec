@@ -9,11 +9,6 @@
         #current_company_left{float: left;width: 70%;}
         .current_news{height: 80px;margin: 2% 0.25% 0.25% 0.25%;}
         .current_searched_cover{
-            width: 20%;
-            height: 80px;
-            float: left;
-            background: url('/media/{{ current_news.news_main_cover }}') no-repeat center;
-            background-size: cover;
         }
         .current_searched_content_portal{float: left;margin-left: 1%;}
         #current_company_right{height: auto;float: right;width: 30%;}
@@ -45,7 +40,11 @@
                                  onmouseover="this.style.cursor='pointer'; this.style.backgroundColor='grey';"
                                  onmouseout="this.style.backgroundColor='';">
                                 <div class="current_searched_content">
-                                    <div class="current_searched_cover"></div>
+                                    <div class="current_searched_cover" style="width: 20%;
+            height: 80px;
+            float: left;
+            background: url('/media/{{ current_news.news_main_cover }}') no-repeat center;
+            background-size: cover;"></div>
                                     <div class="current_searched_content_portal">
                                         {{ current_news.news_portal_name_id|get_portal_name }}
                                     </div>

@@ -47,16 +47,36 @@
         .popular-news{margin-top: 3%; height: auto;}
         .text-top-popular{text-align: center;}
         #pop-news{width: 90%; margin-left: 1%; height: auto; float: left;}
-        .cur_pop_news{float: left; width: 48%; height: 300px; margin: 0 1%;}
+        .cur_pop_news{float: left; width: 48%; height: 300px; margin: 0 1%; position: relative;}
         .image{opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;}
         #match-variation{text-align: left; font-size: 20px;}
-        .current_searched{height: 80px; margin: 2% 0.25% 0.25% 0.25%;}
-        .current_searched_cover{width: 20%; height: 80px; float: left; background: url('/media/{{ current_result.news_main_cover }}') no-repeat center; background-size: cover;}
+        .current_searched{height: 80px; margin: 2% 0.25% 0.25% 0.25%; font-family: Georgia, Times, "Times New Roman", serif}
+        .current_searched_cover{width: 20%; height: 80px; float: left;}
+        .current_searched_content_title{margin-left: 21%;}
         .current_searched_content_portal{float: left; margin-left: 1%;}
         .right-side-block{width: 28%; float: right;}
-        .latest-news{box-shadow: 0 0 10px rgba(0,0,0,5); margin-bottom: 1%;}
+
+        .latest-news-cover{float: left; height: 50%; width: 25%;}
+        .latest-news-content{height:60px;padding-left: 5%; width:75%; float: right; font-family: Georgia, Times, "Times New Roman", serif}
+        .latest-current-news{margin-top: 5%; height: 60px; border-bottom: dotted 1px lightgrey}
         .latest-header{text-align: center;}
-        .time{color: blue;}
+
+        .current_searched_content{position: relative;}
+        .current_searched_content_top{height: 4.4em;}
+        .searched-category-name{
+                position: absolute;
+                z-index: 900;
+                margin-left: 20%;
+        }
+        .searched-category-name-content{
+                background-color: blue;
+                color: white;
+                font-family: Georgia, Times, "Times New Roman", serif;
+                text-transform: uppercase;
+        }
+        .searched-category-link:hover{
+            text-decoration: none;
+        }
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -120,25 +140,35 @@
                                 <div class="clr"></div>
                                 <section class="block">
                                     <article id="an">
-                                    {% if results|length > 0 %}
+                                    {% if matches_amount > 0 %}
                                         {% for current_result in results %}
                                             <div class="current_searched"
                                                  onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"
                                                  onmouseover="this.style.cursor='pointer'; this.style.backgroundColor='grey';"
                                                  onmouseout="this.style.backgroundColor='';">
                                                 <div class="current_searched_content">
-                                                    <div class="current_searched_cover"></div>
-                                                    <div class="current_searched_content_portal">
-                                                        {{ current_result.news_portal_name_id|get_portal_name }}
+                                                    <div class="current_searched_content_top">
+                                                        <div class="current_searched_cover"
+                                                             style="background: url('/media/{{ current_result.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                                        <div class="current_searched_content_portal">
+                                                            {{ current_result.news_portal_name_id|get_portal_name }}
+                                                        </div>
+                                                        <div class="current_searched_content_date">
+                                                            &nbsp;|&nbsp;{{ current_result.news_post_date.date }}
+                                                        </div>
+                                                        <div class="current_searched_content_title">
+                                                            <b>{{ current_result.news_title }}</b>
+                                                        </div>
+                                                        <div class="current_searched_content_post">
+                                                            {{ current_result.news_post_text_english|safe|striptags|truncatechars:"115" }}
+                                                        </div>
                                                     </div>
-                                                    <div class="current_searched_content_date">
-                                                        &nbsp;|&nbsp;{{ current_result.news_post_date.date }}
-                                                    </div>
-                                                    <div class="current_searched_content_title">
-                                                        {{ current_result.news_title }}
-                                                    </div>
-                                                    <div class="current_searched_content_post">
-                                                        {{ current_result.news_post_text|safe|striptags|truncatewords:"15" }}
+                                                    <div class="searched-category-name">
+                                                        <a class="searched-category-link" href="/news/{{ current_result.id|get_news_category }}/">
+                                                            <span class="searched-category-name-content">
+                                                                &nbsp;{{ current_result.id|get_news_category }}&nbsp;
+                                                            </span>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,16 +218,22 @@
                         </div>
                         <div class="latest-titles">
                             {% for i in latest_news %}
-                                <span class="time">
-                                    {{ i.news_post_date.time }}
-                                </span>
-                                <span class="title"
-                                      onmouseover="this.style.color='blue'; style.cursor='pointer';"
-                                      onmouseout="this.style.color='black';"
-                                      onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                    {{ i.news_title }}
-                                </span>
-                                <br>
+                                <div class="latest-current-news"
+                                     onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';"
+                                     onmouseover="this.style.cursor='pointer'; $('#lnt'+{{ i.id }}).css('color', 'blue');"
+                                     onmouseout="$('#lnt'+{{ i.id }}).css('color', 'black');">
+                                    <div class="latest-news-cover"
+                                         style="background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: contain;"></div>
+                                    <div class="latest-news-content">
+                                        <span id="lnt{{ i.id }}"
+                                              class="title"
+                                              onmouseover="this.style.color='blue'; style.cursor='pointer';"
+                                              onmouseout="this.style.color='black';"
+                                              onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                            {{ i.news_title }}
+                                        </span>
+                                    </div>
+                                </div>
                             {% endfor %}
                         </div>
                     </div>

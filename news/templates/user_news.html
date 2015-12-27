@@ -132,7 +132,7 @@
     <div class="container-fluid">
         <div class="row">
             <div id="rss-news">
-            {% if rss_news|length != 0 %}
+            {% if rss_news_count != 0 %}
                 <div id="rss-title">
                     All news which are your interested in
                 </div>
@@ -193,7 +193,7 @@
             </div>
             <div class="right-side">
             <div class="choosen-portals">
-                {% if user_rss|length < 1 %}
+                {% if user_rss_count < 1 %}
                     Recommended&nbsp;portals
                     <div class="recommendations">
                         {% for cur_rss_portal in popular_rss_right %}

@@ -151,6 +151,7 @@
             z-index: 10000;
         }
         .popup-user-auth {
+            z-index:999;
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.1);
@@ -233,7 +234,7 @@
         .left-bar-item{width: 120%;margin-left: -20%;}
         .left-bar-item:hover{background-color: rgba(55, 81, 141, 0.48);cursor: pointer;}
         .left-bar-link{width: 100%;}
-        .news-post-text img{width: 100px;}
+{#        .news-post-text img{width: 100px;}#}
         .signin{position:relative;z-index:1;overflow:hidden;text-align:center;}
         .signin:before,
         .signin:after{
@@ -256,12 +257,12 @@
             margin-top: -1.5%;
             list-style-type: none;
         }
-        .cur_unsel_portal{width: 20%;height: 5em;border: solid 1px red;}
+        .cur_unsel_portal{width: 20%;height: 5em;}
         .top-navigation{position: relative; height: 8%;font-family: Georgia, Times, "Times New Roman", serif}
         .top-left-bar{float: left; margin-left: 11%;}
-        .title-bar{float: left; margin-left: 18%;}
-        .title-name{margin-top: 5%; text-align: center; font-size: 2em;}
-        .logout{float: left; margin-right: 1%; margin-left: 35%;}
+        .title-bar{margin-left: auto; margin-right: auto; width: 120px;}
+        .title-name{margin-top: 5%; text-align: center; font-size: 2em; font-family: Georgia, Times, "Times New Roman", serif}
+        .logout{margin-right: 5%; top: 0; right: 0; position: absolute; float: right; width: 101px;}
         .auth{margin-left: 87%;}
         .signin{float: left;}
         #beta-announce{display: block; margin-left: auto;margin-right: auto;  width: 60%; border: solid 1px lightgrey;}
@@ -281,8 +282,8 @@
         #image-arrow-to-expand{opacity: 0.2;}
         #arrow-to-hide-sections{margin-left: 10%; width: 1%; position: fixed; margin-top: 20%;}
         #image-arrow-to-hide{opacity: 0.2;}
-        .top-navigation-menu{margin-top: 0;font-family: Georgia, Times, "Times New Roman", serif}
-        .top-navi-menu-content{margin-left: 16%;}
+        .top-navigation-menu{margin-left: auto; margin-right: auto; width: 52%; margin-top: 0;font-family: Georgia, Times, "Times New Roman", serif}
+        .top-navi-menu-content{margin-left: auto; margin-right:auto; width: 100%;}
         .top-navi-menu-content ul{list-style-type: none;}
         .search-bar{margin-left: 14%;}
         #textplace-search{float: left; width: 61%;}
@@ -328,7 +329,8 @@
         </div>
         <div class="title-bar">
             <div onmouseover="this.style.cursor='pointer';" class="title-name" onclick="location.href='/';">
-                <img src="{% static 'static/img/logo-light.png' %}" width="100%" />
+                <!--<img src="{% static 'static/img/logo-light.png' %}" width="100%" />-->
+                INSYDIA
             </div>
         </div>
         <div class="right-block">
@@ -337,7 +339,7 @@
                     <a href="/auth/logout/"><i class="fa fa-fw fa-power-off"></i>Log Out</a>
                 </div>
             {% else %}
-                <div class="auth">
+                <div class="logout">
                     <div class="signin" onclick="javascript:UserAuthPopUpShow();">
                         Sign In&nbsp;|&nbsp;
                     </div>
@@ -444,7 +446,6 @@
                 <div class="top-navigation-menu">
                     <div class="top-navi-menu-content">
                         <ul>
-                        {% cache 86400 everyone %}
                             <div id="everyone">
                                 <li class="li-cat"><a href="/">LATEST</a></li>
                                 <li class="li-cat"><a href="/news/technology/">TECHNOLOGY</a></li>
@@ -455,7 +456,6 @@
                                 <li class="li-cat"><a href="/news/companies/">COMPANIES</a></li>
                                 <li class="li-cat"><a href="/news/reviews/">REVIEWS</a></li>
                             </div>
-                        {% endcache %}
                             <div id="personal">
                                 {% if username.username and username.is_active == True %}
                                     <li class="li-cat"><a href="/news/usernews/">MyNews</a></li>
@@ -463,6 +463,17 @@
                             </div>
                         </ul>
                     </div>
+                    {% if category_flag == "ent" %}
+                                <div class="entertainment-categories"
+                                     style="margin-left: auto; margin-right: auto; width: 40%;">
+                                    <ul>
+                                        <li class="li-cat"><a href="">ALL</a></li>
+                                        <li class="li-cat"><a href="">GAMES</a></li>
+                                        <li class="li-cat"><a href="">MEDIA</a></li>
+                                        <li class="li-cat"><a href=""></a></li>
+                                    </ul>
+                                </div>
+                    {% endif %}
                 </div>
                 <div class="other">
                 <br>
@@ -519,6 +530,7 @@
                         {% block contacts %}{% endblock %}
                         {% block search %}{% endblock %}
                         {% block page_not_found %}{% endblock %}
+                        {% block about %}{% endblock %}
                     </div>
                 </div>
                 {% block settings %}{% endblock %}

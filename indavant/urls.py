@@ -23,6 +23,7 @@ handler404 = 'news.views.page_not_found'
 
 urlpatterns = patterns('',
     url(r'^about/', include('news.urls')),
+    url(r'^about', 'news.views.render_about_page'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^auth/', include('loginsys.urls')),
     url(r'^ext/', include("news.urls")),

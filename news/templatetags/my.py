@@ -39,7 +39,7 @@ def get_news_portal(value):
 def get_news_category(value, get_id=False):
     from news.models import News, NewsCategory
     if get_id == False:
-        return NewsCategory.objects.get(id=News.objects.get(id=int(value)).news_category_id).category_name
+        return NewsCategory.objects.get(id=News.objects.get(id=int(value)).news_category_id).category_name.lower()
     else:
         return News.objects.get(id=int(value)).news_category_id
 
@@ -75,7 +75,14 @@ def get_rss_portal_name(value):
 def get_user_photo(value):
     return User.objects.get(id=int(value)).profile.user_photo
 
+
 @register.filter(name="get_rss_news_cover")
 def get_rss_news_cover(value):
     from news.models import RssNewsCovers
     return RssNewsCovers.objects.get(id=int(value)).main_cover
+
+
+@register.filter(name="get_portal_link")
+def get_portal_link(value):
+    from news.models import NewsPortal
+    return NewsPortal.objects.get(id=int(value)).portal_base_link

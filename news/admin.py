@@ -16,11 +16,13 @@ admin.site.register(NewsPortal)
 
 
 class PostAdminForm(forms.ModelForm):
-    news_post_text = forms.CharField(widget=CKEditorWidget())
-    news_post_text_translate = forms.CharField(widget=CKEditorWidget())
+    news_post_text_english = forms.CharField(widget=CKEditorWidget(), required=False)
+    news_post_text_russian = forms.CharField(widget=CKEditorWidget(), required=False)
+    news_post_text_chinese = forms.CharField(widget=CKEditorWidget(), required=False)
     class Meta:
         model = News
         fields = "__all__"
+
 
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm

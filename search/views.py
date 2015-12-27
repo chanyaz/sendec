@@ -12,7 +12,7 @@ from search.models import UserRequests
 #   @login_required(login_url="/auth/login/")
 def render_search_page(request):
     args = {
-        "latest_news": get_latest_news_total(request),
+        "latest_news": get_latest_news_total(request)[:5],
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
@@ -48,23 +48,37 @@ def render_search_page(request):
 
 
 def get_latest_news_total(request):
-    latest_10_news = News.objects.all().order_by("-news_post_date")[:10]
+    latest_10_news = News.objects.all().order_by("-news_post_date")
     return latest_10_news
 
 
 #   @login_required(login_url="/auth/login/")
 def get_search_result(request, search_word):
-    return News.objects.filter(Q(news_title__contains=search_word) | Q(news_post_text__contains=search_word)).values()
+    companies_list = Companies.objects.filter(Q(name__contains=search_word.capitalize()) |
+                                              Q(name__contains=search_word)).values("id")
+    return News.objects.filter(Q(news_title__contains=search_word) |
+                               Q(news_company_owner_id__in=companies_list) |
+                               Q(news_post_text_russian__contains=search_word) |
+                               Q(news_post_text_english__contains=search_word) |
+                               Q(news_post_text_chinese__contains=search_word)).values()
 
 
 #   @login_required(login_url="/auth/login/")
 def get_search_result_text(request, search_word):
-    return News.objects.filter(news_post_text__contains=search_word).order_by("-news_post_date").values()
+    return News.objects.filter(Q(news_post_text_english__contains=search_word) |
+                               Q(news_post_text_russian__contains=search_word) |
+                               Q(news_post_text_chinese__contains=search_word)).order_by("-news_post_date").values()
 
 
 #   @login_required(login_url="/auth/login/")
 def get_matches_amount(request, search_word):
-    news = News.objects.filter(Q(news_title__contains=search_word) | Q(news_post_text__contains=search_word)).count()
+    companies_list = Companies.objects.filter(Q(name__contains=search_word.capitalize()) |
+                                              Q(name__contains=search_word)).values("id")
+    news = News.objects.filter(Q(news_title__contains=search_word) |
+                               Q(news_company_owner_id__in=companies_list) |
+                               Q(news_post_text_russian__contains=search_word) |
+                               Q(news_post_text_english__contains=search_word) |
+                               Q(news_post_text_chinese__contains=search_word)).count()
     users = get_search_among_users(request, search_word).count()
     companies = get_company(request, search_word).count()
     return news + users + companies

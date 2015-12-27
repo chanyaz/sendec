@@ -7,18 +7,30 @@
     <style>
         .ash{width: 95%; margin-left: 1%;}
         .total-news-block{width: 100%;}
-        .bn{height: 456px;}
-        .bn-left{float: left; width: 70%;}
-        #image-main-news{max-width:100%; max-height:100%; height: 450px; background: url('/media/{{ breaking_news.news_main_cover }}') no-repeat center; background-size: cover;}
-        .bn-title{text-align: left; position: relative; margin-top: -15%; width: 60%; background-color: #a6e1ec; opacity: 0.75;}
-        .bn-title-text{text-align: left; font-size: 20px;}
+
+        #latest-news{float: left; width: 68%;margin-left: 1%; height: 300px; border: solid 1px lightgrey; position:relative;}
+        .top-entertainment-content{display: block; opacity:1;height: 300px;}
+        .bn-title{
+            bottom: 50px;
+            position: absolute;
+            z-index: 999;
+            width: 70%;
+            background-color: white;
+            opacity: 0.75;
+            box-sizing: border-box;
+            display: block;
+        }
+        .bn-title-text{margin-left: 5%;font-size: 20px;color: blue;}
+
+
         .bn-right-nav{float: right; width: 30%;}
-        #main-container{width:325px;}
+        #main-container{width:325px; height: 300px; overflow-y: auto; overflow-x: hidden;}
         #container{width:325px;height:120px;}
         .recently-news{width: 100%;}
         .sect{width: 31%; margin-top: 1%;}
         .current_news{box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;}
-        .page-header{margin-top: 1.5%;}
+
+        .news-title{font-size: 17px; margin-top: 1.5%; font-family: Georgia, Times, "Times New Roman", serif}
 {#        .middle-news-cover{max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;}#}
 {#        .interest-news-cover{max-height: 100%; max-width: 100%; height: 200px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size:cover;}#}
 {#        .bottom-news-cover{max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_bottom_news.news_main_cover }}') no-repeat center; background-size: cover;}#}
@@ -29,8 +41,21 @@
         .right-bar-videos{width: 29%; float: right;}
         .recently-news-other{width: 100%;}
         .sect{width: 31%; margin-top: 1%;}
-        .current_news{box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;}
-        h4 .page-header{margin-top: 1.5%;}
+        .current_news{position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;}
+        .category-name{
+            position: absolute;
+            z-index: 900;
+            margin-top: -1%;
+        }
+        .category-name-content{
+            background-color: blue;
+            color: white;
+            font-family: Georgia, Times, "Times New Roman", serif;
+            text-transform: uppercase;
+        }
+    .category-link:hover{
+        text-decoration: none;
+    }
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -39,17 +64,21 @@
                     <div class="total-news-block" >
                         <div class="breaking-news">
                             <div class="bn">
-                                <div class="bn-left"
-                                     onclick="location.href='/news/{{ breaking_news.news_category_id }}/{{ breaking_news.id }}/';"
-                                     onmouseover="this.style.cursor='pointer';">
-                                    <div id="image-main-news"></div>
+
+
+                                <div id="latest-news">
+                                    <img class="top-entertainment-content"
+                                         width="100%"
+                                         src="/media/{{ breaking_news.news_main_cover }}"
+                                         onclick="location.href='/news/{{ breaking_news.news_category_id }}/{{ breaking_news.id }}/';" />
                                     <div class="bn-title">
                                         <span class="bn-title-text">
                                             {{ breaking_news.news_title }}
                                         </span>
                                     </div>
                                 </div>
-                                {% cache 600 bn-right-nav %}
+
+
                                 <div class="bn-right-nav">
 				                    <div id='main-container'>
 					                    <div id="container"></div>
@@ -118,7 +147,6 @@
                                         </table>
                                     </div>
                                 </div>
-                                {% endcache %}
                             </div>
                         </div>
                         <div class="recently-news">
@@ -128,16 +156,26 @@
                                          onmouseover="style.border='solid 0.2px blue';"
                                          onmouseout="style.border='';"
                                          onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
-                                        <div class="title">
-                                            <h4 class="page-header">
-                                                {{ current_middle_news.news_title|safe }}
-                                            </h4>
+                                        <div class="current_news-top" style="position:relative; height: 92%;">
+                                            <div class="category-name">
+                                                <a class="category-link" href="/news/{{ current_middle_news.id|get_news_category }}/">
+                                                    <span class="category-name-content">
+                                                        &nbsp;{{ current_middle_news.id|get_news_category }}&nbsp;
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            {% if current_middle_news.news_main_cover != None %}
+                                                <div class="middle-news-cover"
+                                                     style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                            {% endif %}
+                                            <div class="title">
+                                                <div class="news-title">
+                                                    {{ current_middle_news.news_title|safe }}
+                                                </div>
+                                            </div>
                                         </div>
-                                        {% if current_middle_news.news_main_cover != None %}
-                                            <div class="middle-news-cover"
-                                                 style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;"></div>
-                                        {% endif %}
-                                        <div class="text_post">
+                                        <div class="current_news_bottom">
+                                            SEE LATER
                                         </div>
                                     </div>
                                 </div>
@@ -168,15 +206,22 @@
                                                          onmouseover="style.border='solid 0.2px blue';"
                                                          onmouseout="style.border='';"
                                                          onclick="location.href='/news/{{ current_bottom_news.news_category_id }}/{{ current_bottom_news.id }}/';">
-                                                        <div class="title">
-                                                            <h4 class="page-header">
-                                                                {{ current_bottom_news.news_title|safe }}
-                                                            </h4>
+                                                        <div class="category-name">
+                                                            <a class="category-link" href="/news/{{ current_bottom_news.id|get_news_category }}/">
+                                                                <span class="category-name-content">
+                                                                    &nbsp;{{ current_bottom_news.id|get_news_category }}&nbsp;
+                                                                </span>
+                                                            </a>
                                                         </div>
                                                         {% if current_bottom_news.news_main_cover != '' %}
                                                             <div class="bottom-news-cover"
                                                                  style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_bottom_news.news_main_cover }}') no-repeat center; background-size: cover;"></div>
                                                         {% endif %}
+                                                        <div class="title">
+                                                            <div class="news-title">
+                                                                {{ current_bottom_news.news_title|safe }}
+                                                            </div>
+                                                        </div>
                                                         <div class="text_post">
                                                             {{ current_bottom_news.news_post_text|safe|striptags|truncatewords_html:"8" }}
                                                         </div>
@@ -195,18 +240,27 @@
                                                      onmouseover="style.border='solid 0.2px blue';"
                                                      onmouseout="style.border='';"
                                                      onclick="location.href='/news/{{ current_interest.news_category_id }}/{{ current_interest.id }}/';">
-                                                    <div class="title">
-                                                        <h4 class="page-header">
-                                                            {{ current_interest.news_title|safe }}
-                                                        </h4>
+                                                    <div class="cur-int-top" style="height: 92%;">
+                                                        <div class="category-name">
+                                                            <a class="category-link" href="/news/{{ current_interest.id|get_news_category }}/">
+                                                                <span class="category-name-content">
+                                                                    &nbsp;{{ current_interest.id|get_news_category }}&nbsp;
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                        {% if current_interest.news_main_cover != '' %}
+                                                            <div class="interest-news-cover"
+                                                                 style="max-height: 100%; max-width: 100%; height: 200px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                                        {% endif %}
+                                                        <div class="title">
+                                                            <div class="news-title">
+                                                                {{ current_interest.news_title|safe }}
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    {% if current_interest.news_main_cover != '' %}
-                                                        <div class="interest-news-cover"
-                                                             style="max-height: 100%; max-width: 100%; height: 200px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size:cover;"></div>
-                                                    {% endif %}
-                                                    <div class="text_post">
-                                                        {{ current_interest.news_post_text|safe|striptags|truncatewords_html:"8" }}
-                                                    </div>
+                                                    <!--<div class="source" style="margin-left: 2%;">
+                                                        <a href="{{ current_interest.news_portal_name_id|get_portal_link }}">{{ current_interest.news_portal_name_id|get_portal_name }}</a>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                         {% endfor %}
