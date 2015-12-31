@@ -107,6 +107,34 @@ class News(models.Model):
         }
 
 
+class TopNews(models.Model):
+    class Meta:
+        db_table = "news_top"
+        verbose_name = "Top"
+        verbose_name_plural = "Top news"
+
+    top_news_title = models.CharField(max_length=512)
+    top_news_category = models.ForeignKey(NewsCategory)
+    top_news_post_date = models.DateTimeField(auto_now_add=True)
+    top_news_post_text_english = models.TextField(max_length=4096)
+    top_news_post_text_russian = models.TextField(max_length=4096)
+    top_news_post_text_chinese = models.TextField(max_length=4096)
+
+    top_news_portal_name = models.ForeignKey(NewsPortal, blank=True)
+    top_news_company_owner = models.ForeignKey(Companies, blank=True)
+    top_news_author = models.ForeignKey(User, blank=True)
+
+    # Media
+    top_news_main_cover = models.FileField(upload_to=upload_news_cover, blank=True)
+
+    # Information
+    top_news_likes = models.IntegerField(default=0)
+    top_news_dislikes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.top_news_title
+
+
 class NewsWatches(models.Model):
     class Meta:
         db_table = "news_watches"

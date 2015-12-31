@@ -7,7 +7,7 @@ from django.contrib import auth
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsComments, NewsWatches, NewsCommentsReplies, RssSaveNews, RssNewsCovers
+from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsComments, NewsWatches, NewsCommentsReplies, RssSaveNews, RssNewsCovers, TopNews
 import datetime
 import json
 from userprofile.models import UserLikesNews, UserSettings, UserProfile, UserRssPortals
@@ -26,6 +26,7 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         "interest": get_interesting_news(request)[:3],
         "total_news": get_total_news,
         "page_template": page_template,
+        "top_news": get_top_total_news(request),
     }
     if render_news_by_sendec(request).order_by("-news_post_date")[4:13].count() > 0:
         args["total_bottom_news"] = render_news_by_sendec(request).order_by("-news_post_date")[4:13]
@@ -47,6 +48,10 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         args["username"] = User.objects.get(username=auth.get_user(request).username)
 
     return render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
+
+
+def get_top_total_news(request):
+    return TopNews.objects.all()[:4].values()
 
 
 def get_total_news():
@@ -163,9 +168,9 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
 
 
 def get_rss_filterd(request, user_id):
-    user_portals_ids = UserRssPortals.objects.filter(user_id=user_id).filter(check=True).values("id")
-    return RssNews.objects.filter(portal_name_id__in=user_portals_ids).order_by("-date_posted").order_by("-portal_name__userrssportals__rate").values()
-
+    user_portals_ids = UserRssPortals.objects.filter(user_id=user_id).filter(check=True).order_by("position").values("portal_id")
+    list_ids = [user_portals_ids[i]["portal_id"] for i in range(len(user_portals_ids))]
+    return RssNews.objects.filter(portal_name_id__in=list_ids, portal_name_id__userrssportals__user_id=user_id).order_by("portal_name_id__userrssportals__position").order_by("-date_posted").values()
 
 def get_user_unselceted_portals(request, user_id):
     return UserRssPortals.objects.filter(user_id=user_id).filter(check=False).values()
@@ -776,8 +781,8 @@ def remove_rss_portal_from_feed(request, uuid, pid):
     rss_portal_instance = RssPortals.objects.get(id=int(pid))
     rss_portal_instance.follows -= 1
     rss_portal_instance.save()
-    return render_to_response("user_news.html", args, context_instance=RequestContext(request))
-
+    # return render_to_response("user_news.html", args, context_instance=RequestContext(request))
+    return HttpResponseRedirect("/news/usernews/")
 
 def save_rss_news(request, rss_id):
     user = User.objects.get(username=auth.get_user(request).username)
@@ -884,7 +889,7 @@ def change_rates(request):
     args.update(csrf(request))
     if request.POST:# or request.is_ajax():
         dataArray = request.POST.getlist("dataArray")
-        #print(dataArray)
+        print(dataArray)
         a = json.loads(dataArray[0])
         for i in range(len(a["dict"])):
             #print("a")

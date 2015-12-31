@@ -32,7 +32,6 @@ class UserLikesNews(models.Model):
 class UserRssPortals(models.Model):
     class Meta:
         db_table = "user_rss_news"
-        ordering = ['rate']
 
     user = models.ForeignKey(User)
     portal = models.ForeignKey(RssPortals)

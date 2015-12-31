@@ -1,19 +1,21 @@
 from django.contrib import auth
 from django.contrib.auth import logout
-from django.shortcuts import redirect, render_to_response, HttpResponseRedirect
+from django.shortcuts import redirect, render_to_response, HttpResponseRedirect, HttpResponse
 from django.template.context_processors import csrf
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from userprofile.models import UserSettings, UserRssPortals, User
 from news.models import NewsPortal, NewsCategory, RssPortals
-from .forms import UserCreationFormNew
+from .forms import UserCreationFormNew, UserAuthenticationForm
 from .models import UserProfile
 import uuid
 import datetime
+import json
 import string
-from random import choice
+from random import choice, randint
 
+from django import forms
 
 SESSION_LIFE_TIME = 86400
 SESSION_LIFE_TIME_REMEMBERED = 31536000
@@ -31,6 +33,7 @@ def login(request):
 <br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
 <br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
 """
+    args["form"] = UserAuthenticationForm(request.POST)
 
     if auth.get_user(request).is_authenticated():
         return redirect("/")
@@ -50,10 +53,12 @@ def login(request):
                     request.session["pause"] = True
                 return redirect('/')
             else:
-                args['login_error'] = 'User not found.'
-                return render_to_response('index_new.html', args)
+                args['login_error'] = 'User not found. Please try again.'
+                return render_to_response('login.html', args)
         else:
-            return render_to_response('index_new.html', args)
+            args["img-num"] = randint(1, 4)
+            args["background_url"] = "/static/static/img/login/{file_num}.jpg".format(file_num=randint(1, 7))
+            return render_to_response('login.html', args)
 
 
 @login_required(login_url='/auth/login/')
@@ -83,52 +88,55 @@ def register(request):
         if request.POST:
             new_user_form = UserCreationFormNew(request.POST)
             user_name = request.POST['username']
-            if new_user_form.is_valid():
-                new_user_form.save()
-            new_user = auth.authenticate(username=user_name,
-                                         password=request.POST['password1'])
-            auth.login(request, new_user)
-            # User settings
-            UserSettings.objects.create(
-                user_id=User.objects.get(username=auth.get_user(request).username).id,
-            )
-            user_email = request.POST["email"]
-            user_phone = "+0-000-000-00-00"
-            #    request.POST["phone"]
+            if check_username(request, username=user_name) == False:
+                if new_user_form.is_valid():
+                    new_user_form.save()
+                new_user = auth.authenticate(username=user_name,
+                                             password=request.POST['password1'])
+                auth.login(request, new_user)
+                # User settings
+                UserSettings.objects.create(
+                    user_id=User.objects.get(username=auth.get_user(request).username).id,
+                )
+                user_email = request.POST["email"]
+                user_phone = "+0-000-000-00-00"
+                #    request.POST["phone"]
 
-            UserProfile.objects.create(
-                user_id=User.objects.get(username=auth.get_user(request).username).id,
-                confirmation_code=''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _
-                                          in range(33)),
-                user_cell_number=user_phone,
-                uuid=set_uuid(User.objects.get(username=auth.get_user(request).username).id)
-            )
-            list_portals = RssPortals.objects.all().values()
-            [UserRssPortals.objects.create(
-                user_id=User.objects.get(username=auth.get_user(request).username).id,
-                portal_id=int(list_portals[i]["id"]),
-                check=False
-            ) for i in range(len(list_portals))]
+                UserProfile.objects.create(
+                    user_id=User.objects.get(username=auth.get_user(request).username).id,
+                    confirmation_code=''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _
+                                              in range(33)),
+                    user_cell_number=user_phone,
+                    uuid=set_uuid(User.objects.get(username=auth.get_user(request).username).id)
+                )
+                list_portals = RssPortals.objects.all().values()
+                [UserRssPortals.objects.create(
+                    user_id=User.objects.get(username=auth.get_user(request).username).id,
+                    portal_id=int(list_portals[i]["id"]),
+                    check=False
+                ) for i in range(len(list_portals))]
 
-            mail_subject = "Confirm your account on Insydia, %s" % user_name
-            user_instance = User.objects.get(username=user_name)
-            text_content = 'This is an important message.'
-            htmly = render_to_string("confirm.html",
-                                     {'username': user_instance.username,
-                                      'email': user_email,
-                                      'ucid': user_instance.profile.confirmation_code,
-                                      'uuid': user_instance.profile.uuid})
-            html_content = htmly
-            mail_from = "insydia@yandex.ru"
-            mail_to = user_email
-            msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
-            msg.attach_alternative(html_content, "text/html")
-            msg.send()
-            instance = User.objects.get(username=auth.get_user(request).username)
-            instance.is_active = False
-            instance.email = user_email
-            instance.save()
-            return redirect('/')
+                mail_subject = "Confirm your account on Insydia, %s" % user_name
+                user_instance = User.objects.get(username=user_name)
+                text_content = 'This is an important message.'
+                htmly = render_to_string("confirm.html",
+                                         {'username': user_instance.username,
+                                          'email': user_email,
+                                          'ucid': user_instance.profile.confirmation_code,
+                                          'uuid': user_instance.profile.uuid})
+                html_content = htmly
+                mail_from = "insydia@yandex.ru"
+                mail_to = user_email
+                msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
+                instance = User.objects.get(username=auth.get_user(request).username)
+                instance.is_active = False
+                instance.email = user_email
+                instance.save()
+                return redirect('/')
+        args["img-num"] = randint(1, 4)
+        args["background_url"] = "/static/static/img/login/{file_num}.jpg".format(file_num=randint(1, 7))
         return render_to_response('register.html', args)
 
 
@@ -245,3 +253,17 @@ def send_message_via_sms(request, verify_code, phone_number):
 def set_uuid(user_id):
     user_instance = User.objects.get(id=user_id)
     return uuid.uuid3(uuid.NAMESPACE_DNS, "%s %s" % (user_instance.username, datetime.datetime.now()))
+
+
+def check_username(request, username):
+    if User.objects.filter(username=username).exists():
+        return HttpResponse(json.dumps({"data": True}), content_type="application/json")
+    else:
+        return HttpResponse(json.dumps({"data": False}), content_type="application/json")
+
+
+def render_help_login(request):
+    args = {}
+    args.update(csrf(request))
+
+    return render_to_response("cant_login.html", args)

@@ -4,6 +4,10 @@
 {% load cache %}
 {% block current_news %}
     <script>
+        $("li[title='More Options']").hide();
+    </script>
+
+    <script>
         function add_like_news(news_id) {
             $.ajax({
                 data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
@@ -57,19 +61,21 @@
     <style>
         .share-list-item{float: left;margin-left: 1%; width: 24%; height:1.5em;}
         .container-fluid{border: solid 1px lightgrey;}
-        .tre{float: left; width: 70%;}
+        .tre{float: left; width: 70%; border-right: solid 1px lightgrey;}
         .page-header{font-size: 30px; margin: 0 5%; font-family: Georgia, Times, "Times New Roman", serif}
         .date-and-author{margin-left: 5%;}
         .news-settings{height: 2em; width: 100%; text-transform: uppercase;}
         .shares{margin-left: -6%; margin-top: -1%;}
         .share-title{margin-left: 15%; font-family: Arial, Helvetica, sans-serif}
         ul{list-style-type: none;}
-        .news-cover{max-width: 100%; max-height: 100%; margin-top: 0; min-height: 300px; background: url('/media/{{ current_news_values.news_main_cover }}') no-repeat center; background-size: auto;}
+        .news-cover{display: flex; align-items: baseline; max-width: 100%; max-height: 100%; margin-top: 0; min-height: 200px; width: 100%;}
+        .current-cover{max-width:100%; max-height: 450px; display: block; margin-left: auto; margin-right: auto;}
         .news-cover-bottom{max-width: 100%; max-height: 100%; margin-top: 0; height: 200px;}
         .news-title-bottom{font-family: Georgia, Times, "Times New Roman", serif; font-size: 15px;}
         .current-other-news{height: 20em; float: left; margin-left: 2%; margin-top: 1%; width: 25%; box-shadow: 0 0 1px black;}
         .news-post-text{margin: 0 15%; font-family: Georgia,Times,sans-serif; font-size: 19px;}
-        .nav-bar{margin-left: 63%;}
+        .news-post-text img{}
+{#        .nav-bar{margin-left: 63%;}#}
         .liked{float: left;}
         .disliked{float: left;}
         .other-materials{height: {% if other_materials_count <= 3 %} 25em {% elif other_materials_count <= 6 %} 52em {% elif other_materials_count <= 9 %} 77em {% elif other_materials_count <= 12 %} 103em {% endif %}}
@@ -157,9 +163,9 @@
             </div>
         {% endcache %}
             {% if current_news_values.news_main_cover != '' %}
-                {% cache 600 news-cover %}
-                <div class="news-cover"></div>
-                {% endcache %}
+                <div class="news-cover">
+                    <img class="current-cover" src="/media/{{ current_news_values.news_main_cover }}"/>
+                </div>
             {% endif %}
             <div id="translates" style="float: right;">
                 <ol class="translate-list" style="list-style-type: none;">
@@ -189,8 +195,10 @@
                     {{ current_news_values.news_post_text_chinese|safe|linebreaks }}
                 {% endif %}
             </div>
-            <div class="nav-bar">
-                <ul class="list-inline">
+            <div style="margin-top: -5%;" class='shareaholic-canvas' data-app='share_buttons' data-app-id='22745115'></div>
+            <!--<div style="" class="nav-bar">
+                <div id="nav-bar-left">
+                    <ul class="list-inline">
                     <li>
                         <span data-news-id="{{ current_news_values.id }}"
                               class="news_likes"
@@ -222,7 +230,6 @@
                                 {% if disliked == False %}
                                     Dislikes:
                                 {% else %}
-                                    <!-- Break dislike -->
                                     <span
                                         data-news-id="{{ current_news_values.id }}"
                                         class="break_dislike"
@@ -247,9 +254,8 @@
                     {% endcache %}
                     </li>
                 </ul>
-            </div>
-
-
+                </div>
+            </div>-->
 
             {% if other_materials_count > 0 %}
                 <hr width="100%">

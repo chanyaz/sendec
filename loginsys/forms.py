@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
-
+from django.contrib import auth
 
 class UserCreationFormNew(forms.ModelForm):
     """
@@ -13,9 +13,17 @@ class UserCreationFormNew(forms.ModelForm):
         'password_mismatch': _("The two password fields didn't match."),
     }
     password1 = forms.CharField(label=_("Password"),
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Password',
+            'required': 'required'
+        }))
     password2 = forms.CharField(label=_("Password confirmation"),
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm password'}),
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'required': 'required',
+            'placeholder': 'Confirm password'
+        }),
         help_text=_("Enter the same password as above, for verification."))
 
     class Meta:
@@ -38,3 +46,34 @@ class UserCreationFormNew(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class UserAuthenticationForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ()
+    error_messages = {
+        'password_mismatch': _("The two password fields didn't match."),
+    }
+
+    username = forms.CharField(label=_("Username"),
+                               widget=forms.TextInput(attrs={
+                                   'class': 'form-control',
+                                   'required': 'required',
+                                   'name': 'username',
+                                   'placeholder': "Username"
+                               }))
+    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'required': 'required',
+        'placeholder': 'Password',
+        'name': 'password'
+    }))
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = auth.authenticate(username=username, password=password)
+        if not user or not user.is_active:
+            raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+        return self.cleaned_data

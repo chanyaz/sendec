@@ -20,10 +20,10 @@ def render_search_page(request):
         search_word = request.GET["q"]
         if search_word is "":
             args["erorr_empty_field"] = True
-        elif len(get_search_result_text(request, search_word)) < 1 and len(get_search_result_text(request, search_word)) < 1\
-                and len(get_search_among_users(request, search_word)) < 1 and len(get_company(request, search_word)) < 1:
-            args["empty_result"] = True
-            args["popular_news"] = get_popular_news(request)
+        #elif len(get_search_result_text(request, search_word)) < 1 and len(get_search_result_text(request, search_word)) < 1\
+        #        and len(get_search_among_users(request, search_word)) < 1 and len(get_company(request, search_word)) < 1:
+         #   args["empty_result"] = True
+         #   args["popular_news"] = get_popular_news(request)
         else:
             args["results"] = get_search_result(request, search_word)
             args["matches_amount"] = get_matches_amount(request, search_word)
@@ -54,8 +54,8 @@ def get_latest_news_total(request):
 
 #   @login_required(login_url="/auth/login/")
 def get_search_result(request, search_word):
-    companies_list = Companies.objects.filter(Q(name__contains=search_word.capitalize()) |
-                                              Q(name__contains=search_word)).values("id")
+    companies_list = Companies.objects.filter(Q(name__contains=search_word[1:]) |
+                                              Q(name__contains=search_word[1:])).values("id")
     return News.objects.filter(Q(news_title__contains=search_word) |
                                Q(news_company_owner_id__in=companies_list) |
                                Q(news_post_text_russian__contains=search_word) |
@@ -97,4 +97,5 @@ def get_search_among_users(request, search_word):
 
 
 def get_company(request, search_word):
-    return Companies.objects.filter(Q(name__contains=search_word))
+    return Companies.objects.filter(Q(name__contains=search_word) | Q(verbose_name__contains=search_word) |
+                                    Q(name__contains=search_word.capitalize()))

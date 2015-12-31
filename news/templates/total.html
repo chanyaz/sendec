@@ -8,13 +8,13 @@
         .ash{width: 95%; margin-left: 1%;}
         .total-news-block{width: 100%;}
 
-        #latest-news{float: left; width: 68%;margin-left: 1%; height: 300px; border: solid 1px lightgrey; position:relative;}
-        .top-entertainment-content{display: block; opacity:1;height: 300px;}
+        #latest-news{float: left; width: 100%; height: 400px; border: solid 1px lightgrey; position:relative;}
+        .top-total-content{height: 400px; background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center; background-size: cover;}
         .bn-title{
             bottom: 50px;
             position: absolute;
             z-index: 999;
-            width: 70%;
+            width: 50%;
             background-color: white;
             opacity: 0.75;
             box-sizing: border-box;
@@ -23,12 +23,15 @@
         .bn-title-text{margin-left: 5%;font-size: 20px;color: blue;}
 
 
+
         .bn-right-nav{float: right; width: 30%;}
         #main-container{width:325px; height: 300px; overflow-y: auto; overflow-x: hidden;}
         #container{width:325px;height:120px;}
         .recently-news{width: 100%;}
-        .sect{width: 31%; margin-top: 1%;}
-        .current_news{box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;}
+        #middle-news{
+            margin-top: 1%;
+        }
+{#        .sect{width: 24%; margin-bottom: 1%;}#}
 
         .news-title{font-size: 17px; margin-top: 1.5%; font-family: Georgia, Times, "Times New Roman", serif}
 {#        .middle-news-cover{max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;}#}
@@ -40,8 +43,7 @@
         .left-bar-videos{margin-left: 0.9%; float: left; width: 70%; height: 100%;}
         .right-bar-videos{width: 29%; float: right;}
         .recently-news-other{width: 100%;}
-        .sect{width: 31%; margin-top: 1%;}
-        .current_news{position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;}
+        .current_news{margin-top: 5%; height: 300px; position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.5); width: 100%; float: left;}
         .category-name{
             position: absolute;
             z-index: 900;
@@ -56,6 +58,203 @@
     .category-link:hover{
         text-decoration: none;
     }
+
+    .middle-news-cover .mask,
+    .total-news-cover .mask,
+    .bottom-news-cover .mask,
+    .interest-news-cover .mask {
+   opacity: 0;
+   overflow:visible;
+   border:105px solid rgba(0,0,0,0.7);
+   -moz-box-sizing:border-box;
+   -webkit-box-sizing:border-box;
+   box-sizing:border-box;
+   -webkit-transition: all 0.4s ease-in-out;
+   -moz-transition: all 0.4s ease-in-out;
+   -o-transition: all 0.4s ease-in-out;
+   -ms-transition: all 0.4s ease-in-out;
+   transition: all 0.4s ease-in-out;
+}
+.middle-news-cover a.info,
+.total-news-cover a.info,
+.bottom-news-cover a.info,
+.interest-news-cover a.info,
+.ln-right-left-top a.info{
+   position:relative;
+   top:-10px;
+   opacity: 0;
+   -webkit-transition: opacity 0.5s 0s ease-in-out;
+   -moz-transition: opacity 0.5s 0s ease-in-out;
+   -o-transition: opacity 0.5s 0s ease-in-out;
+   -ms-transition: opacity 0.5s 0s ease-in-out;
+   transition: opacity 0.5s 0s ease-in-out;
+}
+.middle-news-cover:hover .mask,
+.total-news-cover:hover .mask,
+.bottom-news-cover:hover .mask,
+.interest-news-cover:hover .mask{
+   opacity: 1;
+   border:105px solid rgba(0,0,0,0.7);
+}
+.middle-news-cover:hover a.info,
+.total-news-cover:hover a.info,
+.bottom-news-cover:hover a.info,
+.interest-news-cover:hover a.info {
+	opacity:1;
+	-moz-transition-delay: 0.3s;
+	-webkit-transition-delay: 0.3s;
+	-o-transition-delay: 0.3s;
+	-ms-transition-delay: 0.3s;
+	transition-delay: 0.3s;
+}
+
+
+
+
+
+    .ln-left .mask,
+    .ln-right-right .mask{
+        position:absolute; /* Center the mask */
+{#        top: 10px;#}
+{#        left:100px;#}
+        cursor:pointer;
+{#        border-radius: 50px;#}
+{#        border-width: 50px;#}
+        display: inline-block;
+{#        height: 10px;#}
+{#        width: 100%;#}
+        border: 400px solid rgba(0, 0, 0, 0.7);
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+        box-sizing:border-box;
+        opacity:1;
+        visibility:visible;
+        -moz-transform:scale(4);
+        -webkit-transform:scale(4);
+        -o-transform:scale(4);
+        -ms-transform:scale(4);
+        transform:scale(4);
+        -moz-transition:all 0.3s ease-in-out;
+        -webkit-transition:all 0.3s ease-in-out;
+        -o-transition:all 0.3s ease-in-out;
+        -ms-transition:all 0.3s ease-in-out;
+        transition:all 0.3s ease-in-out;
+    }
+
+    .ln-right-left-top .mask,
+    .ln-right-left-bottom .mask{
+        position:absolute; /* Center the mask */
+{#        top: 10px;#}
+{#        left:100px;#}
+        cursor:pointer;
+{#        border-radius: 50px;#}
+{#        border-width: 50px;#}
+        display: inline-block;
+{#        height: 10px;#}
+{#        width: 100%;#}
+        border: 200px solid rgba(0, 0, 0, 0.7);
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+        box-sizing:border-box;
+        opacity:1;
+        visibility:visible;
+        -moz-transform:scale(4);
+        -webkit-transform:scale(4);
+        -o-transform:scale(4);
+        -ms-transform:scale(4);
+        transform:scale(4);
+        -moz-transition:all 0.3s ease-in-out;
+        -webkit-transition:all 0.3s ease-in-out;
+        -o-transition:all 0.3s ease-in-out;
+        -ms-transition:all 0.3s ease-in-out;
+        transition:all 0.3s ease-in-out;
+    }
+
+
+    .ln-left:hover .mask,
+    .ln-right-left-top:hover .mask,
+    .ln-right-left-bottom:hover .mask,
+    .ln-right-right:hover .mask {
+       opacity: 0;
+       border:0 solid rgba(0,0,0,0.7);
+       visibility:hidden;
+    }
+
+    .ln-left{
+        float: left;
+        width: 50%;
+        height: 400px;
+        position: relative;
+        overflow: hidden;
+    }
+    .ln-right{
+        float:right;
+{#        border: solid 1px purple;#}
+        width: 50%;
+        height: 400px;
+    }
+    .ln-right-left{
+        float: left;
+        width: 50%;
+        height: 400px;
+{#        border: solid 1px red;#}
+    }
+    .ln-right-left-top{
+{#        background: url('{% static 'static/img/login/1.jpg' %}') no-repeat center;#}
+{#        background-size: cover;#}
+        width: 100%;
+        height: 200px;
+{#        border: solid 1px blue;#}
+        overflow: hidden;
+        position: relative;
+    }
+    .ln-right-left-top-test{
+        background: url('/media/{{ top_news.1.top_news_main_cover }}') no-repeat center;
+        background-size: cover;
+{#        width: 100%;#}
+        height: 200px;
+{#        border: solid 1px blue;#}
+        overflow: hidden;
+        position: relative;
+    }
+    .ln-right-left-bottom{
+{#        background: url('{% static 'static/img/login/2.jpg' %}') no-repeat center;#}
+{#        background-size: cover;#}
+        width: 100%;
+        height: 200px;
+{#        border: solid 1px greenyellow;#}
+        overflow: hidden;
+        position: relative;
+    }
+    .ln-right-left-bottom-test{
+        background: url('/media/{{ top_news.2.top_news_main_cover }}') no-repeat center;
+        background-size: cover;
+{#        width: 100%;#}
+        height: 200px;
+{#        border: solid 1px greenyellow;#}
+        overflow: hidden;
+        position: relative;
+    }
+    .ln-right-right{
+{#        background: url('{% static 'static/img/login/3.jpg' %}') no-repeat center;#}
+{#        background-size: cover;#}
+        float: right;
+        width: 50%;
+        height: 400px;
+{#        border: solid 1px aqua;#}
+        overflow: hidden;
+        position: relative;
+    }
+    .ln-right-right-test{
+        background: url('/media/{{ top_news.3.top_news_main_cover }}') no-repeat center;
+        background-size: cover;
+{#        float: right;#}
+{#        width: 50%;#}
+        height: 400px;
+{#        border: solid 1px aqua;#}
+        overflow: hidden;
+        position: relative;
+    }
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -64,99 +263,88 @@
                     <div class="total-news-block" >
                         <div class="breaking-news">
                             <div class="bn">
-
-
-                                <div id="latest-news">
-                                    <img class="top-entertainment-content"
-                                         width="100%"
-                                         src="/media/{{ breaking_news.news_main_cover }}"
-                                         onclick="location.href='/news/{{ breaking_news.news_category_id }}/{{ breaking_news.id }}/';" />
-                                    <div class="bn-title">
-                                        <span class="bn-title-text">
-                                            {{ breaking_news.news_title }}
-                                        </span>
+                                <div id="latest-news"
+                                     onmouseover="this.style.cursor='pointer';">
+                                    <div class="ln-left">
+                                        <div class="top-total-content"
+                                             onclick="location.href='/news/{{ top_news.0.top_news_category_id }}/{{ top_news.0.id }}/';">
+                                        </div>
+                                        <div class="bn-title">
+                                            <span class="bn-title-text">
+                                                {{ top_news.0.top_news_title }}
+                                            </span>
+                                        </div>
+{#                                        <div class="mask"></div>#}
+                                    </div>
+                                    <div class="ln-right">
+                                        <div class="ln-right-left">
+                                            <div class="grid ln-right-left-top">
+                                                <figure class="effect-zoe">
+                                                    <div class="ln-right-left-top-test"></div>
+                                                    <div class="mask"></div>
+{#                                                    <img src="{% static 'static/img/login/5.jpg' %}" width="100%" alt="5"/>#}
+                                                    <figcaption>
+                                                        <h4>{{ top_news.1.top_news_title }}</h4>
+                                                        <p class="icon-links">
+                                                            <a href="#"><span class="icon-heart"></span></a>
+                                                            <a href="#"><span class="icon-eye"></span></a>
+                                                            <a href="#"><span class="icon-paper-clip"></span></a>
+                                                        </p>
+                                                        <p class="description">{{ top_news.1.top_news_title }}</p>
+                                                    </figcaption>
+                                                </figure>
+                                            </div>
+                                            <div class="grid ln-right-left-bottom">
+                                                <figure class="effect-zoe">
+                                                    <div class="ln-right-left-bottom-test"></div>
+                                                    <div class="mask"></div>
+{#                                                    <img src="{% static 'static/img/login/5.jpg' %}" width="100%" alt="5"/>#}
+                                                    <figcaption>
+                                                        <h4>{{ top_news.2.top_news_title }}</h4>
+                                                        <p class="icon-links">
+                                                            <a href="#"><span class="icon-heart"></span></a>
+                                                            <a href="#"><span class="icon-eye"></span></a>
+                                                            <a href="#"><span class="icon-paper-clip"></span></a>
+                                                        </p>
+                                                        <p class="description">{{ top_news.2.top_news_title }}</p>
+                                                    </figcaption>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                            <div class="grid ln-right-right">
+                                                <figure class="effect-zoe">
+                                                    <div class="ln-right-right-test"></div>
+                                                    <div class="mask"></div>
+{#                                                    <img src="{% static 'static/img/login/5.jpg' %}" width="100%" alt="5"/>#}
+                                                    <figcaption>
+                                                        <h4>{{ top_news.3.top_news_title }}</h4>
+                                                        <p class="icon-links">
+                                                            <a href="#"><span class="icon-heart"></span></a>
+                                                            <a href="#"><span class="icon-eye"></span></a>
+                                                            <a href="#"><span class="icon-paper-clip"></span></a>
+                                                        </p>
+                                                        <p class="description">{{ top_news.3.top_news_title }}</p>
+                                                    </figcaption>
+                                                </figure>
+                                            </div>
+{#                                            <div class="mask"></div>#}
+{#                                        </div>#}
                                     </div>
                                 </div>
-
-
                                 <div class="bn-right-nav">
-				                    <div id='main-container'>
-					                    <div id="container"></div>
-                                        <a id='adv_AAPL' class='adv_link' rel='nofollow' href='http://amigobulls.com/stocks/AAPL/stockcharts' title='advanced AAPL stock chart'></a>
-                                        <a id='adv_FB' class='adv_link' rel='nofollow' href='http://amigobulls.com/stocks/FB/stockcharts' title='advanced FB stock chart'></a>
-                                        <a id='adv_GOOG' class='adv_link' rel='nofollow' href='http://amigobulls.com/stocks/GOOG/stockcharts' title='advanced GOOG stock chart'></a>
-                                        <a id='adv_MSFT' class='adv_link' rel='nofollow' href='http://amigobulls.com/stocks/MSFT/stockcharts' title='advanced MSFT stock chart'></a>
-                                        <a id='adv_TSLA' class='adv_link' rel='nofollow' href='http://amigobulls.com/stocks/TSLA/stockcharts' title='advanced TSLA stock chart'></a>
-                                        <a id='adv_AMZN' class='adv_link' rel='nofollow' href='http://amigobulls.com/stocks/AMZN/stockcharts' title='advanced AMZN stock chart'></a>
-                                        <a id='adv_TWTR' class='adv_link' rel='nofollow' href='http://amigobulls.com/stocks/TWTR/stockcharts' title='advanced TWTR stock chart'></a>
-                                        <table id='chart_table'>
-                                            <tr>
-                                                <th>Symbol</th>
-                                                <th>Closing&nbsp;Price</th>
-                                                <th>Change(%)</th>
-                                            </tr>
-                                            <tr id="AAPL" class="ticker_tr pointerCursor" onclick="getTickChart('AAPL')">
-                                                <td>
-                                                    <a rel='nofollow' class='tickerblue' href='http://amigobulls.com/stocks/AAPL'>AAPL</a>
-                                                </td>
-                                                <td class='tick_val'></td>
-                                                <td class='tick_change'></td>
-                                            </tr>
-                                            <tr id='FB' class='ticker_tr pointerCursor' onclick="getTickChart('FB')">
-                                                <td>
-                                                    <a rel='nofollow' class='tickerblue' href='http://amigobulls.com/stocks/FB'>FB</a>
-                                                </td>
-                                                <td class='tick_val'></td>
-                                                <td class='tick_change'></td>
-                                            </tr>
-                                            <tr id='GOOG' class='ticker_tr pointerCursor' onclick="getTickChart('GOOG')">
-                                                <td>
-                                                    <a rel='nofollow' class='tickerblue' href='http://amigobulls.com/stocks/GOOG'>GOOG</a>
-                                                </td>
-                                                <td class='tick_val'></td>
-                                                <td class='tick_change'></td>
-                                            </tr>
-                                            <tr id='MSFT' class='ticker_tr pointerCursor' onclick="getTickChart('MSFT')">
-                                                <td>
-                                                    <a rel='nofollow' class='tickerblue' href='http://amigobulls.com/stocks/MSFT'>MSFT</a>
-                                                </td>
-                                                <td class='tick_val'></td>
-                                                <td class='tick_change'></td>
-                                            </tr>
-                                            <tr id='TSLA' class='ticker_tr pointerCursor' onclick="getTickChart('TSLA')">
-                                                <td>
-                                                    <a rel='nofollow' class ='tickerblue' href='http://amigobulls.com/stocks/TSLA'>TSLA</a>
-                                                </td>
-                                                <td class='tick_val'></td>
-                                                <td class='tick_change'></td>
-                                            </tr>
-                                            <tr id='AMZN' class='ticker_tr pointerCursor' onclick="getTickChart('AMZN')">
-                                                <td>
-                                                    <a rel='nofollow' class='tickerblue' href='http://amigobulls.com/stocks/AMZN'>AMZN</a>
-                                                </td>
-                                                <td class='tick_val'></td>
-                                                <td class='tick_change'></td>
-                                            </tr>
-                                            <tr id='TWTR' class='ticker_tr pointerCursor' onclick="getTickChart('TWTR')">
-                                                <td>
-                                                    <a rel='nofollow' class='tickerblue' href='http://amigobulls.com/stocks/TWTR'>TWTR</a>
-                                                </td>
-                                                <td class='tick_val'></td>
-                                                <td class='tick_change'></td>
-                                            </tr>
-                                        </table>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                        <div class="recently-news">
                             {% for current_middle_news in total_middle_news %}
                                 <div class="sect">
                                     <div class="current_news"
                                          onmouseover="style.border='solid 0.2px blue';"
                                          onmouseout="style.border='';"
                                          onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
-                                        <div class="current_news-top" style="position:relative; height: 92%;">
+                                        <div class="current_news_top"
+                                             onmouseover="this.style.cursor='pointer';"
+                                             style="position:relative; height: 92%;">
                                             <div class="category-name">
                                                 <a class="category-link" href="/news/{{ current_middle_news.id|get_news_category }}/">
                                                     <span class="category-name-content">
@@ -166,7 +354,11 @@
                                             </div>
                                             {% if current_middle_news.news_main_cover != None %}
                                                 <div class="middle-news-cover"
-                                                     style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                                     style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                <div class="mask">
+{#                                                    <a href="#" class="info"></a>#}
+                                                </div>
+                                                </div>
                                             {% endif %}
                                             <div class="title">
                                                 <div class="news-title">
@@ -180,13 +372,12 @@
                                     </div>
                                 </div>
                             {% endfor %}
-                        </div>
                         <hr width="100%">
                         <div class="media">
-                        {% cache 86400 latest-reviews %}
+
                             <div class="latest-reviews">
                                 <div class="left-bar-videos">
-                                    <iframe width="100%" height="90%" src="https://www.youtube.com/embed/t4OEsI0Sc_s" frameborder="0" allowfullscreen></iframe>
+{#                                    <iframe width="100%" height="90%" src="https://www.youtube.com/embed/t4OEsI0Sc_s" frameborder="0" allowfullscreen></iframe>#}
                                 </div>
                                 <div class="right-bar-videos">
                                     {% for current_video in video_top %}
@@ -194,7 +385,7 @@
                                     {% endfor %}
                                 </div>
                             </div>
-                        {% endcache %}
+
                             <hr width="100%">
                             <div class="recently-news">
                                 RECENTLY&nbsp;NEWS<br>
@@ -203,7 +394,7 @@
                                             {% for current_bottom_news in total_bottom_news %}
                                                 <div class="sect">
                                                     <div class="current_news"
-                                                         onmouseover="style.border='solid 0.2px blue';"
+                                                         onmouseover="style.border='solid 0.2px blue'; this.style.cursor='pointer';"
                                                          onmouseout="style.border='';"
                                                          onclick="location.href='/news/{{ current_bottom_news.news_category_id }}/{{ current_bottom_news.id }}/';">
                                                         <div class="category-name">
@@ -214,8 +405,12 @@
                                                             </a>
                                                         </div>
                                                         {% if current_bottom_news.news_main_cover != '' %}
-                                                            <div class="bottom-news-cover"
-                                                                 style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_bottom_news.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                                            <div class="bottom-news-cover cover-hover"
+                                                                 style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_bottom_news.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                            <div class="mask">
+            {#                                                  <a href="#" class="info"></a>#}
+                                                            </div>
+                                                            </div>
                                                         {% endif %}
                                                         <div class="title">
                                                             <div class="news-title">
@@ -237,7 +432,7 @@
                                         {% for current_interest in interest %}
                                             <div class="sect">
                                                 <div class="current_news"
-                                                     onmouseover="style.border='solid 0.2px blue';"
+                                                     onmouseover="style.border='solid 0.2px blue'; this.style.cursor='pointer';"
                                                      onmouseout="style.border='';"
                                                      onclick="location.href='/news/{{ current_interest.news_category_id }}/{{ current_interest.id }}/';">
                                                     <div class="cur-int-top" style="height: 92%;">
@@ -249,8 +444,10 @@
                                                             </a>
                                                         </div>
                                                         {% if current_interest.news_main_cover != '' %}
-                                                            <div class="interest-news-cover"
-                                                                 style="max-height: 100%; max-width: 100%; height: 200px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                                            <div class="interest-news-cover cover-hover"
+                                                                 style="max-height: 100%; max-width: 100%; height: 210px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                                <div class="mask"></div>
+                                                            </div>
                                                         {% endif %}
                                                         <div class="title">
                                                             <div class="news-title">
@@ -270,7 +467,7 @@
                                 <div class="load-more">
                                     <div class="endless_page_template">
                                         {% block js %}
-                                            <script src="{% static 'static/js/jquery-latest.js' %}"></script>
+                                            <script src="{% static 'static/js/jquery.js' %}"></script>
                                             <script src="{% static 'static/js/endless-pagination.js' %}"></script>
                                             <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
                                             <script>

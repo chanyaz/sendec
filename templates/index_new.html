@@ -10,16 +10,30 @@
     <meta name='yandex-verification' content='5e44980913d08dad' />
     <meta name="google-site-verification" content="y6Xw9KEH5CLn8NGw7Q2xWyettWl8PNt06hQVCjG2EBs" />
     <title>{{ title }}&nbsp;Insydia</title>
+
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="{% static 'static/img/favicon.ico' %}" type="image/x-icon">
     <!--<script type="text/javascript" src="http://vk.com/js/api/share.js?93" charset="windows-1251"></script>-->
-    <script>var companytick = ["AAPL","FB","GOOG","MSFT","TSLA","AMZN","TWTR"];</script>
-    <script src="{% static 'static/js/jquery.min.js' %}"></script>
-    <script src="{% static 'static/js/jquery-ui.min.js' %}"></script>
+{#    <script>var companytick = ["AAPL","FB","GOOG","MSFT","TSLA","AMZN","TWTR"];</script>#}
+{#    <script src="{% static 'static/js/jquery-ui.min.js' %}"></script>#}
+{#    <script src="{% static 'static/js/jquery-ui.js' %}"></script>#}
+
+
+{#    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">#}
+{#    <script src="//code.jquery.com/jquery-1.10.2.js"></script>#}
+{#    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>#}
+
+
+
     <!--<link rel="stylesheet" type="text/css" href="http://static.amigobulls.com/css/chart-widget.min.css.gz" />-->
-    <link rel="stylesheet" type="text/css" href="{% static 'static/css/chart-widget.css' %}" />
+{#    <link rel="stylesheet" type="text/css" href="{% static 'static/css/chart-widget.css' %}" />#}
     <script type="text/javascript">
         function validate_form ( ) {
         	valid = true;
@@ -43,7 +57,11 @@
             })
         })
     </script>
-    <script>
+
+
+
+
+    <!--<script>
         function showLeftBar() {
             $('.left-panel').show();
             document.getElementById('arrow-to-show-sections').style.marginLeft = '11%';
@@ -56,7 +74,7 @@
             $('#arrow-to-hide-sections').delay(200).fadeOut("fast");
             $('#arrow-to-show-sections').delay(201).fadeIn("fast");
         }
-    </script>
+    </script>-->
     <script>
         jQuery(function($){
             $(document).mouseup(function (e){
@@ -183,6 +201,7 @@
             padding: 10px;
         }
         .preview-rss-news {
+            z-index: 999;
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.1);
@@ -226,7 +245,7 @@
             height: 100%;
             width: inherit;
             max-width: 100%;
-            max-height: 30em;
+            max-height: 300px;
             display: block;
         }
         #rss-share-list li{float:left;}
@@ -282,7 +301,7 @@
         #image-arrow-to-expand{opacity: 0.2;}
         #arrow-to-hide-sections{margin-left: 10%; width: 1%; position: fixed; margin-top: 20%;}
         #image-arrow-to-hide{opacity: 0.2;}
-        .top-navigation-menu{margin-left: auto; margin-right: auto; width: 52%; margin-top: 0;font-family: Georgia, Times, "Times New Roman", serif}
+        .top-navigation-menu{margin-left: auto; margin-right: auto; width: 55%; margin-top: 0;font-family: Georgia, Times, "Times New Roman", serif}
         .top-navi-menu-content{margin-left: auto; margin-right:auto; width: 100%;}
         .top-navi-menu-content ul{list-style-type: none;}
         .search-bar{margin-left: 14%;}
@@ -306,244 +325,227 @@
         #auth-botton-reg-link{margin-left: 1em;}
         .total-body{padding-top: 2%;}
         .total-body-closer{margin-left: 100%; width: 3%; background: whitesmoke; border: solid 1px blue;}
-        .rss-title{margin-top: -8%; margin-left: 2%;}
-        .rss-author{float: left;}
-        .rss-parent-link{float: right; margin-top: -3%;}
-        .rss-shares{border: solid 1px darkred; height: 2.5em;}
+        .rss-preview-title{margin-top: -8%; margin-left: 2%;}
+        .rss-preview-author{float: left;}
+        .rss-preview-parent-link{float: right; margin-top: -3%;}
+        .rss-preview-shares{border: solid 1px darkred; height: 2.5em;}
         #rss-share-list{margin-left: -5%; list-style-type: none;}
-        .rss-body{padding: 0 5%; margin-top: 2%; font-family: Georgia,Times,sans-serif; font-size: 17px;}
+        .rss-preview-body{padding: 0 5%; margin-top: 2%; font-family: Georgia,Times,sans-serif; font-size: 17px;}
+        .rss-preview-body img{max-height: 400px; max-width: 100%;}
         .content-text{text-align: center;}
         .content-portals{width: 70%; margin-left: auto; margin-right: auto;}
         .cur_unsel_portal{width: 25%; float: left;}
         #live{display: none;}
         ul{list-style-type: none;}
-        .other{min-height: 100%; margin-left: 10%; height: 100%;}
+        .other{
+            min-height: 100%;
+{#            margin-left: 10%; #}
+            height: 100%;
+        }
+
+        #cnb{
+            margin-left: 10%;
+        }
+
+        #wrapper-new{
+            margin-left: 2%;
+        }
+
     </style>
+
+
 </head>
 <body>
+    <div id="total-wrapper">
 
-    <div class="top-navigation">
-        <div class="top-left-bar" onmouseover="style.cursor='pointer';">
-            <span onclick="showLeftBar();">SECTIONS</span>&nbsp;|&nbsp;
-            <span class="search-span" onclick="SearchClick();">SEARCH</span>
-        </div>
-        <div class="title-bar">
-            <div onmouseover="this.style.cursor='pointer';" class="title-name" onclick="location.href='/';">
-                <!--<img src="{% static 'static/img/logo-light.png' %}" width="100%" />-->
-                INSYDIA
-            </div>
-        </div>
-        <div class="right-block">
-            {% if username %}
-                <div class="logout">
-                    <a href="/auth/logout/"><i class="fa fa-fw fa-power-off"></i>Log Out</a>
+        <div class="overlay"></div>
+
+        <!-- Sidebar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+            <ul class="nav sidebar-nav">
+                <li class="sidebar-brand"> <a href="#"> INSYDIA </a> </li>
+                <li> <a href="/"><i class="fa fa-fw fa-home"></i> Home</a> </li>
+                <li> <a href="/news/technology/"><i class="fa fa-fw fa-folder"></i> TECHNOLOGY </a> </li>
+                <li> <a href="/news/entertainment/"><i class="fa fa-fw fa-file-o"></i> ENTERTAINMENT </a> </li>
+                <li> <a href="/news/auto/"><i class="fa fa-fw fa-cog"></i> AUTO </a> </li>
+                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> REVIEWS <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header">Dropdown heading</li>
+                        <li><a href="#">AUTO</a></li>
+                        <li><a href="#">PHONES</a></li>
+                        <li><a href="#">PC</a></li>
+                        <li><a href="#">SPACE SHUTTLES</a></li>
+                        <li><a href="#">OTHER</a></li>
+                    </ul>
+                </li>
+                <li> <a href="/about"><i class="fa fa-fw fa-bank"></i> ABOUT US </a> </li>
+                <li> <a href="/about/contacts/"><i class="fa fa-fw fa-dropbox"></i> CONTACT US </a> </li>
+                <li> <a href="/about/advertiser/"><i class="fa fa-fw fa-twitter"></i> ADVERTISER </a> </li>
+            </ul>
+        </nav>
+
+        <div id="wrapper-main-content">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+
+            <div class="top-navigation">
+                <div class="top-left-bar" onmouseover="style.cursor='pointer';">
+        {#            <span  onclick="showLeftBar();">SECTIONS</span>&nbsp;|&nbsp;#}
+{#                    <span class="navbar" onclick="openLeftSideBar();">SECTIONS</span>&nbsp;|&nbsp;#}
+                    <span class="search-span" onclick="SearchClick();">SEARCH</span>
                 </div>
-            {% else %}
-                <div class="logout">
-                    <div class="signin" onclick="javascript:UserAuthPopUpShow();">
-                        Sign In&nbsp;|&nbsp;
-                    </div>
-                    <div class="signup" onclick="location.href='/auth/register/';">
-                        Sign up
+                <div class="title-bar">
+                    <div onmouseover="this.style.cursor='pointer';" class="title-name" onclick="location.href='/';">
+                        <!--<img src="{% static 'static/img/logo-light.png' %}" width="100%" />-->
+                        INSYDIA
                     </div>
                 </div>
-            {% endif %}
-        </div>
-    </div>
-    {% if hide == True %}
-        {% cache 86400 beta-announce %}
-        <div id="beta-announce">
-            <span class="announce-close">
-                <img src="{% static 'static/img/close.png' %}"
-                     onclick="pageState();"
-                     width="100%"/>
-            </span>
-            <div class="announce-content">
-                {{ beta_announce|safe }}
-            </div>
-        </div>
-        {% endcache %}
-    {% endif %}
-    <div id="wrapper-new">
-        <div id="page-wrapper">
-            <div class="ro234w">
-                <div hidden
-                     class="left-panel">
-                    <div class="logo-left-bar">
-                        <span onclick="location.href='/';">
-                            INSYDIA
-                        </span>
-                    </div>
+                <div class="right-block">
                     {% if username %}
-                        <div class="profile">
-                            {% if username.profile.user_photo != '' %}
-                                <div class="image-user">
-                                    <img src="/media/{{ username.profile.user_photo }}"
-                                         onclick="location.href='/profile/';"
-                                         onmouseover="this.style.cursor='pointer';"
-                                         width="128" />
-                                </div>
-                            {% endif %}
-                            <div class="navigation-profile">
-                                <span class="fa fa-fw fa-user" aria-hidden="true" onclick="location.href='/profile/';"></span>|&nbsp;<span class="fa fa-bell" aria-hidden="true" onclick="location.href='/notify/';"></span>
-                                 &nbsp;|&nbsp;<span class="glyphicon glyphicon-star" aria-hidden="true" onclick="location.href='/favourite/';"></span>
+                        <div class="logout">
+                            <a href="/auth/logout/"><i class="fa fa-fw fa-power-off"></i>Log Out</a>
+                        </div>
+                    {% else %}
+                        <div class="logout">
+                            <div class="signin" onclick="location.href='/auth/login/';">
+                                Sign In&nbsp;|&nbsp;
+                            </div>
+                            <div class="signup" onclick="location.href='/auth/register/';">
+                                Sign up
                             </div>
                         </div>
                     {% endif %}
-                    {% cache 86400 lists %}
-                    <div class="lists">
-                        <div class="categories">
-                            <ul class="categories-ul">
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/';">LATEST</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/technology/';">TECHNOLOGY</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/entertainment/';">ENTRTAINMENT</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/auto/';">AUTO</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/space/';">SPACE</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/bio/';">BIO</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/companies/';">COMPANIES</span></li>
-                            </ul>
-                        </div>
-                        <div class="navigation">
-                            <ul>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/top/';">TOP&nbsp;NEWS</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/podcasts/';">PODCASTS</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/reviews/';">REVIEWS</span></li>
-                            </ul>
-                        </div>
-                        <div class="founders">
-                            <ul class="founders-list">
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/news/about/';">ABOUT&nbsp;US</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/about/contacts/';">CONTACTS</span></li>
-                                <li class="left-bar-item"><span class="left-bar-link" onclick="location.href='/';">STH&nbsp;ELSE</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                {% endcache %}
                 </div>
-            {% cache 86400 left-showing-bar %}
-                <div class="left-showing-bar"
-                     onmouseover="$(this).css('backgroundColor', 'rgba(0, 0, 0, 0.61');"
-                     onmouseout="$(this).css('backgroundColor', 'rgba(0, 0, 0, 0'); $('#image-arrow-to-expand').css('opacity', 0.2);">
-                    <span id="arrow-to-show-sections"
-                          class="arrow-to-show-sections"
-                          onclick="showLeftBar();">
-                        <img id="image-arrow-to-expand"
-                             src="{% static 'static/img/arrow.png' %}"
-                             width="30px"
-                             height="100%"/>
-                    </span>
-                    <span id="arrow-to-hide-sections"
-                          class="arrow-to-hide-sections"
-                          onclick="hideLeftBar();"
-                          hidden>
-                        <img id="image-arrow-to-hide"
-                             src="{% static 'static/img/arrow-hide.png' %}"
-                             width="30px"
-                             height="100%"/>
-                    </span>
-                </div>
-            {% endcache %}
-                <div class="top-navigation-menu">
-                    <div class="top-navi-menu-content">
-                        <ul>
-                            <div id="everyone">
-                                <li class="li-cat"><a href="/">LATEST</a></li>
-                                <li class="li-cat"><a href="/news/technology/">TECHNOLOGY</a></li>
-                                <li class="li-cat"><a href="/news/entertainment/">ENTERTAINMENT</a></li>
-                                <li class="li-cat"><a href="/news/auto/">AUTO</a></li>
-                                <li class="li-cat"><a href="/news/space/">SPACE</a></li>
-                                <li class="li-cat"><a href="/news/bio/">BIO</a></li>
-                                <li class="li-cat"><a href="/news/companies/">COMPANIES</a></li>
-                                <li class="li-cat"><a href="/news/reviews/">REVIEWS</a></li>
-                            </div>
-                            <div id="personal">
-                                {% if username.username and username.is_active == True %}
-                                    <li class="li-cat"><a href="/news/usernews/">MyNews</a></li>
-                                {% endif %}
-                            </div>
-                        </ul>
-                    </div>
-                    {% if category_flag == "ent" %}
-                                <div class="entertainment-categories"
-                                     style="margin-left: auto; margin-right: auto; width: 40%;">
-                                    <ul>
-                                        <li class="li-cat"><a href="">ALL</a></li>
-                                        <li class="li-cat"><a href="">GAMES</a></li>
-                                        <li class="li-cat"><a href="">MEDIA</a></li>
-                                        <li class="li-cat"><a href=""></a></li>
-                                    </ul>
-                                </div>
-                    {% endif %}
-                </div>
-                <div class="other">
-                <br>
-                    <div class="search-bar" hidden
-                         onkeydown="if(event.keyCode == 27){$('.search-bar').hide(); $('.block-news').hide();}">
-                        <form id="search-form" action="/search/" method="get" name="search_form" onsubmit="return validate_form();">
-                            <input name="q"
-                                   autocomplete="off"
-                                   id="textplace-search"
-                                   type="text"
-                                   class="form-control"
-                                   placeholder="What&nbsp;are&nbsp;you&nbsp;looking&nbsp;for?">
-                            <input type="submit" value="Search">
-                        </form>
-                    </div>
-                <br>
-                {% cache 86400 service-media %}
-                <div class="service-media">
-                    <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"
-                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png" width="30px"/>
-                    <img onclick="location.href='http://vk.com/insydianews';"
-                         src="https://cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/vkontakte-256.png" width="30px"/>
-                    <img onclick="location.href='https://twitter.com/insydianews';"
-                         src="https://g.twimg.com/Twitter_logo_blue.png" width="30px"/>
-                    <img onclick="location.href='http://linkedin.com/';"
-                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/768px-LinkedIn_logo_initials.png" width="30px"/>
-                    <img onclick="location.href='http://youtube.com';"/>
-                         <!--src="https://trashbox.ru/files/292867_8be151/youtube-logo.png" width="30px"/>-->
-                    <img onclick="location.href='http://127.0.0.1:8001/rss';"
-                         src="http://www.iesf-fc.org/images/rss.gif" width="30px"/>
-                </div>
-                {% endcache %}
-                <hr width="98%">
-                    {% if news_block == True %}
-                        {% include 'news_block_new.html' %}
-                    {% endif %}
-                    {% block user_profile %}{% endblock %}
-                        {% block moderator_page %}{% endblock %}
-                    {% block favourite %}{% endblock %}
-                    {% block notify %}{% endblock %}
-                    {% block current_news %}{% endblock %}
-                    {% block current_category %}{% endblock %}
-                    <div class="news-block" id="news-block">
-                        {% block latest %}{% endblock %}
-                        {% block technology %}{% endblock %}
-                        {% block entertainment %}{% endblock %}
-                        {% block auto %}{% endblock %}
-                        {% block space %}{% endblock %}
-                        {% block bit %}{% endblock %}
-                        {% block companies %}{% endblock %}
-                            {% block current_company %}{% endblock %}
-                        {% block reviews %}{% endblock %}
-                        {% block user_news %}{% endblock %}
-                        {% block contacts %}{% endblock %}
-                        {% block search %}{% endblock %}
-                        {% block page_not_found %}{% endblock %}
-                        {% block about %}{% endblock %}
-                    </div>
-                </div>
-                {% block settings %}{% endblock %}
             </div>
+            {% if hide == True %}
+                {% cache 86400 beta-announce %}
+                <div id="beta-announce">
+                    <span class="announce-close">
+                        <img src="{% static 'static/img/close.png' %}"
+                             onclick="pageState();"
+                             width="100%"/>
+                    </span>
+                    <div class="announce-content">
+                        {{ beta_announce|safe }}
+                    </div>
+                </div>
+                {% endcache %}
+            {% endif %}
+            <div id="wrapper-new">
+                <div id="page-wrapper">
+                    <div class="ro234w">
+                        <div class="top-navigation-menu">
+                            <div class="top-navi-menu-content">
+                                <ul>
+                                    <div id="everyone">
+                                        <li class="li-cat"><a href="/">LATEST</a></li>
+                                        <li class="li-cat"><a href="/news/technology/">TECHNOLOGY</a></li>
+                                        <li class="li-cat"><a href="/news/entertainment/">ENTERTAINMENT</a></li>
+                                        <li class="li-cat"><a href="/news/auto/">AUTO</a></li>
+                                        <li class="li-cat"><a href="/news/space/">SPACE</a></li>
+                                        <li class="li-cat"><a href="/news/bio/">BIO</a></li>
+                                        <li class="li-cat"><a href="/news/companies/">COMPANIES</a></li>
+                                        <li class="li-cat"><a href="/news/reviews/">REVIEWS</a></li>
+                                    </div>
+                                    <div id="personal">
+                                        {% if username.username and username.is_active == True %}
+                                            <li class="li-cat"><a href="/news/usernews/">MyNews</a></li>
+                                        {% endif %}
+                                    </div>
+                                </ul>
+                            </div>
+                            {% if category_flag == "ent" %}
+                                        <div class="entertainment-categories"
+                                             style="margin-left: auto; margin-right: auto; width: 40%;">
+                                            <ul>
+                                                <li class="li-cat"><a href="">ALL</a></li>
+                                                <li class="li-cat"><a href="">GAMES</a></li>
+                                                <li class="li-cat"><a href="">MEDIA</a></li>
+                                                <li class="li-cat"><a href=""></a></li>
+                                            </ul>
+                                        </div>
+                            {% endif %}
+                        </div>
+                        <div class="other">
+                        <br>
+                            <div class="search-bar" hidden
+                                 onkeydown="if(event.keyCode == 27){$('.search-bar').hide(); $('.block-news').hide();}">
+                                <form id="search-form" action="/search/" method="get" name="search_form" onsubmit="return validate_form();">
+                                    <input name="q"
+                                           autocomplete="off"
+                                           id="textplace-search"
+                                           type="text"
+                                           class="form-control"
+                                           placeholder="What&nbsp;are&nbsp;you&nbsp;looking&nbsp;for?">
+                                    <input type="submit" value="Search">
+                                </form>
+                            </div>
+                        <br>
+                        {% cache 86400 service-media %}
+                        <div class="service-media">
+                            <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png" width="30px"/>
+                            <img onclick="location.href='http://vk.com/insydianews';"
+                                 src="https://cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/vkontakte-256.png" width="30px"/>
+                            <img onclick="location.href='https://twitter.com/insydianews';"
+                                 src="https://g.twimg.com/Twitter_logo_blue.png" width="30px"/>
+                            <img onclick="location.href='http://linkedin.com/';"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/768px-LinkedIn_logo_initials.png" width="30px"/>
+                            <img onclick="location.href='http://youtube.com';"/>
+                                 <!--src="https://trashbox.ru/files/292867_8be151/youtube-logo.png" width="30px"/>-->
+                            <img onclick="location.href='http://127.0.0.1:8001/rss';"
+                                 src="http://www.iesf-fc.org/images/rss.gif" width="30px"/>
+                        </div>
+                        {% endcache %}
+                        <hr width="98%">
+
+
+                        <div id="cnb">
+                            {% block current_news %}{% endblock %}
+                        </div>
+                        <div id="flex-block">
+                            {% if news_block == True %}
+                                {% include 'news_block_new.html' %}
+                            {% endif %}
+                            {% block user_profile %}{% endblock %}
+                                {% block moderator_page %}{% endblock %}
+                            {% block favourite %}{% endblock %}
+                            {% block notify %}{% endblock %}
+                            {% block current_category %}{% endblock %}
+                            <div class="news-block" id="news-block">
+                                {% block latest %}{% endblock %}
+                                {% block technology %}{% endblock %}
+                                {% block entertainment %}{% endblock %}
+                                {% block auto %}{% endblock %}
+                                {% block space %}{% endblock %}
+                                {% block bit %}{% endblock %}
+                                {% block companies %}{% endblock %}
+                                    {% block current_company %}{% endblock %}
+                                {% block reviews %}{% endblock %}
+                                {% block user_news %}{% endblock %}
+                                {% block contacts %}{% endblock %}
+                                {% block search %}{% endblock %}
+                                {% block page_not_found %}{% endblock %}
+                                {% block about %}{% endblock %}
+                            </div>
+                        </div>
+                        </div>
+                        {% block settings %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+            {% cache 86400 footer %}
+            <div class="footer">
+                {% include 'footer.html' %}
+            </div>
+            {% endcache %}
         </div>
     </div>
-    {% cache 86400 footer %}
-    <div class="footer">
-        {% include 'footer.html' %}
-    </div>
-    {% endcache %}
-    <script src="{% static 'static/js/jquery.js' %}" type="javascript"></script>
-    <script src="{% static 'static/js/bootstrap.min.js' %}" type="javascript"></script>
+
+
     <div class="popup-user-window" hidden>
         <div class="popup-user-window-content">
             <div class="user-image">
@@ -554,66 +556,7 @@
             </div>
         </div>
     </div>
-    <div class="popup-user-auth" hidden>
-        <div class="popup-user-auth-content">
-            <div id="login-tab">
-                <div class = 'no'>
-                    <div id="choice">
-                        <div class="service-name">
-                            <img src="{% static 'static/img/logo-light.png' %}" width="30%" />
-                        </div>
-                        <div class="sign-in-center-data">
-                            <span class="signin">SIGN&nbsp;IN</span>
-                        </div>
-                    </div>
-                    <div id="sign-in" onblur="this.style.border='solid 1px red';">
-                        <form action="/auth/login/" method="POST">
-                            {% csrf_token %}
-                            <input type="text"
-                                   autocomplete="off"
-                                   name="username"
-                                   id="username"
-                                   placeholder="username">
-                            <input type="password"
-                                   name="password"
-                                   id="password"
-                                   placeholder="password">
-                            {% if login_error %}
-                                <label class="error"> {{ login_error }} </label>
-                            {% endif %}
-                            <button type="submit" id="sign-in-submit">
-                                <div class="button-text">
-                                    Log&nbsp;in
-                                </div>
-                            </button>
-                            <label id="remembering">
-                                <input type="checkbox"
-                                       id="check-remember"
-                                       name="remember-true"
-                                       value="remember-true">
-                                Remember&nbsp;me
-                            </label>
-                            <hr>
-                            <span class="signin-with">Sign&nbsp;in&nbsp;with:</span><br>
-                            <div class="external-systems-auth" style="">
-                                <div class="systems-list"></div>
-                            </div>
-                            <div class="forget-password">
-                                <a href="/auth/recovery/" id="remember-password">Forget&nbsp;password</a>
-                            </div>
-                            <hr width="65%" style="margin-left: 20%;">
-                            <div id="auth-bottom-text">
-                                <div class="">
-                                    Don't&nbsp;have&nbsp;an&nbsp;account?
-                                    <a href="/auth/register/" id="auth-botton-reg-link">Registration</a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div id="preview-rss-news"
          hidden
          class="preview-rss-news"
@@ -628,11 +571,11 @@
                         X
                     </span>
                 </div>
-                <div class="rss-title"></div>
-                <div class="rss-author"></div>
-                <div class="rss-date-published"></div>
-                <div class="rss-parent-link"></div>
-                <div class="rss-shares">
+                <div class="rss-preview-title"></div>
+                <div class="rss-preview-author"></div>
+                <div class="rss-preview-date-published"></div>
+                <div class="rss-preview-parent-link"></div>
+                <div class="rss-preview-shares">
                     <ul id="rss-share-list">
                         <li class="rss-share-item">
                             <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"
@@ -664,7 +607,7 @@
                         <li class="rss-item-copy"></li>
                     </ul>
                 </div>
-                <div class="rss-body"></div>
+                <div class="rss-preview-body"></div>
             </div>
         </div>
     </div>
@@ -719,28 +662,6 @@
             $("#portals-addition-window").hide();
         }
     </script>
-    <script>
-        $(document).ready(function(){
-            UserAuthPopUpHide();
-        });
-        function UserAuthPopUpShow(){
-            $(".popup-user-auth").show().onfocus();
-        }
-        function UserAuthPopUpHide(){
-            $(".popup-user-window").hide();
-        }
-    </script>
-    <script>
-        $(document).ready(function(){
-            SharePopUpHide();
-        });
-        function SharePopUpShow(){
-            $(".popup-user-window").show();
-        }
-        function SharePopUpHide(){
-            $(".popup-user-window").hide();
-        }
-    </script>
     <script >
         $(document).ready(function(){
             RssPreviewPopUpHide();
@@ -748,16 +669,16 @@
         function RssPreviewPopUpShow(i){
             $("html").css("overflowY", "hidden");
             $parsedData = $.parseJSON(i);
-            $(".rss-title").html("<h3>"+$parsedData.title+"</h3>");
-            $(".rss-author").html($parsedData.author);
-            $(".rss-parent-link").html("<a href='"+$parsedData.link+"'>To&nbsp;original<img src='{% static 'static/img/arrow.png' %}'; style='margin-top:-5%;' width=18px'; /></a>");
+            $(".rss-preview-title").html("<h3>"+$parsedData.title+"</h3>");
+            $(".rss-preview-author").html($parsedData.author);
+            $(".rss-preview-parent-link").html("<a href='"+$parsedData.link+"'>To&nbsp;original<img src='{% static 'static/img/arrow.png' %}'; style='margin-top:-5%;' width=18px'; /></a>");
             var d = new Date($parsedData.date_posted);
-            $(".rss-date-published").html("&nbsp;|&nbsp;"+ d.toDateString().substring(4)+"&nbsp;"+d.toTimeString().substring(0,5));
+            $(".rss-preview-date-published").html("&nbsp;|&nbsp;"+ d.toDateString().substring(4)+"&nbsp;"+d.toTimeString().substring(0,5));
             if($parsedData.content_value.length < 1) {
-                $(".rss-body").html($parsedData.post_text+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%;' class='btn btn-primary'>See&nbsp;original</button></a>");
+                $(".rss-preview-body").html($parsedData.post_text+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%;' class='btn btn-primary'>See&nbsp;original</button></a>");
             }
             else {
-                $(".rss-body").html($parsedData.content_value);
+                $(".rss-preview-body").html($parsedData.content_value);
             }
             $(".rss-item-save").html(
                     "<img onclick='add_like_rss("+$parsedData.id+")' class='rss-save' src='{% static 'static/img/save.png' %}' width='30px' alt='Save' />"
@@ -776,7 +697,7 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <!--<script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
     <script type="text/javascript">VK.init({apiId: 111});</script>-->
-    <script>
+    <!--<script>
         (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
@@ -784,8 +705,49 @@
             js.src = "//connect.facebook.net/en_EN/sdk.js#xfbml=1&version=v2.5";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <script src="{% static 'static/js/highstock.js' %}"></script>
-    <script src="{% static 'static/js/chart-widget.js' %}"></script>
+    </script>-->
+{#    <script src="{% static 'static/js/highstock.js' %}"></script>#}
+{#    <script src="{% static 'static/js/chart-widget.js' %}"></script>#}
+{#    <script type='text/javascript' src='//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js' data-shr-siteid='74b93909eb1e8d0eaf0922a55d663ca4' data-cfasync='false' async='async'></script>#}
+    <script src="{% static 'static/js/jquery.js' %}"></script>
+    <script src="{% static 'static/js/jquery.min.js' %}"></script>
+    <script src="{% static 'static/js/bootstrap.min.js' %}" type="javascript"></script>
+                                            <script src="{% static 'static/js/endless-pagination.js' %}"></script>
+                                            <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+
+{#<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>#}
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function () {
+  var trigger = $('.hamburger'),
+      overlay = $('.overlay'),
+     isClosed = false;
+
+    trigger.click(function () {
+      hamburger_cross();
+    });
+
+    function hamburger_cross() {
+
+      if (isClosed == true) {
+        overlay.hide();
+        trigger.removeClass('is-open');
+        trigger.addClass('is-closed');
+        isClosed = false;
+      } else {
+        overlay.show();
+        trigger.removeClass('is-closed');
+        trigger.addClass('is-open');
+        isClosed = true;
+      }
+  }
+
+  $('[data-toggle="offcanvas"]').click(function () {
+        $('#total-wrapper').toggleClass('toggled');
+  });
+});
+</script>
+
+
 </body>
 </html>

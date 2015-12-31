@@ -1,106 +1,143 @@
 {% load staticfiles %}
 {% block login %}
+        <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+
     <style>
-        span{
-            position:relative;
-            z-index:1;
-            overflow:hidden;
-            text-align:center;
+        body{
+            background: url('{{ background_url }}') no-repeat center;
+            background-size: cover;
         }
-        span:before,
-        span:after{
-            content: '';
-            display: inline-block;
-            width: 115px;
-            height: 1px;
-            background: black;
-            z-index: -1;
+        #auth_login{
+            width: 50%;
+            margin-left: auto;
+            margin-right:auto;
+{#            border: solid 1px red;#}
             position: relative;
-            vertical-align: middle;
         }
-        span:before{right:10px;margin:0 0 0 -26%;}
-        span:after{left:10px;margin:0 -30% 0 0;}
-        #login-tab a{color: #201EBE;}
-        #login-tab a:hover{color: #507ebe;}
-        #username:focus{box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);}
-        #password:focus{box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);}
-        #choice{box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);}
-        .no{width: 50em;}
-        #choice{width: 30em; margin: 10% 70%; height: inherit;}
-        .service-name{margin-left: 37.5%; margin-top: 5%;}
-        .sign-in-center-data{text-align: center; margin-top: 5%;}
-        #buttons-choice{margin-left: 20%; margin-top: 5%;}
-        #sign-in-button{width: 28em;}
-        #sign-up-button{width: 28em; margin-bottom: 10%;}
-        #username{width: 64%; margin-left: 20%;}
-        #for-username{width: 64%; margin-left: 20%;}
-        #for-password{width: 64%; margin-left: 20%;}
-        #password{width: 64%; margin-left: 20%;}
-        #log-in-submit{height: 40px; width: 64%; margin-left: 20%;}
-        .button-text{margin-top: -3%;}
-        #remembering{margin-left: 20%;}
-        .forget-password{text-align: center; margin-top: 5%;}
-        #bottom-asks{width: 100%; height: 50px; margin-left: 20%;}
-        #registration-link{margin-left: 10%;}
-        #hr-before-asks{margin-left: 20%;}
+        #auth_login_top{
+            min-height: 81%;
+        }
+    #auth_login_logo{
+        width: 4.5em;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: Georgia, Times, "Times New Roman", serif;
+        font-size: 20px;
+        color: white;
+        margin-top: 5%;
+        margin-bottom: 2%;
+{#        border: solid 1px red;#}
+    }
+    #login-password{
+{#        width: 50em;#}
+{#        margin-left: auto;#}
+{#        margin-right: auto;#}
+{#        border: solid 1px red;#}
+    }
+    .form-fields{
+{#        width: 3em;#}
+        margin-left: auto;
+        margin-right: auto;
+{#        border: solid 1px blue;#}
+    }
+    .form-field{
+        width: 20em;
+        margin-left: auto;
+        margin-right: auto;
+{#        border: solid 1px red;#}
+    }
+    .form-control{
+        margin-left: 0;
+    }
+    .form-field-link{
+        width: 20em;
+        margin-left: auto;
+        margin-right: auto;
+{#        border: solid 1px blue;#}
+        text-align: center;
+    }
+    a:hover{
+        text-decoration: none;
+    }
+    ul{
+        list-style-type: none;
+    }
+    #auth_login_footer{
+        color: white;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+{#        border: solid 1px red;#}
+    }
+    #remembering{
+        width: 9em;
+        color: white;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .error-message{
+        color: white;
+    }
     </style>
-    <script src="{% static 'static/js/jquery.min.js' %}"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#sign-in-button").click(function(){
-                var regElemenet = $("#sign-in").show();
-                $("#buttons-choice").replaceWith(regElemenet);
-            });
-        });
-    </script>
-        <div id="login-tab">
-            <div class = 'no'>
-                <div id="choice">
-                    <div class="service-name">
-                        %SERVICE&nbsp;NAME%
-                    </div>
-                    <div class="sign-in-center-data">
-                        <span>SIGN&nbsp;IN</span>
-                    </div>
-                    <div id="buttons-choice">
-                        <button id="sign-in-button" class="tiny">SIGN&nbsp;IN</button>
-                        <br>
-                        <a href="/auth/register/">
-                            <button id="sign-up-button" class="tiny">SIGN&nbsp;UP</button>
-                        </a>
-                    </div>
-                </div>
-                <div id="sign-in" hidden onblur="this.style.border='solid 1px red';">
-                    <form action="/auth/login/" method="POST" autocomplete="off">
-                        {% csrf_token %}
-                        <label id="for-username" for="username">Username</label>
-                        <input type="text" name="username" id="username">
-                        <label id="for-password" for="password">Password</label>
-                        <input type="password" name="password" id="password">
-                        {% if login_error %}
-                            <label class="error"> {{ login_error }} </label>
-                        {% endif %}
-                        <button type="submit" id="log-in-submit">
-                            <div class="button-text">
-                                Log&nbsp;in
-                            </div>
-                        </button>
-                        <label id="remembering">
-                            <input type="checkbox" id="check-remember" name="remember-true" value="remember-true">
-                            Remember&nbsp;me
-                        </label>
-                        <div class="forget-password">
-                            <a href="/auth/recovery/" id="remember-password">Forget&nbsp;password</a>
-                        </div>
-                        <hr id="hr-before-asks" width="65%">
-                        <div id="bottom-asks">
-                            <div class="">
-                                Don't&nbsp;have&nbsp;an&nbsp;account?
-                                <a href="/auth/register/" id="registration-link">Registration</a>
+
+
+    <div id="auth_login">
+        <div id="auth_login_top">
+            <div id="auth_login_logo">INSYDIA</div>
+            <div id="auth_login_form">
+                <form id="login-password"
+                      class="form-horizontal"
+                      method="POST"
+                      action="/auth/login/">
+                    {% csrf_token %}
+                    <div class="form-fields">
+                        <div class="form-group">
+    {#                        <label class="col-md-4 control-label" for="user-register-password">Username:</label>#}
+                            <div class="form-field">
+                                {{ form.username }}
                             </div>
                         </div>
-                    </form>
-                </div>
+
+                        <div class="form-group">
+    {#                        <label class="col-md-4 control-label" for="user-register-password">Password:</label>#}
+                            <div class="form-field">
+                                {{ form.password }}
+                            </div>
+                        </div>
+
+
+
+                       <div class="form-group">
+                            <div class="form-field">
+                                <input class="btn btn-primary form-field" value="Sign&nbsp;in" type="submit" onclick="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-field">
+                                <span class="error-message">
+                                    {{ login_error }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="help-links">
+                            <div class="form-group">
+                                <div class="form-field">
+                                    <input class="btn form-field" value="Create&nbsp;Free&nbsp;Account" onclick="location.href='/auth/register/';">
+                                </div>
+                            </div>
+                            <div class="form-field-link">
+                                <a href="/auth/cant_login/">Can't log in?</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
+        <div id="auth_login_footer">
+            {% include 'footer_loginsys.html' %}
+        </div>
+    </div>
+
 {% endblock %}

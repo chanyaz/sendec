@@ -1,0 +1,61 @@
+{% load staticfiles %}
+{% load cache %}
+<style>
+    #footer-div{
+{#        -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);#}
+{#        -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);#}
+{#        box-shadow: 0 0 10px rgba(0,0,0,0.5);#}
+        width: 100%;
+        bottom: 20px;
+        font-family: Georgia, Times, "Times New Roman", serif
+    }
+    .footer-list-top .footer-list-element{list-style-type: none;display: inline;width: 100%;}
+    .footer-bottom-block{}
+    .global-left{float: left;width: 100%;}
+    .ftr-lf{float: left;font-size: 40px;margin-right: 1%;}
+    .ftr-rt{margin-top: 2%;}
+    #copyrights{margin-top: -1.7%;}
+    .ftr-lf a{text-decoration: none; color: white;}
+    .main-logo-title, .main-logo-title:hover{text-decoration: none; color: #0f6fb3;}
+    .footer-list-element a {
+        color: white;
+    }
+    .footer-list-element a:hover{
+        color: #0f6fb3;
+    }
+</style>
+<div id="footer-div">
+    <div class="container-fluid">
+        <div class="footer-bottom-block">
+            <div class="global-left">
+                <div class="ftr-lf">
+                    <a class="main-logo-title" href="/">INSYDIA</a>
+                </div>
+                <div class="ftr-rt">
+                    <div id="ftr-rt-top">
+                        <ul class="footer-list-top">
+                            <li class="footer-list-element">
+                                <a href="/about/rules/">Terms&nbsp;and&nbsp;Conditions</a>
+                            </li>&nbsp;|&nbsp;
+                            <li class="footer-list-element">
+                                <a href="/about/privacy/">Privacy&nbsp;Policy</a>
+                            </li>&nbsp;|&nbsp;
+                            <li class="footer-list-element">
+                                <a href="/about/advertiser/">Advertiser</a>
+                            </li>&nbsp;|&nbsp;
+                            <li class="footer-list-element">
+                                <a href="/about/contacts/">Contacts</a>
+                            </li>&nbsp;|&nbsp;
+                            <li class="footer-list-element">
+                                <a href="/about">About&nbsp;us</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="copyrights">
+                        &#169;INSYDIA, 2015{% now "Y" as current_year %}{% if current_year != '2015' %}-{% now "Y" %}{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
