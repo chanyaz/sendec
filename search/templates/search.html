@@ -2,8 +2,8 @@
 {% load staticfiles %}
 {% load my %}
 {% block search %}
-    <script src="{% static 'static/js/jquery.js' %}"></script>
-    <script src="{% static 'static/js/jquery-ui.js' %}"></script>
+{#    <script src="{% static 'static/js/jquery.js' %}"></script>#}
+{#    <script src="{% static 'static/js/jquery-ui.js' %}"></script>#}
     <script type="text/javascript">
         function validate_form ( ) {
         	valid = true;
@@ -13,11 +13,6 @@
                 }
                 return valid;
         }
-    </script>
-    <script>
-        $(function(){
-            $("#tabs").tabs();
-        });
     </script>
     <style>
         ul.tabs{list-style-type: none;margin: 0;padding: 0;}
@@ -29,7 +24,7 @@
             padding: .25em .5em;
         }
         ul.tabs li a{color: gray;font-weight: bold;text-decoration: none;}
-        ul.tabs li.active{background: gray;}
+{#        ul.tabs li.active{background: gray;}#}
         ul.tabs li.active a{color: white;}
         .clr{clear: both;}
         .current_searched{height: 82px;box-shadow: 0 0 5px #5e5e5e;margin: 2% 0.25% 0.25% 0.25%;}
@@ -245,3 +240,5 @@
         </div>
     </div>
 {% endblock %}
+{#    <script src="{% static 'static/js/jquery.js' %}"></script>#}
+{#    <script src="{% static 'static/js/jquery-ui.js' %}"></script>#}

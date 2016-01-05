@@ -1,11 +1,12 @@
 {% extends 'index_new.html' %}
+{% load staticfiles %}
 {% block page_not_found %}
     <div class="container-fluid">
         <div class="row">
-            <div id="not-found">
-                Page not found.
-                <br>But we have found for you this cute sea lion. Good luck searching.
-                <img src="{% static 'static/img/404/1.jpg %}' %}" width="120px" />
+            <div id="not-found" style="text-align: center">
+                <h3>Page not found.</h3>
+                <br>But we have found for you this cute sea lion. Good luck searching.<br>
+                <img src="{% static 'static/img/404/1.jpg' %}" width="100%"  style="max-width: 800px;"/>
             </div>
         </div>
     </div>

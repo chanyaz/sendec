@@ -75,11 +75,11 @@
     <style>
         #confirm-email-label{color: red;}
         #chooser-avatar{display: none;}
-        form{border: solid 1px lightgrey;}
+        #change-photo, #change-user-data{border: solid 1px lightgrey;}
         .special-info{height: 6em;}
         #keywords{float: left;}
-        #settings-form{border: solid 1px lightgrey;}
-        .other-side{height: 500px;}
+{#        #settings-form{border: solid 1px lightgrey;}#}
+        .other-side{height: inherit;}
         .chooser{float: left;}
         #source-ignore{width: 300px;}
         .buttons-to-choose{float: left;}
@@ -117,34 +117,54 @@
                             {% endif %}
                         </label>
                     <br>
-                        <input hidden id="save-image" type="submit" value="Save">
+                        <input hidden id="save-image" class="btn-primary btn" style="display: none;" type="submit" value="Accept">
                     </form>
                 </div>
             <hr width="100%">
                 <div class="user-chars">
-                    <div id="user-rate">
-                        <label class="col-md-3">Rate:&nbsp;{{ username.profile.user_rate }}</label>
-                    </div>
-                    <hr width="100%">
-                    <div id="user-articles">
-                        <label class="col-md-5">Articles:&nbsp;{{ user_articles }}</label>
-                        <div class="looking-article">
-                            {% if user_articles > 0 %}
-                                &nbsp;<i><a href="">See all</a></i>
+                    {% if username.is_staff %}
+                        <div id="user-rate">
+                            <label class="col-md-3">Rate:&nbsp;{{ username.profile.user_rate }}</label>
+                        </div>
+                        <hr width="100%">
+                        <div id="user-articles">
+                            <label class="col-md-5">Articles:&nbsp;{{ user_articles }}</label>
+                            <div class="looking-article">
+                                {% if user_articles > 0 %}
+                                    &nbsp;<i><a href="">See all</a></i>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <hr width="100%">
+                        <div class="requests">
+                            <div class="request-deleting">
+                                <span class="del-acc">
+                                    <a href="">Delete Account</a>
+                                </span><br>
+                                <span class="del-articles">
+                                    <a href="">Delete All Articles</a>
+                                </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        Want to be a freelance editor?
+                        <br>It's easy - <a href="">click here</a>
+                        <hr width="100%">
+                        <div class="requests">
+                            <div class="request-deleting">
+                            <span class="del-acc">
+                                <a href="">Delete Account</a>
+                            </span>
+                            <hr width="100%">
+                            {% if username.is_staff %}
+                                <span class="del-articles">Delete All Articles</span>
                             {% endif %}
                         </div>
-                    </div>
-                </div>
-            <hr width="100%">
-            <div class="requests">
-                <div class="request-deleting">
-                    <span style="color: red;">show popup windows</span><br>
-                    <span class="del-acc">Delete Account</span><br>
-                    <span class="del-articles">Delete All Articles</span>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
-            </div>
-            <div class="col-md-7 col-sm-6 col-xs-12 personal-info">
+            <div class="col-md-7 col-sm-6 col-xs-12 personal-info" id="change-user-data">
                 <h3>Personal info</h3>
                 <form action="/profile/change/"
                       method="POST"
@@ -203,6 +223,74 @@
                                    value="{{ username.profile.user_cell_number }}">
                         </div>
                     </div>
+
+
+
+                    {% if username.is_staff %}
+                        <div id="moderator-social-networks">
+                        <h3>Social&nbsp;Networks(Moderator&nbsp;Mode)</h3>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Facebook:</label>
+                                <div class="col-lg-8">
+                                    <input name="facebook"
+                                           class="form-control"
+                                           type="text"
+                                           placeholder="Facebook"
+                                           value="{{ god.facebook }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Linkedin:</label>
+                                <div class="col-lg-8">
+                                    <input name="linkedin"
+                                           class="form-control"
+                                           type="text"
+                                           placeholder="Linkedin"
+                                           value="{{ god.linkedin }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Twitter:</label>
+                                <div class="col-lg-8">
+                                    <input name="twitter"
+                                           class="form-control"
+                                           type="text"
+                                           placeholder="Twitter"
+                                           value="{{ god.twitter }}">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">VK:</label>
+                                <div class="col-lg-8">
+                                    <input name="vk"
+                                           class="form-control"
+                                           type="text"
+                                           placeholder="VK"
+                                           value="{{ god.vk }}">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Perosnal&nbsp;email:</label>
+                                <div class="col-lg-8">
+                                    <input name="personal_email"
+                                           class="form-control"
+                                           type="text"
+                                           placeholder="Personal&nbsp;email"
+                                           value="{{ god.personal_email }}">
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+
+
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
@@ -276,7 +364,43 @@
                         </div>
                     </div>
                 </form>
+
+                <hr width="100%">
+                <div class="subscribe">
+                    <div class="subscribe-speech">
+                        Would you like to get notification about latest news and reviews?
+                        To take it just write your email and we will send you a link to continue.
+                    </div>
+                    <form id="request-subscribe-form"
+                          action=""
+                          method="get"
+                          class="form-horizontal"
+                          role="form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="col-lg-1 control-label"></label>
+                            <div class="col-lg-9">
+                                <input disabled="disabled"
+                                       type="email"
+                                       class="form-control"
+                                       name="sub-email"
+                                       autocomplete="off"
+                                       id="sub-email"
+                                       placeholder="Enter your email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class=""
+                                 style="width: 5em; margin-top: -1.5%; margin-left: auto; margin-right: auto;">
+                                <input type="submit"
+                                       class="btn btn-primary"
+                                       value="Accept">
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
+
         </div>
     </div>
 {% endblock %}

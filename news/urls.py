@@ -5,16 +5,19 @@ from django.conf import settings
 
 
 urlpatterns = [
-    url(r'^cl&id=(?P<news_id>\w+)&lang_code=(?P<lang_code>\w+)', 'news.views.change_languages'),
+    url(r'^cl&t=0&id=(?P<news_id>\w+)&lang_code=(?P<lang_code>\w+)', 'news.views.change_languages'),
+    url(r'^cl&t=1&id=(?P<news_id>\w+)&lang_code=(?P<lang_code>\w+)', 'news.views.change_languages_top_news'),
     url(r'^change_portals_order/', 'news.views.change_rates'),
     url(r'^add_portals/', 'news.views.set_user_portals'),
     url(r'^about/', 'news.views.render_about_page'),
     url(r'^contacts/', 'news.views.render_contacts_page'),
+    url(r'^advertisers/', 'news.views.render_adertisers_page'),
     url(r'^send_report/', 'news.views.send_report'),
     url(r"^test_rendering/", "news.views.test_rendering"),
 
     url(r'^update_user_rss_news/', 'news.views.get_updated_rss'),
     url(r'^update_user_rss/', 'news.views.get_updated_user_rss'),
+    url(r'^gcr=(?P<news_id>\w+)/', 'news.views.get_current_rss_news'),
 
     # External Transitions
     #url(r"^trans/(?P<cat_id>\w+)/(?P<news_id>\w+)/", 'news.views.external_transition'),
@@ -50,13 +53,19 @@ urlpatterns = [
     url(r"^load=(?P<news_id>\w+)", "news.views.comments_load"),
 
     # Top news
-    url(r'^top/', "news.views.render_top_news_page"),
+    # url(r'^top/', "news.views.render_top_news_page"),
+
 
     # User RSS news
     #url(r'^usernews/', 'news.views.render_user_news'),
+    #url(r'^usernews/(?P<portal_verbose>\w+)', 'news.views.get_rss_news_current_portal'),
+    url(r'^usernews/page/(?P<portal>\w+)', 'news.views.render_current_portal_news'),
     url(r'^usernews/', 'news.views.render_user_news'),
 
 
+
+    url(r'^top/(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_top_news'),
+    url(r'^top/translate/', 'news.views.translate_news_from_top'),
 
     url(r'^(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_news'),
     #url(r'^(?P<category_name>\w+)/', 'news.views.render_current_category'),

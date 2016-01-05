@@ -65,10 +65,18 @@ def get_portal_name(value):
     from news.models import NewsPortal
     return NewsPortal.objects.get(id=int(value)).portal_name
 
+
 @register.filter(name="get_rss_portal_name")
 def get_rss_portal_name(value):
     from news.models import RssPortals
     return RssPortals.objects.get(id=int(value)).portal
+
+
+@register.filter(name="get_rss_verbose_name")
+def get_rss_verbose_name(value):
+    from news.models import RssPortals
+    return RssPortals.objects.get(id=int(value)).verbose_name
+
 
 
 @register.filter(name="get_user_photo")
@@ -79,7 +87,7 @@ def get_user_photo(value):
 @register.filter(name="get_rss_news_cover")
 def get_rss_news_cover(value):
     from news.models import RssNewsCovers
-    return RssNewsCovers.objects.get(id=int(value)).main_cover
+    return RssNewsCovers.objects.get(rss_news_id=int(value)).main_cover
 
 
 @register.filter(name="get_portal_link")

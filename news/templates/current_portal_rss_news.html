@@ -1,0 +1,63 @@
+{% load endless %}
+{% load my %}
+{% load jsonate_tags %}
+
+<style>
+    .sect-rss-new{
+        width: 100%;
+        margin-bottom: 1%;
+    }
+    .category-name{
+            position: absolute;
+            z-index: 900;
+            margin-top: -1%;
+        }
+        .category-name-content{
+            background-color: blue;
+            color: white;
+            font-family: Georgia, Times, "Times New Roman", serif;
+            text-transform: uppercase;
+        }
+    .category-link:hover{
+        text-decoration: none;
+    }
+    .rss-title{
+        margin-top: 0;
+        font-family: Georgia, Times, "Times New Roman", serif;
+        font-size: 15px;
+    }
+    .sect-new{
+        display: inline-block;
+        width: 23%;
+        margin-left: 1%;
+        min-height: 213px;
+    }
+</style>
+
+    <div id="current-portal-rss-news">
+        {{ portal }}<br>
+
+{% for i in portal_news %}
+    <div class="sect-new">
+        <div class="current_rss_news"
+             id="rss_id_{{ i.id }}"
+             data-current-rss-news-id="{{ i.id }}"
+             onclick="RssPreviewPopUpShow('{{ i.id }}')">
+        <div class="category-name">
+                <span class="category-name-content">
+                    &nbsp;{{ i.portal_name_id|get_rss_portal_name }}&nbsp;
+                </span>
+        </div>
+            {% if i.id|get_rss_news_cover != '' %}
+            <div class="news-image" style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;"></div>
+            {% endif %}
+            <div class="rss-title"><b>{{ i.title|safe|striptags }}</b></div>
+    {#        <div class="portal" style="float: left;">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id|get_rss_portal_name }}</a></div>#}
+    {#        <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>#}
+            <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>
+            <div class="navigation" style="float: right;">Share&nbsp;|&nbsp;Like</div>
+        </div>
+    </div>
+{% endfor %}
+
+    </div>

@@ -2,6 +2,15 @@
 {% load staticfiles %}
 {% block about %}
 
+    <style>
+        .grat-img{
+            float: left;
+        }
+        .expression{
+            width: 50%;
+        }
+    </style>
+
     <div class="container-fluid">
         <div class="row">
             <div id="about">
@@ -14,7 +23,7 @@
                         <h2>GRATITUDE</h2>
                     </div>
                     <div class="expression-logo">
-                        <img src="{% static 'static/img/logo-itmo-end.png' %}" width="15%" />
+                        <img class="grat-img" src="{% static 'static/img/logo-itmo-end.png' %}" width="15%" />
                         <div class="expression">
                             {{ expression }}
                         </div>

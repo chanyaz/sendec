@@ -11,6 +11,10 @@ def upload_company_cover(instance, filename):
     return "/".join(["content", "companies", "logo", filename])
 
 
+def upload_rss_portals_covevrs(instance, filename):
+    return "/".join(["content", "rss", "portals", filename])
+
+
 class NewsCategory(models.Model):
     class Meta:
         db_table = "news_category"
@@ -204,6 +208,12 @@ class RssPortals(models.Model):
     portal = models.CharField(max_length=128)
     portal_base_link = models.URLField()
     follows = models.IntegerField(default=0)
+    description = models.TextField(max_length=1024)
+    cover = models.FileField(upload_to=upload_rss_portals_covevrs, blank=True)
+    verbose_name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.portal
 
 
 class RssNews(models.Model):
@@ -220,6 +230,8 @@ class RssNews(models.Model):
     author = models.CharField(max_length=512)
     content_value = models.TextField(max_length=16384)
 
+    nuid = models.CharField(max_length=33)
+
     def __str__(self):
         return self.title
 
@@ -232,6 +244,7 @@ class RssNews(models.Model):
     def get_json_rss(self):
         return {
             "id": self.id,
+            "nuid": self.nuid,
             "title": self.title,
             "date": self.date_posted.date().isoformat(),
             "time": self.date_posted.time().isoformat(),
@@ -247,7 +260,7 @@ class RssNews(models.Model):
 class RssNewsCovers(models.Model):
     class Meta:
         db_table = "rss_news_covers"
-    rss_news = models.ForeignKey(RssNews)
+    rss_news = models.ForeignKey(RssNews, related_name="rss_covers")
     main_cover = models.TextField(max_length=512)
 
 

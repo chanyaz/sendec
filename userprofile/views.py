@@ -1,11 +1,12 @@
-from django.shortcuts import render_to_response, HttpResponseRedirect, HttpResponse, Http404
+from django.shortcuts import render_to_response, HttpResponseRedirect, HttpResponse, Http404, RequestContext
 from django.template.context_processors import csrf
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required, user_passes_test
 from django.template.loader import render_to_string
 from news.models import News, Companies, NewsCategory, NewsPortal
-from userprofile.models import UserProfile, UserSettings, UserRssPortals, RssPortals
+from userprofile.models import UserProfile, UserSettings, UserRssPortals, RssPortals, ModeratorSpecialFields
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 
@@ -16,7 +17,7 @@ def render_user_profile_page(request):
 
     args = {
         "username": user_instance,
-        "title": "Profile |",
+        "title": "Profile | ",
         "user_profile_page": True,
         "user_articles": get_user_articles_amount(user_instance.id),
         "test": get_portals_to_add(request),
@@ -24,17 +25,12 @@ def render_user_profile_page(request):
         "categories": get_categories_names(request),
         "companies": get_companies(request),
     }
-    args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
+    if user_instance.is_staff:
+        args["god"] = get_god_data(request, user_instance.username)
+
+
+    args.update(csrf(request))
 
     if not UserProfile.objects.filter(user_id=user_instance.id).exists():
         UserProfile.objects.create(
@@ -42,35 +38,33 @@ def render_user_profile_page(request):
             user_photo="",
             user_cell_number=""
         )
-
+    args["search_private"] = True
     args["special_text"] = "To get special information you can enter key-word here and we will try to find and provide " \
                            "you with this information."
 
     return render_to_response("profile.html", args)
 
 
-def render_moderator_profile_page(request, username):
+def render_moderator_profile_page(request, username, template="moderator_profile.html", page_template="moderator_news.html", extra_context=None):
     user_instance = User.objects.get(username=auth.get_user(request).username)
     if User.objects.filter(username=username).exists():
         if User.objects.get(username=username).is_staff:
-            user_moderator = User.objects.get(username=username),
+            user_moderator = User.objects.get(username=username)
+            articles = News.objects.filter(news_author_id=user_moderator.id).defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_likes").defer("news_dislikes").values()
             args = {
                 "username": user_instance,
                 "moderator": user_moderator,
-                "articles": News.objects.filter(news_author_id=1).values(),
+                "articles": articles,
+                "articles_count": articles.count(),
+                "page_template": page_template,
             }
             args.update(csrf(request))
+            args["god"] = get_god_data(request, user_moderator.username)
+            if request.is_ajax():
+                template = page_template
 
-            if request.COOKIES.get("announce"):
-                args["hide"] = False
-            else:
-                args["hide"] = True
-            args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
-            return render_to_response("moderator_profile.html", args)
+
+            return render_to_response(template, args, context_instance=RequestContext(request))
         else:
             raise Http404()
     else:
@@ -122,6 +116,16 @@ def change_profile_data(request):
         instance.profile.user_cell_number = request.POST["cell"]
         instance.profile.save()
         instance.save()
+
+        if instance.is_staff:
+            save_special_fields(request, instance.username, {
+                "facebook": request.POST["facebook"],
+                "twitter": request.POST["twitter"],
+                "linkedin": request.POST["linkedin"],
+                "vk": request.POST["vk"],
+                "personal_email": request.POST["personal_email"]
+            })
+
     return HttpResponseRedirect("/profile/", args)
 
 
@@ -184,3 +188,36 @@ Follow the link: <a href=''>%sc/ucid=%s&uid=%s</a>""" % \
 
 def get_user_articles_amount(user_id):
     return News.objects.filter(news_author_id=user_id).count()
+
+
+def check_admin_or_not(user):
+    return user.is_staff
+
+
+# @staff_member_required(view_func=user_passes_test, login_url="/admin/")
+@user_passes_test(test_func=check_admin_or_not, login_url="/admin/")
+def save_special_fields(request, god, fields):
+    god_user_instance = User.objects.get(username=god)
+    if ModeratorSpecialFields.objects.filter(user_id=god_user_instance.id).exists():
+        god_instance = ModeratorSpecialFields.objects.get(user_id=god_user_instance.id)
+        god_instance.facebook = fields["facebook"]
+        god_instance.twitter = fields["twitter"]
+        god_instance.linkedin = fields["linkedin"]
+        god_instance.vk = fields["vk"]
+        god_instance.personal_email = fields["personal_email"]
+        god_instance.save()
+    else:
+        ModeratorSpecialFields.objects.create(
+            user_id=god_user_instance.id,
+            facebook=fields["facebook"],
+            twitter=fields["twitter"],
+            linkedin=fields["linkedin"],
+            vk=fields["vk"],
+            personal_email=fields["personal_email"]
+        )
+
+    return HttpResponseRedirect("/profile/")
+
+
+def get_god_data(request, god):
+    return ModeratorSpecialFields.objects.get(user_id=User.objects.get(username=god).id)

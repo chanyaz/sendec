@@ -88,7 +88,7 @@ def register(request):
         if request.POST:
             new_user_form = UserCreationFormNew(request.POST)
             user_name = request.POST['username']
-            if check_username(request, username=user_name) == False:
+            if not check_username(request, username=user_name) == False:
                 if new_user_form.is_valid():
                     new_user_form.save()
                 new_user = auth.authenticate(username=user_name,

@@ -43,7 +43,12 @@
         .left-bar-videos{margin-left: 0.9%; float: left; width: 70%; height: 100%;}
         .right-bar-videos{width: 29%; float: right;}
         .recently-news-other{width: 100%;}
+
+
         .current_news{margin-top: 5%; height: 300px; position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.5); width: 100%; float: left;}
+        .current_news-special{margin-top: 5%; height: inherit; position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.5); width: 100%; float: left;}
+
+
         .category-name{
             position: absolute;
             z-index: 900;
@@ -267,7 +272,7 @@
                                      onmouseover="this.style.cursor='pointer';">
                                     <div class="ln-left">
                                         <div class="top-total-content"
-                                             onclick="location.href='/news/{{ top_news.0.top_news_category_id }}/{{ top_news.0.id }}/';">
+                                             onclick="location.href='/news/top/{{ top_news.0.top_news_category_id }}/{{ top_news.0.id }}/';">
                                         </div>
                                         <div class="bn-title">
                                             <span class="bn-title-text">
@@ -278,52 +283,61 @@
                                     </div>
                                     <div class="ln-right">
                                         <div class="ln-right-left">
-                                            <div class="grid ln-right-left-top">
+                                            <div class="grid ln-right-left-top"
+                                            onclick="location.href='/news/top/{{ top_news.1.top_news_category_id }}/{{ top_news.1.id }}/';">
                                                 <figure class="effect-zoe">
                                                     <div class="ln-right-left-top-test"></div>
                                                     <div class="mask"></div>
 {#                                                    <img src="{% static 'static/img/login/5.jpg' %}" width="100%" alt="5"/>#}
                                                     <figcaption>
-                                                        <h4>{{ top_news.1.top_news_title }}</h4>
-                                                        <p class="icon-links">
-                                                            <a href="#"><span class="icon-heart"></span></a>
-                                                            <a href="#"><span class="icon-eye"></span></a>
-                                                            <a href="#"><span class="icon-paper-clip"></span></a>
-                                                        </p>
-                                                        <p class="description">{{ top_news.1.top_news_title }}</p>
+                                                        <span class="top-grid-title">
+                                                            {{ top_news.1.top_news_title }}
+                                                        </span>
+{#                                                        <p class="icon-links">#}
+{#                                                            <a href="#"><span class="icon-heart"></span></a>#}
+{#                                                            <a href="#"><span class="icon-eye"></span></a>#}
+{#                                                            <a href="#"><span class="icon-paper-clip"></span></a>#}
+{#                                                        </p>#}
+{#                                                        <p class="description">{{ top_news.1.top_news_title }}</p>#}
                                                     </figcaption>
                                                 </figure>
                                             </div>
-                                            <div class="grid ln-right-left-bottom">
+                                            <div class="grid ln-right-left-bottom"
+                                                 onclick="location.href='/news/top/{{ top_news.2.top_news_category_id }}/{{ top_news.2.id }}/';">
                                                 <figure class="effect-zoe">
                                                     <div class="ln-right-left-bottom-test"></div>
                                                     <div class="mask"></div>
 {#                                                    <img src="{% static 'static/img/login/5.jpg' %}" width="100%" alt="5"/>#}
                                                     <figcaption>
-                                                        <h4>{{ top_news.2.top_news_title }}</h4>
-                                                        <p class="icon-links">
-                                                            <a href="#"><span class="icon-heart"></span></a>
-                                                            <a href="#"><span class="icon-eye"></span></a>
-                                                            <a href="#"><span class="icon-paper-clip"></span></a>
-                                                        </p>
-                                                        <p class="description">{{ top_news.2.top_news_title }}</p>
+                                                        <span class="top-grid-title">
+                                                            {{ top_news.2.top_news_title }}
+                                                        </span>
+{#                                                        <p class="icon-links">#}
+{#                                                            <a href="#"><span class="icon-heart"></span></a>#}
+{#                                                            <a href="#"><span class="icon-eye"></span></a>#}
+{#                                                            <a href="#"><span class="icon-paper-clip"></span></a>#}
+{#                                                        </p>#}
+{#                                                        <p class="description">{{ top_news.2.top_news_title }}</p>#}
                                                     </figcaption>
                                                 </figure>
                                             </div>
                                         </div>
-                                            <div class="grid ln-right-right">
+                                            <div class="grid ln-right-right"
+                                                 onclick="location.href='/news/top/{{ top_news.3.top_news_category_id }}/{{ top_news.3.id }}/';">
                                                 <figure class="effect-zoe">
                                                     <div class="ln-right-right-test"></div>
                                                     <div class="mask"></div>
 {#                                                    <img src="{% static 'static/img/login/5.jpg' %}" width="100%" alt="5"/>#}
                                                     <figcaption>
-                                                        <h4>{{ top_news.3.top_news_title }}</h4>
-                                                        <p class="icon-links">
-                                                            <a href="#"><span class="icon-heart"></span></a>
-                                                            <a href="#"><span class="icon-eye"></span></a>
-                                                            <a href="#"><span class="icon-paper-clip"></span></a>
-                                                        </p>
-                                                        <p class="description">{{ top_news.3.top_news_title }}</p>
+                                                        <span class="top-grid-title">
+                                                            {{ top_news.3.top_news_title }}
+                                                        </span>
+{#                                                        <p class="icon-links">#}
+{#                                                            <a href="#"><span class="icon-heart"></span></a>#}
+{#                                                            <a href="#"><span class="icon-eye"></span></a>#}
+{#                                                            <a href="#"><span class="icon-paper-clip"></span></a>#}
+{#                                                        </p>#}
+{#                                                        <p class="description">{{ top_news.3.top_news_title }}</p>#}
                                                     </figcaption>
                                                 </figure>
                                             </div>
@@ -464,24 +478,24 @@
                                     </div>
                                 </div>
                                 <hr width="100%">
-                                <div class="load-more">
-                                    <div class="endless_page_template">
-                                        {% block js %}
-                                            <script src="{% static 'static/js/jquery.js' %}"></script>
-                                            <script src="{% static 'static/js/endless-pagination.js' %}"></script>
-                                            <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $.endlessPaginate({
-                                                        paginateOnScroll: false,
-                                                        paginateOnScrollChunkSize: 1
+                                    <div class="load-more">
+                                        <div class="endless_page_template">
+                                            {% block js %}
+                                                <script src="{% static 'static/js/jquery.js' %}"></script>
+                                                <script src="{% static 'static/js/endless-pagination.js' %}"></script>
+                                                <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+                                                <script>
+                                                    $(document).ready(function() {
+                                                        $.endlessPaginate({
+                                                            paginateOnScroll: false,
+                                                            paginateOnScrollChunkSize: 1
+                                                        });
                                                     });
-                                                });
-                                            </script>
-                                        {% endblock %}
-                                        {% include page_template %}
+                                                </script>
+                                            {% endblock %}
+                                            {% include page_template %}
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>

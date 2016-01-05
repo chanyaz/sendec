@@ -1,18 +1,221 @@
+{% extends 'index_new.html' %}
 {% load staticfiles %}
 {% load my %}
-{% block top_news %}
+{% load cache %}
+{% block current_news %}
+    <script>
+        $("li[title='More Options']").hide();
+    </script>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div id="top_news">
-                <div class="title" style="text-align: center;">
-                    TOP&nbsp;NEWS<br>
-                    {% for current_top_news in top_news %}
-                        {{ current_top_news.id }}
+    <script>
+        function add_like_news(news_id) {
+            $.ajax({
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                type: "POST",
+                url: "/news/add_like/n=" + news_id,
+                success: $.get("/news/check_like/n=" + news_id).done(function (data) {
+                    $(".news_likes_amount_"+news_id).text(data.likes);
+                    $(".liked").text("Liked");
+                    $(".disliked").text("Dislikes:")
+                })
+            });
+        }
+    </script>
+    <script>
+        function add_dislike_news(news_id) {
+                $.ajax({
+                    data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    type: "POST",
+                    url: "/news/add_dislike/n=" + news_id,
+                    success: $.get("/news/check_dislike/n=" + news_id).done(function (data) {
+                        $(".news_dislikes_amount_"+news_id).text(data.dislikes);
+                        $(".disliked").text("Disliked");
+                        $(".liked").text("Likes:")
+                    })
+                });
+            }
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("img").style.width='100px';
+        })
+    </script>
+    <script>
+        function changeArticleLanguage(news_id, lang_code){
+            $.ajax({
+                url: "/news/cl&t=1&id="+news_id+"&lang_code="+lang_code,
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(data){
+                    var $newsTable = $(".news-post-text");
+                    $newsTable.fadeOut(400, function(){
+                        $newsTable.html(data.data).fadeIn(400);
+                    })
+
+                }
+            })
+        }
+    </script>
+    <style>
+        .share-list-item{float: left;margin-left: 1%; width: 24%; height:1.5em;}
+        .container-fluid{border: solid 1px lightgrey;}
+        .tre{float: left; width: 70%; border-right: solid 1px lightgrey;}
+        .page-header{font-size: 30px; margin: 0 5%; font-family: Georgia, Times, "Times New Roman", serif}
+        .date-and-author{margin-left: 5%;}
+        .news-settings{height: 2em; width: 100%; text-transform: uppercase;}
+        .shares{margin-left: -6%; margin-top: -1%;}
+        .share-title{margin-left: 15%; font-family: Arial, Helvetica, sans-serif}
+        ul{list-style-type: none;}
+        .news-cover{display: flex; align-items: baseline; max-width: 100%; max-height: 100%; margin-top: 0; min-height: 200px; width: 100%;}
+        .current-cover{max-width:100%; max-height: 450px; display: block; margin-left: auto; margin-right: auto;}
+        .news-cover-bottom{max-width: 100%; max-height: 100%; margin-top: 0; height: 200px;}
+        .news-title-bottom{font-family: Georgia, Times, "Times New Roman", serif; font-size: 15px;}
+        .current-other-news{height: 20em; float: left; margin-left: 2%; margin-top: 1%; width: 25%; box-shadow: 0 0 1px black;}
+        .news-post-text{margin: 0 15%; font-family: Georgia,Times,sans-serif; font-size: 19px;}
+        .news-post-text img{}
+{#        .nav-bar{margin-left: 63%;}#}
+        .liked{float: left;}
+        .disliked{float: left;}
+        .other-materials{height: {% if other_materials_count <= 3 %} 25em {% elif other_materials_count <= 6 %} 52em {% elif other_materials_count <= 9 %} 77em {% elif other_materials_count <= 12 %} 103em {% endif %}}
+        .recom-text{width:50%;font-size: 20px; font-family: Georgia, Times, "Times New Roman", serif}
+
+        .portal{float: left;}
+        .current-rss-news{width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; float: left;}
+        .news-image{background: url('/media/{{ current_other.news_main_cover }}') no-repeat center; width: 100%; height: 50%;}
+        .right-news-block{width: 28%; float: right; height: 100%;}
+        .right-block-content{width: 100%;}
+        .latest-news{}
+        .latest-news-cover{float: left; height: 50%; width: 25%;}
+        .latest-news-content{height:60px;padding-left: 5%; width:75%; float: right; font-family: Georgia, Times, "Times New Roman", serif}
+        .latest-current-news{margin-top: 5%; height: 60px; border-bottom: dotted 1px lightgrey}
+        .latest-header{text-align: center;}
+        .translate-list-item{width:2em; height: 2em;}
+        .translate-list-item:hover{cursor: pointer;}
+        #to-russian{background: url('{% static 'static/img/rus.png' %}') no-repeat center;background-size:cover;}
+        #to-english{background: url('{% static 'static/img/uk.png' %}') no-repeat center;background-size:cover}
+        #to-chinese{background: url('{% static 'static/img/china.png' %}') no-repeat center;background-size:cover}
+    </style>
+    <div class="container-fluid" data-news-id="{{ current_news_values.id }}">
+        <div class="tre">
+            <div class="page-header">
+                {{ current_news_values.top_news_title }}
+            </div>
+            <div class="date-and-author">
+                <h5>By
+                    {% if current_news_values.id|get_news_portal == "insydia" %}
+                        <a href="/search/?q={{ current_news_values.top_news_author }}">{{ current_news_values.top_news_author_id|get_article_author }}</a>
+                    {% else %}
+                        <a href="/search/?q={{ current_news_values.top_news_portal_name }}">{{ current_news_values.top_news_portal_name }}</a>
+                    {% endif %}
+                    &nbsp;{{ current_news_values.top_news_post_date.date }}</h5>
+            </div>
+
+            {% if current_news_values.top_news_main_cover != '' %}
+                <div class="news-cover">
+                    <img class="current-cover" src="/media/{{ current_news_values.top_news_main_cover }}"/>
+                </div>
+            {% endif %}
+            <div id="translates" style="float: right;">
+                <ol class="translate-list" style="list-style-type: none;">
+                    {% if rus == True %}
+                        <li id="to-russian"
+                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'rus');"
+                            class="translate-list-item"></li>
+                    {% endif %}
+                    {% if eng == True %}
+                        <li id="to-english"
+                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'eng');"
+                            class="translate-list-item"></li>
+                    {% endif %}
+                    {% if ch == True %}
+                        <li id="to-chinese"
+                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'ch');"
+                            class="translate-list-item"></li>
+                    {% endif %}
+                </ol>
+            </div>
+            <div class="news-post-text">
+                {% if current_news_values.top_news_post_text_english %}
+                    {{ current_news_values.top_news_post_text_english|safe|linebreaks }}
+                {% elif current_news_values.top_news_post_text_russian %}
+                    {{ current_news_values.top_news_post_text_russian|safe|linebreaks }}
+                {% else %}
+                    {{ current_news_values.top_news_post_text_chinese|safe|linebreaks }}
+                {% endif %}
+            </div>
+            <div style="margin-top: -5%;" class='shareaholic-canvas' data-app='share_buttons' data-app-id='22745115'></div>
+
+
+            {% if other_materials_count > 0 %}
+                <hr width="100%">
+                <div class="recom-text">
+                    Recommendations&nbsp;of&nbsp;{{ current_news_values.top_news_category }}
+                </div>
+                <div class="other-materials">
+                    {% for current_other in other_materials %}
+                        <div id="materials-{{ i.id }}"
+                             class="current-other-news"
+                             onclick="location.href='/news/{{ current_other.news_category_id }}/{{ current_other.id }}/';">
+                            <div class="news-cover-bottom"
+                                 style="background: url('/media/{{ current_other.news_main_cover }}') no-repeat center; background-size: auto;"></div>
+                            <div class="title">
+                                <div class="news-title-bottom">
+                                    {{ current_other.news_title }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <hr width="100%">
+            <div id="comments-block">
+                <div id="disqus_thread"></div>
+                <script>
+                    (function(){
+                        var d = document, s = d.createElement('script');
+                        s.src = '//indavant.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+            </div>
+        </div>
+        <div class="right-news-block">
+            <div class="right-block-content">
+            <div class="latest-news">
+                <div class="latest-header">
+                    News&nbsp;of&nbsp;{{ company_name }}
+                </div>
+                <div class="latest-titles">
+                    {% for i in latest_news %}
+                        <div class="latest-current-news"
+                             onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';"
+                             onmouseover="this.style.cursor='pointer'; $('#lnt'+{{ i.id }}).css('color', 'blue');"
+                             onmouseout="$('#lnt'+{{ i.id }}).css('color', 'black');">
+                            <div class="latest-news-cover"
+                                 style="background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: contain;"></div>
+                            <div class="latest-news-content">
+                                <span id="lnt{{ i.id }}"
+                                      class="title"
+                                      onmouseover="this.style.color='blue'; style.cursor='pointer';"
+                                      onmouseout="this.style.color='black';"
+                                      onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                    {{ i.news_title }}
+                                </span>
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
+            {% cache 600 video-and-subs %}
+            <div class="video-and-subs">
+                {% include 'twitter.html' %}
+            </div>
+            {% endcache %}
+        </div>
         </div>
     </div>
-
 {% endblock %}

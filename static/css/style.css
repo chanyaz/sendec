@@ -6,16 +6,15 @@ body {
     position: relative;
     height: 100%;
     overflow-x: hidden;
-    /*margin-top: 100px;
-    /*background-color: #222;
+    /*margin-top: 100px;*/
 }
 
-@media(min-width:768px) {
-    body {
-        margin-top: 50px;
-    }
-}*/
-}
+/*@media(min-width:768px) {*/
+    /*body {*/
+        /*margin-top: 50px;*/
+    /*}*/
+/*}*/
+
 .menupr{
 text-align: center;
 vertical-align: middle;
@@ -195,6 +194,7 @@ ul.alert-dropdown {
 /*-------------------------------*/
 
 #total-wrapper {
+    min-height: 100%;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   -webkit-transition: all 0.5s ease;
@@ -292,6 +292,10 @@ ul.alert-dropdown {
 .sidebar-nav li:nth-child(8):before { background-color: #a396ce; }
 
 .sidebar-nav li:nth-child(9):before { background-color: #b2a7d6; }
+
+.sidebar-nav li:nth-child(10):before { background-color: #c1b8d6; }
+
+.sidebar-nav li:nth-child(11):before { background-color: #d3d7d6; }
 
 .sidebar-nav li:hover:before {
   -webkit-transition: width 0.2s ease-in;
@@ -484,10 +488,16 @@ ul.alert-dropdown {
 	list-style: none;
 	text-align: center;
 }
+.top-grid-title{
+    font-size: 14px;
+    color: black;
+    font-family: Georgia, Times, "Times New Roman", serif;
+
+}
 
 /* Common style */
 .grid figure {
-	position: relative;
+	/*position: relative;*/
 	float: left;
 	overflow: hidden;
 	/*margin: 10px 1%;*/
@@ -568,7 +578,8 @@ figure.effect-zoe figcaption {
 	bottom: 0;
 	padding: 1em;
 	height: 5.75em;
-	background: #fff;
+    opacity: 0.75;
+	background: #9ba3d3;
 	color: #3c4a50;
 	-webkit-transition: -webkit-transform 0.35s;
 	transition: transform 0.35s;
@@ -593,7 +604,7 @@ figure.effect-zoe:hover p.icon-links a:focus {
 
 figure.effect-zoe p.description {
 	position: absolute;
-	bottom: 8em;
+	bottom: 5em;
 	padding: 2em;
 	color: #fff;
 	text-transform: none;
@@ -667,3 +678,71 @@ figure.effect-zoe:hover p.icon-links a:first-child {
 	-webkit-transition-delay: 0.2s;
 	transition-delay: 0.2s;
 }
+
+
+/*---------------*/
+/***** Duke *****/
+/*---------------*/
+
+figure.effect-duke {
+    float: left;
+    overflow: hidden;
+    width: 300px;
+    max-width: 300px;
+    text-align: center;
+    cursor: pointer;
+    background: #3085a3;
+	background: -webkit-linear-gradient(-45deg, #34495e 0%,#cc6055 100%);
+	background: linear-gradient(-45deg, #34495e 0%,#cc6055 100%);
+}
+
+figure.effect-duke img,
+figure.effect-duke p {
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+}
+
+figure.effect-duke:hover img {
+	opacity: 0.1;
+	-webkit-transform: scale3d(2,2,1);
+	transform: scale3d(2,2,1);
+}
+
+figure.effect-duke h2 {
+	-webkit-transition: -webkit-transform 0.35s;
+	transition: transform 0.35s;
+	-webkit-transform: scale3d(0.8,0.8,1);
+	transform: scale3d(0.8,0.8,1);
+	-webkit-transform-origin: 50% 100%;
+	transform-origin: 50% 100%;
+}
+
+figure.effect-duke p {
+    color: inherit;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 20px;
+	padding: 5px;
+	border: 2px solid #fff;
+	text-transform: none;
+	font-size: 90%;
+	opacity: 0;
+	-webkit-transform: scale3d(0.8,0.8,1);
+	transform: scale3d(0.8,0.8,1);
+	-webkit-transform-origin: 50% -100%;
+	transform-origin: 50% -100%;
+}
+
+figure.effect-duke:hover h2,
+figure.effect-duke:hover p {
+	opacity: 1;
+	-webkit-transform: scale3d(1,1,1);
+	transform: scale3d(1,1,1);
+}
+
+/***********/
+/* MASONRY */
+/***********/
+.grid-item { width: 100px; }
+.grid-item--width2 { width: 100%; }

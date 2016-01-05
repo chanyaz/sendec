@@ -2,6 +2,9 @@ import feedparser
 import sqlite3, psycopg2
 import datetime, time
 import os
+import string
+from random import choice, randint
+
 
 def fill_start_data_news():
     #db = sqlite3.connect(BASE_DIR+"\\db.sqlite3")
@@ -59,8 +62,11 @@ def last_element(feed):
 
 
 def connect_to_db(urls):
-    #db = sqlite3.connect(BASE_DIR+"\\db.sqlite3")
+    #   db = sqlite3.connect(BASE_DIR+"\\db.sqlite3")
     db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+
+    import uuid
+
     cursor = db.cursor()
     for url in urls:
         data = last_element(parse_current_url(url=url))
@@ -77,11 +83,15 @@ def connect_to_db(urls):
         else:
             data["main_cover"] = str(match_2)
         data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
+        data["title"] = data["title"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
         data["description"] = data["description"].replace('"', '&#quot;').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
         match = re.findall(r'<.*?>', data["description"])
+        match_tabs = re.findall(r'[\s]{2,}', data["description"])
+        for i in match_tabs:
+            data["description"] = data["description"].replace(i, " ")
         for i in match:
             data["description"] = data["description"].replace(i, "")
-        data["description"] = data["description"].replace("\n", "")
+        data["description"] = data["description"].replace("\n", "").replace("\t", "")
 
         query_for_rss = "SELECT * FROM rss_portals"
         cursor.execute(query_for_rss)
@@ -90,11 +100,23 @@ def connect_to_db(urls):
         for current_portal in portals_list:
             if current_portal[2] in data["link"]:
                 current_rss_news_id = current_portal[0]
-
+        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        mon = int(months.index(new_date[2]))+1
+        date_posted = datetime.datetime(int(new_date[3]), mon, int(new_date[1]), int(time[0]), int(time[1]), int(time[2]))
         if len(count) == 0:
             #cursor.execute("""INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""",(data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], 1, 1, data["content"], data["author"]))
-            query = """INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"""
-            data_query = (data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], current_rss_news_id, 1, data["content"], data["author"])
+            query = """INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author, nuid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+            data_query = (data["title"],
+                          date_posted,
+                          data["description"],
+                          data["link"],
+                          current_rss_news_id,
+                          1,
+                          data["content"],
+                          data["author"],
+                          ''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _
+                                              in range(33)))
+
             cursor.execute(query, data_query)
             query_2 = "SELECT ID FROM news_rss WHERE title=%s"
             data_query_2 = [data["title"]]
@@ -154,14 +176,20 @@ def fill_rss_portals():
         portals = json.load(file)
     end = len(portals)
     cur_iter = 0
-    query_0 = "SELECT portal_name FROM news_portal"
-    cursor.execute(query_0)
-    list_portals = cursor.fetchall()
+    #query_0 = "SELECT portal_name FROM news_portal"
+    #cursor.execute(query_0)
+    #list_portals = cursor.fetchall()
     for i in range(len(portals)):
+        print(len(portals[file_list[i]]["verbose"]))
         cur_iter += 1
-        query = "INSERT INTO rss_portals(portal, portal_base_link, follows) VALUES(%s, %s, %s)"
-        data_query = (portals[file_list[i]]["name"], portals[file_list[i]]["base_link"], 0)
-        cursor.execute(query,data_query)
+        query = "INSERT INTO rss_portals(portal, portal_base_link, follows, description, cover, verbose_name) VALUES(%s, %s, %s, %s, %s, %s)"
+        data_query = (portals[file_list[i]]["name"],
+                      portals[file_list[i]]["base_link"],
+                      0,
+                      portals[file_list[i]]["description"],
+                      portals[file_list[i]]["cover"],
+                      portals[file_list[i]]["verbose"])
+        cursor.execute(query, data_query)
         db.commit()
         print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "When total end is ", end)
     db.close()
@@ -212,9 +240,9 @@ def fill_news():
     import json
     db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
     cursor = db.cursor()
-    with open("news_kristina_2.json", encoding="utf-8-sig") as file_list:
+    with open("news_zaharov_2.json", encoding="utf-8-sig") as file_list:
         file_list = list(json.load(file_list))
-    with open("news_kristina_2.json", encoding="utf-8-sig") as file:
+    with open("news_zaharov_2.json", encoding="utf-8-sig") as file:
         news = json.load(file)
 
     end = len(news)
@@ -227,20 +255,31 @@ def fill_news():
                 news_title = news[file_list[i]]["title"]
                 news_category_id = 1    # Technology
                 news_post_date = news[file_list[i]]["date"]
-                news_post_text = news[file_list[i]]["text"]
-                news_post_text_translate = ""
-                news_portal_name_id = 2    # Insydia
-                news_company_owner_id = 178    # Insydia
+                news_post_text_english = news[file_list[i]]["text"]
+                news_post_text_russian = news[file_list[i]]["text"]
+                news_post_text_chinese = news[file_list[i]]["text"]
+                news_portal_name_id = 1    # Insydia
+                news_company_owner_id = 1    # Insydia
                 news_author_id = 2    # Saqel
                 news_main_cover = ""    # None
                 news_likes = 0
                 news_dislikes = 0
 
-                query_set = "INSERT INTO news(news_title, news_category_id, news_post_date, news_post_text, " \
-                            "news_post_text_translate, news_portal_name_id, news_company_owner_id, news_author_id, " \
-                            "news_main_cover, news_likes, news_dislikes) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-                data_query_set = (news_title, news_category_id, news_post_date, news_post_text, news_post_text_translate,
-                                  news_portal_name_id, news_company_owner_id, news_author_id, news_main_cover, news_likes, news_dislikes)
+                query_set = "INSERT INTO news(news_title, news_category_id, news_post_date, news_post_text_english, " \
+                            "news_post_text_russian, news_post_text_chinese, news_portal_name_id, news_company_owner_id, news_author_id, " \
+                            "news_main_cover, news_likes, news_dislikes) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                data_query_set = (news_title,
+                                  news_category_id,
+                                  news_post_date,
+                                  news_post_text_english,
+                                  news_post_text_russian,
+                                  news_post_text_chinese,
+                                  news_portal_name_id,
+                                  news_company_owner_id,
+                                  news_author_id,
+                                  news_main_cover,
+                                  news_likes,
+                                  news_dislikes)
                 cursor.execute(query_set, data_query_set)
                 db.commit()
                 #print(cur_iter, data_query_set)
@@ -250,9 +289,43 @@ def fill_news():
     db.close()
 
 
+def save_rss_news():
+    import json
+    db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+    cursor = db.cursor()
+
+    query_set = "SELECT * FROM news_rss"
+    cursor.execute(query_set)
+    db.commit()
+    data = cursor.fetchall()
+
+    end = len(data)
+    count = 0
+    with open("save_rss.json", "a+") as file:
+        file.write("{")
+        for i in range(len(data)):
+            count += 1
+            file.write('"object":')
+            data_dict = {}
+            data_dict["title"] = data[i][1]#["title"]
+            data_dict["date_posted"] = data[i][2].isoformat()#["date_posted"]
+            data_dict["post_text"] = data[i][3]#["post_text"]
+            data_dict["portal_name"] = data[i][4]#["portal_name"]
+            data_dict["category"] = data[i][5]#["category"]
+            data_dict["link"] = data[i][6]#["link"]
+            data_dict["author"] = data[i][7]#["author"]
+            data_dict["content_value"] = data[i][8]#["content_value"]
+
+            file.write(json.dumps(data_dict))
+            file.write(",")
+            print("Saving RSS # ", count, " success. In total - ", end, " items")
+        file.write("}")
+    db.close()
+
+
 def work_func():
     urls_of_portals = get_feed_urls()
-    print("1. Fill Rss Portals\n2. Syndicate news\n3. Fill Companies\n4. Fill news")
+    print("1. Fill Rss Portals\n2. Syndicate news\n3. Fill Companies\n4. Fill news\n5. Save RSS")
     x = int(input("What can I help you? Enter number: "))
     if x == 1:
         fill_rss_portals()
@@ -267,6 +340,8 @@ def work_func():
         fill_companies()
     elif x == 4:
         fill_news()
+    elif x == 5:
+        save_rss_news()
     else:
         import sys
         print("Good bye!")

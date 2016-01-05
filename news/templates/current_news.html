@@ -43,7 +43,7 @@
     <script>
         function changeArticleLanguage(news_id, lang_code){
             $.ajax({
-                url: "/news/cl&id="+news_id+"&lang_code="+lang_code,
+                url: "/news/cl&t=0&id="+news_id+"&lang_code="+lang_code,
                 type: "POST",
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}'
@@ -63,22 +63,22 @@
         .container-fluid{border: solid 1px lightgrey;}
         .tre{float: left; width: 70%; border-right: solid 1px lightgrey;}
         .page-header{font-size: 30px; margin: 0 5%; font-family: Georgia, Times, "Times New Roman", serif}
-        .date-and-author{margin-left: 5%;}
+        .date-and-author{margin-left: 5%; float: left;}
         .news-settings{height: 2em; width: 100%; text-transform: uppercase;}
         .shares{margin-left: -6%; margin-top: -1%;}
         .share-title{margin-left: 15%; font-family: Arial, Helvetica, sans-serif}
         ul{list-style-type: none;}
         .news-cover{display: flex; align-items: baseline; max-width: 100%; max-height: 100%; margin-top: 0; min-height: 200px; width: 100%;}
         .current-cover{max-width:100%; max-height: 450px; display: block; margin-left: auto; margin-right: auto;}
-        .news-cover-bottom{max-width: 100%; max-height: 100%; margin-top: 0; height: 200px;}
+        .news-cover-bottom{max-width: 100%; max-height: 100%; margin-top: 0; height: 175px;}
         .news-title-bottom{font-family: Georgia, Times, "Times New Roman", serif; font-size: 15px;}
-        .current-other-news{height: 20em; float: left; margin-left: 2%; margin-top: 1%; width: 25%; box-shadow: 0 0 1px black;}
-        .news-post-text{margin: 0 15%; font-family: Georgia,Times,sans-serif; font-size: 19px;}
+        .current-other-news{height: 20em; float: left; margin-left: 0; margin-right: 1.2%; margin-top: 1%; width: 32%; box-shadow: 0 0 1px black;}
+        .news-post-text{margin: 4% 15%; font-family: Georgia,Times,sans-serif; font-size: 19px;}
         .news-post-text img{}
 {#        .nav-bar{margin-left: 63%;}#}
         .liked{float: left;}
         .disliked{float: left;}
-        .other-materials{height: {% if other_materials_count <= 3 %} 25em {% elif other_materials_count <= 6 %} 52em {% elif other_materials_count <= 9 %} 77em {% elif other_materials_count <= 12 %} 103em {% endif %}}
+{#        .other-materials{height: {% if other_materials_count <= 3 %} 25em {% elif other_materials_count <= 6 %} 52em {% elif other_materials_count <= 9 %} 77em {% elif other_materials_count <= 12 %} 103em {% endif %}}#}
         .recom-text{width:50%;font-size: 20px; font-family: Georgia, Times, "Times New Roman", serif}
 
         .portal{float: left;}
@@ -102,19 +102,23 @@
             <div class="page-header">
                 {{ current_news_values.news_title }}
             </div>
-        {% cache 600 date-and-author %}
+{#        {% cache 600 date-and-author %}#}
             <div class="date-and-author">
                 <h5>By
                     {% if current_news_values.id|get_news_portal == "insydia" %}
-                        <a href="/search/?q={{ current_news_values.news_author }}">{{ current_news_values.news_author_id|get_article_author }}</a>
+                        <a href="/search/?q={{ current_news_values.news_author }}"><i>{{ current_news_values.news_author_id|get_article_author }}</i></a>
                     {% else %}
-                        <a href="/search/?q={{ current_news_values.news_portal_name }}">{{ current_news_values.news_portal_name }}</a>
+                        <a href="/search/?q={{ current_news_values.news_portal_name }}"><i>{{ current_news_values.news_portal_name }}</i></a>
                     {% endif %}
                     &nbsp;{{ current_news_values.news_post_date.date }}</h5>
             </div>
-        {% endcache %}
-        {% cache 600 news-settings %}
-            <div class="news-settings">
+            {% if username.is_staff %}
+                <div class="for-god" style="float: right;">
+                    <a href="http://127.0.0.1:8000/admin/news/news/{{ current_news_values.id }}/">Edit</a>
+                </div>
+            {% endif %}
+{#        {% endcache %}#}
+            <!--    <div class="news-settings">
                 <div class="shares">
                     <ul>
                         <li class="share-list-item">
@@ -160,8 +164,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-        {% endcache %}
+            </div>-->
             {% if current_news_values.news_main_cover != '' %}
                 <div class="news-cover">
                     <img class="current-cover" src="/media/{{ current_news_values.news_main_cover }}"/>
@@ -195,67 +198,10 @@
                     {{ current_news_values.news_post_text_chinese|safe|linebreaks }}
                 {% endif %}
             </div>
+
+
             <div style="margin-top: -5%;" class='shareaholic-canvas' data-app='share_buttons' data-app-id='22745115'></div>
-            <!--<div style="" class="nav-bar">
-                <div id="nav-bar-left">
-                    <ul class="list-inline">
-                    <li>
-                        <span data-news-id="{{ current_news_values.id }}"
-                              class="news_likes"
-                              id="add_like_{{ current_news_values.id }}"
-                              onclick="add_like_news('{{ current_news_values.id }}');">
-                            <div class="liked">
-                                {% if liked == False %}
-                                    Likes:
-                                {% else %}
-                                    <span
-                                        data-news-id="{{ current_news_values.id }}"
-                                        class="break_like"
-                                        id="break_like_{{ current_news_values.id }}"
-                                        onclick="">Liked</span>
-                                {% endif %}
-                            </div>
-                        </span>&nbsp;
-                        <span class="news_likes_amount_{{ current_news_values.id }}">
-                            {{ like_amount }}
-                        </span>
-                    </li>&nbsp;|
-                    <li>
-                        <span
-                                data-news-id="{{ current_news_values.id }}"
-                                class="news_dislikes"
-                                id="add_dislike_{{ current_news_values.id }}"
-                                onclick="add_dislike_news('{{ current_news_values.id }}');">
-                            <div class="disliked">
-                                {% if disliked == False %}
-                                    Dislikes:
-                                {% else %}
-                                    <span
-                                        data-news-id="{{ current_news_values.id }}"
-                                        class="break_dislike"
-                                        id="break_dislike_{{ current_news_values.id }}"
-                                        onclick="">Disliked</span>
-                                {% endif %}
-                            </div>
-                        </span>&nbsp;
-                        <span class="news_dislikes_amount_{{ current_news_values.id }}">
-                            {{ dislike_amount }}
-                        </span>
-                    </li>&nbsp;|
-                    <li>
-                    {% cache 86400 published-time %}
-                        <div class="published-time">
-                            {% if current_news_values.news_post_date.day < current_day %}
-                                {{ current_news_values.news_post_date.date }}
-                            {% else %}
-                                {{ current_news_values.news_post_date.time }}
-                            {% endif %}
-                        </div>
-                    {% endcache %}
-                    </li>
-                </ul>
-                </div>
-            </div>-->
+
 
             {% if other_materials_count > 0 %}
                 <hr width="100%">

@@ -1,33 +1,219 @@
 ﻿{
-  "http://appleinsider": {"name": "Appleinsider", "base_link": "appleinsider.ru"},
-  "http://teslanews": {"name": "TeslaNews", "base_link": "teslanews.com"},
-  "http://zisk.net": {"name": "zisk", "base_link": "zisk.net"},
-  "http://hi-news.ru": {"name": "Hi-News.ru", "base_link": "hi-news.ru"},
-  "http://computerweekly.com": {"name": "ComputerWeekly.com", "base_link": "computerweekly.com"},
-  "http://forbes.com": {"name": "Forbes", "base_link": "forbes.com"},
-  "http://skynews.com": {"name": "Skynews", "base_link": "skynews.com"},
-  "http://firstpost.com": {"name": "Firstpost", "base_link": "firstpost.com"},
-  "http://digitaltrends.com": {"name": "Digitaltrends", "base_link": "digitaltrends.com"},
-  "http://technorati.com": {"name": "Technorati", "base_link": "technorati.com"},
-  "https://techunblocked.org": {"name": "Tech Unblocked", "base_link": "techunblocked.org"},
-  "https://iguides.ru": {"name": "iGuides", "base_link": "iguides.ru"},
-  "http://iphones.ru": {"name": "iPhones", "base_link": "iphones.ru"},
-  "http://appledigger.ru": {"name": "Appledigger", "base_link": "appledigger.ru"},
-  "http://androidinsider.ru": {"name": "Androidinsider", "base_link": "androidinsider.ru"},
-  "http://droider.ru": {"name": "Droider", "base_link": "droider.ru"},
-  "http://myandroid.ru": {"name": "Myandroid", "base_link": "myandroid.ru"},
-  "http://4pda.ru": {"name": "4PDA", "base_link": "4pda.ru"},
-  "http://redroid.ru": {"name": "reDroid", "base_link": "redroid.ru"},
-  "http://andro-news.ru": {"name": "Andro-news", "base_link": "andro-news.ru"},
-  "http://kolesa.ru": {"name": "Колёса.ru", "base_link": "kolesa.ru"},
-  "http://autoweek.com": {"name": "AUTOWEEK", "base_link": "autoweek.com"},
-  "http://autoguide.com": {"name": "AutoGuide.com", "base_link": "autoguide.com"},
-  "http://autoexpress.co.uk": {"name": "AutoExpress", "base_link": "autoexpress.co.uk"},
-  "http://spacenews.com": {"name": "SPACENEWS", "base_link": "spacenews.com"},
-  "http://extremetech.com": {"name": "ExtremeTech", "base_link": "extremetech.com"},
-  "http://cnet.com": {"name": "Cnet", "base_link": "cnet.com"},
-  "http://gamerant.com": {"name": "GAMERANT", "base_link": "gamerant.com"},
-  "http://android-robot": {"name": "Новости Hi-Tech", "base_link": "android-robot"},
-  "http://ria.ru": {"name": "РИА", "base_link": "ria.ru"},
-  "http://dailykanban.com": {"name": "DailyKanban", "base_link": "dailykanban.com"}
+  "http://appleinsider": {
+    "name": "Appleinsider",
+    "verbose": "appleinsider",
+    "base_link": "appleinsider.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://teslanews": {
+    "name": "TeslaNews",
+    "verbose": "teslanews",
+    "base_link": "teslanews.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://zisk.net": {
+    "name": "zisk",
+    "verbose": "zisk",
+    "base_link": "zisk.net",
+    "description": "",
+    "cover": ""
+  },
+  "http://hi-news.ru": {
+    "name": "Hi-News.ru",
+    "verbose": "hinews",
+    "base_link": "hi-news.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://computerweekly.com": {
+    "name": "ComputerWeekly.com",
+    "verbose": "computerweekly",
+    "base_link": "computerweekly.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://forbes.com": {
+    "name": "Forbes",
+    "verbose": "forbes",
+    "base_link": "forbes.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://skynews.com": {
+    "name": "Skynews",
+    "verbose": "skynews",
+    "base_link": "skynews.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://firstpost.com": {
+    "name": "Firstpost",
+    "verbose": "firstpost",
+    "base_link": "firstpost.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://digitaltrends.com": {
+    "name": "Digitaltrends",
+    "verbose": "digitaltrends",
+    "base_link": "digitaltrends.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://technorati.com": {
+    "name": "Technorati",
+    "verbose": "technorati",
+    "base_link": "technorati.com",
+    "description": "",
+    "cover": ""
+  },
+  "https://techunblocked.org": {
+    "name": "Tech Unblocked",
+    "verbose": "techunblocked",
+    "base_link": "techunblocked.org",
+    "description": "",
+    "cover": ""
+  },
+  "https://iguides.ru": {
+    "name": "iGuides",
+    "verbose": "iguides",
+    "base_link": "iguides.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://iphones.ru": {
+    "name": "iPhones",
+    "verbose": "iphones",
+    "base_link": "iphones.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://appledigger.ru": {
+    "name": "Appledigger",
+    "verbose": "appledigger",
+    "base_link": "appledigger.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://androidinsider.ru": {
+    "name": "Androidinsider",
+    "verbose": "androidinsider",
+    "base_link": "androidinsider.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://droider.ru": {
+    "name": "Droider",
+    "verbose": "droider",
+    "base_link": "droider.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://myandroid.ru": {
+    "name": "Myandroid",
+    "verbose": "myandroid",
+    "base_link": "myandroid.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://4pda.ru": {
+    "name": "4PDA",
+    "verbose": "4pda",
+    "base_link": "4pda.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://redroid.ru": {
+    "name": "reDroid",
+    "verbose": "redroid",
+    "base_link": "redroid.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://andro-news.ru": {
+    "name": "Andro-news",
+    "verbose": "andronews",
+    "base_link": "andro-news.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://kolesa.ru": {
+    "name": "Колёса.ru",
+    "verbose": "kolesa",
+    "base_link": "kolesa.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://autoweek.com": {
+    "name": "AUTOWEEK",
+    "verbose": "autoweek",
+    "base_link": "autoweek.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://autoguide.com": {
+    "name": "AutoGuide.com",
+    "verbose": "autoguide",
+    "base_link": "autoguide.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://autoexpress.co.uk": {
+    "name": "AutoExpress",
+    "verbose": "autoexpress",
+    "base_link": "autoexpress.co.uk",
+    "description": "",
+    "cover": ""
+  },
+  "http://spacenews.com": {
+    "name": "SPACENEWS",
+    "verbose": "spacenews",
+    "base_link": "spacenews.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://extremetech.com": {
+    "name": "ExtremeTech",
+    "verbose": "extremetech",
+    "base_link": "extremetech.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://cnet.com": {
+    "name": "Cnet",
+    "verbose": "cnet",
+    "base_link": "cnet.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://gamerant.com": {
+    "name": "GAMERANT",
+    "verbose": "gamerant",
+    "base_link": "gamerant.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://android-robot": {
+    "name": "Новости Hi-Tech",
+    "verbose": "android-robot",
+    "base_link": "android-robot",
+    "description": "",
+    "cover": ""
+  },
+  "http://ria.ru": {
+    "name": "РИА",
+    "verbose": "ria",
+    "base_link": "ria.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://dailykanban.com": {
+    "name": "DailyKanban",
+    "verbose": "dailykanban",
+    "base_link": "dailykanban.com",
+    "description": "",
+    "cover": ""
+  }
 }

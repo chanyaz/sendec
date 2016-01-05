@@ -7,7 +7,7 @@ from django.contrib import auth
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsComments, NewsWatches, NewsCommentsReplies, RssSaveNews, RssNewsCovers, TopNews
+from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsComments, NewsWatches, NewsCommentsReplies, RssSaveNews, RssNewsCovers, TopNews, NewsPortal
 import datetime
 import json
 from userprofile.models import UserLikesNews, UserSettings, UserProfile, UserRssPortals
@@ -15,47 +15,63 @@ from .forms import NewsCommentsForm, NewsCommentsRepliesForm
 from django.core.mail import send_mail
 
 
-def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None):
+def global_redirect(request):
+    if request.COOKIES.get("translate-version"):
+        if "russian" in request.COOKIES.get("translate-version"):
+            return HttpResponseRedirect("/ru/")
+        elif "english" in request.COOKIES.get("translate-version"):
+            return HttpResponseRedirect("/en/")
+        elif "chinese" in request.COOKIES.get("translate-version"):
+            return HttpResponseRedirect("/cn/")
+    else:
+        return HttpResponseRedirect("/en/")
+
+
+def translate_russian(request):
+    return main_page_load(request, translate="russian")
+
+
+def translate_chinese(request):
+    return main_page_load(request, translate="chinese")
+
+
+def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None, translate="english"):
     args = {
         "video_top": TopVideoContent.objects.all().values()[:3],
         "current_year": datetime.datetime.now().year,
         "title": "Home Page | ",
         "news_block": True,
-        "breaking_news": render_news_by_sendec(request).order_by("-news_post_date")[0],
-        "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[1:4],
+        # "breaking_news": render_news_by_sendec(request).order_by("-news_post_date")[0],
+        "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[0:4],
         "interest": get_interesting_news(request)[:3],
         "total_news": get_total_news,
         "page_template": page_template,
         "top_news": get_top_total_news(request),
     }
+    if translate == "russian":
+        args["translate"] = "ru"
     if render_news_by_sendec(request).order_by("-news_post_date")[4:13].count() > 0:
         args["total_bottom_news"] = render_news_by_sendec(request).order_by("-news_post_date")[4:13]
 
     if request.is_ajax():
         template = page_template
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
 
-    return render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
+    response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
+    response.set_cookie("translate-version", translate)
+    return response
 
 
 def get_top_total_news(request):
-    return TopNews.objects.all()[:4].values()
+    return TopNews.objects.all()[:4].defer("top_news_post_text_english").defer("top_news_post_text_russian").defer("top_news_post_text_chinese").values()
 
 
 def get_total_news():
-    return News.objects.all().values()
+    return News.objects.all().order_by("-news_post_date").defer("news_post_text_english").defer("news_post_text_russian").defer("news_post_text_chinese").values()
 
 
 def render_news_by_sendec(request, **kwargs):
@@ -74,6 +90,40 @@ def get_company_news(request, news_id, company_id):
 def get_latest_news_total(request):
     latest_10_news = News.objects.all().order_by("-news_post_date")
     return latest_10_news
+
+
+def render_current_top_news(request, category_id, news_id):
+    current_news = TopNews.objects.get(id=news_id)
+    args = {
+        "title": "%s | " % current_news.top_news_title,
+        "current_news_values": current_news,
+        "other_materials": render_news_by_sendec(request, news_id=news_id,
+                                                 category_id=category_id).exclude(id=news_id)[:12],
+        "other_materials_count": render_news_by_sendec(request, news_id=news_id,
+                                                 category_id=category_id).exclude(id=news_id)[:12].count(),
+        "latest_news": get_company_news(request, news_id, current_news.top_news_company_owner_id)[:5],
+        "company_name": str(Companies.objects.get(id=current_news.top_news_company_owner_id)).capitalize(),
+        "current_day": datetime.datetime.now().day,
+        "comments_total": comments_load(request, news_id),
+        "replies_total": replies_load(request, news_id),
+        "liked": check_like(request, news_id),
+        "disliked": check_dislike(request, news_id),
+        "like_amount": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count(),
+        "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count(),
+        "current_news_title": current_news.top_news_title,
+        #"external_link": shared_news_link(request, news_id),
+    }
+
+    args.update(check_english(current_news, flag=1))
+
+    if auth.get_user(request).username:
+        args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
+    # addition_news_watches(request, news_id)
+    args.update(csrf(request))
+
+    return render_to_response("top_news.html", args)
+
 
 
 def render_current_news(request, category_id, news_id):
@@ -98,34 +148,37 @@ def render_current_news(request, category_id, news_id):
         #"external_link": shared_news_link(request, news_id),
     }
 
-    args.update(check_english(current_news))
+    args.update(check_english(current_news, flag=0))
 
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     addition_news_watches(request, news_id)
     args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("current_news.html", args)
 
 
-def check_english(news):
+def check_english(news, flag):
     args = {}
-    if news.news_post_text_english != "":
-        args["eng"] = True
-    if news.news_post_text_russian != "":
-        args["rus"] = True
-    if news.news_post_text_chinese != "":
-        args["ch"] = True
-    return args
+    if flag == 0:
+        if news.news_post_text_english != "":
+            args["eng"] = True
+        if news.news_post_text_russian != "":
+            args["rus"] = True
+        if news.news_post_text_chinese != "":
+            args["ch"] = True
+        return args
+    elif flag == 1:
+        if news.top_news_post_text_english != "":
+            args["eng"] = True
+        if news.top_news_post_text_russian != "":
+            args["rus"] = True
+        if news.top_news_post_text_chinese != "":
+            args["ch"] = True
+        return args
+    else:
+        pass
 
 
 @login_required(login_url="/auth/login/")
@@ -142,25 +195,21 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
         #"test_2": RssNews.objects.filter(portal_name_id__in=user_rss_list).values(),
         "rss_template": rss_template,
         "un_us_p": get_user_unselceted_portals(request, user_id=user.id),
+        "un_us_p_count": get_user_unselceted_portals(request, user_id=user.id).count(),
+        "if_zero": "<p>Wow, you are reading all of our portals. Would you like to <a href='/about/contacts/'>tell</a> us something?</p><p>Or you just can "
+                   "write which portal you want to see here and we will try to add it to our database with pleasure.</p>"
+                   "<p>You are our <b>HERO</b>, man!</p>",
         "new_user_news": get_rss_filterd(request, user.id),
     }
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     args["rss_news"] = set_rss_for_user_test(request)
     args["rss_news_count"] = set_rss_for_user_test(request).count()
     if request.is_ajax():
         template = rss_template
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
-    if len(get_user_rss_news(request, user_id=user.id)) == 0:
+    if get_user_rss_news(request, user_id=user.id).count() == 0:
         args["zero"] = True
     else:
         args["zero"] = False
@@ -170,10 +219,11 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
 def get_rss_filterd(request, user_id):
     user_portals_ids = UserRssPortals.objects.filter(user_id=user_id).filter(check=True).order_by("position").values("portal_id")
     list_ids = [user_portals_ids[i]["portal_id"] for i in range(len(user_portals_ids))]
-    return RssNews.objects.filter(portal_name_id__in=list_ids, portal_name_id__userrssportals__user_id=user_id).order_by("portal_name_id__userrssportals__position").order_by("-date_posted").values()
+    return RssNews.objects.filter(portal_name_id__in=list_ids, portal_name_id__userrssportals__user_id=user_id).order_by("portal_name_id__userrssportals__position").order_by("-date_posted").defer("author").defer("content_value").values()
+
 
 def get_user_unselceted_portals(request, user_id):
-    return UserRssPortals.objects.filter(user_id=user_id).filter(check=False).values()
+    return UserRssPortals.objects.filter(user_id=user_id).filter(check=False)
 
 
 def get_user_rss_portals(request, user_id):
@@ -199,8 +249,11 @@ def get_rss_news_pagination(request, current_page, next_page):
 
 
 def get_current_rss_news(request, news_id):
-    return HttpResponse(json.dumps({"rss_news": RssNews.objects.get(id=news_id).get_json_rss()}),
-                        content_type="application/json")
+    instance = RssNews.objects.get(id=int(news_id)).get_json_rss()
+    response_data = {
+        "data": instance,
+    }
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
 def get_rss_news(request):
@@ -213,26 +266,20 @@ def render_top_news_page(request):
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("top_news.html", args)
 
 
 def get_user_news_by_portals(request):
     inst = UserSettings.objects.get(user_id=
                                     User.objects.get(username=
-                                                     auth.get_user(request).username).id).portals_to_show.split(",")
-    total_news_2 = list(News.objects.filter(Q(news_portal_name_id=inst[cur_id])).order_by("-news_post_date") for cur_id
-                        in range(len(inst)-1))
+                                                     auth.get_user(request).username).id)
+    len_inst = inst.portals_to_show.count()
+    split_inst=inst.split(",")
+    total_news_2 = list(News.objects.filter(Q(news_portal_name_id=split_inst[cur_id])).order_by("-news_post_date") for cur_id
+                        in range(len(split_inst)-1))
     return total_news_2
 
 
@@ -341,17 +388,9 @@ def render_current_category(request, category_name):
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("current_category.html", args)
 
 #   ###########################################################################
@@ -368,17 +407,9 @@ def render_technology_news(request):
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("technology.html", args)
 
 
@@ -396,17 +427,9 @@ def render_auto_news(request):
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("auto.html", args)
 
 
@@ -424,17 +447,9 @@ def render_bit_news(request):
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("bit.html", args)
 
 
@@ -451,17 +466,9 @@ def render_companies_news(request):
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("companies.html", args)
 
 
@@ -479,15 +486,7 @@ def render_current_company(request, company_name):
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
+        args["search_private"] = True
     return render_to_response("current_company.html", args)
 
 
@@ -508,17 +507,9 @@ def render_entertainment_news(request):
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("entertainment.html", args)
 
 
@@ -537,17 +528,9 @@ def render_latest_news(request):
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us.\
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("latest.html", args)
 
 
@@ -559,17 +542,9 @@ def render_reviews_news(request):
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("reviews.html", args)
 
 
@@ -582,17 +557,9 @@ def render_space_news(request):
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     args.update(csrf(request))
 
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("space.html", args)
 
 
@@ -813,15 +780,6 @@ def test_rendering(request):
         "test_2": RssNews.objects.filter(portal_name_id__in=user_rss_list).values(),
     }
     args.update(csrf(request))
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("test_rss_news.html", args, context_instance=RequestContext(request))
 
 
@@ -837,15 +795,7 @@ def render_contacts_page(request):
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
+        args["search_private"] = True
 
     return render_to_response("contacts.html", args)
 
@@ -857,7 +807,21 @@ def render_about_page(request):
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
-    if request.COOKIES.get("announce"):
+        args["search_private"] = True
+    args["expression"] = """We express our gratitude for the financial and moral support to Afanasyev M.J.
+(Associate Professor of "Instrumentation Technology")."""
+    return render_to_response("about.html", args)
+
+
+def render_adertisers_page(request):
+    args = {
+        "title": "Advertisement | "
+    }
+    args.update(csrf(request))
+    if auth.get_user(request).username:
+        args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
+    if "hide" in request.COOKIES.get("announce"):
         args["hide"] = False
     else:
         args["hide"] = True
@@ -866,9 +830,7 @@ def render_about_page(request):
 <br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
 <br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
 """
-    args["expression"] = """We express our gratitude for the financial and moral support to Afanasyev M.J.
-(Associate Professor of "Instrumentation Technology")."""
-    return render_to_response("about.html", args)
+    return render_to_response("advertisers.html", args)
 
 
 def set_user_portals(request):
@@ -960,3 +922,65 @@ def change_languages(request, news_id, lang_code):
         "data": [data],
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+def change_languages_top_news(request, news_id, lang_code):
+    instance = TopNews.objects.get(id=news_id)
+    if lang_code == 'rus':
+        data = instance.top_news_post_text_russian
+    elif lang_code == "eng":
+        data = instance.top_news_post_text_english
+    elif lang_code == "ch":
+        data = instance.top_news_post_text_chinese
+    else:
+        data = "Currently post has not any translation versions."
+    response_data = {
+        "data": [data],
+    }
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+
+def translate_news_from_top(request):
+    instance_news = TopNews.objects.all().last()
+    News.objects.create(
+        news_title=instance_news.top_news_title,
+        news_category_id=instance_news.top_news_category_id,
+        news_post_date=instance_news.top_news_post_date,
+        news_post_text_english=instance_news.top_news_post_text_english,
+        news_post_text_russian=instance_news.top_news_post_text_russian,
+        news_post_text_chinese=instance_news.top_news_post_text_chinese,
+        news_portal_name=NewsPortal.objects.get(id=instance_news.top_news_portal_name_id),
+        news_company_owner=Companies.objects.get(id=instance_news.top_news_company_owner_id),
+        news_author=User.objects.get(id=instance_news.top_news_author_id),
+        news_main_cover=instance_news.top_news_main_cover,
+        news_likes=instance_news.top_news_likes,
+        news_dislikes=instance_news.top_news_dislikes
+    )
+    instance_news.delete()
+    return HttpResponseRedirect("http://127.0.0.1:8000/admin/news/topnews/add/")
+
+
+def get_rss_news_current_portal(request, portal_verbose):
+    instance_portal = RssNews.objects.filter(portal_name_id=RssPortals.objects.get(verbose_name=portal_verbose).id)
+
+    response_data = {
+        "data": [i.get_json_rss() for i in instance_portal.all()]
+    }
+
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+def render_current_portal_news(request, portal):
+    try:
+        portal_instance = RssPortals.objects.get(verbose_name=portal)
+
+        args = {
+            "portal": portal_instance,
+            "portal_news": RssNews.objects.filter(portal_name_id=portal_instance.id).values(),
+        }
+        args.update(csrf(request))
+
+        return render_to_response("current_portal_rss_news.html", args)
+    except RssPortals.DoesNotExist:
+        return page_not_found(request)

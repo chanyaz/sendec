@@ -16,6 +16,7 @@ def render_search_page(request):
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
+        args["search_private"] = True
     if "q" in request.GET and request.GET["q"]:
         search_word = request.GET["q"]
         if search_word is "":
