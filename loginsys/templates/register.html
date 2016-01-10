@@ -22,7 +22,18 @@
     </script>
     <script>$(document).ready(function(){$("#progress-bar").progressbar({value: false});})</script>
     <style>
-    body{
+    .background-image{
+            top: 0;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+{#            -webkit-filter: blur(1px);#}
+{#            -moz-filter: blur(1px);#}
+{#            -o-filter: blur(1px);#}
+{#            -ms-filter: blur(1px);#}
+{#            filter: blur(1px);#}
+
+{#  display: block;#}
             background: url('{{ background_url }}') no-repeat center;
             background-size: cover;
         }
@@ -164,6 +175,9 @@
             <div id="progress-bar"></div>
         </div>
     </div>
+
+    <div class="background-image"></div>
+
     <div id="auth_reg">
         <div id="auth_reg_top">
             <div id="auth_reg_logo">

@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, HttpResponseRedirect, HttpResponse, Http404, RequestContext
+from django.shortcuts import render_to_response, HttpResponseRedirect, HttpResponse, Http404, RequestContext, loader
 from django.template.context_processors import csrf
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -7,12 +7,19 @@ from django.contrib.admin.views.decorators import staff_member_required, user_pa
 from django.template.loader import render_to_string
 from news.models import News, Companies, NewsCategory, NewsPortal
 from userprofile.models import UserProfile, UserSettings, UserRssPortals, RssPortals, ModeratorSpecialFields
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.conf import settings
 import datetime
 
+from django.core import signing
+from django.contrib.sites.models import Site, RequestSite
+
+
 @login_required(login_url="/auth/login/")
 def render_user_profile_page(request):
+
+    from password_reset.forms import PasswordRecoveryForm
+
     user_instance = User.objects.get(username=auth.get_user(request).username)
 
     args = {
@@ -24,6 +31,7 @@ def render_user_profile_page(request):
         "test_2": get_added_portals_name(request),
         "categories": get_categories_names(request),
         "companies": get_companies(request),
+        "form": PasswordRecoveryForm,
     }
 
     if user_instance.is_staff:
@@ -44,6 +52,33 @@ def render_user_profile_page(request):
 
     return render_to_response("profile.html", args)
 
+
+def get_site(request):
+        if Site._meta.installed:
+            return Site.objects.get_current()
+        else:
+            return RequestSite(request)
+
+def send_notification(request):
+
+    instance_user = User.objects.get(username=auth.get_user(request).username)
+    email_template_name = 'password_reset/recovery_email.txt'
+    email_subject_template_name = 'password_reset/recovery_email_subject.txt'
+
+    context = {
+        'site': get_site(request),
+        'user': instance_user,
+        'username': instance_user.username,
+        'token': signing.dumps(instance_user.pk, salt="password_recovery"),
+        'secure': request.is_secure(),
+    }
+    body = loader.render_to_string(email_template_name,
+                                   context).strip()
+    subject = loader.render_to_string(email_subject_template_name,
+                                      context).strip()
+    send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
+              [instance_user.email])
+    return HttpResponseRedirect("/profile/")
 
 def render_moderator_profile_page(request, username, template="moderator_profile.html", page_template="moderator_news.html", extra_context=None):
     user_instance = User.objects.get(username=auth.get_user(request).username)

@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     "endless_pagination",
     "maintenancemode",
     "nocaptcha_recaptcha",
+    "password_reset",
 )
 
 NORECAPTCHA_SITE_KEY = "6Lc1dhMTAAAAACgdoXQlzfJSkghbnkZuONW_P3xj"

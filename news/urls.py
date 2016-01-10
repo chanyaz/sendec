@@ -72,10 +72,10 @@ urlpatterns = [
     url(r'^auto/', 'news.views.render_auto_news'),
     url(r'^bio/', 'news.views.render_bit_news'),
 
-
     url(r'^companies/cs=(?P<company>\w+)', 'news.views.get_match_company'),
     url(r'^companies/', 'news.views.render_companies_news'),
     # url(r'^/blink-to-company/(?P<company_name>\w+)', 'news.views.blink_to_company'),
+    # url(r'^comp/gid=(?P<company_verbose>\w+)', 'news.views.get_company_id'),
 
 
     url(r'^entertainment/', 'news.views.render_entertainment_news'),

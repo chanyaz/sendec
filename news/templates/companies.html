@@ -88,7 +88,7 @@
                         </tr>
                         {% for current_company in companies %}
                             <tr class="current_company"
-                                id="{{ current_company.name|lower }}"
+                                id="{{ current_company.id }}"
                                 onclick="location.href='/news/companies/{{ current_company.verbose_name }}/';">
                                 <td><div class="company-cover cmp"><img src="/static/static/img/companies_logo/{{ current_company.verbose_name }}.png" width="100px"/> </div></td>
                                 <td><div class="company-name cmp" style="font-size: 20px;">{{ current_company.name }}</div></td>

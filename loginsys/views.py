@@ -56,8 +56,8 @@ def login(request):
                 args['login_error'] = 'User not found. Please try again.'
                 return render_to_response('login.html', args)
         else:
-            args["img-num"] = randint(1, 4)
-            args["background_url"] = "/static/static/img/login/{file_num}.jpg".format(file_num=randint(1, 7))
+            # args["img-num"] = randint(1, 4)
+            args["background_url"] = "/static/static/img/login/{file_num}.jpg".format(file_num=randint(1, 27))
             return render_to_response('login.html', args)
 
 
@@ -135,8 +135,8 @@ def register(request):
                 instance.email = user_email
                 instance.save()
                 return redirect('/')
-        args["img-num"] = randint(1, 4)
-        args["background_url"] = "/static/static/img/login/{file_num}.jpg".format(file_num=randint(1, 7))
+        # args["img-num"] = randint(1, 4)
+        args["background_url"] = "/static/static/img/login/{file_num}.jpg".format(file_num=randint(1, 27))
         return render_to_response('register.html', args)
 
 
@@ -263,7 +263,13 @@ def check_username(request, username):
 
 
 def render_help_login(request):
-    args = {}
+    from password_reset.forms import PasswordRecoveryForm
+    args = {
+        "username": User.objects.get(username=auth.get_user(request).username),
+        "form": PasswordRecoveryForm,
+    }
     args.update(csrf(request))
+
+    args["background_url"] = "/static/static/img/login/{file_num}.jpg".format(file_num=randint(1, 27))
 
     return render_to_response("cant_login.html", args)

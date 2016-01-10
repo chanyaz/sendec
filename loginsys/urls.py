@@ -3,6 +3,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'recover/', include('password_reset.urls')),
     url(r'^cant_login/$', 'loginsys.views.render_help_login'),
     url(r'^login/$', 'loginsys.views.login'),
     url(r'^logout/$', 'loginsys.views.user_logout'),

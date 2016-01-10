@@ -999,3 +999,8 @@ def get_match_company(request, company):
         "data": [i.get_json_company_suggest() for i in instanse_all.all()]
     }
     return HttpResponse(json.dumps([i.get_json_company_suggest() for i in instanse_all.all()]), content_type="application/json")
+
+
+# def get_company_id(request, company_verbose):
+#     word = company_verbose.replace("%20", " ")
+#     return HttpResponse(json.dumps({"data": Companies.objects.get(name__contains=word).get_json_company_suggest()}), content_type="application/json")
