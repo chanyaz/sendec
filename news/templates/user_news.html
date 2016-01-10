@@ -9,38 +9,43 @@
         .pagination li{margin-left: 1%;margin-right: 1%;float: left;}
         .current_rss_news{
             position: relative;
-            width: 23%;
+            width: 24%;
+            padding: 0.5% 0.5%;
             height: 25em;
 {#            min-height: 20em;#}
 {#            max-height: 25em;#}
 {#            margin-left: 1%;#}
-            margin-bottom: 1%;
-            border-radius: 5px;
-            box-shadow: 0 0 5px black;
+{#            margin-bottom: 1%;#}
+{#            border-radius: 5px;#}
+{#            box-shadow: 0 0 5px black;#}
+            border: solid 1px lightgrey;
             float: left;
-            margin-right: 1%;
+{#            margin-right: 1%;#}
         }
         .current_rss_news_mas{
              position: relative;
-            width: 23%;
-            height: 10em;
-            margin-right: 1%;
+            width: 24%;
+            padding: 0.5% 0.5%;
+{#            height: 10em;#} min-height:3em;
+            max-height:15em;
+{#            margin-right: 1%;#}
 {#            min-height: 20em;#}
 {#            max-height: 25em;#}
 {#            margin-left: 1%;#}
-            margin-bottom: 1%;
-            border-radius: 5px;
-            box-shadow: 0 0 5px black;
+{#            margin-bottom: 1%;#}
+            border: solid 1px lightgrey;
+{#            border-radius: 5px;#}
+{#            box-shadow: 0 0 5px black;#}
             float: left;
         }
 
-        .current_rss_news:hover{box-shadow: 0 0 5px blue;}
+{#        .current_rss_news:hover{box-shadow: 0 0 5px blue;}#}
         .most-popular-portals input[type=checkbox]:checked + .lab .description-duke{background-color: greenyellow;}
         .current_portal_item{border: solid 1px red;height: 2em;}
         .current_portal_item:hover{background-color: #69ffb7; cursor: pointer}
         #add-portals-image{height: 2em;}
         #rss-news{border: solid 1px lightgrey; width: 80%; margin-left: 1%; float: left;}
-        #rss-title{text-align: center;}
+        #rss-title{ text-align: center;}
         .user_rss_missing{text-align: center;}
         .check_portals{display: none;}
         .lab{}
@@ -86,7 +91,7 @@
             text-transform: uppercase;
         }
     .rss-title{
-        margin-top: 0;
+        margin-top: 15%;
         font-family: Georgia, Times, "Times New Roman", serif;
         font-size: 12px;
     }
@@ -209,20 +214,25 @@
                 success: function(data){
                     $('#rss-news').html(data);
                     $('#ajax-preloader').hide();
+                },
+                error: function(result){
+                    alert("Oh,"+portal+"'s news have been broken. Try later, please.\nWe are working on this problem.");
+                    $('#ajax-preloader').hide();
                 }
             })
         }
 
     </script>
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid container">
+        <div class="row row-centered">
             <div id="rss-news">
 {#            {% for i in new_user_news %}#}
 {#                    {{ i.portal_name_id|get_rss_portal_name }} - {{ i.date_posted }} - {{ i.title }}<br>#}
 {#                {% endfor %}#}
+            {{ portal }}
             {% if rss_news_count != 0 %}
                 <div id="rss-title">
-                    All news which are your interested in
+                    <h4 style="color:black; font-family: Georgia, Times, 'Times New Roman', serif">Your&nbsp;currently&nbsp;feed</h4>
                 </div>
                 <div class="load-more">
 {#                {% block current_portal_rss %}{% endblock %}#}

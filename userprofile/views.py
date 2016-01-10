@@ -9,7 +9,7 @@ from news.models import News, Companies, NewsCategory, NewsPortal
 from userprofile.models import UserProfile, UserSettings, UserRssPortals, RssPortals, ModeratorSpecialFields
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
-
+import datetime
 
 @login_required(login_url="/auth/login/")
 def render_user_profile_page(request):
@@ -109,6 +109,12 @@ def change_profile_data(request):
     args = {}
     args.update(csrf(request))
     instance = User.objects.get(username=auth.get_user(request).username)
+    try:
+        if "userlogin" in request.POST:
+            return render_to_response("403.html", {"username": instance})
+    except:
+        send_access_report(request)
+        return render_to_response("403.html", {"username": instance})
     if request.POST:
         instance.first_name = request.POST["first_name"]
         instance.last_name = request.POST["last_name"]
@@ -221,3 +227,21 @@ def save_special_fields(request, god, fields):
 
 def get_god_data(request, god):
     return ModeratorSpecialFields.objects.get(user_id=User.objects.get(username=god).id)
+
+
+def send_access_report(request):
+    instance = User.objects.get(username=auth.get_user(request).username)
+    mail_subject = "[HACK] Someone wants to change login."
+    mail_message = "User {username}(id:{id}) at {time} wants to change username(login) through change html code of" \
+                   "username field.".format({"username": instance.username,
+                                             "id": instance.id,
+                                             "time": datetime.datetime.now()})
+    html_content = "User {username}(id:{id}) at {time} wants to change username(login) through change html code of" \
+                   "<i>username</i> field.".format({"username": instance.username,
+                                                    "id": instance.id,
+                                                    "time": datetime.datetime.now()})
+    mail_from = mail_to = "insydia@yandex.ru"
+    msg = EmailMultiAlternatives(mail_subject, mail_message, mail_from, [mail_to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+    return HttpResponse()

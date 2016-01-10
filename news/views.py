@@ -43,7 +43,8 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         "news_block": True,
         # "breaking_news": render_news_by_sendec(request).order_by("-news_post_date")[0],
         "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[0:4],
-        "interest": get_interesting_news(request)[:3],
+        # "interest": get_interesting_news(request)[:3],
+        "interest": get_top_total_news(request),
         "total_news": get_total_news,
         "page_template": page_template,
         "top_news": get_top_total_news(request),
@@ -458,36 +459,44 @@ def get_bit_news(request):
 #   ################################## END BIO #########################################
 
 
-def render_companies_news(request):
+def render_companies_news(request, template="companies.html", companies_endless="companies_endless.html", extra_context=None):
     args = {
         "title": "Companies | ",
         "companies": get_companies(request),
         "category_title": "COMPANIES",
+        # "companies_endless": companies_endless,
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
+    # if request.is_ajax():
+    #     template = companies_endless
 
-    return render_to_response("companies.html", args)
+    return render_to_response(template, args, context_instance=RequestContext(request))
 
 
 def get_companies(request):
-    return Companies.objects.all().order_by("id")
+    return Companies.objects.all().order_by("id").defer("description").defer("site").defer("category")
 
 
-def render_current_company(request, company_name):
+def render_current_company(request, company_name, template="current_company.html", company_news="current_company_news.html", extra_context=None):
     company = Companies.objects.get(verbose_name=company_name)
     args = {
-        "title": company.name+" |",
+        "title": company.name+" | ",
         "company": company,
+        "company_news": company_news,
         "news": get_companies_news(request, company.id),
     }
     args.update(csrf(request))
+
+    if request.is_ajax():
+        template = company_news
+
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-    return render_to_response("current_company.html", args)
+    return render_to_response(template, args, context_instance=RequestContext(request))
 
 
 def get_companies_news(request, company_id):
@@ -787,9 +796,9 @@ def render_contacts_page(request):
     from news.forms import SendReportForm
     args = {
         "title": "Contacts |",
-        "email": "insydia@yandex.ru",
+        "email": "support@insydia.com",
         "phone": "+7-931-579-06-96",
-        "cooperation": "saqel@yandex.ru",
+        "cooperation": "advert@insydia.com",
         "form": SendReportForm,
     }
     args.update(csrf(request))
@@ -821,15 +830,6 @@ def render_adertisers_page(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-    if "hide" in request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response("advertisers.html", args)
 
 
@@ -895,8 +895,8 @@ def send_report(request):
     if response["status"]:
         if request.POST:
             text_content = request.POST["message"] + "\nE-mail: "+request.POST["email"]+"\nName: "+request.POST["username"]
-            mail_from = "insydia@yandex.ru"
-            mail_to = "insydia@yandex.ru"
+            mail_from = "support@insydia.com"
+            mail_to = "support@insydia.com"
             send_mail(mail_subject, text_content, mail_from, [mail_to])
 
     return HttpResponseRedirect("/about/contacts/")
@@ -971,16 +971,31 @@ def get_rss_news_current_portal(request, portal_verbose):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-def render_current_portal_news(request, portal):
+def render_current_portal_news(request, portal, template="user_news.html", page_template="current_portal_rss_news.html", extra_context=None):
     try:
         portal_instance = RssPortals.objects.get(verbose_name=portal)
 
         args = {
+            "page_template": page_template,
             "portal": portal_instance,
-            "portal_news": RssNews.objects.filter(portal_name_id=portal_instance.id).values(),
+            "portal_news": RssNews.objects.filter(portal_name_id=portal_instance.id).order_by("-date_posted").defer("author").defer("content_value").values(),
         }
         args.update(csrf(request))
+        if request.is_ajax():
+            template = page_template
 
-        return render_to_response("current_portal_rss_news.html", args)
+        return render_to_response(template, args, context_instance=RequestContext(request))
     except RssPortals.DoesNotExist:
         return page_not_found(request)
+
+
+def blink_to_company(request, company_name):
+    return Companies.objects.get(name=company_name).id
+
+
+def get_match_company(request, company):
+    instanse_all = Companies.objects.filter(Q(name__contains=company) | Q(verbose_name__contains=company))[:10]
+    response_data = {
+        "data": [i.get_json_company_suggest() for i in instanse_all.all()]
+    }
+    return HttpResponse(json.dumps([i.get_json_company_suggest() for i in instanse_all.all()]), content_type="application/json")

@@ -57,6 +57,13 @@ class Companies(models.Model):
     def __str__(self):
         return self.name
 
+    def get_json_company_suggest(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "verbose": self.verbose_name
+        }
+
 
 class News(models.Model):
     class Meta:

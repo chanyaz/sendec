@@ -1,0 +1,16 @@
+{% extends 'index_new.html' %}
+{% block access_denied %}
+
+    <div class="container-fluid container">
+        <div class="row row-centered">
+            <div id="no-access">
+                <h2>403 Forbidden.</h2>
+                <div class="text-403">
+                    What are you up? You don't have permission for this action.<br>
+                    We remember you. Would you like to risk again?
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

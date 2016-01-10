@@ -44,6 +44,8 @@ class PostAdminForm(forms.ModelForm):
 
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
+    list_display = ['news_title', 'news_category', 'news_portal_name', 'news_company_owner', 'news_author',  'news_likes', 'news_dislikes', ]
+    list_filter = ['news_category', 'news_portal_name', 'news_company_owner', 'news_author',]
 
 
 class RssPortalsForm(forms.ModelForm):
@@ -55,6 +57,8 @@ class RssPortalsForm(forms.ModelForm):
 
 class RssPortalsAdminForm(admin.ModelAdmin):
     form = RssPortalsForm
+    list_filter = ['follows', ]
+    list_display = ['portal', 'verbose_name', 'follows',]
 
 
 class CompaniesEditorFormAdmin(forms.ModelForm):
@@ -66,6 +70,8 @@ class CompaniesEditorFormAdmin(forms.ModelForm):
 
 class AompaniesEditorAdmin(admin.ModelAdmin):
     form = CompaniesEditorFormAdmin
+    list_display = ['name', 'category', 'site',]
+    list_filter = ['name', 'category',]
 
 admin.site.register(RssPortals, RssPortalsAdminForm)
 admin.site.register(TopNews, PostAdminTopNews)

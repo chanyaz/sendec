@@ -1,5 +1,6 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
+{% load my %}
 {% block companies %}
 
     <style>
@@ -16,23 +17,86 @@
             width: 28%;
             float: right;
         }
+    .cmp{
+        float: left;
+    }
+    .current_company{
+        width: 100%;
+        height: 50px;
+    }
+    .current_company:hover{
+        background-color: #7ed3cc;
+        cursor: pointer;
+    }
+    table{
+        width: 100%;
+    }
+    .table-logo{
+        width: 30%;
+    }
+    .table-name{
+        width: 50%;
+    }
+    .table-articles{
+        width: 20%;
+    }
+
     </style>
-    <div class="container-fluid" style="">
-        <div class="row">
+
+
+    <div class="container-fluid container" style="">
+        <div class="row row-centered">
             <div id="companies">
-                <div class="company-top-title">Companies</div>
+                <div class="company-top-title"><h3>Companies</h3></div>
                 <div class="companies-total-description">
                     Here you can search news of the certain company which do you want.
                 </div>
                 <div class="companies-list">
-                    {% for current_company in companies %}
-                        <div class="current_company" onclick="location.href='/news/companies/{{ current_company.verbose_name }}/';">
-                            <div class="current_company_name">
-                                {{ current_company.id }}
-                                {{ current_company.name }}
-                            </div><br>
+                    <div class="search-company-form">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label"></label>
+                            <div class="col-md-7">
+                                <input type="text"
+                                       autocomplete="off"
+                                       id="company-search"
+                                       placeholder="Search&nbsp;company"
+    {#                                       oninput="searchCurrentCompany('Telegram');"#}
+    {#                                   onsubmit="searchCurrentCompany($(this).val);"#}
+                                       class="form-control">
+                            </div>
                         </div>
-                    {% endfor %}
+                        <div class="form-group">
+                            <label class="col-md-0 control-label"></label>
+                            <button id="submit" class="btn btn-primary">Search</button>
+                        </div>
+
+{#                        <div id="suggest">#}
+{#                            <ul id="suggest-list"#}
+{#                                tabindex="0"#}
+{#                                style="display: none; top: 40px; width: 200px; border: solid 1px red;"#}
+{#                                class="ui-autocomplete">#}
+{#                                <li class="suggest-list-item">1</li>#}
+{#                            </ul>#}
+{#                        </div>#}
+
+                    </div>
+                   <table id="company-table">
+                        <tr>
+                            <th class="table-logo tbi">Logo</th>
+                            <th class="table-name tbi">Name</th>
+                            <th class="table-articles tbi">Articles</th>
+                        </tr>
+                        {% for current_company in companies %}
+                            <tr class="current_company"
+                                id="{{ current_company.name|lower }}"
+                                onclick="location.href='/news/companies/{{ current_company.verbose_name }}/';">
+                                <td><div class="company-cover cmp"><img src="/static/static/img/companies_logo/{{ current_company.verbose_name }}.png" width="100px"/> </div></td>
+                                <td><div class="company-name cmp" style="font-size: 20px;">{{ current_company.name }}</div></td>
+                                <td><div class="company-articles cmp">{{ current_company.id|company_articles_amount }}</div></td>
+                                <td><div class="company-sth"></div></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
                 </div>
             </div>
             <div class="right-side">

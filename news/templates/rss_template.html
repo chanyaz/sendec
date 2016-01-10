@@ -9,31 +9,38 @@
 {#        <ifchan></ifchan>ged True i.date_posted.date.day %}#}
 {#            <hr>{{ i.date_posted.date }}<hr>#}
 {#        {% endifchanged %}#}
-        <div class="sect-new">
+        <div class="sect-new"
+             onmouseover="this.style.cursor='pointer'; $('#rss-title-'+{{ i.id }}).css('color', 'blue');"
+             onmouseout="$('#rss-title-'+{{ i.id }}).css('color', 'black');">
             {% if i.id|get_rss_news_cover != '[]' %}
             <div class="current_rss_news rss-rss"
                  id="rss_id_{{ i.id }}"
                  data-indx="{{ i.nuid }}"
                  data-current-rss-news-id="{{ i.id }}"
     {#             onclick="RssPreviewPopUpShow('{{ i|jsonate }}')">#}
-                 onclick="RssPreviewPopUpShow('{{ i.id }}')">
+                 >
             {% else %}
             <div class="current_rss_news_mas rss-rss"
                  id="rss_id_{{ i.id }}"
                  data-indx="{{ i.nuid }}"
                  data-current-rss-news-id="{{ i.id }}"
     {#             onclick="RssPreviewPopUpShow('{{ i|jsonate }}')">#}
-                 onclick="RssPreviewPopUpShow('{{ i.id }}')">
+                  >
             {% endif %}
             <div class="portal-name">
-                <span class="portal-name-content">
+                <span class="portal-name-content"
+                      onclick="showCurrentPortalNews('{{ i.portal_name_id|get_rss_verbose_name }}');">
                     &nbsp;{{ i.portal_name_id|get_rss_portal_name }}&nbsp;
                 </span>
             </div>
                 {% if i.id|get_rss_news_cover != '' %}
-                    <div class="news-image" style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;"></div>
+                    <div class="news-image"
+                         onclick="RssPreviewPopUpShow('{{ i.id }}')"
+                         style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;"></div>
                 {% endif %}
-                <div class="rss-title"><b>{{ i.title|safe|striptags }}</b></div>
+                <div class="rss-title"
+                     id="rss-title-{{ i.id }}"
+                     onclick="RssPreviewPopUpShow('{{ i.id }}')"><b>{{ i.title|safe|striptags }}</b></div>
         {#        <div class="portal" style="float: left;">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id|get_rss_portal_name }}</a></div>#}
         {#        <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>#}
     {#            <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>#}
@@ -52,4 +59,4 @@
 {#            isAnimated: true,#}
 {#            colu1mnWidth: 0#}
         });
-    </script>
+</script>

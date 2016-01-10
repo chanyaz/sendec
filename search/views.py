@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.template.context_processors import csrf
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, RequestContext
 from django.db.models import Q
 
 
@@ -10,10 +10,14 @@ from search.models import UserRequests
 
 
 #   @login_required(login_url="/auth/login/")
-def render_search_page(request):
+def render_search_page(request, template="search.html", news_search_template="news_search_template.html", extra_context=None, translate="english"):
     args = {
         "latest_news": get_latest_news_total(request)[:5],
+        "news_search_template": news_search_template,
     }
+    if request.is_ajax():
+        template = news_search_template
+
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
@@ -45,7 +49,7 @@ def render_search_page(request):
 <br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
 <br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
 """
-    return render_to_response("search.html", args)
+    return render_to_response(template, args, context_instance=RequestContext(request))
 
 
 def get_latest_news_total(request):

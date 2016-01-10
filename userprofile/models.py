@@ -39,6 +39,9 @@ class UserRssPortals(models.Model):
     position = models.IntegerField(default=0)
     rate = models.FloatField(default=0.0)
 
+    def __str__(self):
+        return self.portal.portal
+
     def get_json_portal(self):
         return {
             "id": self.portal_id,
@@ -63,4 +66,13 @@ class ModeratorSpecialFields(models.Model):
     personal_email = models.EmailField(max_length=128)
 
     def __str__(self):
-        return self.user
+        return self.user.username
+
+
+class UserTelegramSettings(models.Model):
+    class Meta:
+        db_table = "user_telegram"
+
+    user = models.ForeignKey(User, related_name="telegram")
+    active = models.BooleanField(default=False)
+    mobile = models.CharField(max_length=11)

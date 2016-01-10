@@ -27,7 +27,6 @@
 {#        ul.tabs li.active{background: gray;}#}
         ul.tabs li.active a{color: white;}
         .clr{clear: both;}
-        .current_searched{height: 82px;box-shadow: 0 0 5px #5e5e5e;margin: 2% 0.25% 0.25% 0.25%;}
         .moderator{width: 50%;height: auto;padding-bottom: 4em;}
         .photo{height: 50px;float: left;width: 25%;border: solid 1px red;}
         .content{float: right;width: 75%;height: 50px;border: solid 1px purple;}
@@ -45,10 +44,25 @@
         .cur_pop_news{float: left; width: 48%; height: 300px; margin: 0 1%; position: relative;}
         .image{opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;}
         #match-variation{text-align: left; font-size: 20px;}
-        .current_searched{height: 80px; margin: 2% 0.25% 0.25% 0.25%; font-family: Georgia, Times, "Times New Roman", serif}
-        .current_searched_cover{width: 20%; height: 80px; float: left;}
-        .current_searched_content_title{margin-left: 21%;}
-        .current_searched_content_portal{float: left; margin-left: 1%;}
+        .current_searched{
+            border: solid 1px lightgrey;
+{#            height: inherit;#}
+            margin: 2% 0.25% 0.25% 0.25%;
+            font-family: Georgia, Times, "Times New Roman", serif
+        }
+        .current_searched_cover{
+            width: 25%;
+            height: 10em;
+{#            max-height:10em;#}
+            float: left;
+        }
+        .current_searched_content_title{
+{#            margin-left: 21%;#}
+        }
+        .current_searched_content_portal{
+            float: left;
+            margin-left: 1%;
+        }
         .right-side-block{width: 28%; float: right;}
 
         .latest-news-cover{float: left; height: 50%; width: 25%;}
@@ -56,12 +70,24 @@
         .latest-current-news{margin-top: 5%; height: 60px; border-bottom: dotted 1px lightgrey}
         .latest-header{text-align: center;}
 
-        .current_searched_content{position: relative;}
-        .current_searched_content_top{height: 4.4em;}
+        .current_searched_content{
+{#            border: solid 1px red;#}
+{#            position: relative;#}
+            height:10em;
+        }
+        .current_searched_content_top{
+{#            border: solid 1px blue;#}
+            position: relative;
+            height: 87%;
+            margin-left: 25%;
+        }
         .searched-category-name{
-                position: absolute;
+{#                position: absolute;#}
                 z-index: 900;
-                margin-left: 20%;
+{#            border: solid 1px red;#}
+            float: right;
+{#                margin-left: 20%;#}
+{#                margin-top: 2%;#}
         }
         .searched-category-name-content{
                 background-color: blue;
@@ -73,8 +99,8 @@
             text-decoration: none;
         }
     </style>
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid container">
+        <div class="row row-centered">
             <div class="search-block">
                 <div class="search">
                     <div class="left-side-search">
@@ -135,40 +161,26 @@
                                 <div class="clr"></div>
                                 <section class="block">
                                     <article id="an">
-                                    {% if matches_amount > 0 %}
-                                        {% for current_result in results %}
-                                            <div class="current_searched"
-                                                 onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"
-                                                 onmouseover="this.style.cursor='pointer'; this.style.backgroundColor='grey';"
-                                                 onmouseout="this.style.backgroundColor='';">
-                                                <div class="current_searched_content">
-                                                    <div class="current_searched_content_top">
-                                                        <div class="current_searched_cover"
-                                                             style="background: url('/media/{{ current_result.news_main_cover }}') no-repeat center; background-size: cover;"></div>
-                                                        <div class="current_searched_content_portal">
-                                                            {{ current_result.news_portal_name_id|get_portal_name }}
-                                                        </div>
-                                                        <div class="current_searched_content_date">
-                                                            &nbsp;|&nbsp;{{ current_result.news_post_date.date }}
-                                                        </div>
-                                                        <div class="current_searched_content_title">
-                                                            <b>{{ current_result.news_title }}</b>
-                                                        </div>
-                                                        <div class="current_searched_content_post">
-                                                            {{ current_result.news_post_text_english|safe|striptags|truncatechars:"115" }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="searched-category-name">
-                                                        <a class="searched-category-link" href="/news/{{ current_result.id|get_news_category }}/">
-                                                            <span class="searched-category-name-content">
-                                                                &nbsp;{{ current_result.id|get_news_category }}&nbsp;
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                        <div class="load-more">
+                                            <div class="endless_page_template" style="margin-left: 1%;">
+                                                {% block js %}
+                                                    <script src="{% static 'static/js/jquery.js' %}"></script>
+                                                    <script src="{% static 'static/js/endless-pagination.js' %}"></script>
+                                                    <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            $.endlessPaginate({
+                                                                paginateOnScroll: false,
+                                                                paginateOnScrollChunkSize: 1
+                                                            });
+                                                        });
+                                                    </script>
+                                                {% endblock %}
+                                            <div class="rss-mas">
+                                                {% include news_search_template %}
                                             </div>
-                                        {% endfor %}
-                                    {% endif %}
+                                            </div>
+                                        </div>
                                     </article>
                                     <article id="ac">
                                         {% if companies_matches|length > 0 %}

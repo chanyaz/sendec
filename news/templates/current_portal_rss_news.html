@@ -22,7 +22,7 @@
         text-decoration: none;
     }
     .rss-title{
-        margin-top: 0;
+        margin-top: 15%;
         font-family: Georgia, Times, "Times New Roman", serif;
         font-size: 15px;
     }
@@ -30,19 +30,32 @@
         display: inline-block;
         width: 23%;
         margin-left: 1%;
-        min-height: 213px;
+{#        min-height: 213px;#}
     }
 </style>
 
+    {{ portal }}<br>
     <div id="current-portal-rss-news">
-        {{ portal }}<br>
 
+    <div class="any40items" style="height: inherit;">
+{% paginate 20 portal_news %}
 {% for i in portal_news %}
-    <div class="sect-new">
-        <div class="current_rss_news"
-             id="rss_id_{{ i.id }}"
-             data-current-rss-news-id="{{ i.id }}"
-             onclick="RssPreviewPopUpShow('{{ i.id }}')">
+    <div class="sect-new" style="padding: 10% 10%;">
+        {% if i.id|get_rss_news_cover != '[]' %}
+            <div class="current_rss_news rss-rss"
+                 id="rss_id_{{ i.id }}"
+                 data-indx="{{ i.nuid }}"
+                 data-current-rss-news-id="{{ i.id }}"
+    {#             onclick="RssPreviewPopUpShow('{{ i|jsonate }}')">#}
+                 onclick="RssPreviewPopUpShow('{{ i.id }}')">
+            {% else %}
+            <div class="current_rss_news_mas rss-rss"
+                 id="rss_id_{{ i.id }}"
+                 data-indx="{{ i.nuid }}"
+                 data-current-rss-news-id="{{ i.id }}"
+    {#             onclick="RssPreviewPopUpShow('{{ i|jsonate }}')">#}
+                 onclick="RssPreviewPopUpShow('{{ i.id }}')">
+            {% endif %}
         <div class="category-name">
                 <span class="category-name-content">
                     &nbsp;{{ i.portal_name_id|get_rss_portal_name }}&nbsp;
@@ -54,10 +67,20 @@
             <div class="rss-title"><b>{{ i.title|safe|striptags }}</b></div>
     {#        <div class="portal" style="float: left;">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id|get_rss_portal_name }}</a></div>#}
     {#        <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>#}
-            <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>
-            <div class="navigation" style="float: right;">Share&nbsp;|&nbsp;Like</div>
+{#            <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>#}
+{#            <div class="navigation" style="float: right;">Share&nbsp;|&nbsp;Like</div>#}
         </div>
     </div>
 {% endfor %}
-
     </div>
+    {% show_more %}
+    <script>
+        $('.any40items').masonry({
+              // options
+            itemSelector: '.rss-rss',
+{#            singleMode: true,#}
+{#            isResizable: true,#}
+{#            isAnimated: true,#}
+{#            colu1mnWidth: 0#}
+        });
+    </script>

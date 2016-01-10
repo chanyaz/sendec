@@ -14,13 +14,18 @@
             bottom: 50px;
             position: absolute;
             z-index: 999;
-            width: 50%;
+            width: 100%;
             background-color: white;
             opacity: 0.75;
             box-sizing: border-box;
             display: block;
         }
-        .bn-title-text{margin-left: 5%;font-size: 20px;color: blue;}
+        .bn-title-text{
+            margin-left: 5%;
+            font-size: 20px;
+            color: black;
+            text-shadow: 0 0 20px black;
+        }
 
 
 
@@ -33,6 +38,12 @@
         }
 {#        .sect{width: 24%; margin-bottom: 1%;}#}
 
+        .sect-2{
+            width: 23%;
+            display: inline-block;
+            margin-right: 2%;
+        }
+
         .news-title{font-size: 17px; margin-top: 1.5%; font-family: Georgia, Times, "Times New Roman", serif}
 {#        .middle-news-cover{max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;}#}
 {#        .interest-news-cover{max-height: 100%; max-width: 100%; height: 200px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size:cover;}#}
@@ -42,12 +53,27 @@
         .latest-reviews{height: 500px;}
         .left-bar-videos{margin-left: 0.9%; float: left; width: 70%; height: 100%;}
         .right-bar-videos{width: 29%; float: right;}
-        .recently-news-other{width: 100%;}
+        .recently-news-other{
+            width: 100%;
+        }
 
 
-        .current_news{margin-top: 5%; height: 300px; position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.5); width: 100%; float: left;}
-        .current_news-special{margin-top: 5%; height: inherit; position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.5); width: 100%; float: left;}
-
+        .current_news{
+{#            margin-top: 5%;#}
+            height: 150px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+{#            width: 23%;#}
+            float: left;
+{#            margin-right: 1%;#}
+        }
+        .current_news_mas{
+            height: inherit;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            float: left;
+{#            margin-right: 1%;#}
+        }
 
         .category-name{
             position: absolute;
@@ -260,9 +286,14 @@
         overflow: hidden;
         position: relative;
     }
+
+    .top-grid-title{
+        text-shadow: 0 0 10px black;
+    }
+
     </style>
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid container">
+        <div class="row row-centered">
             <div class="ash">
                 <div class="panel panel-default">
                     <div class="total-news-block" >
@@ -350,15 +381,24 @@
                                 </div>
                             </div>
                         </div>
+                    <hr width="100%">
+                    <div id="middle-news-special" style="margin-left: 1%;">
                             {% for current_middle_news in total_middle_news %}
-                                <div class="sect">
-                                    <div class="current_news"
+                                <div class="sect-2">
+                                    {% if current_middle_news.news_main_cover == '' %}
+                                    <div class="current_news news-news"
                                          onmouseover="style.border='solid 0.2px blue';"
                                          onmouseout="style.border='';"
                                          onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
-                                        <div class="current_news_top"
-                                             onmouseover="this.style.cursor='pointer';"
-                                             style="position:relative; height: 92%;">
+                                    {% else %}
+                                    <div class="current_news_mas news-news"
+                                         onmouseover="style.border='solid 0.2px blue';"
+                                         onmouseout="style.border='';"
+                                         onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                    {% endif %}
+{#                                        <div class="current_news_top"#}
+{#                                             onmouseover="this.style.cursor='pointer';"#}
+{#                                             style="position:relative; height: 92%;">#}
                                             <div class="category-name">
                                                 <a class="category-link" href="/news/{{ current_middle_news.id|get_news_category }}/">
                                                     <span class="category-name-content">
@@ -366,26 +406,32 @@
                                                     </span>
                                                 </a>
                                             </div>
-                                            {% if current_middle_news.news_main_cover != None %}
+                                            {% if current_middle_news.news_main_cover != '' %}
                                                 <div class="middle-news-cover"
+                                                     onmouseover="this.style.cursor='pointer';"
                                                      style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
                                                 <div class="mask">
 {#                                                    <a href="#" class="info"></a>#}
                                                 </div>
                                                 </div>
                                             {% endif %}
-                                            <div class="title">
+                                            <div class="title" style="margin-top: 5%;"
+                                                 onmouseover="this.style.cursor='pointer'; this.style.color='blue';"
+                                                 onmouseout="this.style.color='';">
                                                 <div class="news-title">
                                                     {{ current_middle_news.news_title|safe }}
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="current_news_bottom">
-                                            SEE LATER
-                                        </div>
+{#                                        </div>#}
+{#                                        <div class="current_news_bottom">#}
+{#                                            SEE LATER#}
+{#                                        </div>#}
                                     </div>
                                 </div>
                             {% endfor %}
+                    </div>
+
+
                         <hr width="100%">
                         <div class="media">
 
@@ -405,76 +451,113 @@
                                 RECENTLY&nbsp;NEWS<br>
                                 <div class="">
                                     <div class="recently-news-other">
-                                            {% for current_bottom_news in total_bottom_news %}
-                                                <div class="sect">
-                                                    <div class="current_news"
-                                                         onmouseover="style.border='solid 0.2px blue'; this.style.cursor='pointer';"
-                                                         onmouseout="style.border='';"
-                                                         onclick="location.href='/news/{{ current_bottom_news.news_category_id }}/{{ current_bottom_news.id }}/';">
-                                                        <div class="category-name">
-                                                            <a class="category-link" href="/news/{{ current_bottom_news.id|get_news_category }}/">
-                                                                <span class="category-name-content">
-                                                                    &nbsp;{{ current_bottom_news.id|get_news_category }}&nbsp;
-                                                                </span>
-                                                            </a>
+                                        {% for i in total_bottom_news %}
+                                            <div class="sect-2">
+                                            {% if i.news_main_cover == '' %}
+                                                <div class="current_news special-pos"
+                                                     onmouseover="style.border='solid 0.2px blue'; this.style.cursor='pointer';"
+                                                     onmouseout="style.border='';"
+                                                     style="width: 23%; margin-right: 1%; margin-bottom: 1%;"
+                                                     onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                                {% else %}
+                                                <div class="current_news_mas special-pos"
+                                                     onmouseover="style.border='solid 0.2px blue'; this.style.cursor='pointer';"
+                                                     onmouseout="style.border='';"
+                                                     style="width: 23%; margin-right: 1%; margin-bottom: 1%;"
+                                                     onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                                {% endif %}
+                                                    <div class="category-name">
+                                                        <a class="category-link" href="/news/{{ i.id|get_news_category }}/">
+                                                            <span class="category-name-content">
+                                                                &nbsp;{{ i.id|get_news_category }}&nbsp;
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    {% if i.news_main_cover != '' %}
+                                                        <div class="total-news-cover cover-hover"
+                                                             style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                            <div class="mask"></div>
                                                         </div>
-                                                        {% if current_bottom_news.news_main_cover != '' %}
-                                                            <div class="bottom-news-cover cover-hover"
-                                                                 style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_bottom_news.news_main_cover }}') no-repeat center; background-size: cover;">
-                                                            <div class="mask">
-            {#                                                  <a href="#" class="info"></a>#}
-                                                            </div>
-                                                            </div>
-                                                        {% endif %}
-                                                        <div class="title">
-                                                            <div class="news-title">
-                                                                {{ current_bottom_news.news_title|safe }}
-                                                            </div>
-                                                        </div>
-                                                        <div class="text_post">
-                                                            {{ current_bottom_news.news_post_text|safe|striptags|truncatewords_html:"8" }}
+                                                    {% endif %}
+                                                    <div class="title" style="margin-top: 5%;">
+                                                        <div class="news-title">
+                                                            {{ i.news_title }}
                                                         </div>
                                                     </div>
+                                                    <div class="text_post">
+                                                        {{ i.news_post_text|safe|striptags|truncatewords_html:"12" }}
+                                                    </div>
                                                 </div>
-                                            {% endfor %}
-                                        </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
                                 <hr width="100%">
                                 <div class="interested-news">
                                     <h4>Interesting&nbsp;articles</h4>
-                                    <div id="interests">
-                                        {% for current_interest in interest %}
-                                            <div class="sect">
-                                                <div class="current_news"
-                                                     onmouseover="style.border='solid 0.2px blue'; this.style.cursor='pointer';"
-                                                     onmouseout="style.border='';"
-                                                     onclick="location.href='/news/{{ current_interest.news_category_id }}/{{ current_interest.id }}/';">
-                                                    <div class="cur-int-top" style="height: 92%;">
-                                                        <div class="category-name">
-                                                            <a class="category-link" href="/news/{{ current_interest.id|get_news_category }}/">
-                                                                <span class="category-name-content">
-                                                                    &nbsp;{{ current_interest.id|get_news_category }}&nbsp;
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        {% if current_interest.news_main_cover != '' %}
-                                                            <div class="interest-news-cover cover-hover"
-                                                                 style="max-height: 100%; max-width: 100%; height: 210px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size: cover;">
-                                                                <div class="mask"></div>
-                                                            </div>
-                                                        {% endif %}
-                                                        <div class="title">
-                                                            <div class="news-title">
-                                                                {{ current_interest.news_title|safe }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--<div class="source" style="margin-left: 2%;">
-                                                        <a href="{{ current_interest.news_portal_name_id|get_portal_link }}">{{ current_interest.news_portal_name_id|get_portal_name }}</a>
-                                                    </div>-->
-                                                </div>
+                                    <div id="interests" class="carousel slide" style="height: 250px;">
+                                        <div class="carousel-inner" style="height: 250px;">
+                                            <div class="active item" style="height: 250px; max-height: 250px; border: solid 1px red;">
+                                                <div class="carousel-inner-item"
+                                                     onclick="location.href='/news/top/{{ interest.0.top_news_category_id }}/{{ interest.0.id }}/';"
+                                                     style="float: left; height: 250px; width: 50%; background: url('/media/{{ interest.0.top_news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                                <div class="carousel-inner-item"
+                                                     onclick="location.href='/news/top/{{ interest.0.top_news_category_id }}/{{ interest.1.id }}/';"
+                                                     style="float: right; height: 250px; width: 50%; background: url('/media/{{ interest.1.top_news_main_cover }}') no-repeat center; background-size: cover;"></div>
                                             </div>
-                                        {% endfor %}
+                                            <div class="item">
+                                                <div class="carousel-inner-item"
+                                                     onclick="location.href='/news/top/{{ interest.2.top_news_category_id }}/{{ interest.2.id }}/';"
+                                                     style="float: left; height: 250px; width: 50%; background: url('/media/{{ interest.2.top_news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                                <div class="carousel-inner-item"
+                                                     onclick="location.href='/news/top/{{ interest.3.top_news_category_id }}/{{ interest.3.id }}/';"
+                                                     style="float: right; height: 250px; width: 50%; background: url('/media/{{ interest.3.top_news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                            </div>
+                                        </div>
+                                        <!-- ARROWS -->
+                                        <div class="carousel-control left" href="#interests" data-slide="prev">
+                                            <div class="control-arrow">
+                                                &lsaquo;
+                                            </div>
+                                        </div>
+                                        <div class="carousel-control right" href="#interests" data-slide="next">
+                                            <div class="control-arrow">
+                                                &rsaquo;
+                                            </div>
+                                        </div>
+                                    </div>
+{#                                        {% for current_interest in interest %}#}
+{#                                            <div class="sect">#}
+{#                                                <div class="current_news"#}
+{#                                                     onmouseover="style.border='solid 0.2px blue'; this.style.cursor='pointer';"#}
+{#                                                     onmouseout="style.border='';"#}
+{#                                                     onclick="location.href='/news/{{ current_interest.news_category_id }}/{{ current_interest.id }}/';">#}
+{#                                                    <div class="cur-int-top" style="height: 92%;">#}
+{#                                                        <div class="category-name">#}
+{#                                                            <a class="category-link" href="/news/{{ current_interest.id|get_news_category }}/">#}
+{#                                                                <span class="category-name-content">#}
+{#                                                                    &nbsp;{{ current_interest.id|get_news_category }}&nbsp;#}
+{#                                                                </span>#}
+{#                                                            </a>#}
+{#                                                        </div>#}
+{#                                                        {% if current_interest.news_main_cover != '' %}#}
+{#                                                            <div class="interest-news-cover cover-hover"#}
+{#                                                                 style="max-height: 100%; max-width: 100%; height: 210px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size: cover;">#}
+{#                                                                <div class="mask"></div>#}
+{#                                                            </div>#}
+{#                                                        {% endif %}#}
+{#                                                        <div class="title">#}
+{#                                                            <div class="news-title">#}
+{#                                                                {{ current_interest.news_title|safe }}#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                    <!--<div class="source" style="margin-left: 2%;">#}
+{#                                                        <a href="{{ current_interest.news_portal_name_id|get_portal_link }}">{{ current_interest.news_portal_name_id|get_portal_name }}</a>#}
+{#                                                    </div>-->#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        {% endfor %}#}
                                     </div>
                                 </div>
                                 <hr width="100%">
@@ -493,7 +576,9 @@
                                                     });
                                                 </script>
                                             {% endblock %}
-                                            {% include page_template %}
+                                <div class="total-mas">
+                                    {% include page_template %}
+                                </div>
                                         </div>
                                     </div>
                             </div>
@@ -503,4 +588,6 @@
             </div>
         </div>
     </div>
+                                        <a href="#0" class="cd-top">Top</a>
+
 {% endblock %}

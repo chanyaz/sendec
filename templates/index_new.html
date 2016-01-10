@@ -36,9 +36,7 @@
 
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
 
-    <script src="{% static 'static/js/bootstrap-form/js/bootstrap-formhelpers-countries.js' %}" type="javascript"></script>
-    <script src="{% static 'static/js/bootstrap-form/js/bootstrap-formhelpers-phone.js' %}" type="javascript"></script>
-
+{#    <script src="{% static 'static/js/jquery.js' %}"></script>#}
 
     <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css">
@@ -307,10 +305,10 @@
         .signin:after{left:10px;margin:0 -30% 0 0;}
         .rss-share-item{margin-bottom:0;margin-left: 0;}
         #rss-properties-list{
-            width: 25%;
-            margin-right: -3%;
+            width: 10em;
+            margin-right: -1%;
             float: right;
-            margin-top: -1.5%;
+{#            margin-top: -1.5%;#}
             list-style-type: none;
         }
         .cur_unsel_portal{width: 20%;height: 5em;}
@@ -364,12 +362,36 @@
         #auth-botton-reg-link{margin-left: 1em;}
         .total-body{padding-top: 2%;}
         .total-body-closer{margin-left: 100%; width: 3%; background: whitesmoke; border: solid 1px blue;}
-        .rss-preview-title{margin-top: -8%; margin-left: 2%;}
+        .rss-preview-title{
+            margin-top: -5%;
+            margin-left: 2%;
+        }
         .rss-preview-author{float: left;}
-        .rss-preview-parent-link{float: right; margin-top: -3%;}
+
+
+        .rss-preview-date-published{
+            float: left;
+        }
+        .rss-preview-parent-link{
+            float: right;
+{#            margin-right: 5%;#}
+            width: 6em;
+        }
         .rss-preview-shares{border: solid 1px darkred; height: 2.5em;}
-        #rss-share-list{margin-left: -5%; list-style-type: none;}
-        .rss-preview-body{padding: 0 5%; margin-top: 2%; font-family: Georgia,Times,sans-serif; font-size: 17px;}
+        #rss-share-list{
+            float: left;
+            margin-left: -5%;
+            list-style-type: none;
+        }
+        .rss-preview-body{
+            padding: 0 5%;
+            margin-top: 2%;
+            font-family: Georgia,Times,sans-serif;
+            font-size: 17px;
+        }
+        .rss-preview-body h3{
+            color: black
+        }
         .rss-preview-body img{max-height: 400px; max-width: 100%;}
         .content-text{text-align: center;}
         .content-portals{width: 70%; margin-left: auto; margin-right: auto;}
@@ -401,6 +423,17 @@
         .most-popular-portals input[type=checkbox]:checked + .lab .description-duke{background-color: greenyellow;}
 
 
+        h2{
+            color: black;
+        }
+
+        #about, #contacts, #companies, #rss-news{
+            font-family: Georgia, Times, "Times New Roman", serif;
+        }
+
+        .sect-new:hover{
+            cursor: pointer;
+        }
 
     </style>
 
@@ -811,11 +844,14 @@
                                 {% block user_news %}{% endblock %}
                                 {% block search %}{% endblock %}
                                 {% block page_not_found %}{% endblock %}
+                                {% block access_denied %}{% endblock %}
                                 {% block about %}{% endblock %}
                                     {% block contacts %}{% endblock %}
                                     {% block advertisers %}{% endblock %}
                             </div>
                         </div>
+                                                            <a href="#0" class="cd-top">Top</a>
+
                         </div>
                         {% block settings %}{% endblock %}
                     </div>
@@ -823,6 +859,7 @@
             </div>
         </div>
     </div>
+{#        <a href="#0" class="cd-top">Top</a>#}
         <div class="footer">
             {% include 'footer.html' %}
         </div>
@@ -857,6 +894,7 @@
                 <div class="rss-preview-author"></div>
                 <div class="rss-preview-date-published"></div>
                 <div class="rss-preview-parent-link"></div>
+                <hr width="100%">
                 <div class="rss-preview-shares">
                     <ul id="rss-share-list">
                         <li class="rss-share-item">
@@ -880,13 +918,10 @@
                                  width="34px"/>
                         </li>
                     </ul>
-                    <ul id="rss-properties-list"
-                        data-rss-id="">
-                         <li class="rss-item-save"></li>
-                        <li>
-                            <img src="{% static 'static/img/mail.png' %}" width="30px" />
-                        </li>
-                        <li class="rss-item-copy"></li>
+                    <ul id="rss-properties-list" data-rss-id="">
+                        <li class="rss-item-save glyphicon glyphicon-plus text-muted" style="font-size: 2em;"></li>
+                        <li class="rss-item-send glyphicon glyphicon-send text-muted" style="font-size: 2em;"></li>
+                        <li class="rss-item-copy glyphicon glyphicon-link text-muted" style="font-size: 2em;"></li>
                     </ul>
                 </div>
                 <div class="rss-preview-body"></div>
@@ -978,7 +1013,21 @@
             </div>
         </div>
     </div>
-    <script>
+
+        <script>
+            var icoElement = $('.glyphicon');
+            icoElement.hover(function(){
+                $(this).removeClass('text-muted');
+                $(this).addClass('text-primary');
+            });
+
+            icoElement.mouseout(function(){
+                $(this).removeClass('text-primary');
+                $(this).addClass('text-muted');
+            })
+        </script>
+
+        <script>
         $(document).ready(function(){
             PortalsAdditionPopUpHide();
         });
@@ -1001,22 +1050,24 @@
                 success: function(data){
                      $("html").css("overflowY", "hidden");
                     $parsedData = data.data;
-                    $(".rss-preview-title").html("<h3 style='color: black;'>"+$parsedData.title+"</h3>");
-                    $(".rss-preview-author").html($parsedData.author);
-                    $(".rss-preview-parent-link").html("<a href='"+$parsedData.link+"'>To&nbsp;original<img src='{% static 'static/img/arrow.png' %}'; style='margin-top:-5%;' width=18px'; /></a>");
-                    var d = new Date($parsedData.date_posted);
-                    $(".rss-preview-date-published").html($parsedData.date);//"&nbsp;|&nbsp;"+ d.toDateString().substring(4)+"&nbsp;"+d.toTimeString().substring(0,5));
+                    $(".rss-preview-title").html("<h2 style='color: black;'>"+$parsedData.title+"</h2>");
+                    if($parsedData.author.length !== 0) {
+                        $(".rss-preview-author").html("Author: "+$parsedData.author+"&nbsp;|&nbsp;");
+                    }
+                    $(".rss-preview-parent-link").html("<a target='_blank' href='"+$parsedData.link+"'>To&nbsp;original<span class='glyphicon glyphicon-chevron-right text-muted'></span></a>");
+{#                    var d = new Date($parsedData.date_posted);#}
+                    $(".rss-preview-date-published").html("Published: "+$parsedData.date);//"&nbsp;|&nbsp;"+ d.toDateString().substring(4)+"&nbsp;"+d.toTimeString().substring(0,5));
                     if($parsedData.content.length === 0) {
                         $(".rss-preview-body").html($parsedData.text+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%;' class='btn btn-primary'>See&nbsp;original</button></a>");
                     }
                     else {
-                        $(".rss-preview-body").html($parsedData.content);
+                        $(".rss-preview-body").html($parsedData.content+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%; margin-bottom: 20px;' class='btn btn-primary'>See&nbsp;original</button></a>");
                     }
-                    $(".rss-item-save").html(
-                            "<img onclick='add_like_rss("+$parsedData.id+")' class='rss-save' src='{% static 'static/img/save.png' %}' width='30px' alt='Save' />"
-                    );
-                    $(".rss-item-copy").html(
-                            "<img class='copy-to-cb' id='copy-"+$parsedData.id+"' src='{% static 'static/img/chain.png' %}' width='30px'/>");
+{#                    $(".rss-item-save").html(#}
+{#                            "<img onclick='add_like_rss("+$parsedData.id+")' class='rss-save' src='{% static 'static/img/save.png' %}' width='30px' alt='Save' />"#}
+{#                    );#}
+{#                    $(".rss-item-copy").html(#}
+{#                            "<img class='copy-to-cb' id='copy-"+$parsedData.id+"' src='{% static 'static/img/chain.png' %}' width='30px'/>");#}
                     $(".preview-rss-news").show();
                         }
             });
@@ -1047,7 +1098,7 @@
     </script>
     <div id="live"></div>
 
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src='//www.google.com/recaptcha/api.js'></script>
     <!--<script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
     <script type="text/javascript">VK.init({apiId: 111});</script>-->
     <!--<script>
@@ -1065,6 +1116,9 @@
     <script src="{% static 'static/js/jquery.js' %}"></script>
     <script src="{% static 'static/js/jquery.min.js' %}"></script>
     <script src="{% static 'static/js/jquery-ui.js' %}"></script>
+    <script src="{% static 'static/js/pulse.js' %}"></script>
+    <script src="{% static 'static/js/pulse.min.js' %}"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="{% static 'static/js/bootstrap.min.js' %}" type="javascript"></script>
 
 
@@ -1072,7 +1126,7 @@
     <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
 
 {#<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>#}
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function () {
   var trigger = $('.hamburger'),
@@ -1111,7 +1165,6 @@ $(document).ready(function () {
             $(this).keydown(function(eventObject){
                 if (eventObject.which == 27)
                     $('.preview-rss-news').hide();
-                    hideLeftBar();
                     $("html").css("overflowY", "auto");
             });
         });
@@ -1123,11 +1176,154 @@ $(document).ready(function () {
         $('.any40items').masonry({
               // options
             itemSelector: '.rss-rss',
-{#            singleMode: true,#}
+{#            singleMode: false,#}
 {#            isResizable: true,#}
 {#            isAnimated: true,#}
 {#            colu1mnWidth: 0#}
         });
+
+        $('#middle-news-special').masonry({
+            itemSelector: '.sect-2'
+        });
+
+        $('.dyn-news').masonry({
+            singleMode: false,
+            itemSelector: '.special-pos',
+            columnWidth: 0
+        });
+
+
+        $('.recently-news-other').masonry({
+            itemSelector: '.special-pos'
+        });
+
+
+        $(window).ready(function(){
+            $('#interests').carousel({
+                interval: 3000
+            });
+        });
+
+
+        $("#submit").click(function() {
+                var inputValue = $("#company-search").val().replace(/\./g, "").toLowerCase();
+                $(".current_company").each(function () {
+                    if ($(this).attr("id") == inputValue) {
+                        $('html,body').animate({
+                            scrollTop: $(this).offset().top
+                        });
+                    }
+                });
+            });
+
+        $("#company-search").keyup(function(e){
+            if(e.keyCode == 13) {
+                var inputValue = $("#company-search").val().replace(/\./g, "").toLowerCase();
+                $(".current_company").each(function () {
+                    if ($(this).attr("id") == inputValue) {
+                        $('html,body').animate({
+                            scrollTop: $(this).offset().top
+                        });
+                    }
+                });
+            }
+        });
+
+        $(document).ready(function(){
+            var offset = 100,
+                offset_opacity = 1200,
+                scroll_top_duration = 700,
+                $back_to_top = $('.cd-top');
+
+            $(window).scroll(function(){
+                ( $(this).scrollTop() > offset ) ? $back_to_top.addClass('cd-is-visible') : $back_to_top.removeClass('cd-is-visible cd-fade-out');
+                if( $(this).scrollTop() > offset_opacity ) {
+                    $back_to_top.addClass('cd-fade-out');
+                }
+            });
+
+            $back_to_top.on('click', function(event){
+                event.preventDefault();
+                $('body,html').animate({
+                    scrollTop: 0
+                    }, scroll_top_duration
+                );
+            });
+
+        });
+
+
+
+{#        $('#company-search').keyup(function(e){#}
+{#            $.ajax({#}
+{#                type: "POST",#}
+{#                url: "/news/companies/cs="+$('#company-search').val().replace(/\./g, ""),#}
+{#                data:{'csrfmiddlewaretoken': '{{ csrf_token }}'},#}
+{#                success:function(data){#}
+{#                    data.data.forEach(function(cur){#}
+{#                        $('#suggest-list').html(#}
+{#                                "<li class='suggest-list-item'>"+cur.name+"</li>"#}
+{#                        );#}
+{#                    })#}
+{#                }#}
+{#            })#}
+{#        })#}
+
+
+    $("#company-search").autocomplete({
+        source: function( request, response ) {
+        $.ajax({
+          url: "/news/companies/cs="+$('#company-search').val().replace(/\./g, ""),
+          dataType: "json",
+          data: {
+              'csrfmiddlewaretoken': '{{ csrf_token }}',
+              q: request.term
+{#              term: $('#company-search').val().replace(/\./g, "")#}
+          },
+          success: function( data ) {
+              response($.map(data, function(item){
+                  return{
+                      label: item.name,
+                      value: item.name,
+                      verbose: item.verbose
+                  };
+              }));
+          }
+        });
+      },
+        minLength: 1,
+        maxLength: 10,
+{#      select: function( event, ui ) {#}
+{#        log( ui.item ?#}
+{#          "Selected: " + ui.item.label :#}
+{#          "Nothing selected, input was " + this.value);#}
+{#      },#}
+        select:function(event, ui){
+            var targetOffset = $(this).offset();
+            $('html,body').animate({
+                scrollTop: targetOffset
+            });
+            var a = $("#company-search").val().toLowerCase();
+            $('#'+ a).animate({backgroundColor: "#00C0FF"}, 2000).animate({backgroundColor: "transparent" }, 2000);
+        },
+
+      open: function() {
+        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+      },
+      close: function() {
+        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }
+    }).data( "autocomplete" )._renderItem = function( ul, item ) {
+    // Inside of _renderItem you can use any property that exists on each item that we built
+    // with $.map above */
+    return $("<li></li>")
+        .data("item.autocomplete", item)
+        .append("<a>" + item.label + "<br>" + item.name + "</a>")
+        .appendTo(ul);
+};
+
+
+
     </script>
 
 </body>

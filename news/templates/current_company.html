@@ -12,19 +12,23 @@
         }
         .current_searched_content_portal{float: left;margin-left: 1%;}
         #current_company_right{height: auto;float: right;width: 30%; border: solid 1px lightgrey;}
-        .company-right-top{height: 110px;}
+        .company-right-top{
+            width: 20em;
+            height: 8em;
+            margin-left: auto;
+            margin-right: auto;
+        }
         .current_company_logo{
-            float: left;
-            width: 100px;
-            height: 100px;
+            width: 100%;
+            height: 100%;
             background: url('/media/{{ company.logo }}') no-repeat center;
             background-size: 100px;
         }
         .company-title{text-align: center;margin-left: -15%;}
         .current-company-title{text-align: center;}
     </style>
-    <div class="current_company">
-        <div class="row">
+    <div class="current_company container">
+        <div class="row row-centered">
             <div class="current_company_content">
                 <div class="company-title">
                     <h2>{{ company.name }}</h2>
@@ -34,41 +38,31 @@
                         <div class="current-company-title">
                             All&nbsp;{{ company.name }}'s&nbsp;news
                         </div>
-                        {% for current_news in news %}
-                            <div class="current_news"
-                                 onclick="location.href='/news/{{ current_news.news_category_id }}/{{ current_news.id }}/';"
-                                 onmouseover="this.style.cursor='pointer'; this.style.backgroundColor='grey';"
-                                 onmouseout="this.style.backgroundColor='';">
-                                <div class="current_searched_content">
-                                    <div class="current_searched_cover" style="width: 20%;
-            height: 80px;
-            float: left;
-            background: url('/media/{{ current_news.news_main_cover }}') no-repeat center;
-            background-size: cover;"></div>
-                                    <div class="current_searched_content_portal">
-                                        {{ current_news.news_portal_name_id|get_portal_name }}
-                                    </div>
-                                    <div class="current_searched_content_date">
-                                        &nbsp;|&nbsp;{{ current_news.news_post_date.date }}
-                                    </div>
-                                    <div class="current_searched_content_title">
-                                        {{ current_news.news_title }}
-                                    </div>
-                                    <div class="current_searched_content_post">
-                                        {{ current_news.news_post_text|safe|striptags|truncatewords:"15" }}
-                                    </div>
+                        <div class="load-more">
+                            <div class="endless_page_template">
+                                {% block js %}
+                                    <script src="{% static 'static/js/jquery.js' %}"></script>
+                                    <script src="{% static 'static/js/endless-pagination.js' %}"></script>
+                                    <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+                                    <script>
+                                        $(document).ready(function() {
+                                            $.endlessPaginate({
+                                                paginateOnScroll: false,
+                                                paginateOnScrollChunkSize: 1
+                                            });
+                                        });
+                                    </script>
+                                {% endblock %}
+                                <div class="total-mas">
+                                    {% include company_news %}
                                 </div>
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
                 </div>
                 <div id="current_company_right">
                 <div class="company-right-top">
-                    <div class="current_company_logo">
-                    </div>
-                    <div class="company-title">
-                        <h2>{{ company.name }}</h2>
-                    </div>
+                    <div class="current_company_logo"></div>
                 </div>
                 <div class="company-right-below">
                     {{ company.description|safe|linebreaks }}

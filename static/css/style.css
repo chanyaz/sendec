@@ -9,11 +9,46 @@ body {
     /*margin-top: 100px;*/
 }
 
-/*@media(min-width:768px) {*/
-    /*body {*/
-        /*margin-top: 50px;*/
-    /*}*/
-/*}*/
+@media(max-width:768px) {
+    .top-left-bar{
+        display: none;
+    }
+    .right-block{
+        display: none;
+    }
+    .service-media{
+        display: none;
+    }
+    .ln-left{
+        width: 100%;
+        height: 400px;
+        position: relative;
+        overflow: hidden;
+    }
+    .ln-right{
+        width: 100%;
+        height: 400px;
+    }
+    .ln-right-left-top{
+        width: 100%;
+        height: 400px;
+    }
+    .ln-right-left-bottom{
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+    }
+    figure{
+        overflow: hidden;
+        min-width: 320px;
+        max-width: 480px;
+        width: 48%;
+        background: #3085a3;
+        text-align: center;
+        cursor: pointer;
+    }
+}
 
 .menupr{
 text-align: center;
@@ -43,7 +78,7 @@ vertical-align: middle;
 .sect{
     display:inline-block;
     width: 32.5%;
-    min-height: 213px;
+    /*min-height: 213px;*/
 
     margin-left: 1.5%;
 
@@ -578,8 +613,8 @@ figure.effect-zoe figcaption {
 	bottom: 0;
 	padding: 1em;
 	height: 5.75em;
-    opacity: 0.75;
-	background: #9ba3d3;
+    opacity: 0.9;
+	background: #ffffff;
 	color: #3c4a50;
 	-webkit-transition: -webkit-transform 0.35s;
 	transition: transform 0.35s;
@@ -746,3 +781,89 @@ figure.effect-duke:hover p {
 /***********/
 .grid-item { width: 100px; }
 .grid-item--width2 { width: 100%; }
+
+
+/*****************/
+/*    SLIDER     */
+/*****************/
+/*#interests {margin-left: 30px; margin-right: 30px;}*/
+
+.carousel-control.left:hover {
+    cursor: pointer;
+    -webkit-box-shadow: inset 40px 0 96px -50px whitesmoke;
+    -moz-box-shadow: inset 40px 0 96px -50px whitesmoke;
+    box-shadow: inset 40px 0 96px -40px whitesmoke;
+}
+.carousel-control.right:hover {
+    cursor: pointer;
+    -webkit-box-shadow: inset -40px 0 96px -50px whitesmoke;
+    -moz-box-shadow: inset -40px 0 96px -50px whitesmoke;
+    box-shadow: inset -40px 0 96px -40px whitesmoke;
+}
+.carousel-inner {
+    width: 100%;
+	/*height: 120px;*/
+}
+.carousel-control.left, .carousel-control.right {
+	background: none;
+	/*color: @red;*/
+	border: none;
+}
+.carousel-control.left {height: 250px;  color: black; width: 7%;}
+.carousel-control.right {height: 250px;  color: black; width: 7%;}
+
+.control-arrow{
+    /*border: solid 1px white;*/
+    color: white;
+    bottom: -40%;
+    vertical-align: baseline;
+    position: relative;
+}
+
+
+
+.title:hover, .rss-title:hover{
+    color: blue;
+}
+
+.cd-top {
+  display: inline-block;
+  height: 40px;
+  width: 5%;
+  position: fixed;
+  bottom: 80px;
+  right: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  /* image replacement properties */
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  background: #00C0FF url('/static/static/img/up-arrow.png') no-repeat center 50%;
+  visibility: visible;
+  opacity: 0;
+  -webkit-transition: opacity .3s 0s, visibility 0s .3s;
+  -moz-transition: opacity .3s 0s, visibility 0s .3s;
+  transition: opacity .3s 0s, visibility 0s .3s;
+}
+.cd-top.cd-is-visible, .cd-top.cd-fade-out, .no-touch .cd-top:hover {
+  -webkit-transition: opacity .3s 0s, visibility 0s 0s;
+  -moz-transition: opacity .3s 0s, visibility 0s 0s;
+  transition: opacity .3s 0s, visibility 0s 0s;
+}
+.cd-top.cd-is-visible {
+  visibility: visible;
+  opacity: 1;
+}
+.cd-top.cd-fade-out {
+    visibility: visible;
+    opacity: 1;
+}
+.no-touch .cd-top:hover {
+    visibility: visible;
+    background-color: #00C0FF;
+    opacity: 1;
+}
+
+.personal { background-color: yellow; }
+
+.ui-show{display: block;}

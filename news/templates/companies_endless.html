@@ -1,0 +1,27 @@
+{% load endless %}
+{% load staticfiles %}
+{% load my %}
+
+
+    <div class="companies-endless" style="height: inherit;">
+        <table id="company-table">
+                            <tr>
+                                <th class="table-logo tbi">Logo</th>
+                                <th class="table-name tbi">Name</th>
+                                <th class="table-articles tbi">Articles</th>
+                            </tr>
+        {% paginate 20 companies %}
+        {% for current_company in companies %}
+            <tr class="current_company"
+                id="{{ current_company.name|lower }}"
+                onclick="location.href='/news/companies/{{ current_company.verbose_name }}/';">
+                <td><div class="company-cover cmp"><img src="/static/static/img/companies_logo/{{ current_company.verbose_name }}.png" width="100px"/> </div></td>
+                <td><div class="company-name cmp" style="font-size: 20px;">{{ current_company.name }}</div></td>
+                <td><div class="company-articles cmp">{{ current_company.id|company_articles_amount }}</div></td>
+                <td><div class="company-sth"></div></td>
+            </tr>
+        {% endfor %}
+
+        </table>
+    </div>
+        {% show_more %}

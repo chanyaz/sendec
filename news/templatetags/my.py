@@ -1,7 +1,7 @@
 from django import template
 from django.utils.importlib import import_module
 from django.contrib.auth.models import User
-
+from news.models import News
 
 register = template.Library()
 
@@ -94,3 +94,8 @@ def get_rss_news_cover(value):
 def get_portal_link(value):
     from news.models import NewsPortal
     return NewsPortal.objects.get(id=int(value)).portal_base_link
+
+
+@register.filter(name="company_articles_amount")
+def company_articles_amount(value):
+    return News.objects.filter(news_company_owner_id=int(value)).count()

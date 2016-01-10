@@ -85,12 +85,24 @@ def connect_to_db(urls):
         data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
         data["title"] = data["title"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
         data["description"] = data["description"].replace('"', '&#quot;').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
-        match = re.findall(r'<.*?>', data["description"])
+
+
+
+
+
+
+        # TEST
+        # match = re.findall(r'<.*?>', data["description"])
+        # for i in match:
+        #     data["description"] = data["description"].replace(i, "")
+
+
+
+
+
         match_tabs = re.findall(r'[\s]{2,}', data["description"])
         for i in match_tabs:
             data["description"] = data["description"].replace(i, " ")
-        for i in match:
-            data["description"] = data["description"].replace(i, "")
         data["description"] = data["description"].replace("\n", "").replace("\t", "")
 
         query_for_rss = "SELECT * FROM rss_portals"
