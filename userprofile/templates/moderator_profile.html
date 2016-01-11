@@ -1,5 +1,6 @@
 {% extends 'index_new.html' %}
 {% load my %}
+{% load i18n %}
 {% load staticfiles %}
 {% block moderator_page %}
 
@@ -41,11 +42,11 @@
             <hr width="100%">
                 <div class="moderator-chars">
                     <div id="moderator-rate">
-                        <label class="col-md-3">Rate:&nbsp;{{ moderator.profile.user_rate }}</label>
+                        <label class="col-md-3">{% trans 'Rate' %}:&nbsp;{{ moderator.profile.user_rate }}</label>
                     </div>
                     <hr width="100%">
                     <div id="moderator-articles">
-                        <label class="col-md-5">Articles:&nbsp;{{ articles_count }}</label>
+                        <label class="col-md-5">{% trans 'Articles' %}:&nbsp;{{ articles_count }}</label>
                     </div>
                 </div>
             <hr width="100%">
@@ -71,7 +72,7 @@
              <hr width="100%">
             </div>
             <div class="col-md-7 col-sm-6 col-xs-12 personal-info">
-                <h3>{{ moderator }}'s&nbsp;articles</h3>
+                <h3>{% blocktrans %}{{ moderator }}'s&nbsp;articles{% endblocktrans %}</h3>
                 <div class="load-more">
                     <div class="endless_page_template">
                         {% block js %}

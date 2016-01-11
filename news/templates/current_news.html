@@ -1,6 +1,7 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
 {% load my %}
+{% load i18n %}
 {% load cache %}
 {% block current_news %}
     <script>
@@ -104,7 +105,7 @@
             </div>
 {#        {% cache 600 date-and-author %}#}
             <div class="date-and-author">
-                <h5>By
+                <h5>{% trans 'By' %}
                     {% if current_news_values.id|get_news_portal == "insydia" %}
                         <a href="/search/?q={{ current_news_values.news_author }}"><i>{{ current_news_values.news_author_id|get_article_author }}</i></a>
                     {% else %}
@@ -114,7 +115,7 @@
             </div>
             {% if username.is_staff %}
                 <div class="for-god" style="float: right;">
-                    <a href="http://127.0.0.1:8000/admin/news/news/{{ current_news_values.id }}/">Edit</a>
+                    <a href="http://127.0.0.1:8000/admin/news/news/{{ current_news_values.id }}/">{% trans 'Edit' %}</a>
                 </div>
             {% endif %}
 {#        {% endcache %}#}
@@ -242,7 +243,7 @@
             <div class="right-block-content">
             <div class="latest-news">
                 <div class="latest-header">
-                    News&nbsp;of&nbsp;{{ company_name }}
+                    {% blocktrans %}News&nbsp;of&nbsp;{{ company_name }}{% endblocktrans %}
                 </div>
                 <div class="latest-titles">
                     {% for i in latest_news %}

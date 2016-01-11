@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load cache %}
+{% load i18n %}
 {% block register %}
     <!--suppress ALL -->
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
@@ -137,8 +138,6 @@
             float: right;
         }
     </style>
-
-
     <script>
         $(document).ready(function(){
             $("#user-register-name").focusout(function() {
@@ -168,9 +167,9 @@
     <div id="progress-popup-window">
         <div id="progress-popup-window-content">
             <div class="text">
-                Please,&nbsp;wait&nbsp;while&nbsp;we&nbsp;are&nbsp;preparing&nbsp;your&nbsp;profile.
+                {% trans 'Please, wait while we are preparing your profile.' %}
                 <br>
-                You&nbsp;will&nbsp;be&nbsp;able&nbsp;to&nbsp;use&nbsp;service&nbsp;in&nbsp;a&nbsp;minute.
+                {% trans 'You will be able to use service in a minute.' %}
             </div>
             <div id="progress-bar"></div>
         </div>
@@ -198,7 +197,7 @@
                                         id="user-register-name"
                                         class="form-control"
                                         type="text"
-                                        placeholder="Username">
+                                        placeholder="{% trans 'Username' %}">
                                 <span id="span-check-username" class="reg-error">
                                 </span>
                             </div>
@@ -212,7 +211,7 @@
                                         class="form-control"
                                         type="text"
                                         pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"
-                                        placeholder="E-mail">
+                                        placeholder="{% trans 'E-mail' %}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -246,14 +245,14 @@
 
                        <div class="form-group">
                             <div class="form-field">
-                                <input id="reg-submit" class="btn btn-primary form-field" value="Sign&nbsp;up" type="submit" onclick="">
+                                <input id="reg-submit" class="btn btn-primary form-field" value="{% trans 'Sign up' %}" type="submit" onclick="">
                             </div>
                         </div>
 
 
                         <div class="help-links">
                             <div class="form-field">
-                                <input id="reg-submit" class="btn btn-default form-field" value="Sign&nbsp;in" onclick="location.href='/auth/login/';">
+                                <input id="reg-submit" class="btn btn-default form-field" value="{% trans 'Sign in' %}" onclick="location.href='/auth/login/';">
                             </div>
                         </div>
                     </div>

@@ -2,6 +2,7 @@
 {% load my %}
 {% load endless %}
 {% load cache %}
+{% load i18n %}
 {% block politics %}
     <!-- class names for covers -->
     <style>
@@ -448,7 +449,7 @@
 
                             <hr width="100%">
                             <div class="recently-news">
-                                RECENTLY&nbsp;NEWS<br>
+                                {% trans 'RECENTLY NEWS' %}<br>
                                 <div class="">
                                     <div class="recently-news-other">
                                         {% for i in total_bottom_news %}
@@ -494,7 +495,7 @@
                                 </div>
                                 <hr width="100%">
                                 <div class="interested-news">
-                                    <h4>Interesting&nbsp;articles</h4>
+                                    <h4>{% trans 'Interesting articles' %}</h4>
                                     <div id="interests" class="carousel slide" style="height: 250px;">
                                         <div class="carousel-inner" style="height: 250px;">
                                             <div class="active item" style="height: 250px; max-height: 250px; border: solid 1px red;">

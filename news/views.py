@@ -15,27 +15,28 @@ from .forms import NewsCommentsForm, NewsCommentsRepliesForm
 from django.core.mail import send_mail
 
 
-def global_redirect(request):
-    if request.COOKIES.get("translate-version"):
-        if "russian" in request.COOKIES.get("translate-version"):
-            return HttpResponseRedirect("/ru/")
-        elif "english" in request.COOKIES.get("translate-version"):
-            return HttpResponseRedirect("/en/")
-        elif "chinese" in request.COOKIES.get("translate-version"):
-            return HttpResponseRedirect("/cn/")
-    else:
-        return HttpResponseRedirect("/en/")
+# def global_redirect(request):
+#     if request.COOKIES.get("translate-version"):
+#         if "russian" in request.COOKIES.get("translate-version"):
+#             return HttpResponseRedirect("/ru/")
+#         elif "english" in request.COOKIES.get("translate-version"):
+#             return HttpResponseRedirect("/en/")
+#         elif "chinese" in request.COOKIES.get("translate-version"):
+#             return HttpResponseRedirect("/cn/")
+#     else:
+#         return HttpResponseRedirect("/en/")
+#
+#
+# def translate_russian(request):
+#     return main_page_load(request, translate="russian")
+#
+#
+# def translate_chinese(request):
+#     return main_page_load(request, translate="chinese")
 
 
-def translate_russian(request):
-    return main_page_load(request, translate="russian")
-
-
-def translate_chinese(request):
-    return main_page_load(request, translate="chinese")
-
-
-def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None, translate="english"):
+def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None):
+# def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None, translate="english"):
     args = {
         "video_top": TopVideoContent.objects.all().values()[:3],
         "current_year": datetime.datetime.now().year,
@@ -49,8 +50,8 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         "page_template": page_template,
         "top_news": get_top_total_news(request),
     }
-    if translate == "russian":
-        args["translate"] = "ru"
+    # if translate == "russian":
+    #     args["translate"] = "ru"
     if render_news_by_sendec(request).order_by("-news_post_date")[4:13].count() > 0:
         args["total_bottom_news"] = render_news_by_sendec(request).order_by("-news_post_date")[4:13]
 
@@ -63,7 +64,7 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         args["search_private"] = True
 
     response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
-    response.set_cookie("translate-version", translate)
+    # response.set_cookie("translate-version", translate)
     return response
 
 

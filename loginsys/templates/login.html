@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load i18n %}
 {% block login %}
         <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
 
@@ -97,7 +98,7 @@
     <div class="background-image"></div>
     <div id="auth_login">
         <div id="auth_login_top">
-            <div id="auth_login_logo">INSYDIA</div>
+            <div id="auth_login_logo"><a href="/">INSYDIA</a></div>
             <div id="auth_login_form">
                 <form id="login-password"
                       class="form-horizontal"
@@ -123,7 +124,7 @@
 
                        <div class="form-group">
                             <div class="form-field">
-                                <input class="btn btn-primary form-field" value="Sign&nbsp;in" type="submit" onclick="">
+                                <input class="btn btn-primary form-field" value="{% trans 'Sign in' %}" type="submit" onclick="">
                             </div>
                         </div>
 
@@ -138,12 +139,12 @@
                         <div class="help-links">
                             <div class="form-group">
                                 <div class="form-field">
-                                    <input class="btn form-field" value="Create&nbsp;Free&nbsp;Account" onclick="location.href='/auth/register/';">
+                                    <input class="btn form-field" value="{% trans 'Create Account' %}" onclick="location.href='/auth/register/';">
                                 </div>
                             </div>
                             <div class="form-field-link">
-                                <a href="/auth/cant_login/">Can't log in?</a>
-                                <a href="{% url "password_reset_recover" %}">RECOVERY</a>
+{#                                <a href="/auth/cant_login/">Can't log in?</a>#}
+                                <a href="{% url "password_reset_recover" %}">{% trans "Can't log in?" %}</a>
                             </div>
                         </div>
                     </div>

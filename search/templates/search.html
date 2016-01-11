@@ -1,6 +1,7 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
 {% load my %}
+{% load i18n %}
 {% block search %}
 {#    <script src="{% static 'static/js/jquery.js' %}"></script>#}
 {#    <script src="{% static 'static/js/jquery-ui.js' %}"></script>#}
@@ -98,6 +99,23 @@
         .searched-category-link:hover{
             text-decoration: none;
         }
+
+        .searched_company_name{
+            margin-bottom: 5%;
+            height: 3em;
+        }
+    .company-cover{
+        float: left;
+    }
+    .company-name{
+        float: left;
+        margin-top: 2%;
+        margin-left: 20%;
+    }
+    .company-articles{
+        float: right;
+        margin-top: 2%;
+    }
     </style>
     <div class="container-fluid container">
         <div class="row row-centered">
@@ -106,7 +124,7 @@
                     <div class="left-side-search">
                         {% if empty_result %}
                             <div class="search-error-text">
-                                No&nbsp;one&nbsp;matches.&nbsp;Please,&nbsp;try&nbsp;another&nbsp;request&nbsp;word<br><br>
+                                {% trans 'No one matches. Please, try another request word' %}<br><br>
                             </div>
                             <div class="no_results">
                                 <form action="/search/" method="get" name="search" onsubmit="return validate_form();">
@@ -116,16 +134,16 @@
                                            id="input-search-field"
                                            type="text"
                                            class="form-control"
-                                           placeholder="What&nbsp;are&nbsp;you&nbsp;looking&nbsp;for?">
+                                           placeholder="{% trans 'What are you looking for?'%}">
                                     <input type="submit"
                                            id="input-search-submit"
-                                           value="Search"
+                                           value="{% trans 'Search' %}"
                                            class="search-submit-button">
                                 </form>
                             </div>
                             <div class="popular-news">
                                 <div class="text-top-popular">
-                                    Popular&nbsp;news
+                                    {% trans 'Popular news' %}
                                 </div>
                                 <div id="pop-news">
                                     {% for current_popular_news in popular_news %}
@@ -134,7 +152,7 @@
                                                 {{ current_popular_news.news_title }}
                                             </div>
                                             <div class="date-author">
-                                                By&nbsp;<a href="/search/?q={{ current_popular_news.news_portal_name }}">{{ current_popular_news.news_portal_name }}</a>&nbsp;|&nbsp;
+                                                {% trans 'By' %} <a href="/search/?q={{ current_popular_news.news_portal_name }}">{{ current_popular_news.news_portal_name }}</a>&nbsp;|&nbsp;
                                                 {{ current_popular_news.news_post_date }}
                                             </div>
                                             <div class="image"></div>
@@ -147,16 +165,16 @@
                             </div>
                         {% else %}
                             <div id="match-variation">
-                                <b>Results&nbsp;for&nbsp;&laquo;{{ search_word }}&raquo;</b>
-                                &nbsp;<h5>&#40;{{ matches_amount }}&nbsp;{% if matches_amount > 1 %}matches
-                            {% else %}match
+                                <b>{% trans 'Results for ' %}&laquo;{{ search_word }}&raquo;</b>
+                                &nbsp;<h5>&#40;{{ matches_amount }}&nbsp;{% if matches_amount > 1 %}{% trans 'matches' %}
+                            {% else %}{% trans 'match' %}
                             {% endif %}&#41;</h5><hr>
                             </div>
                             <div id="tabs">
                                 <ul class="tabs">
-                                    <li><a href="#an">News</a></li>
-                                    <li><a href="#ac">Companies</a></li>
-                                    <li><a href="#au">Moderators</a></li>
+                                    <li><a href="#an">{% trans 'News' %}&nbsp;({{ news_count|default:0 }})</a></li>
+                                    <li><a href="#ac">{% trans 'Companies' %}&nbsp;({{ companies_count|default:0 }})</a></li>
+                                    <li><a href="#au">{% trans 'Moderators' %}&nbsp;({{ users_count|default:0 }})</a></li>
                                 </ul>
                                 <div class="clr"></div>
                                 <section class="block">
@@ -186,8 +204,12 @@
                                         {% if companies_matches|length > 0 %}
                                             {% for current_company in companies_matches %}
                                                 <div class="searched_company_name"
+                                                     onmouseover="this.style.backgroundColor='lightblue';"
+                                                     onmouseout="this.style.backgroundColor='';"
                                                      onclick="location.href='/news/companies/{{ current_company.verbose_name }}/';">
-                                                    {{ current_company.name }}
+                                                    <div class="company-cover"><img src="/static/static/img/companies_logo/{{ current_company.verbose_name }}.png" width="75px"/></div>
+                                                    <div class="company-name">{{ current_company.name }}</div>
+                                                    <div class="company-articles">{% trans 'Articles' %}:&nbsp;{{ current_company.id|company_articles_amount }}</div>
                                                 </div>
                                             {% endfor %}
                                         {% endif %}
@@ -202,10 +224,10 @@
                                                         <div class="username">{{ current_user.username }}</div>
                                                         <ul class="moderator-info">
                                                             <li class="moderator-info-item">
-                                                                <div class="articles">Articles:&nbsp;{{ current_user.profile.written_articles }}&nbsp;|&nbsp;</div>
+                                                                <div class="articles">{% trans 'Articles' %}:&nbsp;{{ current_user.profile.written_articles }}&nbsp;|&nbsp;</div>
                                                             </li>
                                                             <li class="moderator-info-item">
-                                                                <div class="articles">Rate:&nbsp;{{ current_user.profile.user_rate }}</div>
+                                                                <div class="articles">{% trans 'Rate' %}:&nbsp;{{ current_user.profile.user_rate }}</div>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -221,7 +243,7 @@
                 <div class="right-side-block">
                     <div class="latest-news">
                         <div class="latest-header">
-                            Latest&nbsp;news
+                            {% trans 'Latest news' %}
                         </div>
                         <div class="latest-titles">
                             {% for i in latest_news %}

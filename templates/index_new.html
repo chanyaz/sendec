@@ -27,7 +27,7 @@
 
     <meta name='yandex-verification' content='5e44980913d08dad' />
     <meta name="google-site-verification" content="y6Xw9KEH5CLn8NGw7Q2xWyettWl8PNt06hQVCjG2EBs" />
-    <title>{{ title }}Insydia</title>
+    <title>{% blocktrans %}{{ title }}Insydia{% endblocktrans %}</title>
 
 
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -56,6 +56,16 @@
 
     <!--<link rel="stylesheet" type="text/css" href="http://static.amigobulls.com/css/chart-widget.min.css.gz" />-->
 {#    <link rel="stylesheet" type="text/css" href="{% static 'static/css/chart-widget.css' %}" />#}
+
+
+
+    <!-- CHANGE LANGUAGE -->
+
+    <!-- /END CHANGE LANGUAGE -->
+
+
+
+
     <script type="text/javascript">
         function validate_form ( ) {
         	valid = true;
@@ -392,7 +402,13 @@
         .rss-preview-body h3{
             color: black
         }
-        .rss-preview-body img{max-height: 400px; max-width: 100%;}
+        .rss-preview-body img:before{
+            content: '<p align="center">';
+        }
+        .rss-preview-body img:after{
+            content: '</p>';
+        }
+        .rss-preview-body img{ max-width: 100%;}
         .content-text{text-align: center;}
         .content-portals{width: 70%; margin-left: auto; margin-right: auto;}
         .cur_unsel_portal{width: 25%; float: left;}
@@ -451,110 +467,66 @@
                 <li>
                     <a href="/">
                         <i class="fa fa-fw fa-home"></i>
-                            {% if translate == "ru" %}
-                                ГЛАВНАЯ
-                            {% else %}
-                                HOME
-                            {% endif %}
+                        {% trans 'HOME' %}
                     </a>
                 </li>
                 <li>
                     <a href="/news/technology/">
                         <i class="fa fa-fw fa-folder"></i>
-                            {% if translate == "ru" %}
-                                ТЕХНОЛОГИИ
-                            {% else %}
-                                TECHNOLOGY
-                            {% endif %}
+                        {% trans 'TECHNOLOGY' %}
                     </a>
                 </li>
                 <li>
                     <a href="/news/entertainment/">
                         <i class="fa fa-fw fa-file-o"></i>
-                            {% if translate == "ru" %}
-                                РАЗВЛЕЧЕНИЯ
-                            {% else %}
-                                ENTERTAINMENT
-                            {% endif %}
+                        {% trans 'ENTERTAINMENT' %}
                     </a>
                 </li>
                 <li>
                     <a href="/news/auto/">
                         <i class="fa fa-fw fa-cog"></i>
-                            {% if translate == "ru" %}
-                                АВТО
-                            {% else %}
-                                AUTO
-                            {% endif %}
+                        {% trans 'AUTO' %}
                     </a>
                 </li>
                 <li>
                     <a href="/news/space/">
                         <i class="fa fa-fw fa-cog"></i>
-                            {% if translate == "ru" %}
-                                КОСМОС
-                            {% else %}
-                                SPACE
-                            {% endif %}
+                        {% trans 'SPACE' %}
                     </a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-fw fa-plus"></i>
-                            {% if translate == "ru" %}
-                                ОБЗОРЫ
-                            {% else %}
-                                REVIEWS
-                            {% endif %}
-                            <span class="caret"></span>
+                        {% trans 'REVIEWS' %}
+                        <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li class="dropdown-header">
-                            {% if translate == "ru" %}
-                                ГЛАВНАЯ
-                            {% else %}
-                                DROPDOWN HEADING
-                            {% endif %}
+                            {% trans 'DROPDOWN HEADING' %}
                         </li>
                         <li>
                             <a href="#">
-                                {% if translate == "ru" %}
-                                    АВТО
-                                {% else %}
-                                    AUTO
-                                {% endif %}
+                                {% trans 'AUTO' %}
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                {% if translate == "ru" %}
-                                    ТЕЛЕФОНЫ
-                                {% else %}
-                                    PHONES
-                                {% endif %}
+                                {% trans 'PHONES' %}
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                {% if translate == "ru" %}
-                                    КОМПЬЮТЕРЫ
-                                {% else %}
-                                    PC
-                                {% endif %}
+                                {% trans 'PC' %}
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                SPACE SHUTTLES
+                                {% trans 'SPACE SHUTTLES' %}
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                {% if translate == "ru" %}
-                                    ДРУГОЕ
-                                {% else %}
-                                    OTHER
-                                {% endif %}
+                                {% trans 'OTHER' %}
                             </a>
                         </li>
                     </ul>
@@ -562,11 +534,7 @@
                 {% if username.username %}
                     <li>
                         <a href="/profile/">
-                            {% if translate == "ru" %}
-                                ЛИЧНЫЙ КАБИНЕТ
-                            {% else %}
-                                PROFILE
-                            {% endif %}
+                            {% trans 'PROFILE' %}
                         </a>
                     </li>
                 {% endif %}
@@ -574,32 +542,19 @@
                 <li>
                     <a href="/about">
                         <i class="fa fa-fw fa-bank"></i>
-                        {% if translate == "ru" %}
-                            О НАС
-                        {% else %}
-                            ABOUT US
-                        {% endif %}
+                        {% trans 'ABOUT US' %}
                     </a>
                 </li>
                 <li>
                     <a href="/about/contacts/">
                         <i class="fa fa-fw fa-dropbox"></i>
-                        {% if translate == "ru" %}
-                            КОНТАКТЫ
-                        {% else %}
-                            CONTACT US
-                        {% endif %}
+                        {% trans 'CONTACT US' %}
                     </a>
                 </li>
                 <li>
                     <a href="/about/advertisers/">
                         <i class="fa fa-fw fa-twitter"></i>
-                                            {% if translate == "ru" %}
-                        РЕКЛАМОДАТЕЛЯМ
-                    {% else %}
-                        ADVERTISER
-                    {% endif %}
-
+                        {% trans 'ADVERTISER' %}
                     </a>
                 </li>
             </ul>
@@ -618,19 +573,11 @@
 {#                    <span class="navbar" onclick="openLeftSideBar();">SECTIONS</span>&nbsp;|&nbsp;#}
                     {% if search_private == True %}
                         <span class="search-span" onclick="SearchClick(1);">
-                            {% if translate == "ru" %}
-                                ПОИСК
-                            {% else %}
-                                SEARCH
-                            {% endif %}
+                            {% trans 'SEARCH' %}
                         </span>
                     {% else %}
                         <span class="search-span" onclick="SearchClick(0);">
-                            {% if translate == "ru" %}
-                                ПОИСК
-                            {% else %}
-                                SEARCH
-                            {% endif %}
+                            {% trans 'SEARCH' %}
                         </span>
                     {% endif %}
                 </div>
@@ -644,31 +591,19 @@
                     {% if username %}
                         <div class="logout">
                             <a href="/auth/logout/"><i class="fa fa-fw fa-power-off"></i>
-                                {% if translate == "ru" %}
-                                    Выход
-                                {% else %}
-                                    Log&nbsp;out
-                                {% endif %}
+                                {% trans 'Log out' %}
                             </a>
                         </div>
                     {% else %}
                         <div class="login">
                             <div class="signin" onclick="location.href='/auth/login/';">
                                 <button class="btn btn-primary">
-                                    {% if translate == "ru" %}
-                                        Авторизоваться
-                                    {% else %}
-                                        Sign&nbsp;in
-                                    {% endif %}
+                                    {% trans 'Sign in' %}
                                 </button>
                             </div>
                             <div class="signup" onclick="location.href='/auth/register/';">
                                 <button class="btn btn-default">
-                                    {% if translate == "ru" %}
-                                        Регистрация
-                                    {% else %}
-                                        Sign&nbsp;up
-                                    {% endif %}
+                                    {% trans 'Sign up' %}
                                 </button>
                             </div>
                         </div>
@@ -684,74 +619,42 @@
                                     <div id="everyone">
                                         <li class="li-cat">
                                             <a href="/">
-                                                {% if translate == "ru" %}
-                                                    ГЛАВНАЯ
-                                                {% else %}
-                                                    LATEST
-                                                {% endif %}
+                                                {% trans 'LATEST' %}
                                             </a>
                                         </li>
                                         <li class="li-cat">
                                             <a href="/news/technology/">
-                                                {% if translate == "ru" %}
-                                                    ТЕХНОЛОГИИ
-                                                {% else %}
-                                                    TECHNOLOGY
-                                                {% endif %}
+                                                {% trans 'TECHNOLOGY' %}
                                             </a>
                                         </li>
                                         <li class="li-cat">
                                             <a href="/news/entertainment/">
-                                                {% if translate == "ru" %}
-                                                    РАЗВЛЕЧЕНИЯ
-                                                {% else %}
-                                                    ENTERTAINMENT
-                                            {% endif %}
+                                                {% trans 'ENTERTAINMENT' %}
                                             </a>
                                         </li>
                                         <li class="li-cat">
                                             <a href="/news/auto/">
-                                                {% if translate == "ru" %}
-                                                    АВТО
-                                                {% else %}
-                                                    AUTO
-                                                {% endif %}
+                                                {% trans 'AUTO' %}
                                             </a>
                                         </li>
                                         <li class="li-cat">
                                             <a href="/news/space/">
-                                                {% if translate == "ru" %}
-                                                    КОСМОС
-                                                {% else %}
-                                                    SPACE
-                                                {% endif %}
+                                                {% trans 'SPACE' %}
                                             </a>
                                         </li>
                                         <li class="li-cat">
                                             <a href="/news/bio/">
-                                                {% if translate == "ru" %}
-                                                    БИО
-                                                {% else %}
-                                                    BIO
-                                                {% endif %}
+                                                {% trans 'BIO' %}
                                             </a>
                                         </li>
                                         <li class="li-cat">
                                             <a href="/news/companies/">
-                                                {% if translate == "ru" %}
-                                                    КОМПАНИИ
-                                                {% else %}
-                                                    COMPANIES
-                                                {% endif %}
+                                                {% trans 'COMPANIES' %}
                                             </a>
                                         </li>
                                         <li class="li-cat">
                                             <a href="/news/reviews/">
-                                                {% if translate == "ru" %}
-                                                    ОБЗОРЫ
-                                                {% else %}
-                                                    REVIEWS
-                                                {% endif %}
+                                                {% trans 'REVIEWS' %}
                                             </a>
                                         </li>
                                     </div>
@@ -759,11 +662,7 @@
                                         {% if username.username and username.is_active == True %}
                                             <li class="li-cat">
                                                 <a href="/news/usernews/">
-                                                    {% if translate == "ru" %}
-                                                        ЛИЧНЫЕ
-                                                    {% else %}
-                                                        PRIVATE
-                                                    {% endif %}
+                                                    {% trans 'PRIVATE' %}
                                                 </a>
                                             </li>
                                         {% endif %}
@@ -774,9 +673,9 @@
                                         <div class="entertainment-categories"
                                              style="margin-left: auto; margin-right: auto; width: 40%;">
                                             <ul>
-                                                <li class="li-cat"><a href="">ALL</a></li>
-                                                <li class="li-cat"><a href="">GAMES</a></li>
-                                                <li class="li-cat"><a href="">MEDIA</a></li>
+                                                <li class="li-cat"><a href="">{% trans 'ALL' %}</a></li>
+                                                <li class="li-cat"><a href="">{% trans 'GAMES' %}</a></li>
+                                                <li class="li-cat"><a href="">{% trans 'MEDIA' %}</a></li>
                                                 <li class="li-cat"><a href=""></a></li>
                                             </ul>
                                         </div>
@@ -795,7 +694,7 @@
                                            id="textplace-search"
                                            type="text"
                                            class="form-control"
-                                           placeholder="What&nbsp;are&nbsp;you&nbsp;looking&nbsp;for?">
+                                           placeholder="{% trans 'What are you looking for'%}?">
 {#                                    <input type="submit" value="Search">#}
                                 </form>
                             </div>
@@ -871,7 +770,7 @@
                 <input type="text" contenteditable="false" value="{{ external_link }}">
             </div>
             <div class="user-info">
-                <button onclick="javascript:SharePopUpHide();">SHARE</button>
+                <button onclick="javascript:SharePopUpHide();">{% trans 'SHARE' %}</button>
             </div>
         </div>
     </div>
@@ -987,7 +886,7 @@
                               id="portals-choser"
                               rows="1"
                               style="width: 93%; resize: none;"
-                              placeholder="Your&nbsp;portals"></textarea>
+                              placeholder="{% trans 'Your portals' %}"></textarea>
                 </div>
             </div>
             <div id="bottom-buttons" style="margin-left: 80%;">
@@ -995,18 +894,18 @@
                     <div id="content-save" style="float: left;">
                         <button class="btn btn-primary"
                                 onclick="$('#set_portals_new_user').submit();">
-                            Save
+                            {% trans 'Save' %}
                         </button>
                     </div>
                     <div id="content-cancel">
                         <button class="btn" onclick="$('#portals-addition-window').hide();">
-                            Cancel
+                            {% trans 'Cancel' %}
                         </button>
                     </div>
                 {% else %}
                     <div id="content-cancel">
                         <button class="btn btn-primary" onclick="$('#portals-addition-window').hide();">
-                            CLOSE
+                            {% trans 'CLOSE' %}
                         </button>
                     </div>
                 {% endif %}
@@ -1116,10 +1015,13 @@
     <script src="{% static 'static/js/jquery.js' %}"></script>
     <script src="{% static 'static/js/jquery.min.js' %}"></script>
     <script src="{% static 'static/js/jquery-ui.js' %}"></script>
-    <script src="{% static 'static/js/pulse.js' %}"></script>
-    <script src="{% static 'static/js/pulse.min.js' %}"></script>
+{#    <script src="{% static 'static/js/pulse.js' %}"></script>#}
+{#    <script src="{% static 'static/js/pulse.min.js' %}"></script>#}
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="{% static 'static/js/bootstrap.min.js' %}" type="javascript"></script>
+
+<script type="text/javascript" src="{% static 'static/js/jquery.cookie.js' %}"></script>
+
 
 
     <script src="{% static 'static/js/endless-pagination.js' %}"></script>
@@ -1341,6 +1243,44 @@ $(document).ready(function () {
 
 
     </script>
+
+
+
+    <script>
+        // DETERMINE LOCATION AND SET COOKIE VALUE
+        document.cookie = "lang=eng";
+
+        $.ajax({
+            type: "POST",
+            url: "http://ip-api.com/json",
+            dataType: "json",
+            success:function(data){
+                alert(data.country);
+                if(data.country == "Russia"){
+{#                    location.href = "/ru/";#}
+                }
+                else{
+{#                    location.href = "/en/";#}
+                }
+            }
+        });
+
+        function getCookie(name) {
+            var matches = document.cookie.match(new RegExp(
+                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+{#        if (getCookie("lang") == "rus") {#}
+{#            location.href = "/ru/";#}
+{#        } else if (getCookie("lang") == "eng") {#}
+{#            location.href = "/en/";#}
+{#        } else {#}
+{#            location.href = "/cn/";#}
+{#        }#}
+    </script>
+
+
 
 </body>
 </html>

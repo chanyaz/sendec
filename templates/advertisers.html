@@ -1,15 +1,16 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
+{% load i18n %}
 {% block advertisers %}
 
     <div class="container-fluid container">
         <div class="row row-centered">
             <div id="advertisers">
                 <div class="ad-main-title">
-                    <h3 style="text-align: center;">ADVERTISEMENT</h3>
+                    <h3 style="text-align: center;">{% trans 'ADVERTISEMENT' %}</h3>
                 </div>
                 <div class="ad-main-content">
-                    So,
+                    {% blocktrans %}So,{% endblocktrans %}
                 </div>
             </div>
         </div>

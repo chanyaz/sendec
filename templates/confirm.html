@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+{% load i18n %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% trans 'Title' %}</title>
 
 </head>
 <body>
@@ -21,29 +22,30 @@
                     <tr>
                         <td colspan="2" style="padding:30px 30px 0 30px;color:#444444;font-size:14px;line-height:1.5em;" align="left" valign="top">
                             <div style="font-size:14px;line-height:1.6em;color:#444444;">
-                                Hi&nbsp;{{ username }},
+                                {% trans 'Hi' %},&nbsp;{{ username }},
                                 <p>
-                                    Please&nbsp;confirm&nbsp;<a href="mailto:{{ email }}">{{ email }}</a>
-                                    <span>.&nbsp;Thank&nbsp;you!</span>
+                                    {% trans 'Please confirm' %} <a href="mailto:{{ email }}">{{ email }}</a>
+                                    <span>{% trans 'If you do it, you will get access to the hidden features of the portal' %}</span>
+                                    <span>.&nbsp;{% trans 'Thank you!' %}</span>
                                 </p>
                                 <p style="text-align:center;">
-                                    <a href="http://127.0.0.1:8004/c/ucid={{ ucid }}&uuid={{ uuid }}/" class="">
+                                    <a href="http://{{ site }}/c/ucid={{ ucid }}&uuid={{ uuid }}/" class="">
                                         <span style="font-size:16px;min-width:200px;background-color:#19ab58;line-height:42px;display:inline-block;color:white;border-radius:4px;text-align:center;margin-top:10px;padding:0 8px;">
-                                            Confirm&nbsp;your&nbsp;e-mail&nbsp;»
+                                            {% trans 'Confirm your e-mail ' %}»
                                         </span>
                                     </a>
                                 </p>
                                 <p>
-                                    Cheers,
+                                    {% trans 'Cheers' %},
                                     <br>
-                                    Your&nbsp;Insydia&nbsp;Team
+                                    {% trans 'Your Insydia Team' %}
                                     <br><br>
                                 </p>
                                 <p>
 
                                 </p>
                                 <div style="font-size:12px;color:#808080;">
-                                    If&nbsp;you&nbsp;did&nbsp;not&nbsp;sign&nbsp;up&nbsp;or&nbsp;request&nbsp;for&nbsp;email&nbsp;confirmation,&nbsp;please&nbsp;ignore&nbsp;this&nbsp;email.
+                                    {% trans 'If you did not sign up or request for email confirmation, please ignore this email.' %}
                                 </div>
                             </div>
                         </td>
@@ -54,9 +56,9 @@
                 <tr>
                     <td style="padding:5% 5% 0 5%; color:#444444; font-size:14px; line-height:1.5em; text-align: center;">
                         <div class="">
-                            You&nbsp;are&nbsp;receiving&nbsp;this&nbsp;email&nbsp;because&nbsp;{{ email }}&nbsp;is&nbsp;registered&nbsp;on&nbsp;Insydia.
+                            {% blocktrans %}You&nbsp;are&nbsp;receiving&nbsp;this&nbsp;email&nbsp;because&nbsp;{{ email }}&nbsp;is&nbsp;registered&nbsp;on&nbsp;Insydia.
                             <br>Please&nbsp;do&nbsp;not&nbsp;reply&nbsp;directly&nbsp;to&nbsp;this&nbsp;email.&nbsp;If&nbsp;you&nbsp;have&nbsp;any&nbsp;questions&nbsp;or&nbsp;feedback,&nbsp;please&nbsp;visit&nbsp;our&nbsp;contact&nbsp;page.
-                            <br>Copyright&nbsp;&#169;&nbsp;2015&nbsp;Insydia,&nbsp;|&nbsp;St.&nbsp;Petersburg,&nbsp;Russia
+                            <br>Copyright&nbsp;&#169;&nbsp;2015&nbsp;Insydia,&nbsp;|&nbsp;St.&nbsp;Petersburg,&nbsp;Russia{% endblocktrans %}
                         </div>
                     </td>
                 </tr>

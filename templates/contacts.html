@@ -1,5 +1,6 @@
 {% extends 'index_new.html' %}
 {% load my %}
+{% load i18n %}
 {% load staticfiles %}
 {% block contacts %}
     <script>
@@ -33,17 +34,17 @@
     <div class="container-fluid container ">
         <div class="row row-centered">
             <span class="contact-title">
-                <h3>CONTACT&nbsp;INFORMATION</h3>
+                <h3>{% trans 'CONTACT INFORMATION' %}</h3>
             </span>
             <div id="contacts" class="col-xs-12 col-centered col-fixed">
                 <div class="contacts-left">
                     <div class="contacts-left-top">
                         <div class="contacts-left-top-left">
-                            Cell:&nbsp;{{ phone }}<br>
-                            E-mail:&nbsp;<a href="mailto:{{ email }}">{{ email }}</a><br>
-                            On&nbsp;cooperation:&nbsp;<a href="mailto:{{ cooperation }}?subject=[Cooperation] ">{{ cooperation }}</a>
+                            {% trans 'Cell' %}:&nbsp;{{ phone }}<br>
+                            {% trans 'E-mail'%}:&nbsp;<a href="mailto:{{ email }}">{{ email }}</a><br>
+                            {% trans 'On cooperation' %}:&nbsp;<a href="mailto:{{ cooperation }}?subject=[Cooperation] ">{{ cooperation }}</a>
                             <hr width="1%">
-                            <span class="contact-us-text" onmouseover="this.style.cursor='pointer';" onclick="changeState();">Contact with us</span>
+                            <span class="contact-us-text" onmouseover="this.style.cursor='pointer';" onclick="changeState();">{% trans 'Contact with us' %}</span>
                             <div  id="user-message">
                                 <form class="form-horizontal"
                                       role="form"
@@ -51,26 +52,26 @@
                                       action="/about/send_report/">
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="user-message-name">Name:</label>
+                                        <label class="col-md-3 control-label" for="user-message-name">{% trans 'Name' %}:</label>
                                         <div class="col-md-5">
                                             {{ form.username }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="user-message-email">Email:</label>
+                                        <label class="col-md-3 control-label" for="user-message-email">{% trans 'E-mail' %}:</label>
                                         <div class="col-md-5">
                                             {{ form.email }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="user-message-message">Message:</label>
+                                        <label class="col-md-3 control-label" for="user-message-message">{% trans 'Message' %}:</label>
                                         <div class="col-md-5">
                                             <textarea class="form-control"
                                                       name="message"
                                                       required="required"
                                                       id="user-message-message"
                                                       rows="10"
-                                                      placeholder="Message"></textarea>
+                                                      placeholder="{% trans 'Message' %}"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -88,7 +89,7 @@
                                             <input type="submit"
                                                    class="btn btn-primary"
                                                    id="report-submit"
-                                                   value="Send">
+                                                   value="{% trans 'Send' %}">
                                         </div>
                                     </div>
                                 </form>
@@ -98,17 +99,17 @@
                     </div>
                     <div class="contacts-left-bottom">
                         <div class="team-title">
-                            <h2>OUR&nbsp;TEAM</h2>
+                            <h2>{% trans 'OUR TEAM' %}</h2>
                         </div>
                         <ul class="team-list">
                             <li class="team-list-item">
                                 <div class="Founder">
                                     <div class="photo"></div>
                                     <div class="content">
-                                        <b>Founder</b>:<br>
-                                        Evgeniy Privalov<br>
+                                        <b>{% trans 'Founder' %}</b>:<br>
+                                        {% trans 'Evgeniy Privalov' %}<br>
                                         <a href="email:eprivalov@insydia.com">eprivalov@insydia.com</a><br>
-                                        St. Petersburg<br>
+                                        {% blocktrans %}St. Petersburg{% endblocktrans %}<br>
                                     </div>
                                 </div>
                             </li>
@@ -116,10 +117,10 @@
                                 <div class="CTO">
                                     <div class="photo"></div>
                                     <div class="content">
-                                        <b>Co-Founder</b>:<br>
-                                        Anton Tinishov<br>
+                                        <b>{% trans 'Co-Founder' %}</b>:<br>
+                                        {% trans 'Anton Tinishov' %}<br>
                                         <a href="mailto:atinishov@insydia.com">atinishov@insydia.com</a><br>
-                                        St.Petersburg<br>
+                                        {% blocktrans %}St.Petersburg{% endblocktrans %}<br>
                                     </div>
                                 </div>
                             </li>
@@ -127,30 +128,30 @@
                         <hr width="0">
                         <div id="vacancy">
                             <div class="vacancy-text">
-                                At this time we need in:
+                                {% trans 'At this time we need in' %}:
                             </div>
                             <div id="vacancy-left" style="width: 30%; float: left; margin-left: 1%; border: solid 1px red;">
-                                LOCALIZATION
-                                <br>EDITORS & REPORTERS
+                                {% trans 'LOCALIZATION' %}
+                                <br>{% trans 'EDITORS & REPORTERS' %}
                             </div>
                             <div id="vacancy-center" style="width: 30%; float: left;margin-left: 1%;border: solid 1px red;">
-                                PROGRAMMER
+                                {% trans 'PROGRAMMER' %}
                             </div>
                             <div id="vacancy-right" style="width: 30%; float: left;margin-left: 1%;border: solid 1px red;">
-                                MARKETING
+                                {% trans 'MARKETING' %}
                             </div>
                         </div>
                         <hr width="100%">
                         <div>
                             <span class="join-team">
-                                <a class="team-link" href="">Join&nbsp;to&nbsp;us</a>
+                                <a class="team-link" href="">{% trans 'Join to us' %}</a>
                             </span>
                         </div>
                         <hr width="100%">
                         </div>
                     </div>
                 <div class="contacts-right">
-                    Social&nbsp;Networks
+                    {% trans 'Social Networks' %}
                     <hr width="100%">
                     <ul class="contact-list">
                         <li class="contact-list-item">

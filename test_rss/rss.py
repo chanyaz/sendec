@@ -54,10 +54,13 @@ def last_element(feed):
     else: args["content"] = ""
     # DATE
     if "date" in keys: args["date"] = feed[0].published
-    else: args["date"] = feed[0].published
+    elif "published" in keys: args["date"] = feed[0]["published"]
+    elif "updated" in keys: args["date"] = feed[0]["updated"]
+    else: args["date"] = feed[0]["updated"]
     # DESCRIPTION
     if "description" in keys: args["description"] = feed[0].description
-    else: args["description"] = feed[0]['summary_detail']['value']
+    elif "summary_detail" in keys: args["description"] = feed[0]['summary_detail']['value']
+    else: args["description"] = feed[0]['summary']
     return args
 
 
@@ -70,8 +73,16 @@ def connect_to_db(urls):
     cursor = db.cursor()
     for url in urls:
         data = last_element(parse_current_url(url=url))
-        new_date = data["date"].split()
-        time = new_date[4].split(":")
+        try:
+            new_date = data["date"].split()
+            time = new_date[4].split(":")
+            months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            mon = int(months.index(new_date[2]))+1
+            date_posted = datetime.datetime(int(new_date[3]), mon, int(new_date[1]), int(time[0]), int(time[1]), int(time[2]))
+        except IndexError:
+            date_posted = data["date"]
+
+
         query_0 = "SELECT ID FROM news_rss WHERE link=%s"
         data_query_0 = [data["link"]]
         cursor.execute(query_0, data_query_0)
@@ -112,9 +123,6 @@ def connect_to_db(urls):
         for current_portal in portals_list:
             if current_portal[2] in data["link"]:
                 current_rss_news_id = current_portal[0]
-        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        mon = int(months.index(new_date[2]))+1
-        date_posted = datetime.datetime(int(new_date[3]), mon, int(new_date[1]), int(time[0]), int(time[1]), int(time[2]))
         if len(count) == 0:
             #cursor.execute("""INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""",(data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], 1, 1, data["content"], data["author"]))
             query = """INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author, nuid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
@@ -192,18 +200,25 @@ def fill_rss_portals():
     #cursor.execute(query_0)
     #list_portals = cursor.fetchall()
     for i in range(len(portals)):
-        print(len(portals[file_list[i]]["verbose"]))
-        cur_iter += 1
-        query = "INSERT INTO rss_portals(portal, portal_base_link, follows, description, cover, verbose_name) VALUES(%s, %s, %s, %s, %s, %s)"
-        data_query = (portals[file_list[i]]["name"],
-                      portals[file_list[i]]["base_link"],
-                      0,
-                      portals[file_list[i]]["description"],
-                      portals[file_list[i]]["cover"],
-                      portals[file_list[i]]["verbose"])
-        cursor.execute(query, data_query)
-        db.commit()
-        print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "When total end is ", end)
+        query_0 = "SELECT ID FROM rss_portals WHERE portal=%s"
+        data_query_0 = [portals[file_list[i]]["name"]]
+        cursor.execute(query_0, data_query_0)
+        count = cursor.fetchall()
+        if len(count) == 0:
+            print(len(portals[file_list[i]]["verbose"]))
+            cur_iter += 1
+            query = "INSERT INTO rss_portals(portal, portal_base_link, follows, description, cover, verbose_name) VALUES(%s, %s, %s, %s, %s, %s)"
+            data_query = (portals[file_list[i]]["name"],
+                          portals[file_list[i]]["base_link"],
+                          0,
+                          portals[file_list[i]]["description"],
+                          portals[file_list[i]]["cover"],
+                          portals[file_list[i]]["verbose"])
+            cursor.execute(query, data_query)
+            db.commit()
+            print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "When total end is ", end)
+        else:
+            pass
     db.close()
 
 

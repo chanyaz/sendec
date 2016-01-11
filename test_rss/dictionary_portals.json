@@ -215,5 +215,159 @@
     "base_link": "dailykanban.com",
     "description": "",
     "cover": ""
+  },
+  "http://www.playground.ru/rss/news.xml":{
+    "name": "Playground News",
+    "verbose": "playground",
+    "base_link": "playground.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://www.playground.ru/rss/articles.xml":{
+    "name": "Playground Articles",
+    "verbose": "playground_articles",
+    "base_link": "playground.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://stopgame.ru/rss/rss_news.xml":{
+    "name": "Stopgame News",
+    "verbose": "stopgame_news",
+    "base_link": "stopgame.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://stopgame.ru/rss/rss_review.xml":{
+    "name": "Stopgame Reviews",
+    "verbose": "stopgame_reviews",
+    "base_link": "stopgame.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://www.goha.ru/news/mmo/rss":{
+    "name": "Goha MMO",
+    "verbose": "goha_mmo",
+    "base_link": "goha.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://www.goha.ru/news/video/rss":{
+    "name": "Goha Videos",
+    "verbose": "goha_videos",
+    "base_link": "goha.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://www.goha.ru/news/e3-2015-news/rss":{
+    "name": "Goha E3",
+    "verbose": "goha_e3",
+    "base_link": "goha.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://www.goha.ru/news/igromir-comiccon-news-2015/rss":{
+    "name": "Goha Igromir",
+    "verbose": "goha_igromir",
+    "base_link": "goha.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://www.goha.ru/news/all/rss":{
+    "name": "Goha News",
+    "verbose": "goha_news",
+    "base_link": "goha.ru",
+    "description": "",
+    "cover": ""
+  },
+  "http://n4g.com/rss/news?channel=&sort=latest":{
+    "name": "n4g News",
+    "verbose": "n4g_news",
+    "base_link": "n4g.com",
+    "description": "",
+    "cover": ""
+  },
+  "http://n4g.com/rss/news?channel=pc&sort=latest":{
+    "name": "n4g PC",
+    "verbose": "n4g_pc",
+    "description": "",
+    "base_link": "n4g.com",
+    "cover": ""
+  },
+  "http://n4g.com/rss/news?channel=tech&sort=latest":{
+    "name": "n4g Tech",
+    "verbose": "n4g_tech",
+    "description": "",
+    "base_link": "n4g.com",
+    "cover": ""
+  },
+  "http://n4g.com/rss/news?channel=iphone&sort=latest":{
+    "name": "n4g iPhone",
+    "verbose": "n4g_iphone",
+    "description": "",
+    "base_link": "n4g.com",
+    "cover": ""
+  },
+  "http://n4g.com/rss/news?channel=android&sort=latest":{
+    "name": "n4g Android",
+    "verbose": "n4g_android",
+    "description": "",
+    "base_link": "n4g_android",
+    "cover": ""
+  },
+  "http://n4g.com/rss/news?channel=xbox&sort=latest":{
+    "name": "n4g xbox",
+    "verbose": "n4g_xbox",
+    "description": "",
+    "base_link": "n4g.com",
+    "cover": ""
+  },
+  "http://n4g.com/rss/news?channel=ps4&sort=latest":{
+    "name": "n4g PS4",
+    "verbose": "n4g_ps4",
+    "description": "",
+    "base_link": "n4g.com",
+    "cover": ""
+  },
+  "http://n4g.com/rss/news?channel=ps3&sort=latest":{
+    "name": "n4g PS3",
+    "verbose": "n4g_ps3",
+    "description": "",
+    "base_link": "n4g.com",
+    "cover": ""
+  },
+  "http://www.polygon.com/rss/index.xml":{
+    "name": "Polygon",
+    "verbose": "polygon",
+    "description": "",
+    "base_link": "polygon.com",
+    "cover": ""
+  },
+  "http://rss.gametrailers.com/news/0.xml":{
+    "name": "Gametrailers",
+    "verbose": "gametrailers",
+    "description": "",
+    "base_link": "gametrailers.com",
+    "cover": ""
+  },
+  "http://www.giantbomb.com/feeds/reviews/":{
+    "name": "Giantbomb Reviews",
+    "verbose": "giantbomb_reviews",
+    "description": "",
+    "base_link": "giantbomb.com",
+    "cover": ""
+  },
+  "http://www.giantbomb.com/feeds/new_releases/":{
+    "name": "Giantbomb Releases",
+    "verbose": "giantbomb_releases",
+    "description": "",
+    "base_link": "giantbomb.com",
+    "cover": ""
+  },
+  "http://ru.ign.com/feed.xml":{
+    "name": "ign",
+    "verbose": "ign",
+    "description": "",
+    "base_link": "ign.com",
+    "cover": ""
   }
 }

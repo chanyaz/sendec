@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load my %}
 {% load jsonate_tags %}
+{% load i18n %}
 {% block current_company %}
     <style>
         .current_news{height: 82px;box-shadow: 0 0 5px #5e5e5e;margin: 2% 0.25% 0.25% 0.25%;}
@@ -36,7 +37,7 @@
                 <div id="current_company_left">
                     <div class="current_company_news">
                         <div class="current-company-title">
-                            All&nbsp;{{ company.name }}'s&nbsp;news
+                            {% blocktrans %}All {{ company.name }}'s news{% endblocktrans %}
                         </div>
                         <div class="load-more">
                             <div class="endless_page_template">

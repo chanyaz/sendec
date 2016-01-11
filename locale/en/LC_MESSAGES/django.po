@@ -1,0 +1,679 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-11 22:21+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: loginsys/forms.py:13 loginsys/forms.py:56
+msgid "The two password fields didn't match."
+msgstr ""
+
+#: loginsys/forms.py:15 loginsys/forms.py:66
+msgid "Password"
+msgstr ""
+
+#: loginsys/forms.py:21
+msgid "Password confirmation"
+msgstr ""
+
+#: loginsys/forms.py:27
+msgid "Enter the same password as above, for verification."
+msgstr ""
+
+#: loginsys/forms.py:59 loginsys/templates/register.html:200
+#: userprofile/templates/profile.html:180
+msgid "Username"
+msgstr ""
+
+#: loginsys/templates/cant_login.html:102
+msgid "Reset"
+msgstr ""
+
+#: loginsys/templates/footer_loginsys.html:41 templates/footer.html:35
+msgid "Terms and Conditions"
+msgstr ""
+
+#: loginsys/templates/footer_loginsys.html:44 templates/footer.html:38
+msgid "Privacy Policy"
+msgstr ""
+
+#: loginsys/templates/footer_loginsys.html:47 templates/footer.html:41
+msgid "Advertiser"
+msgstr ""
+
+#: loginsys/templates/footer_loginsys.html:50 templates/footer.html:44
+msgid "Contacts"
+msgstr ""
+
+#: loginsys/templates/footer_loginsys.html:53 templates/footer.html:47
+msgid "About us"
+msgstr ""
+
+#: loginsys/templates/login.html:127 loginsys/templates/register.html:255
+#: templates/index_new.html:601
+msgid "Sign in"
+msgstr ""
+
+#: loginsys/templates/login.html:142
+msgid "Create Account"
+msgstr ""
+
+#: loginsys/templates/login.html:147
+msgid "Can't log in?"
+msgstr ""
+
+#: loginsys/templates/register.html:170
+msgid "Please, wait while we are preparing your profile."
+msgstr ""
+
+#: loginsys/templates/register.html:172
+msgid "You will be able to use service in a minute."
+msgstr ""
+
+#: loginsys/templates/register.html:214 templates/contacts.html:44
+#: templates/contacts.html.py:61
+msgid "E-mail"
+msgstr ""
+
+#: loginsys/templates/register.html:248 templates/index_new.html:606
+msgid "Sign up"
+msgstr ""
+
+#: news/templates/companies.html:51 search/templates/search.html:176
+msgid "Companies"
+msgstr ""
+
+#: news/templates/companies.html:53
+msgid "Here you can search news of the certain company which do you want."
+msgstr ""
+
+#: news/templates/companies.html:63
+msgid "Search company"
+msgstr ""
+
+#: news/templates/companies.html:71 search/templates/search.html:140
+#: userprofile/templates/profile.html:329
+msgid "Search"
+msgstr ""
+
+#: news/templates/companies.html:86
+msgid "Logo"
+msgstr ""
+
+#: news/templates/companies.html:87 templates/contacts.html:55
+msgid "Name"
+msgstr ""
+
+#: news/templates/companies.html:88 search/templates/search.html:212
+#: search/templates/search.html.py:227
+#: userprofile/templates/moderator_profile.html:49
+#: userprofile/templates/profile.html:136
+msgid "Articles"
+msgstr ""
+
+#: news/templates/current_company.html:40
+#, python-format
+msgid "All %(company.name)s's news"
+msgstr ""
+
+#: news/templates/current_news.html:108 news/templates/top_news.html:107
+#: search/templates/search.html:155
+msgid "By"
+msgstr ""
+
+#: news/templates/current_news.html:118
+msgid "Edit"
+msgstr ""
+
+#: news/templates/current_news.html:246 news/templates/top_news.html:191
+#, python-format
+msgid "News&nbsp;of&nbsp;%(company_name)s"
+msgstr ""
+
+#: news/templates/top_news.html:155
+#, python-format
+msgid "Recommendations&nbsp;of&nbsp;%(current_news_values.top_news_category)s"
+msgstr ""
+
+#: news/templates/total.html:452
+msgid "RECENTLY NEWS"
+msgstr ""
+
+#: news/templates/total.html:498
+msgid "Interesting articles"
+msgstr ""
+
+#: news/templates/user_news.html:262
+msgid "At this time you have no one portals to syndicate for you."
+msgstr ""
+
+#: news/templates/user_news.html:264
+msgid ""
+"Would you like to choose any one? <a href=\"/profile/#settings-form\">Click</"
+"a> to set your own preferences."
+msgstr ""
+
+#: news/templates/user_news.html:267
+msgid "The most popular portals."
+msgstr ""
+
+#: news/templates/user_news.html:299
+msgid "Recommended portals"
+msgstr ""
+
+#: news/templates/user_news.html:307
+msgid "Your current portals "
+msgstr ""
+
+#: news/templates/user_news.html:312
+msgid "Done"
+msgstr ""
+
+#: news/templates/user_news.html:320
+msgid "All"
+msgstr ""
+
+#: search/templates/search.html:127
+msgid "No one matches. Please, try another request word"
+msgstr ""
+
+#: search/templates/search.html:137
+msgid "What are you looking for?"
+msgstr ""
+
+#: search/templates/search.html:146
+msgid "Popular news"
+msgstr ""
+
+#: search/templates/search.html:168
+msgid "Results for "
+msgstr ""
+
+#: search/templates/search.html:169
+msgid "matches"
+msgstr ""
+
+#: search/templates/search.html:170
+msgid "match"
+msgstr ""
+
+#: search/templates/search.html:175
+msgid "News"
+msgstr ""
+
+#: search/templates/search.html:177
+msgid "Moderators"
+msgstr ""
+
+#: search/templates/search.html:230
+#: userprofile/templates/moderator_profile.html:45
+#: userprofile/templates/profile.html:132
+msgid "Rate"
+msgstr ""
+
+#: search/templates/search.html:246
+msgid "Latest news"
+msgstr ""
+
+#: templates/403.html:10
+msgid ""
+"What are you up? You don't have permission for this action.<br>\n"
+"                    We remember you. Would you like to risk again?"
+msgstr ""
+
+#: templates/404.html:8
+msgid "Page not found."
+msgstr ""
+
+#: templates/404.html:9
+msgid "But we have found for you this cute sea lion. Good luck searching."
+msgstr ""
+
+#: templates/503.html:5
+msgid "Maintenance"
+msgstr ""
+
+#: templates/503.html:18
+msgid "Web-site is under development. Please, come later."
+msgstr ""
+
+#: templates/503.html:19
+msgid ""
+"To contact with us you can write <a href=\"mailto:support@insydia.com"
+"\">support@insydia.com</a> or call <a href=\"tel:79315790696\">"
+"+7-931-579-06-96</a>."
+msgstr ""
+
+#: templates/503.html:22
+msgid "Thank you for your consideration."
+msgstr ""
+
+#: templates/503.html:23
+msgid "Insydia Team"
+msgstr ""
+
+#: templates/about.html:18
+msgid "ABOUT"
+msgstr ""
+
+#: templates/about.html:20
+msgid "Insydia is a ..."
+msgstr ""
+
+#: templates/about.html:24
+msgid "GRATITUDE"
+msgstr ""
+
+#: templates/advertisers.html:10
+msgid "ADVERTISEMENT"
+msgstr ""
+
+#: templates/advertisers.html:13
+msgid "So,"
+msgstr ""
+
+#: templates/confirm.html:6
+msgid "Title"
+msgstr ""
+
+#: templates/confirm.html:25
+msgid "Hi"
+msgstr ""
+
+#: templates/confirm.html:27
+msgid "Please confirm"
+msgstr ""
+
+#: templates/confirm.html:28
+msgid "If you do it, you will get access to the hidden features of the portal"
+msgstr ""
+
+#: templates/confirm.html:29
+msgid "Thank you!"
+msgstr ""
+
+#: templates/confirm.html:34
+msgid "Confirm your e-mail "
+msgstr ""
+
+#: templates/confirm.html:39
+msgid "Cheers"
+msgstr ""
+
+#: templates/confirm.html:41
+msgid "Your Insydia Team"
+msgstr ""
+
+#: templates/confirm.html:48
+msgid ""
+"If you did not sign up or request for email confirmation, please ignore this "
+"email."
+msgstr ""
+
+#: templates/confirm.html:59
+#, python-format
+msgid ""
+"You&nbsp;are&nbsp;receiving&nbsp;this&nbsp;email&nbsp;because&nbsp;"
+"%(email)s&nbsp;is&nbsp;registered&nbsp;on&nbsp;Insydia.\n"
+"                            <br>Please&nbsp;do&nbsp;not&nbsp;reply&nbsp;"
+"directly&nbsp;to&nbsp;this&nbsp;email.&nbsp;If&nbsp;you&nbsp;have&nbsp;"
+"any&nbsp;questions&nbsp;or&nbsp;feedback,&nbsp;please&nbsp;visit&nbsp;"
+"our&nbsp;contact&nbsp;page.\n"
+"                            <br>Copyright&nbsp;&#169;&nbsp;2015&nbsp;Insydia,"
+"&nbsp;|&nbsp;St.&nbsp;Petersburg,&nbsp;Russia"
+msgstr ""
+
+#: templates/contacts.html:37
+msgid "CONTACT INFORMATION"
+msgstr ""
+
+#: templates/contacts.html:43
+msgid "Cell"
+msgstr ""
+
+#: templates/contacts.html:45
+msgid "On cooperation"
+msgstr ""
+
+#: templates/contacts.html:47
+msgid "Contact with us"
+msgstr ""
+
+#: templates/contacts.html:67 templates/contacts.html.py:74
+msgid "Message"
+msgstr ""
+
+#: templates/contacts.html:92 userprofile/templates/profile.html:93
+msgid "Send"
+msgstr ""
+
+#: templates/contacts.html:102
+msgid "OUR TEAM"
+msgstr ""
+
+#: templates/contacts.html:109
+msgid "Founder"
+msgstr ""
+
+#: templates/contacts.html:110
+msgid "Evgeniy Privalov"
+msgstr ""
+
+#: templates/contacts.html:112
+msgid "St. Petersburg"
+msgstr ""
+
+#: templates/contacts.html:120
+msgid "Co-Founder"
+msgstr ""
+
+#: templates/contacts.html:121
+msgid "Anton Tinishov"
+msgstr ""
+
+#: templates/contacts.html:123
+msgid "St.Petersburg"
+msgstr ""
+
+#: templates/contacts.html:131
+msgid "At this time we need in"
+msgstr ""
+
+#: templates/contacts.html:134
+msgid "LOCALIZATION"
+msgstr ""
+
+#: templates/contacts.html:135
+msgid "EDITORS & REPORTERS"
+msgstr ""
+
+#: templates/contacts.html:138
+msgid "PROGRAMMER"
+msgstr ""
+
+#: templates/contacts.html:141
+msgid "MARKETING"
+msgstr ""
+
+#: templates/contacts.html:147
+msgid "Join to us"
+msgstr ""
+
+#: templates/contacts.html:154
+msgid "Social Networks"
+msgstr ""
+
+#: templates/footer.html:53
+msgid "International Editions: "
+msgstr ""
+
+#: templates/index_new.html:30
+#, python-format
+msgid "%(title)sInsydia"
+msgstr "en"
+
+#: templates/index_new.html:470
+msgid "HOME"
+msgstr ""
+
+#: templates/index_new.html:476 templates/index_new.html.py:627
+msgid "TECHNOLOGY"
+msgstr ""
+
+#: templates/index_new.html:482 templates/index_new.html.py:632
+msgid "ENTERTAINMENT"
+msgstr ""
+
+#: templates/index_new.html:488 templates/index_new.html.py:509
+#: templates/index_new.html:637
+msgid "AUTO"
+msgstr ""
+
+#: templates/index_new.html:494 templates/index_new.html.py:642
+msgid "SPACE"
+msgstr ""
+
+#: templates/index_new.html:500 templates/index_new.html.py:657
+msgid "REVIEWS"
+msgstr ""
+
+#: templates/index_new.html:505
+msgid "DROPDOWN HEADING"
+msgstr ""
+
+#: templates/index_new.html:514
+msgid "PHONES"
+msgstr ""
+
+#: templates/index_new.html:519
+msgid "PC"
+msgstr ""
+
+#: templates/index_new.html:524
+msgid "SPACE SHUTTLES"
+msgstr ""
+
+#: templates/index_new.html:529
+msgid "OTHER"
+msgstr ""
+
+#: templates/index_new.html:537
+msgid "PROFILE"
+msgstr ""
+
+#: templates/index_new.html:545
+msgid "ABOUT US"
+msgstr ""
+
+#: templates/index_new.html:551
+msgid "CONTACT US"
+msgstr ""
+
+#: templates/index_new.html:557
+msgid "ADVERTISER"
+msgstr ""
+
+#: templates/index_new.html:576 templates/index_new.html.py:580
+msgid "SEARCH"
+msgstr ""
+
+#: templates/index_new.html:594
+msgid "Log out"
+msgstr ""
+
+#: templates/index_new.html:622
+msgid "LATEST"
+msgstr ""
+
+#: templates/index_new.html:647
+msgid "BIO"
+msgstr ""
+
+#: templates/index_new.html:652
+msgid "COMPANIES"
+msgstr ""
+
+#: templates/index_new.html:665
+msgid "PRIVATE"
+msgstr ""
+
+#: templates/index_new.html:676
+msgid "ALL"
+msgstr ""
+
+#: templates/index_new.html:677
+msgid "GAMES"
+msgstr ""
+
+#: templates/index_new.html:678
+msgid "MEDIA"
+msgstr ""
+
+#: templates/index_new.html:697
+msgid "What are you looking for"
+msgstr ""
+
+#: templates/index_new.html:773
+msgid "SHARE"
+msgstr ""
+
+#: templates/index_new.html:889
+msgid "Your portals"
+msgstr ""
+
+#: templates/index_new.html:897 userprofile/templates/profile.html:372
+msgid "Save"
+msgstr ""
+
+#: templates/index_new.html:902 userprofile/templates/profile.html:305
+msgid "Cancel"
+msgstr ""
+
+#: templates/index_new.html:908
+msgid "CLOSE"
+msgstr ""
+
+#: test_rss/save.html:34
+msgid "SHOW&nbsp;MORE"
+msgstr ""
+
+#: test_rss/save.html:55
+msgid "Home"
+msgstr ""
+
+#: userprofile/templates/moderator_profile.html:75
+#, python-format
+msgid "%(moderator)s's&nbsp;articles"
+msgstr ""
+
+#: userprofile/templates/profile.html:93
+msgid " new email with confirmation code."
+msgstr ""
+
+#: userprofile/templates/profile.html:97
+msgid "Profile"
+msgstr ""
+
+#: userprofile/templates/profile.html:112
+msgid "Upload photo"
+msgstr ""
+
+#: userprofile/templates/profile.html:121
+#: userprofile/templates/profile.html:408
+msgid "Accept"
+msgstr ""
+
+#: userprofile/templates/profile.html:128
+msgid "Status"
+msgstr ""
+
+#: userprofile/templates/profile.html:128
+msgid "moderator"
+msgstr ""
+
+#: userprofile/templates/profile.html:139
+msgid "See all"
+msgstr ""
+
+#: userprofile/templates/profile.html:147
+#: userprofile/templates/profile.html:161
+msgid "Delete Account"
+msgstr ""
+
+#: userprofile/templates/profile.html:150
+#: userprofile/templates/profile.html:165
+msgid "Delete All Articles"
+msgstr ""
+
+#: userprofile/templates/profile.html:155
+msgid "Want to be a freelance editor?"
+msgstr ""
+
+#: userprofile/templates/profile.html:156
+msgid "It's easy"
+msgstr ""
+
+#: userprofile/templates/profile.html:156
+msgid "click here"
+msgstr ""
+
+#: userprofile/templates/profile.html:193
+#: userprofile/templates/profile.html:198
+msgid "First name"
+msgstr ""
+
+#: userprofile/templates/profile.html:203
+#: userprofile/templates/profile.html:208
+msgid "Last name"
+msgstr ""
+
+#: userprofile/templates/profile.html:228
+msgid "Your phone number"
+msgstr ""
+
+#: userprofile/templates/profile.html:237
+msgid "Social Networks(Moderator Mode)"
+msgstr ""
+
+#: userprofile/templates/profile.html:285
+msgid "Perosnal email"
+msgstr ""
+
+#: userprofile/templates/profile.html:290
+msgid "Personal email"
+msgstr ""
+
+#: userprofile/templates/profile.html:303
+msgid "Save Changes"
+msgstr ""
+
+#: userprofile/templates/profile.html:311
+msgid "change"
+msgstr ""
+
+#: userprofile/templates/profile.html:319
+msgid "Key word"
+msgstr ""
+
+#: userprofile/templates/profile.html:325
+msgid "Enter key word"
+msgstr ""
+
+#: userprofile/templates/profile.html:342
+msgid "Choose portals which news would you like to view."
+msgstr ""
+
+#: userprofile/templates/profile.html:345
+msgid "Choose"
+msgstr ""
+
+#: userprofile/templates/profile.html:361
+msgid "Chosen"
+msgstr ""
+
+#: userprofile/templates/profile.html:382
+msgid ""
+"Would you like to get notification about latest news and reviews?\n"
+"                        To take it just write your email and we will send "
+"you a link to continue."
+msgstr ""
+
+#: userprofile/templates/profile.html:400
+msgid "Enter your email"
+msgstr ""
+
+#~ msgid "Home | Insydia"
+#~ msgstr "Главная | Insydia"

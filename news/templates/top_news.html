@@ -1,6 +1,7 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
 {% load my %}
+{% load i18n %}
 {% load cache %}
 {% block current_news %}
     <script>
@@ -103,7 +104,7 @@
                 {{ current_news_values.top_news_title }}
             </div>
             <div class="date-and-author">
-                <h5>By
+                <h5>{% trans 'By' %}
                     {% if current_news_values.id|get_news_portal == "insydia" %}
                         <a href="/search/?q={{ current_news_values.top_news_author }}">{{ current_news_values.top_news_author_id|get_article_author }}</a>
                     {% else %}
@@ -151,7 +152,7 @@
             {% if other_materials_count > 0 %}
                 <hr width="100%">
                 <div class="recom-text">
-                    Recommendations&nbsp;of&nbsp;{{ current_news_values.top_news_category }}
+                    {% blocktrans %}Recommendations&nbsp;of&nbsp;{{ current_news_values.top_news_category }}{% endblocktrans %}
                 </div>
                 <div class="other-materials">
                     {% for current_other in other_materials %}
@@ -187,7 +188,7 @@
             <div class="right-block-content">
             <div class="latest-news">
                 <div class="latest-header">
-                    News&nbsp;of&nbsp;{{ company_name }}
+                    {% blocktrans %}News&nbsp;of&nbsp;{{ company_name }}{% endblocktrans %}
                 </div>
                 <div class="latest-titles">
                     {% for i in latest_news %}

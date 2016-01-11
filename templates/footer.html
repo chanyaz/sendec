@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load i18n %}
 {% load cache %}
 <style>
     #footer-div{
@@ -31,25 +32,25 @@
                     <div id="ftr-rt-top">
                         <ul class="footer-list-top">
                             <li class="footer-list-element">
-                                <a href="/about/rules/">Terms&nbsp;and&nbsp;Conditions</a>
+                                <a href="/about/rules/">{% trans 'Terms and Conditions' %}</a>
                             </li>&nbsp;|&nbsp;
                             <li class="footer-list-element">
-                                <a href="/about/privacy/">Privacy&nbsp;Policy</a>
+                                <a href="/about/privacy/">{% trans 'Privacy Policy' %}</a>
                             </li>&nbsp;|&nbsp;
                             <li class="footer-list-element">
-                                <a href="/about/advertisers/">Advertiser</a>
+                                <a href="/about/advertisers/">{% trans 'Advertiser' %}</a>
                             </li>&nbsp;|&nbsp;
                             <li class="footer-list-element">
-                                <a href="/about/contacts/">Contacts</a>
+                                <a href="/about/contacts/">{% trans 'Contacts' %}</a>
                             </li>&nbsp;|&nbsp;
                             <li class="footer-list-element">
-                                <a href="/about">About&nbsp;us</a>
+                                <a href="/about">{% trans 'About us' %}</a>
                             </li>
                         </ul>
                     </div>
                     <div class="ftr-rt-bottom">
                         <ul class="footer-list-top">
-                                International&nbsp;Editions:&nbsp;
+                                {% trans 'International Editions: ' %}
                             <li class="footer-list-element">
                                 <a href="/en/">EN</a>
                             </li>&nbsp;|&nbsp;

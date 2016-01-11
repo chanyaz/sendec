@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load i18n %}
 <head>
-    <title>Maintenance | Insydia</title>
+    <title>{% trans 'Maintenance' %}| Insydia</title>
     <meta charset="utf-8" />
     <meta name='yandex-verification' content='5e44980913d08dad' />
     <meta name="google-site-verification" content="y6Xw9KEH5CLn8NGw7Q2xWyettWl8PNt06hQVCjG2EBs" />
@@ -14,12 +15,12 @@
 <body >
     <div id="wrapper" class="container">
         <div id="maintenance" class="row row-centered">
-            Web-site is under development. Please, come later.
-            <br>To contact with us you can write <a href="mailto:insydia@yandex.ru">insydia@yandex.ru</a> or call <a href="tel:79315790696">+7-931-579-06-96</a>.
+            {% trans 'Web-site is under development. Please, come later.' %}
+            <br>{% blocktrans %}To contact with us you can write <a href="mailto:support@insydia.com">support@insydia.com</a> or call <a href="tel:79315790696">+7-931-579-06-96</a>.{% endblocktrans %}
             <br>
             <p></p>
-            <br>Thank you for your consideration.
-            <br>Insydia Team
+            <br>{% trans 'Thank you for your consideration.' %}
+            <br>{% trans 'Insydia Team' %}
         </div>
     </div>
     <div id="live">

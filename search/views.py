@@ -18,11 +18,12 @@ def render_search_page(request, template="search.html", news_search_template="ne
     if request.is_ajax():
         template = news_search_template
 
-    if auth.get_user(request).username:
-        args["username"] = User.objects.get(username=auth.get_user(request).username)
-        args["search_private"] = True
+
     if "q" in request.GET and request.GET["q"]:
         search_word = request.GET["q"]
+        args["users_count"] = get_search_among_users(request, search_word).count()
+        args["companies_count"] = get_company(request, search_word).count()
+        args["news_count"] =get_search_result(request, search_word).count()
         if search_word is "":
             args["erorr_empty_field"] = True
         #elif len(get_search_result_text(request, search_word)) < 1 and len(get_search_result_text(request, search_word)) < 1\
@@ -35,20 +36,19 @@ def render_search_page(request, template="search.html", news_search_template="ne
             args["users_matches"] = get_search_among_users(request, search_word)
             args["companies_matches"] = get_company(request, search_word).values()
         args["search_word"] = search_word
-        UserRequests.objects.create(
-            user_id=User.objects.get(username=auth.get_user(request).username).id,
-            request=search_word
-        )
+        if auth.get_user(request).username:
+            args["username"] = User.objects.get(username=auth.get_user(request).username)
+            args["search_private"] = True
+            UserRequests.objects.create(
+                user_id=User.objects.get(username=auth.get_user(request).username).id,
+                request=search_word
+            )
+        else:
+            UserRequests.objects.create(
+                user_id=User.objects.get(username="eprivalov").id,
+                request=search_word
+            )
     args.update(csrf(request))
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     return render_to_response(template, args, context_instance=RequestContext(request))
 
 

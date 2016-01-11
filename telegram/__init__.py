@@ -28,6 +28,41 @@ def show_me(message):
     bot.send_message(chat_id=message.chat.id, text=message.chat.id)
 
 
+@bot.message_handler(commands=["interest_link"])
+def get_interest_news(message):
+    try:
+        db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+        cursor = db.cursor()
+        query_set = "SELECT * FROM news t1 INNER JOIN news_watches t2 ON t1.id=t2.news_id ORDER BY t2.watches DESC LIMIT 1"
+        # data_query_set = [amount]
+        cursor.execute(query_set)
+        db.commit()
+        item = cursor.fetchall()
+        string = "https://insydia.com/%s/%s/" % (item[0][2], item[0][0])
+        bot.send_message(chat_id=message.chat.id, text=string)
+    except:
+        pass
+
+
+@bot.message_handler(commands=["interest_text"])
+def get_interest_news(message):
+    try:
+        db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+        cursor = db.cursor()
+        query_set = "SELECT * FROM news t1 INNER JOIN news_watches t2 ON t1.id=t2.news_id ORDER BY t2.watches DESC LIMIT 1"
+        # data_query_set = [amount]
+        cursor.execute(query_set)
+        db.commit()
+        item = cursor.fetchall()
+        print(item[0][5])
+        import re
+        match = re.findall(r'<.*?>', item[0][5])
+        for i in match:
+            string = item[0][5].replace(i, '')
+        bot.send_message(chat_id=message.chat.id, text=string)
+    except:
+        pass
+
 
 @bot.message_handler(regexp="^last \d+ news$")
 def last_news_2(message):

@@ -14,6 +14,9 @@ import datetime
 import json
 import string
 from random import choice, randint
+from django.contrib.sites.models import Site, RequestSite
+from django.conf import settings
+
 
 from django import forms
 
@@ -24,15 +27,6 @@ SESSION_LIFE_TIME_REMEMBERED = 31536000
 def login(request):
     args = {}
     args.update(csrf(request))
-    if request.COOKIES.get("announce"):
-        args["hide"] = False
-    else:
-        args["hide"] = True
-    args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
     args["form"] = UserAuthenticationForm(request.POST)
 
     if auth.get_user(request).is_authenticated():
@@ -74,16 +68,6 @@ def register(request):
         args = {}
         args.update(csrf(request))
 
-        if request.COOKIES.get("announce"):
-            args["hide"] = False
-        else:
-            args["hide"] = True
-        args["beta_announce"] = """<h5>Currently version is only for <i>beta testing</i>. We have hidden/disabled some functions and blocks.
-<br>Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version(the last pre-release) will have all functions and design solutions which we build.</h5>
-"""
-
         args['form'] = UserCreationFormNew()
         if request.POST:
             new_user_form = UserCreationFormNew(request.POST)
@@ -121,11 +105,12 @@ def register(request):
                 text_content = 'This is an important message.'
                 htmly = render_to_string("confirm.html",
                                          {'username': user_instance.username,
+                                          'site': get_site(request),
                                           'email': user_email,
                                           'ucid': user_instance.profile.confirmation_code,
                                           'uuid': user_instance.profile.uuid})
                 html_content = htmly
-                mail_from = "insydia@yandex.ru"
+                mail_from = settings.DEFAULT_FROM_EMAIL
                 mail_to = user_email
                 msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
                 msg.attach_alternative(html_content, "text/html")
@@ -150,16 +135,6 @@ def render_user_preferences_categories_page(request):
             "categories": get_categories_names(request),
         }
         args.update(csrf(request))
-
-        if request.COOKIES.get("announce"):
-            args["hide"] = False
-        else:
-            args["hide"] = True
-        args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
-Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
-"""
         return render_to_response("user_preferences_categories.html", args)
 
 
@@ -174,15 +149,6 @@ def render_user_preferences_portal_page(request):
             }
         args.update(csrf(request))
 
-        if request.COOKIES.get("announce"):
-            args["hide"] = False
-        else:
-            args["hide"] = True
-        args["beta_announce"] = """<h5>Currently version is only for <i>beta testing(coursework)</i>. We have hidden/disabled some functions and blocks.
-Beta test continues <b>till 21.12.15 17:00 GMT(UTC) +0300</b>
-<br>If you found any problems or just want to tell us something else, you can <a href="/about/contacts/">write</a> to us
-<br>We hope that next version will have localisation and mobile app at least for Android OS.</h5>
-"""
         return render_to_response("user_preferences_portals.html", args)
 
 
@@ -273,3 +239,10 @@ def render_help_login(request):
     args["background_url"] = "/static/static/img/login/{file_num}.jpg".format(file_num=randint(1, 27))
 
     return render_to_response("cant_login.html", args)
+
+
+def get_site(request):
+    if Site._meta.installed:
+        return Site.objects.get_current()
+    else:
+        return RequestSite(request)

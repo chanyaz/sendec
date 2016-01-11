@@ -7,6 +7,7 @@ from ckeditor.widgets import CKEditorWidget
 class RssNewsAdmin(admin.ModelAdmin):
     model = RssNews
     list_display = ['title', 'portal_name', 'category']#, 'get_category', 'get_author')
+    list_filter = ["portal_name", "category"]
 
     def get_portal(self, obj):
         return obj.portal_name.portal

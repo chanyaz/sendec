@@ -3,6 +3,7 @@
 {% load my %}
 {% load jsonate_tags %}
 {% load endless %}
+{% load i18n %}
 {% block user_news %}
     <style>
         .pagination ul{list-style-type: none;}
@@ -258,12 +259,12 @@
                 <hr width="100%">
             {% else %}
                 <div class="user_rss_missing">
-                    At this time you have no one portals to syndicate for you.
+                    {% trans 'At this time you have no one portals to syndicate for you.' %}
                     <br>
-                    Would you like to choose any one? <a href="/profile/#settings-form">Click</a> to set your own preferences.
+                    {% blocktrans %}Would you like to choose any one? <a href="/profile/#settings-form">Click</a> to set your own preferences.{% endblocktrans %}
                 </div>
                 <div class="most-popular">
-                    <div class="title">The most popular portals.</div>
+                    <div class="title">{% trans 'The most popular portals.' %}</div>
                     <div class="most-popular-portals">
                         <form action="/news/add_portals/"
                               id="set_portals_new_user"
@@ -295,7 +296,7 @@
             <div class="right-side">
                 <div class="choosen-portals">
                     {% if user_rss_count < 1 %}
-                        Recommended&nbsp;portals
+                        {% trans 'Recommended portals' %}
                         <div class="recommendations">
                             {% for cur_rss_portal in popular_rss_right %}
                                 <span class="">{{ cur_rss_portal.portal }}</span><br>
@@ -303,12 +304,12 @@
                         </div>
                     {% else %}
                         <div class="user-rss-portals">
-                            Your&nbsp;current&nbsp;portals&nbsp;
+                            {% trans 'Your current portals ' %}
                         </div>
                         <div class="user-chosen-portals">
                             <div class="user-portals-edit-done"
                                  onclick="userPortalsListDoneEdit();">
-                                Done
+                                {% trans 'Done' %}
                             </div>
                             <div id="add-portals-image">
                                 <img src="{% static 'static/img/add.png' %}"
@@ -316,7 +317,7 @@
                                      width="20em" />&nbsp;Add&nbsp;portal
                             </div>
                         <div id="all-portals-link">
-                            <span class="apl-text"><a href="/news/usernews/">All</a></span>
+                            <span class="apl-text"><a href="/news/usernews/">{% trans 'All' %}</a></span>
                         </div>
                             <div id="sortContainer">
                                 {% for i in user_rss %}

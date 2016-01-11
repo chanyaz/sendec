@@ -79,6 +79,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+    'django.middleware.locale.LocaleMiddleware',
 )
 MAINTENANCE_MODE = False
 MAINTENANCE_URL = "503.html"
@@ -108,6 +109,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.i18n'
             ],
         },
     },
@@ -146,12 +148,12 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
-
+# gettext = lambda s: s
 LANGUAGE_CODE = 'ru-RU'
-LANGUAGES = (
-    ('ru', 'Russian'),
-    ('en', 'English'),
-)
+# LANGUAGES = (
+#     ('ru', gettext('Russian')),
+#     ('en', gettext('English')),
+# )
 
 TIME_ZONE = 'UTC'
 
@@ -160,6 +162,11 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 
 # Static files (CSS, JavaScript, Images)

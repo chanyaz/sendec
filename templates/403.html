@@ -1,4 +1,5 @@
 {% extends 'index_new.html' %}
+{% load i18n %}
 {% block access_denied %}
 
     <div class="container-fluid container">
@@ -6,8 +7,8 @@
             <div id="no-access">
                 <h2>403 Forbidden.</h2>
                 <div class="text-403">
-                    What are you up? You don't have permission for this action.<br>
-                    We remember you. Would you like to risk again?
+                    {% blocktrans %}What are you up? You don't have permission for this action.<br>
+                    We remember you. Would you like to risk again?{% endblocktrans %}
                 </div>
             </div>
         </div>
