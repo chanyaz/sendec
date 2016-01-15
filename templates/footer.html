@@ -3,6 +3,8 @@
 {% load cache %}
 <style>
     #footer-div{
+        height: 23em;
+        background-color: rgb(45, 62, 80);
         -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
         -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);
         box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -10,68 +12,118 @@
         font-family: Georgia, Times, "Times New Roman", serif;
         bottom: 10px;
     }
-    .footer-list-top .footer-list-element{list-style-type: none;display: inline;width: 100%;}
+    #footer-div a:hover{
+        text-decoration: none;
+    }
     .footer-bottom-block{}
-    .global-left{float: left;width: 60%;margin-left: 10%;}
-    .ftr-lf{float: left;font-size: 45px;margin-right: 1%;}
-    .ftr-rt{margin-top: 0;}
-    .ftr-rt-bottom{margin-top: -1%;}
-    #copyrights{margin-top: -1%;}
-    .global-right{height: 5em;margin-right: 10%;}
-    #mobile-apps{float: right;color: red;}
-    .main-logo-title, .main-logo-title:hover{text-decoration: none;}
+    #footer-social li{
+        display: inline;
+    }
+    #footer-list-top li{
+        display: inline;
+    }
+    .main-footer-item {
+        width: 25%;
+        float: left;
+    }
 </style>
 <div id="footer-div">
     <div class="container-fluid container">
         <div class="footer-bottom-block row row-centered">
-            <div class="global-left">
-                <div class="ftr-lf">
-                    <a class="main-logo-title" href="/">INSYDIA</a>
-                </div>
-                <div class="ftr-rt">
-                    <div id="ftr-rt-top">
-                        <ul class="footer-list-top">
-                            <li class="footer-list-element">
-                                <a href="/about/rules/">{% trans 'Terms and Conditions' %}</a>
-                            </li>&nbsp;|&nbsp;
-                            <li class="footer-list-element">
-                                <a href="/about/privacy/">{% trans 'Privacy Policy' %}</a>
-                            </li>&nbsp;|&nbsp;
-                            <li class="footer-list-element">
-                                <a href="/about/advertisers/">{% trans 'Advertiser' %}</a>
-                            </li>&nbsp;|&nbsp;
-                            <li class="footer-list-element">
-                                <a href="/about/contacts/">{% trans 'Contacts' %}</a>
-                            </li>&nbsp;|&nbsp;
-                            <li class="footer-list-element">
-                                <a href="/about">{% trans 'About us' %}</a>
-                            </li>
+            <div class="footer-top">
+                <ul id="main-footer-list">
+                    <li class="main-footer-item">
+                        <ul>
+                            <li>{% trans 'LATEST NEWS' %}</li>
+                            {% for i in footer_news %}
+                                <li style="height: 60px; margin-top: 5px; bottom: 5px; border-bottom: dotted 1px red; font-size: 12px;">
+                                   <div class="footer-news"
+                                         onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';"
+                                         onmouseover="this.style.cursor='pointer'; $('#lnt'+{{ i.id }}).css('color', 'blue');"
+                                         onmouseout="$('#lnt'+{{ i.id }}).css('color', 'black');">
+                                        <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover  ;"></div>
+                                        <div class="footer-news-content" style="margin-left: 30%; height: 60px;">
+                                            <span id="lnt{{ i.id }}"
+                                                  class="title"
+                                                  style="vertical-align: middle;"
+                                                  onmouseover="this.style.color='blue'; style.cursor='pointer';"
+                                                  onmouseout="this.style.color='black';"
+                                                  onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                                {{ i.news_title|truncatechars:"60" }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
-                    </div>
-                    <div class="ftr-rt-bottom">
-                        <ul class="footer-list-top">
-                                {% trans 'International Editions: ' %}
-                            <li class="footer-list-element">
-                                <a href="/en/">EN</a>
-                            </li>&nbsp;|&nbsp;
-                            <li class="footer-list-element">
-                                <a href="/ru/">RU</a>
-                            </li>&nbsp;|&nbsp;
-                            <li class="footer-list-element">
-                                <a href="/cn/">CH</a>
-                            </li>
+                    </li>
+                    <li class="main-footer-item">
+                        <ul>
+                            <li></li>
+                            <li>2</li>
+                            <li>3</li>
                         </ul>
-                    </div>
-                    <div id="copyrights">
-                        &#169;INSYDIA, 2015{% now "Y" as current_year %}{% if current_year != '2015' %}-{% now "Y" %}{% endif %}
-                    </div>
-                </div>
+                    </li>
+                    <li class="main-footer-item">
+                        <ul>
+                            <li>{% trans 'Categories' %}</li>
+                            <li><a href="/news/technology/">{% trans 'Technology' %}</a></li>
+                            <li><a href="/news/entertainment/">{% trans 'Entertainment' %}</a></li>
+                            <li><a href="/news/auto/">{% trans 'Auto' %}</a></li>
+                            <li><a href="/news/space/">{% trans 'Space' %}</a></li>
+                            <li><a href="/news/bio/">{% trans 'BIO' %}</a></li>
+                            <li><a href="/news/companies/">{% trans 'Companies' %}</a></li>
+                            <li><a href="/news/reviews/">{% trans 'Reviews' %}</a></li>
+                            {% if username.username %}
+                                <li><a href="/news/reviews/">{% trans 'PRIVATE' %}</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="main-footer-item">
+                        <ul>
+                            <li>{% trans 'Quick links' %}</li>
+                            <li><a href="/about">{% trans 'About us' %}</a></li>
+                            <li><a href="/about/contacts/">{% trans 'Contacts' %}</a></li>
+                            <li><a href="/about/advertisers/">{% trans 'Advertisers' %}</a></li>
+                            <li><a href="/api/">API</a></li>
+                            <li><a href=""><img src="{% static 'static/img/app_store.png' %}" width="100em" /></a></li>
+                            <li><a href=""><img src="{% static 'static/img/app_android.png' %}" width="106em" style="margin-left: -1%;"/></a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-            <div class="global-right">
-                <div id="mobile-apps">
-                    Soon<br>
-                    <a href=""><img src="{% static 'static/img/app_store.png' %}" width="100em" /></a>
-                    <a href=""><img src="{% static 'static/img/app_android.png' %}" width="108em" /></a>
+            <hr width="100%">
+            <div class="footer-middle" style="text-align: center;">
+        <div class="middle-text">
+            INSYDIA, 2015{% now "Y" as current_year %}{% if current_year != '2015' %}-{% now "Y" %}{% endif %}
+        </div>
+        <ul id="footer-list-top">
+            <li>{% trans 'International Editions: ' %}</li>
+            <li class="footer-list-element">
+                <a href="/en/">EN</a>
+            </li>&nbsp;|&nbsp;
+            <li class="footer-list-element">
+                <a href="/ru/">RU</a>
+            </li>&nbsp;|&nbsp;
+            <li class="footer-list-element">
+                <a href="/cn/">CH</a>
+            </li>
+        </ul>
+    </div>
+
+            <div class="footer-bottom">
+                <div class="bottom-left" style="float: left; font-size: 30px;"><a href="/">INSYDIA</a></div>
+                <div class="bottom-right" style="float: right;">
+                    <ul id="footer-social" style="list-style-type: none;">
+                        <li><img src="{% static 'static/img/telegram' %}" width="30px"></li>
+                        <li><img src="{% static 'static/img/facebook.png' %}" width="30px"></li>
+                        <li><img src="{% static 'static/img/linkedin.png' %}" width="30px"></li>
+                        <li><img src="{% static 'static/img/vk.png' %}" width="30px"></li>
+                        <li><img src="{% static 'static/img/twitter.png' %}" width="30px"></li>
+                        <li><img src="{% static 'static/img/instagram.png' %}" width="30px"></li>
+                        <li><img src="{% static 'static/img/youtube.png' %}" width="30px"></li>
+                        <li><img src="{% static 'static/img/rss.png' %}" width="30px"></li>
+                    </ul>
                 </div>
             </div>
         </div>

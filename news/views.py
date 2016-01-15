@@ -43,7 +43,7 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         "title": "Home Page | ",
         "news_block": True,
         # "breaking_news": render_news_by_sendec(request).order_by("-news_post_date")[0],
-        "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[0:4],
+        "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[0:3],
         # "interest": get_interesting_news(request)[:3],
         "interest": get_top_total_news(request),
         "total_news": get_total_news,

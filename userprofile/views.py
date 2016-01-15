@@ -49,8 +49,12 @@ def render_user_profile_page(request):
     args["search_private"] = True
     args["special_text"] = "To get special information you can enter key-word here and we will try to find and provide " \
                            "you with this information."
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("profile.html", args)
+
+
+def get_news_for_footer(request):
+    return News.objects.order_by("-news_post_date").defer("news_dislikes").defer("news_likes").defer("news_post_text_english").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_author").defer("news_portal_name")
 
 
 def get_site(request):

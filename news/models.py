@@ -119,6 +119,9 @@ class News(models.Model):
         }
 
 
+
+
+
 class TopNews(models.Model):
     class Meta:
         db_table = "news_top"

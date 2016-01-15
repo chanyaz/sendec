@@ -16,8 +16,6 @@ import string
 from random import choice, randint
 from django.contrib.sites.models import Site, RequestSite
 from django.conf import settings
-
-
 from django import forms
 
 SESSION_LIFE_TIME = 86400
@@ -92,6 +90,7 @@ def register(request):
                                               in range(33)),
                     user_cell_number=user_phone,
                     uuid=set_uuid(User.objects.get(username=auth.get_user(request).username).id)
+
                 )
                 list_portals = RssPortals.objects.all().values()
                 [UserRssPortals.objects.create(

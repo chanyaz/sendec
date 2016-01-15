@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-11 22:21+0000\n"
+"POT-Creation-Date: 2016-01-15 23:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,28 +42,28 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: loginsys/templates/footer_loginsys.html:41 templates/footer.html:35
+#: loginsys/templates/footer_loginsys.html:41
 msgid "Terms and Conditions"
 msgstr ""
 
-#: loginsys/templates/footer_loginsys.html:44 templates/footer.html:38
+#: loginsys/templates/footer_loginsys.html:44
 msgid "Privacy Policy"
 msgstr ""
 
-#: loginsys/templates/footer_loginsys.html:47 templates/footer.html:41
+#: loginsys/templates/footer_loginsys.html:47
 msgid "Advertiser"
 msgstr ""
 
-#: loginsys/templates/footer_loginsys.html:50 templates/footer.html:44
+#: loginsys/templates/footer_loginsys.html:50 templates/footer.html:86
 msgid "Contacts"
 msgstr ""
 
-#: loginsys/templates/footer_loginsys.html:53 templates/footer.html:47
+#: loginsys/templates/footer_loginsys.html:53 templates/footer.html:85
 msgid "About us"
 msgstr ""
 
 #: loginsys/templates/login.html:127 loginsys/templates/register.html:255
-#: templates/index_new.html:601
+#: templates/index_new.html:696
 msgid "Sign in"
 msgstr ""
 
@@ -88,11 +88,12 @@ msgstr ""
 msgid "E-mail"
 msgstr ""
 
-#: loginsys/templates/register.html:248 templates/index_new.html:606
+#: loginsys/templates/register.html:248 templates/index_new.html:701
 msgid "Sign up"
 msgstr ""
 
 #: news/templates/companies.html:51 search/templates/search.html:176
+#: templates/footer.html:75
 msgid "Companies"
 msgstr ""
 
@@ -138,21 +139,21 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: news/templates/current_news.html:246 news/templates/top_news.html:191
+#: news/templates/current_news.html:249 news/templates/top_news.html:195
 #, python-format
 msgid "News&nbsp;of&nbsp;%(company_name)s"
 msgstr ""
 
-#: news/templates/top_news.html:155
+#: news/templates/top_news.html:159
 #, python-format
 msgid "Recommendations&nbsp;of&nbsp;%(current_news_values.top_news_category)s"
 msgstr ""
 
-#: news/templates/total.html:452
+#: news/templates/total.html:474
 msgid "RECENTLY NEWS"
 msgstr ""
 
-#: news/templates/total.html:498
+#: news/templates/total.html:520
 msgid "Interesting articles"
 msgstr ""
 
@@ -416,133 +417,169 @@ msgstr ""
 msgid "Social Networks"
 msgstr ""
 
-#: templates/footer.html:53
-msgid "International Editions: "
+#: templates/footer.html:37
+msgid "LATEST NEWS"
 msgstr ""
 
-#: templates/index_new.html:30
-#, python-format
-msgid "%(title)sInsydia"
-msgstr "cn"
-
-#: templates/index_new.html:470
-msgid "HOME"
+#: templates/footer.html:69
+msgid "Categories"
 msgstr ""
 
-#: templates/index_new.html:476 templates/index_new.html.py:627
-msgid "TECHNOLOGY"
+#: templates/footer.html:70
+msgid "Technology"
 msgstr ""
 
-#: templates/index_new.html:482 templates/index_new.html.py:632
-msgid "ENTERTAINMENT"
+#: templates/footer.html:71
+msgid "Entertainment"
 msgstr ""
 
-#: templates/index_new.html:488 templates/index_new.html.py:509
-#: templates/index_new.html:637
-msgid "AUTO"
+#: templates/footer.html:72
+msgid "Auto"
 msgstr ""
 
-#: templates/index_new.html:494 templates/index_new.html.py:642
-msgid "SPACE"
+#: templates/footer.html:73
+msgid "Space"
 msgstr ""
 
-#: templates/index_new.html:500 templates/index_new.html.py:657
-msgid "REVIEWS"
-msgstr ""
-
-#: templates/index_new.html:505
-msgid "DROPDOWN HEADING"
-msgstr ""
-
-#: templates/index_new.html:514
-msgid "PHONES"
-msgstr ""
-
-#: templates/index_new.html:519
-msgid "PC"
-msgstr ""
-
-#: templates/index_new.html:524
-msgid "SPACE SHUTTLES"
-msgstr ""
-
-#: templates/index_new.html:529
-msgid "OTHER"
-msgstr ""
-
-#: templates/index_new.html:537
-msgid "PROFILE"
-msgstr ""
-
-#: templates/index_new.html:545
-msgid "ABOUT US"
-msgstr ""
-
-#: templates/index_new.html:551
-msgid "CONTACT US"
-msgstr ""
-
-#: templates/index_new.html:557
-msgid "ADVERTISER"
-msgstr ""
-
-#: templates/index_new.html:576 templates/index_new.html.py:580
-msgid "SEARCH"
-msgstr ""
-
-#: templates/index_new.html:594
-msgid "Log out"
-msgstr ""
-
-#: templates/index_new.html:622
-msgid "LATEST"
-msgstr ""
-
-#: templates/index_new.html:647
+#: templates/footer.html:74 templates/index_new.html:747
 msgid "BIO"
 msgstr ""
 
-#: templates/index_new.html:652
-msgid "COMPANIES"
+#: templates/footer.html:76
+msgid "Reviews"
 msgstr ""
 
-#: templates/index_new.html:665
+#: templates/footer.html:78 templates/index_new.html:765
 msgid "PRIVATE"
 msgstr ""
 
-#: templates/index_new.html:676
+#: templates/footer.html:84
+msgid "Quick links"
+msgstr ""
+
+#: templates/footer.html:87
+msgid "Advertisers"
+msgstr ""
+
+#: templates/footer.html:101
+msgid "International Editions: "
+msgstr ""
+
+#: templates/index_new.html:43
+#, python-format
+msgid "%(title)sInsydia"
+msgstr ""
+
+#: templates/index_new.html:564
+msgid "HOME"
+msgstr ""
+
+#: templates/index_new.html:570 templates/index_new.html.py:727
+msgid "TECHNOLOGY"
+msgstr ""
+
+#: templates/index_new.html:576 templates/index_new.html.py:732
+msgid "ENTERTAINMENT"
+msgstr ""
+
+#: templates/index_new.html:582 templates/index_new.html.py:603
+#: templates/index_new.html:737
+msgid "AUTO"
+msgstr ""
+
+#: templates/index_new.html:588 templates/index_new.html.py:742
+msgid "SPACE"
+msgstr ""
+
+#: templates/index_new.html:594 templates/index_new.html.py:757
+msgid "REVIEWS"
+msgstr ""
+
+#: templates/index_new.html:599
+msgid "DROPDOWN HEADING"
+msgstr ""
+
+#: templates/index_new.html:608
+msgid "PHONES"
+msgstr ""
+
+#: templates/index_new.html:613
+msgid "PC"
+msgstr ""
+
+#: templates/index_new.html:618
+msgid "SPACE SHUTTLES"
+msgstr ""
+
+#: templates/index_new.html:623
+msgid "OTHER"
+msgstr ""
+
+#: templates/index_new.html:631
+msgid "PROFILE"
+msgstr ""
+
+#: templates/index_new.html:639
+msgid "ABOUT US"
+msgstr ""
+
+#: templates/index_new.html:645
+msgid "CONTACT US"
+msgstr ""
+
+#: templates/index_new.html:651
+msgid "ADVERTISER"
+msgstr ""
+
+#: templates/index_new.html:671 templates/index_new.html.py:675
+msgid "SEARCH"
+msgstr ""
+
+#: templates/index_new.html:689
+msgid "Log out"
+msgstr ""
+
+#: templates/index_new.html:722
+msgid "LATEST"
+msgstr ""
+
+#: templates/index_new.html:752
+msgid "COMPANIES"
+msgstr ""
+
+#: templates/index_new.html:776
 msgid "ALL"
 msgstr ""
 
-#: templates/index_new.html:677
+#: templates/index_new.html:777
 msgid "GAMES"
 msgstr ""
 
-#: templates/index_new.html:678
+#: templates/index_new.html:778
 msgid "MEDIA"
 msgstr ""
 
-#: templates/index_new.html:697
+#: templates/index_new.html:802
 msgid "What are you looking for"
 msgstr ""
 
-#: templates/index_new.html:773
+#: templates/index_new.html:879
 msgid "SHARE"
 msgstr ""
 
-#: templates/index_new.html:889
+#: templates/index_new.html:999
 msgid "Your portals"
 msgstr ""
 
-#: templates/index_new.html:897 userprofile/templates/profile.html:372
+#: templates/index_new.html:1007 userprofile/templates/profile.html:372
 msgid "Save"
 msgstr ""
 
-#: templates/index_new.html:902 userprofile/templates/profile.html:305
+#: templates/index_new.html:1012 userprofile/templates/profile.html:305
 msgid "Cancel"
 msgstr ""
 
-#: templates/index_new.html:908
+#: templates/index_new.html:1018
 msgid "CLOSE"
 msgstr ""
 

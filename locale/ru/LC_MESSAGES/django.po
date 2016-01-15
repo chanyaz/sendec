@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-11 22:21+0000\n"
+"POT-Creation-Date: 2016-01-15 23:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,24 +16,22 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: loginsys/forms.py:13 loginsys/forms.py:56
 msgid "The two password fields didn't match."
-msgstr ""
+msgstr "Пароли не совпадают. Повторите ввод."
 
 #: loginsys/forms.py:15 loginsys/forms.py:66
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: loginsys/forms.py:21
 msgid "Password confirmation"
-msgstr ""
+msgstr "Подтверждение пороля"
 
 #: loginsys/forms.py:27
 msgid "Enter the same password as above, for verification."
-msgstr ""
+msgstr "Повторите пароль"
 
 #: loginsys/forms.py:59 loginsys/templates/register.html:200
 #: userprofile/templates/profile.html:180
@@ -42,61 +40,63 @@ msgstr "Логин"
 
 #: loginsys/templates/cant_login.html:102
 msgid "Reset"
-msgstr ""
+msgstr "Сброс"
 
-#: loginsys/templates/footer_loginsys.html:41 templates/footer.html:35
+#: loginsys/templates/footer_loginsys.html:41
 msgid "Terms and Conditions"
-msgstr ""
+msgstr "Условия и соглашения"
 
-#: loginsys/templates/footer_loginsys.html:44 templates/footer.html:38
+#: loginsys/templates/footer_loginsys.html:44
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Политика Конфиденциальности"
 
-#: loginsys/templates/footer_loginsys.html:47 templates/footer.html:41
+#: loginsys/templates/footer_loginsys.html:47
 msgid "Advertiser"
-msgstr ""
+msgstr "Рекламодателям"
 
-#: loginsys/templates/footer_loginsys.html:50 templates/footer.html:44
+#: loginsys/templates/footer_loginsys.html:50 templates/footer.html:86
 msgid "Contacts"
-msgstr ""
+msgstr "Контакты"
 
-#: loginsys/templates/footer_loginsys.html:53 templates/footer.html:47
+#: loginsys/templates/footer_loginsys.html:53 templates/footer.html:85
 msgid "About us"
-msgstr ""
+msgstr "О нас"
 
 #: loginsys/templates/login.html:127 loginsys/templates/register.html:255
-#: templates/index_new.html:601
+#: templates/index_new.html:696
 msgid "Sign in"
-msgstr ""
+msgstr "Войти"
 
 #: loginsys/templates/login.html:142
 msgid "Create Account"
-msgstr ""
+msgstr "Создать запись"
 
 #: loginsys/templates/login.html:147
 msgid "Can't log in?"
-msgstr ""
+msgstr "Не можете войти?"
 
 #: loginsys/templates/register.html:170
 msgid "Please, wait while we are preparing your profile."
 msgstr ""
+"Пожалуйста, подождите, пока мы подготавливаем Ваш профиль к использованию"
 
 #: loginsys/templates/register.html:172
 msgid "You will be able to use service in a minute."
-msgstr ""
+msgstr "Вы сможете начать пользоваться нашим сервисом через минуту."
 
 #: loginsys/templates/register.html:214 templates/contacts.html:44
 #: templates/contacts.html.py:61
 msgid "E-mail"
-msgstr ""
+msgstr "Электронная почта"
 
-#: loginsys/templates/register.html:248 templates/index_new.html:606
+#: loginsys/templates/register.html:248 templates/index_new.html:701
 msgid "Sign up"
-msgstr ""
+msgstr "Зарегистрироваться"
 
 #: news/templates/companies.html:51 search/templates/search.html:176
+#: templates/footer.html:75
 msgid "Companies"
-msgstr ""
+msgstr "Компании"
 
 #: news/templates/companies.html:53
 msgid "Here you can search news of the certain company which do you want."
@@ -109,58 +109,62 @@ msgstr ""
 #: news/templates/companies.html:71 search/templates/search.html:140
 #: userprofile/templates/profile.html:329
 msgid "Search"
-msgstr ""
+msgstr "Поиск"
 
 #: news/templates/companies.html:86
 msgid "Logo"
-msgstr ""
+msgstr "Логотип"
 
 #: news/templates/companies.html:87 templates/contacts.html:55
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: news/templates/companies.html:88 search/templates/search.html:212
 #: search/templates/search.html.py:227
 #: userprofile/templates/moderator_profile.html:49
 #: userprofile/templates/profile.html:136
 msgid "Articles"
-msgstr ""
+msgstr "Статьи"
 
 #: news/templates/current_company.html:40
 #, python-format
 msgid "All %(company.name)s's news"
-msgstr ""
+msgstr "Новости компании %(company.name)s"
 
 #: news/templates/current_news.html:108 news/templates/top_news.html:107
 #: search/templates/search.html:155
 msgid "By"
-msgstr ""
+msgstr "Автор"
 
 #: news/templates/current_news.html:118
 msgid "Edit"
-msgstr ""
+msgstr "Редактировать"
 
-#: news/templates/current_news.html:246 news/templates/top_news.html:191
-#, python-format
+#: news/templates/current_news.html:249 news/templates/top_news.html:195
+#, fuzzy, python-format
+#| msgid "News of %(company_name)s"
 msgid "News&nbsp;of&nbsp;%(company_name)s"
-msgstr ""
+msgstr "Новости %(company_name)s"
 
-#: news/templates/top_news.html:155
-#, python-format
+#: news/templates/top_news.html:159
+#, fuzzy, python-format
+#| msgid "Recommendations of %(current_news_values.top_news_category)s"
 msgid "Recommendations&nbsp;of&nbsp;%(current_news_values.top_news_category)s"
-msgstr ""
+msgstr "Рекомендации"
 
-#: news/templates/total.html:452
+#: news/templates/total.html:474
 msgid "RECENTLY NEWS"
-msgstr ""
+msgstr "Последние новости"
 
-#: news/templates/total.html:498
+#: news/templates/total.html:520
 msgid "Interesting articles"
-msgstr ""
+msgstr "Нравится пользователям"
 
 #: news/templates/user_news.html:262
 msgid "At this time you have no one portals to syndicate for you."
 msgstr ""
+"На текущий момент Вы не выбрали ни одного портала для предосталвения Вам "
+"новостей."
 
 #: news/templates/user_news.html:264
 msgid ""
@@ -170,87 +174,91 @@ msgstr ""
 
 #: news/templates/user_news.html:267
 msgid "The most popular portals."
-msgstr ""
+msgstr "Наиболее популярные порталы"
 
 #: news/templates/user_news.html:299
 msgid "Recommended portals"
-msgstr ""
+msgstr "Рекомендуемые порталы"
 
 #: news/templates/user_news.html:307
 msgid "Your current portals "
-msgstr ""
+msgstr "Ваши порталы"
 
 #: news/templates/user_news.html:312
 msgid "Done"
-msgstr ""
+msgstr "Готово"
 
 #: news/templates/user_news.html:320
 msgid "All"
-msgstr ""
+msgstr "Все"
 
 #: search/templates/search.html:127
 msgid "No one matches. Please, try another request word"
-msgstr ""
+msgstr "Ничего не найдено. Пожалуйста, попробуйте другой поисковый запрос"
 
 #: search/templates/search.html:137
 msgid "What are you looking for?"
-msgstr ""
+msgstr "Что будем искать?"
 
 #: search/templates/search.html:146
 msgid "Popular news"
-msgstr ""
+msgstr "Популярные новости"
 
 #: search/templates/search.html:168
 msgid "Results for "
-msgstr ""
+msgstr "Резальтаты поиска"
 
 #: search/templates/search.html:169
 msgid "matches"
-msgstr ""
+msgstr "совпадений"
 
 #: search/templates/search.html:170
 msgid "match"
-msgstr ""
+msgstr "совпадение"
 
 #: search/templates/search.html:175
 msgid "News"
-msgstr ""
+msgstr "Новости"
 
 #: search/templates/search.html:177
 msgid "Moderators"
-msgstr ""
+msgstr "Редакторы"
 
 #: search/templates/search.html:230
 #: userprofile/templates/moderator_profile.html:45
 #: userprofile/templates/profile.html:132
 msgid "Rate"
-msgstr ""
+msgstr "Рейтинг"
 
 #: search/templates/search.html:246
 msgid "Latest news"
-msgstr ""
+msgstr "Последние новости"
 
 #: templates/403.html:10
 msgid ""
 "What are you up? You don't have permission for this action.<br>\n"
 "                    We remember you. Would you like to risk again?"
 msgstr ""
+"Вы что задумали, а? У Вас нет доступа для данного действия. Мы запомнили "
+"Вас. Рискнёте ещё разок?"
 
 #: templates/404.html:8
 msgid "Page not found."
-msgstr ""
+msgstr "Страница не найдена"
 
 #: templates/404.html:9
 msgid "But we have found for you this cute sea lion. Good luck searching."
 msgstr ""
+"Но зато мы нашли для Вас этого милого детёныша морского льва. Удачи в "
+"поисках."
 
 #: templates/503.html:5
 msgid "Maintenance"
-msgstr ""
+msgstr "Техническое обслуживание"
 
 #: templates/503.html:18
 msgid "Web-site is under development. Please, come later."
-msgstr ""
+msgstr "Сайт находится в разработке. Пожалуйста, загляните к нам позже."
 
 #: templates/503.html:19
 msgid ""
@@ -261,15 +269,15 @@ msgstr ""
 
 #: templates/503.html:22
 msgid "Thank you for your consideration."
-msgstr ""
+msgstr "Спасибо за Ваше понимание"
 
 #: templates/503.html:23
 msgid "Insydia Team"
-msgstr ""
+msgstr "Команда Insydia"
 
 #: templates/about.html:18
 msgid "ABOUT"
-msgstr ""
+msgstr "О"
 
 #: templates/about.html:20
 msgid "Insydia is a ..."
@@ -277,11 +285,11 @@ msgstr ""
 
 #: templates/about.html:24
 msgid "GRATITUDE"
-msgstr ""
+msgstr "БЛАГОДАРНОСТЬ"
 
 #: templates/advertisers.html:10
 msgid "ADVERTISEMENT"
-msgstr ""
+msgstr "РЕКЛАМА"
 
 #: templates/advertisers.html:13
 msgid "So,"
@@ -289,41 +297,43 @@ msgstr ""
 
 #: templates/confirm.html:6
 msgid "Title"
-msgstr ""
+msgstr "Заголовок"
 
 #: templates/confirm.html:25
 msgid "Hi"
-msgstr ""
+msgstr "Здравствуйте"
 
 #: templates/confirm.html:27
 msgid "Please confirm"
-msgstr ""
+msgstr "Пожалуйста, повторите"
 
 #: templates/confirm.html:28
 msgid "If you do it, you will get access to the hidden features of the portal"
-msgstr ""
+msgstr "Если Вы это сделаете, Вы получите доступ к скрытым функциям сайта"
 
 #: templates/confirm.html:29
 msgid "Thank you!"
-msgstr ""
+msgstr "Спасибо!"
 
 #: templates/confirm.html:34
 msgid "Confirm your e-mail "
-msgstr ""
+msgstr "Подтвердите Вашу электронную почту"
 
 #: templates/confirm.html:39
 msgid "Cheers"
-msgstr ""
+msgstr "С Уважением,"
 
 #: templates/confirm.html:41
 msgid "Your Insydia Team"
-msgstr ""
+msgstr "Команда Insydia"
 
 #: templates/confirm.html:48
 msgid ""
 "If you did not sign up or request for email confirmation, please ignore this "
 "email."
 msgstr ""
+"Если Вы не регистрировались или не запрашивали письмо на подтверждение, "
+"пожалуйста, проигнорируйте это письмо"
 
 #: templates/confirm.html:59
 #, python-format
@@ -340,221 +350,265 @@ msgstr ""
 
 #: templates/contacts.html:37
 msgid "CONTACT INFORMATION"
-msgstr ""
+msgstr "КОНТАКТНАЯ ИНФОРМАЦИЯ"
 
 #: templates/contacts.html:43
 msgid "Cell"
-msgstr ""
+msgstr "Телефон"
 
 #: templates/contacts.html:45
 msgid "On cooperation"
-msgstr ""
+msgstr "По вопросам рекламы и сотрудничества"
 
 #: templates/contacts.html:47
 msgid "Contact with us"
-msgstr ""
+msgstr "Свяжитесь с нами"
 
 #: templates/contacts.html:67 templates/contacts.html.py:74
 msgid "Message"
-msgstr ""
+msgstr "Сообщение"
 
 #: templates/contacts.html:92 userprofile/templates/profile.html:93
 msgid "Send"
-msgstr ""
+msgstr "Отправить"
 
 #: templates/contacts.html:102
 msgid "OUR TEAM"
-msgstr ""
+msgstr "НАША КОМАНДА"
 
 #: templates/contacts.html:109
 msgid "Founder"
-msgstr ""
+msgstr "Создатель"
 
 #: templates/contacts.html:110
 msgid "Evgeniy Privalov"
-msgstr ""
+msgstr "Евгений Привалов"
 
 #: templates/contacts.html:112
 msgid "St. Petersburg"
-msgstr ""
+msgstr "Санкт-Петербург"
 
 #: templates/contacts.html:120
 msgid "Co-Founder"
-msgstr ""
+msgstr "Создатель"
 
 #: templates/contacts.html:121
 msgid "Anton Tinishov"
-msgstr ""
+msgstr "Антон Тинишов"
 
 #: templates/contacts.html:123
+#, fuzzy
+#| msgid "St. Petersburg"
 msgid "St.Petersburg"
-msgstr ""
+msgstr "Санкт-Петербург"
 
 #: templates/contacts.html:131
 msgid "At this time we need in"
-msgstr ""
+msgstr "На данный момент мы нуждаемся в следующих специалистах"
 
 #: templates/contacts.html:134
 msgid "LOCALIZATION"
-msgstr ""
+msgstr "локализация"
 
 #: templates/contacts.html:135
 msgid "EDITORS & REPORTERS"
-msgstr ""
+msgstr "Редакторы и репортёры"
 
 #: templates/contacts.html:138
 msgid "PROGRAMMER"
-msgstr ""
+msgstr "Разработчики"
 
 #: templates/contacts.html:141
 msgid "MARKETING"
-msgstr ""
+msgstr "Маркетологи"
 
 #: templates/contacts.html:147
 msgid "Join to us"
-msgstr ""
+msgstr "Присоединиться к нашей команде"
 
 #: templates/contacts.html:154
 msgid "Social Networks"
+msgstr "Социальные сети"
+
+#: templates/footer.html:37
+#, fuzzy
+#| msgid "LATEST"
+msgid "LATEST NEWS"
+msgstr "Последние"
+
+#: templates/footer.html:69
+msgid "Categories"
 msgstr ""
 
-#: templates/footer.html:53
+#: templates/footer.html:70
+msgid "Technology"
+msgstr ""
+
+#: templates/footer.html:71
+msgid "Entertainment"
+msgstr ""
+
+#: templates/footer.html:72
+msgid "Auto"
+msgstr ""
+
+#: templates/footer.html:73
+msgid "Space"
+msgstr ""
+
+#: templates/footer.html:74 templates/index_new.html:747
+msgid "BIO"
+msgstr "БИО"
+
+#: templates/footer.html:76
+msgid "Reviews"
+msgstr ""
+
+#: templates/footer.html:78 templates/index_new.html:765
+msgid "PRIVATE"
+msgstr "Мои новости"
+
+#: templates/footer.html:84
+msgid "Quick links"
+msgstr ""
+
+#: templates/footer.html:87
+#, fuzzy
+#| msgid "Advertiser"
+msgid "Advertisers"
+msgstr "Рекламодателям"
+
+#: templates/footer.html:101
 msgid "International Editions: "
-msgstr ""
+msgstr "Международные версии"
 
-#: templates/index_new.html:30
+#: templates/index_new.html:43
 #, python-format
 msgid "%(title)sInsydia"
-msgstr "ru"
+msgstr ""
 
-#: templates/index_new.html:470
+#: templates/index_new.html:564
 msgid "HOME"
-msgstr ""
+msgstr "Главная"
 
-#: templates/index_new.html:476 templates/index_new.html.py:627
+#: templates/index_new.html:570 templates/index_new.html.py:727
 msgid "TECHNOLOGY"
-msgstr ""
+msgstr "Технологии"
 
-#: templates/index_new.html:482 templates/index_new.html.py:632
+#: templates/index_new.html:576 templates/index_new.html.py:732
 msgid "ENTERTAINMENT"
-msgstr ""
+msgstr "Развлечения"
 
-#: templates/index_new.html:488 templates/index_new.html.py:509
-#: templates/index_new.html:637
+#: templates/index_new.html:582 templates/index_new.html.py:603
+#: templates/index_new.html:737
 msgid "AUTO"
-msgstr ""
+msgstr "Авто"
 
-#: templates/index_new.html:494 templates/index_new.html.py:642
+#: templates/index_new.html:588 templates/index_new.html.py:742
 msgid "SPACE"
-msgstr ""
+msgstr "Космос"
 
-#: templates/index_new.html:500 templates/index_new.html.py:657
+#: templates/index_new.html:594 templates/index_new.html.py:757
 msgid "REVIEWS"
-msgstr ""
+msgstr "Обзоры"
 
-#: templates/index_new.html:505
+#: templates/index_new.html:599
 msgid "DROPDOWN HEADING"
 msgstr ""
 
-#: templates/index_new.html:514
+#: templates/index_new.html:608
 msgid "PHONES"
-msgstr ""
+msgstr "Телефоны"
 
-#: templates/index_new.html:519
+#: templates/index_new.html:613
 msgid "PC"
 msgstr ""
 
-#: templates/index_new.html:524
+#: templates/index_new.html:618
 msgid "SPACE SHUTTLES"
 msgstr ""
 
-#: templates/index_new.html:529
+#: templates/index_new.html:623
 msgid "OTHER"
-msgstr ""
+msgstr "Другое"
 
-#: templates/index_new.html:537
+#: templates/index_new.html:631
 msgid "PROFILE"
-msgstr ""
+msgstr "Профиль"
 
-#: templates/index_new.html:545
+#: templates/index_new.html:639
 msgid "ABOUT US"
-msgstr ""
+msgstr "О нас"
 
-#: templates/index_new.html:551
+#: templates/index_new.html:645
 msgid "CONTACT US"
-msgstr ""
+msgstr "Контакты"
 
-#: templates/index_new.html:557
+#: templates/index_new.html:651
 msgid "ADVERTISER"
-msgstr ""
+msgstr "Рекламодателям"
 
-#: templates/index_new.html:576 templates/index_new.html.py:580
+#: templates/index_new.html:671 templates/index_new.html.py:675
 msgid "SEARCH"
-msgstr ""
+msgstr "Поиск"
 
-#: templates/index_new.html:594
+#: templates/index_new.html:689
 msgid "Log out"
-msgstr ""
+msgstr "Выйти"
 
-#: templates/index_new.html:622
+#: templates/index_new.html:722
 msgid "LATEST"
-msgstr ""
+msgstr "Последние"
 
-#: templates/index_new.html:647
-msgid "BIO"
-msgstr ""
-
-#: templates/index_new.html:652
+#: templates/index_new.html:752
 msgid "COMPANIES"
-msgstr ""
+msgstr "Компании"
 
-#: templates/index_new.html:665
-msgid "PRIVATE"
-msgstr ""
-
-#: templates/index_new.html:676
+#: templates/index_new.html:776
 msgid "ALL"
-msgstr ""
+msgstr "ВСЕ"
 
-#: templates/index_new.html:677
+#: templates/index_new.html:777
 msgid "GAMES"
-msgstr ""
+msgstr "Игры"
 
-#: templates/index_new.html:678
+#: templates/index_new.html:778
 msgid "MEDIA"
-msgstr ""
+msgstr "Медиа"
 
-#: templates/index_new.html:697
+#: templates/index_new.html:802
 msgid "What are you looking for"
-msgstr ""
+msgstr "Что будем искать"
 
-#: templates/index_new.html:773
+#: templates/index_new.html:879
 msgid "SHARE"
-msgstr ""
+msgstr "Поделиться"
 
-#: templates/index_new.html:889
+#: templates/index_new.html:999
 msgid "Your portals"
-msgstr ""
+msgstr "Ваши порталы"
 
-#: templates/index_new.html:897 userprofile/templates/profile.html:372
+#: templates/index_new.html:1007 userprofile/templates/profile.html:372
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
-#: templates/index_new.html:902 userprofile/templates/profile.html:305
+#: templates/index_new.html:1012 userprofile/templates/profile.html:305
 msgid "Cancel"
-msgstr ""
+msgstr "Отменить"
 
-#: templates/index_new.html:908
+#: templates/index_new.html:1018
 msgid "CLOSE"
-msgstr ""
+msgstr "Закрыть"
 
 #: test_rss/save.html:34
+#, fuzzy
+#| msgid "SHOW MORE"
 msgid "SHOW&nbsp;MORE"
-msgstr ""
+msgstr "Предыдущие новости"
 
 #: test_rss/save.html:55
 msgid "Home"
-msgstr ""
+msgstr "Главная"
 
 #: userprofile/templates/moderator_profile.html:75
 #, python-format
@@ -567,104 +621,104 @@ msgstr ""
 
 #: userprofile/templates/profile.html:97
 msgid "Profile"
-msgstr ""
+msgstr "Профиль"
 
 #: userprofile/templates/profile.html:112
 msgid "Upload photo"
-msgstr ""
+msgstr "Загрузить фото"
 
 #: userprofile/templates/profile.html:121
 #: userprofile/templates/profile.html:408
 msgid "Accept"
-msgstr ""
+msgstr "Применить"
 
 #: userprofile/templates/profile.html:128
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 #: userprofile/templates/profile.html:128
 msgid "moderator"
-msgstr ""
+msgstr "модератор"
 
 #: userprofile/templates/profile.html:139
 msgid "See all"
-msgstr ""
+msgstr "Показать все"
 
 #: userprofile/templates/profile.html:147
 #: userprofile/templates/profile.html:161
 msgid "Delete Account"
-msgstr ""
+msgstr "Удалить профиль"
 
 #: userprofile/templates/profile.html:150
 #: userprofile/templates/profile.html:165
 msgid "Delete All Articles"
-msgstr ""
+msgstr "Удалить все статьи"
 
 #: userprofile/templates/profile.html:155
 msgid "Want to be a freelance editor?"
-msgstr ""
+msgstr "Хотите быть нашим внештатным редактором?"
 
 #: userprofile/templates/profile.html:156
 msgid "It's easy"
-msgstr ""
+msgstr "Это легко"
 
 #: userprofile/templates/profile.html:156
 msgid "click here"
-msgstr ""
+msgstr "наэмите здесь"
 
 #: userprofile/templates/profile.html:193
 #: userprofile/templates/profile.html:198
 msgid "First name"
-msgstr ""
+msgstr "Имя"
 
 #: userprofile/templates/profile.html:203
 #: userprofile/templates/profile.html:208
 msgid "Last name"
-msgstr ""
+msgstr "Фамилия"
 
 #: userprofile/templates/profile.html:228
 msgid "Your phone number"
-msgstr ""
+msgstr "Телефон"
 
 #: userprofile/templates/profile.html:237
 msgid "Social Networks(Moderator Mode)"
-msgstr ""
+msgstr "Социальные сети(Режим модератора)"
 
 #: userprofile/templates/profile.html:285
 msgid "Perosnal email"
-msgstr ""
+msgstr "Личная почта"
 
 #: userprofile/templates/profile.html:290
 msgid "Personal email"
-msgstr ""
+msgstr "Личная почта"
 
 #: userprofile/templates/profile.html:303
 msgid "Save Changes"
-msgstr ""
+msgstr "Сохранить изменения"
 
 #: userprofile/templates/profile.html:311
 msgid "change"
-msgstr ""
+msgstr "изменить"
 
 #: userprofile/templates/profile.html:319
 msgid "Key word"
-msgstr ""
+msgstr "Ключевое слово"
 
 #: userprofile/templates/profile.html:325
 msgid "Enter key word"
-msgstr ""
+msgstr "Введите ключевое слово"
 
 #: userprofile/templates/profile.html:342
 msgid "Choose portals which news would you like to view."
-msgstr ""
+msgstr "Выберите порталы, новости с которых Вы хотите читать"
 
 #: userprofile/templates/profile.html:345
 msgid "Choose"
-msgstr ""
+msgstr "Порталы"
 
 #: userprofile/templates/profile.html:361
 msgid "Chosen"
-msgstr ""
+msgstr "Ваши порталы"
 
 #: userprofile/templates/profile.html:382
 msgid ""
@@ -675,7 +729,7 @@ msgstr ""
 
 #: userprofile/templates/profile.html:400
 msgid "Enter your email"
-msgstr ""
+msgstr "Введите вашу почту"
 
 #~ msgid "Home | Insydia"
 #~ msgstr "Главная | Insydia"

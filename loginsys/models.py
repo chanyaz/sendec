@@ -18,5 +18,6 @@ class UserProfile(models.Model):
 
     confirmation_code = models.CharField(max_length=33)
     uuid = models.UUIDField()
+    # token = models.CharField(max_length=512)
 
     moderator = models.BooleanField(default=False)

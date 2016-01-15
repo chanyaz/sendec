@@ -6,9 +6,6 @@
 <div class="any40items" style="height: inherit;">
 {% paginate 20 new_user_news %} <!-- rss_news -->
     {% for i in new_user_news %}
-{#        <ifchan></ifchan>ged True i.date_posted.date.day %}#}
-{#            <hr>{{ i.date_posted.date }}<hr>#}
-{#        {% endifchanged %}#}
         <div class="sect-new"
              onmouseover="this.style.cursor='pointer'; $('#rss-title-'+{{ i.id }}).css('color', 'blue');"
              onmouseout="$('#rss-title-'+{{ i.id }}).css('color', 'black');">

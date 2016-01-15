@@ -16,11 +16,24 @@
     <meta name="google" content="notranslate">
 
 
+    <meta property="og:title" content="{{ og_title }}" />
+    <meta property="og:type" content="News" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:image:width" content="150" />
+    <meta property="og:image:height" content="150" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="" />
+    <meta name="twitter:title" content="Small Island Developing States Photo Submission" />
+    <meta name="twitter:description" content="View the album on Flickr." />
+    <meta name="twitter:image" content="" />
 
 
-    <link rel="alternate" hreflang="ru-ru" href="http://127.0.0.1:8000/ru/">
-    <link rel="alternate" hreflang="en-us" href="http://127.0.0.1:8000/en/">
-    <link rel="alternate" hreflang="cn-cn" href="http://127.0.0.1:8000/cn/">
+
+    <link rel="alternate" hreflang="ru-ru" href="https://insydia.com/ru/">
+    <link rel="alternate" hreflang="en-us" href="https://insydia.com/en/">
+    <link rel="alternate" hreflang="cn-cn" href="https://insydia.com/cn/">
 
 
 
@@ -182,6 +195,12 @@
         })
     </script>
     <style>
+        body{
+            background: url('/static/static/img/brushed.png');
+        }
+        #wrapper-new{
+            background: url('/static/static/img/brushed.png');
+        }
         .popup-user-window {
             width: 100%;
             height: 100%;
@@ -322,7 +341,12 @@
             list-style-type: none;
         }
         .cur_unsel_portal{width: 20%;height: 5em;}
-        .top-navigation{position: relative; height: 8%;font-family: Georgia, Times, "Times New Roman", serif}
+        .top-navigation{
+            background-color: rgb(45, 62, 80);
+            position: relative;
+            height: 8%;
+            font-family: Georgia, Times, "Times New Roman", serif
+        }
         .top-left-bar{float: left; margin-left: 11%;}
         .title-bar{margin-left: auto; margin-right: auto; width: 120px;}
         .title-name{margin-top: 5%; text-align: center; font-size: 2em; font-family: Georgia, Times, "Times New Roman", serif}
@@ -347,7 +371,12 @@
         #image-arrow-to-expand{opacity: 0.2;}
         #arrow-to-hide-sections{margin-left: 10%; width: 1%; position: fixed; margin-top: 20%;}
         #image-arrow-to-hide{opacity: 0.2;}
-        .top-navigation-menu{margin-left: auto; margin-right: auto; width: 55%; margin-top: 0;font-family: Georgia, Times, "Times New Roman", serif}
+        .top-navigation-menu{
+            margin-left: auto;
+            margin-right: auto;
+            width: 55%;
+            margin-top: 0;
+            font-family: Georgia, Times, "Times New Roman", serif}
         .top-navi-menu-content{margin-left: auto; margin-right:auto; width: 100%;}
         .top-navi-menu-content ul{list-style-type: none;}
         .search-bar{ width:45%; margin-left: 25%; margin-right: auto;}
@@ -418,6 +447,7 @@
             min-height: 100%;
 {#            margin-left: 10%; #}
             height: 100%;
+            background: url('/static/static/img/brushed.png');
         }
 
         #cnb{
@@ -451,12 +481,76 @@
             cursor: pointer;
         }
 
+        .total-news-block{
+            background: url('/static/static/img/brushed.png');
+
+        }
+
     </style>
 
 
 </head>
 <body>
+    <header class="tabs-to-dropdown">
+        <nav class="tab-bar">
+            <ul class="">
+                <li class="active"><a href="/"><span class="">INSYDIA</span></a></li>
+{#                <li><a href="#0">HOME</a></li>#}
+                <li class="top-bar-item"><a href="/news/technology/">TECHNOLOGY</a></li>
+                <li class="top-bar-item"><a href="/news/entertainment/">ENTERTAINMENT</a></li>
+                <li class="top-bar-item"><a href="/news/auto/">AUTO</a></li>
+                <li class="top-bar-item"><a href="/news/space/">SPACE</a></li>
+                <li class="top-bar-item"><a href="/news/bio/">BIO</a></li>
+                <li class="top-bar-item"><a href="/news/companies/">COMPANIES</a></li>
+                <li class="top-bar-item"><a href="/news/reviews/">REVIEWS</a></li>
+                {% if username.username %}
+                    <li class="top-bar-item"><a href="/news/usernews/">PRIVATE</a></li>
+                {% endif %}
+            {% if username.username %}
+                <li class="top-bar-item search-item-private">
+                    {% else %}
+                <li class="top-bar-item search-item">
+                    {% endif %}
+                    <span id="search-button"
+                          onclick="$('#textplace-search').addClass('textplace-search-active');"
+                          class="glyphicon glyphicon-search"></span>
+                    <div id="search-bar" class="">
+                        <form id="search-form"
+                              style=""
+                              action="/search/" method="get" name="search_form" onsubmit="return validate_form();">
+                                <input style=""
+                                       onblur="$(this).removeClass('textplace-search-active');"
+                                       placeholder="What are you lookig for?"
+                                       type="search"
+                                       name="q"
+                                       autocomplete="off"
+                                       id="textplace-search"
+                                       class="textplace-search">
+                                <input type="submit" hidden/>
+                            </form>
+                    </div>
+                </li>
+            {% if username.username %}
+                <li class="top-bar-item">
+                    <a href="/auth/logout/">Log out</a>
+                </li>
+            {% else %}
+                <li class="top-bar-item">
+                    <a href="/auth/login/">log in</a>
+                </li>
+            {% endif %}
+            </ul>
+        </nav>
+        <div class="dropdown">
+            <button class="dropdown-toggle">...<span class="fa fa-angle-down"></span></button>
+            <ul></ul>
+        </div>
+
+    </header>
+
     <div id="total-wrapper">
+
+
 
         <div class="overlay"></div>
 
@@ -567,6 +661,7 @@
                 <span class="hamb-bottom"></span>
             </button>
 
+            <!--
             <div class="top-navigation">
                 <div class="top-left-bar" onmouseover="style.cursor='pointer';">
         {#            <span  onclick="showLeftBar();">SECTIONS</span>&nbsp;|&nbsp;#}
@@ -583,7 +678,7 @@
                 </div>
                 <div class="title-bar">
                     <div onmouseover="this.style.cursor='pointer';" class="title-name" onclick="location.href='/';">
-                        <!--<img src="{% static 'static/img/logo-light.png' %}" width="100%" />-->
+{#                        <img src="{% static 'static/img/logo-light.png' %}" width="100%" />#}
                         INSYDIA
                     </div>
                 </div>
@@ -610,9 +705,14 @@
                     {% endif %}
                 </div>
             </div>
+        -->
+
             <div id="wrapper-new">
                 <div id="page-wrapper">
                     <div class="ro234w">
+
+
+                        <!-- <TOP NAVIGATION>
                         <div class="top-navigation-menu">
                             <div class="top-navi-menu-content">
                                 <ul>
@@ -681,6 +781,11 @@
                                         </div>
                             {% endif %}
                         </div>
+                        <!-- </TOP NAVIGATION> -->
+
+
+
+
                         <div class="other">
                         <br>
                             {% if search_private == True %}
@@ -699,22 +804,22 @@
                                 </form>
                             </div>
                         <br>
-                        {% cache 86400 service-media %}
                             <div class="service-media">
+                            <img onclick="location.href='https://telegram.me/insydia';"
+                                 src="{% static 'static/img/telegram' %}" width="30px" />
                             <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png" width="30px"/>
+                                 src="//upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png" width="30px"/>
                             <img onclick="location.href='http://vk.com/insydianews';"
-                                 src="https://cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/vkontakte-256.png" width="30px"/>
+                                 src="//cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/vkontakte-256.png" width="30px"/>
                             <img onclick="location.href='https://twitter.com/insydianews';"
-                                 src="https://g.twimg.com/Twitter_logo_blue.png" width="30px"/>
+                                 src="//g.twimg.com/Twitter_logo_blue.png" width="30px"/>
                             <img onclick="location.href='http://linkedin.com/';"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/768px-LinkedIn_logo_initials.png" width="30px"/>
+                                 src="//upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/768px-LinkedIn_logo_initials.png" width="30px"/>
                             <img onclick="location.href='http://youtube.com';"/>
                                  <!--src="https://trashbox.ru/files/292867_8be151/youtube-logo.png" width="30px"/>-->
                             <img onclick="location.href='http://127.0.0.1:8001/rss';"
-                                 src="http://www.iesf-fc.org/images/rss.gif" width="30px"/>
+                                 src="//www.iesf-fc.org/images/rss.gif" width="30px"/>
                         </div>
-                        {% endcache %}
                         <hr width="98%">
 
 
@@ -747,6 +852,7 @@
                                 {% block about %}{% endblock %}
                                     {% block contacts %}{% endblock %}
                                     {% block advertisers %}{% endblock %}
+                                {% block api %}{% endblock %}
                             </div>
                         </div>
                                                             <a href="#0" class="cd-top">Top</a>
@@ -777,6 +883,7 @@
 
     <div id="preview-rss-news"
          hidden
+         style="z-index: 999;"
          class="preview-rss-news"
          onkeydown="if(event.keyCode == 27){RssPreviewPopUpHide();}">
         <div class="preview-rss-news-content">
@@ -824,6 +931,9 @@
                     </ul>
                 </div>
                 <div class="rss-preview-body"></div>
+
+                <div class="google-news-rss-bottom" style="margin-left:auto; margin-right:auto; bottom: 5em;  width: 468px; height: 60px; background-color: #00fff9"></div>
+
             </div>
         </div>
     </div>
@@ -1019,8 +1129,7 @@
 {#    <script src="{% static 'static/js/pulse.min.js' %}"></script>#}
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="{% static 'static/js/bootstrap.min.js' %}" type="javascript"></script>
-
-<script type="text/javascript" src="{% static 'static/js/jquery.cookie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'static/js/jquery.cookie.js' %}"></script>
 
 
 
@@ -1091,7 +1200,7 @@ $(document).ready(function () {
         $('.dyn-news').masonry({
             singleMode: false,
             itemSelector: '.special-pos',
-            columnWidth: 0
+{#            columnWidth: 0#}
         });
 
 
@@ -1281,6 +1390,62 @@ $(document).ready(function () {
     </script>
 
 
+    <script>
+        $(function() {
+    $(".tabs-to-dropdown").each(function() {
+        var resizeTimeout   = 20;
+
+        var tabBar          = $(this).children(".tab-bar");
+        var tabList         = tabBar.children("ul");
+        var tabListItem     = tabList.children("li");
+
+        var dropdown        = $(this).children(".dropdown");
+        var dropdownToggle  = dropdown.children(".dropdown-toggle");
+        var dropdownList    = dropdown.children("ul");
+
+        var clickHandler = ("ontouchstart" in document.documentElement ? "touchstart": "click");
+
+        var tabsToDropdown  = function() {
+            var tabBarWidth = tabBar.width();
+            tabListItem.each(function(index) {
+                var dropdownListItem  = dropdownList.children("li").eq(index);
+                var tabListItemOffset = $(this).position().left;// + $(this).outerWidth();
+
+                if (tabListItemOffset >= tabBarWidth) {
+                    $(this).addClass("ttd-hide"); dropdownListItem.addClass("ttd-show");
+                } else {
+                    $(this).removeClass("ttd-hide"); dropdownListItem.removeClass("ttd-show");
+                }
+            });
+
+            tabList.children(".ttd-hide").length > 0 ? dropdown.addClass("ttd-show"): dropdown.removeClass("ttd-show");
+        };
+
+        tabListItem.clone().appendTo(dropdownList);
+
+
+
+        tabsToDropdown();
+        $(window).bind("resize", function(){
+            if(typeof sizeWait != "undefined") { clearTimeout(sizeWait); }
+            sizeWait = setTimeout(function(){
+                tabsToDropdown();
+            },resizeTimeout);
+        });
+
+        dropdown.bind(clickHandler, function(e) { e.stopPropagation(); });
+        $(document).bind(clickHandler, function() { dropdown.removeClass("ttd-open"); });
+        dropdownToggle.bind(clickHandler, function(e) { dropdown.toggleClass("ttd-open"); e.stopPropagation(); });
+    });
+});
+
+    </script>
+
+    <script>
+            $('#search-button').onclick(function () {
+                $('#textplace-search').addClass('search-bar-active');
+            });
+    </script>
 
 </body>
 </html>

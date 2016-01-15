@@ -149,6 +149,10 @@
             <div style="margin-top: -5%;" class='shareaholic-canvas' data-app='share_buttons' data-app-id='22745115'></div>
 
 
+            <div class="google-news-below-shares" style="width:728px; height: 90px; background-color: #00fff9;"></div>
+
+
+
             {% if other_materials_count > 0 %}
                 <hr width="100%">
                 <div class="recom-text">
@@ -186,37 +190,35 @@
         </div>
         <div class="right-news-block">
             <div class="right-block-content">
-            <div class="latest-news">
-                <div class="latest-header">
-                    {% blocktrans %}News&nbsp;of&nbsp;{{ company_name }}{% endblocktrans %}
-                </div>
-                <div class="latest-titles">
-                    {% for i in latest_news %}
-                        <div class="latest-current-news"
-                             onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';"
-                             onmouseover="this.style.cursor='pointer'; $('#lnt'+{{ i.id }}).css('color', 'blue');"
-                             onmouseout="$('#lnt'+{{ i.id }}).css('color', 'black');">
-                            <div class="latest-news-cover"
-                                 style="background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: contain;"></div>
-                            <div class="latest-news-content">
-                                <span id="lnt{{ i.id }}"
-                                      class="title"
-                                      onmouseover="this.style.color='blue'; style.cursor='pointer';"
-                                      onmouseout="this.style.color='black';"
-                                      onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                    {{ i.news_title }}
-                                </span>
+                <div class="latest-news">
+                    <div class="latest-header">
+                        {% blocktrans %}News&nbsp;of&nbsp;{{ company_name }}{% endblocktrans %}
+                    </div>
+                    <div class="latest-titles">
+                        {% for i in latest_news %}
+                            <div class="latest-current-news"
+                                 onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';"
+                                 onmouseover="this.style.cursor='pointer'; $('#lnt'+{{ i.id }}).css('color', 'blue');"
+                                 onmouseout="$('#lnt'+{{ i.id }}).css('color', 'black');">
+                                <div class="latest-news-cover"
+                                     style="background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: contain;"></div>
+                                <div class="latest-news-content">
+                                    <span id="lnt{{ i.id }}"
+                                          class="title"
+                                          onmouseover="this.style.color='blue'; style.cursor='pointer';"
+                                          onmouseout="this.style.color='black';"
+                                          onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                                        {{ i.news_title }}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
+
+                <div class="google-news-right" style="width: 300px; height: 600px; background-color: #00fff9"></div>
+
             </div>
-            {% cache 600 video-and-subs %}
-            <div class="video-and-subs">
-                {% include 'twitter.html' %}
-            </div>
-            {% endcache %}
-        </div>
         </div>
     </div>
 {% endblock %}

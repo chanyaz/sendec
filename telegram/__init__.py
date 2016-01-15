@@ -101,6 +101,14 @@ def check_user(username):
         return False
 
 
+@bot.message_handler(commands=["rss"])
+def current_rss_syndicate(message):
+    db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+    cursor = db.cursor()
+    query_set = "SELECT id FROM news_rss"
+    cursor.execute(query_set)
+    count = len(cursor.fetchall())
+    bot.send_message(chat_id=message.chat.id, text="Syndicated %s news at this time." % count)
 
 
 @bot.message_handler(commands=["start"])

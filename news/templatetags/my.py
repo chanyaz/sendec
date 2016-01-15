@@ -1,7 +1,7 @@
 from django import template
 from django.utils.importlib import import_module
 from django.contrib.auth.models import User
-from news.models import News
+from news.models import News, NewsWatches
 
 register = template.Library()
 
@@ -99,3 +99,16 @@ def get_portal_link(value):
 @register.filter(name="company_articles_amount")
 def company_articles_amount(value):
     return News.objects.filter(news_company_owner_id=int(value)).count()
+
+
+@register.filter(name="devide")
+def devide(value):
+    if int(value) % 2 == 0:
+        return True
+    else:
+        return False
+
+
+@register.filter(name="count_watches")
+def count_watches(value):
+    return NewsWatches.objects.get(news_id=int(value)).watches
