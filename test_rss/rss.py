@@ -93,9 +93,9 @@ def connect_to_db(urls):
             data["main_cover"] = str(match_2[0])
         else:
             data["main_cover"] = str(match_2)
-        data["content"] = data["content"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
+        data["content"] = data["content"].replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
         data["title"] = data["title"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
-        data["description"] = data["description"].replace('"', '&#quot;').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
+        data["description"] = data["description"].replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
 
 
 

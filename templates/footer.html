@@ -3,6 +3,7 @@
 {% load cache %}
 <style>
     #footer-div{
+        color: white;
         height: 23em;
         background-color: rgb(45, 62, 80);
         -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -42,10 +43,9 @@
                                          onmouseover="this.style.cursor='pointer'; $('#lnt'+{{ i.id }}).css('color', 'blue');"
                                          onmouseout="$('#lnt'+{{ i.id }}).css('color', 'black');">
                                         <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover  ;"></div>
-                                        <div class="footer-news-content" style="margin-left: 30%; height: 60px;">
+                                        <div class="footer-news-content" style="margin-left: 35%; height: 60px;">
                                             <span id="lnt{{ i.id }}"
                                                   class="title"
-                                                  style="vertical-align: middle;"
                                                   onmouseover="this.style.color='blue'; style.cursor='pointer';"
                                                   onmouseout="this.style.color='black';"
                                                   onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
@@ -115,14 +115,14 @@
                 <div class="bottom-left" style="float: left; font-size: 30px;"><a href="/">INSYDIA</a></div>
                 <div class="bottom-right" style="float: right;">
                     <ul id="footer-social" style="list-style-type: none;">
-                        <li><img src="{% static 'static/img/telegram' %}" width="30px"></li>
-                        <li><img src="{% static 'static/img/facebook.png' %}" width="30px"></li>
-                        <li><img src="{% static 'static/img/linkedin.png' %}" width="30px"></li>
-                        <li><img src="{% static 'static/img/vk.png' %}" width="30px"></li>
-                        <li><img src="{% static 'static/img/twitter.png' %}" width="30px"></li>
-                        <li><img src="{% static 'static/img/instagram.png' %}" width="30px"></li>
-                        <li><img src="{% static 'static/img/youtube.png' %}" width="30px"></li>
-                        <li><img src="{% static 'static/img/rss.png' %}" width="30px"></li>
+                        <li onclick="location.href='https://telegram.me/insydia'"><img src="{% static 'static/img/telegram' %}" width="30px"></li>
+                        <li onclick="location.href='https://facebook.com/'"><img src="{% static 'static/img/facebook.png' %}" width="30px"></li>
+                        <li onclick="location.href='https://linkedin.com/'"><img src="{% static 'static/img/linkedin.png' %}" width="30px"></li>
+                        <li onclick="location.href='https://vk.com/'"><img src="{% static 'static/img/vk.png' %}" width="30px"></li>
+                        <li onclick="location.href='https://twitter.com/'"><img src="{% static 'static/img/twitter.png' %}" width="30px"></li>
+                        <li onclick="location.href='https://instagram.com/'"><img src="{% static 'static/img/instagram.png' %}" width="30px"></li>
+                        <li onclick="location.href='https://youtube.com/'"><img src="{% static 'static/img/youtube.png' %}" width="30px"></li>
+                        <li onclick="location.href='/rss'"><img src="{% static 'static/img/rss.png' %}" width="30px"></li>
                     </ul>
                 </div>
             </div>

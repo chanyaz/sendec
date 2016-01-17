@@ -38,22 +38,27 @@ from django.core.mail import send_mail
 def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None):
 # def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None, translate="english"):
     args = {
-        "video_top": TopVideoContent.objects.all().values()[:3],
+        "video_first": TopVideoContent.objects.all().values()[0],
+        "video_top": TopVideoContent.objects.all().values()[1:3],
         "current_year": datetime.datetime.now().year,
         "title": "Home Page | ",
         "news_block": True,
         # "breaking_news": render_news_by_sendec(request).order_by("-news_post_date")[0],
-        "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[0:3],
+        "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[0:4],
+        "total_bottom_news": render_news_by_sendec(request).order_by("-news_post_date")[4:6],
         # "interest": get_interesting_news(request)[:3],
         "interest": get_top_total_news(request),
+
+        "before_reviews": render_news_by_sendec(request).order_by("-news_post_date")[6:9],
+
         "total_news": get_total_news,
         "page_template": page_template,
         "top_news": get_top_total_news(request),
     }
     # if translate == "russian":
     #     args["translate"] = "ru"
-    if render_news_by_sendec(request).order_by("-news_post_date")[4:13].count() > 0:
-        args["total_bottom_news"] = render_news_by_sendec(request).order_by("-news_post_date")[4:13]
+    # if render_news_by_sendec(request).order_by("-news_post_date")[4:13].count() > 0:
+    #     args["total_bottom_news"] = render_news_by_sendec(request).order_by("-news_post_date")[4:13]
 
     if request.is_ajax():
         template = page_template
@@ -73,7 +78,7 @@ def get_top_total_news(request):
 
 
 def get_total_news():
-    return News.objects.all().order_by("-news_post_date").defer("news_post_text_english").defer("news_post_text_russian").defer("news_post_text_chinese").values()
+    return News.objects.all().order_by("-news_post_date").defer("news_post_text_english").defer("news_post_text_russian").defer("news_post_text_chinese").values()[9:]
 
 
 def render_news_by_sendec(request, **kwargs):
@@ -100,9 +105,9 @@ def render_current_top_news(request, category_id, news_id):
         "title": "%s | " % current_news.top_news_title,
         "current_news_values": current_news,
         "other_materials": render_news_by_sendec(request, news_id=news_id,
-                                                 category_id=category_id).exclude(id=news_id)[:12],
+                                                 category_id=category_id).exclude(id=news_id)[:3],
         "other_materials_count": render_news_by_sendec(request, news_id=news_id,
-                                                 category_id=category_id).exclude(id=news_id)[:12].count(),
+                                                 category_id=category_id).exclude(id=news_id)[:3].count(),
         "latest_news": get_company_news(request, news_id, current_news.top_news_company_owner_id)[:5],
         "company_name": str(Companies.objects.get(id=current_news.top_news_company_owner_id)).capitalize(),
         "current_day": datetime.datetime.now().day,
@@ -134,9 +139,9 @@ def render_current_news(request, category_id, news_id):
         "title": "%s | " % current_news.news_title,
         "current_news_values": current_news,
         "other_materials": render_news_by_sendec(request, news_id=news_id,
-                                                 category_id=category_id).exclude(id=news_id)[:12],
+                                                 category_id=category_id).exclude(id=news_id)[:3],
         "other_materials_count": render_news_by_sendec(request, news_id=news_id,
-                                                 category_id=category_id).exclude(id=news_id)[:12].count(),
+                                                 category_id=category_id).exclude(id=news_id)[:3].count(),
         "latest_news": get_company_news(request, news_id, current_news.news_company_owner_id)[:5],
         "company_name": str(Companies.objects.get(id=current_news.news_company_owner_id)).capitalize(),
         "current_day": datetime.datetime.now().day,

@@ -969,9 +969,10 @@ figure.effect-duke:hover p {
     text-transform:uppercase;
     padding:0 15px;
     line-height:50px;
+    border-bottom: solid 2px rgb(45, 62, 80);
 }
-.tabs-to-dropdown>.tab-bar>ul>li>a:hover { color:rgb(25, 189, 155); }
-.tabs-to-dropdown>.tab-bar>ul>li>a:active { color:rgba(25, 189, 155,.65); }
+.tabs-to-dropdown>.tab-bar>ul>li>a:hover { color:rgb(25, 189, 155); border-bottom: solid 2px rgb(25, 189, 155);}
+.tabs-to-dropdown>.tab-bar>ul>li>a:active { border-bottom: solid 2px rgb(25, 189, 155); color:rgba(25, 189, 155,.65); }
 
 /* Home button */
 .tabs-to-dropdown>.tab-bar>ul>li>a>.fa {
@@ -980,10 +981,10 @@ figure.effect-duke:hover p {
 }
 
 /* Acctive */
-.tabs-to-dropdown>.tab-bar>ul>li.active { background:rgb(25, 189, 155); }
+.tabs-to-dropdown>.tab-bar>ul>li.active {  background:rgb(25, 189, 155); }
 .tabs-to-dropdown>.tab-bar>ul>li.active:hover { opacity:.85; }
 .tabs-to-dropdown>.tab-bar>ul>li.active:active { opacity:.7; }
-.tabs-to-dropdown>.tab-bar>ul>li.active>a { color:rgba(255,255,255,1); }
+.tabs-to-dropdown>.tab-bar>ul>li.active>a { border-bottom: solid 2px rgb(25, 189, 155); color:rgba(255,255,255,1); }
 
 /* dropdown */
 .tabs-to-dropdown>.dropdown>button.dropdown-toggle {
@@ -1138,7 +1139,7 @@ figure.effect-duke:hover p {
     /*margin-top: -100%;*/
     visibility: visible;
     position: absolute;
-	width: 78em;
+	width: 77em;
     height: 100%;
 	padding-left: 32px;
     /*margin-top: 0;*/
@@ -1147,7 +1148,39 @@ figure.effect-duke:hover p {
 	background-color: #fff;
 	cursor: auto;
     /*float: left;*/
-    margin-left: -78em;
+    margin-left: -77em;
     transition: all 0.3s ease-out;
     /*margin-left: -300px;*/
+}
+
+
+.current_news{
+    min-height: 150px;
+    max-height: 400px;
+    height: inherit;
+    width: 100%;
+    position: relative;
+    float: left;
+}
+.current_news_mas{
+    height: inherit;
+    width: 100%;
+    position: relative;
+    float: left;
+}
+
+.cat{
+    cursor: pointer;
+    color: blue;
+    border-bottom: solid 2px red;
+    margin-top: -22px;
+}
+.cat:hover{
+    color: rgb(25, 189, 155)
+}
+.cat-left{
+    float: left;
+}
+.cat-right{
+    float: right
 }

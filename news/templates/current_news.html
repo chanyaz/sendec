@@ -61,26 +61,118 @@
     </script>
     <style>
         .share-list-item{float: left;margin-left: 1%; width: 24%; height:1.5em;}
-        .container-fluid{border: solid 1px lightgrey;}
+        .container-fluid{
+{#            border: solid 1px lightgrey;#}
+        }
         .tre{float: left; width: 70%; border-right: solid 1px lightgrey;}
-        .page-header{font-size: 30px; margin: 0 5%; font-family: Georgia, Times, "Times New Roman", serif}
-        .date-and-author{margin-left: 5%; float: left;}
+        .page-header{
+            text-align: center;
+            margin-right: auto;
+            margin-left: auto;
+{#            margin-bottom: 5%;#}
+            width: 50%;
+            font-size: 30px;
+{#            margin: 0 5%; #}
+            font-family: Georgia, Times, "Times New Roman", serif
+        }
+        .date-and-author{
+{#            border: solid 1px red;#}
+            margin-right: auto;
+            margin-left: auto;
+            margin-bottom: 1%;
+            width: 100%;
+            text-align: center;
+{#            max-width: 30%;#}
+{#            margin-left: 5%;#}
+{#            float: left;#}
+        }
         .news-settings{height: 2em; width: 100%; text-transform: uppercase;}
         .shares{margin-left: -6%; margin-top: -1%;}
         .share-title{margin-left: 15%; font-family: Arial, Helvetica, sans-serif}
         ul{list-style-type: none;}
-        .news-cover{display: flex; align-items: baseline; max-width: 100%; max-height: 100%; margin-top: 0; min-height: 200px; width: 100%;}
-        .current-cover{max-width:100%; max-height: 450px; display: block; margin-left: auto; margin-right: auto;}
+        .news-cover{
+{#            display: flex;#}
+{#            align-items: baseline;#}
+{#            max-width: 100%; #}
+{#            max-height: 100%; #}
+{#            margin-top: -100px;#}
+{#            min-height: 200px; #}
+{#            height: 100%;#}
+{#            width: 100%;#}
+{#            border: solid 1px red;#}
+        }
+        .news-cover img{
+{#            margin-top: -5%;#}
+        }
+
+        .author-span{
+            color: blue;
+            font-size: 16px;
+        }
+        .author-span:hover{
+            color: rgb(25, 189, 155);
+            cursor: pointer;
+        }
+
+        #translates{
+            margin-bottom: 2%;
+            width: 8em;
+{#            border: solid 1px red;#}
+            height: 2em;
+            margin-left:auto;
+            margin-right: auto;
+        }
+        .translate-list{
+            margin-left: -2em;
+        }
+        .translate-list-item{
+            display: inline;
+            float: left;
+            width: 2em;
+            height: 2em;
+            cursor: pointer;
+        }
+
+        .current-cover{
+            max-width:100%;
+            max-height: 100%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
         .news-cover-bottom{max-width: 100%; max-height: 100%; margin-top: 0; height: 175px;}
         .news-title-bottom{font-family: Georgia, Times, "Times New Roman", serif; font-size: 15px;}
         .current-other-news{height: 20em; float: left; margin-left: 0; margin-right: 1.2%; margin-top: 1%; width: 32%; box-shadow: 0 0 1px black;}
-        .news-post-text{margin: 4% 15%; font-family: Georgia,Times,sans-serif; font-size: 19px;}
+        .news-post-text{
+            margin-right: auto;
+            margin-left: auto;
+            margin-bottom: 5%;
+            width: 50%;
+{#            margin: 4% 15%; #}
+            font-family: Georgia,Times,sans-serif;
+            font-size: 19px;}
         .news-post-text img{}
 {#        .nav-bar{margin-left: 63%;}#}
         .liked{float: left;}
         .disliked{float: left;}
 {#        .other-materials{height: {% if other_materials_count <= 3 %} 25em {% elif other_materials_count <= 6 %} 52em {% elif other_materials_count <= 9 %} 77em {% elif other_materials_count <= 12 %} 103em {% endif %}}#}
-        .recom-text{width:50%;font-size: 20px; font-family: Georgia, Times, "Times New Roman", serif}
+        .recom-text{
+{#            background: linear-gradient(to right, rgb(45, 62, 80) 1%, transparent);#}
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            font-size: 20px;
+            font-family: Georgia, Times, "Times New Roman", serif
+        }
+        .recom-span-text{
+            width: 100%;
+{#            border: solid 1px red;#}
+            margin-left: -72%;
+            text-align: left;
+            color: rgb(25, 189, 155);
+        }
+
 
         .portal{float: left;}
         .current-rss-news{width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; float: left;}
@@ -92,27 +184,60 @@
         .latest-news-content{height:60px;padding-left: 5%; width:75%; float: right; font-family: Georgia, Times, "Times New Roman", serif}
         .latest-current-news{margin-top: 5%; height: 60px; border-bottom: dotted 1px lightgrey}
         .latest-header{text-align: center;}
-        .translate-list-item{width:2em; height: 2em;}
-        .translate-list-item:hover{cursor: pointer;}
+{#        .translate-list-item{width:2em; height: 2em;}#}
+{#        .translate-list-item:hover{cursor: pointer;}#}
         #to-russian{background: url('{% static 'static/img/rus.png' %}') no-repeat center;background-size:cover;}
         #to-english{background: url('{% static 'static/img/uk.png' %}') no-repeat center;background-size:cover}
         #to-chinese{background: url('{% static 'static/img/china.png' %}') no-repeat center;background-size:cover}
     </style>
+
+
+    <div class="news-cover" style="background: url('/media/{{ current_news_values.news_main_cover }}') no-repeat center; background-size: cover; width: 100%; height: 500px; max-height: 600px; margin-top: 0;">
+{#                    <img class="current-cover" src="/media/{{ current_news_values.news_main_cover }}"/>#}
+                </div>
+
     <div class="container-fluid " data-news-id="{{ current_news_values.id }}">
-        <div class="tre">
+{#        {% if current_news_values.news_main_cover != '' %}#}
+{#                <div class="news-cover">#}
+{#                    <img class="current-cover" src="/media/{{ current_news_values.news_main_cover }}"/>#}
+{#                </div>#}
+{#            {% endif %}#}
+
+        <div class="">
+
             <div class="page-header">
                 {{ current_news_values.news_title }}
             </div>
 {#        {% cache 600 date-and-author %}#}
             <div class="date-and-author">
-                <h5>{% trans 'By' %}
+                <h5><span style="color: black;">{% trans 'By' %}</span>
                     {% if current_news_values.id|get_news_portal == "insydia" %}
-                        <a href="/search/?q={{ current_news_values.news_author }}"><i>{{ current_news_values.news_author_id|get_article_author }}</i></a>
+                        <span class="author-span" onclick="location.href='/search/?q={{ current_news_values.news_author }}';"><i>{{ current_news_values.news_author_id|get_article_author }}</i></span>
                     {% else %}
-                        <a href="/search/?q={{ current_news_values.news_portal_name }}"><i>{{ current_news_values.news_portal_name }}</i></a>
+                        <span class="author-span" onclick="location.href='/search/?q={{ current_news_values.news_portal_name }}';"><i>{{ current_news_values.news_portal_name }}</i></span>
                     {% endif %}
-                    &nbsp;{{ current_news_values.news_post_date.date }}</h5>
+                    &nbsp;<span style="color: black;">{{ current_news_values.news_post_date.date }}</span></h5>
             </div>
+            <div id="translates">
+                <ol class="translate-list" style="list-style-type: none;">
+                    {% if rus == True %}
+                        <li id="to-russian"
+                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'rus');"
+                            class="translate-list-item"></li>
+                    {% endif %}
+                    {% if eng == True %}
+                        <li id="to-english"
+                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'eng');"
+                            class="translate-list-item"></li>
+                    {% endif %}
+                    {% if ch == True %}
+                        <li id="to-chinese"
+                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'ch');"
+                            class="translate-list-item"></li>
+                    {% endif %}
+                </ol>
+            </div>
+
             {% if username.is_staff %}
                 <div class="for-god" style="float: right;">
                     <a href="http://127.0.0.1:8000/admin/news/news/{{ current_news_values.id }}/">{% trans 'Edit' %}</a>
@@ -166,30 +291,8 @@
                     </ul>
                 </div>
             </div>-->
-            {% if current_news_values.news_main_cover != '' %}
-                <div class="news-cover">
-                    <img class="current-cover" src="/media/{{ current_news_values.news_main_cover }}"/>
-                </div>
-            {% endif %}
-            <div id="translates" style="float: right;">
-                <ol class="translate-list" style="list-style-type: none;">
-                    {% if rus == True %}
-                        <li id="to-russian"
-                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'rus');"
-                            class="translate-list-item"></li>
-                    {% endif %}
-                    {% if eng == True %}
-                        <li id="to-english"
-                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'eng');"
-                            class="translate-list-item"></li>
-                    {% endif %}
-                    {% if ch == True %}
-                        <li id="to-chinese"
-                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'ch');"
-                            class="translate-list-item"></li>
-                    {% endif %}
-                </ol>
-            </div>
+
+
             <div class="news-post-text">
                 {% if current_news_values.news_post_text_english %}
                     {{ current_news_values.news_post_text_english|safe|linebreaks }}
@@ -204,45 +307,99 @@
             <div style="margin-top: -5%;" class='shareaholic-canvas' data-app='share_buttons' data-app-id='22745115'></div>
 
 
-            <div class="google-news-below-shares" style="width:728px; height: 90px; background-color: #00fff9;"></div>
+            <div class="google-news-below-shares" style="margin-left: auto; margin-right: auto; width:728px; height: 90px; background-color: #00fff9;"></div>
 
 
             {% if other_materials_count > 0 %}
                 <hr width="100%">
-                <div class="recom-text">
-                    Recommendations&nbsp;of&nbsp;{{ current_news_values.news_category }}
+                <div class="container-fluid container">
+                    <div class="recom-text row row-centered">
+                        <span class="recom-span-text">Recommendations&nbsp;of&nbsp;{{ current_news_values.news_category }}</span>
+                    </div>
                 </div>
-                <div class="other-materials">
-                    {% for current_other in other_materials %}
-                        <div id="materials-{{ i.id }}"
-                             class="current-other-news"
-                             onclick="location.href='/news/{{ current_other.news_category_id }}/{{ current_other.id }}/';">
-                            <div class="news-cover-bottom"
-                                 style="background: url('/media/{{ current_other.news_main_cover }}') no-repeat center; background-size: auto;"></div>
-                            <div class="title">
-                                <div class="news-title-bottom">
-                                    {{ current_other.news_title }}
+                <div class="other-materials container-fluid container" style="margin-top: 2%;">
+                    {% for current_middle_news in other_materials %}
+                    <div class="sect-2-top" style="width: 350px; margin-right: 2%; margin-bottom: 3%; float: left">
+                                    {% if current_middle_news.news_main_cover == '' %}
+                                    <div class="current_news news-news"
+                                         onmouseover="style.border='solid 0.2px blue';"
+                                         onmouseout="style.border='';"
+                                         onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                    {% else %}
+                                    <div class="current_news_mas news-news"
+                                         onmouseover="style.border='solid 0.2px blue';"
+                                         onmouseout="style.border='';"
+                                         onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                    {% endif %}
+    {#                                        <div class="current_news_top"#}
+    {#                                             onmouseover="this.style.cursor='pointer';"#}
+    {#                                             style="position:relative; height: 92%;">#}
+    {#                                        <div class="category-name">#}
+    {#                                            <a class="category-link" href="/news/{{ current_middle_news.id|get_news_category }}/">#}
+    {#                                                <span class="category-name-content">#}
+    {#                                                    &nbsp;{{ current_middle_news.id|get_news_category }}&nbsp;#}
+    {#                                                </span>#}
+    {#                                            </a>#}
+    {#                                        </div>#}
+
+
+                                            <div class="cat cat-left">
+                                                <span href="/news/{{ current_middle_news.id|get_news_category }}">{{ current_middle_news.id|get_news_category|upper }}</span>
+                                            </div>
+                                            {% if current_middle_news.news_main_cover != '' %}
+                                                <div class="middle-news-cover"
+                                                     onmouseover="this.style.cursor='pointer';"
+                                                     style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                <div class="mask">
+    {#                                                    <a href="#" class="info"></a>#}
+                                                </div>
+                                                </div>
+                                            {% endif %}
+                                            <div class="title" style="margin-top: 5%;"
+                                                 onmouseover="this.style.cursor='pointer'; this.style.color='blue';"
+                                                 onmouseout="this.style.color='';">
+                                                <div class="news-title">
+                                                    <b>{{ current_middle_news.news_title|safe }}</b>
+                                                </div>
+                                            </div>
+                                    <div class="params">
+                                        <span class="glyphicon glyphicon-eye-open" style="float: left;"></span>
+{#                                        <div class="watches" style="float: left;">{{ current_middle_news.id|count_watches }}</div>#}
+                                        <div class="publushed" style="float: right;">{{ current_middle_news.news_post_date }}</div>
+                                    </div>
+    {#                                        </div>#}
+    {#                                        <div class="current_news_bottom">#}
+    {#                                            SEE LATER#}
+    {#                                        </div>#}
+                                    </div>
                                 </div>
-                            </div>
+                                        {% endfor %}
+
                         </div>
-                    {% endfor %}
                 </div>
             {% endif %}
             <hr width="100%">
-            <div id="comments-block">
-                <div id="disqus_thread"></div>
-                <script>
-                    (function(){
-                        var d = document, s = d.createElement('script');
-                        s.src = '//indavant.disqus.com/embed.js';
-                        s.setAttribute('data-timestamp', +new Date());
-                        (d.head || d.body).appendChild(s);
-                    })();
-                </script>
-                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+            <div class="container-fluid container">
+                <div class="row row-centered">
+                    <div id="comments-block" style="width: 70%; float: left;">
+                        <div id="disqus_thread"></div>
+                        <script>
+                            (function(){
+                                var d = document, s = d.createElement('script');
+                                s.src = '//indavant.disqus.com/embed.js';
+                                s.setAttribute('data-timestamp', +new Date());
+                                (d.head || d.body).appendChild(s);
+                            })();
+                        </script>
+                        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+                    </div>
+                    <div class="adver-near-comments" style="float: right; width: 300px; height: 660px; background-color: #00fff9"></div>
+                </div>
             </div>
+
+
         </div>
-        <div class="right-news-block">
+        <!--<div class="right-news-block">
             <div class="right-block-content">
                 <div class="latest-news">
                     <div class="latest-header">
@@ -271,6 +428,6 @@
                 </div>
                 <div class="google-news-right" style="width: 300px; height: 600px; background-color: #00fff9"></div>
             </div>
-        </div>
+        </div>-->
     </div>
 {% endblock %}

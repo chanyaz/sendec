@@ -10,7 +10,7 @@
     <meta name="keywords" content="IT, space, computers, auto, bio, entertainment">
     <meta name="robots" content="all">
     <meta name="author" content="Evgeniy Privalov">
-    <meta name="description" content="Web-service with top IT, Space and BIO news. Here you find materials that will not find anywhere else.">
+    <meta name="description" content="Web-service with top IT, Auto, Space and BIO news. We provide you Hi-Tech news from all around the World.">
     <meta name="reply-to" content="saqel@yandex.ru">
     <meta http-equiv="content-language" content="en">
     <meta name="google" content="notranslate">
@@ -24,9 +24,9 @@
     <meta property="og:image:height" content="150" />
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="" />
-    <meta name="twitter:title" content="Small Island Developing States Photo Submission" />
-    <meta name="twitter:description" content="View the album on Flickr." />
+    <meta name="twitter:site" content="@InsydiaNews" />
+    <meta name="twitter:title" content="Insydia" />
+    <meta name="twitter:description" content="Web-service with top IT, Auto, Space and BIO news. We provide you Hi-Tech news from all around the World." />
     <meta name="twitter:image" content="" />
 
 
@@ -451,11 +451,12 @@
         }
 
         #cnb{
-            margin-left: 10%;
+{#            margin-left: 10%;#}
+            margin-top: -2.4%;
         }
 
         #wrapper-new{
-            margin-left: 2%;
+{#            margin-left: 2%;#}
         }
 
 
@@ -709,7 +710,7 @@
 
             <div id="wrapper-new">
                 <div id="page-wrapper">
-                    <div class="ro234w">
+                    <div class="row row-centered">
 
 
                         <!-- <TOP NAVIGATION>
@@ -787,46 +788,47 @@
 
 
                         <div class="other">
-                        <br>
-                            {% if search_private == True %}
-                                <div hidden class="search-bar-wide" onkeydown="if(event.keyCode == 27){$('.search-bar-wide').hide(); $('.block-news').hide();}">
-                                 {% else %}
-                                <div hidden class="search-bar" onkeydown="if(event.keyCode == 27){$('.search-bar').hide(); $('.block-news').hide();}">
-                                 {% endif %}
-                                <form id="search-form" action="/search/" method="get" name="search_form" onsubmit="return validate_form();">
-                                    <input name="q"
-                                           autocomplete="off"
-                                           id="textplace-search"
-                                           type="text"
-                                           class="form-control"
-                                           placeholder="{% trans 'What are you looking for'%}?">
+{#                        <br>#}
+{#                            {% if search_private == True %}#}
+{#                                <div hidden class="search-bar-wide" onkeydown="if(event.keyCode == 27){$('.search-bar-wide').hide(); $('.block-news').hide();}">#}
+{#                                 {% else %}#}
+{#                                <div hidden class="search-bar" onkeydown="if(event.keyCode == 27){$('.search-bar').hide(); $('.block-news').hide();}">#}
+{#                                 {% endif %}#}
+{#                                <form id="search-form" action="/search/" method="get" name="search_form" onsubmit="return validate_form();">#}
+{#                                    <input name="q"#}
+{#                                           autocomplete="off"#}
+{#                                           id="textplace-search"#}
+{#                                           type="text"#}
+{#                                           class="form-control"#}
+{#                                           placeholder="{% trans 'What are you looking for'%}?">#}
 {#                                    <input type="submit" value="Search">#}
-                                </form>
-                            </div>
-                        <br>
-                            <div class="service-media">
-                            <img onclick="location.href='https://telegram.me/insydia';"
-                                 src="{% static 'static/img/telegram' %}" width="30px" />
-                            <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"
-                                 src="//upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png" width="30px"/>
-                            <img onclick="location.href='http://vk.com/insydianews';"
-                                 src="//cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/vkontakte-256.png" width="30px"/>
-                            <img onclick="location.href='https://twitter.com/insydianews';"
-                                 src="//g.twimg.com/Twitter_logo_blue.png" width="30px"/>
-                            <img onclick="location.href='http://linkedin.com/';"
-                                 src="//upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/768px-LinkedIn_logo_initials.png" width="30px"/>
-                            <img onclick="location.href='http://youtube.com';"/>
-                                 <!--src="https://trashbox.ru/files/292867_8be151/youtube-logo.png" width="30px"/>-->
-                            <img onclick="location.href='http://127.0.0.1:8001/rss';"
-                                 src="//www.iesf-fc.org/images/rss.gif" width="30px"/>
-                        </div>
-                        <hr width="98%">
+{#                                </form>#}
+{#                            </div>#}
+{#                        <br>#}
+{#                            <div class="service-media">#}
+{#                            <img onclick="location.href='https://telegram.me/insydia';"#}
+{#                                 src="{% static 'static/img/telegram' %}" width="30px" />#}
+{#                            <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"#}
+{#                                 src="//upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png" width="30px"/>#}
+{#                            <img onclick="location.href='http://vk.com/insydianews';"#}
+{#                                 src="//cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/vkontakte-256.png" width="30px"/>#}
+{#                            <img onclick="location.href='https://twitter.com/insydianews';"#}
+{#                                 src="//g.twimg.com/Twitter_logo_blue.png" width="30px"/>#}
+{#                            <img onclick="location.href='http://linkedin.com/';"#}
+{#                                 src="//upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/768px-LinkedIn_logo_initials.png" width="30px"/>#}
+{#                            <img onclick="location.href='http://youtube.com';"/>#}
+{#                                 <!--src="https://trashbox.ru/files/292867_8be151/youtube-logo.png" width="30px"/>-->#}
+{#                            <img onclick="location.href='http://127.0.0.1:8000/rss';"#}
+{#                                 src="//www.iesf-fc.org/images/rss.gif" width="30px"/>#}
+{#                        </div>#}
+{#                        <hr width="98%">#}
 
 
                         <div id="cnb">
-                            {% block current_news %}{% endblock %}
+{#                            {% block current_news %}{% endblock %}#}
                         </div>
                         <div id="flex-block">
+                            {% block current_news %}{% endblock %}
                             {% if news_block == True %}
                                 {% include 'news_block_new.html' %}
                             {% endif %}
@@ -853,6 +855,7 @@
                                     {% block contacts %}{% endblock %}
                                     {% block advertisers %}{% endblock %}
                                 {% block api %}{% endblock %}
+                                {% block feed %}{% endblock %}
                             </div>
                         </div>
                                                             <a href="#0" class="cd-top">Top</a>
@@ -865,7 +868,7 @@
         </div>
     </div>
 {#        <a href="#0" class="cd-top">Top</a>#}
-        <div class="footer">
+        <div class="footer-lol">
             {% include 'footer.html' %}
         </div>
 

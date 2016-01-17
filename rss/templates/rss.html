@@ -1,0 +1,88 @@
+{% extends 'index_new.html' %}
+{% load staticfiles %}
+{% load my  %}
+{% load i18n %}
+{% block feed %}
+
+    <style>
+    #feeds-list{
+        float: left;
+        width:70%;
+    }
+    #feeds-table{
+        width: 100%;
+    }
+    .table-item{
+        height: 30px;
+    }
+    .table-item:hover{
+        background-color: #0fbfb3;
+    }
+        .channel-name{
+            width: 50%;
+        }
+        .channel-today{
+            width: 25%;
+        }
+        .channel-week{
+            width: 25%;
+        }
+    </style>
+
+
+    <div id="feed" class="container-fluid container">
+        <div class="row row-centered">
+            <div class="feed-content">
+                <div id="feeds-list">
+                    <div class="feed-title" style=" width: 100%; border-bottom: dashed 3px lightgrey; margin-bottom: 10px;">
+                        <h1>RSS Feed</h1>
+                    </div>
+                    <table id="feeds-table">
+                        <tr class="table-item">
+                            <td class="channel-name">Latest</td>
+                            <td class="channel-today">Today</td>
+                            <td class="channel-week">This week</td>
+                        </tr>
+                        <tr class="table-item">
+                            <td class="channel-name">Technology</td>
+                            <td class="channel-today">Today</td>
+                            <td class="channel-week">This week</td>
+                        </tr>
+                        <tr class="table-item">
+                            <td class="channel-name">Entertainment</td>
+                            <td class="channel-today">Today</td>
+                            <td class="channel-week">This week</td>
+                        </tr>
+                        <tr class="table-item">
+                            <td class="channel-name">Auto</td>
+                            <td class="channel-today">Today</td>
+                            <td class="channel-week">This week</td>
+                        </tr>
+                        <tr class="table-item">
+                            <td class="channel-name">Space</td>
+                            <td class="channel-today">Today</td>
+                            <td class="channel-week">This week</td>
+                        </tr>
+                        <tr class="table-item">
+                            <td class="channel-name">Bio</td>
+                            <td class="channel-today">Today</td>
+                            <td class="channel-week">This week</td>
+                        </tr>
+                    </table>
+                    Company feed:
+                    <form>
+                        {% csrf_token %}
+                        <input type="text">
+                        <input type="submit">
+                    </form>
+                </div>
+                <div class="feed-right-side">
+                    <aside>
+                        <div class="google-news-right" style="float: right; width: 300px; height: 600px; background-color: #00fff9"></div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

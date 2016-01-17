@@ -119,7 +119,8 @@ class News(models.Model):
         }
 
 
-
+    def get_absolute_url(self):
+        return "/news/%s/%s" % (self.news_category_id, self.id)
 
 
 class TopNews(models.Model):

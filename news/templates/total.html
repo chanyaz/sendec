@@ -396,123 +396,129 @@
                             </div>
                         </div>
                     <hr width="100%">
-                    <div id="middle-news-special" style="margin-left: 1%;">
-                    TOP 3 NEWS
-                        {% for current_middle_news in total_middle_news %}
-                            <div class="sect-2">
-                                {% if current_middle_news.news_main_cover == '' %}
-                                <div class="current_news news-news"
-                                     onmouseover="style.border='solid 0.2px blue';"
-                                     onmouseout="style.border='';"
-                                     onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
-                                {% else %}
-                                <div class="current_news_mas news-news"
-                                     onmouseover="style.border='solid 0.2px blue';"
-                                     onmouseout="style.border='';"
-                                     onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
-                                {% endif %}
-{#                                        <div class="current_news_top"#}
-{#                                             onmouseover="this.style.cursor='pointer';"#}
-{#                                             style="position:relative; height: 92%;">#}
-                                        <div class="category-name">
-                                            <a class="category-link" href="/news/{{ current_middle_news.id|get_news_category }}/">
-                                                <span class="category-name-content">
-                                                    &nbsp;{{ current_middle_news.id|get_news_category }}&nbsp;
-                                                </span>
-                                            </a>
-                                        </div>
-                                        {% if current_middle_news.news_main_cover != '' %}
-                                            <div class="middle-news-cover"
-                                                 onmouseover="this.style.cursor='pointer';"
-                                                 style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
-                                            <div class="mask">
-{#                                                    <a href="#" class="info"></a>#}
+                    <div id="middle-news-special">
+                        <div id="top-4-news" style="float: left; width:70%; margin-left: 2%;">
+                            {% for current_middle_news in total_middle_news %}
+                                <div class="sect-2-top" style="width: 350px; margin-right: 4%; margin-bottom: 3%; margin-top: 3%; float: left">
+                                    {% if current_middle_news.news_main_cover == '' %}
+                                    <div class="current_news news-news"
+                                         onmouseover="style.border='solid 0.2px blue';"
+                                         onmouseout="style.border='';"
+                                         onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                    {% else %}
+                                    <div class="current_news_mas news-news"
+                                         onmouseover="style.border='solid 0.2px blue';"
+                                         onmouseout="style.border='';"
+                                         onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                    {% endif %}
+    {#                                        <div class="current_news_top"#}
+    {#                                             onmouseover="this.style.cursor='pointer';"#}
+    {#                                             style="position:relative; height: 92%;">#}
+    {#                                        <div class="category-name">#}
+    {#                                            <a class="category-link" href="/news/{{ current_middle_news.id|get_news_category }}/">#}
+    {#                                                <span class="category-name-content">#}
+    {#                                                    &nbsp;{{ current_middle_news.id|get_news_category }}&nbsp;#}
+    {#                                                </span>#}
+    {#                                            </a>#}
+    {#                                        </div>#}
+
+
+                                            <div class="cat cat-left">
+                                                <span href="/news/{{ current_middle_news.id|get_news_category }}">{{ current_middle_news.id|get_news_category|upper }}</span>
                                             </div>
+                                            {% if current_middle_news.news_main_cover != '' %}
+                                                <div class="middle-news-cover"
+                                                     onmouseover="this.style.cursor='pointer';"
+                                                     style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                <div class="mask">
+    {#                                                    <a href="#" class="info"></a>#}
+                                                </div>
+                                                </div>
+                                            {% endif %}
+                                            <div class="title" style="margin-top: 5%;"
+                                                 onmouseover="this.style.cursor='pointer'; this.style.color='blue';"
+                                                 onmouseout="this.style.color='';">
+                                                <div class="news-title">
+                                                    <b>{{ current_middle_news.news_title|safe }}</b>
+                                                </div>
                                             </div>
-                                        {% endif %}
-                                        <div class="title" style="margin-top: 5%;"
-                                             onmouseover="this.style.cursor='pointer'; this.style.color='blue';"
-                                             onmouseout="this.style.color='';">
-                                            <div class="news-title">
-                                                {{ current_middle_news.news_title|safe }}
-                                            </div>
-                                        </div>
-                                <div class="params">
-                                    <span class="glyphicon glyphicon-eye-open" style="float: left;"></span>
-                                    <div class="watches" style="float: left;">{{ current_middle_news.id|count_watches }}</div>
-                                    <div class="publushed" style="float: right;">{{ current_middle_news.news_post_date }}</div>
+                                    <div class="params">
+                                        <span class="glyphicon glyphicon-eye-open" style="float: left;"></span>
+                                        <div class="watches" style="float: left;">{{ current_middle_news.id|count_watches }}</div>
+                                        <div class="publushed" style="float: right;">{{ current_middle_news.news_post_date }}</div>
+                                    </div>
+    {#                                        </div>#}
+    {#                                        <div class="current_news_bottom">#}
+    {#                                            SEE LATER#}
+    {#                                        </div>#}
+                                    </div>
                                 </div>
-{#                                        </div>#}
-{#                                        <div class="current_news_bottom">#}
-{#                                            SEE LATER#}
-{#                                        </div>#}
-                                </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
-                    <hr width="100%">
 
-                    <div class="google-news-right" style="margin-left: auto; margin-right: auto; width: 970px; height: 90px; background-color: #00fff9"></div>
-
+                    <div class="adver-near-top" style="float: right; width: 300px; height: 660px; background-color: #00fff9"></div>
 
                         <hr width="100%">
                         <div class="media">
 
                             <div class="latest-reviews">
                                 <div class="left-bar-videos">
-{#                                    <iframe width="100%" height="90%" src="https://www.youtube.com/embed/t4OEsI0Sc_s" frameborder="0" allowfullscreen></iframe>#}
+                                    <iframe width="100%" height="90%" src="{{ video_first.video }}?rel=0" frameborder="0" allowfullscreen></iframe>
                                 </div>
                                 <div class="right-bar-videos">
                                     {% for current_video in video_top %}
-                                        <iframe width="100%" height="20%" src="{{ current_video.video }}" frameborder="0" allowfullscreen></iframe>
+                                        <iframe width="100%" height="20%" src="{{ current_video.video }}?rel=0" frameborder="0" allowfullscreen></iframe>
                                     {% endfor %}
                                 </div>
                             </div>
+                        <hr width="100%">
+
+                            <div class="google-news-right" style="margin-left: auto; margin-right: auto; width: 970px; height: 90px; background-color: #00fff9"></div>
 
                             <hr width="100%">
                             <div class="recently-news">
-                                {% trans 'RECENTLY NEWS' %}<br>
-                                <div class="">
-                                    <div class="recently-news-other">
-                                        {% for i in total_bottom_news %}
-                                            <div class="sect-2">
-                                            {% if i.news_main_cover == '' %}
-                                                <div class="current_news special-pos"
-                                                     onmouseover="style.border='solid 0.2px blue'; this.style.cursor='pointer';"
-                                                     onmouseout="style.border='';"
-                                                     style="width: 23%; margin-right: 1%; margin-bottom: 1%;"
-                                                     onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                                {% else %}
-                                                <div class="current_news_mas special-pos"
-                                                     onmouseover="style.border='solid 0.2px blue'; this.style.cursor='pointer';"
-                                                     onmouseout="style.border='';"
-                                                     style="width: 23%; margin-right: 1%; margin-bottom: 1%;"
-                                                     onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                                {% endif %}
-                                                    <div class="category-name">
-                                                        <a class="category-link" href="/news/{{ i.id|get_news_category }}/">
-                                                            <span class="category-name-content">
-                                                                &nbsp;{{ i.id|get_news_category }}&nbsp;
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    {% if i.news_main_cover != '' %}
-                                                        <div class="total-news-cover cover-hover"
-                                                             style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
-                                                            <div class="mask"></div>
-                                                        </div>
-                                                    {% endif %}
-                                                    <div class="title" style="margin-top: 5%;">
-                                                        <div class="news-title">
-                                                            {{ i.news_title }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="text_post">
-                                                        {{ i.news_post_text|safe|striptags|truncatewords_html:"12" }}
-                                                    </div>
-                                                </div>
+{#                                {% trans 'RECENTLY NEWS' %}<br>#}
+                                <div class="two-news">
+                                    <div class="top-one"
+                                         onmouseout="$('#big-news-one').css('color', 'black')"
+                                         onmouseover="this.style.cursor='pointer'; $('#big-news-one').css('color', 'rgb(25, 189, 155)')"
+                                         onclick="location.href='/news/{{ total_bottom_news.0.news_category_id }}/{{ total_bottom_news.0.id }}/'">
+                                        <div class="cat cat-left">
+                                            <span onclick="location.href='/news/{{ total_bottom_news.0.id|get_news_category }}';">{{ total_bottom_news.0.id|get_news_category|upper }}</span>
+                                        </div>
+                                        <div class="cover-top-middle" style="float: left; height: 300px; width: 70%; background: url('/media/{{ total_bottom_news.0.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                        <div class="right-middle-top" style="float: right; width: 30%;">
+                                            <div id="big-news-one" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
+                                                <b>{{ total_bottom_news.0.news_title }}</b>
                                             </div>
-                                        {% endfor %}
+                                            <div class="author-and-other" style="margin-bottom: 10px">
+                                                {% trans 'By' %}&nbsp;<a href="">{{ total_bottom_news.0.news_author_id|get_article_author }}</a>&nbsp;{{ total_bottom_news.0.news_post_date.date|date }}
+                                                <span class="glyphicon glyphicon-eye-open">{{ total_bottom_news.0.id|count_watches|default:0 }}</span>
+                                            </div>
+                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">{{ total_bottom_news.0.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
+                                        </div>
+                                    </div>
+                                    <hr width="100%">
+                                    <div class="bottom-one"
+                                         onmouseout="$('#big-news-two').css('color', 'black')"
+                                         onmouseover="this.style.cursor='pointer'; $('#big-news-two').css('color', 'rgb(25, 189, 155)')"
+                                         onclick="location.href='/news/{{ total_bottom_news.0.news_category_id }}/{{ total_bottom_news.0.id }}/'"
+                                         style="margin-top: 50px;">
+                                        <div class="right-middle-top" style="float: left; width: 30%;">
+                                            <div id="big-news-two" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
+                                                <b>{{ total_bottom_news.1.news_title }}</b>
+                                            </div>
+                                            <div class="author-and-other">
+                                                {% trans 'By' %}&nbsp;<a href="">{{ total_bottom_news.1.news_author_id|get_article_author }}</a>&nbsp;{{ total_bottom_news.1.news_post_date.date|date }}
+                                                <span class="glyphicon glyphicon-eye-open">&nbsp;{{ total_bottom_news.1.id|count_watches|default:0 }}</span>
+                                            </div>
+                                            <div class="text-top-middle">{{ total_bottom_news.1.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
+                                        </div>
+                                        <div class="cat cat-right">
+                                            <span onclick="location.href='/news/{{ total_bottom_news.1.id|get_news_category }}';">{{ total_bottom_news.1.id|get_news_category|upper }}</span>
+                                        </div>
+                                        <div class="cover-top-middle" style="float: right; height: 300px; width: 70%; background: url('/media/{{ total_bottom_news.1.news_main_cover }}') no-repeat center; background-size: cover;"></div>
                                     </div>
                                 </div>
                                 <hr width="100%">
@@ -549,6 +555,78 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="before-reviews">
+                                        {% for current_middle_news in before_reviews %}
+                                            <div class="sect-2-top" style="width: 31%; margin-left: 1%; margin-right: 1%; margin-top: 3%; float: left;">
+                                                {% if current_middle_news.news_main_cover == '' %}
+                                                <div class="current_news news-news"
+                                                     onmouseover="style.border='solid 0.2px blue';"
+                                                     onmouseout="style.border='';"
+                                                     onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                                {% else %}
+                                                <div class="current_news_mas news-news"
+                                                     onmouseover="style.border='solid 0.2px blue';"
+                                                     onmouseout="style.border='';"
+                                                     onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                                {% endif %}
+                {#                                        <div class="current_news_top"#}
+                {#                                             onmouseover="this.style.cursor='pointer';"#}
+                {#                                             style="position:relative; height: 92%;">#}
+                {#                                        <div class="category-name">#}
+                {#                                            <a class="category-link" href="/news/{{ current_middle_news.id|get_news_category }}/">#}
+                {#                                                <span class="category-name-content">#}
+                {#                                                    &nbsp;{{ current_middle_news.id|get_news_category }}&nbsp;#}
+                {#                                                </span>#}
+                {#                                            </a>#}
+                {#                                        </div>#}
+                                                        <div class="cat" style="float: left;border-bottom: solid 2px red; margin-top: -20px">
+                                                            <a href="/news/{{ current_middle_news.id|get_news_category }}">{{ current_middle_news.id|get_news_category|upper }}</a>
+                                                        </div>
+                                                        {% if current_middle_news.news_main_cover != '' %}
+                                                            <div class="middle-news-cover"
+                                                                 onmouseover="this.style.cursor='pointer';"
+                                                                 style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                                <div class="mask">
+                    {#                                                    <a href="#" class="info"></a>#}
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="title" style="margin-top: 5%;"
+                                                             onmouseover="this.style.cursor='pointer'; this.style.color='blue';"
+                                                             onmouseout="this.style.color='';">
+                                                            <div class="news-title">
+                                                                <b>{{ current_middle_news.news_title|safe }}</b>
+                                                            </div>
+                                                        </div>
+                                                <div class="params">
+                                                    <div class="author-and-other">
+                                                        {% trans 'By' %}<a href="">{{ current_middle_news.news_author }}</a>&nbsp;{{ current_middle_news.news_post_date }}
+                                                        <span class="glyphicon glyphicon-eye-open">&nbsp;{{ current_middle_news.id|count_watches|default:0 }}</span>
+                                                    </div>
+                                                    <div class="above-text" style="
+    background: white;
+    background: linear-gradient(to top, lightgrey, transparent);
+    width: 100%;
+    height: 150px;
+    bottom: 0;
+    position: absolute;
+    z-index: 999;"></div>
+                                                    <div class="text-top-middle" style="position: relative">{{ current_middle_news.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
+
+{#                                                    <span class="glyphicon glyphicon-eye-open" style="float: left;"></span>#}
+{#                                                    <div class="watches" style="float: left;">{{ current_middle_news.id|count_watches }}</div>#}
+{#                                                    <div class="publushed" style="float: right;">{{ current_middle_news.news_post_date }}</div>#}
+                                                </div>
+                {#                                        </div>#}
+                {#                                        <div class="current_news_bottom">#}
+                {#                                            SEE LATER#}
+                {#                                        </div>#}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+
 {#                                        {% for current_interest in interest %}#}
 {#                                            <div class="sect">#}
 {#                                                <div class="current_news"#}
@@ -584,6 +662,11 @@
                                     </div>
                                 </div>
                                 <hr width="100%">
+                                <div id="announce-reviews">
+
+                                </div>
+
+
                                     <div class="load-more">
                                         <div class="endless_page_template">
                                             {% block js %}

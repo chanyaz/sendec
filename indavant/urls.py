@@ -41,5 +41,6 @@ urlpatterns = patterns('',
     # url(r'^en/', 'news.views.main_page_load'),
     # url(r'^ru/', 'news.views.translate_russian'),
     # url(r'^cn/', 'news.views.translate_chinese'),
+    url(r'^rss/', include('rss.urls')),
     url(r'^$', 'news.views.main_page_load'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

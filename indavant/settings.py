@@ -54,6 +54,7 @@ INSTALLED_APPS = (
     "password_reset",
     "api",
     "rest_framework",
+    "rss",
 )
 
 NORECAPTCHA_SITE_KEY = "6Lc1dhMTAAAAACgdoXQlzfJSkghbnkZuONW_P3xj"
