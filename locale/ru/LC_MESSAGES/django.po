@@ -480,7 +480,7 @@ msgstr "Рекламодателям"
 
 #: templates/footer.html:101
 msgid "International Editions: "
-msgstr "Международные версии"
+msgstr "Международные версии: "
 
 #: templates/index_new.html:43
 #, python-format

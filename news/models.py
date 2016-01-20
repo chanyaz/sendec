@@ -159,6 +159,9 @@ class NewsWatches(models.Model):
     watches = models.IntegerField(default=0)
     external_transition = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.news.news_title
+
 
 class NewsComments(models.Model):
     class Meta:

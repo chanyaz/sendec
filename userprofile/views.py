@@ -102,7 +102,7 @@ def render_moderator_profile_page(request, username, template="moderator_profile
             if request.is_ajax():
                 template = page_template
 
-
+            args["footer_news"] = get_news_for_footer(request)[:3]
             return render_to_response(template, args, context_instance=RequestContext(request))
         else:
             raise Http404()

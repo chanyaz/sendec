@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from .models import News, NewsPortal, NewsCategory, Companies, RssNews, RssPortals, TopVideoContent, TopNews
+from .models import News, NewsPortal, NewsCategory, Companies, RssNews, RssPortals, TopVideoContent, TopNews, NewsWatches
 from ckeditor.widgets import CKEditorWidget
 
 
@@ -13,7 +13,13 @@ class RssNewsAdmin(admin.ModelAdmin):
         return obj.portal_name.portal
 
 
+class NewsWatchesAdmin(admin.ModelAdmin):
+    model = NewsWatches
+    list_display = ['news', 'watches']
+    list_filter = ['watches']
 
+
+admin.site.register(NewsWatches, NewsWatchesAdmin)
 admin.site.register(TopVideoContent)
 # admin.site.register(RssPortals)
 admin.site.register(NewsCategory)

@@ -47,7 +47,9 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[0:4],
         "total_bottom_news": render_news_by_sendec(request).order_by("-news_post_date")[4:6],
         # "interest": get_interesting_news(request)[:3],
-        "interest": get_top_total_news(request),
+        "interest": get_hottest_news(request),
+        "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4],
+
 
         "before_reviews": render_news_by_sendec(request).order_by("-news_post_date")[6:9],
 
@@ -67,10 +69,15 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
     # response.set_cookie("translate-version", translate)
     return response
+
+
+def get_hottest_news(request):
+    watches = NewsWatches.objects.order_by("-watches").values("news_id")[:4].values("news_id")
+    return News.objects.filter(id__in=watches).defer("news_portal_name").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").defer("news_author").values()
 
 
 def get_top_total_news(request):
@@ -128,7 +135,7 @@ def render_current_top_news(request, category_id, news_id):
         args["search_private"] = True
     # addition_news_watches(request, news_id)
     args.update(csrf(request))
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("top_news.html", args)
 
 
@@ -162,7 +169,7 @@ def render_current_news(request, category_id, news_id):
         args["search_private"] = True
     addition_news_watches(request, news_id)
     args.update(csrf(request))
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("current_news.html", args)
 
 
@@ -220,6 +227,7 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
         args["zero"] = True
     else:
         args["zero"] = False
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response(template, context=args, context_instance=RequestContext(request))
 
 
@@ -275,7 +283,7 @@ def render_top_news_page(request):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("top_news.html", args)
 
 
@@ -397,7 +405,7 @@ def render_current_category(request, category_name):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("current_category.html", args)
 
 #   ###########################################################################
@@ -416,7 +424,7 @@ def render_technology_news(request):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("technology.html", args)
 
 
@@ -436,7 +444,7 @@ def render_auto_news(request):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("auto.html", args)
 
 
@@ -456,7 +464,7 @@ def render_bit_news(request):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("bit.html", args)
 
 
@@ -478,7 +486,7 @@ def render_companies_news(request, template="companies.html", companies_endless=
     args.update(csrf(request))
     # if request.is_ajax():
     #     template = companies_endless
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response(template, args, context_instance=RequestContext(request))
 
 
@@ -502,6 +510,7 @@ def render_current_company(request, company_name, template="current_company.html
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response(template, args, context_instance=RequestContext(request))
 
 
@@ -524,7 +533,7 @@ def render_entertainment_news(request):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("entertainment.html", args)
 
 
@@ -545,7 +554,7 @@ def render_latest_news(request):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("latest.html", args)
 
 
@@ -559,7 +568,7 @@ def render_reviews_news(request):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("reviews.html", args)
 
 
@@ -574,7 +583,7 @@ def render_space_news(request):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("space.html", args)
 
 
@@ -795,6 +804,7 @@ def test_rendering(request):
         "test_2": RssNews.objects.filter(portal_name_id__in=user_rss_list).values(),
     }
     args.update(csrf(request))
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("test_rss_news.html", args, context_instance=RequestContext(request))
 
 
@@ -811,7 +821,7 @@ def render_contacts_page(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("contacts.html", args)
 
 
@@ -825,6 +835,7 @@ def render_about_page(request):
         args["search_private"] = True
     args["expression"] = """We express our gratitude for the financial and moral support to Afanasyev M.J.
 (Associate Professor of "Instrumentation Technology")."""
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("about.html", args)
 
 
@@ -836,6 +847,7 @@ def render_adertisers_page(request):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("advertisers.html", args)
 
 
@@ -989,7 +1001,7 @@ def render_current_portal_news(request, portal, template="user_news.html", page_
         args.update(csrf(request))
         if request.is_ajax():
             template = page_template
-
+        args["footer_news"] = get_news_for_footer(request)[:3]
         return render_to_response(template, args, context_instance=RequestContext(request))
     except RssPortals.DoesNotExist:
         return page_not_found(request)
@@ -1010,3 +1022,6 @@ def get_match_company(request, company):
 # def get_company_id(request, company_verbose):
 #     word = company_verbose.replace("%20", " ")
 #     return HttpResponse(json.dumps({"data": Companies.objects.get(name__contains=word).get_json_company_suggest()}), content_type="application/json")
+
+def get_news_for_footer(request):
+    return News.objects.order_by("-news_post_date").defer("news_dislikes").defer("news_likes").defer("news_post_text_english").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_author").defer("news_portal_name")

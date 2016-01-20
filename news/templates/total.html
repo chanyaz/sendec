@@ -15,7 +15,11 @@
             height: 400px;
 {#            border: solid 1px lightgrey; #}
             position:relative;}
-        .top-total-content{height: 400px; background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center; background-size: cover;}
+        .top-total-content{
+            height: 400px;
+            background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;
+            background-size: cover;
+        }
         .bn-title{
             bottom: 50px;
             position: absolute;
@@ -106,126 +110,6 @@
         text-decoration: none;
     }
 
-    .middle-news-cover .mask,
-    .total-news-cover .mask,
-    .bottom-news-cover .mask,
-    .interest-news-cover .mask {
-   opacity: 0;
-   overflow:visible;
-   border:105px solid rgba(0,0,0,0.7);
-   -moz-box-sizing:border-box;
-   -webkit-box-sizing:border-box;
-   box-sizing:border-box;
-   -webkit-transition: all 0.4s ease-in-out;
-   -moz-transition: all 0.4s ease-in-out;
-   -o-transition: all 0.4s ease-in-out;
-   -ms-transition: all 0.4s ease-in-out;
-   transition: all 0.4s ease-in-out;
-}
-.middle-news-cover a.info,
-.total-news-cover a.info,
-.bottom-news-cover a.info,
-.interest-news-cover a.info,
-.ln-right-left-top a.info{
-   position:relative;
-   top:-10px;
-   opacity: 0;
-   -webkit-transition: opacity 0.5s 0s ease-in-out;
-   -moz-transition: opacity 0.5s 0s ease-in-out;
-   -o-transition: opacity 0.5s 0s ease-in-out;
-   -ms-transition: opacity 0.5s 0s ease-in-out;
-   transition: opacity 0.5s 0s ease-in-out;
-}
-.middle-news-cover:hover .mask,
-.total-news-cover:hover .mask,
-.bottom-news-cover:hover .mask,
-.interest-news-cover:hover .mask{
-   opacity: 1;
-   border:105px solid rgba(0,0,0,0.7);
-}
-.middle-news-cover:hover a.info,
-.total-news-cover:hover a.info,
-.bottom-news-cover:hover a.info,
-.interest-news-cover:hover a.info {
-	opacity:1;
-	-moz-transition-delay: 0.3s;
-	-webkit-transition-delay: 0.3s;
-	-o-transition-delay: 0.3s;
-	-ms-transition-delay: 0.3s;
-	transition-delay: 0.3s;
-}
-
-
-
-
-
-    .ln-left .mask,
-    .ln-right-right .mask{
-        position:absolute; /* Center the mask */
-{#        top: 10px;#}
-{#        left:100px;#}
-        cursor:pointer;
-{#        border-radius: 50px;#}
-{#        border-width: 50px;#}
-        display: inline-block;
-{#        height: 10px;#}
-{#        width: 100%;#}
-        border: 400px solid rgba(0, 0, 0, 0.7);
-        -moz-box-sizing:border-box;
-        -webkit-box-sizing:border-box;
-        box-sizing:border-box;
-        opacity:1;
-        visibility:visible;
-        -moz-transform:scale(4);
-        -webkit-transform:scale(4);
-        -o-transform:scale(4);
-        -ms-transform:scale(4);
-        transform:scale(4);
-        -moz-transition:all 0.3s ease-in-out;
-        -webkit-transition:all 0.3s ease-in-out;
-        -o-transition:all 0.3s ease-in-out;
-        -ms-transition:all 0.3s ease-in-out;
-        transition:all 0.3s ease-in-out;
-    }
-
-    .ln-right-left-top .mask,
-    .ln-right-left-bottom .mask{
-        position:absolute; /* Center the mask */
-{#        top: 10px;#}
-{#        left:100px;#}
-        cursor:pointer;
-{#        border-radius: 50px;#}
-{#        border-width: 50px;#}
-        display: inline-block;
-{#        height: 10px;#}
-{#        width: 100%;#}
-        border: 200px solid rgba(0, 0, 0, 0.7);
-        -moz-box-sizing:border-box;
-        -webkit-box-sizing:border-box;
-        box-sizing:border-box;
-        opacity:1;
-        visibility:visible;
-        -moz-transform:scale(4);
-        -webkit-transform:scale(4);
-        -o-transform:scale(4);
-        -ms-transform:scale(4);
-        transform:scale(4);
-        -moz-transition:all 0.3s ease-in-out;
-        -webkit-transition:all 0.3s ease-in-out;
-        -o-transition:all 0.3s ease-in-out;
-        -ms-transition:all 0.3s ease-in-out;
-        transition:all 0.3s ease-in-out;
-    }
-
-
-    .ln-left:hover .mask,
-    .ln-right-left-top:hover .mask,
-    .ln-right-left-bottom:hover .mask,
-    .ln-right-right:hover .mask {
-       opacity: 0;
-       border:0 solid rgba(0,0,0,0.7);
-       visibility:hidden;
-    }
 
     .ln-left{
         float: left;
@@ -305,6 +189,14 @@
 
     .top-grid-title{
         text-shadow: 0 0 10px black;
+    }
+
+    #announce-reviews{
+        width: 100%;
+        height: 250px;
+        border: solid 1px lightblue;
+        margin-top: 40px;
+        margin-bottom: 40px;
     }
 
     </style>
@@ -429,14 +321,22 @@
                                             {% if current_middle_news.news_main_cover != '' %}
                                                 <div class="middle-news-cover"
                                                      onmouseover="this.style.cursor='pointer';"
-                                                     style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
-                                                <div class="mask">
+                                                     style="max-width: 100%;
+                                                             max-height: 100%;
+                                                             height: 210px;
+{#                                                             {% if current_middle_news.news_main_cover|check_format == True %}#}
+                                                                background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center;
+                                                                background-size: cover;">
+{#                                                                 {% endif %}>#}
+{#                                                <div class="mask">#}
     {#                                                    <a href="#" class="info"></a>#}
-                                                </div>
+{#                                                </div>#}
                                                 </div>
                                             {% endif %}
-                                            <div class="title" style="margin-top: 5%;"
-                                                 onmouseover="this.style.cursor='pointer'; this.style.color='blue';"
+                                            <div class="title"
+                                                 id="title-{{ current_middle_news.id }}"
+                                                 style="margin-top: 5%;"
+                                                 onmouseover="this.style.cursor='pointer'; this.style.color='rgb(25, 189, 155)';"
                                                  onmouseout="this.style.color='';">
                                                 <div class="news-title">
                                                     <b>{{ current_middle_news.news_title|safe }}</b>
@@ -464,12 +364,18 @@
 
                             <div class="latest-reviews">
                                 <div class="left-bar-videos">
-                                    <iframe width="100%" height="90%" src="{{ video_first.video }}?rel=0" frameborder="0" allowfullscreen></iframe>
+                                    <video src="/media/SpaceX_2.mp4" width="800" height="400" controls
+                                           poster="{% static 'static/img/companies_logo/spacex.png' %}"
+                                           preload="metadata"
+                                           loop>
+{#                                        <source src="/media/SpaceX_2.mp4" type="video/mp4" />#}
+                                    </video>
+{#                                    <iframe width="100%" height="90%" src="{{ video_first.video }}?rel=0" frameborder="0" allowfullscreen></iframe>#}
                                 </div>
                                 <div class="right-bar-videos">
-                                    {% for current_video in video_top %}
-                                        <iframe width="100%" height="20%" src="{{ current_video.video }}?rel=0" frameborder="0" allowfullscreen></iframe>
-                                    {% endfor %}
+{#                                    {% for current_video in video_top %}#}
+{#                                        <iframe width="100%" height="20%" src="{{ current_video.video }}?rel=0" frameborder="0" allowfullscreen></iframe>#}
+{#                                    {% endfor %}#}
                                 </div>
                             </div>
                         <hr width="100%">
@@ -488,7 +394,7 @@
                                             <span onclick="location.href='/news/{{ total_bottom_news.0.id|get_news_category }}';">{{ total_bottom_news.0.id|get_news_category|upper }}</span>
                                         </div>
                                         <div class="cover-top-middle" style="float: left; height: 300px; width: 70%; background: url('/media/{{ total_bottom_news.0.news_main_cover }}') no-repeat center; background-size: cover;"></div>
-                                        <div class="right-middle-top" style="float: right; width: 30%;">
+                                        <div class="right-middle-top" style="float: right; width: 28%; margin-left: 2%;">
                                             <div id="big-news-one" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
                                                 <b>{{ total_bottom_news.0.news_title }}</b>
                                             </div>
@@ -505,11 +411,11 @@
                                          onmouseover="this.style.cursor='pointer'; $('#big-news-two').css('color', 'rgb(25, 189, 155)')"
                                          onclick="location.href='/news/{{ total_bottom_news.0.news_category_id }}/{{ total_bottom_news.0.id }}/'"
                                          style="margin-top: 50px;">
-                                        <div class="right-middle-top" style="float: left; width: 30%;">
+                                        <div class="right-middle-top" style="float: left; width: 28%; margin-right: 2%; ">
                                             <div id="big-news-two" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
                                                 <b>{{ total_bottom_news.1.news_title }}</b>
                                             </div>
-                                            <div class="author-and-other">
+                                            <div class="author-and-other" style="margin-bottom: 10px">
                                                 {% trans 'By' %}&nbsp;<a href="">{{ total_bottom_news.1.news_author_id|get_article_author }}</a>&nbsp;{{ total_bottom_news.1.news_post_date.date|date }}
                                                 <span class="glyphicon glyphicon-eye-open">&nbsp;{{ total_bottom_news.1.id|count_watches|default:0 }}</span>
                                             </div>
@@ -525,22 +431,73 @@
                                 <div class="interested-news">
                                     <h4>{% trans 'Interesting articles' %}</h4>
                                     <div id="interests" class="carousel slide" style="height: 250px;">
-                                        <div class="carousel-inner" style="height: 250px;">
-                                            <div class="active item" style="height: 250px; max-height: 250px; border: solid 1px red;">
-                                                <div class="carousel-inner-item"
-                                                     onclick="location.href='/news/top/{{ interest.0.top_news_category_id }}/{{ interest.0.id }}/';"
-                                                     style="float: left; height: 250px; width: 50%; background: url('/media/{{ interest.0.top_news_main_cover }}') no-repeat center; background-size: cover;"></div>
-                                                <div class="carousel-inner-item"
-                                                     onclick="location.href='/news/top/{{ interest.0.top_news_category_id }}/{{ interest.1.id }}/';"
-                                                     style="float: right; height: 250px; width: 50%; background: url('/media/{{ interest.1.top_news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                        <div class="carousel-inner">
+                                            <div class="active item" style="height: 250px; max-height: 250px;">
+                                                <div class="car-it-block">
+                                                    <a class="car-it-link" href="/news/{{ interest.0.news_category_id }}/{{ interest.0.id }}/">
+                                                        <div class="carousel-inner-item-left"
+                                                                 style="position: relative; height: 250px; width: 100%; background: url('/media/{{ interest.0.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                            <div class="inner-item-back">
+    {#                                                            <a class="carousel-inner-item-title">#}
+    {#                                                                {{ interest.0.news_title }}#}
+    {#                                                            </a>#}
+                                                            </div>
+                                                        </div>
+                                                        <a class="carousel-inner-item-title">
+                                                            {{ interest.0.news_title }}
+                                                        </a>
+                                                    </a>
+                                                </div>
+                                                <div class="car-it-block">
+                                                    <a class="car-it-link" href="/news/{{ interest.1.news_category_id }}/{{ interest.1.id }}/">
+                                                        <div class="carousel-inner-item-right"
+                                                             onclick="location.href='/news/{{ interest.1.news_category_id }}/{{ interest.1.id }}/';"
+                                                             style="position: relative; float: right; height: 250px; width: 100%;background: url('/media/{{ interest.1.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                            <div class="inner-item-back">
+    {#                                                            <a class="carousel-inner-item-title">#}
+    {#                                                                {{ interest.1.news_title }}#}
+    {#                                                            </a>#}
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <a class="carousel-inner-item-title">
+                                                        {{ interest.1.news_title }}
+                                                    </a>
+                                                </div>
                                             </div>
                                             <div class="item">
-                                                <div class="carousel-inner-item"
-                                                     onclick="location.href='/news/top/{{ interest.2.top_news_category_id }}/{{ interest.2.id }}/';"
-                                                     style="float: left; height: 250px; width: 50%; background: url('/media/{{ interest.2.top_news_main_cover }}') no-repeat center; background-size: cover;"></div>
-                                                <div class="carousel-inner-item"
-                                                     onclick="location.href='/news/top/{{ interest.3.top_news_category_id }}/{{ interest.3.id }}/';"
-                                                     style="float: right; height: 250px; width: 50%; background: url('/media/{{ interest.3.top_news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                                <div class="car-it-block">
+                                                    <a class="car-it-link" href="/news/{{ interest.2.news_category_id }}/{{ interest.2.id }}/">
+                                                        <div class="carousel-inner-item-left"
+                                                             onclick="location.href='/news/{{ interest.2.news_category_id }}/{{ interest.2.id }}/';"
+                                                             style="position: relative; height: 250px; width: 100%; background: url('/media/{{ interest.2.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                            <div class="inner-item-back">
+{#                                                                <a class="carousel-inner-item-title">#}
+{#                                                                    {{ interest.2.news_title }}#}
+{#                                                                </a>#}
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <a class="carousel-inner-item-title">
+                                                        {{ interest.2.news_title }}
+                                                    </a>
+                                                </div>
+                                                <div class="car-it-block">
+                                                    <a class="car-it-link" href="/news/{{ interest.3.news_category_id }}/{{ interest.3.id }}/">
+                                                        <div class="carousel-inner-item-right"
+                                                             onclick="location.href='/news/{{ interest.3.news_category_id }}/{{ interest.3.id }}/';"
+                                                             style="position: relative; float: right; height: 250px; width: 100%; background: url('/media/{{ interest.3.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                            <div class="inner-item-back">
+{#                                                                <a class="carousel-inner-item-title">#}
+{#                                                                    {{ interest.3.news_title }}#}
+{#                                                                </a>#}
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <a class="carousel-inner-item-title">
+                                                        {{ interest.3.news_title }}
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- ARROWS -->
@@ -581,23 +538,23 @@
                 {#                                            </a>#}
                 {#                                        </div>#}
                                                         <div class="cat" style="float: left;border-bottom: solid 2px red; margin-top: -20px">
-                                                            <a href="/news/{{ current_middle_news.id|get_news_category }}">{{ current_middle_news.id|get_news_category|upper }}</a>
+                                                            <span onclick="location.href='/news/{{ current_middle_news.id|get_news_category }}'">{{ current_middle_news.id|get_news_category|upper }}</span>
                                                         </div>
                                                         {% if current_middle_news.news_main_cover != '' %}
                                                             <div class="middle-news-cover"
                                                                  onmouseover="this.style.cursor='pointer';"
                                                                  style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
-                                                                <div class="mask">
+{#                                                                <div class="mask">#}
                     {#                                                    <a href="#" class="info"></a>#}
-                                                                </div>
+{#                                                                </div>#}
                                                             </div>
                                                         {% endif %}
                                                         <div class="title" style="margin-top: 5%;"
                                                              onmouseover="this.style.cursor='pointer'; this.style.color='blue';"
                                                              onmouseout="this.style.color='';">
-                                                            <div class="news-title">
+                                                            <a class="news-title">
                                                                 <b>{{ current_middle_news.news_title|safe }}</b>
-                                                            </div>
+                                                            </a>
                                                         </div>
                                                 <div class="params">
                                                     <div class="author-and-other">

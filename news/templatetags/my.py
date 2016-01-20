@@ -111,4 +111,15 @@ def devide(value):
 
 @register.filter(name="count_watches")
 def count_watches(value):
-    return NewsWatches.objects.get(news_id=int(value)).watches
+    try:
+        return NewsWatches.objects.get(news_id=int(value)).watches
+    except NewsWatches.DoesNotExist:
+        return 0
+
+
+@register.filter(name="check_format")
+def check_format(value):
+    if ["jpg", "png"] in value[-4:]:
+        return True
+    else:
+        return False

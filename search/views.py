@@ -49,7 +49,11 @@ def render_search_page(request, template="search.html", news_search_template="ne
                 request=search_word
             )
     args.update(csrf(request))
+    args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response(template, args, context_instance=RequestContext(request))
+
+def get_news_for_footer(request):
+    return News.objects.order_by("-news_post_date").defer("news_dislikes").defer("news_likes").defer("news_post_text_english").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_author").defer("news_portal_name")
 
 
 def get_latest_news_total(request):
