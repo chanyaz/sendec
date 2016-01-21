@@ -56,6 +56,7 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         "total_news": get_total_news,
         "page_template": page_template,
         "top_news": get_top_total_news(request),
+        "latest_review": get_latest_reviews(request),
     }
     # if translate == "russian":
     #     args["translate"] = "ru"
@@ -74,6 +75,9 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
     # response.set_cookie("translate-version", translate)
     return response
 
+
+def get_latest_reviews(request):
+    return News.objects.filter(news_category_id=6).order_by("-news_post_date").values()[0]
 
 def get_hottest_news(request):
     watches = NewsWatches.objects.order_by("-watches").values("news_id")[:4].values("news_id")

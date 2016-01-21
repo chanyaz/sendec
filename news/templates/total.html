@@ -63,7 +63,7 @@
 {#        .bottom-news-cover{max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_bottom_news.news_main_cover }}') no-repeat center; background-size: cover;}#}
         .text_post{width: 100%;}
         .media{height: inherit;}
-        .latest-reviews{height: 500px;}
+        .latest-reviews{height: 500px; border: solid 1px red; position: relative; width: 100%;}
         .left-bar-videos{margin-left: 0.9%; float: left; width: 70%; height: 100%;}
         .right-bar-videos{width: 29%; float: right;}
         .recently-news-other{
@@ -319,19 +319,30 @@
                                                 <span href="/news/{{ current_middle_news.id|get_news_category }}">{{ current_middle_news.id|get_news_category|upper }}</span>
                                             </div>
                                             {% if current_middle_news.news_main_cover != '' %}
-                                                <div class="middle-news-cover"
-                                                     onmouseover="this.style.cursor='pointer';"
-                                                     style="max-width: 100%;
-                                                             max-height: 100%;
-                                                             height: 210px;
-{#                                                             {% if current_middle_news.news_main_cover|check_format == True %}#}
-                                                                background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center;
-                                                                background-size: cover;">
-{#                                                                 {% endif %}>#}
-{#                                                <div class="mask">#}
-    {#                                                    <a href="#" class="info"></a>#}
-{#                                                </div>#}
-                                                </div>
+                                                {% if current_middle_news.news_main_cover|check_format == True %}
+                                                    <div class="middle-news-cover"
+                                                         onmouseover="this.style.cursor='pointer';"
+                                                         style="max-width: 100%;
+                                                                 max-height: 100%;
+                                                                 height: 210px;
+    {#                                                             {% if current_middle_news.news_main_cover|check_format == True %}#}
+                                                                    background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center;
+                                                                    background-size: cover;">
+    {#                                                                 {% endif %}>#}
+    {#                                                <div class="mask">#}
+        {#                                                    <a href="#" class="info"></a>#}
+    {#                                                </div>#}
+                                                    </div>
+                                                {% else %}
+                                                        <div class="middle-news-cover"
+                                                         onmouseover="this.style.cursor='pointer';"
+                                                         style="max-width: 100%;
+                                                                 max-height: 100%;
+                                                                 height: 210px;
+    {#                                                             {% if current_middle_news.news_main_cover|check_format == True %}#}
+                                                                    background: url('{% static 'static/img/companies_cover/' %}{{ current_middle_news.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center;
+                                                                    background-size: cover;"></div>
+                                                {% endif %}
                                             {% endif %}
                                             <div class="title"
                                                  id="title-{{ current_middle_news.id }}"
@@ -363,20 +374,9 @@
                         <div class="media">
 
                             <div class="latest-reviews">
-                                <div class="left-bar-videos">
-                                    <video src="/media/SpaceX_2.mp4" width="800" height="400" controls
-                                           poster="{% static 'static/img/companies_logo/spacex.png' %}"
-                                           preload="metadata"
-                                           loop>
-{#                                        <source src="/media/SpaceX_2.mp4" type="video/mp4" />#}
-                                    </video>
-{#                                    <iframe width="100%" height="90%" src="{{ video_first.video }}?rel=0" frameborder="0" allowfullscreen></iframe>#}
-                                </div>
-                                <div class="right-bar-videos">
-{#                                    {% for current_video in video_top %}#}
-{#                                        <iframe width="100%" height="20%" src="{{ current_video.video }}?rel=0" frameborder="0" allowfullscreen></iframe>#}
-{#                                    {% endfor %}#}
-                                </div>
+                                <div class="review-cover" style="position: absolute; width:100%; height: 500px; background: url('/media/{{ latest_review.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                <div class="review-title-back" style="position: absolute; width: 100%; height: 100px; bottom:0; background-color: black; opacity: 0.3;"></div>
+                                <div class="review-title" style="position: absolute; bottom: 5%; width: 100%; text-align: center; font-size: 40px; color: white;"><a href="">{{ latest_review.news_title }}</a></div>
                             </div>
                         <hr width="100%">
 
@@ -435,8 +435,13 @@
                                             <div class="active item" style="height: 250px; max-height: 250px;">
                                                 <div class="car-it-block">
                                                     <a class="car-it-link" href="/news/{{ interest.0.news_category_id }}/{{ interest.0.id }}/">
-                                                        <div class="carousel-inner-item-left"
-                                                                 style="position: relative; height: 250px; width: 100%; background: url('/media/{{ interest.0.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% if interest.0.news_main_cover|check_format == True %}
+                                                            <div class="carousel-inner-item-left"
+                                                                     style="position: relative; height: 250px; width: 100%; background: url('/media/{{ interest.0.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% else %}
+                                                             <div class="carousel-inner-item-left"
+                                                                 style="position: relative; height: 250px; width: 100%; background: url('{% static 'static/img/companies_cover/' %}{{ interest.0.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover;">
+                                                        {% endif %}
                                                             <div class="inner-item-back">
     {#                                                            <a class="carousel-inner-item-title">#}
     {#                                                                {{ interest.0.news_title }}#}
@@ -450,9 +455,13 @@
                                                 </div>
                                                 <div class="car-it-block">
                                                     <a class="car-it-link" href="/news/{{ interest.1.news_category_id }}/{{ interest.1.id }}/">
-                                                        <div class="carousel-inner-item-right"
-                                                             onclick="location.href='/news/{{ interest.1.news_category_id }}/{{ interest.1.id }}/';"
-                                                             style="position: relative; float: right; height: 250px; width: 100%;background: url('/media/{{ interest.1.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% if interest.1.news_main_cover|check_format == True %}
+                                                            <div class="carousel-inner-item-right"
+                                                                     style="position: relative; float:right; height: 250px; width: 100%; background: url('/media/{{ interest.1.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% else %}
+                                                             <div class="carousel-inner-item-right"
+                                                                 style="position: relative; float:right; height: 250px; width: 100%; background: url('{% static 'static/img/companies_cover/' %}{{ interest.1.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover;">
+                                                        {% endif %}
                                                             <div class="inner-item-back">
     {#                                                            <a class="carousel-inner-item-title">#}
     {#                                                                {{ interest.1.news_title }}#}
@@ -468,9 +477,13 @@
                                             <div class="item">
                                                 <div class="car-it-block">
                                                     <a class="car-it-link" href="/news/{{ interest.2.news_category_id }}/{{ interest.2.id }}/">
-                                                        <div class="carousel-inner-item-left"
-                                                             onclick="location.href='/news/{{ interest.2.news_category_id }}/{{ interest.2.id }}/';"
-                                                             style="position: relative; height: 250px; width: 100%; background: url('/media/{{ interest.2.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% if interest.2.news_main_cover|check_format == True %}
+                                                            <div class="carousel-inner-item-left"
+                                                                     style="position: relative; height: 250px; width: 100%; background: url('/media/{{ interest.2.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% else %}
+                                                             <div class="carousel-inner-item-left"
+                                                                 style="position: relative; height: 250px; width: 100%; background: url('{% static 'static/img/companies_cover/' %}{{ interest.2.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover;">
+                                                        {% endif %}
                                                             <div class="inner-item-back">
 {#                                                                <a class="carousel-inner-item-title">#}
 {#                                                                    {{ interest.2.news_title }}#}
@@ -484,9 +497,13 @@
                                                 </div>
                                                 <div class="car-it-block">
                                                     <a class="car-it-link" href="/news/{{ interest.3.news_category_id }}/{{ interest.3.id }}/">
-                                                        <div class="carousel-inner-item-right"
-                                                             onclick="location.href='/news/{{ interest.3.news_category_id }}/{{ interest.3.id }}/';"
-                                                             style="position: relative; float: right; height: 250px; width: 100%; background: url('/media/{{ interest.3.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% if interest.3.news_main_cover|check_format == True %}
+                                                            <div class="carousel-inner-item-right"
+                                                                     style="position: relative; float:right; height: 250px; width: 100%; background: url('/media/{{ interest.3.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% else %}
+                                                             <div class="carousel-inner-item-right"
+                                                                 style="position: relative; float: right; height: 250px; width: 100%; background: url('{% static 'static/img/companies_cover/' %}{{ interest.3.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover;">
+                                                        {% endif %}
                                                             <div class="inner-item-back">
 {#                                                                <a class="carousel-inner-item-title">#}
 {#                                                                    {{ interest.3.news_title }}#}

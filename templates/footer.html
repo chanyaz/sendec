@@ -1,6 +1,7 @@
 {% load staticfiles %}
 {% load i18n %}
 {% load cache %}
+{% load my %}
 <style>
     #footer-div{
         color: white;
@@ -60,7 +61,11 @@
                                          onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';"
                                          onmouseover="this.style.cursor='pointer'; $('#lnt'+{{ i.id }}).css('color', 'rgb(25, 189, 155)');"
                                          onmouseout="$('#lnt'+{{ i.id }}).css('color', 'white');">
-                                        <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover  ;"></div>
+                                       {% if i.news_main_cover|check_format == True %}
+                                            <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover  ;"></div>
+                                       {% else %}
+                                           <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('{% static 'static/img/companies_cover/' %}{{ i.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover  ;"></div>
+                                       {% endif %}
                                         <div class="footer-news-content" style="margin-left: 35%; height: 60px;">
                                             <span id="lnt{{ i.id }}"
                                                   class="title"

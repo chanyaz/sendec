@@ -43,8 +43,8 @@
     <title>{% blocktrans %}{{ title }}Insydia{% endblocktrans %}</title>
 
 
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+{#    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">#}
+{#    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">#}
 
 
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
@@ -52,7 +52,7 @@
 {#    <script src="{% static 'static/js/jquery.js' %}"></script>#}
 
     <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'static/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css">
+{#    <link href="{% static 'static/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css">#}
     <link rel="shortcut icon" href="{% static 'static/img/favicon.ico' %}" type="image/x-icon">
     <!--<script type="text/javascript" src="http://vk.com/js/api/share.js?93" charset="windows-1251"></script>-->
 {#    <script>var companytick = ["AAPL","FB","GOOG","MSFT","TSLA","AMZN","TWTR"];</script>#}
@@ -1110,7 +1110,7 @@
     </script>
     <div id="live"></div>
 
-    <script src='//www.google.com/recaptcha/api.js'></script>
+{#    <script src='//www.google.com/recaptcha/api.js'></script>#}
     <!--<script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
     <script type="text/javascript">VK.init({apiId: 111});</script>-->
     <!--<script>
@@ -1124,7 +1124,7 @@
     </script>-->
 {#    <script src="{% static 'static/js/highstock.js' %}"></script>#}
 {#    <script src="{% static 'static/js/chart-widget.js' %}"></script>#}
-    <script type='text/javascript' src='//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js' data-shr-siteid='74b93909eb1e8d0eaf0922a55d663ca4' data-cfasync='false' async='async'></script>
+{#    <script type='text/javascript' src='//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js' data-shr-siteid='74b93909eb1e8d0eaf0922a55d663ca4' data-cfasync='false' async='async'></script>#}
     <script src="{% static 'static/js/jquery.js' %}"></script>
     <script src="{% static 'static/js/jquery.min.js' %}"></script>
     <script src="{% static 'static/js/jquery-ui.js' %}"></script>
@@ -1449,6 +1449,77 @@ $(document).ready(function () {
                 $('#textplace-search').addClass('search-bar-active');
             });
     </script>
+
+<script>
+/** Document Ready Functions **/
+/********************************************************************/
+
+$( document ).ready(function() {
+
+    // Resive video
+    scaleVideoContainer();
+    initBannerVideoSize('.video-container video');
+
+    $(window).on('resize', function() {
+        scaleVideoContainer();
+        scaleBannerVideoSize('.video-container video');
+    });
+
+});
+
+/** Reusable Functions **/
+/********************************************************************/
+
+function scaleVideoContainer() {
+
+    var height = $(window).height();
+    var unitHeight = parseInt(height) + 'px';
+    $('.homepage-hero-module-top').css('height',unitHeight);
+
+}
+
+function initBannerVideoSize(element){
+
+    $(element).each(function(){
+        $(this).data('height', $(this).height());
+        $(this).data('width', $(this).width());
+    });
+
+    scaleBannerVideoSize(element);
+
+}
+
+function scaleBannerVideoSize(element){
+
+    var windowWidth = $(window).width(),
+        windowHeight = $(window).height(),
+        videoWidth,
+        videoHeight;
+
+    console.log(windowHeight);
+
+    $(element).each(function(){
+        var videoAspectRatio = $(this).data('height')/$(this).data('width'),
+            windowAspectRatio = windowHeight/windowWidth;
+
+        if (videoAspectRatio > windowAspectRatio) {
+            videoWidth = windowWidth;
+            videoHeight = videoWidth * videoAspectRatio;
+            $(this).css({'top' : -(videoHeight - windowHeight) / 2 + 'px', 'margin-left' : 0});
+        } else {
+            videoHeight = windowHeight;
+            videoWidth = videoHeight / videoAspectRatio;
+            $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
+        }
+
+        $(this).width(videoWidth).height(videoHeight);
+
+        $('.homepage-hero-module-top .video-container video').addClass('fadeIn animated');
+
+
+    });
+}
+</script>
 
 </body>
 </html>
