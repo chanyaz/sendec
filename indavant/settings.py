@@ -55,6 +55,8 @@ INSTALLED_APPS = (
     "api",
     "rest_framework",
     "rss",
+    #"imagekit",
+    "sorl.thumbnail",
 )
 
 NORECAPTCHA_SITE_KEY = "6Lc1dhMTAAAAACgdoXQlzfJSkghbnkZuONW_P3xj"

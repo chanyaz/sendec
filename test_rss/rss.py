@@ -280,21 +280,22 @@ def fill_news():
             if news[file_list[i]]['category'] == "technology" and news[file_list[i]]['date'] != "date":
                 cur_iter += 1
                 news_title = news[file_list[i]]["title"]
-                news_category_id = 1    # Technology
+                news_category_id = 6    # Technology
                 news_post_date = news[file_list[i]]["date"]
                 news_post_text_english = news[file_list[i]]["text"]
                 news_post_text_russian = news[file_list[i]]["text"]
                 news_post_text_chinese = news[file_list[i]]["text"]
                 news_portal_name_id = 1    # Insydia
                 news_company_owner_id = 1    # Insydia
-                news_author_id = 2    # Saqel
+                news_author_id = 1    # Saqel
                 news_main_cover = ""    # None
                 news_likes = 0
                 news_dislikes = 0
+                photo = ""
 
                 query_set = "INSERT INTO news(news_title, news_category_id, news_post_date, news_post_text_english, " \
                             "news_post_text_russian, news_post_text_chinese, news_portal_name_id, news_company_owner_id, news_author_id, " \
-                            "news_main_cover, news_likes, news_dislikes) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                            "news_main_cover, photo, news_likes, news_dislikes) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
                 data_query_set = (news_title,
                                   news_category_id,
                                   news_post_date,
@@ -305,6 +306,7 @@ def fill_news():
                                   news_company_owner_id,
                                   news_author_id,
                                   news_main_cover,
+                                  photo,
                                   news_likes,
                                   news_dislikes)
                 cursor.execute(query_set, data_query_set)
@@ -328,7 +330,7 @@ def save_rss_news():
 
     end = len(data)
     count = 0
-    with open("save_rss.json", "a+") as file:
+    with open("save_rss.json", "a+", encoding="utf-8") as file:
         file.write("{")
         for i in range(len(data)):
             count += 1

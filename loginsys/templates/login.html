@@ -70,9 +70,7 @@
 {#        border: solid 1px blue;#}
         text-align: center;
     }
-    a:hover{
-        text-decoration: none;
-    }
+
     ul{
         list-style-type: none;
     }
@@ -92,6 +90,10 @@
     }
     .error-message{
         color: white;
+    }
+    a:hover{
+        text-decoration: none;
+        color: rgb(25, 180, 155);
     }
     </style>
 
@@ -124,7 +126,7 @@
 
                        <div class="form-group">
                             <div class="form-field">
-                                <input class="btn btn-primary form-field" value="{% trans 'Sign in' %}" type="submit" onclick="">
+                                <input class="btn btn-success form-field" value="{% trans 'Sign in' %}" type="submit" onclick="">
                             </div>
                         </div>
 

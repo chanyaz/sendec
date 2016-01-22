@@ -1,62 +1,530 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
+{% load my %}
+{% load endless %}
+{% load cache %}
+{% load i18n %}
+{#{% load imagekit %}#}
+{% load thumbnail %}
 {% block auto %}
+    <!-- class names for covers -->
     <style>
-        #latest-news{width: 70%;margin-left: 1%; height: 400px; border: solid 1px lightgrey; position:relative;}
-        .bn-auto-cover{max-width: 100%; max-height: 100%; height: 400px; background: url('/media/{{ top_auto_news.news_main_cover }}') no-repeat center; background-size: cover;}
+        .ash{width: 95%; margin-left: 1%;}
+        .total-news-block{width: 100%;}
+
+        #latest-news{
+            float: left;
+            width: 100%;
+            height: 400px;
+{#            border: solid 1px lightgrey; #}
+            position:relative;}
+        .top-total-content{
+            height: 400px;
+            background: url('/media/{{ top_news.top_news_main_cover }}') no-repeat center;
+            background-size: cover;
+        }
         .bn-title{
             bottom: 50px;
             position: absolute;
             z-index: 999;
-            width: 70%;
+            width: 100%;
             background-color: white;
             opacity: 0.75;
             box-sizing: border-box;
             display: block;
         }
-        .bn-title-text{margin-left: 5%;font-size: 20px;color: blue;}
-        #auto-news{width: 98%;margin-left: 1%;float: left;}
-        .container-fluid{border: solid 1px lightgrey;}
-        .sect{max-width: 23%; margin-top: 1%;}
-        .current_news{box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;}
+        .bn-title-text{
+            margin-left: 5%;
+            font-size: 20px;
+            color: black;
+            text-shadow: 0 0 20px black;
+        }
+
+
+
+        .bn-right-nav{float: right; width: 30%;}
+        #main-container{width:325px; height: 300px; overflow-y: auto; overflow-x: hidden;}
+        #container{width:325px;height:120px;}
+        .recently-news{width: 100%;}
+        #middle-news{
+            margin-top: 1%;
+        }
+{#        .sect{width: 24%; margin-bottom: 1%;}#}
+
+        .sect-2{
+            width: 32.2%;
+            display: inline-block;
+            margin-right: 1%;
+            margin-top: 3%;
+{#            height: 300px;#}
+            max-height: 400px;
+        }
+
         .news-title{font-size: 17px; margin-top: 1.5%; font-family: Georgia, Times, "Times New Roman", serif}
-        .sect{width: 31%; margin-top: 1%;}
-        .current_news{box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;}
+{#        .middle-news-cover{max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;}#}
+{#        .interest-news-cover{max-height: 100%; max-width: 100%; height: 200px; background: url('/media/{{ current_interest.news_main_cover }}') no-repeat center; background-size:cover;}#}
+{#        .bottom-news-cover{max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_bottom_news.news_main_cover }}') no-repeat center; background-size: cover;}#}
+        .text_post{width: 100%;}
+        .media{height: inherit;}
+        .latest-reviews{height: 500px; border: solid 1px red; position: relative; width: 100%;}
+        .left-bar-videos{margin-left: 0.9%; float: left; width: 70%; height: 100%;}
+        .right-bar-videos{width: 29%; float: right;}
+        .recently-news-other{
+            width: 100%;
+        }
+
+
+        .current_news{
+{#                        background: white;#}
+
+{#            margin-top: 5%;#}
+            min-height: 150px;
+            max-height: 400px;
+            height: inherit;
+            width: 100%;
+            position: relative;
+{#            box-shadow: 0 0 10px rgba(0,0,0,0.5);#}
+{#            width: 23%;#}
+            float: left;
+{#            margin-right: 1%;#}
+        }
+        .current_news_mas{
+{#                        background-color: #fff;#}
+            height: inherit;
+            width: 100%;
+            position: relative;
+{#            box-shadow: 0 0 10px rgba(0,0,0,0.5);#}
+            float: left;
+{#            margin-right: 1%;#}
+        }
+
+        .category-name{
+            position: absolute;
+            z-index: 900;
+            margin-top: -1%;
+        }
+        .category-name-content{
+            background-color: blue;
+            color: white;
+            font-family: Georgia, Times, "Times New Roman", serif;
+            text-transform: uppercase;
+        }
+    .category-link:hover{
+        text-decoration: none;
+    }
+
+
+    .ln-left{
+        float: left;
+        width: 50%;
+        height: 400px;
+        position: relative;
+        overflow: hidden;
+    }
+    .ln-right{
+        float:right;
+{#        border: solid 1px purple;#}
+        width: 50%;
+        height: 400px;
+    }
+    .ln-right-left{
+        float: left;
+        width: 50%;
+        height: 400px;
+{#        border: solid 1px red;#}
+    }
+    .ln-right-left-top{
+{#        background: url('{% static 'static/img/login/1.jpg' %}') no-repeat center;#}
+{#        background-size: cover;#}
+        width: 100%;
+        height: 200px;
+{#        border: solid 1px blue;#}
+        overflow: hidden;
+        position: relative;
+    }
+    .ln-right-left-top-test{
+        background: url('/media/{{ top_news.1.top_news_main_cover }}') no-repeat center;
+        background-size: cover;
+{#        width: 100%;#}
+        height: 200px;
+{#        border: solid 1px blue;#}
+        overflow: hidden;
+        position: relative;
+    }
+    .ln-right-left-bottom{
+{#        background: url('{% static 'static/img/login/2.jpg' %}') no-repeat center;#}
+{#        background-size: cover;#}
+        width: 100%;
+        height: 200px;
+{#        border: solid 1px greenyellow;#}
+        overflow: hidden;
+        position: relative;
+    }
+    .ln-right-left-bottom-test{
+        background: url('/media/{{ top_news.2.top_news_main_cover }}') no-repeat center;
+        background-size: cover;
+{#        width: 100%;#}
+        height: 200px;
+{#        border: solid 1px greenyellow;#}
+        overflow: hidden;
+        position: relative;
+    }
+    .ln-right-right{
+{#        background: url('{% static 'static/img/login/3.jpg' %}') no-repeat center;#}
+{#        background-size: cover;#}
+        float: right;
+        width: 50%;
+        height: 400px;
+{#        border: solid 1px aqua;#}
+        overflow: hidden;
+        position: relative;
+    }
+    .ln-right-right-test{
+        background: url('/media/{{ top_news.3.top_news_main_cover }}') no-repeat center;
+        background-size: cover;
+{#        float: right;#}
+{#        width: 50%;#}
+        height: 400px;
+{#        border: solid 1px aqua;#}
+        overflow: hidden;
+        position: relative;
+    }
+
+    .top-grid-title{
+        text-shadow: 0 0 10px black;
+    }
+
+    #announce-reviews{
+        width: 100%;
+        height: 250px;
+        border: solid 1px lightblue;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
     </style>
-    <div class="container-fluid">
-        <div class="row">
-            <div id="latest-news">
-                <div class="bn-auto-cover"
-                     onclick="location.href='/news/{{ top_auto_news.news_category_id }}/{{ top_auto_news.id }}/';"></div>
-                <div class="bn-title">
-                    <span class="bn-title-text">
-                        {{ top_auto_news.news_title }}
-                    </span>
-                </div>
-            </div>
-        <hr>
-            <div id="auto-news">
-                {% for current_auto_news in auto_news %}
-                    <div class="sect">
-                        <div class="current_news"
-                             onmouseover="style.border='solid 0.2px blue';"
-                             onmouseout="style.border='';"
-                             onclick="location.href='/news/{{ current_auto_news.news_category_id }}/{{ current_auto_news.id }}/';">
-                            <div class="current_news-top" style="height: 92%;">
-                                {% if current_auto_news.news_main_cover != None %}
-                                    <div class="middle-news-cover"
-                                         style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_auto_news.news_main_cover }}') no-repeat center; background-size: cover;"></div>
-                                {% endif %}
-                                <div class="title">
-                                    <div class="news-title">
-                                        {{ current_auto_news.news_title|safe }}
+    <div class="container-fluid container">
+        <div class="row row-centered">
+            <div class="ash">
+                <div class="panel panel-default">
+                    <div class="total-news-block" >
+                        <div class="breaking-news">
+                            <div class="bn">
+                                <div id="latest-news"
+                                     onmouseover="this.style.cursor='pointer';">
+                                    <div class="top-total-content"
+                                         onclick="location.href='/news/top/{{ top_news.top_news_category_id }}/{{ top_news.0.id }}/';">
+                                    </div>
+                                    <div class="bn-title">
+                                        <span class="bn-title-text">
+                                            {{ top_news.top_news_title }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    <hr width="100%">
+                    <div id="middle-news-special">
+                        <div id="top-4-news" style="float: left; width:70%; margin-left: 2%;">
+                            {% for current_middle_news in total_middle_news %}
+                                <div class="sect-2-top" style="width: 350px; margin-right: 4%; margin-bottom: 3%; margin-top: 3%; float: left">
+                                    {% if current_middle_news.news_main_cover == '' %}
+                                    <div class="current_news news-news"
+                                         onmouseover="style.border='solid 0.2px blue';"
+                                         onmouseout="style.border='';"
+                                         onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                    {% else %}
+                                    <div class="current_news_mas news-news"
+                                         onmouseover="style.border='solid 0.2px blue';"
+                                         onmouseout="style.border='';"
+                                         onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                    {% endif %}
+                                            <div class="cat cat-left">
+                                                <span href="/search/?q={{ current_middle_news.news_company_owner_id|get_company_owner_name|lower }}">{{ current_middle_news.news_company_owner_id|get_company_owner_name|upper }}</span>
+                                            </div>
+                                            {% if current_middle_news.news_main_cover != '' %}
+                                                {% if current_middle_news.news_main_cover|check_format == True %}
+                                                    <div class="middle-news-cover"
+                                                         onmouseover="this.style.cursor='pointer';"
+                                                         style="max-width: 100%; max-height: 100%;">
+                                                    {% thumbnail current_middle_news.news_main_cover '350x210' as im %}
+                                                        <img src="{{ im.url }}" />
+                                                    {% endthumbnail %}
+                                                    </div>
+                                                {% else %}
+                                                    <div class="middle-news-cover"
+                                                     onmouseover="this.style.cursor='pointer';"
+                                                     style="max-width: 100%; max-height: 100%; height: 210px;
+                                                            background: url('{% static 'static/img/companies_cover/' %}{{ current_middle_news.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center;
+                                                            background-size: cover;"></div>
+                                                {% endif %}
+                                            {% endif %}
+                                            <div class="title"
+                                                 id="title-{{ current_middle_news.id }}"
+                                                 style="margin-top: 5%;"
+                                                 onmouseover="this.style.cursor='pointer'; this.style.color='rgb(25, 189, 155)';"
+                                                 onmouseout="this.style.color='';">
+                                                <div class="news-title">
+                                                    <b>{{ current_middle_news.news_title|safe }}</b>
+                                                </div>
+                                            </div>
+                                    <div class="params">
+                                        <span class="glyphicon glyphicon-eye-open" style="float: left;"></span>
+                                        <div class="watches" style="float: left;">{{ current_middle_news.id|count_watches }}</div>
+                                        <div class="publushed" style="float: right;">{{ current_middle_news.news_post_date }}</div>
+                                    </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
-                {% endfor %}
+
+                    <div class="adver-near-top" style="float: right; width: 300px; height: 660px; background-color: #00fff9"></div>
+
+                        <hr width="100%">
+                        <div class="media">
+
+                            <div class="latest-reviews">
+                                <div class="review-cover" style="position: absolute; width:100%; height: 500px; background: url('/media/{{ latest_review.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                <div class="review-title-back" style="position: absolute; width: 100%; height: 100px; bottom:0; background-color: black; opacity: 0.3;"></div>
+                                <div class="review-title" style="position: absolute; bottom: 5%; width: 100%; text-align: center; font-size: 40px; color: white;"><a href="">{{ latest_review.news_title }}</a></div>
+                            </div>
+                        <hr width="100%">
+
+                            <div class="google-news-right" style="margin-left: auto; margin-right: auto; width: 970px; height: 90px; background-color: #00fff9"></div>
+
+                            <hr width="100%">
+                            <div class="recently-news">
+{#                                {% trans 'RECENTLY NEWS' %}<br>#}
+                                <div class="two-news">
+                                    <div class="top-one"
+                                         onmouseout="$('#big-news-one').css('color', 'black')"
+                                         onmouseover="this.style.cursor='pointer'; $('#big-news-one').css('color', 'rgb(25, 189, 155)')"
+                                         onclick="location.href='/news/{{ total_bottom_news.0.news_category_id }}/{{ total_bottom_news.0.id }}/'">
+                                        <div class="cat cat-left">
+                                            <a href="/search/?q={{ total_bottom_news.0.news_company_owner_id|get_company_owner_name|lower }}">{{ total_bottom_news.0.news_company_owner_id|get_company_owner_name|upper }}</a>
+                                        </div>
+                                        <div class="cover-top-middle" style="float: left; height: 300px; width: 70%; background: url('/media/{{ total_bottom_news.0.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                        <div class="right-middle-top" style="float: right; width: 28%; margin-left: 2%;">
+                                            <div id="big-news-one" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
+                                                <b>{{ total_bottom_news.0.news_title }}</b>
+                                            </div>
+                                            <div class="author-and-other" style="margin-bottom: 10px">
+                                                {% trans 'By' %}&nbsp;<a href="">{{ total_bottom_news.0.news_author_id|get_article_author }}</a>&nbsp;{{ total_bottom_news.0.news_post_date.date|date }}
+                                                <span class="glyphicon glyphicon-eye-open">{{ total_bottom_news.0.id|count_watches|default:0 }}</span>
+                                            </div>
+                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">{{ total_bottom_news.0.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
+                                        </div>
+                                    </div>
+                                    <hr width="100%">
+                                    <div class="bottom-one"
+                                         onmouseout="$('#big-news-two').css('color', 'black')"
+                                         onmouseover="this.style.cursor='pointer'; $('#big-news-two').css('color', 'rgb(25, 189, 155)')"
+                                         onclick="location.href='/news/{{ total_bottom_news.0.news_category_id }}/{{ total_bottom_news.0.id }}/'"
+                                         style="margin-top: 50px;">
+                                        <div class="right-middle-top" style="float: left; width: 28%; margin-right: 2%; ">
+                                            <div id="big-news-two" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
+                                                <b>{{ total_bottom_news.1.news_title }}</b>
+                                            </div>
+                                            <div class="author-and-other" style="margin-bottom: 10px">
+                                                {% trans 'By' %}&nbsp;<a href="">{{ total_bottom_news.1.news_author_id|get_article_author }}</a>&nbsp;{{ total_bottom_news.1.news_post_date.date|date }}
+                                                <span class="glyphicon glyphicon-eye-open">&nbsp;{{ total_bottom_news.1.id|count_watches|default:0 }}</span>
+                                            </div>
+                                            <div class="text-top-middle">{{ total_bottom_news.1.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
+                                        </div>
+                                        <div class="cat cat-right">
+                                            <a href="/search/?q={{ total_bottom_news.1.news_company_owner_id|get_company_owner_name|lower }}">{{ total_bottom_news.1.news_company_owner_id|get_company_owner_name|upper }}</a>
+                                        </div>
+                                        <div class="cover-top-middle" style="float: right; height: 300px; width: 70%; background: url('/media/{{ total_bottom_news.1.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                    </div>
+                                </div>
+                                <hr width="100%">
+                                <div class="interested-news">
+                                    <h4>{% trans 'Interesting articles' %}</h4>
+                                    <div id="interests" class="carousel slide" style="height: 250px;">
+                                        <div class="carousel-inner">
+                                            <div class="active item" style="height: 250px; max-height: 250px;">
+                                                <div class="car-it-block">
+                                                    <a class="car-it-link" href="/news/{{ interest.0.news_category_id }}/{{ interest.0.id }}/">
+                                                        {% if interest.0.news_main_cover|check_format == True %}
+                                                            <div class="carousel-inner-item-left"
+                                                                     style="position: relative; height: 250px; width: 100%; background: url('/media/{{ interest.0.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% else %}
+                                                             <div class="carousel-inner-item-left"
+                                                                 style="position: relative; height: 250px; width: 100%; background: url('{% static 'static/img/companies_cover/' %}{{ interest.0.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover;">
+                                                        {% endif %}
+                                                            <div class="inner-item-back">
+    {#                                                            <a class="carousel-inner-item-title">#}
+    {#                                                                {{ interest.0.news_title }}#}
+    {#                                                            </a>#}
+                                                            </div>
+                                                        </div>
+                                                        <a class="carousel-inner-item-title">
+                                                            {{ interest.0.news_title }}
+                                                        </a>
+                                                    </a>
+                                                </div>
+                                                <div class="car-it-block">
+                                                    <a class="car-it-link" href="/news/{{ interest.1.news_category_id }}/{{ interest.1.id }}/">
+                                                        {% if interest.1.news_main_cover|check_format == True %}
+                                                            <div class="carousel-inner-item-right"
+                                                                     style="position: relative; float:right; height: 250px; width: 100%; background: url('/media/{{ interest.1.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% else %}
+                                                             <div class="carousel-inner-item-right"
+                                                                 style="position: relative; float:right; height: 250px; width: 100%; background: url('{% static 'static/img/companies_cover/' %}{{ interest.1.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover;">
+                                                        {% endif %}
+                                                            <div class="inner-item-back">
+    {#                                                            <a class="carousel-inner-item-title">#}
+    {#                                                                {{ interest.1.news_title }}#}
+    {#                                                            </a>#}
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <a class="carousel-inner-item-title">
+                                                        {{ interest.1.news_title }}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="car-it-block">
+                                                    <a class="car-it-link" href="/news/{{ interest.2.news_category_id }}/{{ interest.2.id }}/">
+                                                        {% if interest.2.news_main_cover|check_format == True %}
+                                                            <div class="carousel-inner-item-left"
+                                                                     style="position: relative; height: 250px; width: 100%; background: url('/media/{{ interest.2.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% else %}
+                                                             <div class="carousel-inner-item-left"
+                                                                 style="position: relative; height: 250px; width: 100%; background: url('{% static 'static/img/companies_cover/' %}{{ interest.2.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover;">
+                                                        {% endif %}
+                                                            <div class="inner-item-back">
+{#                                                                <a class="carousel-inner-item-title">#}
+{#                                                                    {{ interest.2.news_title }}#}
+{#                                                                </a>#}
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <a class="carousel-inner-item-title">
+                                                        {{ interest.2.news_title }}
+                                                    </a>
+                                                </div>
+                                                <div class="car-it-block">
+                                                    <a class="car-it-link" href="/news/{{ interest.3.news_category_id }}/{{ interest.3.id }}/">
+                                                        {% if interest.3.news_main_cover|check_format == True %}
+                                                            <div class="carousel-inner-item-right"
+                                                                     style="position: relative; float:right; height: 250px; width: 100%; background: url('/media/{{ interest.3.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                        {% else %}
+                                                             <div class="carousel-inner-item-right"
+                                                                 style="position: relative; float: right; height: 250px; width: 100%; background: url('{% static 'static/img/companies_cover/' %}{{ interest.3.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover;">
+                                                        {% endif %}
+                                                            <div class="inner-item-back">
+{#                                                                <a class="carousel-inner-item-title">#}
+{#                                                                    {{ interest.3.news_title }}#}
+{#                                                                </a>#}
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <a class="carousel-inner-item-title">
+                                                        {{ interest.3.news_title }}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ARROWS -->
+                                        <div class="carousel-control left" href="#interests" data-slide="prev">
+                                            <div class="control-arrow">
+                                                &lsaquo;
+                                            </div>
+                                        </div>
+                                        <div class="carousel-control right" href="#interests" data-slide="next">
+                                            <div class="control-arrow">
+                                                &rsaquo;
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="before-reviews">
+                                        {% for current_middle_news in before_reviews %}
+                                            <div class="sect-2-top" style="width: 31%; margin-left: 1%; margin-right: 1%; margin-top: 3%; float: left;">
+                                                {% if current_middle_news.news_main_cover == '' %}
+                                                <div class="current_news news-news"
+                                                     onmouseover="style.border='solid 0.2px blue';"
+                                                     onmouseout="style.border='';"
+                                                     onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                                {% else %}
+                                                <div class="current_news_mas news-news"
+                                                     onmouseover="style.border='solid 0.2px blue';"
+                                                     onmouseout="style.border='';"
+                                                     onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                                {% endif %}
+                                                        <div class="cat" style="float: left;border-bottom: solid 2px red; margin-top: -20px">
+                                                            <a href="/search/?q={{ current_middle_news.news_company_owner_id|get_company_owner_name|lower }}'">{{ current_middle_news.news_company_owner_id|get_company_owner_name|upper }}</a>
+                                                        </div>
+                                                        {% if current_middle_news.news_main_cover != '' %}
+                                                            <div class="middle-news-cover"
+                                                                 onmouseover="this.style.cursor='pointer';"
+                                                                 style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="title" style="margin-top: 5%;"
+                                                             onmouseover="this.style.cursor='pointer'; this.style.color='blue';"
+                                                             onmouseout="this.style.color='';">
+                                                            <a class="news-title">
+                                                                <b>{{ current_middle_news.news_title|safe }}</b>
+                                                            </a>
+                                                        </div>
+                                                <div class="params">
+                                                    <div class="author-and-other">
+                                                        {% trans 'By' %}<a href="">{{ current_middle_news.news_author }}</a>&nbsp;{{ current_middle_news.news_post_date }}
+                                                        <span class="glyphicon glyphicon-eye-open">&nbsp;{{ current_middle_news.id|count_watches|default:0 }}</span>
+                                                    </div>
+                                                    <div class="above-text" style="
+    background: white;
+    background: linear-gradient(to top, lightgrey, transparent);
+    width: 100%;
+    height: 150px;
+    bottom: 0;
+    position: absolute;
+    z-index: 999;"></div>
+                                                    <div class="text-top-middle" style="position: relative">{{ current_middle_news.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    </div>
+                                </div>
+                                <hr width="100%">
+                                <div id="announce-reviews">
+
+                                </div>
+
+
+                                    <div class="load-more">
+                                        <div class="endless_page_template">
+                                            {% block js %}
+                                                <script src="{% static 'static/js/jquery.js' %}"></script>
+                                                <script src="{% static 'static/js/endless-pagination.js' %}"></script>
+                                                <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+                                                <script>
+                                                    $(document).ready(function() {
+                                                        $.endlessPaginate({
+                                                            paginateOnScroll: false,
+                                                            paginateOnScrollChunkSize: 1
+                                                        });
+                                                    });
+                                                </script>
+                                            {% endblock %}
+                                <div class="total-mas">
+                                    {% include auto_template %}
+                                </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+                                        <a href="#0" class="cd-top">Top</a>
+
 {% endblock %}

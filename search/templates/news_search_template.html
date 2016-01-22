@@ -10,12 +10,12 @@
                 <div class="current_searched_content">
                         <div class="current_searched_cover"
                              onmouseout="$('#current_searched_content_title_'+{{ current_result.id }}).css('color', 'black');"
-                             onmouseover="$('#current_searched_content_title_'+{{ current_result.id }}).css('color', 'blue');this.style.cursor='pointer';"
+                             onmouseover="$('#current_searched_content_title_'+{{ current_result.id }}).css('color', 'rgb(25, 180, 155)');this.style.cursor='pointer';"
                              onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"
                              style="background: url('/media/{{ current_result.news_main_cover }}') no-repeat center; background-size: cover;"></div>
                     <div class="current_searched_content_top"
                          onmouseout="$('#current_searched_content_title_'+{{ current_result.id }}).css('color', 'black');"
-                         onmouseover="$('#current_searched_content_title_'+{{ current_result.id }}).css('color', 'blue');this.style.cursor='pointer';"
+                         onmouseover="$('#current_searched_content_title_'+{{ current_result.id }}).css('color', 'rgb(25, 180, 155)');this.style.cursor='pointer';"
                          onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';">
                         <div class="current_searched_content_portal">
                             {{ current_result.news_portal_name_id|get_portal_name }}

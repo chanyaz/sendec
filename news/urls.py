@@ -70,7 +70,7 @@ urlpatterns = [
     url(r'^(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_news'),
     #url(r'^(?P<category_name>\w+)/', 'news.views.render_current_category'),
     url(r'^auto/', 'news.views.render_auto_news'),
-    url(r'^bio/', 'news.views.render_bit_news'),
+    url(r'^bio/', 'news.views.render_bio_news'),
 
     url(r'^companies/cs=(?P<company>\w+)', 'news.views.get_match_company'),
     url(r'^companies/', 'news.views.render_companies_news'),

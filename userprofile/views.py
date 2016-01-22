@@ -279,8 +279,35 @@ def send_access_report(request):
                    "<i>username</i> field.".format({"username": instance.username,
                                                     "id": instance.id,
                                                     "time": datetime.datetime.now()})
-    mail_from = mail_to = "insydia@yandex.ru"
+    mail_from = mail_to = "support@insydia.com"
     msg = EmailMultiAlternatives(mail_subject, mail_message, mail_from, [mail_to])
     msg.attach_alternative(html_content, "text/html")
     msg.send()
     return HttpResponse()
+
+
+
+def send_request_message(request, username, keyword):
+    mail_subject = "[RSS REQUEST] Someone wants to change login."
+    mail_message = """User %s(id: %s) at %s request to add new RSS portal(keyword: "%s") via profile form.\n\n
+User e-mail: %s""" % (username.username, username.id, datetime.datetime.now(), keyword, username.email)
+    html_content = """User %s(id: %s) at %s request to add new RSS portal(keyword: <i>%s</i>) via profile form.
+User e-mail: %s""" % \
+                   (username.username, username.id, datetime.datetime.now(),  keyword, username.email)
+    mail_from = "noreply@insydia.com"
+    msg = EmailMultiAlternatives(mail_subject, mail_message, mail_from, ["support@insydia.com", "eprivalov@insydia.com"])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+    return HttpResponse()
+
+
+def user_request_rss_portal(request):
+    instance = User.objects.get(username=auth.get_user(request).username)
+    args = {
+        "username": instance,
+    }
+    args.update(csrf(request))
+    if request.POST:
+        key_word = request.POST["keyword"]
+        send_request_message(request, username=instance, keyword=key_word)
+    return HttpResponseRedirect("/profile/")

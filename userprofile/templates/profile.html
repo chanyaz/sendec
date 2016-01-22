@@ -316,18 +316,24 @@
                     <div class="special-info-speech">
                         {{ special_text }}
                     </div>
-                    <label class="col-md-2 control-label">{% trans 'Key word' %}:</label>
-                    <div class="col-md-8" id="keywords">
-                        <input name="keyword"
-                               disabled="disabled"
-                               class="form-control"
-                               type="text"
-                               placeholder="{% trans 'Enter key word' %}"
-                               spellcheck="true">
-                    </div>
-                    <div class="col-md-1">
-                        <input type="submit" value="{% trans 'Search' %}">
-                    </div>
+                    <form action="/profile/urp/"
+                          method="POST"
+                          class="form-horizontal"
+                          role="form">
+                        {% csrf_token %}
+                        <label class="col-md-2 control-label">{% trans 'Key word' %}:</label>
+                        <div class="col-md-8" id="keywords">
+                            <input name="keyword"
+    {#                               disabled#}
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="{% trans 'Enter key word' %}"
+                                   spellcheck="true">
+                        </div>
+                        <div class="col-md-1">
+                            <input type="submit" value="{% trans 'Search' %}">
+                        </div>
+                    </form>
                 </div>
                 <form id="settings-form"
                       action="/profile/add_portals"

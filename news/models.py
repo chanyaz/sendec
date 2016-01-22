@@ -1,6 +1,10 @@
 from django.db import models
 from loginsys.models import UserProfile
 from django.contrib.auth.models import User
+import PIL
+from PIL import Image
+from imagekit.models.fields import ImageSpecField
+from imagekit.processors import ResizeToFit, Adjust,ResizeToFill
 
 
 def upload_news_cover(instance, filename):
@@ -85,6 +89,16 @@ class News(models.Model):
 
     # Media
     news_main_cover = models.FileField(upload_to=upload_news_cover, blank=True)
+
+    photo = models.ImageField(upload_to=upload_news_cover, blank=True)
+    # photo_small = ImageSpecField([Adjust(contrast=1.2, sharpness=1.1), ResizeToFill(50, 50)],# image_field='photo',
+    #                             format='JPEG', options={'quality': 90})
+    # photo_medium = ImageSpecField([Adjust(contrast=1.2, sharpness=1.1), ResizeToFit(300, 200)],# image_field='photo',
+    #                              format='JPEG', options={'quality': 90})
+    # photo_big = ImageSpecField([Adjust(contrast=1.2, sharpness=1.1), ResizeToFit(640, 480)],# image_field='photo',
+    #                           format='JPEG', options={'quality': 90})
+
+
 
     # Information
     news_likes = models.IntegerField(default=0)

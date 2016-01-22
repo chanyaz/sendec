@@ -5,8 +5,9 @@ from django.conf import settings
 
 
 urlpatterns = [
-    url(r'cp/', 'userprofile.views.send_notification'),
-    url(r'm/(?P<username>\w+)/$', 'userprofile.views.render_moderator_profile_page'),
+    url(r'^urp/', 'userprofile.views.user_request_rss_portal'),
+    url(r'^cp/', 'userprofile.views.send_notification'),
+    url(r'^m/(?P<username>\w+)/$', 'userprofile.views.render_moderator_profile_page'),
     url(r'^change/$', 'userprofile.views.change_profile_data'),
     url(r"^photo_upload/$", "userprofile.views.change_profile_photo"),
     url(r'^add_portals$', 'userprofile.views.addition_portals_show'),

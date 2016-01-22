@@ -59,12 +59,8 @@
         margin-bottom: 2%;
 {#        border: solid 1px red;#}
     }
-    #auth_reg_logo a, a:active{
-        color: white;
-    }
-    #auth_reg_logo a:hover{
-        color:#0f6fb3;
-    }
+
+
     #reg-password{
 {#        width: 50em;#}
 {#        margin-left: auto;#}
@@ -93,9 +89,6 @@
         margin-right: auto;
 {#        border: solid 1px blue;#}
         text-align: center;
-    }
-    a:hover{
-        text-decoration: none;
     }
     ul{
         list-style-type: none;
@@ -137,6 +130,12 @@
             color: red;
             float: right;
         }
+
+        a:hover{
+            text-decoration: none;
+            color: rgb(25, 180, 155);
+        }
+
     </style>
     <script>
         $(document).ready(function(){
@@ -245,7 +244,7 @@
 
                        <div class="form-group">
                             <div class="form-field">
-                                <input id="reg-submit" class="btn btn-primary form-field" value="{% trans 'Sign up' %}" type="submit" onclick="">
+                                <input id="reg-submit" class="btn btn-success form-field" value="{% trans 'Sign up' %}" type="submit" onclick="">
                             </div>
                         </div>
 

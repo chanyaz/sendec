@@ -3,6 +3,8 @@
 {% load endless %}
 {% load cache %}
 {% load i18n %}
+{#{% load imagekit %}#}
+{% load thumbnail %}
 {% block politics %}
     <!-- class names for covers -->
     <style>
@@ -323,15 +325,19 @@
                                                     <div class="middle-news-cover"
                                                          onmouseover="this.style.cursor='pointer';"
                                                          style="max-width: 100%;
-                                                                 max-height: 100%;
-                                                                 height: 210px;
-    {#                                                             {% if current_middle_news.news_main_cover|check_format == True %}#}
-                                                                    background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center;
-                                                                    background-size: cover;">
-    {#                                                                 {% endif %}>#}
+                                                                 max-height: 100%;">
+{#                                                                 height: 210px;#}
+{#                                                                    background: url('/media/{{ im.url }}') no-repeat center;#}
+{#                                                                    background-size: cover;">#}
     {#                                                <div class="mask">#}
         {#                                                    <a href="#" class="info"></a>#}
     {#                                                </div>#}
+{#                                                        {% thumbnail current_middle_news.news_main_cover '350x210' as im %}#}
+{#                                                        <img src="/media/{{ im.url }}" />#}
+{#                                                        {% endthumbnail %}#}
+                                                    {% thumbnail current_middle_news.news_main_cover '350x210' as im %}
+                                                        <img src="{{ im.url }}" />
+                                                    {% endthumbnail %}
                                                     </div>
                                                 {% else %}
                                                         <div class="middle-news-cover"
@@ -374,7 +380,12 @@
                         <div class="media">
 
                             <div class="latest-reviews">
-                                <div class="review-cover" style="position: absolute; width:100%; height: 500px; background: url('/media/{{ latest_review.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                <div class="review-cover" style="position: absolute; width:100%; height: 500px;">
+{#                                        background: url('/media/{{ latest_review.news_main_cover }}') no-repeat center; background-size: cover;">#}
+                                    {% thumbnail latest_review.news_main_cover 'x500' as im %}
+                                        <img src="{{ im.url }}" />
+                                    {% endthumbnail %}
+                                </div>
                                 <div class="review-title-back" style="position: absolute; width: 100%; height: 100px; bottom:0; background-color: black; opacity: 0.3;"></div>
                                 <div class="review-title" style="position: absolute; bottom: 5%; width: 100%; text-align: center; font-size: 40px; color: white;"><a href="">{{ latest_review.news_title }}</a></div>
                             </div>
@@ -393,8 +404,8 @@
                                         <div class="cat cat-left">
                                             <span onclick="location.href='/news/{{ total_bottom_news.0.id|get_news_category }}';">{{ total_bottom_news.0.id|get_news_category|upper }}</span>
                                         </div>
-                                        <div class="cover-top-middle" style="float: left; height: 300px; width: 70%; background: url('/media/{{ total_bottom_news.0.news_main_cover }}') no-repeat center; background-size: cover;"></div>
-                                        <div class="right-middle-top" style="float: right; width: 28%; margin-left: 2%;">
+                                        <div class="cover-top-middle" style="float: left; height: 300px; width: 70%;background: url('/media/{{ total_bottom_news.0.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                            <div class="right-middle-top" style="float: right; width: 28%; margin-left: 2%;">
                                             <div id="big-news-one" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
                                                 <b>{{ total_bottom_news.0.news_title }}</b>
                                             </div>
@@ -424,8 +435,8 @@
                                         <div class="cat cat-right">
                                             <span onclick="location.href='/news/{{ total_bottom_news.1.id|get_news_category }}';">{{ total_bottom_news.1.id|get_news_category|upper }}</span>
                                         </div>
-                                        <div class="cover-top-middle" style="float: right; height: 300px; width: 70%; background: url('/media/{{ total_bottom_news.1.news_main_cover }}') no-repeat center; background-size: cover;"></div>
-                                    </div>
+                                        <div class="cover-top-middle" style="float: right; height: 300px; width: 70%;background: url('/media/{{ total_bottom_news.1.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                        </div>
                                 </div>
                                 <hr width="100%">
                                 <div class="interested-news">
@@ -560,8 +571,10 @@
                                                         {% if current_middle_news.news_main_cover != '' %}
                                                             <div class="middle-news-cover"
                                                                  onmouseover="this.style.cursor='pointer';"
-                                                                 style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
-{#                                                                <div class="mask">#}
+                                                                 style="max-width: 100%; max-height: 100%; height: 210px;">
+{#                                                                background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">#}
+                                                            <img src="{% thumbnail current_middle_news.news_main_cover '340x210' %}" />
+{#                                                            <div class="mask">#}
                     {#                                                    <a href="#" class="info"></a>#}
 {#                                                                </div>#}
                                                             </div>

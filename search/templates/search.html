@@ -204,7 +204,7 @@
                                         {% if companies_matches|length > 0 %}
                                             {% for current_company in companies_matches %}
                                                 <div class="searched_company_name"
-                                                     onmouseover="this.style.backgroundColor='lightblue';"
+                                                     onmouseover="this.style.backgroundColor='rgb(25, 180, 155)';"
                                                      onmouseout="this.style.backgroundColor='';"
                                                      onclick="location.href='/news/companies/{{ current_company.verbose_name }}/';">
                                                     <div class="company-cover"><img src="/static/static/img/companies_logo/{{ current_company.verbose_name }}.png" width="75px"/></div>

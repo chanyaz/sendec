@@ -38,8 +38,8 @@ from django.core.mail import send_mail
 def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None):
 # def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None, translate="english"):
     args = {
-        "video_first": TopVideoContent.objects.all().values()[0],
-        "video_top": TopVideoContent.objects.all().values()[1:3],
+        #test "video_first": TopVideoContent.objects.all().values()[0],
+        #test "video_top": TopVideoContent.objects.all().values()[1:3],
         "current_year": datetime.datetime.now().year,
         "title": "Home Page | ",
         "news_block": True,
@@ -56,7 +56,7 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         "total_news": get_total_news,
         "page_template": page_template,
         "top_news": get_top_total_news(request),
-        "latest_review": get_latest_reviews(request),
+        #test "latest_review": get_latest_reviews(request),
     }
     # if translate == "russian":
     #     args["translate"] = "ru"
@@ -78,6 +78,7 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
 
 def get_latest_reviews(request):
     return News.objects.filter(news_category_id=6).order_by("-news_post_date").values()[0]
+
 
 def get_hottest_news(request):
     watches = NewsWatches.objects.order_by("-watches").values("news_id")[:4].values("news_id")
@@ -141,7 +142,6 @@ def render_current_top_news(request, category_id, news_id):
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("top_news.html", args)
-
 
 
 def render_current_news(request, category_id, news_id):
@@ -389,16 +389,6 @@ def get_top_news(request):
     return top_news
 
 
-#def render_current_news_comments(request, news_id):
-#    news_comments = NewsComments.objects.filter(news_attached=int(news_id))
-#    news_replies = NewsCommentsReplies.objects.filter(news_attached=int(news_id))
-#    response_data = {
-#        "content_comments": [data_comments.get_json_comments() for data_comments in news_comments.all()],
-#        "content_replies": [data_replies.get_json_replies() for data_replies in news_replies.all()]
-#    }
-#    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
 def render_current_category(request, category_name):
     args = {
         "title": "Politics | ",
@@ -417,19 +407,28 @@ def render_current_category(request, category_name):
 #   ###########################################################################
 
 
-def render_technology_news(request):
+def render_technology_news(request, template="technology.html", tech_template="tech_template.html", extra_context=None):
     args = {
         "title": "Technology | ",
-        "top_technology": get_technology_news(request)[0],
-        "technology_news": get_technology_news(request)[1:],
         "category_title": "TECHNOLOGY",
+
+        "top_news": get_top_category_news(request, category_name="Technology"),
+        "total_middle_news": get_category_news_offset(request, category_name="Technology")[1:5],
+        "total_bottom_news": get_category_news_offset(request, category_name="Technology")[5:7],
+        "interest": get_category_news_offset(request, category_name="Technology")[7:11],
+
+        "tech_template": tech_template,
+        "total_news": get_category_news_offset(request, category_name="Technology")[11:],
     }
+    if request.is_ajax():
+        template = tech_template
+
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response("technology.html", args)
+    return render_to_response(template, args, context_instance=RequestContext(request))
 
 
 def get_technology_news(request):
@@ -437,19 +436,43 @@ def get_technology_news(request):
 #   #########3#################### END TECHNOLOGY #######################################
 
 
-def render_auto_news(request):
+def get_category_news_offset(request, *args, **kwargs):
+    return News.objects.filter(news_category_id=NewsCategory.objects.get(category_name=kwargs["category_name"])).order_by("-news_post_date").defer("news_post_text_chinese").defer("news_post_text_english").defer("news_post_text_russian").values()
+
+
+def get_top_category_news(request, *args, **kwargs):
+    """
+    GET TOP NEWS OF CURRENT CATEGORY
+    :param request:
+    :param args:
+    :param kwargs:
+    :return:
+    """
+    return News.objects.filter(news_category_id=NewsCategory.objects.get(category_name=kwargs["category_name"])).order_by("-news_post_date").defer("news_post_text_chinese").defer("news_post_text_english").defer("news_post_text_russian").values()[0]
+
+
+def render_auto_news(request, template="auto.html", auto_template="auto_template.html", extra_context=None):
     args = {
         "title": "Auto | ",
-        "top_auto_news": get_auto_news(request)[0],
-        "auto_news": get_auto_news(request)[1:],
         "category_title": "AUTO",
+
+        "top_news": get_top_category_news(request, category_name="Auto"),
+        "total_middle_news": get_category_news_offset(request, category_name="Auto")[1:5],
+        "total_bottom_news": get_category_news_offset(request, category_name="Auto")[5:7],
+        "interest": get_category_news_offset(request, category_name="Auto")[7:11],
+
+        "auto_template": auto_template,
+        "total_news": get_category_news_offset(request, category_name="Auto")[11:],
     }
+    if request.is_ajax():
+        template = auto_template
+
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response("auto.html", args)
+    return render_to_response(template, args, context_instance=RequestContext(request))
 
 
 def get_auto_news(request):
@@ -457,19 +480,27 @@ def get_auto_news(request):
 #   ################################## END AUTO #########################################
 
 
-def render_bit_news(request):
+def render_bio_news(request, template="bio.html", bio_template="bio_template.html", extra_context=None):
     args = {
         "title": "Bio Technology | ",
-        "top_bit_news": get_bit_news(request)[0],
-        "bit_news": get_bit_news(request)[1:],
         "category_title": "Bio Technology",
+        "top_news": get_top_category_news(request, category_name="BIO"),
+        "total_middle_news": get_category_news_offset(request, category_name="BIO")[1:5],
+        "total_bottom_news": get_category_news_offset(request, category_name="BIO")[5:7],
+        "interest": get_category_news_offset(request, category_name="BIO")[7:11],
+
+        "bio_template": bio_template,
+        "total_news": get_category_news_offset(request, category_name="BIO")[11:],
     }
+    if request.is_ajax():
+        template = bio_template
+
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response("bit.html", args)
+    return render_to_response(template, args, context_instance=RequestContext(request))
 
 
 def get_bit_news(request):
@@ -525,20 +556,29 @@ def get_companies_news(request, company_id):
 #   #############################END COMPANIES###################################
 
 
-def render_entertainment_news(request):
+def render_entertainment_news(request, template="entertainment.html", ent_template="ent_template.html", extra_context=None):
     args = {
         "title": "Entertainment | ",
-        "top_entertainment_news": get_entertainment_news(request)[0],
-        "entertainment_news": get_entertainment_news(request)[1:],
         "category_title": "ENTERTAINMENT",
         "category_flag": "ent",
+
+        "top_news": get_top_category_news(request, category_name="Entertainment"),
+        "total_middle_news": get_category_news_offset(request, category_name="Entertainment")[1:5],
+        "total_bottom_news": get_category_news_offset(request, category_name="Entertainment")[5:7],
+        "interest": get_category_news_offset(request, category_name="Entertainment")[7:11],
+
+        "ent_template": ent_template,
+        "total_news": get_category_news_offset(request, category_name="Entertainment")[11:],
     }
+    if request.is_ajax():
+        template = ent_template
+
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response("entertainment.html", args)
+    return render_to_response(template, args, context_instance=RequestContext(request))
 
 
 def get_entertainment_news(request):
@@ -576,19 +616,27 @@ def render_reviews_news(request):
     return render_to_response("reviews.html", args)
 
 
-def render_space_news(request):
+def render_space_news(request, template="space.html", space_template="space_template.html", extra_context=None):
     args = {
         "title": "Space | ",
-        "top_space_news": get_space_news(request)[0],
-        "space_news": get_space_news(request)[1:],
         "category_title": "SPACE",
+        "top_news": get_top_category_news(request, category_name="Space"),
+        "total_middle_news": get_category_news_offset(request, category_name="Space")[1:5],
+        "total_bottom_news": get_category_news_offset(request, category_name="Space")[5:7],
+        "interest": get_category_news_offset(request, category_name="Space")[7:11],
+
+        "space_template": space_template,
+        "total_news": get_category_news_offset(request, category_name="Space")[11:],
     }
+    if request.is_ajax():
+        template = space_template
+
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response("space.html", args)
+    return render_to_response(template, args, RequestContext(request))
 
 
 def get_space_news(request):
