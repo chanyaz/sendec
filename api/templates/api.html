@@ -1,15 +1,103 @@
-{% extends 'index_new.html' %}
+{#{% extends 'index_new.html' %}#}
 {% load staticfiles %}
 {% load i18n %}
 {% load my %}
 {% block api %}
 
-    <div class="container-fluid container">
+    <style>
+    .api{font-family: Georgia, Times, "Times New Roman", serif}
+{#    h3{color: black;}#}
+    h4{color: black;}
+        .table{width:100%; border: solid 1px lightgrey;}
+        .td{width:30%;}
+        .name{ font-family:Georgia, Times, "Times New Roman", serif;  font-size:20px; text-align: center; color: rgb(25,180,155);}
+        .example{color: blue;}
+    </style>
+
+    <div class="container-fluid container api">
         <div class="row row-centered">
             <div id="api-page">
                 <h3>API</h3>
+                <hr width="100%">
+                <div id="get-token">
+                    <h4>Get token</h4> https://insydia.com/api/get_token/
+                    <table class="table">
+                        <tr class="tr">
+                            <th class="th">Parameter</th>
+                            <th class="th">Value</th>
+                        </tr>
+                        <tr class="tr">
+                            <td class="td name">model</td>
+                            <td class="td">news
+                            <br><b>example value:</b> <i>news</i></td>
+                        </tr>
+                    </table>
+                    example: <span class="example">https://insydia.com/api/get_token/model=news</span>
+                    <br>will return
+                    <i>{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzYWx0IjoiYXBpX25ld3NfdG9rZW4iLCJtb2RlbCI6Im5ld3MiLCJtb2JpbGUiOnRydWV9.pqUgeGCZvjTi7c5ANjij25s3dDhsV9xLBQv5LLCe28I"}</i>
+                </div>
+                <hr width="100%">
+                <div id="get-news">
+                    <h4>Get one article</h4> https://insydia.com/api/news/
+                    <table class="table">
+                        <tr class="tr">
+                            <th class="th">Parameter</th>
+                            <th class="th">Value</th>
+                        </tr>
+                        <tr class="tr">
+                            <td class="td name">token</td>
+                            <td class="td">
+                                <br><b>example value:</b>
+                                <br>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
+                                eyJzYWx0IjoiYXBpX25ld3NfdG9rZW4iLCJtb2RlbCI6Im5ld3MiLCJtb2JpbGUiOnRydWV9.
+                                pqUgeGCZvjTi7c5ANjij25s3dDhsV9xLBQv5LLCe28I </td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="td name">nid</td>
+                            <td class="td">ID of the news</td>
+                        </tr>
+                    </table>
+                    example:
+                    <br><span class="example">https://insydia.com/api/news/token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9 ... pqUgeGCZvjTi7c5ANjij25s3dDhsV9xLBQv5LLCe28I&nid=1</span>
+                    <br>will return
+                    <i>{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzYWx0IjoiYXBpX25ld3NfdG9rZW4iLCJtb2RlbCI6Im5ld3MiLCJtb2JpbGUiOnRydWV9.pqUgeGCZvjTi7c5ANjij25s3dDhsV9xLBQv5LLCe28I"}</i>
+                </div>
+                <hr width="100%">
+                <div id="get-news-offset">
+                    <h4>Get offset of articles</h4> https://insydia.com/api/news/
+                    <table class="table">
+                        <tr class="tr">
+                            <th class="th">Parameter</th>
+                            <th class="th">Value</th>
+                        </tr>
+                        <tr class="tr">
+                            <td class="td name">token</td>
+                            <td class="td">token_value</td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="td name">offset</td>
+                            <td class="td">amount of news
+                                <br><b>Required</b>
+                            </td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="td name">cat</td>
+                            <td class="td">ID of the category
+                                <br><b>Not required</b>
+                            </td>
+                        </tr>
+                    </table>
+                    example:
+                    <br><span class="example">https://insydia.com/api/news/token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9 ... pqUgeGCZvjTi7c5ANjij25s3dDhsV9xLBQv5LLCe28I&cat=1&offset=10</span>
+                    <br>will return 10 news of the category with ID = 1 ('Technology')
+                </div>
             </div>
         </div>
     </div>
+
+                <div class="footer-lol" style="margin-top: 10em;">
+                {% include 'footer.html' %}
+            </div>
+
 
 {% endblock %}

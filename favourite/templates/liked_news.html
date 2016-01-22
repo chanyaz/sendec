@@ -4,43 +4,105 @@
 {% load jsonate_tags %}
 {% block favourite %}
     <style>
-        #rss-news{border: solid 1px red; width: 70%; margin-left: 1%; float: left;}
+        #rss-news{
+            width: 100%;
+            margin-left: 1%;
+            height: 100%;
+            min-height:100%;
+        }
         .current_rss_news{
-            width: 32%;
-            height: 25em;
+            width: 20%;
+            height: 20em;
             margin-left: 1%;
             margin-top: 1%;
             border-radius: 5px;
             box-shadow: 0 0 5px black;
             float: left;
+            position: relative;
         }
-        .current_rss_news:hover{box-shadow: 0 0 5px blue;}
+        .current_rss_news:hover{
+            box-shadow: 0 0 5px blue;
+        }
         .portal{float: left;}
-        .news-image{background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;}
-        .navigation{float: right;}
+{#        .news-image{background: url('') no-repeat center; background-size: cover;  width: 100%; height: 50%;}#}
+        .navigation{
+            float: left;
+        }
+
+        #fav-main-title{
+            text-align: center;
+        }
+
+
+    .fav-footer{
+        bottom: 10px;
+    }
+
+    .favourites{
+        min-height: 30em;
+    }
+    .fav-title{
+        font-family:Georgia, Times, "Times New Roman", serif;
+        font-size: 16px;
+    }
+
+    .fav-delete{
+        position: absolute;
+        bottom: 10px;
+        margin-left: 80%;
+    }
+
     </style>
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid container favourites">
+        <div class="row row-centered">
             <div id="rss-news">
-                {% if rss_news|length < 1 %}
-                    You have not any news as favourite or "see later" yet.
+                {% if fav_len < 1 %}
+                    <div id="fav-main-title">
+                        <h2>FAVOURITE ARTICLES</h2>
+                        You have not any news as favourite or "see later" yet.
+                        <br>You can <a href="/news/usernews/">go</a> to your rss collection or to the <a href="/">latest</a> articles
+                    </div>
                 {% else %}
-                    {% for i in rss_news %}
-                        <div class="current_rss_news"
+                    <div id="fav-main-title">
+                        <h2>Your favourite articles</h2>
+                    </div>
+                    {% for i in favs %}
+                        <div class="current_rss_news rss-rss"
                              id="rss_id_{{ i.id }}"
-                             data-current-rss-news-id="{{ i.id }}"
-                             onclick="RssPreviewPopUpShow('{{ i|jsonate }}')"
-                             style="">
-                            <div class="title">{{ i.title }}</div>
-                            <div class="portal">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id }}</a></div>
-                            <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>
-                            <div class="news-image"></div>
-                            <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>
-                            <div class="navigation">Share&nbsp;|&nbsp;Like</div>
+                             data-indx="{{ i.nuid }}"
+                             onclick="RssPreviewPopUpShow('{{ i.id }}')"
+                             data-current-rss-news-id="{{ i.id }}">
+{#                            <div class="portal">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id }}</a></div>#}
+{#                            <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>#}
+                            <div class="fav-news-image" style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;"></div>
+                            <div class="fav-title"><b>{{ i.id|get_rss_news_title }}</b></div>
+                            {#                            <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>#}
+                            <div class="navigation">{{ i.id|get_rss_portal_name }}&nbsp;|&nbsp;{{ i.id|get_rss_news_date|date }}</div>
+
+                            <div class="fav-delete"><span onclick="removeRssFavourite('{{ i.id }}');">forget</span></div>
                         </div>
                     {% endfor %}
                 {% endif %}
             </div>
         </div>
     </div>
+
+
+    <div class="fav-footer">
+        {% include 'footer.html' %}
+    </div>
+
+
+    <script>
+        function removeRssFavourite(news_id){
+            $.ajax({
+                type: "POST",
+                url: "/news/remove_like_rss/r="+news_id,
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: alert("success")
+            });
+        }
+    </script>
+
+
 {% endblock %}

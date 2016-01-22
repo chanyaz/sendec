@@ -3,6 +3,44 @@
 {% load jsonate_tags %}
 
 <style>
+
+    #current-portal-rss-news{
+       height: 100%;
+        margin-top: 10%;
+        margin-bottom: 10%;
+    }
+    .current_rss_news{
+            position: relative;
+            width: 33%;
+            padding: 0.5% 0.5%;
+            height: 25em;
+{#            min-height: 20em;#}
+{#            max-height: 25em;#}
+{#            margin-left: 1%;#}
+{#            margin-bottom: 1%;#}
+{#            border-radius: 5px;#}
+{#            box-shadow: 0 0 5px black;#}
+            border: solid 2px lightgrey;
+            float: left;
+{#            margin-right: 1%;#}
+        }
+        .current_rss_news_mas{
+             position: relative;
+            width: 33%;
+            padding: 0.5% 0.5%;
+{#            height: 10em;#} min-height:3em;
+            max-height:15em;
+{#            margin-right: 1%;#}
+{#            min-height: 20em;#}
+{#            max-height: 25em;#}
+{#            margin-left: 1%;#}
+{#            margin-bottom: 1%;#}
+            border: solid 2px lightgrey;
+{#            border-radius: 5px;#}
+{#            box-shadow: 0 0 5px black;#}
+            float: left;
+        }
+
     .sect-rss-new{
         width: 100%;
         margin-bottom: 1%;
@@ -49,7 +87,7 @@
     {#             onclick="RssPreviewPopUpShow('{{ i|jsonate }}')">#}
                  onclick="RssPreviewPopUpShow('{{ i.id }}')">
             {% else %}
-            <div class="current_rss_news_mas rss-rss"
+            <div class="current_rss_news rss-rss"
                  id="rss_id_{{ i.id }}"
                  data-indx="{{ i.nuid }}"
                  data-current-rss-news-id="{{ i.id }}"

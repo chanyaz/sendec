@@ -5,6 +5,10 @@
 {% block feed %}
 
     <style>
+    #feed{
+        height: 100%;
+        min-height: 50em;
+    }
     #feeds-list{
         float: left;
         width:70%;
@@ -19,6 +23,7 @@
         background-color: #0fbfb3;
     }
         .channel-name{
+            font-weight: bold;
             width: 50%;
         }
         .channel-today{
@@ -27,6 +32,20 @@
         .channel-week{
             width: 25%;
         }
+
+        #rss-company-form{
+            width:100%;
+            position: relative;
+        }
+    #company-name{
+        float: left;
+        width: 65%
+    }
+    #search-rss-company{
+        float: right;
+        width: 25%;
+    }
+
     </style>
 
 
@@ -39,50 +58,137 @@
                     </div>
                     <table id="feeds-table">
                         <tr class="table-item">
-                            <td class="channel-name">Latest</td>
-                            <td class="channel-today">Today</td>
-                            <td class="channel-week">This week</td>
+                            <td class="channel-name">{% trans 'Latest' %}</td>
+                            <td class="channel-today">
+                                <a href="/rss/news&channel=latest" target="_blank">{% trans 'Today' %}</a>
+                            </td>
+                            <td class="channel-week">
+                                <a href="/rss/news&channel=latest&range=week" target="_blank">
+                                    {% trans 'This week' %}
+                                </a>
+                            </td>
                         </tr>
                         <tr class="table-item">
-                            <td class="channel-name">Technology</td>
-                            <td class="channel-today">Today</td>
-                            <td class="channel-week">This week</td>
+                            <td class="channel-name">{% trans 'Technology' %}</td>
+                            <td class="channel-today">
+                                <a href="/rss/news&channel=technology" target="_blank">{% trans 'Today' %}</a>
+                            </td>
+                            <td class="channel-week">
+                                <a href="/rss/news&channel=technology&range=week" target="_blank">
+                                    {% trans 'This week' %}
+                                </a>
+                            </td>
                         </tr>
                         <tr class="table-item">
-                            <td class="channel-name">Entertainment</td>
-                            <td class="channel-today">Today</td>
-                            <td class="channel-week">This week</td>
+                            <td class="channel-name">{% trans 'Entertainment' %}</td>
+                            <td class="channel-today">
+                                <a href="/rss/news&channel=entertainment" target="_blank">{% trans 'Today' %}</a>
+                            </td>
+                            <td class="channel-week">
+                                <a href="/rss/news&channel=entertainment&range=week" target="_blank">
+                                    {% trans 'This week' %}
+                                </a>
+                            </td>
                         </tr>
                         <tr class="table-item">
-                            <td class="channel-name">Auto</td>
-                            <td class="channel-today">Today</td>
-                            <td class="channel-week">This week</td>
+                            <td class="channel-name">{% trans 'Auto' %}</td>
+                            <td class="channel-today">
+                                <a href="/rss/news&channel=auto" target="_blank">{% trans 'Today' %}</a>
+                            </td>
+                            <td class="channel-week">
+                                <a href="/rss/news&channel=auto&range=week" target="_blank">
+                                    {% trans 'This week' %}
+                                </a>
+                            </td>
                         </tr>
                         <tr class="table-item">
-                            <td class="channel-name">Space</td>
-                            <td class="channel-today">Today</td>
-                            <td class="channel-week">This week</td>
+                            <td class="channel-name">{% trans 'Space' %}</td>
+                            <td class="channel-today">
+                                <a href="/rss/news&channel=space" target="_blank">{% trans 'Today' %}</a>
+                            </td>
+                            <td class="channel-week">
+                                <a href="/rss/news&channel=space&range=week" target="_blank">
+                                    {% trans 'This week' %}
+                                </a>
+                            </td>
                         </tr>
                         <tr class="table-item">
-                            <td class="channel-name">Bio</td>
-                            <td class="channel-today">Today</td>
-                            <td class="channel-week">This week</td>
+                            <td class="channel-name">{% trans 'BIO' %}</td>
+                            <td class="channel-today">
+                                <a href="/rss/news&channel=bio" target="_blank">{% trans 'Today' %}</a>
+                            </td>
+                            <td class="channel-week">
+                                <a href="/rss/news&channel=bio&range=week" target="_blank">
+                                    {% trans 'This week' %}
+                                </a>
+                            </td>
                         </tr>
                     </table>
-                    Company feed:
-                    <form>
+                    <hr width="100%">
+                    <h4>{% trans 'Company feed' %}:</h4>
+                    <span>
+                        {% trans 'Use this form if you want to get RSS for certain company' %}.
+                    </span>
+                    <form id="rss-company-form"
+                          action="/rss/gcr/"
+                          method="POST"
+                          class="form-horizontal">
                         {% csrf_token %}
-                        <input type="text">
-                        <input type="submit">
+                        <div class="form-field">
+                            <div class="form-group">
+                                <input type="text"
+                                       class="form-control"
+                                       id="company-name"
+                                       name="rss-company">
+                                <input type="submit"
+                                       value="{% trans 'Get' %}"
+                                       id="search-rss-company"
+                                       class="form-control btn btn-info">
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="feed-right-side">
                     <aside>
-                        <div class="google-news-right" style="float: right; width: 300px; height: 600px; background-color: #00fff9"></div>
+                        <div class="google-news-right" style="margin-top: 5%; float: right; width: 300px; height: 600px; background-color: #00fff9"></div>
                     </aside>
                 </div>
             </div>
+            <div id="latest-news">
+                {% for i in latest_news %}
+                    <div class="sect-2-top" style="width: 33%; margin-right: 2%; margin-bottom: 3%; float: left">
+                        {% if i.news_main_cover == '' %}
+                        <div class="current_news news-news"
+                             onmouseover="style.border='solid 0.2px blue';"
+                             onmouseout="style.border='';"
+                             onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                        {% else %}
+                        <div class="current_news_mas news-news"
+                             onmouseover="style.border='solid 0.2px blue';"
+                             onmouseout="style.border='';"
+                             onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
+                        {% endif %}
+                            {% if i.news_main_cover != '' %}
+                                <div class="middle-news-cover"
+                                     onmouseover="this.style.cursor='pointer';"
+                                     style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
+                                    <div class="mask"></div>
+                                </div>
+                            {% endif %}
+                            <div class="title" style="margin-top: 5%;"
+                                 onmouseover="this.style.cursor='pointer'; this.style.color='rgb(25, 189, 155)';"
+                                 onmouseout="this.style.color='';">
+                                <div class="news-title">
+                                    <b>{{ i.news_title|safe }}</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
+
+    {% include 'footer.html' %}
 
 {% endblock %}

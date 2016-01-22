@@ -5,6 +5,7 @@
 {% load i18n %}
 {% load cache %}
 {% load my %}
+{% load thumbnail %}
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="keywords" content="IT, space, computers, auto, bio, entertainment">
@@ -16,9 +17,9 @@
     <meta name="google" content="notranslate">
 
 
-    <meta property="og:title" content="{{ og_title }}" />
+    <meta property="og:title" content="Insydia" />
     <meta property="og:type" content="News" />
-    <meta property="og:url" content="" />
+    <meta property="og:url" content="https://insydia.com/" />
     <meta property="og:image" content="" />
     <meta property="og:image:width" content="150" />
     <meta property="og:image:height" content="150" />
@@ -43,7 +44,7 @@
     <title>{% blocktrans %}{{ title }}Insydia{% endblocktrans %}</title>
 
 
-{#    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">#}
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 {#    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">#}
 
 
@@ -69,7 +70,6 @@
 
     <!--<link rel="stylesheet" type="text/css" href="http://static.amigobulls.com/css/chart-widget.min.css.gz" />-->
 {#    <link rel="stylesheet" type="text/css" href="{% static 'static/css/chart-widget.css' %}" />#}
-
 
 
     <!-- CHANGE LANGUAGE -->
@@ -332,7 +332,11 @@
         }
         .signin:before {right:10px;margin:0 0 0 -26%;}
         .signin:after{left:10px;margin:0 -30% 0 0;}
-        .rss-share-item{margin-bottom:0;margin-left: 0;}
+        .rss-share-item{
+            width: 50px;
+            margin-bottom:0;
+            margin-left: 0;
+        }
         #rss-properties-list{
             width: 10em;
             margin-right: -1%;
@@ -383,7 +387,10 @@
         .search-bar-wide{ width:50%; margin-left: 25%; margin-right: auto;}
 {#        #textplace-search{float: left; width: 61%;}#}
         .service-media{float: right; margin-right: 4%;}
-        #news-block{height: 100%;}
+        #news-block{
+            height: 100%;
+            width: 100%;
+        }
         .user-image input[type='text']{width: 80%;}
         .no{width: 100%;}
         #choice{height: inherit;}
@@ -416,11 +423,21 @@
 {#            margin-right: 5%;#}
             width: 6em;
         }
-        .rss-preview-shares{border: solid 1px darkred; height: 2.5em;}
+        .rss-preview-shares{
+            background-color: rgb(45, 62, 80);
+            border: solid 1px darkred;
+            height: 2.5em;
+        }
         #rss-share-list{
             float: left;
             margin-left: -5%;
             list-style-type: none;
+        }
+        #rss-share-list a{
+            color: white;
+        }
+        #rss-share-list a:active{
+            color: #333333;
         }
         .rss-preview-body{
             padding: 0 5%;
@@ -437,7 +454,12 @@
         .rss-preview-body img:after{
             content: '</p>';
         }
-        .rss-preview-body img{ max-width: 100%;}
+        .rss-preview-body img{
+            max-height: 400px;
+            max-width: 100%;
+            width: 100%;
+            height: inherit;
+        }
         .content-text{text-align: center;}
         .content-portals{width: 70%; margin-left: auto; margin-right: auto;}
         .cur_unsel_portal{width: 25%; float: left;}
@@ -492,25 +514,175 @@
             color: rgb(25, 180, 155);
         }
 
+
+        .social-rss:hover{
+            cursor: pointer;
+            color: rgb(25,180,155);
+        }
+
     </style>
 
 
 </head>
 <body>
-    <header class="tabs-to-dropdown">
+
+    <header class="top-bar-header hidden-print top top-nav-collapse">
+        <nav id="top-bar" class="navbar navbar-default"
+        role="navigation" style="top: 0;">
+            <div class="container-fluid container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="/">INSYDIA</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav">
+                      <li><a class="nav-link" href="/news/technology/">Technology</a></li>
+                      <li><a href="/news/entertainment/">Entertainment</a></li>
+                      <li><a href="/news/auto/">Auto</a></li>
+                      <li><a href="/news/space/">Space</a></li>
+                      <li><a href="/news/bio/">Bio</a></li>
+                      <li><a href="/news/companies/">Companies</a></li>
+                      <li><a href="/news/reviews/">Reviews</a></li>
+                      <li><a href="/news/usernews/">Private</a></li>
+{#                    <li class="dropdown">#}
+{#                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>#}
+{#                      <ul class="dropdown-menu">#}
+{#                        <li><a href="#">Action</a></li>#}
+{#                        <li><a href="#">Another action</a></li>#}
+{#                        <li><a href="#">Something else here</a></li>#}
+{#                        <li role="separator" class="divider"></li>#}
+{#                        <li><a href="#">Separated link</a></li>#}
+{#                        <li role="separator" class="divider"></li>#}
+{#                        <li><a href="#">One more separated link</a></li>#}
+{#                      </ul>#}
+{#                    </li>#}
+                  </ul>
+
+                  <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a>
+                            <span id="nav-search-btn" class="glyphicon glyphicon-search"></span>
+                        </a>
+                    </li>
+                      {% if username.username %}
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                              {{ username.username }}<span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a href="/profile/">Profile</a></li>
+                            <li><a href="/news/usernews/">Private news</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/auth/logout/">Sign out</a></li>
+                          </ul>
+                        </li>
+                      {% else %}
+                          <li><a href="/auth/login/">Sign in</a></li>
+                      {% endif %}
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+
+            <div id="nav-search-bar"
+                 hidden
+                 style="position: absolute; z-index: 999; background: rgba(0, 0, 0, 0.7); width: 100%; height: 60px;">
+                <ul class="nav navbar-nav" style="width: 80%; margin-left: 10%; height: 60px; position: relative">
+                    <li style="float: left; width: 10%; font-size: 1.5em; height: 60px;">
+                        <a>
+                            <div class="" style="vertical-align: baseline;">
+                                <span class="glyphicon glyphicon-search" style="position: relative;">Search</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li style="width: 90%;float: right;">
+                        <form class="navbar-form navbar-left"
+                              action="/search/"
+                              style="width: 100%;"
+                              method="get"
+                              name="search_form"
+                              onsubmit="return validate_form();"
+                              role="search">
+                            <div class="form-field" style="width: 100%;">
+                                <div class="form-group" style="width: 100%;">
+                                    <input onblur="$(this).removeClass('textplace-search-active');"
+                                           placeholder="What are you lookig for?"
+                                           type="search"
+                                           name="q"
+                                           autocomplete="off"
+                                           id=""
+                                           class=""
+                                           style="float: left; background: none; border: none; border-bottom: solid 1px lightgrey;
+                                           outline: none; width:80%; font-size: 2em; color: white;">
+                                    <button type="submit"
+                                            class="btn btn-primary"
+                                            style="float: right; margin-right: 10%; margin-top: 1%;">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+
+    <!--<header class="tabs-to-dropdown" style="">
         <nav class="tab-bar">
             <ul class="">
                 <li class="active"><a href="/"><span class="">INSYDIA</span></a></li>
 {#                <li><a href="#0">HOME</a></li>#}
-                <li class="top-bar-item"><a href="/news/technology/">TECHNOLOGY</a></li>
-                <li class="top-bar-item"><a href="/news/entertainment/">ENTERTAINMENT</a></li>
-                <li class="top-bar-item"><a href="/news/auto/">AUTO</a></li>
-                <li class="top-bar-item"><a href="/news/space/">SPACE</a></li>
-                <li class="top-bar-item"><a href="/news/bio/">BIO</a></li>
-                <li class="top-bar-item"><a href="/news/companies/">COMPANIES</a></li>
-                <li class="top-bar-item"><a href="/news/reviews/">REVIEWS</a></li>
+                {% if here_tech == True %}
+                    <li class="top-bar-item"><a class="here" href="/news/technology/">TECHNOLOGY</a></li>
+                {% else %}
+                    <li class="top-bar-item"><a href="/news/technology/">TECHNOLOGY</a></li>
+                {% endif %}
+                {% if here_ent == True %}
+                    <li class="top-bar-item"><a class="here" href="/news/entertainment/">ENTERTAINMENT</a></li>
+                {% else %}
+                    <li class="top-bar-item"><a href="/news/entertainment/">ENTERTAINMENT</a></li>
+                {% endif %}
+                {% if here_auto == True %}
+                    <li class="top-bar-item"><a class="here" href="/news/auto/">AUTO</a></li>
+                {% else %}
+                    <li class="top-bar-item"><a href="/news/auto/">AUTO</a></li>
+                {% endif %}
+                {% if here_space == True %}
+                    <li class="top-bar-item"><a class="here" href="/news/space/">SPACE</a></li>
+                {% else %}
+                    <li class="top-bar-item"><a href="/news/space/">SPACE</a></li>
+                {% endif %}
+                {% if here_bio == True %}
+                    <li class="top-bar-item"><a class="here" href="/news/bio/">BIO</a></li>
+                {% else %}
+                    <li class="top-bar-item"><a href="/news/bio/">BIO</a></li>
+                {% endif %}
+                {% if here_companies == True %}
+                    <li class="top-bar-item"><a class="here" href="/news/companies/">COMPANIES</a></li>
+                {% else %}
+                    <li class="top-bar-item"><a href="/news/companies/">COMPANIES</a></li>
+                {% endif %}
+                {% if here_review == True %}
+                    <li class="top-bar-item"><a class="here" href="/news/reviews/">REVIEWS</a></li>
+                {% else %}
+                    <li class="top-bar-item"><a href="/news/reviews/">REVIEWS</a></li>
+            {% endif %}
                 {% if username.username %}
-                    <li class="top-bar-item"><a href="/news/usernews/">PRIVATE</a></li>
+                    {% if here_private == True %}
+                        <li class="top-bar-item"><a class="here" href="/news/usernews/">PRIVATE</a></li>
+                    {% else %}
+                        <li class="top-bar-item"><a href="/news/usernews/">PRIVATE</a></li>
+                    {% endif %}
                 {% endif %}
             {% if username.username %}
                 <li class="top-bar-item search-item-private">
@@ -547,19 +719,16 @@
             {% endif %}
             </ul>
         </nav>
-        <div class="dropdown">
-            <button class="dropdown-toggle">...<span class="fa fa-angle-down"></span></button>
-            <ul></ul>
-        </div>
 
     </header>
-
+    -->
     <div id="total-wrapper">
 
 
 
         <div class="overlay"></div>
 
+        {% if left_bar == True %}
         <!-- Sidebar -->
         <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
             <ul class="nav sidebar-nav">
@@ -660,12 +829,15 @@
             </ul>
         </nav>
 
-        <div id="wrapper-main-content">
-            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
-                <span class="hamb-top"></span>
-                <span class="hamb-middle"></span>
-                <span class="hamb-bottom"></span>
-            </button>
+            <div id="wrapper-main-content">
+                <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                    <span class="hamb-top"></span>
+                    <span class="hamb-middle"></span>
+                    <span class="hamb-bottom"></span>
+                </button>
+        {% else %}
+            <div id="wrapper-main-content">
+        {% endif %}
 
             <!--
             <div class="top-navigation">
@@ -829,9 +1001,9 @@
 {#                        <hr width="98%">#}
 
 
-                        <div id="cnb">
+{#                        <div id="cnb">#}
 {#                            {% block current_news %}{% endblock %}#}
-                        </div>
+{#                        </div>#}
                         <div id="flex-block">
                             {% block current_news %}{% endblock %}
                             {% if news_block == True %}
@@ -853,6 +1025,8 @@
                                     {% block current_company %}{% endblock %}
                                 {% block reviews %}{% endblock %}
                                 {% block user_news %}{% endblock %}
+                                    {% block manager %}{% endblock %}
+                                    {% block browse_portals %}{% endblock %}
                                 {% block search %}{% endblock %}
                                 {% block page_not_found %}{% endblock %}
                                 {% block access_denied %}{% endblock %}
@@ -873,9 +1047,11 @@
         </div>
     </div>
 {#        <a href="#0" class="cd-top">Top</a>#}
-        <div class="footer-lol">
-            {% include 'footer.html' %}
-        </div>
+        {% if left_bar == True %}
+            <div class="footer-lol">
+                {% include 'footer.html' %}
+            </div>
+        {% endif %}
 
 
     <div class="popup-user-window" hidden>
@@ -893,6 +1069,7 @@
          hidden
          style="z-index: 999;"
          class="preview-rss-news"
+         data-nuid=""
          onkeydown="if(event.keyCode == 27){RssPreviewPopUpHide();}">
         <div class="preview-rss-news-content">
             <div class="total-body">
@@ -905,37 +1082,67 @@
                     </span>
                 </div>
                 <div class="rss-preview-title"></div>
-                <div class="rss-preview-author"></div>
-                <div class="rss-preview-date-published"></div>
-                <div class="rss-preview-parent-link"></div>
+                <div class="" style="height: 10px;">
+                    <div class="rss-preview-author"></div>
+                    <div class="rss-preview-date-published"></div>
+                    <div class="rss-preview-parent-link"></div>
+                </div>
                 <hr width="100%">
-                <div class="rss-preview-shares">
+                <div class="rss-preview-shares" data-news-link="">
+                    
+
+
                     <ul id="rss-share-list">
-                        <li class="rss-share-item">
-                            <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/2000px-Facebook_icon_2013.svg.png"
-                                 width="34px"/>
+                        <li class="rss-share-item" style="margin-right: -20px;">
+                            <a data-target-link="" class="rss-share-facebook" onclick="window.open(
+                                'http://facebook.com/sharer/sharer.php?u='+$(this).attr('data-target-link'),
+                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes'
+                            )">
+                                <span class="fa fa-facebook social-rss" style="font-size: 2.5em; "></span>
+                            </a>
+{#                            <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"#}
+{#                                 {% thumbnail '/static/img/rss-news/facebook.png' '16x16' as im %}#}
+{#                                 src="{{ im.url }}"#}
+{#                                 {% endthumbnail %}#}
+{#                                 onmouseover="$(this).css('background-color', 'rgb(25,180,155)');"#}
+{#                                  height="30px"/>#}
                         </li>
                         <li class="rss-share-item">
-                            <img onclick="location.href='http://vk.com/insydianews';"
-                                 src="https://cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/vkontakte-256.png"
-                                 width="34px"/>
+                            <a data-target-link="" class="rss-share-vk" onclick="window.open('https://vk.com='+$(this).attr('data-target-link'),
+                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
+                                <span class="fa fa-vk social-rss" style="font-size: 2.5em;"></span>
+                            </a>
+{#                            <img onclick="location.href='http://vk.com/insydianews';"#}
+{#                                 src="https://cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/vkontakte-256.png"#}
+{#                                 width="34px"/>#}
                         </li>
                         <li class="rss-share-item">
-                            <img onclick="location.href='https://twitter.com/insydianews';"
-                                 src="https://g.twimg.com/Twitter_logo_blue.png"
-                                 width="40px"/>
+                            <a data-target-link="" class="rss-share-twitter"
+                            onclick="window.open('https://twitter.com/intent/tweet?original_referer='+'https://insydia.com/'+'&ref_src=twsrc%5Etfw&%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+$(this).attr('data-target-link')+'&via=InsydiaNews',
+                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
+                                <span class="fa fa-twitter social-rss" style="font-size: 2.5em;"></span>
+                            </a>
+{#                            <img onclick="location.href='https://twitter.com/insydianews';"#}
+{#                                 src="https://g.twimg.com/Twitter_logo_blue.png"#}
+{#                                 width="40px"/>#}
                         </li>
                         <li class="rss-share-item">
-                            <img onclick="location.href='http://linkedin.com/';"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/768px-LinkedIn_logo_initials.png"
-                                 width="34px"/>
+                            <a data-target-link="" class="rss-share-linkedin" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+$(this).attr('data-target-link')+'&title='+'TITLE'+'&summary='+'summary',
+                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
+                                <span class="fa fa-linkedin social-rss" style="font-size: 2.5em;"></span>
+                            </a>
+{#                            <img onclick="location.href='http://linkedin.com/';"#}
+{#                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/768px-LinkedIn_logo_initials.png"#}
+{#                                 width="34px"/>#}
                         </li>
                     </ul>
                     <ul id="rss-properties-list" data-rss-id="">
-                        <li class="rss-item-save glyphicon glyphicon-plus text-muted" style="font-size: 2em;"></li>
-                        <li class="rss-item-send glyphicon glyphicon-send text-muted" style="font-size: 2em;"></li>
-                        <li class="rss-item-copy glyphicon glyphicon-link text-muted" style="font-size: 2em;"></li>
+                        <li class="rss-item-save glyphicon glyphicon-plus text-muted"
+                            onclick="setRssFavourite($('#rss-properties-list').attr('data-rss-id'));"
+                            style="font-size: 2em;"></li>
+                        <a href="mailto:">
+                            <li class="rss-item-send glyphicon glyphicon-send text-muted" style="font-size: 2em;"></li>
+                        </a>
                     </ul>
                 </div>
                 <div class="rss-preview-body"></div>
@@ -1055,39 +1262,86 @@
             $("#portals-addition-window").hide();
         }
     </script>
+
+
+    <script>
+        function setRssFavourite(news_id){
+            $.ajax({
+                type: "POST",
+                url: "/news/add_like_rss/r="+news_id,
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: alert("success")
+            });
+        }
+    </script>
+
     <script >
         $(document).ready(function(){
             RssPreviewPopUpHide();
         });
         function RssPreviewPopUpShow(i){
+
+             $.ajax({
+                 type: "POST",
+                 url: "/news/scar="+i,
+                 data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                 success: function(){
+                    $('#rss-title-'+i).addClass('rss-title-read');
+                }
+            });
+
             $.ajax({
                 type: "POST",
                 url: "/news/gcr="+i+"/",
                 data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                success: function(data){
-                     $("html").css("overflowY", "hidden");
+                success: function(data) {
+                    $("html").css("overflowY", "hidden");
                     $parsedData = data.data;
-                    $(".rss-preview-title").html("<h2 style='color: black;'>"+$parsedData.title+"</h2>");
-                    if($parsedData.author.length !== 0) {
-                        $(".rss-preview-author").html("Author: "+$parsedData.author+"&nbsp;|&nbsp;");
+                    $(".rss-preview-title").html("<h2 style='color: black;'>" + $parsedData.title + "</h2>");
+                    if ($parsedData.author.length !== 0) {
+                        $(".rss-preview-author").html("Author: " + $parsedData.author + "&nbsp;|&nbsp;");
                     }
-                    $(".rss-preview-parent-link").html("<a target='_blank' href='"+$parsedData.link+"'>To&nbsp;original<span class='glyphicon glyphicon-chevron-right text-muted'></span></a>");
-{#                    var d = new Date($parsedData.date_posted);#}
-                    $(".rss-preview-date-published").html("Published: "+$parsedData.date);//"&nbsp;|&nbsp;"+ d.toDateString().substring(4)+"&nbsp;"+d.toTimeString().substring(0,5));
-                    if($parsedData.content.length === 0) {
-                        $(".rss-preview-body").html($parsedData.text+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%;' class='btn btn-primary'>See&nbsp;original</button></a>");
+
+                    $('#preview-rss-news').attr('data-nuid', $parsedData.nuid);
+                    $('#rss-properties-list').attr('data-rss-id', $parsedData.id);
+
+                    $('.rss-share-facebook').attr('data-target-link', $parsedData.link);
+                    $('.rss-share-vk').attr('data-target-link', $parsedData.link);
+                    $('.rss-share-twitter').attr('data-target-link', $parsedData.link);
+                    $('.rss-share-linkedin').attr('data-target-link', $parsedData.link);
+
+
+                    $(".rss-preview-parent-link").html("<a target='_blank' href='" + $parsedData.link + "'>To&nbsp;original<span class='glyphicon glyphicon-chevron-right text-muted'></span></a>");
+                    {#                    var d = new Date($parsedData.date_posted);#}
+                    $(".rss-preview-date-published").html("Published: " + $parsedData.date);//"&nbsp;|&nbsp;"+ d.toDateString().substring(4)+"&nbsp;"+d.toTimeString().substring(0,5));
+                    if ($parsedData.content.length === 0) {
+                        $(".rss-preview-body").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;' class='btn btn-primary'>See&nbsp;original</button></a>");
                     }
                     else {
-                        $(".rss-preview-body").html($parsedData.content+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%; margin-bottom: 20px;' class='btn btn-primary'>See&nbsp;original</button></a>");
+                        $(".rss-preview-body").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px;' class='btn btn-primary'>See&nbsp;original</button></a>");
                     }
-{#                    $(".rss-item-save").html(#}
-{#                            "<img onclick='add_like_rss("+$parsedData.id+")' class='rss-save' src='{% static 'static/img/save.png' %}' width='30px' alt='Save' />"#}
-{#                    );#}
-{#                    $(".rss-item-copy").html(#}
-{#                            "<img class='copy-to-cb' id='copy-"+$parsedData.id+"' src='{% static 'static/img/chain.png' %}' width='30px'/>");#}
-                    $(".preview-rss-news").show();
+                    {#                    $(".rss-item-save").html(#}
+                    {#                            "<img onclick='add_like_rss("+$parsedData.id+")' class='rss-save' src='{% static 'static/img/save.png' %}' width='30px' alt='Save' />"#}
+                    {#                    );#}
+                    {#                    $(".rss-item-copy").html(#}
+                    {#                            "<img class='copy-to-cb' id='copy-"+$parsedData.id+"' src='{% static 'static/img/chain.png' %}' width='30px'/>");#}
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/news/cua="+$parsedData.portal,
+                        data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                        success: function(data){
+                            $('#cprs-count-'+$parsedData.portal).html(
+                                    data.data
+                            );
                         }
+                    });
+                    $(".preview-rss-news").show();
+                }
             });
+
+
             /*$("html").css("overflowY", "hidden");
             $parsedData = $.parseJSON(i);
             $(".rss-preview-title").html("<h3 style='color: black;'>"+$parsedData.title+"</h3>");
@@ -1112,6 +1366,7 @@
             $(".preview-rss-news").hide();
             $("html").css("overflowY", "auto");
         }
+
     </script>
     <div id="live"></div>
 
@@ -1136,7 +1391,8 @@
 {#    <script src="{% static 'static/js/pulse.js' %}"></script>#}
 {#    <script src="{% static 'static/js/pulse.min.js' %}"></script>#}
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="{% static 'static/js/bootstrap.min.js' %}" type="javascript"></script>
+{#    <script src="{% static 'static/js/bootstrap.js' %}" type="javascript"></script>#}
+{#    <script src="{% static 'static/js/bootstrap.min.js' %}" type="javascript"></script>#}
     <script type="text/javascript" src="{% static 'static/js/jquery.cookie.js' %}"></script>
 
 
@@ -1146,7 +1402,9 @@
 
 {#<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>#}
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script>
+{#<script src="//atmpl.ru/design/scroll-effect/2015/hiding-menu/jquery.bootstrap-autohidingnavbar.min.js"></script>#}
+
+        <script>
 $(document).ready(function () {
   var trigger = $('.hamburger'),
       overlay = $('.overlay'),
@@ -1333,10 +1591,10 @@ $(document).ready(function () {
 {#      },#}
         select:function(event, ui){
             var targetOffset = $("#"+ui.item.id).offset().top;
-            $('html,body').animate({
+            $('html, body').animate({
                 scrollTop: targetOffset
             });
-            var a = $("#company-search").val().toLowerCase();
+{#            var a = $("#company-search").val().toLowerCase();#}
 {#            getCompanyID(ui.item.id);#}
 {#            alert(ui.item.id);#}
             $('#'+ ui.item.id).animate({backgroundColor: "#00C0FF"}, 2000).animate({backgroundColor: "transparent" }, 2000);
@@ -1348,18 +1606,66 @@ $(document).ready(function () {
       close: function() {
         $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
       }
-    }).data( "autocomplete" )._renderItem = function( ul, item ) {
-    // Inside of _renderItem you can use any property that exists on each item that we built
-    // with $.map above */
-    return $("<li></li>")
-        .data("item.autocomplete", item)
-        .append("<a>" + item.label + "<br>" + item.name + "</a>")
-        .appendTo(ul);
-};
+    })
 
 
 
     </script>
+
+
+
+
+
+
+
+    <script>
+        $('#rss-company-form').submit(function(){
+            location.href='/rss/news&channel=company&name='+$('#company-name');
+        });
+
+        $('#company-name').autocomplete({
+            source: function(request, response){
+                $.ajax({
+                    url: "/news/companies/cs="+$('#company-name').val().replace(/\./g, ""),
+                    dataType: "json",
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        q: request.term
+                    },
+                    success: function( data ) {
+                        response($.map(data, function(item){
+                            return{
+                                id: item.id,
+                                label: item.name,
+                                value: item.name,
+                                verbose: item.verbose
+                            };
+                        }));
+                    }
+                });
+            },
+            minLength: 1,
+            maxLength: 10,
+            select: function(event, ui){
+                location.href='/rss/news&channel=company&name='+ui.item.verbose;
+            },
+            open: function(){
+                $(this).removeClass('ui-corner-all').addClass('ui-corner-top');
+            },
+            close: function(){
+                $(this).removeClass('ui-corner-top').addClass('ui-corner-all');
+            }
+        }).data("autocomplete")._renderItem = function(ul, item){
+            return $("<li></li>").data("item.autocomplete", item).append("<a>"+item.label+"<br>"+item.name+"</a>").appendTo(ul);
+        };
+
+    </script>
+
+
+
+
+
+
 
 
 
@@ -1524,7 +1830,31 @@ function scaleBannerVideoSize(element){
 
     });
 }
+
+
+    $('#nav-search-btn').click(function(){
+        if($(this).hasClass('active-search-btn')){
+            $('#nav-search-bar').slideUp();
+            $('#nav-search-btn').removeClass('active-search-btn');
+
+        }
+        else{
+            $('#nav-search-btn').addClass('active-search-btn');
+            $('#nav-search-bar').slideDown();
+        }
+    });
+
+    $(document).ready(function(){
+        $(this).keydown(function(eventObject){
+            if(eventObject.which == 27){
+                $("#nav-search-bar").slideUp();
+            }
+        })
+    });
+
+
 </script>
+
 
 </body>
 </html>

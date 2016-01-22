@@ -1,7 +1,8 @@
 from django import template
 from django.utils.importlib import import_module
 from django.contrib.auth.models import User
-from news.models import News, NewsWatches, NewsPortal, NewsCategory, RssPortals, RssNewsCovers, Companies
+from news.models import News, NewsWatches, NewsPortal, NewsCategory, RssPortals, RssNewsCovers, Companies, \
+    UserRssNewsReading, RssNews
 from userprofile.models import UserSettings
 from django.contrib.auth.models import User
 
@@ -48,15 +49,18 @@ def check_reading_category(value_cid, value_username):
     else:
         return False
 
+
 @register.filter(name="get_article_author")
 def get_article_author(value):
     first_name = User.objects.get(id=value).first_name
     second_name = User.objects.get(id=value).last_name
     return first_name.capitalize()+" "+second_name.capitalize()
 
+
 @register.filter(name="get_portal_name")
 def get_portal_name(value):
     return NewsPortal.objects.get(id=int(value)).portal_name
+
 
 @register.filter(name="get_company_owner_name")
 def get_company_owner_name(value):
@@ -82,6 +86,15 @@ def get_user_photo(value):
 @register.filter(name="get_rss_news_cover")
 def get_rss_news_cover(value):
     return RssNewsCovers.objects.get(rss_news_id=int(value)).main_cover
+
+@register.filter(name="get_rss_news_title")
+def get_rss_news_title(value):
+    return RssNews.objects.get(id=int(value)).title
+
+
+@register.filter(name="get_rss_news_date")
+def get_rss_news_date(value):
+    return RssNews.objects.get(id=int(value)).date_posted
 
 
 @register.filter(name="get_portal_link")
@@ -116,3 +129,25 @@ def check_format(value):
         return True
     elif str(value)[-4:] in ['.mp4']:
         return False
+
+
+@register.filter(name="get_unread_news")
+def get_unread_news(value, user):
+    return UserRssNewsReading.objects.filter(user_id=user).filter(rss_portal_id=int(value)).filter(read=False).count()
+
+
+@register.filter(name="check_read_rss")
+def check_read_rss(value, user):
+    return UserRssNewsReading.objects.get(rss_news_id=int(value), user_id=int(user)).read
+
+
+@register.filter(name="get_cover_last_article")
+def get_cover_last_article(value):
+    rss_instance = RssNews.objects.filter(portal_name_id=int(value))[0]
+    # rss_instance = RssNews.objects.get(id=157)
+    return RssNewsCovers.objects.get(rss_news_id=rss_instance.id).main_cover
+
+
+@register.filter(name="get_description")
+def get_description(value):
+    return RssPortals.objects.get(id=int(value)).description

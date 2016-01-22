@@ -4,7 +4,7 @@ import datetime, time
 import os
 import string
 from random import choice, randint
-
+import lxml.html
 
 def fill_start_data_news():
     #db = sqlite3.connect(BASE_DIR+"\\db.sqlite3")
@@ -64,6 +64,52 @@ def last_element(feed):
     return args
 
 
+def set_user_rss_read(user_id, rss_news_id, rss_portal_id):
+    db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+    cursor = db.cursor()
+    query = "INSERT INTO user_rss_news_read(user_id, rss_news_id, rss_portal_id, read) VALUES(%s,%s,%s,%s)"
+    data_query = (user_id, rss_news_id, rss_portal_id, False)
+    cursor.execute(query, data_query)
+    db.commit()
+    return 0
+
+
+def get_amount_of_user_readers(portal_id):
+    db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+    cursor = db.cursor()
+    query = "SELECT user_id FROM user_rss_news UR WHERE portal_id=%s AND UR.check=TRUE"
+    data_query = [portal_id]
+    cursor.execute(query, data_query)
+    amount = cursor.fetchall()
+    print("Count: ", len(amount), "\nUsers with IDs: ", amount)
+    for i in amount:
+        print(i[0])
+
+    return [len(amount), amount]
+
+
+def parse_img(url):
+    import urllib.request as r
+    from urllib import error
+    try:
+        return lxml.html.parse(r.urlopen(url)).xpath('//img')
+    except error.HTTPError:
+        return False
+
+
+def result(url):
+    if parse_img(url) == False:
+        return False
+    else:
+        array = []
+        for i in parse_img(url):
+            if i.get('width') and i.get('height'):
+                array.append({'size': str(int(i.get('width'))*int(i.get('height'))), 'src': i.get('src')})
+            else:
+                pass
+        return array
+
+
 def connect_to_db(urls):
     #   db = sqlite3.connect(BASE_DIR+"\\db.sqlite3")
     db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
@@ -88,18 +134,28 @@ def connect_to_db(urls):
         cursor.execute(query_0, data_query_0)
         count = cursor.fetchall()
         import re
-        match_2 = re.findall(r'src=(.*?)\s.*/>', data["content"])
+        match_2 = re.findall(r'src=\"(.*?)\"\s.*/>', data["content"])
         if len(match_2) >= 1:
-            data["main_cover"] = str(match_2[0])
+            # a = re.findall(r'([=\-_.:](\d+x\d+)+)', str(match_2[0]))[0]
+            data["main_cover"] = str(match_2[0])#.replace(a, '')
         else:
-            data["main_cover"] = str(match_2)
-        data["content"] = data["content"].replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
-        data["title"] = data["title"].replace('"', '').replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
-        data["description"] = data["description"].replace("\xa0", "").replace("%", "%%").replace("> ", ">").replace(" </", "</").replace(" <", "<").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
+            # a = re.findall(r'([=\-_.:](\d+x\d+)+)', str(match_2))[0]
+            data["main_cover"] = str(match_2)#.replace(a, '')
+
+        if len(match_2) == 0:
+            match_3 = re.findall(r'src=\"(.*?)\"\s.*/>', data["description"])
+            a = str(match_3)
+
+            if len(match_3) >= 1:
+                data["main_cover"] = str(match_3[0])#.replace(a, '')
+            else:
+                # a = re.findall(r'([=\-_.:](\d+x\d+)+)', str(match_2))[0]
+                data["main_cover"] = str(match_3)#.replace(a, '')
 
 
-
-
+        data["content"] = data["content"].replace("\xa0", " ").replace("%", "%%").replace("> ", "> ").replace(" </", "</").replace(" <", " <").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
+        data["title"] = data["title"].replace('"', '').replace("\xa0", " ").replace("%", "%%").replace("> ", "> ").replace(" </", "</").replace(" <", " <").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
+        data["description"] = data["description"].replace("\xa0", "").replace("%", "%%").replace("> ", "> ").replace(" </", "</").replace(" <", " <").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
 
 
         # TEST
@@ -107,7 +163,37 @@ def connect_to_db(urls):
         # for i in match:
         #     data["description"] = data["description"].replace(i, "")
 
+    ############## Parse all images from current url #######################
+    # def parse_img(url):
+    #     return lxml.html.parse(url).xpath('//img')
 
+    # def print_matches(url):
+    #     for i in parse_img(url):
+    #         print(i.get('width'), i.get('height'), i.get('src'))
+
+    # def result(url):
+    #     array = []
+    #     for i in parse_img(url):
+    #         if i.get('width') and i.get('height'):
+    #             array.append({'size':str(int(i.get('width'))*int(i.get('height'))), 'src': i.get('src')})
+    #         else:
+    #             pass
+    #     return array
+    #
+        if data["main_cover"] == '[]':
+            end = result(data['link'])
+            if end != False:
+                max_item = 0
+                for i in range(len(end)):
+                    if int(end[i]['size']) > max_item:
+                        max_item = int(end[i]['size'])
+
+                for i in range(len(end)):
+                    if int(end[i]['size']) == max_item:
+                        current_cover = end[i]['src']
+
+                        data["main_cover"] = current_cover
+    ############################################################################
 
 
 
@@ -122,7 +208,9 @@ def connect_to_db(urls):
 
         for current_portal in portals_list:
             if current_portal[2] in data["link"]:
-                current_rss_news_id = current_portal[0]
+                current_rss_news_id = current_portal[0]    # CURRENT PORTAL ID
+                current_rss_news_cat_id = current_portal[7]
+
         if len(count) == 0:
             #cursor.execute("""INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""",(data["title"], datetime.datetime(int(new_date[3]), 11, int(new_date[1]), int(time[0]), int(time[1]), int(time[2])), data["description"], data["link"], 1, 1, data["content"], data["author"]))
             query = """INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author, nuid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
@@ -131,21 +219,34 @@ def connect_to_db(urls):
                           data["description"],
                           data["link"],
                           current_rss_news_id,
-                          1,
+                          current_rss_news_cat_id,
                           data["content"],
                           data["author"],
                           ''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _
                                               in range(33)))
-
             cursor.execute(query, data_query)
             query_2 = "SELECT ID FROM news_rss WHERE title=%s"
             data_query_2 = [data["title"]]
             cursor.execute(query_2, data_query_2)
             current_rss_id = cursor.fetchone()[0]
+
+
             query_3 = "INSERT INTO rss_news_covers(rss_news_id, main_cover) VALUES (%s, %s)"
             data_query_3 = (int(current_rss_id), data["main_cover"])
             cursor.execute(query_3, data_query_3)
+
+
+            query_rss_portal = "UPDATE rss_portals SET cover=%s WHERE id=%s"
+            query_rss_portal_data=(data["main_cover"], int(current_rss_news_id))
+            cursor.execute(query_rss_portal, query_rss_portal_data)
+
+
             db.commit()
+            instance = get_amount_of_user_readers(current_rss_news_id)
+            user_amount = instance[0]
+            users = [i[0] for i in instance[1]]
+            for i in range(len(users)):
+                set_user_rss_read(users[i], current_rss_id, current_rss_news_id)
             print("Inserted from: ", url)
         else:
             print("Already exists: ", url)
@@ -207,13 +308,15 @@ def fill_rss_portals():
         if len(count) == 0:
             print(len(portals[file_list[i]]["verbose"]))
             cur_iter += 1
-            query = "INSERT INTO rss_portals(portal, portal_base_link, follows, description, cover, verbose_name) VALUES(%s, %s, %s, %s, %s, %s)"
+            categories = {"Technology": 1, "Entertainment": 2, "Auto": 3, "Space": 4, "BIO": 5}
+            query = "INSERT INTO rss_portals(portal, portal_base_link, follows, description, cover, verbose_name, category_id) VALUES(%s, %s, %s, %s, %s, %s,%s)"
             data_query = (portals[file_list[i]]["name"],
                           portals[file_list[i]]["base_link"],
                           0,
                           portals[file_list[i]]["description"],
                           portals[file_list[i]]["cover"],
-                          portals[file_list[i]]["verbose"])
+                          portals[file_list[i]]["verbose"],
+                          categories[portals[file_list[i]]["category"]])
             cursor.execute(query, data_query)
             db.commit()
             print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "When total end is ", end)
@@ -263,6 +366,7 @@ def fill_companies():
     db.close()
 
 
+
 def fill_news():
     import json
     db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
@@ -280,13 +384,13 @@ def fill_news():
             if news[file_list[i]]['category'] == "technology" and news[file_list[i]]['date'] != "date":
                 cur_iter += 1
                 news_title = news[file_list[i]]["title"]
-                news_category_id = 6    # Technology
+                news_category_id = 1    # Technology
                 news_post_date = news[file_list[i]]["date"]
                 news_post_text_english = news[file_list[i]]["text"]
                 news_post_text_russian = news[file_list[i]]["text"]
                 news_post_text_chinese = news[file_list[i]]["text"]
                 news_portal_name_id = 1    # Insydia
-                news_company_owner_id = 1    # Insydia
+                news_company_owner_id = 2    # Insydia
                 news_author_id = 1    # Saqel
                 news_main_cover = ""    # None
                 news_likes = 0
@@ -352,9 +456,23 @@ def save_rss_news():
     db.close()
 
 
+def create_categories():
+    db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+    cursor = db.cursor()
+    categories = ["Technology", "Entertainment", "Auto", "Space", "BIO"]
+    for i in categories:
+        query_set = "INSERT into news_category(category_name) VALUES(%s)"
+        query_data = [i]
+        cursor.execute(query_set, query_data)
+        db.commit()
+        print("Category ", i, "added")
+    db.close()
+
+
+
 def work_func():
     urls_of_portals = get_feed_urls()
-    print("1. Fill Rss Portals\n2. Syndicate news\n3. Fill Companies\n4. Fill news\n5. Save RSS")
+    print("1. Fill Rss Portals\n2. Syndicate news\n3. Fill Companies\n4. Fill news\n5. Save RSS\n6.User readers\n7. Create categories")
     x = int(input("What can I help you? Enter number: "))
     if x == 1:
         fill_rss_portals()
@@ -371,6 +489,10 @@ def work_func():
         fill_news()
     elif x == 5:
         save_rss_news()
+    elif x == 6:
+        get_amount_of_user_readers(3)
+    elif x == 7:
+        create_categories()
     else:
         import sys
         print("Good bye!")

@@ -17,11 +17,40 @@ from django.conf.urls import include, url, patterns
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth.models import User, Group
+
+
+# API MODELS
+from news.models import News
+
 
 from django.conf.urls import handler404
 handler404 = 'news.views.page_not_found'
 
+
+admin.autodiscover()
+from rest_framework import routers
+from api.views import NewsViewSet
+
+
+router = routers.DefaultRouter()
+router.register(r'news', NewsViewSet)
+
+
+
+
 urlpatterns = patterns('',
+
+
+
+    url(r'^o/', include(router.urls)),
+    # url(r'^oauth/', include('oauth2_provider.urls'),name='oauth2_provider'),
+    url(r'^oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+
+
+
+
+
     url(r'^about/', include('news.urls')),
     url(r'^about', 'news.views.render_about_page'),
     url(r'^admin/', include(admin.site.urls)),
@@ -42,5 +71,13 @@ urlpatterns = patterns('',
     # url(r'^ru/', 'news.views.translate_russian'),
     # url(r'^cn/', 'news.views.translate_chinese'),
     url(r'^rss/', include('rss.urls')),
+
+
+
+    url(r'^closet/check_email/email=(?P<email>\w+)$', 'news.views.check_email_subs'),
+    url(r'^closet/subs/$', 'news.views.closet_subscribe'),
+    url(r'^closet/(?P<lang>\w+)/$', 'news.views.render_close_page'),
+
+
     url(r'^$', 'news.views.main_page_load'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

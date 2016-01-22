@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     "nocaptcha_recaptcha",
     "password_reset",
     "api",
+    "oauth2_provider",
     "rest_framework",
     "rss",
     #"imagekit",
@@ -135,6 +136,26 @@ CACHES = {
         }
     }
 }
+
+
+OAUTH2_PROVIDER = {
+    # this is the list of available scopes
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+}
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser',
+    ),
+    'PAGE_SIZE': 10,
+}
+
+
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases

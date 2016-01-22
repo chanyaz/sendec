@@ -16,8 +16,8 @@
 {#            filter: blur(1px);#}
 
 {#  display: block;#}
-            background: url('{{ background_url }}') no-repeat center;
-            background-size: cover;
+{#            background: url('{{ background_url }}') no-repeat center;#}
+{#            background-size: cover;#}
         }
 
 
@@ -77,7 +77,7 @@
     #auth_login_footer{
         position: relative;
         color: white;
-        width: 100%;
+{#        width: 100%;#}
         margin-left: auto;
         margin-right: auto;
 {#        border: solid 1px red;#}
@@ -97,7 +97,13 @@
     }
     </style>
 
-    <div class="background-image"></div>
+    <div class="background-image">
+
+    <video loop autoplay muted>
+        <source src="{% static 'static/video/loginsys/hoverboard.mp4' %}" type="video/mp4" />
+    </video>
+
+    </div>
     <div id="auth_login">
         <div id="auth_login_top">
             <div id="auth_login_logo"><a href="/">INSYDIA</a></div>
@@ -156,9 +162,7 @@
     </div>
 
     <div id="auth_login_footer" class="container-fluid container">
-        <div class="row row-centered" style="width: 50em;
-    margin-left: auto;
-    margin-right: auto;">
+        <div class="row row-centered" style="width: 40%;margin-left: auto;margin-right: auto;">
             {% include 'footer_loginsys.html' %}
         </div>
     </div>

@@ -18,16 +18,24 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-from rss.views import RssChannelLatest,RssChannelTechnology,RssChannelEntertainment,RssChannelAuto,RssChannelSpace,RssChannelBio,RssChannelCompany
-
+from rss.views import RssChannelLatest,RssChannelTechnology,RssChannelEntertainment,RssChannelAuto,RssChannelSpace,RssChannelBio,RssChannelCompany,\
+    RssChannelLatestWeek, RssChannelTechnologyWeek, RssChannelEntertainmentWeek, RssChannelAutoWeek, RssChannelSpaceWeek,RssChannelBioWeek
+from rss.views import RenderRSSPage
 
 urlpatterns = patterns('',
+    url(r'^gcr/', 'rss.views.get_current_company_rss'),
+    url(r'^news&channel=company&name=(?P<company_name>\w+)$', RssChannelCompany()),
+    url(r'^news&channel=technology&range=week', RssChannelTechnologyWeek()),
     url(r'^news&channel=technology', RssChannelTechnology()),
+    url(r'^news&channel=entertainment&range=week', RssChannelEntertainmentWeek()),
     url(r'^news&channel=entertainment', RssChannelEntertainment()),
+    url(r'^news&channel=auto&range=week', RssChannelAutoWeek()),
     url(r'^news&channel=auto', RssChannelAuto()),
+    url(r'^news&channel=space&range=week', RssChannelSpaceWeek()),
     url(r'^news&channel=space', RssChannelSpace()),
+    url(r'^news&channel=bio&range=week', RssChannelBioWeek()),
     url(r'^news&channel=bio', RssChannelBio()),
-    url(r'^news&channel=company&name=(?P<company_name>\w+)', RssChannelTechnology),
+    url(r'^news&channel=latest&range=week', RssChannelLatestWeek()),
     url(r'^news&channel=latest', RssChannelLatest()),
-    url(r'^', 'rss.views.render_feed_page'),
+    url(r'^', RenderRSSPage.as_view()),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

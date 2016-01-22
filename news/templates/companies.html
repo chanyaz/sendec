@@ -41,6 +41,12 @@
     .table-articles{
         width: 20%;
     }
+    .companies-right{
+        width: 20%;
+        margin-top: 10%;
+        margin-right:2%;
+        float: right;
+    }
 
     </style>
 
@@ -98,8 +104,65 @@
                             </tr>
                         {% endfor %}
                     </table>
+
                 </div>
             </div>
+
+            <div class="companies-right">
+                <div class="adver-near-top" style="width: 300px; height: 660px; background-color: #00fff9"></div>
+            </div>
+
         </div>
     </div>
 {% endblock %}
+
+<script>
+
+    $("#company-search").autocomplete({
+        source: function( request, response ) {
+        $.ajax({
+          url: "/news/companies/cs="+$('#company-search').val().replace(/\./g, ""),
+          dataType: "json",
+          data: {
+              'csrfmiddlewaretoken': '{{ csrf_token }}',
+              q: request.term
+{#              term: $('#company-search').val().replace(/\./g, "")#}
+          },
+          success: function( data ) {
+              response($.map(data, function(item){
+                  return{
+                      id: item.id,
+                      label: item.name,
+                      value: item.name,
+                      verbose: item.verbose
+                  };
+              }));
+          }
+        });
+      },
+        minLength: 1,
+        maxLength: 10,
+{#      select: function( event, ui ) {#}
+{#        log( ui.item ?#}
+{#          "Selected: " + ui.item.label :#}
+{#          "Nothing selected, input was " + this.value);#}
+{#      },#}
+        select:function(event, ui){
+            var targetOffset = $("#"+ui.item.id).offset().top;
+            $('html, body').animate({
+                scrollTop: targetOffset
+            });
+{#            var a = $("#company-search").val().toLowerCase();#}
+{#            getCompanyID(ui.item.id);#}
+{#            alert(ui.item.id);#}
+            $('#'+ ui.item.id).animate({backgroundColor: "#00C0FF"}, 2000).animate({backgroundColor: "transparent" }, 2000);
+        },
+
+      open: function() {
+        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+      },
+      close: function() {
+        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }
+    })
+</script>

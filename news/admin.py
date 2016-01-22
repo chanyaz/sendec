@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import admin
-from .models import News, NewsPortal, NewsCategory, Companies, RssNews, RssPortals, TopVideoContent, TopNews, NewsWatches
+from .models import News, NewsPortal, NewsCategory, Companies, RssNews, RssPortals, TopVideoContent, TopNews, \
+    NewsWatches, UserRssNewsReading
 from ckeditor.widgets import CKEditorWidget
 
 
@@ -38,6 +39,20 @@ class PostAdminTopNewsForm(forms.ModelForm):
 
 class PostAdminTopNews(admin.ModelAdmin):
     form = PostAdminTopNewsForm
+
+
+class RSSNewsAdminForm(forms.ModelForm):
+    post_text = forms.CharField(widget=CKEditorWidget(), required=False)
+    content_value = forms.CharField(widget=CKEditorWidget(), required=False)
+    class Meta:
+        model = RssNews
+        fields = "__all__"
+
+
+
+class RSSAdmin(admin.ModelAdmin):
+    form = RSSNewsAdminForm
+    list_filter = ["category", "author", "portal_name"]
 
 
 class PostAdminForm(forms.ModelForm):
@@ -84,4 +99,5 @@ admin.site.register(RssPortals, RssPortalsAdminForm)
 admin.site.register(TopNews, PostAdminTopNews)
 admin.site.register(News, PostAdmin)
 admin.site.register(Companies, AompaniesEditorAdmin)
-admin.site.register(RssNews, RssNewsAdmin)
+admin.site.register(RssNews, RSSAdmin)
+admin.site.register(UserRssNewsReading)

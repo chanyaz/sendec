@@ -61,6 +61,12 @@
         }
     </script>
     <style>
+
+        #current-news-page{
+            height: 100%;
+            margin-bottom: 5%;
+        }
+
         .share-list-item{float: left;margin-left: 1%; width: 24%; height:1.5em;}
         .container-fluid{
 {#            border: solid 1px lightgrey;#}
@@ -152,7 +158,23 @@
 {#            margin: 4% 15%; #}
             font-family: Georgia,Times,sans-serif;
             font-size: 19px;}
-        .news-post-text img{}
+        .news-post-text img{
+            position: relative;
+            min-width: 100%;
+            width:200%;
+            max-width: 200%;
+            margin-left: -50%;
+            margin-right: 50%;
+        }
+
+        .news-post-text img.middle-size{
+            position: relative;
+            min-width: 100%;
+            width:100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
 {#        .nav-bar{margin-left: 63%;}#}
         .liked{float: left;}
         .disliked{float: left;}
@@ -193,7 +215,7 @@
     </style>
 
     {% if current_news_values.news_main_cover|check_format == True %}
-        <div class="news-cover" style="background: url('/media/{{ current_news_values.news_main_cover }}') no-repeat center; background-size: cover; width: 100%; height: 500px; max-height: 600px; margin-top: 0;"></div>
+        <div class="news-cover" style="background: url('/media/{{ current_news_values.news_main_cover }}') no-repeat center; background-size: cover; width: 100%; height: 500px; max-height: 600px; margin-top: -1.5%;"></div>
     {% else %}
         <div class="homepage-hero-module-top">
             <div class="video-container">
@@ -217,7 +239,7 @@
         </div>
     {% endif %}
 
-    <div class="container-fluid " data-news-id="{{ current_news_values.id }}">
+    <div class="container-fluid" id="current-news-page" data-news-id="{{ current_news_values.id }}">
 {#        {% if current_news_values.news_main_cover != '' %}#}
 {#                <div class="news-cover">#}
 {#                    <img class="current-cover" src="/media/{{ current_news_values.news_main_cover }}"/>#}

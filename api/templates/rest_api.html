@@ -1,0 +1,42 @@
+{#{% extends 'index_new.html' %}#}
+{% load staticfiles %}
+{% load i18n %}
+{% load my %}
+{% block api %}
+
+    <style>
+    .api{font-family: Georgia, Times, "Times New Roman", serif}
+{#    h3{color: black;}#}
+    h4{color: black;}
+        .table{width:100%; border: solid 1px lightgrey;}
+        .td{width:30%;}
+        .name{ font-family:Georgia, Times, "Times New Roman", serif;  font-size:20px; text-align: center; color: rgb(25,180,155);}
+        .example{color: blue;}
+    #left-side{float: left; width:30%; height: 100%; background-color: #269abc}
+    #right-side{float: right; width:70%; height: 100%; background-color: #E2E2E2}
+    </style>
+
+    <div class="container-fluid container api">
+        <div class="row row-centered">
+            <div id="api-page">
+                <div id="left-side">
+                    API
+                    <ul id="api-methods">
+                        API Applications
+                        <li>Get Token</li>
+                        <li>Authentication</li>
+                    </ul>
+                    <ul>
+                        News
+                        <li>App configs</li>
+                        <li>methods</li>
+                    </ul>
+                </div>
+                <div id="right-side">
+                    methods
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

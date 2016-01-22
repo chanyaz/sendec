@@ -3,36 +3,45 @@
 {% load my %}
 {% load jsonate_tags %}
 {% load i18n %}
+{% load thumbnail %}
+
 {% block current_company %}
     <style>
+        .company{height:100%;}
         .current_news{height: 82px;box-shadow: 0 0 5px #5e5e5e;margin: 2% 0.25% 0.25% 0.25%;}
-        .company-title{text-align: center;margin-left: -15%;}
-        #current_company_left{float: left;width: 70%; border: solid 1px lightgrey;}
+        #current_company_left{float: left;width: 60%; border: solid 1px lightgrey;}
         .current_news{height: 80px;margin: 2% 0.25% 0.25% 0.25%;}
         .current_searched_cover{
         }
         .current_searched_content_portal{float: left;margin-left: 1%;}
-        #current_company_right{height: auto;float: right;width: 30%; border: solid 1px lightgrey;}
+        #current_company_right{height: auto;float: right;width: 35%; margin-left: 5%;border: solid 1px lightgrey;}
         .company-right-top{
-            width: 20em;
-            height: 8em;
+            width: inherit;
+{#            height: 8em;#}
             margin-left: auto;
             margin-right: auto;
         }
         .current_company_logo{
             width: 100%;
-            height: 100%;
-            background: url('/media/{{ company.logo }}') no-repeat center;
-            background-size: 100px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .company-title{text-align: center;margin-left: -15%;}
-        .current-company-title{text-align: center;}
+        .company-title{height: 60px; width: 100%;  position: relative;}
+        .title-word{ margin-top: 3%;  position: relative;}
+        .company-title-back{position: absolute; width: 100%; height: 75px;}
+        .current-company-title{}
+
+        .company-right-below{
+            border-bottom: solid 1px lightgrey;
+        }
+
     </style>
-    <div class="current_company container">
+    <div class="company-title-back"></div>
+    <div class="current_company container company">
         <div class="row row-centered">
             <div class="current_company_content">
                 <div class="company-title">
-                    <h2>{{ company.name }}</h2>
+                    <h2 class="title-word">{{ company.name }}</h2>
                 </div>
                 <div id="current_company_left">
                     <div class="current_company_news">
@@ -63,11 +72,18 @@
                 </div>
                 <div id="current_company_right">
                 <div class="company-right-top">
-                    <div class="current_company_logo"></div>
+                    <div class="current_company_logo">
+{#                        <img src="{% thumbnail company.logo '300x150' %}" />#}
+                        <img src="{% static 'static/img/companies_logo/' %}{{ company.verbose_name }}.png"/>
+                    </div>
                 </div>
                 <div class="company-right-below">
                     {{ company.description|safe|linebreaks }}
                 </div>
+
+                                    <div class="google-news-rss-right" style="width: 300px; height: 250px; background-color: #00fff9"></div>
+
+
             </div>
             </div>
         </div>

@@ -22,7 +22,7 @@ from django.conf import settings
 urlpatterns = patterns('',
 
     url(r'^get_token/model=(?P<model>\w+)', 'api.views.get_news_token'),
-
+    url(r'^news/token=(?P<token>(.*?))&cat=(?P<cat_id>\d+)&offset=(?P<offset>\w+)$', 'api.views.news_cat_list'),
     url(r'^news/token=(?P<token>(.*?))&offset=(?P<offset>\w+)$', 'api.views.news_list', name='news_list'),
     url(r'^news/token=(?P<token>(.*?))&nid=(?P<news_id>\d+)$', 'api.views.news_detail'),
     url(r'^$', 'api.views.render_api_page'),

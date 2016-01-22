@@ -3,371 +3,576 @@
     "name": "Appleinsider",
     "verbose": "appleinsider",
     "base_link": "appleinsider.ru",
-    "description": "",
-    "cover": ""
+    "description": "AppleInsider.ru – Блог об Apple, iPhone, iPad, iPod, iMac, MacBook",
+    "cover": "",
+    "category": "Technology"
   },
-  "http://teslanews": {
+  "http://teslanews.com": {
     "name": "TeslaNews",
     "verbose": "teslanews",
     "base_link": "teslanews.com",
-    "description": "",
-    "cover": ""
+    "description": "Tesla News website that talks about Tesla Company and Automobile, Tesla Prices, Reviews, Product Specifications, Features, News and More.",
+    "cover": "",
+    "category": "Auto"
   },
   "http://zisk.net": {
     "name": "zisk",
     "verbose": "zisk",
     "base_link": "zisk.net",
-    "description": "",
-    "cover": ""
+    "description": "Полезная информация о новинках в мире 'железа'. Статьи, обзоры, новостная лента.",
+    "cover": "",
+    "category": "Technology"
   },
   "http://hi-news.ru": {
     "name": "Hi-News.ru",
     "verbose": "hinews",
     "base_link": "hi-news.ru",
-    "description": "",
-    "cover": ""
+    "description": "Hi-News.ru - Новости высоких технологий",
+    "cover": "",
+    "category": "Technology"
   },
   "http://computerweekly.com": {
     "name": "ComputerWeekly.com",
     "verbose": "computerweekly",
     "base_link": "computerweekly.com",
-    "description": "",
-    "cover": ""
+    "description": "The latest information technology (IT) news and IT jobs from ComputerWeekly.com. Stay ahead with IT management and technology news, blogs, jobs, case studies, whitepapers and videos.",
+    "cover": "",
+    "category": "Technology"
   },
   "http://forbes.com": {
     "name": "Forbes",
     "verbose": "forbes",
     "base_link": "forbes.com",
-    "description": "",
-    "cover": ""
+    "description": "Forbes is a global media company, focusing on business, investing, technology, entrepreneurship, leadership, and lifestyle.",
+    "cover": "",
+    "category": "Technology"
   },
   "http://skynews.com": {
     "name": "Skynews",
     "verbose": "skynews",
     "base_link": "skynews.com",
-    "description": "",
-    "cover": ""
+    "description": "Sky news delivers breaking news, headlines and top stories from business, politics, entertainment and more in the UK and worldwide.",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://firstpost.com": {
     "name": "Firstpost",
     "verbose": "firstpost",
     "base_link": "firstpost.com",
-    "description": "",
-    "cover": ""
+    "description": "Latest News Headlines: Firstpost covers Latest India News, Top Todays Breaking News on Business, India, World, Politics, Entertainment and Sports - Firstpost.com",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://digitaltrends.com": {
     "name": "Digitaltrends",
     "verbose": "digitaltrends",
     "base_link": "digitaltrends.com",
-    "description": "",
-    "cover": ""
+    "description": "Digital Trends is your premier source for technology news and unbiased expert product reviews of TVs, laptops, smartphones and more.",
+    "cover": "",
+    "category": "Technology"
   },
   "http://technorati.com": {
     "name": "Technorati",
     "verbose": "technorati",
     "base_link": "technorati.com",
-    "description": "",
-    "cover": ""
+    "description": "We shape the conversation of online publishing, advertising technology, content monetization and website marketing strategies.",
+    "cover": "",
+    "category": "Technology"
   },
   "https://techunblocked.org": {
     "name": "Tech Unblocked",
     "verbose": "techunblocked",
     "base_link": "techunblocked.org",
-    "description": "",
-    "cover": ""
+    "description": "Blog best, top 10, world, How to blogger, Blogging, Best Proxy sites, Free Movies websites, Tech, website, make money, window, apps tips tricks. games",
+    "cover": "",
+    "category": "Entertainment"
   },
   "https://iguides.ru": {
     "name": "iGuides",
     "verbose": "iguides",
     "base_link": "iguides.ru",
-    "description": "",
-    "cover": ""
+    "description": "iGuides.ru - Новости и обзоры гаджетов, приложений и аксессуаров",
+    "cover": "",
+    "category": "Technology"
   },
   "http://iphones.ru": {
     "name": "iPhones",
     "verbose": "iphones",
     "base_link": "iphones.ru",
-    "description": "",
-    "cover": ""
+    "description": "iPhones.ru – Новости и советы",
+    "cover": "",
+    "category": "Technology"
   },
   "http://appledigger.ru": {
     "name": "Appledigger",
     "verbose": "appledigger",
     "base_link": "appledigger.ru",
-    "description": "",
-    "cover": ""
+    "description": "AppleDigger.ru - Новости Apple, игры для iphone и ipad, советы, обзоры",
+    "cover": "",
+    "category": "Technology"
   },
   "http://androidinsider.ru": {
     "name": "Androidinsider",
     "verbose": "androidinsider",
     "base_link": "androidinsider.ru",
-    "description": "",
-    "cover": ""
+    "description": "лучшее из мира Android",
+    "cover": "",
+    "category": "Technology"
   },
   "http://droider.ru": {
     "name": "Droider",
     "verbose": "droider",
     "base_link": "droider.ru",
-    "description": "",
-    "cover": ""
+    "description": "Droider - всё об Android. Программы Android | Новости Android | Игры для Android | Google Android приложения",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://myandroid.ru": {
     "name": "Myandroid",
     "verbose": "myandroid",
     "base_link": "myandroid.ru",
-    "description": "",
-    "cover": ""
+    "description": "Новости операционной системы Android, обзоры приложений, мобильных игр, полезные советы и слухи.",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://4pda.ru": {
     "name": "4PDA",
     "verbose": "4pda",
     "base_link": "4pda.ru",
-    "description": "",
-    "cover": ""
+    "description": "4PDA - Новости мира мобильных устройств",
+    "cover": "",
+    "category": "Technology"
   },
   "http://redroid.ru": {
     "name": "reDroid",
     "verbose": "redroid",
     "base_link": "redroid.ru",
-    "description": "",
-    "cover": ""
+    "description": "Всё об ОС Android | Новости, Обзоры смартфонов, планшетов и игр | Любим Google",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://andro-news.ru": {
     "name": "Andro-news",
     "verbose": "andronews",
     "base_link": "andro-news.ru",
-    "description": "",
-    "cover": ""
+    "description": "Новости Android - лучшее о популярной ОС | Andro-News",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://kolesa.ru": {
     "name": "Колёса.ru",
     "verbose": "kolesa",
     "base_link": "kolesa.ru",
-    "description": "",
-    "cover": ""
+    "description": "«Автомобильный портал КОЛЕСА.ру – это ежедневные автомобильные новости, новинки и премьеры, профессиональные тест-драйвы, каталог авто, адреса дилеров и отзывы об автомобилях.»",
+    "cover": "",
+    "category": "Auto"
   },
   "http://autoweek.com": {
     "name": "AUTOWEEK",
     "verbose": "autoweek",
     "base_link": "autoweek.com",
-    "description": "",
-    "cover": ""
+    "description": "Get the latest car news, car reviews, auto show updates, and racing news from Autoweek. News for the auto enthusiast.",
+    "cover": "",
+    "category": "Auto"
   },
   "http://autoguide.com": {
     "name": "AutoGuide.com",
     "verbose": "autoguide",
     "base_link": "autoguide.com",
-    "description": "",
-    "cover": ""
+    "description": "Car Reviews: New Car Prices and Used Cars Classifieds",
+    "cover": "",
+    "category": "Auto"
   },
   "http://autoexpress.co.uk": {
     "name": "AutoExpress",
     "verbose": "autoexpress",
     "base_link": "autoexpress.co.uk",
-    "description": "",
-    "cover": ""
+    "description": "New and Used Car Reviews, News & Advice",
+    "cover": "",
+    "category": "Auto"
   },
   "http://spacenews.com": {
     "name": "SPACENEWS",
     "verbose": "spacenews",
     "base_link": "spacenews.com",
-    "description": "",
-    "cover": ""
+    "description": "Covering the business and politics of space",
+    "cover": "",
+    "category": "Space"
   },
   "http://extremetech.com": {
     "name": "ExtremeTech",
     "verbose": "extremetech",
     "base_link": "extremetech.com",
-    "description": "",
-    "cover": ""
+    "description": "Latest Technology News | Tech Blog | ExtremeTech",
+    "cover": "",
+    "category": "Technology"
   },
   "http://cnet.com": {
     "name": "Cnet",
     "verbose": "cnet",
     "base_link": "cnet.com",
-    "description": "",
-    "cover": ""
+    "description": "CNET is the world's leader in tech product reviews, news, prices, videos, forums, how to's and more.",
+    "cover": "",
+    "category": "Technology"
   },
   "http://gamerant.com": {
     "name": "GAMERANT",
     "verbose": "gamerant",
     "base_link": "gamerant.com",
-    "description": "",
-    "cover": ""
+    "description": "Game Rant: Gaming News, Game Reviews, Game Trailers, Tech News ",
+    "cover": "",
+    "category": "Entertainment"
   },
-  "http://android-robot": {
+  "http://android-robot.com": {
     "name": "Новости Hi-Tech",
     "verbose": "android-robot",
     "base_link": "android-robot",
-    "description": "",
-    "cover": ""
+    "description": "Новости Hi-Tech",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://ria.ru": {
     "name": "РИА",
     "verbose": "ria",
     "base_link": "ria.ru",
-    "description": "",
-    "cover": ""
+    "description": "Оперативно и достоверно о событиях в России и в мире: политика, экономика, происшествия, спорт, наука, культура. Больше чем новости:фото, видео, инфографика, рейтинги, оценки, комментарии",
+    "cover": "",
+    "category": "Technology"
   },
   "http://dailykanban.com": {
     "name": "DailyKanban",
     "verbose": "dailykanban",
     "base_link": "dailykanban.com",
-    "description": "",
-    "cover": ""
+    "description": "Just-in-time auto industry news and analysis",
+    "cover": "",
+    "category": "Auto"
   },
   "http://www.playground.ru/rss/news.xml":{
     "name": "Playground News",
     "verbose": "playground",
     "base_link": "playground.ru",
-    "description": "",
-    "cover": ""
+    "description": "PlayGround.ru - компьютерные игры, патчи, моды, nocd, прохождение игр, коды, читы, трейнеры, скачать игры",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://www.playground.ru/rss/articles.xml":{
     "name": "Playground Articles",
     "verbose": "playground_articles",
     "base_link": "playground.ru",
-    "description": "",
-    "cover": ""
+    "description": "PlayGround.ru - компьютерные игры, патчи, моды, nocd, прохождение игр, коды, читы, трейнеры, скачать игры",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://stopgame.ru/rss/rss_news.xml":{
     "name": "Stopgame News",
     "verbose": "stopgame_news",
     "base_link": "stopgame.ru",
-    "description": "",
-    "cover": ""
+    "description": "Все о секретах игр - коды и прохождения, возможность скачать игру, обзоры и превью, игровые новости, трейлеры и видео, машинима, flash и онлайн игры, скриншоты, обои, блоги и обсуждения",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://stopgame.ru/rss/rss_review.xml":{
     "name": "Stopgame Reviews",
     "verbose": "stopgame_reviews",
     "base_link": "stopgame.ru",
-    "description": "",
-    "cover": ""
+    "description": "Все о секретах игр - коды и прохождения, возможность скачать игру, обзоры и превью, игровые новости, трейлеры и видео, машинима, flash и онлайн игры, скриншоты, обои, блоги и обсуждения",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://www.goha.ru/news/mmo/rss":{
     "name": "Goha MMO",
     "verbose": "goha_mmo",
     "base_link": "goha.ru",
-    "description": "",
-    "cover": ""
+    "description": "GoHa.Ru - крупнейший игровой портал, на котором вы можете найти самые свежие игровые новости, обзоры событий игровой индустрии, видеообзоры новых игр, авторские статьи, руководства и многое другое.",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://www.goha.ru/news/video/rss":{
     "name": "Goha Videos",
     "verbose": "goha_videos",
     "base_link": "goha.ru",
-    "description": "",
-    "cover": ""
+    "description": "GoHa.Ru - крупнейший игровой портал, на котором вы можете найти самые свежие игровые новости, обзоры событий игровой индустрии, видеообзоры новых игр, авторские статьи, руководства и многое другое.",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://www.goha.ru/news/e3-2015-news/rss":{
     "name": "Goha E3",
     "verbose": "goha_e3",
     "base_link": "goha.ru",
-    "description": "",
-    "cover": ""
+    "description": "GoHa.Ru - крупнейший игровой портал, на котором вы можете найти самые свежие игровые новости, обзоры событий игровой индустрии, видеообзоры новых игр, авторские статьи, руководства и многое другое.",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://www.goha.ru/news/igromir-comiccon-news-2015/rss":{
     "name": "Goha Igromir",
     "verbose": "goha_igromir",
     "base_link": "goha.ru",
-    "description": "",
-    "cover": ""
+    "description": "GoHa.Ru - крупнейший игровой портал, на котором вы можете найти самые свежие игровые новости, обзоры событий игровой индустрии, видеообзоры новых игр, авторские статьи, руководства и многое другое.",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://www.goha.ru/news/all/rss":{
     "name": "Goha News",
     "verbose": "goha_news",
     "base_link": "goha.ru",
-    "description": "",
-    "cover": ""
+    "description": "GoHa.Ru - крупнейший игровой портал, на котором вы можете найти самые свежие игровые новости, обзоры событий игровой индустрии, видеообзоры новых игр, авторские статьи, руководства и многое другое.",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://n4g.com/rss/news?channel=&sort=latest":{
     "name": "n4g News",
     "verbose": "n4g_news",
     "base_link": "n4g.com",
-    "description": "",
-    "cover": ""
+    "description": "Hottest Game News & Rumors",
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://n4g.com/rss/news?channel=pc&sort=latest":{
     "name": "n4g PC",
     "verbose": "n4g_pc",
-    "description": "",
+    "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
-    "cover": ""
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://n4g.com/rss/news?channel=tech&sort=latest":{
     "name": "n4g Tech",
     "verbose": "n4g_tech",
-    "description": "",
+    "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
-    "cover": ""
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://n4g.com/rss/news?channel=iphone&sort=latest":{
     "name": "n4g iPhone",
     "verbose": "n4g_iphone",
-    "description": "",
+    "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
-    "cover": ""
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://n4g.com/rss/news?channel=android&sort=latest":{
     "name": "n4g Android",
     "verbose": "n4g_android",
-    "description": "",
+    "description": "Hottest Game News & Rumors",
     "base_link": "n4g_android",
-    "cover": ""
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://n4g.com/rss/news?channel=xbox&sort=latest":{
     "name": "n4g xbox",
     "verbose": "n4g_xbox",
-    "description": "",
+    "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
-    "cover": ""
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://n4g.com/rss/news?channel=ps4&sort=latest":{
     "name": "n4g PS4",
     "verbose": "n4g_ps4",
-    "description": "",
+    "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
-    "cover": ""
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://n4g.com/rss/news?channel=ps3&sort=latest":{
     "name": "n4g PS3",
     "verbose": "n4g_ps3",
-    "description": "",
+    "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
-    "cover": ""
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://www.polygon.com/rss/index.xml":{
     "name": "Polygon",
     "verbose": "polygon",
-    "description": "",
+    "description": "Polygon's mission is to cover not only games but the artists who make them, the fans that love them and the culture surrounding them",
     "base_link": "polygon.com",
-    "cover": ""
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://rss.gametrailers.com/news/0.xml":{
     "name": "Gametrailers",
     "verbose": "gametrailers",
-    "description": "",
+    "description": "Watch new video game trailers, read reviews and previews of upcoming video games at GameTrailers.com. Video game demos, online gameplay, game cheats  and walkthroughs or view movies and media on the GameTrailers website.",
     "base_link": "gametrailers.com",
-    "cover": ""
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://www.giantbomb.com/feeds/reviews/":{
     "name": "Giantbomb Reviews",
     "verbose": "giantbomb_reviews",
-    "description": "",
+    "description": "The largest video game database online, Giant Bomb features Game Reviews, News, Videos, and Forums for the latest in PS4, Xbox One, PS3, Xbox 360, Wii, PSP, DS, 3DS, NGP, and more!",
     "base_link": "giantbomb.com",
-    "cover": ""
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://www.giantbomb.com/feeds/new_releases/":{
     "name": "Giantbomb Releases",
     "verbose": "giantbomb_releases",
-    "description": "",
+    "description": "The largest video game database online, Giant Bomb features Game Reviews, News, Videos, and Forums for the latest in PS4, Xbox One, PS3, Xbox 360, Wii, PSP, DS, 3DS, NGP, and more!",
     "base_link": "giantbomb.com",
-    "cover": ""
+    "cover": "",
+    "category": "Entertainment"
   },
   "http://ru.ign.com/feed.xml":{
     "name": "ign",
     "verbose": "ign",
-    "description": "",
+    "description": "IGN is your site for Xbox One, PS4, PC, Wii-U, Xbox 360, PS3, Wii, 3DS, PS Vita & iPhone games with expert reviews, news, previews, trailers, cheat codes, wiki guides & walkthroughs",
     "base_link": "ign.com",
-    "cover": ""
-  }
+    "cover": "",
+    "category": "Entertainment"
+  },
+  "http://phys.org/rss-feed/":{
+    "name": "Phys Org",
+    "verbose": "physorg",
+    "description": "Phys.org internet news portal provides the latest news on science including: Physics, Space Science, Earth Science, Health and Medicine",
+    "base_link": "phys.org",
+    "cover": "",
+    "category": "Space"
+  },
+  "http://www.universetoday.com/feed/":{
+    "name": "Universe Today",
+    "verbose": "universe_today",
+    "description": "Universe Today - Space and astronomy news",
+    "base_link": "www.universetoday.com",
+    "cover": "",
+    "category": "Space"
+  },
+  "http://zeenews.india.com/rss/science-technology-news.xml":{
+    "name": "Zee news",
+    "verbose": "zee_news",
+    "description": "Read all latest news from India & World on Politics, Business,Technology, Entertainment, Sports etc. Find exclusive news stories on current affairs, cricket matches, festivals & events.",
+    "base_link": "zeenews.india.com",
+    "cover": "",
+    "category": "Technology"
+  },
+  "http://www.space.com/home/feed/site.xml":{
+    "name": "Space com",
+    "verbose": "space_com",
+    "description": "Get the latest space exploration, innovation and astronomy news. Space.com celebrates humanity's ongoing expansion across the final frontier.",
+    "base_link": "www.space.com",
+    "cover": "",
+    "category": "Space"
+  },
+  "https://spaceflightnow.com/feed/":{
+    "name": "Spaceflight Now",
+    "verbose": "spaceflightnow",
+    "description": "Spaceflight Now | The leading source for online space news",
+    "base_link": "spaceflightnow.com",
+    "cover": "",
+    "category": "Space"
+  },
+  "http://feeds.newscientist.com/tech":{
+    "name": "News Scientist",
+    "verbose": "newscientist",
+    "description": "Science news and science articles from New Scientist",
+    "base_link": "newscientist.com",
+    "cover": "",
+    "category": "Technology"
+  },
+  "http://aviationweek.com/rss.xml":{
+    "name": "Aviation Week",
+    "verbose": "aviationweek",
+    "description": "Aerospace Defense, Business & Commercial News",
+    "base_link": "aviationweek.com",
+    "cover": "",
+    "category": "Technology"
+  },
+  "http://scitechdaily.com/news/space/feed/":{
+    "name": "SciTechDaily",
+    "verbose": "scitechdaily",
+    "description": "Science, Space and Technology News 2015",
+    "base_link": "scitechdaily.com",
+    "cover": "",
+    "category": "Space"
+  },
+  "http://www.cbsnews.com/latest/rss/tech/":{
+    "name": "CBS News",
+    "verbose": "cbsnews",
+    "description": "CBS News is your source for the latest breaking, national and world news video, including politics, sports, entertainment, business and more.",
+    "base_link": "cbsnews.com",
+    "cover": "",
+    "category": "Technology"
+},
+  "http://www.mynews13.com/content/news/cfnews13/feeds/rss.html/space.html":{
+    "name": "My News 13",
+    "verbose": "mynews13_space",
+    "description": "News 13 has the latest local news headlines.  Breaking news, weather and traffic for Orlando, Daytona Beach, Melbourne and Sanford.",
+    "base_link": "mynews13.com",
+    "cover": "",
+    "category": "Space"
+},
+   "http://www.mynews13.com/content/news/cfnews13/feeds/rss.html/entertainment.html":{
+    "name": "My News 13",
+    "verbose": "mynews13_entertainment",
+    "description": "News 13 has the latest local news headlines.  Breaking news, weather and traffic for Orlando, Daytona Beach, Melbourne and Sanford.",
+    "base_link": "mynews13.com",
+    "cover": "",
+    "category": "Entertainment"
+},
+   "http://www.mynews13.com/content/news/cfnews13/feeds/rss.html/technology.html":{
+    "name": "My News 13",
+    "verbose": "mynews13_technology",
+    "description": "News 13 has the latest local news headlines.  Breaking news, weather and traffic for Orlando, Daytona Beach, Melbourne and Sanford.",
+    "base_link": "mynews13.com",
+    "cover": "",
+    "category": "Technology"
+},
+  "http://www.abc.net.au/news/feed/46800/rss.xml/":{
+    "name": "ABC",
+    "verbose": "abc",
+    "description": "Australia's leading source of information and entertainment",
+    "base_link": "abc.net.au",
+    "cover": "",
+    "category": "Entertainment"
+},
+  "http://www.npr.org/rss/rss.php?id=1026":{
+    "name": "NPR",
+    "verbose": "npr",
+    "description": "NPR delivers breaking national and world news. Also top stories from business, politics, health, science, technology, music, arts and culture.",
+    "base_link": "npr.org",
+    "cover": "",
+    "category": "Space"
+},
+  "http://topics.nytimes.com/top/news/science/topics/space/index.html?rss=1":{
+    "name": "New York Times",
+    "verbose": "nytimes",
+    "description": "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",
+    "base_link": "nytimes.com",
+    "cover": "",
+    "category": "Space"
+},
+  "http://www.jpl.nasa.gov/multimedia/rss/news.xml":{
+    "name": "Jet Propulsion Laboratory",
+    "verbose": "jpl",
+    "description": "Space mission and science news, images and videos from NASA's Jet Propulsion Laboratory, the leading center for robotic exploration of the solar system.",
+    "base_link": "jpl.nasa.gov",
+    "cover": "",
+    "category": "Space"
+},
+  "https://www.flightglobal.com/rss/news/space/":{
+    "name": "Flightglobal",
+    "verbose": "flightglobal",
+    "description": "Aviation News | Aviation Industry and Airline Statistics",
+    "base_link": "flightglobal.com",
+    "cover": "",
+    "category": "Space"
+},
+  "http://www.coloradospacenews.com/feed/":{
+    "name": "Colorado Space News",
+    "verbose": "coloradospacenews",
+    "description": "Colorado Space News",
+    "base_link": "coloradospacenews.com",
+    "cover": "",
+    "category": "Space"
+},
+  "http://www.davidreneke.com/feed/":{
+    "name": "David Reneke",
+    "verbose": "davidreneke",
+    "description": "Space News, Astronomy News, Telescopes, Astrophotography, UFOs",
+    "base_link": "davidreneke.com",
+    "cover": "",
+    "category": "Space"
+}
 }

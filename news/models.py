@@ -16,7 +16,11 @@ def upload_company_cover(instance, filename):
 
 
 def upload_rss_portals_covevrs(instance, filename):
-    return "/".join(["content", "rss", "portals", filename])
+    return "/".join(["content", "rss", "portals", 'covers', filename])
+
+
+def upload_rss_favicon(instance, filename):
+    return "/".join(['content', 'rss', 'portals', 'favicons', filename])
 
 
 class NewsCategory(models.Model):
@@ -69,6 +73,10 @@ class Companies(models.Model):
             "verbose": self.verbose_name
         }
 
+    def get_absolute_url(self):
+        return "/news/companies/%s/" % self.verbose_name
+
+
 
 class News(models.Model):
     class Meta:
@@ -110,6 +118,9 @@ class News(models.Model):
     def __str__(self):
         return self.news_title
 
+    # def __unicode__(self):
+    #     return self.news_post_text_russian
+
     def get_portal_name(self, portal_id):
         return NewsPortal.objects.get(id=portal_id).portal_name
 
@@ -131,7 +142,6 @@ class News(models.Model):
             "shown": self.news_latest_shown,
             "show_now": self.news_currently_showing,
         }
-
 
     def get_absolute_url(self):
         return "/news/%s/%s" % (self.news_category_id, self.id)
@@ -238,11 +248,20 @@ class RssPortals(models.Model):
     portal_base_link = models.URLField()
     follows = models.IntegerField(default=0)
     description = models.TextField(max_length=1024)
-    cover = models.FileField(upload_to=upload_rss_portals_covevrs, blank=True)
+    cover = models.CharField(max_length=512)
+    # favicon = models.FileField(upload_to=upload_rss_favicon, blank=True)
     verbose_name = models.CharField(max_length=128)
+    category = models.ForeignKey(NewsCategory)
 
     def __str__(self):
         return self.portal
+
+    def get_json(self):
+        return {
+            'id': self.id,
+            'portal': self.portal,
+            'verbose': self.verbose_name
+        }
 
 
 class RssNews(models.Model):
@@ -286,6 +305,16 @@ class RssNews(models.Model):
         }
 
 
+class UserRssNewsReading(models.Model):
+    class Meta:
+        db_table = "user_rss_news_read"
+
+    user = models.ForeignKey(User, related_name="read")
+    rss_news = models.ForeignKey(RssNews, related_name="read_rss")
+    rss_portal = models.ForeignKey(RssPortals)
+    read = models.BooleanField(default=False)
+
+
 class RssNewsCovers(models.Model):
     class Meta:
         db_table = "rss_news_covers"
@@ -293,14 +322,6 @@ class RssNewsCovers(models.Model):
     main_cover = models.TextField(max_length=512)
 
 
-class RssSaveNews(models.Model):
-    class Meta:
-        db_table = "rss_save"
-        verbose_name = "RSS"
-        verbose_name_plural = "RSS"
-
-    user = models.ForeignKey(User)
-    news = models.ForeignKey(RssNews)
 
 
 class TopVideoContent(models.Model):
@@ -314,3 +335,12 @@ class TopVideoContent(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class SubscriptionUsers(models.Model):
+    class Meta:
+        db_table = "closet_subs"
+
+    email = models.EmailField(max_length=128)
+    uid = models.UUIDField(max_length=33)
+

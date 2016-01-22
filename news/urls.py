@@ -28,9 +28,10 @@ urlpatterns = [
 
 
     # Likes
-    url(r'^add_like/n=(?P<news_id>\w+)', 'news.views.add_like_news'),
+   #  url(r'^add_like/n=(?P<news_id>\w+)', 'news.views.add_like_news'),
     url(r'^add_like_rss/r=(?P<rss_id>\w+)', 'news.views.save_rss_news'),
-    url(r'^check_like/n=(?P<news_id>\w+)', 'news.views.check_like_amount'),
+    url(r'^remove_like_rss/r=(?P<rss_id>\w+)', 'news.views.forget_rss_news'),
+    # url(r'^check_like/n=(?P<news_id>\w+)', 'news.views.check_like_amount'),
 
 
     # Dislikes
@@ -59,8 +60,10 @@ urlpatterns = [
     # User RSS news
     #url(r'^usernews/', 'news.views.render_user_news'),
     #url(r'^usernews/(?P<portal_verbose>\w+)', 'news.views.get_rss_news_current_portal'),
-    url(r'^usernews/page/(?P<portal>\w+)', 'news.views.render_current_portal_news'),
-    url(r'^usernews/', 'news.views.render_user_news'),
+    url(r'^manager/', 'news.views.render_manager_portal'),
+    url(r'^browser/', 'news.views.render_browser_portals'),
+    url(r'^usernews/page/(?P<portal>\w+)$', 'news.views.render_current_portal_news'),
+    url(r'^usernews/$', 'news.views.render_user_news'),
 
 
 
@@ -78,11 +81,18 @@ urlpatterns = [
     # url(r'^comp/gid=(?P<company_verbose>\w+)', 'news.views.get_company_id'),
 
 
+
+
+
     url(r'^entertainment/', 'news.views.render_entertainment_news'),
     url(r'^technology/', 'news.views.render_technology_news'),
     url(r'^latest/', 'news.views.render_latest_news'),
     url(r'^reviews/', 'news.views.render_reviews_news'),
+    url(r'^cua=(?P<portal_id>\w+)', 'news.views.count_unread_articles'),
+    url(r'^scar=(?P<rss_id>\w+)', 'news.views.set_current_news_as_read'),
+    url(r'^arp&uid=(?P<uuid>[^/]+)&pid=(?P<pid>\w+)/', 'news.views.follow_current_rss_portal'),
     url(r'^rrp&uid=(?P<uuid>[^/]+)&pid=(?P<pid>\w+)/', 'news.views.remove_rss_portal_from_feed'),
     url(r'^space/', 'news.views.render_space_news'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,197 @@
+{% extends 'index_new.html' %}
+{% load i18n %}
+{% load my %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% block manager %}
+
+    <style>
+    .manager{
+        position: relative;
+        min-height: 300px;
+    }
+        #manager-portals{
+            min-height: 300px;
+             border: solid 1px lightgrey;
+            width: 82%;
+{#            margin-left: 1%;#}
+            float: right;
+            margin-bottom: 50px;
+        }
+
+        #left-control-portals{
+            position: fixed;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            z-index: 989;
+            height: 100%;
+            margin-top: -5.5%;
+            float: left;
+            width: 16.1%;
+            left: 0;
+    }
+    #manager-title{
+        width: 100%;
+        text-align: center;
+    }
+
+    #user-rss-table{
+        width: 100%;
+    }
+    .td-rp-name{
+        width: 15%;
+    }
+    .td-rp-description{
+        width: 70%;
+    }
+    .td-rp-btn{
+        width: 15%;
+    }
+
+    .current-rss-portal{
+        height: 75px;
+        margin-bottom: 2px;
+        border-bottom: solid 1px lightgrey;
+    }
+    .current-rss-portal:hover{
+        background: rgba(28, 244, 216, 0.15);
+    }
+    #manager-answer{
+        width: 100%;
+        font-family:Georgia, Times, "Times New Roman", serif;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    </style>
+
+    <script>
+
+
+
+        function removeUserRssPortal(uuid,pid, id){
+{#            $("#ajax-preloader").show();#}
+            var $link = "/news/update_user_rss_news/";
+{#            var csrftoken = getCookie('csrftoken');#}
+            $.ajax({
+                url: "/news/rrp&uid="+uuid+"&pid="+pid+"/",
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(result){
+                    $("#user-rss-"+id).slideToggle();
+                    $("#left-bar-portal-"+id).slideUp('slow').detach();
+{#                    $("#manager-portals").load("/news/manager/");#}
+{#                    $("#ajax-preloader").hide();#}
+                }
+            })
+        }
+    </script>
+
+
+<div class="container-fluid container manager">
+    <div class="row row-centered">
+        <div id="left-control-portals">
+            <main class="cd-main-content">
+                <nav class="cd-side-nav-2">
+                    <ul>
+                        <li id="left-panel-main-title" style="z-index:919; color: white; text-align: center; font-family: Georgia, Times, 'Times New Roman', serifs">
+                            <a href="/" style="font-size: 30px">INSYDIA</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="cd-label">Main</li>
+                        <li class="has-children overview active" onclick="changeStatePortals(this);">
+                            <a href="#">Overview</a>
+                            <ul>
+                                <li><a href="/news/usernews/">My feed</a></li>
+                                <li><a href="/favourite/">Saved articles</a></li>
+        {#						<li><a href="#0">Category 2</a></li>#}
+                            </ul>
+                        </li>
+                        <li id="side-bar-portals" class="has-children notifications active">
+                            <a id="side-bar-portals-link" href="#" onclick="changeStatePortals(this);">Portals</a>
+                            <ul class="user-rss">
+                                {% for current_portal in user_rss_portals %}
+                                    <li id="left-bar-portal-{{ current_portal.id }}">
+                                        <a>
+                                            <span class="cprs" onclick="showCurrentPortalNews('{{ current_portal.portal_id|get_rss_verbose_name }}');">
+                                                {{ current_portal.portal_id|get_rss_portal_name }}
+                                            </span>
+                                            {% if current_portal.portal_id|get_unread_news:username.id != 0 %}
+                                                <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>
+                                            {% endif %}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul style="margin-bottom: 50px;">
+                        <li class="cd-label">Configures</li>
+                        <li class="has-children bookmarks">
+                            <a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>Manage portals</a>
+                            <a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>Browse portals</a>
+                        </li>
+                    </ul>
+                </nav>
+	        </main>
+        </div>
+        <div id="manager-portals">
+            <div id="manager-title">
+                <h2>Rss Manager</h2>
+            </div>
+
+
+            {% if user_rss_portals|length > 0 %}
+                <table id="user-rss-table">
+                <tr>
+                    <th class="table-rss-name">Portal name</th>
+                    <th class="table-rss-describe">Description</th>
+                    <th class="table-rss-configs">Configs</th>
+                </tr>
+                    {% for i in user_rss_portals %}
+                        <tr class="current-rss-portal"
+                            id="user-rss-{{ i.id }}">
+                            <td class="td-rp-name">
+                                <div>
+                                    <img src="" height="70px"/>{{ i.portal_id|get_rss_portal_name }}
+                                </div>
+                            </td>
+                            <td class="td-rp-description"><div>{{ i.portal_id|get_description }}</div></td>
+                            <td class="td-rp-btn"><div><button onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}', '{{ i.id }}');"
+                                             class="btn btn-success">unfollow</button></div></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+        {% else %}
+            <div id="manager-answer">
+                You have no one portals yet. Would you like gather your own collection?
+
+                You just need to <a href="/news/browser/">open</a> portals browser.
+
+                <br>If you have any questions or offers, <a href="/about/contacts/">write</a> to us, please.
+            </div>
+        {% endif %}
+        </div>
+    </div>
+</div>
+    <div class="usernews-footer" style="margin-left: 16.1%;
+    width: 83.9%;
+    border: solid 1px red;">
+        {% include 'footer_usernews.html' %}
+    </div>
+
+     <script>
+        function changeStatePortals(element){
+            if (!$(element).parent().hasClass('active')) {
+                $(element).parent().addClass('active');
+            }
+            else {
+                $(element).parent().removeClass('active');
+            }
+        }
+    </script>
+
+{% endblock %}

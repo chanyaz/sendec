@@ -7,13 +7,13 @@ from django.contrib import auth
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsComments, NewsWatches, NewsCommentsReplies, RssSaveNews, RssNewsCovers, TopNews, NewsPortal
+from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsComments, NewsWatches, NewsCommentsReplies, RssNewsCovers, TopNews, NewsPortal,UserRssNewsReading
 import datetime
 import json
 from userprofile.models import UserLikesNews, UserSettings, UserProfile, UserRssPortals
 from .forms import NewsCommentsForm, NewsCommentsRepliesForm
 from django.core.mail import send_mail
-
+from favourite.models import RssSaveNews
 
 # def global_redirect(request):
 #     if request.COOKIES.get("translate-version"):
@@ -57,6 +57,7 @@ def main_page_load(request, template="index_new.html", page_template="page_templ
         "page_template": page_template,
         "top_news": get_top_total_news(request),
         #test "latest_review": get_latest_reviews(request),
+        "left_bar": True,
     }
     # if translate == "russian":
     #     args["translate"] = "ru"
@@ -81,8 +82,12 @@ def get_latest_reviews(request):
 
 
 def get_hottest_news(request):
-    watches = NewsWatches.objects.order_by("-watches").values("news_id")[:4].values("news_id")
-    return News.objects.filter(id__in=watches).defer("news_portal_name").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").defer("news_author").values()
+    # try:
+    watches = NewsWatches.objects.order_by("-watches").values("news_id").values("news_id")
+    if watches.count() >= 4:
+        return News.objects.filter(id__in=watches[:4]).defer("news_portal_name").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").defer("news_author").values()
+    else:
+        return News.objects.all().defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").order_by("news_post_date").values()[:4]
 
 
 def get_top_total_news(request):
@@ -131,6 +136,7 @@ def render_current_top_news(request, category_id, news_id):
         "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count(),
         "current_news_title": current_news.top_news_title,
         #"external_link": shared_news_link(request, news_id),
+        "left_bar": True,
     }
 
     args.update(check_english(current_news, flag=1))
@@ -164,6 +170,7 @@ def render_current_news(request, category_id, news_id):
         "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count(),
         "current_news_title": current_news.news_title,
         #"external_link": shared_news_link(request, news_id),
+        "left_bar": True,
     }
 
     args.update(check_english(current_news, flag=0))
@@ -202,37 +209,47 @@ def check_english(news, flag):
 @login_required(login_url="/auth/login/")
 def render_user_news(request, template="user_news.html", rss_template="rss_template.html", extra_context=None):
     user = User.objects.get(username=auth.get_user(request).username)
-    user_rss_list = UserRssPortals.objects.filter(user_id=user.id).filter(check=True).values("id")
-    args = {
-        "title": "My news | ",
-        #"test": set_rss_for_user_test(request),
-        "user_rss": get_user_rss_news(request, user_id=user.id).order_by("position"),
-        "user_rss_count": get_user_rss_news(request, user_id=user.id).order_by("position").count(),
-        "popular_rss": get_most_popular_rss_portals(request)[:9],
-        "popular_rss_right": get_most_popular_rss_portals(request)[:3],
-        #"test_2": RssNews.objects.filter(portal_name_id__in=user_rss_list).values(),
-        "rss_template": rss_template,
-        "un_us_p": get_user_unselceted_portals(request, user_id=user.id),
-        "un_us_p_count": get_user_unselceted_portals(request, user_id=user.id).count(),
-        "if_zero": "<p>Wow, you are reading all of our portals. Would you like to <a href='/about/contacts/'>tell</a> us something?</p><p>Or you just can "
-                   "write which portal you want to see here and we will try to add it to our database with pleasure.</p>"
-                   "<p>You are our <b>HERO</b>, man!</p>",
-        "new_user_news": get_rss_filterd(request, user.id),
-    }
-    args.update(csrf(request))
-    if auth.get_user(request).username:
-        args["username"] = User.objects.get(username=auth.get_user(request).username)
-        args["search_private"] = True
-    args["rss_news"] = set_rss_for_user_test(request)
-    args["rss_news_count"] = set_rss_for_user_test(request).count()
-    if request.is_ajax():
-        template = rss_template
-    if get_user_rss_news(request, user_id=user.id).count() == 0:
-        args["zero"] = True
+    if get_user_rss_portals(request, user_id=user.id).count() == 0:
+        """If RSS portals list is empty for current user
+        """
+        return HttpResponseRedirect('/news/browser/')
     else:
-        args["zero"] = False
-    args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response(template, context=args, context_instance=RequestContext(request))
+        user_rss_list = UserRssPortals.objects.filter(user_id=user.id).filter(check=True).values("id")
+        args = {
+            "title": "My news | ", "user_rss": get_user_rss_news(request, user_id=user.id).order_by("position"),
+            "user_rss_count": get_user_rss_news(request, user_id=user.id).order_by("position").count(),
+            "popular_rss": get_most_popular_rss_portals(request)[:9],
+            "popular_rss_right": get_most_popular_rss_portals(request)[:3],
+            "rss_template": rss_template,
+            "un_us_p": get_user_unselceted_portals(request, user_id=user.id),
+            "un_us_p_count": get_user_unselceted_portals(request, user_id=user.id).count(),
+            "if_zero": "<p>Wow, you are reading all of our portals. Would you like to <a href='/about/contacts/'>tell</a> us something?</p><p>Or you just can "
+                       "write which portal you want to see here and we will try to add it to our database with pleasure.</p>"
+                       "<p>You are our <b>HERO</b>, man!</p>", "new_user_news": get_rss_filterd(request, user.id),
+            "user_rss_portals": get_user_rss_portals(request, user_id=user.id),
+            "left_bar": False,
+            "here_private": True,
+            "rss_tech": RssPortals.objects.filter(category=1).order_by("-follows")[:4],
+            "rss_ent": RssPortals.objects.filter(category=2)[:4],
+            "rss_auto": RssPortals.objects.filter(category=3)[:4],
+            "rss_space": RssPortals.objects.filter(category=4)[:4],
+            "rss_bio": RssPortals.objects.filter(category=5)[:4]
+        }
+
+        args.update(csrf(request))
+        if auth.get_user(request).username:
+            args["username"] = User.objects.get(username=auth.get_user(request).username)
+            args["search_private"] = True
+        args["rss_news"] = set_rss_for_user_test(request)
+        args["rss_news_count"] = set_rss_for_user_test(request).count()
+        if request.is_ajax():
+            template = rss_template
+        if get_user_rss_news(request, user_id=user.id).count() == 0:
+            args["zero"] = True
+        else:
+            args["zero"] = False
+        args["footer_news"] = get_news_for_footer(request)[:3]
+        return render_to_response(template, context=args, context_instance=RequestContext(request))
 
 
 def get_rss_filterd(request, user_id):
@@ -282,6 +299,7 @@ def get_rss_news(request):
 def render_top_news_page(request):
     args = {
         "top_news": get_top_news(request),
+        "left_bar": True,
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
@@ -371,7 +389,8 @@ def set_shown(request, news_id):
 
 @login_required(login_url="/auth/login/")
 def addition_news_watches(request, news_id):
-    if NewsWatches.objects.filter(news_id=news_id).exists():
+    instance = NewsWatches.objects.filter(news_id=news_id)
+    if instance.exists() and isinstance(instance, News):
         instance = NewsWatches.objects.get(news_id=news_id)
         instance.watches += 1
         instance.save()
@@ -394,6 +413,7 @@ def render_current_category(request, category_name):
         "title": "Politics | ",
         "latest_news": get_latest_news_total(request),
         "category_title": category_name.capitalize(),
+        "left_bar": True,
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
@@ -419,6 +439,9 @@ def render_technology_news(request, template="technology.html", tech_template="t
 
         "tech_template": tech_template,
         "total_news": get_category_news_offset(request, category_name="Technology")[11:],
+
+        "left_bar": True,
+        "here_tech": True,
     }
     if request.is_ajax():
         template = tech_template
@@ -463,6 +486,9 @@ def render_auto_news(request, template="auto.html", auto_template="auto_template
 
         "auto_template": auto_template,
         "total_news": get_category_news_offset(request, category_name="Auto")[11:],
+
+        "left_bar": True,
+        "here_auto": True,
     }
     if request.is_ajax():
         template = auto_template
@@ -491,6 +517,9 @@ def render_bio_news(request, template="bio.html", bio_template="bio_template.htm
 
         "bio_template": bio_template,
         "total_news": get_category_news_offset(request, category_name="BIO")[11:],
+
+        "left_bar": True,
+        "here_bio": True,
     }
     if request.is_ajax():
         template = bio_template
@@ -514,6 +543,9 @@ def render_companies_news(request, template="companies.html", companies_endless=
         "companies": get_companies(request),
         "category_title": "COMPANIES",
         # "companies_endless": companies_endless,
+
+        "left_bar": True,
+        "here_companies": True,
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
@@ -536,6 +568,8 @@ def render_current_company(request, company_name, template="current_company.html
         "company": company,
         "company_news": company_news,
         "news": get_companies_news(request, company.id),
+
+        "left_bar": True,
     }
     args.update(csrf(request))
 
@@ -569,6 +603,9 @@ def render_entertainment_news(request, template="entertainment.html", ent_templa
 
         "ent_template": ent_template,
         "total_news": get_category_news_offset(request, category_name="Entertainment")[11:],
+
+        "left_bar": True,
+        "here_ent": True,
     }
     if request.is_ajax():
         template = ent_template
@@ -593,6 +630,8 @@ def render_latest_news(request):
         "top_latest_news": get_latest_news_total(request)[0],
         "latest_news": get_latest_news_total(request)[1:10],
         "category_title": "LATEST",
+
+        "left_bar": True,
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
@@ -607,6 +646,9 @@ def render_reviews_news(request):
         "title": "Reviews | ",
         "latest_news": get_latest_news_total(request),
         "category_title": "REVIEWS",
+
+        "left_bar": True,
+        "here_review": True,
     }
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
@@ -627,6 +669,9 @@ def render_space_news(request, template="space.html", space_template="space_temp
 
         "space_template": space_template,
         "total_news": get_category_news_offset(request, category_name="Space")[11:],
+
+        "left_bar": True,
+        "here_space": True,
     }
     if request.is_ajax():
         template = space_template
@@ -813,6 +858,9 @@ def set_rss_for_user_test(request):
     return test_new
 
 
+
+
+
 def remove_rss_portal_from_feed(request, uuid, pid):
     args = {}
     args.update(csrf(request))
@@ -824,18 +872,43 @@ def remove_rss_portal_from_feed(request, uuid, pid):
     rss_portal_instance = RssPortals.objects.get(id=int(pid))
     rss_portal_instance.follows -= 1
     rss_portal_instance.save()
+
+
+
+
+
+    portal_news_instance = RssNews.objects.filter(portal_name_id=int(pid))
+    count_news = portal_news_instance.count() # amount of news on this portal
+
+    list_of_news = portal_news_instance.order_by("-date_posted").values('id')
+
+    for i in range(count_news):
+        user_rss_instance = UserRssNewsReading.objects.get(user_id=user.id, rss_news_id=list_of_news[i]['id'])
+        user_rss_instance.delete()
+
     # return render_to_response("user_news.html", args, context_instance=RequestContext(request))
     return HttpResponseRedirect("/news/usernews/")
 
+
+
+
+
 def save_rss_news(request, rss_id):
     user = User.objects.get(username=auth.get_user(request).username)
-    if not RssSaveNews.objects.filter(user_id=user.id).filter(news_id=rss_id).exists():
+    if not RssSaveNews.objects.filter(user_id=user.id).filter(rss_id=rss_id).exists():
         RssSaveNews.objects.create(
             user_id=user.id,
-            news_id=rss_id
+            rss_id=rss_id
         )
     else:
         pass
+    return HttpResponse()
+
+
+def forget_rss_news(request, rss_id):
+    instance = RssSaveNews.objects.get(id=rss_id)
+    instance.delete()
+    # instance.save()
     return HttpResponse()
 
 
@@ -868,6 +941,8 @@ def render_contacts_page(request):
         "phone": "+7-931-579-06-96",
         "cooperation": "advert@insydia.com",
         "form": SendReportForm,
+
+        "left_bar": True,
     }
     args.update(csrf(request))
     if auth.get_user(request).username:
@@ -879,7 +954,9 @@ def render_contacts_page(request):
 
 def render_about_page(request):
     args = {
-        "title": "About |"
+        "title": "About |",
+
+        "left_bar": True,
     }
     args.update(csrf(request))
     if auth.get_user(request).username:
@@ -893,7 +970,9 @@ def render_about_page(request):
 
 def render_adertisers_page(request):
     args = {
-        "title": "Advertisement | "
+        "title": "Advertisement | ",
+
+        "left_bar": True,
     }
     args.update(csrf(request))
     if auth.get_user(request).username:
@@ -1049,6 +1128,8 @@ def render_current_portal_news(request, portal, template="user_news.html", page_
             "page_template": page_template,
             "portal": portal_instance,
             "portal_news": RssNews.objects.filter(portal_name_id=portal_instance.id).order_by("-date_posted").defer("author").defer("content_value").values(),
+
+            "left_bar": False,
         }
         args.update(csrf(request))
         if request.is_ajax():
@@ -1077,3 +1158,208 @@ def get_match_company(request, company):
 
 def get_news_for_footer(request):
     return News.objects.order_by("-news_post_date").defer("news_dislikes").defer("news_likes").defer("news_post_text_english").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_author").defer("news_portal_name")
+
+
+def render_manager_portal(request):
+    user_instance = User.objects.get(username=auth.get_user(request).username)
+    args = {
+        "username": user_instance,
+
+        "user_rss_portals": get_user_rss_portals(request, user_id=user_instance.id),
+        "left_bar": False,
+        "here_private": True,
+    }
+    args.update(csrf(request))
+
+    return render_to_response("manage_portals.html", args)
+
+
+def get_all_rss_portals(request):
+    return RssPortals.objects.all().values()
+
+
+def render_browser_portals(request, template="browse_portals.html", browse_template="browse_template.html", extra_context=None):
+    user_instance = User.objects.get(username=auth.get_user(request).username)
+    args = {
+        "username": user_instance,
+        "browse_template": browse_template,
+        "rss_portals": get_all_rss_portals(request),
+        "user_rss_portals": get_user_rss_portals(request, user_id=user_instance.id),
+        "left_bar": False,
+        "here_private": True,
+
+        "rss_tech": RssPortals.objects.filter(category=1).filter(
+            id__in=get_user_unselceted_portals(request, user_id=user_instance.id).values_list("portal_id")
+        ).order_by("-follows")[:4],
+        "rss_ent": RssPortals.objects.filter(category=2).order_by("-follows")[:4],
+        "rss_auto": RssPortals.objects.filter(category=3).order_by("-follows")[:4],
+        "rss_space": RssPortals.objects.filter(category=4).order_by("-follows")[:4],
+        "rss_bio": RssPortals.objects.filter(category=5).order_by("-follows")[:4],
+    }
+    args.update(csrf(request))
+
+    if request.is_ajax():
+        template = browse_template
+
+    return render_to_response(template, args, context_instance=RequestContext(request))
+
+
+def render_close_page(request, lang):
+    args = {
+        "title": "INSYDIA",
+    }
+    args.update(csrf(request))
+
+    if lang == "en":
+        args["slog"] = "Our service is coming soon!"
+        args["about"] = "Insydia is a news providing service. " \
+                        "<p>We are focused on categories such as: High-tech, auto," \
+                        "<br>aerospace technologies, entertainment and bio-technology. " \
+                        "<p>You will be able to read a lot of news which you never" \
+                        "<br>read somewhere else. Also, we will gather special articles" \
+                        "<br>only for you, that is you can gather your own collection of " \
+                        "<br>interesting news and enjoying reading them. And many more... " \
+                        "<p>Let's work together and spread news about all companies and"\
+                        "<br>achievements all over the World!"
+        args["top_one"] = "About"
+        args["top_two"] = "Get in touch"
+        args["left_item"] = "ABOUT"
+        args["right_item"] = "CONTACTS"
+        args["contacts"] = "E-mail: support@insydia.com"\
+        "<br>Phone: +7-931-579-06-96"\
+        "<br>Location: Russia, St. Petersburg"
+        args["sub_title"] = "Subscribe"
+        args["subs"] = "Subscribe to our newsletter the launch of our service."
+        args["subs_success"] = "Thank you for subscriptions. We will send you a message when we get back."
+    elif lang == "ru":
+        args["slog"] = "Скоро запуск"
+        args["about"] = "Проект Insydia - это особый новостной сервис." \
+        "<p>Мы ориентированы на такие категории как: Высокие-технологии," \
+        "<br>развлечения, авто, космос и био-технологии." \
+        "<p>Здесь Вы сможете прочитать такие новости, какие вряд ли сможете" \
+        "<br>найти где-либо ещё. Кроме того, мы специально для Вас подготовим" \
+        "<br>интересные статьи, чтобы Вы смогли собрать свою уникальную" \
+        "<br>коллекцию новостей и наслаждась, читать их. И кое-что ещё..."\
+        "<p>Давайте сотрудничать и работать совместо, распространяя новости" \
+        "<br>обо всех компаниях и достижениях человечства по всему Миру!"
+        args["top_one"] = "О проекте"
+        args["top_two"] = "Свяжитесь с нами"
+        args["left_item"] = "О НАС"
+        args["right_item"] = "КОНТАКТЫ"
+        args["contacts"] = "Электронная почта: support@insydia.com"\
+        "<br>Телефон: +7-931-579-06-96"\
+        "<br>Расположение: Россия, Санкт-Петербург"
+        args["sub_title"] = "Подписка"
+        args["subs"] = "Подпишитесь на рассылку об открытии нашего сервиса."
+        args["subs_success"] = "Спасибо за подписку. Мы сообщим о запуске, отправив Вам сообщение на электронную почту."
+    else:
+        args["slog"] = "我們的服務即將推出"
+        args["about"] = "印度是一個消息提供服務。" \
+                        "<p>我們專注於如類：高科技，汽車，航空航天技術，娛樂和生物技術。"\
+        "<br>您可以閱讀大量的新聞，你從來沒有看過別的地方。此外，我們將收集特殊物品只為你，" \
+        "<p>這是你可以收集你自己收集的有趣的新聞，享受閱讀。 還有很多..."\
+        "<p>讓我們攜手合作，傳播新聞的所有公司和成就遍布世界！"
+        args["top_one"] = "關於"
+        args["top_two"] = "保持聯繫"
+        args["left_item"] = "關於"
+        args["right_item"] = "聯繫人"
+        args["contacts"] = "電子信箱：support@insydia.com"\
+        "<br>電話：+7-931-579-06-96"\
+        "<br>地點：俄羅斯，聖彼得堡"
+        args["sub_title"] = "訂閱新聞"
+        args["subs"] = "我們將宣布推出我們的項目通過消息的電子郵件。"
+        args["subs_success"] = "感謝您的訂閱。當我們回來，我們會送你一個消息。"
+    return render_to_response("close_site.html", args)
+
+
+def check_email_subs(request, email):
+    from .models import SubscriptionUsers
+    if SubscriptionUsers.objects.filter(email=email).exists():
+            return HttpResponse(json.dumps({"data": True}), content_type="application/json")
+    else:
+        return HttpResponse(json.dumps({"data": False}), content_type="application/json")
+
+
+def closet_subscribe(request):
+    from .models import SubscriptionUsers
+    import uuid
+    args = {}
+    args.update(csrf(request))
+    if request.POST:
+        print("post")
+        if not SubscriptionUsers.objects.filter(email=request.POST["email"]).exists():
+            SubscriptionUsers.objects.create(
+                email=request.POST['email'],
+                uid=uuid.uuid3(uuid.NAMESPACE_DNS, "%s" % request.POST["email"])
+            )
+            return HttpResponse(json.dumps({"data": True}), content_type="application/json")
+        else:
+            return HttpResponse(json.dumps({"data": False}), content_type="application/json")
+    return HttpResponse()
+
+
+def follow_current_rss_portal(request, uuid, pid):
+    args = {}
+    args.update(csrf(request))
+    user = User.objects.get(id=UserProfile.objects.get(uuid=uuid).user_id)
+    user_rss_instance = UserRssPortals.objects.get(portal_id=pid, user_id=user.id)
+    if user_rss_instance.check == False:
+        user_rss_instance.check = True
+        user_rss_instance.save()
+        rss_portal_instance = RssPortals.objects.get(id=int(pid))
+        rss_portal_instance.follows += 1
+        rss_portal_instance.save()
+        data = {
+            'data': RssPortals.objects.get(id=pid).get_json(),
+            'exists': False,
+            'string': """<li id="left-bar-portal-{portal_id}">
+<a><span class="cprs" onclick="showCurrentPortalNews({portal_verbose});">{portal_name}</span>
+<span class="count"></span></a></li>""",
+        }
+
+
+
+        portal_news_instance = RssNews.objects.filter(portal_name_id=int(pid))
+        count_news = portal_news_instance.count() # amount of news on this portal
+
+        list_of_news = portal_news_instance.order_by("-date_posted").values('id')
+
+        for i in range(count_news):
+            if i < 5:
+                UserRssNewsReading.objects.create(
+                    user_id=user.id,
+                    rss_news_id=list_of_news[i]['id'],
+                    rss_portal_id=int(pid),
+                    read=False
+                )
+            else:
+                 UserRssNewsReading.objects.create(
+                    user_id=user.id,
+                    rss_news_id=list_of_news[i]['id'],
+                    rss_portal_id=int(pid),
+                    read=True
+                )
+        return HttpResponse(json.dumps(data), content_type="application/json")
+    else:
+        user_rss_instance.check = True
+        user_rss_instance.save()
+        return HttpResponse(json.dumps({'exists': True}), content_type="application/json")
+
+
+def set_current_news_as_read(request, rss_id):
+    args = {}
+    args.update(csrf(request))
+    user_instance = User.objects.get(username=auth.get_user(request).username)
+    read_instance = UserRssNewsReading.objects.get(user_id=user_instance.id, rss_news_id=rss_id)
+    read_instance.read = True
+    read_instance.save()
+    return HttpResponse(json.dumps({'read': True}), content_type="application/json")
+
+
+def count_unread_articles(request, portal_id):
+    args = {}
+    args.update(csrf(request))
+    user_instance = User.objects.get(username=auth.get_user(request).username)
+    data = UserRssNewsReading.objects.filter(user_id=user_instance.id).filter(rss_portal_id=portal_id).filter(read=False).count()
+    return HttpResponse(json.dumps({'data': data}), content_type="application/json")
+
