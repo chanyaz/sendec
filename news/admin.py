@@ -10,6 +10,7 @@ class RssNewsAdmin(admin.ModelAdmin):
     list_display = ['title', 'portal_name', 'category']#, 'get_category', 'get_author')
     list_filter = ["portal_name", "category"]
 
+
     def get_portal(self, obj):
         return obj.portal_name.portal
 
@@ -66,7 +67,7 @@ class PostAdminForm(forms.ModelForm):
 
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
-    list_display = ['news_title', 'news_category', 'news_portal_name', 'news_company_owner', 'news_author',  'news_likes', 'news_dislikes', ]
+    list_display = ['news_title', 'news_category', 'news_portal_name', 'news_company_owner', 'news_author',  'news_likes', 'news_dislikes', 'news_post_date',]
     list_filter = ['news_category', 'news_portal_name', 'news_company_owner', 'news_author',]
 
 

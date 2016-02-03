@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.template.context_processors import csrf
 from django.shortcuts import render_to_response, RequestContext
 from django.db.models import Q
-
+from django.http import HttpRequest, HttpResponse
+import json
 
 from news.models import NewsWatches, News, Companies
 from search.models import UserRequests
@@ -70,6 +71,24 @@ def get_search_result(request, search_word):
                                Q(news_post_text_russian__contains=search_word) |
                                Q(news_post_text_english__contains=search_word) |
                                Q(news_post_text_chinese__contains=search_word)).values()
+
+
+def get_search_preview_result(request, search_word):
+    companies_list = Companies.objects.filter(Q(name__contains=search_word[1:]) |
+                                              Q(name__contains=search_word[1:])).values("id")
+    result = News.objects.all().filter(Q(news_title__contains=search_word) |
+                               Q(news_company_owner_id__in=companies_list) |
+                               Q(news_post_text_russian__contains=search_word) |
+                               Q(news_post_text_english__contains=search_word) |
+                               Q(news_post_text_chinese__contains=search_word))[:10]
+
+    data = {
+        'data': [i.get_json_for_search() for i in result.all()]
+    }
+
+    # result_2 = News.objects.all()[:3]
+
+    return HttpResponse(json.dumps([i.get_json_for_search() for i in result.all()]), content_type='application/json')
 
 
 #   @login_required(login_url="/auth/login/")

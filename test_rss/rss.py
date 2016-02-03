@@ -366,6 +366,16 @@ def fill_companies():
     db.close()
 
 
+def fill_portals():
+    import json
+    db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+    cursor = db.cursor()
+
+    query_portals = "INSERT INTO news_portal(portal_name, portal_base_link) VALUES(%s,%s)"
+    query_data = ("Appleinsider", "appleinsider.ru")
+    cursor.execute(query_portals, query_data)
+    db.commit()
+    db.close()
 
 def fill_news():
     import json
@@ -391,15 +401,16 @@ def fill_news():
                 news_post_text_chinese = news[file_list[i]]["text"]
                 news_portal_name_id = 1    # Insydia
                 news_company_owner_id = 2    # Insydia
-                news_author_id = 1    # Saqel
+                news_author_id = 2    # Saqel
                 news_main_cover = ""    # None
                 news_likes = 0
                 news_dislikes = 0
                 photo = ""
+                news_tags = ""
 
                 query_set = "INSERT INTO news(news_title, news_category_id, news_post_date, news_post_text_english, " \
                             "news_post_text_russian, news_post_text_chinese, news_portal_name_id, news_company_owner_id, news_author_id, " \
-                            "news_main_cover, photo, news_likes, news_dislikes) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                            "news_main_cover, photo, news_likes, news_dislikes, news_tags) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
                 data_query_set = (news_title,
                                   news_category_id,
                                   news_post_date,
@@ -412,7 +423,8 @@ def fill_news():
                                   news_main_cover,
                                   photo,
                                   news_likes,
-                                  news_dislikes)
+                                  news_dislikes,
+                                  news_tags)
                 cursor.execute(query_set, data_query_set)
                 db.commit()
                 #print(cur_iter, data_query_set)
@@ -469,10 +481,9 @@ def create_categories():
     db.close()
 
 
-
 def work_func():
     urls_of_portals = get_feed_urls()
-    print("1. Fill Rss Portals\n2. Syndicate news\n3. Fill Companies\n4. Fill news\n5. Save RSS\n6.User readers\n7. Create categories")
+    print("1. Fill Rss Portals\n2. Syndicate news\n3. Fill Companies\n4. Fill news\n5. Save RSS\n6.User readers\n7. Create categories\n8. Fill portals")
     x = int(input("What can I help you? Enter number: "))
     if x == 1:
         fill_rss_portals()
@@ -493,6 +504,8 @@ def work_func():
         get_amount_of_user_readers(3)
     elif x == 7:
         create_categories()
+    elif x == 8:
+        fill_portals()
     else:
         import sys
         print("Good bye!")

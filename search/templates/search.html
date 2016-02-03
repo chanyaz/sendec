@@ -33,7 +33,7 @@
         .content{float: right;width: 75%;height: 50px;border: solid 1px purple;}
         .moderator-info{margin-left: -12%;list-style-type: none;}
         .moderator-info-item{float: left;}
-        .search{width: 100%; height: 100%;}
+        .search{width: 100%; height: inherit; min-height: 800px;}
         .left-side-search{width: 70%; height: inherit; float: left;}
         .search-error-text{text-align: center;}
         .no_results{margin-left: 25%;}
@@ -46,45 +46,67 @@
         .image{opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;}
         #match-variation{text-align: left; font-size: 20px;}
         .current_searched{
-            border: solid 1px lightgrey;
-{#            height: inherit;#}
-            margin: 2% 0.25% 0.25% 0.25%;
-            font-family: Georgia, Times, "Times New Roman", serif
+            margin-bottom: 3em;
+            height: 13em;
+            font-family: Georgia, Times, "Times New Roman", serif;
+            border-bottom: solid 1px lightgrey;
         }
+
+        .search-news-block{
+            height: inherit;
+            margin-bottom: 20px;
+        }
+        .news_search_template{margin-bottom: 50px;}
+
         .current_searched_cover{
-            width: 25%;
+            width: 30%;
             height: 10em;
 {#            max-height:10em;#}
             float: left;
         }
-        .current_searched_content_title{
-{#            margin-left: 21%;#}
+        .current_searched_content_title > a{ color:black }
+        .current_searched_content_title > a:hover{ color:#F62A00; }
+
+        .md-bt-ct{position:relative; margin-top:2%;}
+        .current_searched_content_post{
+            margin-top: 3%;
+            font-size: 13px;
         }
-        .current_searched_content_portal{
+        .current_searched_content_author{
+            position: relative;
             float: left;
-            margin-left: 1%;
         }
+        .current_searched_content_author a{
+            text-decoration: none;
+            color: #F62A00;
+        }
+        .current_searched_content_author a:hover{
+            text-decoration: none;
+            color: #1E656D;
+        }
+
         .right-side-block{width: 28%; float: right;}
 
         .latest-news-cover{float: left; height: 50%; width: 25%;}
         .latest-news-content{height:60px;padding-left: 5%; width:75%; float: right; font-family: Georgia, Times, "Times New Roman", serif}
+        .latest-news-content > a{color: #F62A00;text-decoration: none;}
+        .latest-news-content > a:hover{color: #1E656D;text-decoration: none;}
+
         .latest-current-news{margin-top: 5%; height: 60px; border-bottom: dotted 1px lightgrey}
         .latest-header{text-align: center;}
 
         .current_searched_content{
-{#            border: solid 1px red;#}
-{#            position: relative;#}
             height:10em;
         }
         .current_searched_content_top{
 {#            border: solid 1px blue;#}
             position: relative;
             height: 87%;
-            margin-left: 25%;
+            margin-left: 35%;
         }
         .searched-category-name{
 {#                position: absolute;#}
-                z-index: 900;
+            z-index: 900;
 {#            border: solid 1px red;#}
             float: right;
 {#                margin-left: 20%;#}
@@ -171,14 +193,27 @@
                             {% endif %}&#41;</h5><hr>
                             </div>
                             <div id="tabs">
-                                <ul class="tabs">
-                                    <li><a href="#an">{% trans 'News' %}&nbsp;({{ news_count|default:0 }})</a></li>
-                                    <li><a href="#ac">{% trans 'Companies' %}&nbsp;({{ companies_count|default:0 }})</a></li>
-                                    <li><a href="#au">{% trans 'Moderators' %}&nbsp;({{ users_count|default:0 }})</a></li>
+                                <ul class="tabs-list nav nav-tabs" role="tablist">
+                                    <li role="presentation">
+                                        <a href="#an" class="active" aria-controls="an" role="tab" data-toggle="tab">
+                                            {% trans 'News' %}&nbsp;({{ news_count|default:0 }})
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#ac" class="active" aria-controls="ac" role="tab" data-toggle="tab">
+                                            {% trans 'Companies' %}&nbsp;({{ companies_count|default:0 }})
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#au" class="active" aria-controls="au" role="tab" data-toggle="tab">
+                                            {% trans 'Moderators' %}&nbsp;({{ users_count|default:0 }})
+                                        </a>
+                                    </li>
                                 </ul>
                                 <div class="clr"></div>
-                                <section class="block">
-                                    <article id="an">
+{#                                <section class="block">#}
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade in active" id="an">
                                         <div class="load-more">
                                             <div class="endless_page_template" style="margin-left: 1%;">
                                                 {% block js %}
@@ -194,27 +229,26 @@
                                                         });
                                                     </script>
                                                 {% endblock %}
-                                            <div class="rss-mas">
-                                                {% include news_search_template %}
-                                            </div>
+                                                <div class="news_search_template">
+                                                    {% include news_search_template %}
+                                                </div>
                                             </div>
                                         </div>
-                                    </article>
-                                    <article id="ac">
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="ac">
                                         {% if companies_matches|length > 0 %}
                                             {% for current_company in companies_matches %}
-                                                <div class="searched_company_name"
-                                                     onmouseover="this.style.backgroundColor='rgb(25, 180, 155)';"
-                                                     onmouseout="this.style.backgroundColor='';"
-                                                     onclick="location.href='/news/companies/{{ current_company.verbose_name }}/';">
-                                                    <div class="company-cover"><img src="/static/static/img/companies_logo/{{ current_company.verbose_name }}.png" width="75px"/></div>
-                                                    <div class="company-name">{{ current_company.name }}</div>
-                                                    <div class="company-articles">{% trans 'Articles' %}:&nbsp;{{ current_company.id|company_articles_amount }}</div>
-                                                </div>
+                                                <a href="/news/companies/{{ current_company.verbose_name }}/">
+                                                    <div class="searched_company_name">
+                                                        <div class="company-cover"><img src="/static/static/img/companies_logo/{{ current_company.verbose_name }}.png" width="75px"/></div>
+                                                        <div class="company-name">{{ current_company.name }}</div>
+                                                        <div class="company-articles">{% trans 'Articles' %}:&nbsp;{{ current_company.id|company_articles_amount }}</div>
+                                                    </div>
+                                                </a>
                                             {% endfor %}
                                         {% endif %}
-                                    </article>
-                                    <article id="au">
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="au">
                                         {% if users_matches|length > 0 %}
                                             {% for current_user in users_matches %}
                                                 <div class="moderator"
@@ -234,42 +268,47 @@
                                                 </div>
                                             {% endfor %}
                                         {% endif %}
-                                    </article>
-                                </section>
+                                    </div>
+                                </div>
                             </div>
                         {% endif %}
                     </div>
-                </div>
-                <div class="right-side-block">
-                    <div class="latest-news">
-                        <div class="latest-header">
-                            {% trans 'Latest news' %}
-                        </div>
-                        <div class="latest-titles">
-                            {% for i in latest_news %}
-                                <div class="latest-current-news"
-                                     onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';"
-                                     onmouseover="this.style.cursor='pointer'; $('#lnt'+{{ i.id }}).css('color', 'blue');"
-                                     onmouseout="$('#lnt'+{{ i.id }}).css('color', 'black');">
-                                    <div class="latest-news-cover"
-                                         style="background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: contain;"></div>
-                                    <div class="latest-news-content">
-                                        <span id="lnt{{ i.id }}"
-                                              class="title"
-                                              onmouseover="this.style.color='blue'; style.cursor='pointer';"
-                                              onmouseout="this.style.color='black';"
-                                              onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                            {{ i.news_title }}
-                                        </span>
+                    <div class="right-side-block">
+
+                        <div class="advert-google" style="width: 300px; height: 300px; background: lightblue;"></div>
+
+                        <div class="latest-news">
+                            <div class="latest-header">
+                                {% trans 'Latest news' %}
+                            </div>
+                            <div class="latest-titles">
+                                {% for i in latest_news %}
+                                    <div class="latest-current-news">
+                                        <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
+                                            <div class="latest-news-cover"
+                                             style="background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: contain;"></div>
+                                        </a>
+                                        <div class="latest-news-content">
+                                            <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
+                                                <span id="lnt{{ i.id }}"
+                                                      class="title">
+                                                    {{ i.news_title }}
+                                                </span>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    {% include 'footer.html' %}
+
 {% endblock %}
 {#    <script src="{% static 'static/js/jquery.js' %}"></script>#}
 {#    <script src="{% static 'static/js/jquery-ui.js' %}"></script>#}

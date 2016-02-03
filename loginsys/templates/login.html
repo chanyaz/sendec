@@ -1,108 +1,117 @@
 {% load staticfiles %}
 {% load i18n %}
 {% block login %}
-        <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
 
     <style>
-        .background-image{
-            top: 0;
-            width: 100%;
-            height: 100%;
-            position: fixed;
-{#            -webkit-filter: blur(1px);#}
-{#            -moz-filter: blur(1px);#}
-{#            -o-filter: blur(1px);#}
-{#            -ms-filter: blur(1px);#}
-{#            filter: blur(1px);#}
 
-{#  display: block;#}
-{#            background: url('{{ background_url }}') no-repeat center;#}
-{#            background-size: cover;#}
+    @media (max-device-width: 600px){
+        body{
+            background: url('/static/static/img/login/3.jpg') no-repeat center;
+            background-size: cover;
         }
-
-
         #auth_login{
+            height: 100%;
+            width: 100%;
+            margin-left: auto;
+            margin-right:auto;
+            position: relative;
+        }
+        #auth_login_logo{
+            position: relative;
+{#            width: 4.5em;#}
+{#            margin: 5% auto 2% auto;#}
+            font-family: Georgia, Times, "Times New Roman", serif;
+            font-size: 10em;
+            color: white;
+            text-align: center;
+        }
+        .background-image{visibility: hidden;}
+        #login-password input{font-size: 3em; height: 3em; margin-bottom: 2%;}
+
+        .help-links{width:100%;}
+        #create-acc-btn{width:100%;}
+        #help-signin{font-size: 5em;}
+        .form-field-link{
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        .footer-auth{width: 100%; position: relative; margin-left: auto;margin-right: auto;}
+        .footer-rt{}
+        #auth_login_footer{width:100%;}
+        #auth_login_footer .ftr-lf{visibility: hidden}
+        #auth_login_footer #ftr-rt-top{width: 100%; text-align: center}
+        #auth_login_footer .footer-list-top{width: 100%; font-size: 2em; text-align: center}
+    }
+
+    @media (min-device-width: 600px){
+        #auth_login{
+            height: 80%;
             width: 50%;
             margin-left: auto;
             margin-right:auto;
-{#            border: solid 1px red;#}
             position: relative;
         }
+        #auth_login_logo{
+            width: 4.5em;
+            margin: 5% auto 2% auto;
+            font-family: Georgia, Times, "Times New Roman", serif;
+            font-size: 30px;
+            color: white;
+        }
+        .form-field{
+            width: 20em;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .background-image{
+            top: 0;
+            margin-left: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: black;
+        }
+        .form-field-link{
+            width: 20em;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        #auth_login_footer{position: relative;color: white;margin-left: auto;margin-right: auto;  }
+        .footer-auth{width: 40%;margin-left: auto;margin-right: auto;}
+    }
+
+
+        #auth-video{
+            margin-left: 1%;
+            margin-top: -3%;
+        }
+
         #auth_login_top{
             min-height: 81%;
         }
-    #auth_login_logo{
-        width: 4.5em;
-        margin-left: auto;
-        margin-right: auto;
-        font-family: Georgia, Times, "Times New Roman", serif;
-        font-size: 30px;
-        color: white;
-        margin-top: 5%;
-        margin-bottom: 2%;
-{#        border: solid 1px red;#}
-    }
-    #login-password{
-{#        width: 50em;#}
-{#        margin-left: auto;#}
-{#        margin-right: auto;#}
-{#        border: solid 1px red;#}
-    }
-    .form-fields{
-{#        width: 3em;#}
-        margin-left: auto;
-        margin-right: auto;
-{#        border: solid 1px blue;#}
-    }
-    .form-field{
-        width: 20em;
-        margin-left: auto;
-        margin-right: auto;
-{#        border: solid 1px red;#}
-    }
-    .form-control{
-        margin-left: 0;
-    }
-    .form-field-link{
-        width: 20em;
-        margin-left: auto;
-        margin-right: auto;
-{#        border: solid 1px blue;#}
-        text-align: center;
-    }
+        .form-fields{
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-    ul{
-        list-style-type: none;
-    }
-    #auth_login_footer{
-        position: relative;
-        color: white;
-{#        width: 100%;#}
-        margin-left: auto;
-        margin-right: auto;
-{#        border: solid 1px red;#}
-    }
-    #remembering{
-        width: 9em;
-        color: white;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .error-message{
-        color: white;
-    }
-    a:hover{
-        text-decoration: none;
-        color: rgb(25, 180, 155);
-    }
+        #signin{margin-left: 3%;}
+        #create-acc-btn{margin-left:3%;}
+
+        .form-field-link a:hover{text-decoration: none;color: #F62A00;}
+        ul{list-style-type: none;}
+        .error-message{color: white;}
+        #auth_login_logo a{text-decoration: none;color: #F62A00;}
+        #auth_login_logo a:hover{text-decoration: none;color: #1E656D;}
     </style>
 
     <div class="background-image">
-
-    <video loop autoplay muted>
-        <source src="{% static 'static/video/loginsys/hoverboard.mp4' %}" type="video/mp4" />
-    </video>
-
+        <video loop autoplay muted id="auth-video">
+            <source src="{% static 'static/video/loginsys/hoverboard.mp4' %}" type="video/mp4" />
+        </video>
     </div>
     <div id="auth_login">
         <div id="auth_login_top">
@@ -115,27 +124,20 @@
                     {% csrf_token %}
                     <div class="form-fields">
                         <div class="form-group">
-    {#                        <label class="col-md-4 control-label" for="user-register-password">Username:</label>#}
                             <div class="form-field">
                                 {{ form.username }}
                             </div>
                         </div>
-
                         <div class="form-group">
-    {#                        <label class="col-md-4 control-label" for="user-register-password">Password:</label>#}
                             <div class="form-field">
                                 {{ form.password }}
                             </div>
                         </div>
-
-
-
-                       <div class="form-group">
+                        <div class="form-group">
                             <div class="form-field">
-                                <input class="btn btn-success form-field" value="{% trans 'Sign in' %}" type="submit" onclick="">
+                                <input id="signin" class="btn btn-success form-field form-control" value="{% trans 'Sign in' %}" type="submit" onclick="">
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="form-field">
                                 <span class="error-message">
@@ -143,15 +145,15 @@
                                 </span>
                             </div>
                         </div>
-
                         <div class="help-links">
                             <div class="form-group">
                                 <div class="form-field">
-                                    <input class="btn form-field" value="{% trans 'Create Account' %}" onclick="location.href='/auth/register/';">
+                                    <a href="/auth/register/">
+                                        <input id="create-acc-btn" class="btn form-field" value="{% trans 'Create Account' %}">
+                                    </a>
                                 </div>
                             </div>
-                            <div class="form-field-link">
-{#                                <a href="/auth/cant_login/">Can't log in?</a>#}
+                            <div class="form-field-link" id="help-signin">
                                 <a href="{% url "password_reset_recover" %}">{% trans "Can't log in?" %}</a>
                             </div>
                         </div>
@@ -162,7 +164,7 @@
     </div>
 
     <div id="auth_login_footer" class="container-fluid container">
-        <div class="row row-centered" style="width: 40%;margin-left: auto;margin-right: auto;">
+        <div class="row row-centered footer-auth">
             {% include 'footer_loginsys.html' %}
         </div>
     </div>

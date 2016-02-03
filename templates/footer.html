@@ -7,7 +7,8 @@
     #footer-div{
         color: white;
         height: inherit;
-        background-color: rgb(45, 62, 80);
+{#        background-color: rgb(45, 62, 80);#}
+        background-color: #00293C;
         -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
         -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);
         box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -16,8 +17,14 @@
         position: relative;
     }
     #footer-div a:hover{
+        color: #F62A00;
         text-decoration: none;
     }
+    .social:active{
+        color: white;
+        text-decoration: none;
+    }
+
     .footer-bottom-block{}
     #footer-social li{
         display: inline;
@@ -49,19 +56,22 @@
         color: white;
     }
     .footer-list-item a:hover{
-        color: rgb(25, 189, 155);
+{#        color: rgb(25, 189, 155);#}
+        color: #ff6e1f;
     }
     .footer-main-title-link{
         color: white;
     }
     .footer-main-title-link:hover{
-        color: rgb(25, 189, 155);
+{#        color: rgb(25, 189, 155);#}
+        color: #ff6e1f;
     }
 
 
     #footer-social li{display: inline;}
     .social{font-size: 25px; color: white; margin-right: 5px;}
-    .social:hover{cursor: pointer;color: rgb(25, 180, 155);}
+{#    .social:hover{cursor: pointer;color: rgb(25, 180, 155);}#}
+    .social:hover{cursor: pointer;color: #ff6e1f;}
 
 
     .footer-current-news{
@@ -84,20 +94,24 @@
                             <li><h3 class="footer-title">{% trans 'RECENT NEWS' %}</h3></li>
                             {% for i in footer_news %}
                                 <li>
-                                    <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
-                                       <div class="footer-current-news">
-                                           {% if i.news_main_cover|check_format == True %}
+                                   <div class="footer-current-news">
+                                       {% if i.news_main_cover|check_format == True %}
+                                           <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
                                                 <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover  ;"></div>
-                                           {% else %}
+                                           </a>
+                                       {% else %}
+                                           <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
                                                <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('{% static 'static/img/companies_cover/' %}{{ i.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover  ;"></div>
-                                           {% endif %}
+                                           </a>
+                                       {% endif %}
+                                       <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
                                             <div class="footer-news-content" style="margin-left: 35%; height: 60px;">
-                                                <span id="lnt{{ i.id }}" class="title">
+                                                <span id="lnt{{ i.id }}">
                                                     {{ i.news_title|truncatechars:"60" }}
                                                 </span>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    </div>
                                 </li>
                             {% endfor %}
                         </ul>

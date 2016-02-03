@@ -22,10 +22,13 @@
             margin-right: auto;
         }
         .current_company_logo{
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
         }
+
+        .company-right-name{
+            font-size: 20px;
+            font-family: Georgia, Times, "Times New Roman", serif;
+        }
+
         .company-title{height: 60px; width: 100%;  position: relative;}
         .title-word{ margin-top: 3%;  position: relative;}
         .company-title-back{position: absolute; width: 100%; height: 75px;}
@@ -72,10 +75,11 @@
                 </div>
                 <div id="current_company_right">
                 <div class="company-right-top">
-                    <div class="current_company_logo">
+                    <div class="current_company_logo" style="float: left">
 {#                        <img src="{% thumbnail company.logo '300x150' %}" />#}
-                        <img src="{% static 'static/img/companies_logo/' %}{{ company.verbose_name }}.png"/>
+                        <img src="{% static 'static/img/companies_logo/' %}{{ company.verbose_name }}.png" height="100px"/>
                     </div>
+                    <div class="company-right-name">{{ company.name }}</div>
                 </div>
                 <div class="company-right-below">
                     {{ company.description|safe|linebreaks }}

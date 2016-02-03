@@ -63,6 +63,8 @@
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
+                    $('#user-photo-glyph').hide();
+                    $('#user-photo').show();
                     $('#user-photo').attr('src', e.target.result);
                 };
                 $("#save-image").slideDown();
@@ -114,7 +116,8 @@
                             {% if username.profile.user_photo != '' %}
                                 <img id="user-photo" src="/media/{{ username.profile.user_photo }}" alt="avatar" width="200" />
                             {% else %}
-                                <img id="user-photo" src="{% static 'static/img/default_profile.png' %}" width="80%" />
+                                <img hidden id="user-photo" src="" width="80%" />
+                                <span id="user-photo-glyph" class="glyphicon glyphicon-user" style="font-size: 15em;"></span>
                             {% endif %}
                         </label>
                     <br>

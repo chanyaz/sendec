@@ -61,7 +61,7 @@
 {#    <script src="{% static 'static/js/jquery-ui.js' %}"></script>#}
 
 
-{#    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">#}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 {#    <script src="//code.jquery.com/jquery-1.10.2.js"></script>#}
 {#    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>#}
 
@@ -196,47 +196,49 @@
     </script>
     <style>
         body{
-            background: url('/static/static/img/brushed.png');
+            background-color: #F1F3CE;
+{#            background: url('/static/static/img/brushed.png');#}
         }
         #wrapper-new{
-            background: url('/static/static/img/brushed.png');
+            background-color: #F1F3CE;
+{#            background: url('/static/static/img/brushed.png');#}
         }
-        .popup-user-window {
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            position: fixed;
-            top: 0;
-        }
-        .popup-user-window .popup-user-window-content{
-            margin: 5% auto 0 40%;
-            width:  30%;
-            height: 620px;
-            padding: 10px;
-            background-color: #c5c5c5;
-            border-radius:5px;
-            box-shadow: 0 0 10px #000;
-            z-index: 10000;
-        }
-        .popup-user-auth {
-            z-index:999;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: fixed;
-            top: 0;
-        }
-        .popup-user-auth .popup-user-auth-content{
-            margin: 5% auto 0 32.5%;
-            width:  30%;
-            height: 70%;
-            padding: 10px;
-            background-color: #ffffff;
-            border-radius:5px;
-            box-shadow: 0 0 10px #000;
-        }
+{#        .popup-user-window {#}
+{#            width: 100%;#}
+{#            height: 100%;#}
+{#            background-color: rgba(0, 0, 0, 0.5);#}
+{#            overflow: hidden;#}
+{#            position: fixed;#}
+{#            top: 0;#}
+{#        }#}
+{#        .popup-user-window .popup-user-window-content{#}
+{#            margin: 5% auto 0 40%;#}
+{#            width:  30%;#}
+{#            height: 620px;#}
+{#            padding: 10px;#}
+{#            background-color: #c5c5c5;#}
+{#            border-radius:5px;#}
+{#            box-shadow: 0 0 10px #000;#}
+{#            z-index: 10000;#}
+{#        }#}
+{#        .popup-user-auth {#}
+{#            z-index:999;#}
+{#            width: 100%;#}
+{#            height: 100%;#}
+{#            background-color: rgba(0, 0, 0, 0.1);#}
+{#            overflow: hidden;#}
+{#            position: fixed;#}
+{#            top: 0;#}
+{#        }#}
+{#        .popup-user-auth .popup-user-auth-content{#}
+{#            margin: 5% auto 0 32.5%;#}
+{#            width:  30%;#}
+{#            height: 70%;#}
+{#            padding: 10px;#}
+{#            background-color: #ffffff;#}
+{#            border-radius:5px;#}
+{#            box-shadow: 0 0 10px #000;#}
+{#        }#}
         #ajax-preloader {
             width: 100%;
             height: 100%;
@@ -256,7 +258,7 @@
             z-index: 999;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.8);
             overflow: auto;
             position: fixed;
             top: 0;
@@ -264,12 +266,12 @@
         .preview-rss-news .preview-rss-news-content{
             font-family: Georgia, Times, "Times New Roman", serif;
             margin: 0 auto 0 22%;
-            width:  50%;
+            width:  60%;
             height: auto;
-            min-height:98%;
+            min-height:100%;
             padding: 0;
-            background-color: white;
-            border-radius:5px;
+            background-color: ivory;
+{#            border-radius:5px;#}
             box-shadow: 0 0 10px #000;
         }
         #portals-addition-window {
@@ -338,12 +340,15 @@
             margin-left: 0;
         }
         #rss-properties-list{
-            width: 10em;
+            width: 12em;
             margin-right: -1%;
             float: right;
-{#            margin-top: -1.5%;#}
             list-style-type: none;
         }
+        #rss-properties-list li{
+            margin-left: 0.5em;
+        }
+
         .cur_unsel_portal{width: 20%;height: 5em;}
         .top-navigation{
             background-color: rgb(45, 62, 80);
@@ -407,10 +412,28 @@
         #auth-bottom-text{width: 100%; height: 50px; margin-left: 20%;}
         #auth-botton-reg-link{margin-left: 1em;}
         .total-body{padding-top: 2%;}
-        .total-body-closer{margin-left: 100%; width: 3%; background: whitesmoke; border: solid 1px blue;}
+        .total-body-closer{
+            margin-left: 100%;
+            width: 4%;
+            height: inherit;
+            font-size: 2em;
+            background: ivory;
+            top:0;
+        }
+        .close-rss-preview{
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .total-body-closer a{color: #F62A00}
+        .total-body-closer a:hover{
+            color: #1E656D;
+            cursor: pointer;
+        }
+
         .rss-preview-title{
             margin-top: -5%;
             margin-left: 2%;
+
         }
         .rss-preview-author{float: left;}
 
@@ -425,14 +448,18 @@
         }
         .rss-preview-shares{
             background-color: rgb(45, 62, 80);
-            border: solid 1px darkred;
             height: 2.5em;
         }
         #rss-share-list{
             float: left;
-            margin-left: -5%;
+            margin-left: 0;
             list-style-type: none;
         }
+
+        #rss-share-list li{
+            margin-right: 1em;
+        }
+
         #rss-share-list a{
             color: white;
         }
@@ -469,7 +496,8 @@
             min-height: 100%;
 {#            margin-left: 10%; #}
             height: 100%;
-            background: url('/static/static/img/brushed.png');
+            background-color: #F1F3CE;
+{#            background: url('/static/static/img/brushed.png');#}
         }
 
         #cnb{
@@ -505,19 +533,25 @@
         }
 
         .total-news-block{
-            background: url('/static/static/img/brushed.png');
+                        background-color: #F1F3CE;
+
+{#            background: url('/static/static/img/brushed.png');#}
 
         }
 
         a:hover{
             text-decoration: none;
-            color: rgb(25, 180, 155);
+            color: #F62A00;
         }
 
 
         .social-rss:hover{
             cursor: pointer;
-            color: rgb(25,180,155);
+            color: #F62A00;
+        }
+
+        .top-bar-header{
+            font-family: Georgia, Times, "Times New Roman", serif;
         }
 
     </style>
@@ -544,14 +578,54 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
-                      <li><a class="nav-link" href="/news/technology/">Technology</a></li>
-                      <li><a href="/news/entertainment/">Entertainment</a></li>
-                      <li><a href="/news/auto/">Auto</a></li>
-                      <li><a href="/news/space/">Space</a></li>
-                      <li><a href="/news/bio/">Bio</a></li>
-                      <li><a href="/news/companies/">Companies</a></li>
-                      <li><a href="/news/reviews/">Reviews</a></li>
-                      <li><a href="/news/usernews/">Private</a></li>
+
+                      {% if here_tech == True %}
+                        <li><a class="active" href="/news/technology/">TECHNOLOGY</a></li>
+                      {% else %}
+                          <li><a href="/news/technology/">TECHNOLOGY</a></li>
+                      {% endif %}
+
+                      {% if here_ent == True %}
+                        <li><a class="active" href="/news/entertainment/">ENTERTAINMENT</a></li>
+                      {% else %}
+                        <li><a href="/news/entertainment/">ENTERTAINMENT</a></li>
+                      {% endif %}
+
+                      {% if here_auto == True %}
+                          <li><a class="active" href="/news/auto/">AUTO</a></li>
+                      {% else %}
+                          <li><a href="/news/auto/">AUTO</a></li>
+                      {% endif %}
+
+                      {% if here_space == True %}
+                            <li><a class="active" href="/news/space/">SPACE</a></li>
+                      {% else %}
+                          <li><a href="/news/space/">SPACE</a></li>
+                      {% endif %}
+
+                      {% if here_bio == True %}
+                            <li><a class="active" href="/news/bio/">BIO</a></li>
+                      {% else %}
+                          <li><a href="/news/bio/">BIO</a></li>
+                      {% endif %}
+
+                      {% if here_companies == True %}
+                          <li><a class="active" href="/news/companies/">COMPANIES</a></li>
+                      {% else %}
+                          <li><a href="/news/companies/">COMPANIES</a></li>
+                      {% endif %}
+
+                      {% if here_review == True %}
+                          <li><a class="active" href="/news/reviews/">REVIEWS</a></li>
+                      {% else %}
+                          <li><a href="/news/reviews/">REVIEWS</a></li>
+                      {% endif %}
+
+                      {% if here_private == True %}
+                          <li><a class="active" href="/news/usernews/">PRIVATE</a></li>
+                      {% else %}
+                          <li><a href="/news/usernews/">PRIVATE</a></li>
+                      {% endif %}
 {#                    <li class="dropdown">#}
 {#                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>#}
 {#                      <ul class="dropdown-menu">#}
@@ -599,11 +673,11 @@
                     <li style="float: left; width: 10%; font-size: 1.5em; height: 60px;">
                         <a>
                             <div class="" style="vertical-align: baseline;">
-                                <span class="glyphicon glyphicon-search" style="position: relative;">Search</span>
+                                    <span class="glyphicon glyphicon-search" style="color: #F62A00; position: relative;">Search</span>
                             </div>
                         </a>
                     </li>
-                    <li style="width: 90%;float: right;">
+                    <li style="width: 85%; margin-left:5%; float: right;">
                         <form class="navbar-form navbar-left"
                               action="/search/"
                               style="width: 100%;"
@@ -613,18 +687,17 @@
                               role="search">
                             <div class="form-field" style="width: 100%;">
                                 <div class="form-group" style="width: 100%;">
-                                    <input onblur="$(this).removeClass('textplace-search-active');"
-                                           placeholder="What are you lookig for?"
+                                    <input placeholder="What are you looking for?"
                                            type="search"
                                            name="q"
                                            autocomplete="off"
-                                           id=""
+                                           id="search-field"
                                            class=""
                                            style="float: left; background: none; border: none; border-bottom: solid 1px lightgrey;
                                            outline: none; width:80%; font-size: 2em; color: white;">
                                     <button type="submit"
-                                            class="btn btn-primary"
-                                            style="float: right; margin-right: 10%; margin-top: 1%;">
+                                            class="btn"
+                                            style="color:white; background: #F62A00; float: right; margin-right: 10%; margin-top: 1%;">
                                         <span class="glyphicon glyphicon-search"></span>
                                     </button>
                                 </div>
@@ -632,7 +705,12 @@
                         </form>
                     </li>
                 </ul>
+
+{#                <div id="search-results" style="width:100%; height: 300px; background: grey; margin-top: 60px; z-index: 9999; opacity: 0.8"></div>#}
+
             </div>
+
+
 
         </nav>
     </header>
@@ -1073,13 +1151,8 @@
          onkeydown="if(event.keyCode == 27){RssPreviewPopUpHide();}">
         <div class="preview-rss-news-content">
             <div class="total-body">
-                <div class="total-body-closer"
-                     onclick="javascript:RssPreviewPopUpHide();"
-                     onmouseover="this.style.background='red';"
-                     onmouseout="this.style.background='whitesmoke';">
-                    <span class="close-rss-preview">
-                        X
-                    </span>
+                <div class="total-body-closer" onclick="RssPreviewPopUpHide();">
+                    <a title="{% trans 'Close' %}"><span class="close-rss-preview glyphicon glyphicon-remove"></span></a>
                 </div>
                 <div class="rss-preview-title"></div>
                 <div class="" style="height: 10px;">
@@ -1093,11 +1166,10 @@
 
 
                     <ul id="rss-share-list">
-                        <li class="rss-share-item" style="margin-right: -20px;">
+                        <li class="rss-share-item" style="margin-right: -0.5em;">
                             <a data-target-link="" class="rss-share-facebook" onclick="window.open(
                                 'http://facebook.com/sharer/sharer.php?u='+$(this).attr('data-target-link'),
-                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes'
-                            )">
+                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
                                 <span class="fa fa-facebook social-rss" style="font-size: 2.5em; "></span>
                             </a>
 {#                            <img onclick="location.href='http://facebook.com/groups/insydiaofficial/';"#}
@@ -1137,11 +1209,11 @@
                         </li>
                     </ul>
                     <ul id="rss-properties-list" data-rss-id="">
-                        <li class="rss-item-save glyphicon glyphicon-plus text-muted"
+                        <li class="rss-item-save glyphicon glyphicon-plus text-muted social-rss"
                             onclick="setRssFavourite($('#rss-properties-list').attr('data-rss-id'));"
                             style="font-size: 2em;"></li>
                         <a href="mailto:">
-                            <li class="rss-item-send glyphicon glyphicon-send text-muted" style="font-size: 2em;"></li>
+                            <li class="rss-item-send glyphicon glyphicon-send text-muted social-rss"  style="font-size: 2em;"></li>
                         </a>
                     </ul>
                 </div>
@@ -1239,16 +1311,16 @@
     </div>
 
         <script>
-            var icoElement = $('.glyphicon');
-            icoElement.hover(function(){
-                $(this).removeClass('text-muted');
-                $(this).addClass('text-primary');
-            });
-
-            icoElement.mouseout(function(){
-                $(this).removeClass('text-primary');
-                $(this).addClass('text-muted');
-            })
+{#            var icoElement = $('.glyphicon');#}
+{#            icoElement.hover(function(){#}
+{#                $(this).removeClass('text-muted');#}
+{#                $(this).addClass('text-primary');#}
+{#            });#}
+{##}
+{#            icoElement.mouseout(function(){#}
+{#                $(this).removeClass('text-primary');#}
+{#                $(this).addClass('text-muted');#}
+{#            })#}
         </script>
 
         <script>
@@ -1297,9 +1369,9 @@
                 success: function(data) {
                     $("html").css("overflowY", "hidden");
                     $parsedData = data.data;
-                    $(".rss-preview-title").html("<h2 style='color: black;'>" + $parsedData.title + "</h2>");
+                    $(".rss-preview-title").html("<h2 style='color: #F62A00;'>" + $parsedData.title + "</h2>");
                     if ($parsedData.author.length !== 0) {
-                        $(".rss-preview-author").html("Author: " + $parsedData.author + "&nbsp;|&nbsp;");
+                        $(".rss-preview-author").html("Author: " + "<span class='rss-author-name' style='color: #F62A00'>" + $parsedData.author + "</span>" + "&nbsp;|&nbsp;");
                     }
 
                     $('#preview-rss-news').attr('data-nuid', $parsedData.nuid);
@@ -1315,10 +1387,10 @@
                     {#                    var d = new Date($parsedData.date_posted);#}
                     $(".rss-preview-date-published").html("Published: " + $parsedData.date);//"&nbsp;|&nbsp;"+ d.toDateString().substring(4)+"&nbsp;"+d.toTimeString().substring(0,5));
                     if ($parsedData.content.length === 0) {
-                        $(".rss-preview-body").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;' class='btn btn-primary'>See&nbsp;original</button></a>");
+                        $(".rss-preview-body").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
                     }
                     else {
-                        $(".rss-preview-body").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px;' class='btn btn-primary'>See&nbsp;original</button></a>");
+                        $(".rss-preview-body").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
                     }
                     {#                    $(".rss-item-save").html(#}
                     {#                            "<img onclick='add_like_rss("+$parsedData.id+")' class='rss-save' src='{% static 'static/img/save.png' %}' width='30px' alt='Save' />"#}
@@ -1390,7 +1462,6 @@
     <script src="{% static 'static/js/jquery-ui.js' %}"></script>
 {#    <script src="{% static 'static/js/pulse.js' %}"></script>#}
 {#    <script src="{% static 'static/js/pulse.min.js' %}"></script>#}
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 {#    <script src="{% static 'static/js/bootstrap.js' %}" type="javascript"></script>#}
 {#    <script src="{% static 'static/js/bootstrap.min.js' %}" type="javascript"></script>#}
     <script type="text/javascript" src="{% static 'static/js/jquery.cookie.js' %}"></script>
@@ -1435,9 +1506,17 @@ $(document).ready(function () {
 });
 </script>
 <script>
-        $(function(){
-            $("#tabs").tabs();
-        });
+{#        $(function(){#}
+{#            $("#tabs").tabs();#}
+{#        });#}
+
+
+    $('.tabs-list a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show')
+    });
+
+
     $(document).ready(function(){
             $(this).keydown(function(eventObject){
                 if (eventObject.which == 27)
@@ -1613,6 +1692,46 @@ $(document).ready(function () {
     </script>
 
 
+    <script>
+{#        $('#search-field').autocomplete({#}
+{#            max: 5,#}
+{#            source: function (request, response) {#}
+{#                $.ajax({#}
+{#                    url: '/search/sac=' + $('#search-field').val().replace(/\./g, ""),#}
+{#                    dataType: 'json',#}
+{#                    data: {#}
+{#                        'csrfmiddlewaretoken': '{{ csrf_token }}',#}
+{#                        q: request.term#}
+{#                    },#}
+{##}
+{#                    success: function (data) {#}
+{#                        response($.map(data.slice(0,5), function (item) {#}
+{#                            return {#}
+{#                                id: item.id,#}
+{#                                label: item.title,#}
+{#                                category: item.category#}
+{#                            };#}
+{#                        }));#}
+{#                    }#}
+{#                });#}
+{#            }#}
+{#        });#}
+        String.prototype.replaceAt = function(index, char) {
+            return this.substr(0, index) + "<span style='font-weight:bold;color:#F62A00;'>" + char + "</span>";
+        };
+        $.ui.autocomplete.prototype._renderItem = function(ul, item) {
+            this.term = this.term.toLowerCase();
+            var resultStr = item.label.toLowerCase();
+            var t = "";
+            while (resultStr.indexOf(this.term) != -1) {
+                var index = resultStr.indexOf(this.term);
+                t = t + item.label.replaceAt(index, item.label.slice(index, index + this.term.length));
+                resultStr = resultStr.substr(index + this.term.length);
+                item.label = item.label.substr(index + this.term.length);
+            }
+            return $("<li></li>").data("item.autocomplete", item).append("<a>" + t + item.label + "</a>").appendTo(ul);
+        };
+    </script>
 
 
 
@@ -1756,9 +1875,9 @@ $(document).ready(function () {
     </script>
 
     <script>
-            $('#search-button').onclick(function () {
-                $('#textplace-search').addClass('search-bar-active');
-            });
+{#            $('#search-button').onclick(function () {#}
+{#                $('#textplace-search').addClass('search-bar-active');#}
+{#            });#}
     </script>
 
 <script>
@@ -1851,6 +1970,8 @@ function scaleBannerVideoSize(element){
             }
         })
     });
+
+
 
 
 </script>

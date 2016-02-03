@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django.contrib.auth import logout
-from django.shortcuts import redirect, render_to_response, HttpResponseRedirect, HttpResponse
+from django.shortcuts import redirect, render_to_response, HttpResponseRedirect, HttpResponse, RequestContext
 from django.template.context_processors import csrf
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -17,6 +17,7 @@ from random import choice, randint
 from django.contrib.sites.models import Site, RequestSite
 from django.conf import settings
 from django import forms
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 
 SESSION_LIFE_TIME = 86400
 SESSION_LIFE_TIME_REMEMBERED = 31536000
@@ -50,13 +51,13 @@ def login(request):
         else:
             # args["img-num"] = randint(1, 4)
             args["background_url"] = "/static/static/img/login/{file_num}.jpg".format(file_num=randint(1, 27))
-            return render_to_response('login.html', args)
+            return render_to_response('login.html', args, context_instance=RequestContext(request))
 
 
 @login_required(login_url='/auth/login/')
 def user_logout(request):
     logout(request)
-    return redirect('/')
+    return HttpResponseRedirect("/?next=%s" % request.get_full_path())
 
 
 def register(request):

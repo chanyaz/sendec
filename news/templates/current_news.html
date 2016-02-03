@@ -76,23 +76,28 @@
             text-align: center;
             margin-right: auto;
             margin-left: auto;
-{#            margin-bottom: 5%;#}
             width: 50%;
             font-size: 30px;
-{#            margin: 0 5%; #}
+            color: #F62A00;
+            border-bottom: solid 1px #F62A00;
             font-family: Georgia, Times, "Times New Roman", serif
         }
         .date-and-author{
-{#            border: solid 1px red;#}
             margin-right: auto;
             margin-left: auto;
             margin-bottom: 1%;
             width: 100%;
             text-align: center;
-{#            max-width: 30%;#}
-{#            margin-left: 5%;#}
-{#            float: left;#}
         }
+        .date-and-author a{
+            color: #F62A00;
+        }
+
+        .date-and-author a:hover{
+            text-decoration: none;
+            color: #1E656D;
+        }
+
         .news-settings{height: 2em; width: 100%; text-transform: uppercase;}
         .shares{margin-left: -6%; margin-top: -1%;}
         .share-title{margin-left: 15%; font-family: Arial, Helvetica, sans-serif}
@@ -112,14 +117,6 @@
 {#            margin-top: -5%;#}
         }
 
-        .author-span{
-            color: blue;
-            font-size: 16px;
-        }
-        .author-span:hover{
-            color: rgb(25, 189, 155);
-            cursor: pointer;
-        }
 
         #translates{
             margin-bottom: 2%;
@@ -175,6 +172,51 @@
             margin-right: auto;
         }
 
+        #share-news{
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            height: 30px;
+            width: 50%;
+            margin-bottom: 100px;
+        }
+        #share-news > ul{width:100%; height: 30px; list-style-type: none; position: absolute; padding-left: 0;}
+        #share-news > ul > li{float: left; height: 30px;width: 25%; text-align: center; padding-top: 4px;}
+        #share-news > .share{color: ivory; font-family: Georgia, Times, "Times New Roman", serif;}
+        #share-news > .share .facebook{background-color: #3b5998;}
+        #share-news > .share .facebook:hover{background-color: #3b4998; cursor: pointer;}
+        #share-news > .share .twitter{background-color: #00aced;}
+        #share-news > .share .twitter:hover{background-color: #00bced; cursor: pointer;}
+        #share-news > .share .linkedin{background-color: #007bb6;}
+        #share-news > .share .linkedin:hover{background-color: #008bb6; cursor: pointer;}
+        #share-news > .share .vk{background-color: #45668e;}
+        #share-news > .share .vk:hover{background-color: #45568e; cursor: pointer;}
+
+
+        .news_tags{
+            font-family: Georgia, Times, "Times New Roman", serif;
+            margin-left: 25%;
+            width: 50%;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .tags-title{
+            font-weight: bold;
+            font-size: 25px;
+            float: left;
+            margin-right: 15px;
+        }
+
+        .current-tag{
+            min-width: 75px;
+            padding: 3px 7px;
+            border: solid 1px #1E656D;
+            float: left;
+            margin-right: 15px;
+            text-align: center;
+            font-size: 20px;
+        }
+
 {#        .nav-bar{margin-left: 63%;}#}
         .liked{float: left;}
         .disliked{float: left;}
@@ -193,7 +235,15 @@
 {#            border: solid 1px red;#}
             margin-left: -72%;
             text-align: left;
-            color: rgb(25, 189, 155);
+            color: #F62A00;
+        }
+        .recom-title a{
+            text-decoration: none;
+            color: black;
+        }
+        .recom-title a:hover{
+            text-decoration: none;
+            color: #F62A00;
         }
 
 
@@ -254,11 +304,7 @@
 {#        {% cache 600 date-and-author %}#}
             <div class="date-and-author">
                 <h5><span style="color: black;">{% trans 'By' %}</span>
-                    {% if current_news_values.id|get_news_portal == "insydia" %}
-                        <span class="author-span" onclick="location.href='/search/?q={{ current_news_values.news_author }}';"><i>{{ current_news_values.news_author_id|get_article_author }}</i></span>
-                    {% else %}
-                        <span class="author-span" onclick="location.href='/search/?q={{ current_news_values.news_portal_name }}';"><i>{{ current_news_values.news_portal_name }}</i></span>
-                    {% endif %}
+                    <a class="author-span" href="/search/?q={{ current_news_values.news_author }}"><i>{{ current_news_values.news_author_id|get_article_author }}</i></a>
                     &nbsp;<span style="color: black;">{{ current_news_values.news_post_date.date }}</span></h5>
             </div>
             <div id="translates">
@@ -347,7 +393,27 @@
             </div>
 
 
-            <div style="margin-top: -5%;" class='shareaholic-canvas' data-app='share_buttons' data-app-id='22745115'></div>
+{#            <div style="margin-top: -5%;" class='shareaholic-canvas' data-app='share_buttons' data-app-id='22745115'></div>#}
+
+
+            <div id="share-news">
+                <ul class="share list">
+                    <li class="share facebook"><span class="fa fa-facebook"></span> facebook</li>
+                    <li class="share twitter"><span class="fa fa-twitter"></span> twitter</li>
+                    <li class="share linkedin"><span class="fa fa-linkedin"></span> linkedin</li>
+                    <li class="share vk"><span class="fa fa-vk"></span> vk</li>
+                </ul>
+            </div>
+
+
+
+            {% if current_news_values.news_tags != '' %}
+                <div class="news_tags">
+                    {% for i in current_news_values.news_tags.split %}
+                        <a href=""><div class="current-tag">{{ i }}</div></a>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
 
             <div class="google-news-below-shares" style="margin-left: auto; margin-right: auto; width:728px; height: 90px; background-color: #00fff9;"></div>
@@ -364,15 +430,9 @@
                     {% for current_middle_news in other_materials %}
                     <div class="sect-2-top" style="width: 350px; margin-right: 2%; margin-bottom: 3%; float: left">
                                     {% if current_middle_news.news_main_cover == '' %}
-                                    <div class="current_news news-news"
-                                         onmouseover="style.border='solid 0.2px blue';"
-                                         onmouseout="style.border='';"
-                                         onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                        <div class="current_news news-news">
                                     {% else %}
-                                    <div class="current_news_mas news-news"
-                                         onmouseover="style.border='solid 0.2px blue';"
-                                         onmouseout="style.border='';"
-                                         onclick="location.href='/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/';">
+                                        <div class="current_news_mas news-news">
                                     {% endif %}
     {#                                        <div class="current_news_top"#}
     {#                                             onmouseover="this.style.cursor='pointer';"#}
@@ -390,20 +450,17 @@
 {#                                                <span href="/news/{{ current_middle_news.id|get_news_category }}">{{ current_middle_news.id|get_news_category|upper }}</span>#}
 {#                                            </div>#}
                                             {% if current_middle_news.news_main_cover != '' %}
+                                                <a href="/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/">
                                                     <div class="middle-news-cover"
-                                                         onmouseover="this.style.cursor='pointer';"
+                                                         title="{{ current_middle_news.news_title|safe }}"
                                                          style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
-                                                    <div class="mask">
-        {#                                                    <a href="#" class="info"></a>#}
                                                     </div>
-                                                    </div>
+                                                </a>
                                             {% endif %}
-                                            <div class="title" style="margin-top: 5%;"
-                                                 onmouseover="this.style.cursor='pointer'; this.style.color='rgb(25, 189, 155)';"
-                                                 onmouseout="this.style.color='';">
-                                                <div class="news-title">
+                                            <div class="recom-title" style="margin-top: 5%;">
+                                                <a href="/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/">
                                                     <b>{{ current_middle_news.news_title|safe }}</b>
-                                                </div>
+                                                </a>
                                             </div>
 {#                                    <div class="params">#}
 {#                                        <span class="glyphicon glyphicon-eye-open" style="float: left;"></span>#}
@@ -473,5 +530,5 @@
             </div>
         </div>-->
     </div>
-        <script type='text/javascript' src='//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js' data-shr-siteid='74b93909eb1e8d0eaf0922a55d663ca4' data-cfasync='false' async='async'></script>
+{#        <script type='text/javascript' src='//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js' data-shr-siteid='74b93909eb1e8d0eaf0922a55d663ca4' data-cfasync='false' async='async'></script>#}
 {% endblock %}

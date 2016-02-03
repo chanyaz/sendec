@@ -112,6 +112,9 @@ class News(models.Model):
     news_likes = models.IntegerField(default=0)
     news_dislikes = models.IntegerField(default=0)
 
+
+    news_tags = models.CharField(max_length=128, blank=True)
+
     def get_news_id(self):
         return self.id
 
@@ -146,6 +149,14 @@ class News(models.Model):
     def get_absolute_url(self):
         return "/news/%s/%s" % (self.news_category_id, self.id)
 
+    def get_json_for_search(self):
+        return {
+            'id': self.id,
+            'title': self.news_title,
+            'category': self.news_category_id,
+            'cover': str(self.news_main_cover)
+        }
+
 
 class TopNews(models.Model):
     class Meta:
@@ -170,6 +181,7 @@ class TopNews(models.Model):
     # Information
     top_news_likes = models.IntegerField(default=0)
     top_news_dislikes = models.IntegerField(default=0)
+
 
     def __str__(self):
         return self.top_news_title

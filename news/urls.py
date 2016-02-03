@@ -70,7 +70,7 @@ urlpatterns = [
     url(r'^top/(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_top_news'),
     url(r'^top/translate/', 'news.views.translate_news_from_top'),
 
-    url(r'^(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_news'),
+    url(r'^(?P<category_id>\w+)/(?P<news_id>\w+)/$', 'news.views.render_current_news'),
     #url(r'^(?P<category_name>\w+)/', 'news.views.render_current_category'),
     url(r'^auto/', 'news.views.render_auto_news'),
     url(r'^bio/', 'news.views.render_bio_news'),

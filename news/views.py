@@ -85,7 +85,7 @@ def get_hottest_news(request):
     # try:
     watches = NewsWatches.objects.order_by("-watches").values("news_id").values("news_id")
     if watches.count() >= 4:
-        return News.objects.filter(id__in=watches[:4]).defer("news_portal_name").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").defer("news_author").values()
+        return News.objects.filter(id__in=watches[:4]).defer("news_portal_name").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").values()
     else:
         return News.objects.all().defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").order_by("news_post_date").values()[:4]
 
@@ -147,8 +147,7 @@ def render_current_top_news(request, category_id, news_id):
     # addition_news_watches(request, news_id)
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response("top_news.html", args)
-
+    return render_to_response("top_news.html", args, context_instance=RequestContext(request))
 
 def render_current_news(request, category_id, news_id):
     current_news = News.objects.get(id=news_id)
@@ -390,7 +389,7 @@ def set_shown(request, news_id):
 @login_required(login_url="/auth/login/")
 def addition_news_watches(request, news_id):
     instance = NewsWatches.objects.filter(news_id=news_id)
-    if instance.exists() and isinstance(instance, News):
+    if instance.exists():
         instance = NewsWatches.objects.get(news_id=news_id)
         instance.watches += 1
         instance.save()

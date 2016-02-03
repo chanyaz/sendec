@@ -18,6 +18,16 @@ header{
     z-index: 999;
 }
 
+a:hover{
+    /*color: rgb(25, 180, 155);*/
+    color: #F62A00;
+    text-decoration: none;
+}
+a:active{
+    color: ivory;
+    text-decoration: none;
+}
+
 @media screen and (max-width: 1920px){
     #left-panel-main-title{
         margin-top: -4em;
@@ -1200,17 +1210,20 @@ figure.effect-duke:hover p {
     float: left;
 }
 
-.cat{
+.cat a{
+    text-decoration: none;
     cursor: pointer;
-    color: blue;
+    /*color: blue;*/
+    color: #F62A00;
     border-bottom: solid 2px red;
     margin-top: -22px;
 }
 .cat:hover{
-    color: rgb(25, 189, 155);
+    /*color: rgb(25, 189, 155);*/
+    color: #1E656D;
 }
 .cat-left{
-    float: left;
+    /*float: left;*/
 }
 .cat-right{
     float: right
@@ -1229,7 +1242,8 @@ figure.effect-duke:hover p {
     .interest-news-cover .mask {
    opacity: 0;
    overflow:visible;
-   border:105px solid rgba(0,0,0,0.7);
+   /*border:105px solid rgba(0,0,0,0.7);*/
+   border:105px solid -webkit-linear-gradient(to top, #F62A00, black, #1E656D);
    -moz-box-sizing:border-box;
    -webkit-box-sizing:border-box;
    box-sizing:border-box;
@@ -1258,7 +1272,8 @@ figure.effect-duke:hover p {
 .bottom-news-cover:hover .mask,
 .interest-news-cover:hover .mask{
    opacity: 1;
-   border:105px solid rgba(0,0,0,0.7);
+   /*border:105px solid rgba(0,0,0,0.7);*/
+   border:105px solid -webkit-linear-gradient(to top, #F62A00, black, #1E656D);
 }
 .middle-news-cover:hover a.info,
 .total-news-cover:hover a.info,
@@ -1354,13 +1369,24 @@ figure.effect-duke:hover p {
 
 .inner-item-back{
     width: 100%;
-    background: linear-gradient(to top, rgb(25, 180, 1550), black, rgba(45, 62, 80,.8));
-    opacity: 0.5;
+    /*background: linear-gradient(to top, #F62A00, black, #1E656D);*/
+    background: linear-gradient(to top, #F62A00, black, #00293C);
+    opacity: 0.6;
     position: relative;
-    /*bottom: 0;*/
     height: 100%;
     z-index: 9999;
 }
+
+.carousel-inner-item-author{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 99999;
+    color: ivory;
+    line-height: 1.2;
+    font-size: 15px;
+}
+
 
 .carousel-inner-item-title{
     width: 100%;
@@ -1369,23 +1395,40 @@ figure.effect-duke:hover p {
     text-align: center;
     font-size: 25px;
     z-index: 9999;
-    color: white;
+    color: ivory;
     line-height: 1.2;
     top: 20%;
     /*background: linear-gradient(to top, rgb(25, 189, 155), transparent);*/
     margin-left: auto;
     margin-right: auto;
 }
+
+.carousel-inner-item-title .carousel-inner-item-author a{
+    text-decoration: none;
+    color: #F62A00;
+}
+.carousel-inner-item-title .carousel-inner-item-author a:hover{
+    text-decoration: none;
+    color: #1E656D;
+}
+
+.carousel-inner-item-title a{
+    text-decoration: none;
+    color: ivory;
+}
+
+.carousel-inner-item-title a:hover{
+    text-decoration: none;
+    color: #F62A00;
+}
+
+
 .carousel-inner-item-title:hover{
     color: rgb(25, 180, 155);
     cursor: pointer;
     text-decoration: none;
 }
 
-a:hover{
-    color: rgb(25, 180, 155);
-    text-decoration: none;
-}
 
 
 /***************************************/
@@ -1789,7 +1832,7 @@ Top Navigation
 }
 @media only screen and (min-width: 1170px) {
   .cd-top-nav li:not(.has-children) a:hover {
-    color: #1784c7;
+    color: #1E656D;
   }
 }
 
@@ -2174,5 +2217,25 @@ Sidebar
 
 .cprs:hover{
     text-decoration: none;
-    color: rgb(25, 180, 155);
+    color: #F62A00;
 }
+
+#nav-search-btn{
+    cursor: pointer;
+}
+
+/******************************************************/
+/******************** AUTOCOMPLETE ********************/
+/******************************************************/
+.bold-text {
+    font-weight: bold;
+}
+
+
+.ui-menu li{
+    height: 40px;
+    background: ivory;
+    border-top: solid 1px lightgrey;
+}
+
+.nav .navbar-nav > a.active{color: solid 1px #F62A00;}

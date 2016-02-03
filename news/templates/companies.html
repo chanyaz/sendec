@@ -5,6 +5,9 @@
 {% block companies %}
 
     <style>
+        .companies{
+            margin-bottom: 100px;
+        }
         #companies{
             width: 70%;
             margin-left: 1%;
@@ -26,7 +29,9 @@
         height: 50px;
     }
     .current_company:hover{
-        background-color: rgb(25, 180, 155);
+{#        background-color: rgb(25, 180, 155);#}
+        background-color: rgba(246, 42, 0, 0.8);
+        color: ivory;
         cursor: pointer;
     }
     table{
@@ -51,7 +56,7 @@
     </style>
 
 
-    <div class="container-fluid container" style="">
+    <div class="container-fluid container companies" style="">
         <div class="row row-centered">
             <div id="companies">
                 <div class="company-top-title"><h3>{% trans 'Companies' %}</h3></div>
