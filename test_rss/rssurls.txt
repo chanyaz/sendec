@@ -20,7 +20,6 @@ http://www.digitaltrends.com/mobile/feed/
 http://www.digitaltrends.com/computing/feed/
 http://www.digitaltrends.com/cars/feed/
 http://www.digitaltrends.com/e3/feed/
-https://www.iguides.ru/rss/main.rss
 http://www.iphones.ru/feed
 http://appledigger.ru/feed/
 http://4pda.ru/feed/

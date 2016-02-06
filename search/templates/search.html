@@ -99,22 +99,17 @@
             height:10em;
         }
         .current_searched_content_top{
-{#            border: solid 1px blue;#}
             position: relative;
             height: 87%;
             margin-left: 35%;
         }
         .searched-category-name{
-{#                position: absolute;#}
             z-index: 900;
-{#            border: solid 1px red;#}
             float: right;
-{#                margin-left: 20%;#}
-{#                margin-top: 2%;#}
         }
         .searched-category-name-content{
-                background-color: blue;
-                color: white;
+                background-color: #1E656D;
+                color: ivory;
                 font-family: Georgia, Times, "Times New Roman", serif;
                 text-transform: uppercase;
         }
@@ -289,7 +284,7 @@
                                              style="background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: contain;"></div>
                                         </a>
                                         <div class="latest-news-content">
-                                            <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
+                                            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
                                                 <span id="lnt{{ i.id }}"
                                                       class="title">
                                                     {{ i.news_title }}

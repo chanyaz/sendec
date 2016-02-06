@@ -61,6 +61,7 @@ urlpatterns = [
     #url(r'^usernews/', 'news.views.render_user_news'),
     #url(r'^usernews/(?P<portal_verbose>\w+)', 'news.views.get_rss_news_current_portal'),
     url(r'^manager/', 'news.views.render_manager_portal'),
+    url(r'^browser/tech', 'news.views.render_browse_tech_portals'),
     url(r'^browser/', 'news.views.render_browser_portals'),
     url(r'^usernews/page/(?P<portal>\w+)$', 'news.views.render_current_portal_news'),
     url(r'^usernews/$', 'news.views.render_user_news'),
@@ -70,7 +71,14 @@ urlpatterns = [
     url(r'^top/(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_top_news'),
     url(r'^top/translate/', 'news.views.translate_news_from_top'),
 
-    url(r'^(?P<category_id>\w+)/(?P<news_id>\w+)/$', 'news.views.render_current_news'),
+    # url(r'^(?P<category_id>\w+)/(?P<news_id>\w+)/(?P<slug>[-\w]+)/$', 'news.views.render_current_news'),
+    # url(r'^(?P<category_id>\w+)/(?P<slug>[-\w]+)/$', 'news.views.render_current_news'),
+    url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/(?P<news_id>\d+)/(?P<slug>[-\w]+)/$', 'news.views.render_current_news'),
+    # url(r'^(?P<slug>[-\w]+)/$', 'news.views.render_current_news'),
+
+
+
+
     #url(r'^(?P<category_name>\w+)/', 'news.views.render_current_category'),
     url(r'^auto/', 'news.views.render_auto_news'),
     url(r'^bio/', 'news.views.render_bio_news'),
@@ -81,8 +89,9 @@ urlpatterns = [
     # url(r'^comp/gid=(?P<company_verbose>\w+)', 'news.views.get_company_id'),
 
 
-
-
+    url(r'^rss/get_matches=(?P<word>\w+)$', 'news.views.get_rss_matches'),
+    url(r'^gcrp=(?P<rss_id>\w+)', 'news.views.get_current_rss_portal'),
+    url(r'^find_rss/$', 'news.views.search_rss'),
 
     url(r'^entertainment/', 'news.views.render_entertainment_news'),
     url(r'^technology/', 'news.views.render_technology_news'),

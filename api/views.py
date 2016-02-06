@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from news.models import News
-from news.serializer import NewsSerializer
+# from news.serializer import NewsSerializer
 from django.utils.html import strip_tags
 from django.template.context_processors import csrf
 from django.shortcuts import redirect, render_to_response, HttpResponseRedirect, HttpResponse

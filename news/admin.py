@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 from .models import News, NewsPortal, NewsCategory, Companies, RssNews, RssPortals, TopVideoContent, TopNews, \
-    NewsWatches, UserRssNewsReading
+    NewsWatches, UserRssNewsReading, RSSChannels
 from ckeditor.widgets import CKEditorWidget
 
 
@@ -67,6 +67,7 @@ class PostAdminForm(forms.ModelForm):
 
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
+    prepopulated_fields = {'slug': ('news_title', )}
     list_display = ['news_title', 'news_category', 'news_portal_name', 'news_company_owner', 'news_author',  'news_likes', 'news_dislikes', 'news_post_date',]
     list_filter = ['news_category', 'news_portal_name', 'news_company_owner', 'news_author',]
 
@@ -80,8 +81,8 @@ class RssPortalsForm(forms.ModelForm):
 
 class RssPortalsAdminForm(admin.ModelAdmin):
     form = RssPortalsForm
-    list_filter = ['follows', ]
-    list_display = ['portal', 'verbose_name', 'follows',]
+    list_filter = ['follows', 'category']
+    list_display = ['portal', 'verbose_name', 'follows', 'category',]
 
 
 class CompaniesEditorFormAdmin(forms.ModelForm):
@@ -96,9 +97,23 @@ class AompaniesEditorAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'site',]
     list_filter = ['name', 'category',]
 
+
+class RssChannelsAdminForm(forms.ModelForm):
+    class Meta:
+        model = RSSChannels
+        fields = "__all__"
+
+
+class RssChannelAdmin(admin.ModelAdmin):
+    form = RssChannelsAdminForm
+    list_display = ['portal', 'link', ]
+    list_filter = ['portal', ]
+
+
 admin.site.register(RssPortals, RssPortalsAdminForm)
 admin.site.register(TopNews, PostAdminTopNews)
 admin.site.register(News, PostAdmin)
 admin.site.register(Companies, AompaniesEditorAdmin)
 admin.site.register(RssNews, RSSAdmin)
 admin.site.register(UserRssNewsReading)
+admin.site.register(RSSChannels, RssChannelAdmin)

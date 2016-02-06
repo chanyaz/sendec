@@ -70,7 +70,7 @@ def get_search_result(request, search_word):
                                Q(news_company_owner_id__in=companies_list) |
                                Q(news_post_text_russian__contains=search_word) |
                                Q(news_post_text_english__contains=search_word) |
-                               Q(news_post_text_chinese__contains=search_word)).values()
+                               Q(news_post_text_chinese__contains=search_word))
 
 
 def get_search_preview_result(request, search_word):

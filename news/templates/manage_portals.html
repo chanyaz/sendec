@@ -39,10 +39,10 @@
         width: 100%;
     }
     .td-rp-name{
-        width: 15%;
+        width: 25%;
     }
     .td-rp-description{
-        width: 70%;
+        width: 60%;
     }
     .td-rp-btn{
         width: 15%;
@@ -144,6 +144,33 @@
             </div>
 
 
+{#            <div id="add-user-portal" style="width:80%; margin-left: auto; margin-right: auto; margin-bottom: 50px;">#}
+{##}
+{##}
+{#                <div class="google-news-below-shares" style="margin-left: auto; margin-right: auto; width:728px; height: 90px; background-color: #00fff9;"></div>#}
+{##}
+{##}
+{#                <input name="user_portal"#}
+{#                       type="text"#}
+{#                       id="uap"#}
+{#                       placeholder="Drop the key word"#}
+{#                       class=""#}
+{#                       style="width:100%;">#}
+{#                <div hidden id="preview-portal" style="margin-top:15px; width: 350px; margin-left: auto; margin-right: auto; height: 300px;">#}
+{#                    <div id="preview-portal-content" style="border: solid 1px lightgrey; border-radius: 5px;">#}
+{#                        <div id="ppc-cover" style="width: 350px; height: 150px; background: url('{{ test.cover }}') no-repeat center; background-size: cover;"></div>#}
+{#                        <div id="ppc-name"><b>{{ test.portal }}</b></div>#}
+{#                        <div id="ppc-description"><i>{{ test.description }}</i></div>#}
+{#                        <div id="ppc-params">Followers:&nbsp;{{ test.follows }}</div>#}
+{#                        <div id="ppc-follow">#}
+{#                            <button class="btn btn-success">Follow</button>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+
+
+
             {% if user_rss_portals|length > 0 %}
                 <table id="user-rss-table">
                 <tr>
@@ -156,7 +183,8 @@
                             id="user-rss-{{ i.id }}">
                             <td class="td-rp-name">
                                 <div>
-                                    <img src="" height="70px"/>{{ i.portal_id|get_rss_portal_name }}
+                                    <img style="float: left;" src="" width="32px" height="32px"/>
+                                    <div style="">{{ i.portal_id|get_rss_portal_name }}</div>
                                 </div>
                             </td>
                             <td class="td-rp-description"><div>{{ i.portal_id|get_description }}</div></td>

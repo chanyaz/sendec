@@ -1,0 +1,350 @@
+{% extends 'index_new.html' %}
+{% load i18n %}
+{% load my %}
+{% load thumbnail %}
+{% load staticfiles %}
+{% block browse_portals_tech %}
+
+    <style>
+    #left-control-portals{
+            position: fixed;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            z-index: 989;
+            height: 100%;
+            margin-top: -5.5%;
+            float: left;
+            width: 16.1%;
+            left: 0;
+    }
+
+
+
+        #browser{
+            width: 82%;
+            float: right;
+            position: relative;
+            min-height: 300px;
+        }
+
+
+        .rss_portal_preview{
+            position: relative;
+            width: 20%;
+            min-height: 10em;
+            max-height: 28em;
+{#            height: inherit;#}
+            float: left;
+            margin-left: 1%;
+            background: white;
+            opacity: 1;
+        }
+        .rss_tech_middle{
+            padding: 2%;
+        }
+        .rss_tech_title{
+            text-align: center;
+            margin-top: 1%;
+        }
+        .rss_tech_description{
+            margin-top: 1%;
+        }
+        .rss_tech_configs{
+            margin-top: 1%;
+        }
+        .rss_tech_btn{
+            margin-top: 1%;
+        }
+
+
+        #browser-main-title{
+            width: 100%;
+            text-align: center;
+            font-family: Georgia, Times, "Times New Roman", serif;
+            font-size: 16px;
+        }
+
+        #browser-middle{
+            width: 100%;
+            border: solid 1px red;
+        }
+
+        #browser-technology{
+            width: 100%;
+            height: 500px;
+            border: solid 1px blue;
+{#            background: url('{% static 'static/img/rss-technology/back.jpg' %}') no-repeat center;#}
+            background-size: cover;
+            margin-bottom: 50px;
+        }
+
+        #browser-entertainment{
+            width: 100%;
+            height: 500px;
+            border: solid 1px blue;
+{#            background: url('{% static 'static/img/rss-entertainment/back.jpg' %}') no-repeat center;#}
+            background-size: cover;
+            margin-bottom: 50px;
+        }
+
+        #browser-auto{
+            width: 100%;
+            height: 500px;
+            border: solid 1px blue;
+            background: url('{% static 'static/img/rss-auto/back.jpg' %}') no-repeat center;
+            background-size: cover;
+            margin-bottom: 50px;
+        }
+
+        #browser-space{
+            width: 100%;
+            height: 500px;
+            border: solid 1px blue;
+{#            background: url('{% static 'static/img/rss-space/back.jpg' %}') no-repeat center;#}
+            background-size: cover;
+            margin-bottom: 50px;
+        }
+
+        #browser-bio{
+            width: 100%;
+            height: 500px;
+            border: solid 1px blue;
+{#            background: url('{% static 'static/img/rss-bio/back.jpg' %}') no-repeat center;#}
+            background-size: cover;
+            margin-bottom: 50px;
+        }
+
+        .category-main-title{
+            position: relative;
+            width: 100%;
+            font-family:Georgia, Times, "Times New Roman", serif;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+        }
+
+
+        .current_rss_news{
+            width: 20%;
+            height: 20em;
+            margin-left: 1%;
+            margin-top: 1%;
+            border-radius: 5px;
+            box-shadow: 0 0 5px black;
+            float: left;
+            background-color: white;
+            opacity: 0.7;
+        }
+    </style>
+
+    <script>
+
+        function showCurrentPortalNews(portal){
+            $('#ajax-preloader').show();
+            $.ajax({
+                method: "POST",
+                url: "/news/usernews/page/"+portal,
+                data:{csrfmiddlewaretoken: "{{ csrf_token }}"},
+                success: function(data){
+                    $('#browser').html(data);
+                    $('#ajax-preloader').hide();
+                },
+                error: function(result){
+                    alert("Oh,"+portal+"'s news have been broken. Try later, please.\nWe are working on this problem.");
+                    $('#ajax-preloader').hide();
+                }
+            })
+        }
+
+
+        function followCurrentRssPortal(uuid,pid, id){
+            $("#ajax-preloader").show();
+            $.ajax({
+                url: "/news/arp&uid="+uuid+"&pid="+pid+"/",
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(result){
+                    if(result.exists == false) {
+                        $("#left-bar-portal-" + id).slideToggle();
+                        var table = $('.user-rss');
+{#                        var string = '<li id="left-bar-portal-{portal_id}"><a>' +#}
+{#                                '<span class="cprs" onclick="showCurrentPortalNews(' + '{portal_verbose}' + ');">' +#}
+{#                                '{portal_name}</span>' +#}
+{#                                '<span class="count"></span></a>' + '</li><br>';#}
+                        {#                    alert(string);#}
+                        table.append(result.string.replace('{portal_id}', result.data.id)
+                                .replace('{portal_verbose}', result.data.verbose)
+                                .replace('{portal_name}', result.data.portal));
+
+                        var scrollTo = $('#left-bar-portal-'+result.data.id).offset().top;
+                        $('#left-control-portals').animate({scrollTop: scrollTo});
+                        $('#left-bar-portal-'+result.data.id).animate({backgroundColor: 'rgb(25, 180, 155)'}, 2000).animate({backgroundColor: '#1C1F22'}, 2000);
+
+{#                        $(".browser").load("/news/browser/");#}
+                        $("#ajax-preloader").hide();
+                    }
+                    else{
+                        alert('Already exists');
+                        $("#ajax-preloader").hide();
+                    }
+                }
+            })
+        }
+
+    </script>
+
+    <div class="container-fluid container browser">
+        <div class="row row-centered">
+            <div id="left-control-portals">
+                <main class="cd-main-content">
+                    <nav class="cd-side-nav-2">
+                        <ul>
+                            <li id="left-panel-main-title" style="z-index:919; color: white; text-align: center; font-family: Georgia, Times, 'Times New Roman', serifs">
+                                <a href="/" style="font-size: 30px">INSYDIA</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="cd-label">Main</li>
+                            <li class="has-children overview active" onclick="changeStatePortals(this);">
+                                <a href="#">Overview</a>
+                                <ul>
+                                    <li><a href="/news/usernews/">My feed</a></li>
+                                    <li><a href="/favourite/">Saved articles</a></li>
+                                </ul>
+                            </li>
+                        <li>
+                            <li class="has-children overview active" onclick="changeStatePortals(this);">
+                                <a href="">Properties</a>
+                                <ul>
+                                    <li class="cd-label">Show type</li>
+                                    <li><a href="">blocks</a></li>
+                                    <li><a href="">list</a></li>
+                                    <li><a href="">Show readed</a></li>
+                                </ul>
+                            </li>
+                        </li>
+                            <li id="side-bar-portals" class="has-children notifications active">
+                                <a id="side-bar-portals-link" href="#" onclick="changeStatePortals(this);">Portals</a>
+
+                                <ul class="user-rss">
+                                    {% for current_portal in user_rss_portals %}
+                                        <li id="left-bar-portal-{{ current_portal.id }}"><a>
+                                            <span class="cprs" onclick="showCurrentPortalNews('{{ current_portal.portal_id|get_rss_verbose_name }}');">
+                                                {{ current_portal.portal_id|get_rss_portal_name }}
+                                            </span>
+                                            {% if current_portal.portal_id|get_unread_news:username.id != 0 %}
+                                                <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>
+                                            {% endif %}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul style="margin-bottom: 50px;">
+                            <li class="cd-label">Configures</li>
+                            <li class="has-children bookmarks">
+                                <a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>Manage portals</a>
+                                <a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>Browse portals</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </main>
+            </div>
+
+
+
+
+            <div id="browser">
+
+                    <div id="browser-main-title">
+                        <h2>Collect your own collection of news</h2>
+                    </div>
+
+
+
+             <div id="add-user-portal" style="width:80%; margin-left: auto; margin-right: auto; margin-bottom: 50px;">
+
+
+                <div class="google-news-below-shares" style="margin-left: auto; margin-right: auto; width:728px; height: 90px; background-color: #00fff9;"></div>
+
+
+                <input name="user_portal"
+                       type="text"
+                       id="uap"
+                       placeholder="Drop the key word"
+                       class=""
+                       style="width:100%;">
+                <div hidden id="preview-portal" style="margin-top:15px; width: 350px; margin-left: auto; margin-right: auto; height: 300px;">
+{#
+                </div>
+            </div>
+
+
+
+
+                    <div id="browser-middle">
+                    
+                        <div id="browser-categories">
+                            <div id="browser-technology">
+                                <div class="category-main-title"><h2 style="color: white;">TECHNOLOGY</h2></div>
+                                {% for i in rss_tech %}
+                                    <div class="rss_portal_preview"
+                                         id="rss_id_"
+                                         data-indx=""
+                                         onclick=""
+                                         data-current-rss-news-id="">
+                                        <div class="rss_tech_cover"
+                                             style="width: 100%;
+                                                     height: 150px;
+    {#                                                 {% if i.cover != '[]' %}#}
+                                                        background: url('{{ i.cover }}') no-repeat center;
+    {#                                                 {% endif %}#}
+                                                     background-size: cover;">
+    {#                                        <img src="{{ i.cover }}" width="100%" height="150px"/>#}
+                                        </div>
+                                        <div class="rss_tech_middle">
+                                            <div class="rss_tech_title"><b>{{ i.portal }}</b></div>
+                                            <div class="rss_tech_description"><i>{{ i.description|safe|truncatechars:100 }}</i></div>
+                                            <div class="rss_tech_configs">Followers:&nbsp;{{ i.follows }}</div>
+                                        </div>
+                                        <div class="rss_tech_btn" style="width:100%;">
+                                            <button class="btn btn-success"
+                                                    onclick="followCurrentRssPortal('{{ username.profile.uuid }}','{{ i.id }}', '{{ i.id }}')"
+                                                    style="width:100%;">{% trans 'Follow' %}</button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <div class="rss_tech_all">
+                                    Show more
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+        </div>
+    </div>
+
+    <div class="usernews-footer" style="margin-left: 16.1%;
+    width: 83.9%;
+    border: solid 1px red;">
+        {% include 'footer_usernews.html' %}
+    </div>
+
+     <script>
+        function changeStatePortals(element){
+            if (!$(element).parent().hasClass('active')) {
+                $(element).parent().addClass('active');
+            }
+            else {
+                $(element).parent().removeClass('active');
+            }
+        }
+    </script>
+
+{% endblock %}

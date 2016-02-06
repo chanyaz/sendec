@@ -22,15 +22,15 @@
 
 <div class="company_news" style="height: inherit; margin-bottom: 5%;">
 {% paginate 20 news %}
-{% for current_news in news %}
+{% for i in news %}
     <div class="sect-2">
         <div class="current_news"
              onmouseout="this.style.backgroundColor='';">
             <div class="current_searched_content">
-                <a href="/news/{{ current_news.news_category_id }}/{{ current_news.id }}/">
+                <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
                     <div class="current-news-left" style="float: left;">
                         <div class="current_searched_cover">
-                            <img src="{% thumbnail current_news.news_main_cover '300x150' crop='center' %}" />
+                            <img src="{% thumbnail i.news_main_cover '300x150' crop='center' %}" />
                         </div>
                     </div>
                 </a>
@@ -42,11 +42,13 @@
         {#                    &nbsp;|&nbsp;{{ current_news.news_post_date.date }}#}
         {#                </div>#}
                     <div class="current_searched_content_title">
-                        <a href="/news/{{ current_news.news_category_id }}/{{ current_news.id }}/">{{ current_news.news_title }}</a>
+                        <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                            {{ i.news_title }}
+                        </a>
                     </div>
                     <div class="current_searched_content_post">
                         {% trans 'By' %}&nbsp;{{ current_news.id|default:"insydia" }}&nbsp;on
-                        {{ current_news.news_post_date.date|date }}
+                        {{ i.news_post_date.date|date }}
                     </div>
                 </div>
             </div>

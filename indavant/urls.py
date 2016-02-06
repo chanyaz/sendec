@@ -30,11 +30,11 @@ handler404 = 'news.views.page_not_found'
 
 admin.autodiscover()
 from rest_framework import routers
-from api.views import NewsViewSet
+# from api.views import NewsViewSet
 
 
 router = routers.DefaultRouter()
-router.register(r'news', NewsViewSet)
+# router.register(r'news', NewsViewSet)
 
 
 

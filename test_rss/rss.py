@@ -30,12 +30,26 @@ def fill_start_data_news():
 
 
 def get_feed_urls():
-    with open("rssurls.txt", "r") as file:
-        url_feeds = file.readlines()
+    # with open("rssurls.txt", "r") as file:
+    #     url_feeds = file.readlines()
 
+    db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
+    cursor = db.cursor()
+    query = "SELECT link FROM rss_channels"
+    # data_query = ()
+    cursor.execute(query)
+    url_feeds = cursor.fetchall()
+    db.close()
+
+    print(url_feeds)
+
+    urls = []
     for i in range(len(url_feeds)):
-        url_feeds[i] = url_feeds[i][:-1]
-    return url_feeds
+        print(url_feeds[i])
+        # url_feeds[i] = url_feeds[i]#[:-1]
+        urls.append(url_feeds[i][0])
+    # return url_feeds
+    return urls
 
 
 def parse_current_url(url=''):
@@ -81,9 +95,9 @@ def get_amount_of_user_readers(portal_id):
     data_query = [portal_id]
     cursor.execute(query, data_query)
     amount = cursor.fetchall()
-    print("Count: ", len(amount), "\nUsers with IDs: ", amount)
-    for i in amount:
-        print(i[0])
+    # print("Count: ", len(amount), "\nUsers with IDs: ", amount)
+    # for i in amount:
+        # print(i[0])
 
     return [len(amount), amount]
 
@@ -117,14 +131,27 @@ def connect_to_db(urls):
     import uuid
 
     cursor = db.cursor()
+    num = 0
     for url in urls:
+        num += 1
+        print("#%s Current url: %s" % (num, url))
         data = last_element(parse_current_url(url=url))
+        # print(data["date"])
         try:
             new_date = data["date"].split()
             time = new_date[4].split(":")
+
+
+            if len(new_date[1]) > len(new_date[2]):
+                tmp = new_date[1][:3]
+                new_date[1] = new_date[2][:2]
+                new_date[2] = tmp
+
+
             months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-            mon = int(months.index(new_date[2]))+1
-            date_posted = datetime.datetime(int(new_date[3]), mon, int(new_date[1]), int(time[0]), int(time[1]), int(time[2]))
+            mon = months.index(new_date[2])+1
+
+            date_posted = datetime.datetime(int(new_date[3][:4]), mon, int(new_date[1]), int(time[0]), int(time[1]), int(time[2]))
         except IndexError:
             date_posted = data["date"]
 
@@ -292,36 +319,60 @@ def fill_rss_portals():
     db = psycopg2.connect("dbname='test' user='testuser' host='' password='test'")
     cursor = db.cursor()
     with open("dictionary_portals.json", encoding="utf-8-sig") as file_list:
-        file_list = list(json.load(file_list))
+        file_list = json.load(file_list)
     with open("dictionary_portals.json", encoding="utf-8-sig") as file:
         portals = json.load(file)
     end = len(portals)
+    print(end)
     cur_iter = 0
-    #query_0 = "SELECT portal_name FROM news_portal"
-    #cursor.execute(query_0)
-    #list_portals = cursor.fetchall()
-    for i in range(len(portals)):
+    for i in range(1,len(file_list)):
+        i = i+1
         query_0 = "SELECT ID FROM rss_portals WHERE portal=%s"
-        data_query_0 = [portals[file_list[i]]["name"]]
+        data_query_0 = [file_list['object-%s'%i]["name"]]
         cursor.execute(query_0, data_query_0)
         count = cursor.fetchall()
+
+
         if len(count) == 0:
-            print(len(portals[file_list[i]]["verbose"]))
             cur_iter += 1
             categories = {"Technology": 1, "Entertainment": 2, "Auto": 3, "Space": 4, "BIO": 5}
-            query = "INSERT INTO rss_portals(portal, portal_base_link, follows, description, cover, verbose_name, category_id) VALUES(%s, %s, %s, %s, %s, %s,%s)"
-            data_query = (portals[file_list[i]]["name"],
-                          portals[file_list[i]]["base_link"],
+            query = "INSERT INTO rss_portals(portal, portal_base_link, follows, description, cover, verbose_name, category_id) VALUES(%s, %s, %s, %s, %s,%s,%s)"
+            data_query = (file_list['object-%s'%i]["name"],
+                          file_list['object-%s'%i]["base_link"],
                           0,
-                          portals[file_list[i]]["description"],
-                          portals[file_list[i]]["cover"],
-                          portals[file_list[i]]["verbose"],
-                          categories[portals[file_list[i]]["category"]])
+                          file_list['object-%s'%i]["description"],
+                          file_list['object-%s'%i]["cover"],
+                          file_list['object-%s'%i]["verbose"],
+                          categories[file_list['object-%s'%i]["category"]])
             cursor.execute(query, data_query)
             db.commit()
+
+
+            # Add feed to each portal
+            query_test = "SELECT DISTINCT ON (ID) ID FROM rss_portals WHERE portal_base_link=%s"
+            query_test_data = [file_list['object-%s'%i]['base_link']]
+            cursor.execute(query_test, query_test_data)
+            rss_id = cursor.fetchall()
+            query_channel = "INSERT INTO rss_channels(portal_id, link) VALUES(%s, %s)"
+            query_channel_data = (rss_id[0], file_list['object-%s'%i]["feed"])
+            cursor.execute(query_channel, query_channel_data)
+            db.commit()
+
+
+
             print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "When total end is ", end)
         else:
-            pass
+            # Add feed to each portal
+            query_test = "SELECT DISTINCT ON (ID) ID FROM rss_portals WHERE portal=%s"
+            query_test_data = [file_list['object-%s'%i]['name']]
+            cursor.execute(query_test, query_test_data)
+            rss_id = cursor.fetchall()
+            query_channel = "INSERT INTO rss_channels(portal_id, link) VALUES(%s, %s)"
+            query_channel_data = (rss_id[0], file_list['object-%s'%i]["feed"])
+            cursor.execute(query_channel, query_channel_data)
+            db.commit()
+
+
     db.close()
 
 
@@ -407,10 +458,12 @@ def fill_news():
                 news_dislikes = 0
                 photo = ""
                 news_tags = ""
+                slug = "a-a-a-%s" % i
+
 
                 query_set = "INSERT INTO news(news_title, news_category_id, news_post_date, news_post_text_english, " \
                             "news_post_text_russian, news_post_text_chinese, news_portal_name_id, news_company_owner_id, news_author_id, " \
-                            "news_main_cover, photo, news_likes, news_dislikes, news_tags) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                            "news_main_cover, photo, news_likes, news_dislikes, news_tags, slug) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
                 data_query_set = (news_title,
                                   news_category_id,
                                   news_post_date,
@@ -424,7 +477,7 @@ def fill_news():
                                   photo,
                                   news_likes,
                                   news_dislikes,
-                                  news_tags)
+                                  news_tags,slug)
                 cursor.execute(query_set, data_query_set)
                 db.commit()
                 #print(cur_iter, data_query_set)
@@ -489,11 +542,11 @@ def work_func():
         fill_rss_portals()
     elif x == 2:
         while True:
-            try:
-                connect_to_db(urls=urls_of_portals)
-                time.sleep(1)
-            except IndexError:
-                pass
+            # try:
+            connect_to_db(urls=urls_of_portals)
+            time.sleep(1)
+            # except IndexError:
+            #     pass
     elif x == 3:
         fill_companies()
     elif x == 4:

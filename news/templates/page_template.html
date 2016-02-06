@@ -8,52 +8,67 @@
         .news-title{font-size: 17px; margin-top: 1.5%; font-family: Georgia, Times, "Times New Roman", serif}
         .main-page-news-cover{max-width: 100%; max-height: 100%; height: 200px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;}
         .text_post{width: 100%;}
+    .sect-2-top{
+        width: 30%;
+        display: inline-block;
+        margin-right: 1%;
+        margin-top: 3%;
+        height:400px;
+        max-height: 400px;
+    }
 </style>
-<div class="dyn-news" style="height: inherit">
-{% paginate 32 total_news %}
-{% for i in total_news %}
-    <div class="sect-2">
-    {% if i.news_main_cover == '' %}
-        <div class="current_news special-pos"
-             style="width: 32.2%; margin-right: 1%; margin-bottom: 3%;">
-        {% else %}
-        <div class="current_news_mas special-pos"
-             style="width: 32.2%; margin-right: 1%; margin-bottom: 3%;">
-        {% endif %}
-            <div class="category-name">
-                <a class="category-link" href="/news/{{ i.id|get_news_category }}/">
-                    <span class="category-name-content">
-                        &nbsp;{{ i.id|get_news_category }}&nbsp;
-                    </span>
-                </a>
-            </div>
-            {% if i.news_main_cover != '' %}
-                <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
-                    <div class="total-news-cover cover-hover"
-                         style="max-width: 100%; max-height: 100%; height: 210px;">
-    {#                    background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">#}
-    {#                    <div class="mask"></div>#}
-                    <img src="{% thumbnail i.news_main_cover '350x210' %}" />
+
+
+<div class="dyn-news-2" style="height: inherit; margin-bottom: 5%;">
+    {% paginate 30 total_news %}
+    {% for i in total_news %}
+        <div class="sect-2-top">
+            <div class="current_news">
+                <div class="cat cat-left">
+                    <a href="/news/{{ i.id|get_news_category }}">{{ i.id|get_news_category|upper }}</a>
+                </div>
+                {% if i.news_main_cover != '' %}
+                    <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                        {% if i.news_main_cover|check_format == True %}
+                            <div class="middle-news-cover" style="max-width: 100%;cursor: pointer;max-height: 100%;">
+                            {% thumbnail i.news_main_cover '350x210' as im %}
+                                <img src="{{ im.url }}" />
+                            {% endthumbnail %}
+                            </div>
+                        {% else %}
+                            <div class="middle-news-cover" style="max-width: 100%;cursor:pointer;max-height: 100%;height: 210px;
+                                     background: url('{% static 'static/img/companies_cover/' %}{{ i.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center;
+                                     background-size: cover;"></div>
+                        {% endif %}
+                    </a>
+                {% endif %}
+                <div class="title"
+                     id="title-{{ i.id }}"
+                     style="margin-top: 5%;">
+                    <div class="news-title">
+                        <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                            <b>{{ i.news_title|safe }}</b>
+                        </a>
                     </div>
-                </a>
-            {% endif %}
-            <div class="title" style="margin-top: 5%;">
-                <a class="news-title" href="/news/{{ i.news_category_id }}/{{ i.id }}/">
-                    {{ i.news_title }}
-                </a>
+                </div>
+            <div class="params">
+                <span class="glyphicon glyphicon-eye-open" style="float: left;"></span>
+                <div class="watches" style="float: left;">
+{#                    {{ i.id|count_watches }}#}
+                </div>
+                <div class="publushed" style="float: right;">{{ i.news_post_date }}</div>
             </div>
-            <div class="text_post">
-                {{ i.news_post_text|safe|striptags|truncatewords_html:"12" }}
             </div>
         </div>
-    </div>
-{#    <br><br><br><br>#}
-{#    {{ forloop.counter0 }}#}
-{% endfor %}
+    {% endfor %}
 </div>
+<hr width="100%">
+
 {% show_more %}
-<script>
-    $('.dyn-news').masonry({
-        itemSelector: '.special-pos'
-    })
-</script>
+
+{##}
+{#<script>#}
+{#    $('.dyn-news').masonry({#}
+{#        itemSelector: '.special-pos'#}
+{#    })#}
+{#</script>#}

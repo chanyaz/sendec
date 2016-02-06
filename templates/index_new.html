@@ -467,6 +467,7 @@
             color: #333333;
         }
         .rss-preview-body{
+            width: 100%;
             padding: 0 5%;
             margin-top: 2%;
             font-family: Georgia,Times,sans-serif;
@@ -475,17 +476,13 @@
         .rss-preview-body h3{
             color: black
         }
-        .rss-preview-body img:before{
-            content: '<p align="center">';
-        }
-        .rss-preview-body img:after{
-            content: '</p>';
-        }
         .rss-preview-body img{
-            max-height: 400px;
+            max-height: 800px;
             max-width: 100%;
-            width: 100%;
+{#            width: 100%;#}
             height: inherit;
+            margin-left: auto !important;
+            margin-right: auto !important;
         }
         .content-text{text-align: center;}
         .content-portals{width: 70%; margin-left: auto; margin-right: auto;}
@@ -1105,6 +1102,7 @@
                                 {% block user_news %}{% endblock %}
                                     {% block manager %}{% endblock %}
                                     {% block browse_portals %}{% endblock %}
+                                        {% block browse_portals_tech %}{% endblock %}
                                 {% block search %}{% endblock %}
                                 {% block page_not_found %}{% endblock %}
                                 {% block access_denied %}{% endblock %}
@@ -1542,11 +1540,11 @@ $(document).ready(function () {
             itemSelector: '.sect-2'
         });
 
-        $('.dyn-news').masonry({
-            singleMode: false,
-            itemSelector: '.special-pos',
+{#        $('.dyn-news').masonry({#}
+{#            singleMode: false,#}
+{#            itemSelector: '.special-pos',#}
 {#            columnWidth: 0#}
-        });
+{#        });#}
 
 
         $('.recently-news-other').masonry({
@@ -1975,6 +1973,88 @@ function scaleBannerVideoSize(element){
 
 
 </script>
+
+
+    <script>
+        var $valRE = /^((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/g;
+        $('#uap').keyup(function(){
+            if($('#uap').val().match($valRE)) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'url': $('#uap').val()
+                    },
+                    url: "/news/find_rss/",
+                    success: function(data){
+                        if(data.response == true)
+                        {
+                            $('#search-feed-fail').hide();
+                            $('#user-url').html($('#uap').val());
+                            $('#user-url-feed').html(data.feed);
+                            $('#found-feed').show();
+                        }
+                        else{
+                            $('#found-feed').hide();
+                            $('#search-feed-fail').show();
+                        }
+                    }
+                })
+            }
+            else {
+                $('#search-feed-fail').hide();
+                $('#found-feed').hide();
+                $('#uap').autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "/news/rss/get_matches=" + $('#uap').val().replace(/\./g, ""),
+                            dataType: "json",
+                            data: {
+                                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                q: request.term
+                            },
+                            success: function (data) {
+                                response($.map(data.slice(0, 5), function (item) {
+                                    return {
+                                        id: item.id,
+                                        label: item.name
+                                    };
+                                }));
+                            }
+                        })
+                    },
+                    select: function (event, ui) {
+                        $.ajax({
+                            url: "/news/gcrp=" + ui.item.id,
+                            dataType: 'json',
+                            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                            success: function (data) {
+                                $('#preview-portal').html(
+                                        data.string.replace('{cover}', data.data.cover)
+                                                .replace('{portal}', data.data.portal)
+                                                .replace('{description}', data.data.description)
+                                                .replace('{follows}', data.data.follows)
+                                ).removeAttr('hidden');
+
+                                $('#ppc-follow').click(function () {
+
+                                })
+
+                            }
+                        })
+                    },
+                    open: function () {
+                        $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+                    },
+                    close: function () {
+                        $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+                    }
+                })
+            }
+            return false;
+        });
+    </script>
 
 
 </body>

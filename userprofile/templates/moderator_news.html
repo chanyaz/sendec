@@ -2,37 +2,83 @@
 {% load my %}
 {% load i18n %}
 {% load staticfiles %}
-{% paginate 10 articles %}
-{% for current_result in articles %}
-    <div class="current_searched"
-         onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"
-         onmouseover="this.style.cursor='pointer'; this.style.backgroundColor='grey';"
-         onmouseout="this.style.backgroundColor='';">
-        <div class="current_searched_content">
-            <div class="current_searched_content_top">
-                <div class="current_searched_cover"
-                     style="background: url('/media/{{ current_result.news_main_cover }}') no-repeat center; background-size: cover;"></div>
-                <div class="current_searched_content_portal">
-                    {{ current_result.news_portal_name_id|get_portal_name }}
-                </div>
-                <div class="current_searched_content_date">
-                    &nbsp;|&nbsp;{{ current_result.news_post_date.date }}
-                </div>
-                <div class="current_searched_content_title">
-                    <b>{{ current_result.news_title }}</b>
-                </div>
-                <div class="current_searched_content_post">
-                    {{ current_result.news_post_text_english|safe|striptags|truncatechars:"115" }}
-                </div>
-            </div>
-            <div class="searched-category-name">
-                <a class="searched-category-link" href="/news/{{ current_result.id|get_news_category }}/">
-                    <span class="searched-category-name-content">
-                        &nbsp;{{ current_result.id|get_news_category }}&nbsp;
-                    </span>
+
+{##}
+{#{% paginate 10 articles %}#}
+{#{% for current_result in articles %}#}
+{#    <div class="current_searched"#}
+{#         onclick="location.href='/news/{{ current_result.news_category_id }}/{{ current_result.id }}/';"#}
+{#         onmouseover="this.style.cursor='pointer'; this.style.backgroundColor='grey';"#}
+{#         onmouseout="this.style.backgroundColor='';">#}
+{#        <div class="current_searched_content">#}
+{#            <div class="current_searched_content_top">#}
+{#                <div class="current_searched_cover"#}
+{#                     style="background: url('/media/{{ current_result.news_main_cover }}') no-repeat center; background-size: cover;"></div>#}
+{#                <div class="current_searched_content_portal">#}
+{#                    {{ current_result.news_portal_name_id|get_portal_name }}#}
+{#                </div>#}
+{#                <div class="current_searched_content_date">#}
+{#                    &nbsp;|&nbsp;{{ current_result.news_post_date.date }}#}
+{#                </div>#}
+{#                <div class="current_searched_content_title">#}
+{#                    <b>{{ current_result.news_title }}</b>#}
+{#                </div>#}
+{#                <div class="current_searched_content_post">#}
+{#                    {{ current_result.news_post_text_english|safe|striptags|truncatechars:"115" }}#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="searched-category-name">#}
+{#                <a class="searched-category-link" href="/news/{{ current_result.id|get_news_category }}/">#}
+{#                    <span class="searched-category-name-content">#}
+{#                        &nbsp;{{ current_result.id|get_news_category }}&nbsp;#}
+{#                    </span>#}
+{#                </a>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endfor %}#}
+
+<div class="search-news-block">
+    {% paginate 20 articles %}
+    {% for current_result in articles %}
+        <div class="current_searched">
+            <div class="current_searched_content">
+                <a href="/news/{{ current_result.news_category_id }}/{{ current_result.id }}/">
+                    <div class="current_searched_cover"
+                         style="background: url('/media/{{ current_result.news_main_cover }}') no-repeat center; background-size: cover;"></div>
                 </a>
+                <div class="current_searched_content_top">
+                    <div id="current_searched_content_title_{{ current_result.id }}"
+                         class="current_searched_content_title">
+                        <a href="/news/{{ current_result.news_category_id }}/{{ current_result.id }}/">
+                            <b>{{ current_result.news_title }}</b>
+                        </a>
+                    </div>
+                    <div class="current_searched_content_post">
+                        {{ current_result.news_post_text_english|safe|striptags|truncatechars:"200" }}
+                    </div>
+
+                    <div class="md-bt-ct">
+                        <div class="current_searched_content_author">
+                            By&nbsp;--&nbsp;<a href="/search/?q={{ current_result.news_author_id|get_username }}">{{ current_result.news_author_id|get_article_author }}</a>
+                        </div>
+                        <div class="current_searched_content_date">
+                            &nbsp;|&nbsp;{{ current_result.news_post_date.date }}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="searched-category-name">
+                    <a class="searched-category-link" href="/news/{{ current_result.news_category_id }}/{{ current_result.id }}/">
+                        <span class="searched-category-name-content">
+                            &nbsp;{{ current_result.id|get_news_category }}&nbsp;
+                        </span>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
+</div>
+
 {% show_more %}

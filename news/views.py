@@ -149,8 +149,11 @@ def render_current_top_news(request, category_id, news_id):
     args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("top_news.html", args, context_instance=RequestContext(request))
 
-def render_current_news(request, category_id, news_id):
-    current_news = News.objects.get(id=news_id)
+
+# def render_current_news(request, category_id, news_id, slug):
+def render_current_news(request, year, month, day, news_id, slug):
+    current_news = News.objects.get(slug=slug)
+    category_id = current_news.news_category_id
     args = {
         "title": "%s | " % current_news.news_title,
         "current_news_values": current_news,
@@ -168,7 +171,7 @@ def render_current_news(request, category_id, news_id):
         "like_amount": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count(),
         "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count(),
         "current_news_title": current_news.news_title,
-        #"external_link": shared_news_link(request, news_id),
+        ##"external_link": shared_news_link(request, news_id),
         "left_bar": True,
     }
 
@@ -177,7 +180,7 @@ def render_current_news(request, category_id, news_id):
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-    addition_news_watches(request, news_id)
+    # addition_news_watches(request, news_id)
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("current_news.html", args)
@@ -224,11 +227,12 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
             "un_us_p_count": get_user_unselceted_portals(request, user_id=user.id).count(),
             "if_zero": "<p>Wow, you are reading all of our portals. Would you like to <a href='/about/contacts/'>tell</a> us something?</p><p>Or you just can "
                        "write which portal you want to see here and we will try to add it to our database with pleasure.</p>"
-                       "<p>You are our <b>HERO</b>, man!</p>", "new_user_news": get_rss_filterd(request, user.id),
+                       "<p>You are our <b>HERO</b>, man!</p>",
+            "new_user_news": get_rss_filterd(request, user.id),
             "user_rss_portals": get_user_rss_portals(request, user_id=user.id),
             "left_bar": False,
             "here_private": True,
-            "rss_tech": RssPortals.objects.filter(category=1).order_by("-follows")[:4],
+            "rss_tech": RssPortals.objects.filter(category=1)[:4],
             "rss_ent": RssPortals.objects.filter(category=2)[:4],
             "rss_auto": RssPortals.objects.filter(category=3)[:4],
             "rss_space": RssPortals.objects.filter(category=4)[:4],
@@ -252,7 +256,7 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
 
 
 def get_rss_filterd(request, user_id):
-    user_portals_ids = UserRssPortals.objects.filter(user_id=user_id).filter(check=True).order_by("position").values("portal_id")
+    user_portals_ids = UserRssPortals.objects.filter(user_id=user_id).filter(check=True).values("portal_id")
     list_ids = [user_portals_ids[i]["portal_id"] for i in range(len(user_portals_ids))]
     return RssNews.objects.filter(portal_name_id__in=list_ids, portal_name_id__userrssportals__user_id=user_id).order_by("portal_name_id__userrssportals__position").order_by("-date_posted").defer("author").defer("content_value").values()
 
@@ -1165,6 +1169,9 @@ def render_manager_portal(request):
         "username": user_instance,
 
         "user_rss_portals": get_user_rss_portals(request, user_id=user_instance.id),
+
+        "test": RssPortals.objects.get(portal="Appleinsider"),
+
         "left_bar": False,
         "here_private": True,
     }
@@ -1187,9 +1194,13 @@ def render_browser_portals(request, template="browse_portals.html", browse_templ
         "left_bar": False,
         "here_private": True,
 
-        "rss_tech": RssPortals.objects.filter(category=1).filter(
-            id__in=get_user_unselceted_portals(request, user_id=user_instance.id).values_list("portal_id")
+
+        "rss_tech": RssPortals.objects.filter(category=1).exclude(
+            id__in=get_user_rss_portals(request, user_id=user_instance.id).values("portal_id")
         ).order_by("-follows")[:4],
+
+
+
         "rss_ent": RssPortals.objects.filter(category=2).order_by("-follows")[:4],
         "rss_auto": RssPortals.objects.filter(category=3).order_by("-follows")[:4],
         "rss_space": RssPortals.objects.filter(category=4).order_by("-follows")[:4],
@@ -1199,6 +1210,29 @@ def render_browser_portals(request, template="browse_portals.html", browse_templ
 
     if request.is_ajax():
         template = browse_template
+
+    return render_to_response(template, args, context_instance=RequestContext(request))
+
+
+def render_browse_tech_portals(request, template="browse_tech.html", browse_tech_portals="browse_tech_template.html", extra_context=None):
+    user_instance = User.objects.get(username=auth.get_user(request).username)
+    args = {
+        "username": user_instance,
+        "browse_tech_portals": browse_tech_portals,
+        "rss_portals": get_all_rss_portals(request),
+        "user_rss_portals": get_user_rss_portals(request, user_id=user_instance.id),
+        "left_bar": False,
+        "here_private": True,
+
+
+        "rss_tech": RssPortals.objects.filter(category=1).exclude(
+            id__in=get_user_rss_portals(request, user_id=user_instance.id).values("portal_id")
+        ).order_by("-follows"),
+    }
+    args.update(csrf(request))
+
+    if request.is_ajax():
+        template = browse_tech_portals
 
     return render_to_response(template, args, context_instance=RequestContext(request))
 
@@ -1362,3 +1396,76 @@ def count_unread_articles(request, portal_id):
     data = UserRssNewsReading.objects.filter(user_id=user_instance.id).filter(rss_portal_id=portal_id).filter(read=False).count()
     return HttpResponse(json.dumps({'data': data}), content_type="application/json")
 
+
+def get_rss_matches(request, word):
+    args = {}
+    args.update(csrf(request))
+
+    instance = RssNews.objects.filter(Q(title__contains=word) |
+                                      Q(post_text__contains=word) |
+                                      Q(portal_name__portal__contains=word) |
+                                      Q(portal_name__description__contains=word) |
+                                      Q(content_value__contains=word)).distinct("portal_name__portal")
+
+    return HttpResponse(json.dumps([i.get_portal_json() for i in instance.all()]), content_type="application/json")
+
+
+def get_current_rss_portal(request, rss_id):
+    args = {}
+    args.update(csrf(request))
+
+    data_response = {
+        'string': """<div id="preview-portal-content" style="border: solid 1px lightgrey; border-radius: 5px;">
+                        <div id="ppc-cover" style="width: 350px; height: 150px; background: url('{cover}') no-repeat center; background-size: cover;"></div>
+                        <div id="ppc-name"><b>{portal}</b></div>
+                        <div id="ppc-description"><i>{description}</i></div>
+                        <div id="ppc-params">Followers:&nbsp;{follows}</div>
+                        <div id="ppc-follow">
+                            <button id="ppc-follow" class="btn btn-success">Follow</button>
+                        </div>
+                    </div>""",
+        "data": RssPortals.objects.get(id=int(rss_id)).get_portal_full(),
+    }
+
+    return HttpResponse(json.dumps(data_response), content_type="application/json")
+
+
+def search_rss(request):
+    from feedfinder2 import find_feeds
+    import tldextract
+    args = {}
+    args.update(csrf(request))
+    if request.POST:
+        url = request.POST['url']
+        feeds = find_feeds(url)
+        url_instance = tldextract.extract(url)
+        url_domain, url_suffix = url_instance.domain, url_instance.suffix
+
+        category = NewsCategory.objects.get(category_name="Technology").id
+
+        if not RssPortals.objects.filter(portal_base_link__contains=url_domain+"."+url_suffix).exists():
+            RssPortals.objects.create(
+                portal=str(url_domain).capitalize(),
+                portal_base_link=url_domain+"."+url_suffix,
+                follows=0,
+                description="",
+                cover="",
+                verbose_name=url_domain,
+                category_id=1
+            )
+        else:
+            pass
+        if len(feeds) > 0:
+            data_url = True
+            data_response = {
+                "data": data_url,
+                "feed": feeds,
+                'response': True
+            }
+        else:
+            data_response = {
+                'response': False
+            }
+        return HttpResponse(json.dumps(data_response), content_type="application/json")
+    else:
+        raise 404

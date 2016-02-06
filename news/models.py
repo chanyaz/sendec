@@ -5,6 +5,8 @@ import PIL
 from PIL import Image
 from imagekit.models.fields import ImageSpecField
 from imagekit.processors import ResizeToFit, Adjust,ResizeToFill
+from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
 
 
 def upload_news_cover(instance, filename):
@@ -111,9 +113,20 @@ class News(models.Model):
     # Information
     news_likes = models.IntegerField(default=0)
     news_dislikes = models.IntegerField(default=0)
-
-
     news_tags = models.CharField(max_length=128, blank=True)
+    slug = models.SlugField(max_length=256, unique=True, blank=True)
+
+    def get_absolute_url(self):
+        # URL is /{year}/{month}/{day}/{slug}
+        # return "/news/%s/%s" % (self.news_category_id, self.id)
+        # return reverse('news.views.render_current_news', args=[str(self.slug)])
+        return "news/%s/%s/%s/%s/%s" % (self.news_post_date.year,
+                             self.news_post_date.month,
+                             self.news_post_date.day,
+                             self.id,
+                             str(self.slug))
+
+
 
     def get_news_id(self):
         return self.id
@@ -145,10 +158,6 @@ class News(models.Model):
             "shown": self.news_latest_shown,
             "show_now": self.news_currently_showing,
         }
-
-    def get_absolute_url(self):
-        return "/news/%s/%s" % (self.news_category_id, self.id)
-
     def get_json_for_search(self):
         return {
             'id': self.id,
@@ -156,6 +165,11 @@ class News(models.Model):
             'category': self.news_category_id,
             'cover': str(self.news_main_cover)
         }
+    #
+    # def save(self, *args, **kwargs):
+    #     if not self.id:
+    #         self.s = slugify(self.news_title)
+    #     super(News, self).save(*args, **kwargs)
 
 
 class TopNews(models.Model):
@@ -265,6 +279,8 @@ class RssPortals(models.Model):
     verbose_name = models.CharField(max_length=128)
     category = models.ForeignKey(NewsCategory)
 
+    # feed_url = models.URLField(max_length=256)
+
     def __str__(self):
         return self.portal
 
@@ -274,6 +290,32 @@ class RssPortals(models.Model):
             'portal': self.portal,
             'verbose': self.verbose_name
         }
+
+    def get_portal_full(self):
+        return {
+            "id": self.id,
+            "portal": self.portal,
+            "link": self.portal_base_link,
+            "follows": self.follows,
+            "description": self.description,
+            "cover": str(self.cover),
+            "verbose": self.verbose_name,
+            "category": self.category_id,
+            "feed": self.feed_url
+        }
+
+
+class RSSChannels(models.Model):
+    class Meta:
+        db_table = "rss_channels"
+        verbose_name = "Rss channel"
+        verbose_name_plural = "Rss channels"
+
+    portal = models.ForeignKey(RssPortals, related_name="channel")
+    link = models.URLField(max_length=256)
+
+    def __str__(self):
+        return self.portal.portal
 
 
 class RssNews(models.Model):
@@ -314,6 +356,13 @@ class RssNews(models.Model):
             "link": self.link,
             "content": self.content_value,#.replace("\u2019", "&rsquo;"),
             "author": self.author,
+        }
+
+
+    def get_portal_json(self):
+        return {
+            "id": self.portal_name_id,
+            "name": str(RssPortals.objects.get(id=self.portal_name_id).portal)
         }
 
 
