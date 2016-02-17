@@ -101,17 +101,17 @@
                         </li>
                     </ul>
                     <ul>
-                        <li class="cd-label">Main</li>
+                        <li class="cd-label">{% trans 'Main' %}</li>
                         <li class="has-children overview active" onclick="changeStatePortals(this);">
-                            <a href="#">Overview</a>
+                            <a href="#">{% trans 'Overview' %}</a>
                             <ul>
-                                <li><a href="/news/usernews/">My feed</a></li>
-                                <li><a href="/favourite/">Saved articles</a></li>
+                                <li><a href="/news/usernews/">{% trans 'My feed' %}</a></li>
+                                <li><a href="/favourite/">{% trans 'Saved articles' %}</a></li>
         {#						<li><a href="#0">Category 2</a></li>#}
                             </ul>
                         </li>
                         <li id="side-bar-portals" class="has-children notifications active">
-                            <a id="side-bar-portals-link" href="#" onclick="changeStatePortals(this);">Portals</a>
+                            <a id="side-bar-portals-link" href="#" onclick="changeStatePortals(this);">{% trans 'Portals' %}</a>
                             <ul class="user-rss">
                                 {% for current_portal in user_rss_portals %}
                                     <li id="left-bar-portal-{{ current_portal.id }}">
@@ -129,10 +129,10 @@
                         </li>
                     </ul>
                     <ul style="margin-bottom: 50px;">
-                        <li class="cd-label">Configures</li>
+                        <li class="cd-label">{% trans 'Configures' %}</li>
                         <li class="has-children bookmarks">
-                            <a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>Manage portals</a>
-                            <a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>Browse portals</a>
+                            <a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>{% trans 'Manage portals' %}</a>
+                            <a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>{% trans 'Browse portals' %}</a>
                         </li>
                     </ul>
                 </nav>
@@ -140,7 +140,7 @@
         </div>
         <div id="manager-portals">
             <div id="manager-title">
-                <h2>Rss Manager</h2>
+                <h2>Manager</h2>
             </div>
 
 
@@ -174,9 +174,9 @@
             {% if user_rss_portals|length > 0 %}
                 <table id="user-rss-table">
                 <tr>
-                    <th class="table-rss-name">Portal name</th>
-                    <th class="table-rss-describe">Description</th>
-                    <th class="table-rss-configs">Configs</th>
+                    <th class="table-rss-name">{% trans 'Portal name' %}</th>
+                    <th class="table-rss-describe">{% trans 'Description' %}</th>
+                    <th class="table-rss-configs">{% trans 'Configs' %}</th>
                 </tr>
                     {% for i in user_rss_portals %}
                         <tr class="current-rss-portal"
@@ -189,17 +189,17 @@
                             </td>
                             <td class="td-rp-description"><div>{{ i.portal_id|get_description }}</div></td>
                             <td class="td-rp-btn"><div><button onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}', '{{ i.id }}');"
-                                             class="btn btn-success">unfollow</button></div></td>
+                                             class="btn btn-success">{% trans 'unfollow' %}</button></div></td>
                         </tr>
                     {% endfor %}
                 </table>
         {% else %}
             <div id="manager-answer">
-                You have no one portals yet. Would you like gather your own collection?
+                {% trans 'You have no one portals yet. Would you like pick your own collection?' %}
 
-                You just need to <a href="/news/browser/">open</a> portals browser.
+                {% trans 'You just need to' %} <a href="/news/browser/">{% trans 'open' %}</a> {% trans 'portals browser.' %}
 
-                <br>If you have any questions or offers, <a href="/about/contacts/">write</a> to us, please.
+                <br>{% trans 'If you have any questions or offers,' %} <a href="/about/contacts/">{% trans 'write' %}</a> {% trans 'to us, please.' %}
             </div>
         {% endif %}
         </div>

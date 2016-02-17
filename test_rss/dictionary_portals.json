@@ -5,6 +5,7 @@
     "base_link": "teslanews.com",
     "description": "Tesla News website that talks about Tesla Company and Automobile, Tesla Prices, Reviews, Product Specifications, Features, News and More.",
     "cover": "",
+    "favicon": "",
     "category": "Auto",
     "feed": "http://teslanews.com/feed/"
   },
@@ -14,6 +15,7 @@
     "base_link": "zisk.net",
     "description": "Полезная информация о новинках в мире 'железа'. Статьи, обзоры, новостная лента.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://zisk.net/feed/"
   },
@@ -23,6 +25,7 @@
     "base_link": "hi-news.ru",
     "description": "Hi-News.ru - Новости высоких технологий",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://hi-news.ru/feed"
   },
@@ -32,6 +35,7 @@
     "base_link": "computerweekly.com",
     "description": "The latest information technology (IT) news and IT jobs from ComputerWeekly.com. Stay ahead with IT management and technology news, blogs, jobs, case studies, whitepapers and videos.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.computerweekly.com/rss/All-Computer-Weekly-content.xml"
   },
@@ -41,6 +45,7 @@
     "base_link": "forbes.com",
     "description": "Forbes is a global media company, focusing on business, investing, technology, entrepreneurship, leadership, and lifestyle.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.forbes.com/technology/feed/"
   },
@@ -50,6 +55,7 @@
     "base_link": "skynews.com",
     "description": "Sky news delivers breaking news, headlines and top stories from business, politics, entertainment and more in the UK and worldwide.",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://feeds.skynews.com/feeds/rss/technology.xml"
   },
@@ -59,6 +65,7 @@
     "base_link": "firstpost.com",
     "description": "Latest News Headlines: Firstpost covers Latest India News, Top Todays Breaking News on Business, India, World, Politics, Entertainment and Sports - Firstpost.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://tech.firstpost.com/feed"
   },
@@ -68,6 +75,7 @@
     "base_link": "digitaltrends.com",
     "description": "Digital Trends is your premier source for technology news and unbiased expert product reviews of TVs, laptops, smartphones and more.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.digitaltrends.com/gaming/feed/"
   },
@@ -77,6 +85,7 @@
     "base_link": "digitaltrends.com",
     "description": "Digital Trends is your premier source for technology news and unbiased expert product reviews of TVs, laptops, smartphones and more.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.digitaltrends.com/mobile/feed/"
   },
@@ -86,6 +95,7 @@
     "base_link": "digitaltrends.com",
     "description": "Digital Trends is your premier source for technology news and unbiased expert product reviews of TVs, laptops, smartphones and more.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.digitaltrends.com/computing/feed/"
   },
@@ -95,6 +105,7 @@
     "base_link": "digitaltrends.com",
     "description": "Digital Trends is your premier source for technology news and unbiased expert product reviews of TVs, laptops, smartphones and more.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.digitaltrends.com/cars/feed/"
   },
@@ -104,6 +115,7 @@
     "base_link": "digitaltrends.com",
     "description": "Digital Trends is your premier source for technology news and unbiased expert product reviews of TVs, laptops, smartphones and more.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.digitaltrends.com/e3/feed/"
   },
@@ -113,6 +125,7 @@
     "base_link": "technorati.com",
     "description": "We shape the conversation of online publishing, advertising technology, content monetization and website marketing strategies.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://technorati.com/feed/"
   },
@@ -122,6 +135,7 @@
     "base_link": "techunblocked.org",
     "description": "Blog best, top 10, world, How to blogger, Blogging, Best Proxy sites, Free Movies websites, Tech, website, make money, window, apps tips tricks. games",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "https://www.techunblocked.org/feed"
   },
@@ -131,6 +145,7 @@
     "base_link": "iguides.ru",
     "description": "iGuides.ru - Новости и обзоры гаджетов, приложений и аксессуаров",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "https://www.iguides.ru/rss/main.rss"
   },
@@ -140,6 +155,7 @@
     "base_link": "iphones.ru",
     "description": "iPhones.ru – Новости и советы",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.iphones.ru/feed"
   },
@@ -149,6 +165,7 @@
     "base_link": "appledigger.ru",
     "description": "AppleDigger.ru - Новости Apple, игры для iphone и ipad, советы, обзоры",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://appledigger.ru/feed/"
   },
@@ -158,6 +175,7 @@
     "base_link": "androidinsider.ru",
     "description": "лучшее из мира Android",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://androidinsider.ru/feed"
   },
@@ -167,6 +185,7 @@
     "base_link": "droider.ru",
     "description": "Droider - всё об Android. Программы Android | Новости Android | Игры для Android | Google Android приложения",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://droider.ru/feed/"
   },
@@ -176,6 +195,7 @@
     "base_link": "myandroid.ru",
     "description": "Новости операционной системы Android, обзоры приложений, мобильных игр, полезные советы и слухи.",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://myandroid.ru/feed"
   },
@@ -185,6 +205,7 @@
     "base_link": "4pda.ru",
     "description": "4PDA - Новости мира мобильных устройств",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://4pda.ru/feed/"
   },
@@ -194,6 +215,7 @@
     "base_link": "redroid.ru",
     "description": "Всё об ОС Android | Новости, Обзоры смартфонов, планшетов и игр | Любим Google",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://redroid.ru/feed/"
   },
@@ -203,6 +225,7 @@
     "base_link": "andro-news.ru",
     "description": "Новости Android - лучшее о популярной ОС | Andro-News",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://andro-news.ru/feed/"
   },
@@ -212,6 +235,7 @@
     "base_link": "kolesa.ru",
     "description": "«Автомобильный портал КОЛЕСА.ру – это ежедневные автомобильные новости, новинки и премьеры, профессиональные тест-драйвы, каталог авто, адреса дилеров и отзывы об автомобилях.»",
     "cover": "",
+    "favicon": "",
     "category": "Auto",
     "feed": "http://www.kolesa.ru/rss"
   },
@@ -221,6 +245,7 @@
     "base_link": "autoweek.com",
     "description": "Get the latest car news, car reviews, auto show updates, and racing news from Autoweek. News for the auto enthusiast.",
     "cover": "",
+    "favicon": "",
     "category": "Auto",
     "feed": "http://rss.autoweek.com/?page=n-69656"
   },
@@ -230,6 +255,7 @@
     "base_link": "autoweek.com",
     "description": "Get the latest car news, car reviews, auto show updates, and racing news from Autoweek. News for the auto enthusiast.",
     "cover": "",
+    "favicon": "",
     "category": "Auto",
     "feed": "http://rss.autoweek.com/?page=n-69660"
   },
@@ -239,6 +265,7 @@
     "base_link": "autoguide.com",
     "description": "Car Reviews: New Car Prices and Used Cars Classifieds",
     "cover": "",
+    "favicon": "",
     "category": "Auto",
     "feed": "http://www.autoguide.com/feed"
   },
@@ -248,6 +275,7 @@
     "base_link": "autoexpress.co.uk",
     "description": "New and Used Car Reviews, News & Advice",
     "cover": "",
+    "favicon": "",
     "category": "Auto",
     "feed": "http://www.autoexpress.co.uk/feeds/all"
   },
@@ -257,6 +285,7 @@
     "base_link": "spacenews.com",
     "description": "Covering the business and politics of space",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "http://spacenews.com/feed/"
   },
@@ -266,6 +295,7 @@
     "base_link": "extremetech.com",
     "description": "Latest Technology News | Tech Blog | ExtremeTech",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.extremetech.com/feed"
   },
@@ -275,6 +305,7 @@
     "base_link": "cnet.com",
     "description": "CNET is the world's leader in tech product reviews, news, prices, videos, forums, how to's and more.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.cnet.com/rss/gaming/"
   },
@@ -284,6 +315,7 @@
     "base_link": "cnet.com",
     "description": "CNET is the world's leader in tech product reviews, news, prices, videos, forums, how to's and more.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.cnet.com/rss/car-tech/"
   },
@@ -293,6 +325,7 @@
     "base_link": "cnet.com",
     "description": "CNET is the world's leader in tech product reviews, news, prices, videos, forums, how to's and more.",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.cnet.com/rss/iphone-update/"
   },
@@ -302,6 +335,7 @@
     "base_link": "gamerant.com",
     "description": "Game Rant: Gaming News, Game Reviews, Game Trailers, Tech News ",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://gamerant.com/feed/"
   },
@@ -311,6 +345,7 @@
     "base_link": "android-robot",
     "description": "Новости Hi-Tech",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://android-robot.com/feed/"
   },
@@ -320,6 +355,7 @@
     "base_link": "ria.ru",
     "description": "Оперативно и достоверно о событиях в России и в мире: политика, экономика, происшествия, спорт, наука, культура. Больше чем новости:фото, видео, инфографика, рейтинги, оценки, комментарии",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://ria.ru/export/rss2/technology/index.xml"
   },
@@ -329,6 +365,7 @@
     "base_link": "dailykanban.com",
     "description": "Just-in-time auto industry news and analysis",
     "cover": "",
+    "favicon": "",
     "category": "Auto",
     "feed": "http://dailykanban.com/feed/"
   },
@@ -338,6 +375,7 @@
     "base_link": "playground.ru",
     "description": "PlayGround.ru - компьютерные игры, патчи, моды, nocd, прохождение игр, коды, читы, трейнеры, скачать игры",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://www.playground.ru/rss/news.xml"
   },
@@ -347,6 +385,7 @@
     "base_link": "playground.ru",
     "description": "PlayGround.ru - компьютерные игры, патчи, моды, nocd, прохождение игр, коды, читы, трейнеры, скачать игры",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://www.playground.ru/rss/articles.xml"
   },
@@ -356,6 +395,7 @@
     "base_link": "stopgame.ru",
     "description": "Все о секретах игр - коды и прохождения, возможность скачать игру, обзоры и превью, игровые новости, трейлеры и видео, машинима, flash и онлайн игры, скриншоты, обои, блоги и обсуждения",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://stopgame.ru/rss/rss_news.xml"
   },
@@ -365,6 +405,7 @@
     "base_link": "stopgame.ru",
     "description": "Все о секретах игр - коды и прохождения, возможность скачать игру, обзоры и превью, игровые новости, трейлеры и видео, машинима, flash и онлайн игры, скриншоты, обои, блоги и обсуждения",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://stopgame.ru/rss/rss_review.xml"
   },
@@ -374,6 +415,7 @@
     "base_link": "goha.ru",
     "description": "GoHa.Ru - крупнейший игровой портал, на котором вы можете найти самые свежие игровые новости, обзоры событий игровой индустрии, видеообзоры новых игр, авторские статьи, руководства и многое другое.",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://www.goha.ru/news/mmo/rss"
   },
@@ -383,6 +425,7 @@
     "base_link": "goha.ru",
     "description": "GoHa.Ru - крупнейший игровой портал, на котором вы можете найти самые свежие игровые новости, обзоры событий игровой индустрии, видеообзоры новых игр, авторские статьи, руководства и многое другое.",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://www.goha.ru/news/video/rss"
   },
@@ -392,6 +435,7 @@
     "base_link": "goha.ru",
     "description": "GoHa.Ru - крупнейший игровой портал, на котором вы можете найти самые свежие игровые новости, обзоры событий игровой индустрии, видеообзоры новых игр, авторские статьи, руководства и многое другое.",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://www.goha.ru/news/e3-2015-news/rss"
   },
@@ -401,6 +445,7 @@
     "base_link": "goha.ru",
     "description": "GoHa.Ru - крупнейший игровой портал, на котором вы можете найти самые свежие игровые новости, обзоры событий игровой индустрии, видеообзоры новых игр, авторские статьи, руководства и многое другое.",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://www.goha.ru/news/igromir-comiccon-news-2015/rss"
   },
@@ -410,6 +455,7 @@
     "base_link": "goha.ru",
     "description": "GoHa.Ru - крупнейший игровой портал, на котором вы можете найти самые свежие игровые новости, обзоры событий игровой индустрии, видеообзоры новых игр, авторские статьи, руководства и многое другое.",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://www.goha.ru/news/all/rss"
   },
@@ -419,6 +465,7 @@
     "base_link": "n4g.com",
     "description": "Hottest Game News & Rumors",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://n4g.com/rss/news?channel=&sort=latest"
   },
@@ -428,6 +475,7 @@
     "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://n4g.com/rss/news?channel=pc&sort=latest"
   },
@@ -437,6 +485,7 @@
     "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://n4g.com/rss/news?channel=tech&sort=latest"
   },
@@ -446,6 +495,7 @@
     "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://n4g.com/rss/news?channel=iphone&sort=latest"
   },
@@ -455,6 +505,7 @@
     "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://n4g.com/rss/news?channel=android&sort=latest"
   },
@@ -464,6 +515,7 @@
     "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://n4g.com/rss/news?channel=xbox&sort=latest"
   },
@@ -473,6 +525,7 @@
     "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://n4g.com/rss/news?channel=ps4&sort=latest"
   },
@@ -482,6 +535,7 @@
     "description": "Hottest Game News & Rumors",
     "base_link": "n4g.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://n4g.com/rss/news?channel=ps3&sort=latest"
   },
@@ -491,6 +545,7 @@
     "description": "Polygon's mission is to cover not only games but the artists who make them, the fans that love them and the culture surrounding them",
     "base_link": "polygon.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://www.polygon.com/rss/index.xml"
   },
@@ -500,6 +555,7 @@
     "description": "Watch new video game trailers, read reviews and previews of upcoming video games at GameTrailers.com. Video game demos, online gameplay, game cheats  and walkthroughs or view movies and media on the GameTrailers website.",
     "base_link": "gametrailers.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://rss.gametrailers.com/news/0.xml"
   },
@@ -509,6 +565,7 @@
     "description": "The largest video game database online, Giant Bomb features Game Reviews, News, Videos, and Forums for the latest in PS4, Xbox One, PS3, Xbox 360, Wii, PSP, DS, 3DS, NGP, and more!",
     "base_link": "giantbomb.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://www.giantbomb.com/feeds/reviews"
   },
@@ -518,6 +575,7 @@
     "description": "The largest video game database online, Giant Bomb features Game Reviews, News, Videos, and Forums for the latest in PS4, Xbox One, PS3, Xbox 360, Wii, PSP, DS, 3DS, NGP, and more!",
     "base_link": "giantbomb.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://www.giantbomb.com/feeds/new_releases/"
   },
@@ -527,6 +585,7 @@
     "description": "IGN is your site for Xbox One, PS4, PC, Wii-U, Xbox 360, PS3, Wii, 3DS, PS Vita & iPhone games with expert reviews, news, previews, trailers, cheat codes, wiki guides & walkthroughs",
     "base_link": "ign.com",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://ru.ign.com/feed.xml"
   },
@@ -536,6 +595,7 @@
     "description": "Phys.org internet news portal provides the latest news on science including: Physics, Space Science, Earth Science, Health and Medicine",
     "base_link": "phys.org",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "http://phys.org/rss-feed/"
   },
@@ -545,6 +605,7 @@
     "description": "Universe Today - Space and astronomy news",
     "base_link": "www.universetoday.com",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "http://www.universetoday.com/feed/"
   },
@@ -554,6 +615,7 @@
     "description": "Read all latest news from India & World on Politics, Business,Technology, Entertainment, Sports etc. Find exclusive news stories on current affairs, cricket matches, festivals & events.",
     "base_link": "zeenews.india.com",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://zeenews.india.com/rss/science-technology-news.xml"
   },
@@ -563,6 +625,7 @@
     "description": "Get the latest space exploration, innovation and astronomy news. Space.com celebrates humanity's ongoing expansion across the final frontier.",
     "base_link": "www.space.com",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "http://www.space.com/home/feed/site.xml"
   },
@@ -572,6 +635,7 @@
     "description": "Spaceflight Now | The leading source for online space news",
     "base_link": "spaceflightnow.com",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "https://spaceflightnow.com/feed/"
   },
@@ -581,6 +645,7 @@
     "description": "Science news and science articles from New Scientist",
     "base_link": "newscientist.com",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://feeds.newscientist.com/tech"
   },
@@ -590,6 +655,7 @@
     "description": "Aerospace Defense, Business & Commercial News",
     "base_link": "aviationweek.com",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://aviationweek.com/rss.xml"
   },
@@ -599,6 +665,7 @@
     "description": "Science, Space and Technology News 2015",
     "base_link": "scitechdaily.com",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "http://scitechdaily.com/news/space/feed/"
   },
@@ -608,6 +675,7 @@
     "description": "CBS News is your source for the latest breaking, national and world news video, including politics, sports, entertainment, business and more.",
     "base_link": "cbsnews.com",
     "cover": "",
+    "favicon": "",
     "category": "Technology",
     "feed": "http://www.cbsnews.com/latest/rss/tech"
 },
@@ -617,6 +685,7 @@
     "description": "News 13 has the latest local news headlines.  Breaking news, weather and traffic for Orlando, Daytona Beach, Melbourne and Sanford.",
     "base_link": "mynews13.com",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "http://www.mynews13.com/content/news/cfnews13/feeds/rss.html/space.html"
 },
@@ -626,6 +695,7 @@
     "description": "News 13 has the latest local news headlines.  Breaking news, weather and traffic for Orlando, Daytona Beach, Melbourne and Sanford.",
     "base_link": "mynews13.com",
     "cover": "",
+     "favicon": "",
     "category": "Entertainment",
      "feed": "http://www.mynews13.com/content/news/cfnews13/feeds/rss.html/entertainment.html"
 },
@@ -635,6 +705,7 @@
      "description": "News 13 has the latest local news headlines.  Breaking news, weather and traffic for Orlando, Daytona Beach, Melbourne and Sanford.",
      "base_link": "mynews13.com",
      "cover": "",
+     "favicon": "",
      "category": "Technology",
      "feed": "http://www.mynews13.com/content/news/cfnews13/feeds/rss.html/technology.html"
 },
@@ -644,6 +715,7 @@
     "description": "Australia's leading source of information and entertainment",
     "base_link": "abc.net.au",
     "cover": "",
+    "favicon": "",
     "category": "Entertainment",
     "feed": "http://www.abc.net.au/news/feed/46800/rss.xml/"
 },
@@ -653,6 +725,7 @@
     "description": "NPR delivers breaking national and world news. Also top stories from business, politics, health, science, technology, music, arts and culture.",
     "base_link": "npr.org",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "http://www.npr.org/rss/rss.php?id=1026"
 },
@@ -662,6 +735,7 @@
     "description": "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",
     "base_link": "nytimes.com",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "http://topics.nytimes.com/top/news/science/topics/space/index.html?rss=1"
 },
@@ -671,6 +745,7 @@
     "description": "Space mission and science news, images and videos from NASA's Jet Propulsion Laboratory, the leading center for robotic exploration of the solar system.",
     "base_link": "jpl.nasa.gov",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "http://www.jpl.nasa.gov/multimedia/rss/news.xml"
 },
@@ -680,6 +755,7 @@
     "description": "Aviation News | Aviation Industry and Airline Statistics",
     "base_link": "flightglobal.com",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "https://www.flightglobal.com/rss/news/space/"
 },
@@ -689,6 +765,7 @@
     "description": "Colorado Space News",
     "base_link": "coloradospacenews.com",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "http://www.coloradospacenews.com/feed/"
 },
@@ -698,6 +775,7 @@
     "description": "Space News, Astronomy News, Telescopes, Astrophotography, UFOs",
     "base_link": "davidreneke.com",
     "cover": "",
+    "favicon": "",
     "category": "Space",
     "feed": "http://www.davidreneke.com/feed/"
 }

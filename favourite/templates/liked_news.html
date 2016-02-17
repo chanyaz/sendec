@@ -1,6 +1,7 @@
 {% extends 'index_new.html' %}
 {% load staticfiles %}
 {% load my %}
+{% load i18n %}
 {% load jsonate_tags %}
 {% block favourite %}
     <style>
@@ -58,13 +59,13 @@
             <div id="rss-news">
                 {% if fav_len < 1 %}
                     <div id="fav-main-title">
-                        <h2>FAVOURITE ARTICLES</h2>
+                        <h2>{% trans 'FAVOURITE ARTICLES' %}</h2>
                         You have not any news as favourite or "see later" yet.
                         <br>You can <a href="/news/usernews/">go</a> to your rss collection or to the <a href="/">latest</a> articles
                     </div>
                 {% else %}
                     <div id="fav-main-title">
-                        <h2>Your favourite articles</h2>
+                        <h2>{% trans 'Your favourite articles' %}</h2>
                     </div>
                     {% for i in favs %}
                         <div class="current_rss_news rss-rss"

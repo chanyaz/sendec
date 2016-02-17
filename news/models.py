@@ -1,10 +1,10 @@
 from django.db import models
 from loginsys.models import UserProfile
 from django.contrib.auth.models import User
-import PIL
-from PIL import Image
-from imagekit.models.fields import ImageSpecField
-from imagekit.processors import ResizeToFit, Adjust,ResizeToFill
+#import PIL
+#from PIL import Image
+#from imagekit.models.fields import ImageSpecField
+#from imagekit.processors import ResizeToFit, Adjust,ResizeToFill
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
@@ -72,7 +72,8 @@ class Companies(models.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "verbose": self.verbose_name
+            "verbose": self.verbose_name,
+            "logo": str(self.logo)
         }
 
     def get_absolute_url(self):
@@ -93,9 +94,9 @@ class News(models.Model):
     news_post_text_russian = models.TextField(max_length=4096, blank=True, default="Empty")
     news_post_text_chinese = models.TextField(max_length=4096, blank=True, default="Empty")
 
-    news_portal_name = models.ForeignKey(NewsPortal, blank=True)
-    news_company_owner = models.ForeignKey(Companies, blank=True)
-    news_author = models.ForeignKey(User, blank=True)
+    news_portal_name = models.ForeignKey(NewsPortal, blank=True, related_name="portal")
+    news_company_owner = models.ForeignKey(Companies, blank=True, related_name="company")
+    news_author = models.ForeignKey(User, blank=True, related_name="author")
 
     # Media
     news_main_cover = models.FileField(upload_to=upload_news_cover, blank=True)
@@ -196,9 +197,14 @@ class TopNews(models.Model):
     top_news_likes = models.IntegerField(default=0)
     top_news_dislikes = models.IntegerField(default=0)
 
+    slug = models.SlugField(max_length=256, unique=True, blank=True)
+
 
     def __str__(self):
         return self.top_news_title
+
+    def get_absolute_url(self):
+        return "news/top/%s/%s" % (self.id, str(self.slug))
 
 
 class NewsWatches(models.Model):
@@ -276,10 +282,14 @@ class RssPortals(models.Model):
     description = models.TextField(max_length=1024)
     cover = models.CharField(max_length=512)
     # favicon = models.FileField(upload_to=upload_rss_favicon, blank=True)
+    favicon = models.TextField(max_length=512, blank=True)
     verbose_name = models.CharField(max_length=128)
     category = models.ForeignKey(NewsCategory)
 
     # feed_url = models.URLField(max_length=256)
+
+    puid = models.UUIDField(max_length=33, unique=True)
+
 
     def __str__(self):
         return self.portal
@@ -288,7 +298,8 @@ class RssPortals(models.Model):
         return {
             'id': self.id,
             'portal': self.portal,
-            'verbose': self.verbose_name
+            'verbose': self.verbose_name,
+            'favicon': self.favicon,
         }
 
     def get_portal_full(self):
@@ -299,9 +310,9 @@ class RssPortals(models.Model):
             "follows": self.follows,
             "description": self.description,
             "cover": str(self.cover),
+            "favicon": self.favicon,
             "verbose": self.verbose_name,
             "category": self.category_id,
-            "feed": self.feed_url
         }
 
 

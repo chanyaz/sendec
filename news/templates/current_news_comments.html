@@ -19,7 +19,7 @@
                           placeholder="Leave&nbsp;your&nbsp;comment..."
                           onfocus=""
                           onblur=""></textarea>
-                <input type="submit" value="Send" style="margin-left: 91.5%;">
+                <input type="submit" value="{% trans 'Send' %}" style="margin-left: 91.5%;">
             </form>
             <div class="comments" style="border: solid 1px lawngreen;">
                 {% for current_comment in comments_total %}

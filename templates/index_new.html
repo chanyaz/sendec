@@ -10,11 +10,42 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="keywords" content="IT, space, computers, auto, bio, entertainment">
     <meta name="robots" content="all">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <meta name="category" content="Technology">
+    <meta name="revisit" content="5 days">
     <meta name="author" content="Evgeniy Privalov">
+    <meta name="COPYRIGHT" content="COPYRIGHT (c) 2016 by Evgeniy Privalov">
     <meta name="description" content="Web-service with top IT, Auto, Space and BIO news. We provide you Hi-Tech news from all around the World.">
     <meta name="reply-to" content="saqel@yandex.ru">
     <meta http-equiv="content-language" content="en">
     <meta name="google" content="notranslate">
+
+    <meta name="application-name" content="Insydia">
+    <meta name="msapplication-TileColor" content="#F62A00">
+    <meta name="msapplication-square70x70logo" content="">
+    <meta name="msapplication-square150x150logo" content="">
+    <meta name="msapplication-wide310x150logo" content="">
+    <meta name="msapplication-square310x310logo" content="">
+    <meta name="msapplication-notification" content="frequency=30;
+          polling-uri=;
+          polling-uri2=;
+          polling-uri3=;
+          polling-uri4=;
+          polling-uri5=">
+
+
+    <link rel="canonical" href="https://insydia.com/" />
+    <link rel="alternate" type="application/rss+xml" title="Latest news" href="https://insydia.com/rss/news&channel=latest">
+    <link rel="alternate" type="application/rss+xml" title="Technology" href="https://insydia.com/rss/news&channel=technology">
+    <link rel="alternate" type="application/rss+xml" title="Entertainment" href="https://insydia.com/rss/news&channel=entertainment">
+    <link rel="alternate" type="application/rss+xml" title="Auto" href="https://insydia.com/rss/news&channel=auto">
+    <link rel="alternate" type="application/rss+xml" title="Space" href="https://insydia.com/rss/news&channel=space">
+    <link rel="alternate" type="application/rss+xml" title="BIO" href="https://insydia.com/rss/news&channel=bio">
+
 
 
     <meta property="og:title" content="Insydia" />
@@ -24,11 +55,11 @@
     <meta property="og:image:width" content="150" />
     <meta property="og:image:height" content="150" />
 
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@InsydiaNews" />
-    <meta name="twitter:title" content="Insydia" />
-    <meta name="twitter:description" content="Web-service with top IT, Auto, Space and BIO news. We provide you Hi-Tech news from all around the World." />
-    <meta name="twitter:image" content="" />
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:site" content="@InsydiaNews" />
+    <meta property="twitter:title" content="Insydia" />
+    <meta property="twitter:description" content="Web-service with top IT, Auto, Space and BIO news. We provide you Hi-Tech news from all around the World." />
+    <meta property="twitter:image" content="" />
 
 
 
@@ -54,7 +85,13 @@
 
     <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
 {#    <link href="{% static 'static/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css">#}
-    <link rel="shortcut icon" href="{% static 'static/img/favicon.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'static/img/favicons/favicon.ico' %}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="">
+    <link rel="apple-touch-icon" sizes="76x76" href="">
+    <link rel="apple-touch-icon" sizes="120x120" href="">
+    <link rel="apple-touch-icon" sizes="152x152" href="">
+    <link rel="icon" sizes="196x196" href="">
+
     <!--<script type="text/javascript" src="http://vk.com/js/api/share.js?93" charset="windows-1251"></script>-->
 {#    <script>var companytick = ["AAPL","FB","GOOG","MSFT","TSLA","AMZN","TWTR"];</script>#}
 {#    <script src="{% static 'static/js/jquery-ui.min.js' %}"></script>#}
@@ -70,14 +107,6 @@
 
     <!--<link rel="stylesheet" type="text/css" href="http://static.amigobulls.com/css/chart-widget.min.css.gz" />-->
 {#    <link rel="stylesheet" type="text/css" href="{% static 'static/css/chart-widget.css' %}" />#}
-
-
-    <!-- CHANGE LANGUAGE -->
-
-    <!-- /END CHANGE LANGUAGE -->
-
-
-
 
     <script type="text/javascript">
         function validate_form ( ) {
@@ -108,10 +137,6 @@
             })
         })
     </script>
-
-
-
-
     <!--<script>
         function showLeftBar() {
             $('.left-panel').show();
@@ -263,17 +288,20 @@
             position: fixed;
             top: 0;
         }
+
+
         .preview-rss-news .preview-rss-news-content{
             font-family: Georgia, Times, "Times New Roman", serif;
-            margin: 0 auto 0 22%;
+            margin: 2.5% auto 0 22%;
             width:  60%;
-            height: auto;
-            min-height:100%;
+            height: 90%;
+            min-height: 90%;
             padding: 0;
             background-color: ivory;
 {#            border-radius:5px;#}
             box-shadow: 0 0 10px #000;
         }
+
         #portals-addition-window {
             z-index: 901;
             width: 100%;
@@ -411,18 +439,23 @@
         .forget-password{text-align: center; margin-top: 5%;}
         #auth-bottom-text{width: 100%; height: 50px; margin-left: 20%;}
         #auth-botton-reg-link{margin-left: 1em;}
-        .total-body{padding-top: 2%;}
+        .total-body{
+            padding-top: 0;
+        }
         .total-body-closer{
             margin-left: 100%;
-            width: 4%;
-            height: inherit;
-            font-size: 2em;
-            background: ivory;
+            width: 2em;
+            height: 2em;
+            font-size: 1.5em;
+            background: #c3c3b6;
+            opacity: 0.75;
             top:0;
+            border-left: solid 1px lightgrey;
         }
         .close-rss-preview{
-            margin-left: auto;
-            margin-right: auto;
+            width: 1em;
+            margin-left: 0.5em;
+            top: 0.45em;
         }
         .total-body-closer a{color: #F62A00}
         .total-body-closer a:hover{
@@ -484,6 +517,12 @@
             margin-left: auto !important;
             margin-right: auto !important;
         }
+        .rss-preview-body > * {
+            max-width: 100%;
+        }
+
+
+
         .content-text{text-align: center;}
         .content-portals{width: 70%; margin-left: auto; margin-right: auto;}
         .cur_unsel_portal{width: 25%; float: left;}
@@ -552,89 +591,85 @@
         }
 
     </style>
+<script src="{% static 'static/js/jquery.js' %}"></script>
+    <script src="{% static 'static/js/jquery.min.js' %}"></script>
+{#  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">#}
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 </head>
+{% if body_color == True %}
+<body style="background-color: #fff;">
+{% else %}
 <body>
-
-    <header class="top-bar-header hidden-print top top-nav-collapse">
-        <nav id="top-bar" class="navbar navbar-default"
-        role="navigation" style="top: 0;">
-            <div class="container-fluid container">
+{% endif %}
+{#    <header class="top-bar-header hidden-print top top-nav-collapse">#}
+        <nav class="navbar navbar-default" role="navigation" style="top: 0; z-index: 999;">
+            <div class="container-fluid container" id="navfluid">
             <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
+                <div class="navbar-header pull-left">
                   <a class="navbar-brand" href="/">INSYDIA</a>
                 </div>
-
+                <div class="navbar-header ">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar">
+                        <span class="sr-only">{% trans 'Toggle navigation' %}</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse" id="navigationbar">
                   <ul class="nav navbar-nav">
 
                       {% if here_tech == True %}
-                        <li><a class="active" href="/news/technology/">TECHNOLOGY</a></li>
+                        <li><a class="active" href="/news/technology/">{% trans 'TECHNOLOGY' %}</a></li>
                       {% else %}
-                          <li><a href="/news/technology/">TECHNOLOGY</a></li>
+                          <li><a href="/news/technology/">{% trans 'TECHNOLOGY' %}</a></li>
                       {% endif %}
 
                       {% if here_ent == True %}
-                        <li><a class="active" href="/news/entertainment/">ENTERTAINMENT</a></li>
+                        <li><a class="active" href="/news/entertainment/">{% trans 'ENTERTAINMENT' %}</a></li>
                       {% else %}
-                        <li><a href="/news/entertainment/">ENTERTAINMENT</a></li>
+                        <li><a href="/news/entertainment/">{% trans 'ENTERTAINMENT' %}</a></li>
                       {% endif %}
 
                       {% if here_auto == True %}
-                          <li><a class="active" href="/news/auto/">AUTO</a></li>
+                          <li><a class="active" href="/news/auto/">{% trans 'AUTO' %}</a></li>
                       {% else %}
-                          <li><a href="/news/auto/">AUTO</a></li>
+                          <li><a href="/news/auto/">{% trans 'AUTO' %}</a></li>
                       {% endif %}
 
                       {% if here_space == True %}
-                            <li><a class="active" href="/news/space/">SPACE</a></li>
+                            <li><a class="active" href="/news/space/">{% trans 'SPACE' %}</a></li>
                       {% else %}
-                          <li><a href="/news/space/">SPACE</a></li>
+                          <li><a href="/news/space/">{% trans 'SPACE' %}</a></li>
                       {% endif %}
 
                       {% if here_bio == True %}
-                            <li><a class="active" href="/news/bio/">BIO</a></li>
+                            <li><a class="active" href="/news/bio/">{% trans 'BIO' %}</a></li>
                       {% else %}
-                          <li><a href="/news/bio/">BIO</a></li>
+                          <li><a href="/news/bio/">{% trans 'BIO' %}</a></li>
                       {% endif %}
 
                       {% if here_companies == True %}
-                          <li><a class="active" href="/news/companies/">COMPANIES</a></li>
+                          <li><a class="active" href="/news/companies/">{% trans 'COMPANIES' %}</a></li>
                       {% else %}
-                          <li><a href="/news/companies/">COMPANIES</a></li>
+                          <li><a href="/news/companies/">{% trans 'COMPANIES' %}</a></li>
                       {% endif %}
 
                       {% if here_review == True %}
-                          <li><a class="active" href="/news/reviews/">REVIEWS</a></li>
+                          <li><a class="active" href="/news/reviews/">{% trans 'REVIEWS' %}</a></li>
                       {% else %}
-                          <li><a href="/news/reviews/">REVIEWS</a></li>
+                          <li><a href="/news/reviews/">{% trans 'REVIEWS' %}</a></li>
                       {% endif %}
 
                       {% if here_private == True %}
-                          <li><a class="active" href="/news/usernews/">PRIVATE</a></li>
+                          <li><a class="active" href="/news/usernews/">{% trans 'PRIVATE' %}</a></li>
                       {% else %}
-                          <li><a href="/news/usernews/">PRIVATE</a></li>
+                          <li><a href="/news/usernews/">{% trans 'PRIVATE' %}</a></li>
                       {% endif %}
-{#                    <li class="dropdown">#}
-{#                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>#}
-{#                      <ul class="dropdown-menu">#}
-{#                        <li><a href="#">Action</a></li>#}
-{#                        <li><a href="#">Another action</a></li>#}
-{#                        <li><a href="#">Something else here</a></li>#}
-{#                        <li role="separator" class="divider"></li>#}
-{#                        <li><a href="#">Separated link</a></li>#}
-{#                        <li role="separator" class="divider"></li>#}
-{#                        <li><a href="#">One more separated link</a></li>#}
-{#                      </ul>#}
-{#                    </li>#}
                   </ul>
 
                   <ul class="nav navbar-nav navbar-right">
@@ -649,19 +684,20 @@
                               {{ username.username }}<span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu">
-                            <li><a href="/profile/">Profile</a></li>
-                            <li><a href="/news/usernews/">Private news</a></li>
+                            <li><a href="/profile/">{% trans 'Profile' %}</a></li>
+                            <li><a href="/news/usernews/">{% trans 'Private news' %}</a></li>
                             <li><a href="#">Something else here</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/auth/logout/">Sign out</a></li>
+                            <li><a href="/auth/logout/">{% trans 'Sign out' %}</a></li>
                           </ul>
                         </li>
                       {% else %}
-                          <li><a href="/auth/login/">Sign in</a></li>
+                          <li><a href="/auth/login/">{% trans 'Sign in' %}</a></li>
                       {% endif %}
                   </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
+        </nav>
 
             <div id="nav-search-bar"
                  hidden
@@ -670,7 +706,7 @@
                     <li style="float: left; width: 10%; font-size: 1.5em; height: 60px;">
                         <a>
                             <div class="" style="vertical-align: baseline;">
-                                    <span class="glyphicon glyphicon-search" style="color: #F62A00; position: relative;">Search</span>
+                                    <span class="glyphicon glyphicon-search" style="color: #F62A00; position: relative;">{% trans 'Search' %}</span>
                             </div>
                         </a>
                     </li>
@@ -684,7 +720,7 @@
                               role="search">
                             <div class="form-field" style="width: 100%;">
                                 <div class="form-group" style="width: 100%;">
-                                    <input placeholder="What are you looking for?"
+                                    <input placeholder="{% trans 'What are you looking for?' %}"
                                            type="search"
                                            name="q"
                                            autocomplete="off"
@@ -707,10 +743,7 @@
 
             </div>
 
-
-
-        </nav>
-    </header>
+{#    </header>#}
 
     <!--<header class="tabs-to-dropdown" style="">
         <nav class="tab-bar">
@@ -797,7 +830,8 @@
 
     </header>
     -->
-    <div id="total-wrapper">
+{#    <div id="total-wrapper" class="container-fluid container">#}
+    <div id="total-wrapper" class="">
 
 
 
@@ -904,14 +938,14 @@
             </ul>
         </nav>
 
-            <div id="wrapper-main-content">
+            <div id="wrapper-main-content" class="row">
                 <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
                     <span class="hamb-top"></span>
                     <span class="hamb-middle"></span>
                     <span class="hamb-bottom"></span>
                 </button>
         {% else %}
-            <div id="wrapper-main-content">
+            <div id="wrapper-main-content" class="row">
         {% endif %}
 
             <!--
@@ -960,7 +994,7 @@
             </div>
         -->
 
-            <div id="wrapper-new">
+            <div id="wrapper-new" class="">
                 <div id="page-wrapper">
                     <div class="row row-centered">
 
@@ -1099,10 +1133,6 @@
                                 {% block companies %}{% endblock %}
                                     {% block current_company %}{% endblock %}
                                 {% block reviews %}{% endblock %}
-                                {% block user_news %}{% endblock %}
-                                    {% block manager %}{% endblock %}
-                                    {% block browse_portals %}{% endblock %}
-                                        {% block browse_portals_tech %}{% endblock %}
                                 {% block search %}{% endblock %}
                                 {% block page_not_found %}{% endblock %}
                                 {% block access_denied %}{% endblock %}
@@ -1116,6 +1146,11 @@
                                                             <a href="#0" class="cd-top">Top</a>
 
                         </div>
+                        {% block user_news %}{% endblock %}
+                            {% block manager %}{% endblock %}
+                            {% block browse_portals %}{% endblock %}
+                                {% block browse_portals_tech %}{% endblock %}
+
                         {% block settings %}{% endblock %}
                     </div>
                 </div>
@@ -1130,16 +1165,16 @@
         {% endif %}
 
 
-    <div class="popup-user-window" hidden>
-        <div class="popup-user-window-content">
-            <div class="user-image">
-                <input type="text" contenteditable="false" value="{{ external_link }}">
-            </div>
-            <div class="user-info">
-                <button onclick="javascript:SharePopUpHide();">{% trans 'SHARE' %}</button>
-            </div>
-        </div>
-    </div>
+{#    <div class="popup-user-window" hidden>#}
+{#        <div class="popup-user-window-content">#}
+{#            <div class="user-image">#}
+{#                <input type="text" contenteditable="false" value="{{ external_link }}">#}
+{#            </div>#}
+{#            <div class="user-info">#}
+{#                <button onclick="javascript:SharePopUpHide();">{% trans 'SHARE' %}</button>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
     <div id="preview-rss-news"
          hidden
@@ -1150,7 +1185,9 @@
         <div class="preview-rss-news-content">
             <div class="total-body">
                 <div class="total-body-closer" onclick="RssPreviewPopUpHide();">
-                    <a title="{% trans 'Close' %}"><span class="close-rss-preview glyphicon glyphicon-remove"></span></a>
+                    <a title="{% trans 'Close' %}">
+                        <span class="close-rss-preview glyphicon glyphicon-remove"></span>
+                    </a>
                 </div>
                 <div class="rss-preview-title"></div>
                 <div class="" style="height: 10px;">
@@ -1224,7 +1261,7 @@
     </div>
     <div id="ajax-preloader" hidden>
         <div id="ajax-preloader-content">
-            <img src='{% static 'static/img/load.GIF' %}' alt='Loading...' />
+            <img src='{% static 'static/img/load.GIF' %}' alt='{% trans "Loading..." %}' />
         </div>
     </div>
     <div id="portals-addition-window" hidden>
@@ -1345,7 +1382,7 @@
         }
     </script>
 
-    <script >
+    <script>
         $(document).ready(function(){
             RssPreviewPopUpHide();
         });
@@ -1367,6 +1404,7 @@
                 success: function(data) {
                     $("html").css("overflowY", "hidden");
                     $parsedData = data.data;
+                    window.location.hash = $parsedData.id;
                     $(".rss-preview-title").html("<h2 style='color: #F62A00;'>" + $parsedData.title + "</h2>");
                     if ($parsedData.author.length !== 0) {
                         $(".rss-preview-author").html("Author: " + "<span class='rss-author-name' style='color: #F62A00'>" + $parsedData.author + "</span>" + "&nbsp;|&nbsp;");
@@ -1455,8 +1493,8 @@
 {#    <script src="{% static 'static/js/highstock.js' %}"></script>#}
 {#    <script src="{% static 'static/js/chart-widget.js' %}"></script>#}
 {#    <script type='text/javascript' src='//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js' data-shr-siteid='74b93909eb1e8d0eaf0922a55d663ca4' data-cfasync='false' async='async'></script>#}
-    <script src="{% static 'static/js/jquery.js' %}"></script>
-    <script src="{% static 'static/js/jquery.min.js' %}"></script>
+{#    <script src="{% static 'static/js/jquery.js' %}"></script>#}
+{#    <script src="{% static 'static/js/jquery.min.js' %}"></script>#}
     <script src="{% static 'static/js/jquery-ui.js' %}"></script>
 {#    <script src="{% static 'static/js/pulse.js' %}"></script>#}
 {#    <script src="{% static 'static/js/pulse.min.js' %}"></script>#}
@@ -1464,69 +1502,67 @@
 {#    <script src="{% static 'static/js/bootstrap.min.js' %}" type="javascript"></script>#}
     <script type="text/javascript" src="{% static 'static/js/jquery.cookie.js' %}"></script>
 
+{#    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>#}
+{#  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>#}
 
 
     <script src="{% static 'static/js/endless-pagination.js' %}"></script>
     <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
 
 {#<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>#}
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 {#<script src="//atmpl.ru/design/scroll-effect/2015/hiding-menu/jquery.bootstrap-autohidingnavbar.min.js"></script>#}
 
-        <script>
-$(document).ready(function () {
-  var trigger = $('.hamburger'),
-      overlay = $('.overlay'),
-     isClosed = false;
+    <script>
+        $(document).ready(function () {
+          var trigger = $('.hamburger'),
+              overlay = $('.overlay'),
+             isClosed = false;
 
-    trigger.click(function () {
-      hamburger_cross();
-    });
-
-    function hamburger_cross() {
-
-      if (isClosed == true) {
-        overlay.hide();
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = false;
-      } else {
-        overlay.show();
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-  }
-
-  $('[data-toggle="offcanvas"]').click(function () {
-        $('#total-wrapper').toggleClass('toggled');
-  });
-});
-</script>
-<script>
-{#        $(function(){#}
-{#            $("#tabs").tabs();#}
-{#        });#}
-
-
-    $('.tabs-list a').click(function (e) {
-      e.preventDefault();
-      $(this).tab('show')
-    });
-
-
-    $(document).ready(function(){
-            $(this).keydown(function(eventObject){
-                if (eventObject.which == 27)
-                    $('.preview-rss-news').hide();
-                    $("html").css("overflowY", "auto");
+            trigger.click(function () {
+              hamburger_cross();
             });
-        });
-</script>
-<script src="{% static 'static/js/masonry.js' %}" ></script>
-    <script src="{% static 'static/js/masonry.min.js' %}" ></script>
 
-<script>
+            function hamburger_cross() {
+
+              if (isClosed == true) {
+                overlay.hide();
+                trigger.removeClass('is-open');
+                trigger.addClass('is-closed');
+                isClosed = false;
+              } else {
+                overlay.show();
+                trigger.removeClass('is-closed');
+                trigger.addClass('is-open');
+                isClosed = true;
+              }
+          }
+
+          $('[data-toggle="offcanvas"]').click(function () {
+                $('#total-wrapper').toggleClass('toggled');
+          });
+        });
+    </script>
+    <script>
+    {#        $(function(){#}
+    {#            $("#tabs").tabs();#}
+    {#        });#}
+        $('.tabs-list a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show')
+        });
+
+
+        $(document).ready(function(){
+                $(this).keydown(function(eventObject){
+                    if (eventObject.which == 27)
+                        $('.preview-rss-news').hide();
+                        $("html").css("overflowY", "auto");
+                });
+            });
+    </script>
+    <script src="{% static 'static/js/masonry.js' %}" ></script>
+    <script src="{% static 'static/js/masonry.min.js' %}" ></script>
+    <script>
         $('.any40items').masonry({
               // options
             itemSelector: '.rss-rss',
@@ -1652,7 +1688,7 @@ $(document).ready(function () {
                   return{
                       id: item.id,
                       label: item.name,
-                      value: item.name,
+                      logo: item.logo,
                       verbose: item.verbose
                   };
               }));
@@ -1675,21 +1711,22 @@ $(document).ready(function () {
 {#            getCompanyID(ui.item.id);#}
 {#            alert(ui.item.id);#}
             $('#'+ ui.item.id).animate({backgroundColor: "#00C0FF"}, 2000).animate({backgroundColor: "transparent" }, 2000);
-        },
-
-      open: function() {
-        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-      },
-      close: function() {
-        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-      }
-    })
-
-
-
+        }
+{##}
+{#      open: function() {#}
+{#        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );#}
+{#      },#}
+{#      close: function() {#}
+{#        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );#}
+{#      }#}
+    }).data("ui-autocomplete")._renderItem = function(ul, item){
+        var inner_html = '<a><div><img src="{% static "static/img/companies_logo/" %}'+item.verbose+'.png" width="20" />'+item.label+'</div></a>';
+            return $("<li></li>")
+                    .data("item.autocomplete", item)
+                    .append(inner_html)
+                    .appendTo(ul);
+        };
     </script>
-
-
     <script>
 {#        $('#search-field').autocomplete({#}
 {#            max: 5,#}
@@ -1730,14 +1767,9 @@ $(document).ready(function () {
             return $("<li></li>").data("item.autocomplete", item).append("<a>" + t + item.label + "</a>").appendTo(ul);
         };
     </script>
-
-
-
-
-
     <script>
         $('#rss-company-form').submit(function(){
-            location.href='/rss/news&channel=company&name='+$('#company-name');
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        location.href='/rss/news&channel=company&name='+$('#company-name');
         });
 
         $('#company-name').autocomplete({
@@ -1777,15 +1809,6 @@ $(document).ready(function () {
         };
 
     </script>
-
-
-
-
-
-
-
-
-
     <script>
         // DETERMINE LOCATION AND SET COOKIE VALUE
         document.cookie = "lang=eng";
@@ -1819,8 +1842,6 @@ $(document).ready(function () {
 {#            location.href = "/cn/";#}
 {#        }#}
     </script>
-
-
     <script>
         $(function() {
     $(".tabs-to-dropdown").each(function() {
@@ -1871,191 +1892,280 @@ $(document).ready(function () {
 });
 
     </script>
-
     <script>
-{#            $('#search-button').onclick(function () {#}
-{#                $('#textplace-search').addClass('search-bar-active');#}
-{#            });#}
-    </script>
+        /** Document Ready Functions **/
+        /********************************************************************/
 
-<script>
-/** Document Ready Functions **/
-/********************************************************************/
+        $( document ).ready(function() {
 
-$( document ).ready(function() {
+            // Resive video
+            scaleVideoContainer();
+            initBannerVideoSize('.video-container video');
 
-    // Resive video
-    scaleVideoContainer();
-    initBannerVideoSize('.video-container video');
+            $(window).on('resize', function() {
+                scaleVideoContainer();
+                scaleBannerVideoSize('.video-container video');
+            });
 
-    $(window).on('resize', function() {
-        scaleVideoContainer();
-        scaleBannerVideoSize('.video-container video');
-    });
+        });
 
-});
+        /** Reusable Functions **/
+        /********************************************************************/
 
-/** Reusable Functions **/
-/********************************************************************/
+        function scaleVideoContainer() {
 
-function scaleVideoContainer() {
-
-    var height = $(window).height();
-    var unitHeight = parseInt(height) + 'px';
-    $('.homepage-hero-module-top').css('height',unitHeight);
-
-}
-
-function initBannerVideoSize(element){
-
-    $(element).each(function(){
-        $(this).data('height', $(this).height());
-        $(this).data('width', $(this).width());
-    });
-
-    scaleBannerVideoSize(element);
-
-}
-
-function scaleBannerVideoSize(element){
-
-    var windowWidth = $(window).width(),
-        windowHeight = $(window).height(),
-        videoWidth,
-        videoHeight;
-
-    console.log(windowHeight);
-
-    $(element).each(function(){
-        var videoAspectRatio = $(this).data('height')/$(this).data('width'),
-            windowAspectRatio = windowHeight/windowWidth;
-
-        if (videoAspectRatio > windowAspectRatio) {
-            videoWidth = windowWidth;
-            videoHeight = videoWidth * videoAspectRatio;
-            $(this).css({'top' : -(videoHeight - windowHeight) / 2 + 'px', 'margin-left' : 0});
-        } else {
-            videoHeight = windowHeight;
-            videoWidth = videoHeight / videoAspectRatio;
-            $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
-        }
-
-        $(this).width(videoWidth).height(videoHeight);
-
-        $('.homepage-hero-module-top .video-container video').addClass('fadeIn animated');
-
-
-    });
-}
-
-
-    $('#nav-search-btn').click(function(){
-        if($(this).hasClass('active-search-btn')){
-            $('#nav-search-bar').slideUp();
-            $('#nav-search-btn').removeClass('active-search-btn');
+            var height = $(window).height();
+            var unitHeight = parseInt(height) + 'px';
+            $('.homepage-hero-module-top').css('height',unitHeight);
 
         }
-        else{
-            $('#nav-search-btn').addClass('active-search-btn');
-            $('#nav-search-bar').slideDown();
-        }
-    });
 
-    $(document).ready(function(){
-        $(this).keydown(function(eventObject){
-            if(eventObject.which == 27){
-                $("#nav-search-bar").slideUp();
+        function initBannerVideoSize(element){
+
+            $(element).each(function(){
+                $(this).data('height', $(this).height());
+                $(this).data('width', $(this).width());
+            });
+
+            scaleBannerVideoSize(element);
+
+        }
+
+        function scaleBannerVideoSize(element){
+
+            var windowWidth = $(window).width(),
+                windowHeight = $(window).height(),
+                videoWidth,
+                videoHeight;
+
+            console.log(windowHeight);
+
+            $(element).each(function(){
+                var videoAspectRatio = $(this).data('height')/$(this).data('width'),
+                    windowAspectRatio = windowHeight/windowWidth;
+
+                if (videoAspectRatio > windowAspectRatio) {
+                    videoWidth = windowWidth;
+                    videoHeight = videoWidth * videoAspectRatio;
+                    $(this).css({'top' : -(videoHeight - windowHeight) / 2 + 'px', 'margin-left' : 0});
+                } else {
+                    videoHeight = windowHeight;
+                    videoWidth = videoHeight / videoAspectRatio;
+                    $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
+                }
+
+                $(this).width(videoWidth).height(videoHeight);
+
+                $('.homepage-hero-module-top .video-container video').addClass('fadeIn animated');
+
+
+            });
+        }
+
+        $('#nav-search-btn').click(function(){
+            if($(this).hasClass('active-search-btn')){
+                $('#nav-search-bar').slideUp();
+                $('#nav-search-btn').removeClass('active-search-btn');
+
             }
-        })
-    });
+            else{
+                $('#nav-search-btn').addClass('active-search-btn');
+                $('#nav-search-bar').slideDown();
+            }
+        });
+
+        $(document).ready(function(){
+            $(this).keydown(function(eventObject){
+                if(eventObject.which == 27){
+                    $("#nav-search-bar").slideUp();
+                }
+            })
+        });
 
 
-
-
-</script>
-
-
+    </script>
     <script>
-        var $valRE = /^((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/g;
-        $('#uap').keyup(function(){
-            if($('#uap').val().match($valRE)) {
-                $.ajax({
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        'csrfmiddlewaretoken': '{{ csrf_token }}',
-                        'url': $('#uap').val()
-                    },
-                    url: "/news/find_rss/",
-                    success: function(data){
-                        if(data.response == true)
-                        {
-                            $('#search-feed-fail').hide();
-                            $('#user-url').html($('#uap').val());
-                            $('#user-url-feed').html(data.feed);
-                            $('#found-feed').show();
-                        }
-                        else{
-                            $('#found-feed').hide();
-                            $('#search-feed-fail').show();
-                        }
+
+        function followCurrentRssPortal(uuid,pid, id){
+            $("#ajax-preloader").show();
+            $.ajax({
+                url: "/news/arp&uid="+uuid+"&pid="+pid+"/",
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(result){
+                    if(result.exists == false) {
+                        $("#left-bar-portal-" + id).slideToggle();
+                        var table = $('.user-rss');
+                        table.append(result.string.replace('{portal_id}', result.data.id)
+                                .replace('{portal_verbose}', result.data.verbose)
+                                .replace('{portal_name}', result.data.portal));
+
+                        var scrollTo = $('#left-bar-portal-'+result.data.id).offset().top;
+                        $('#left-control-portals').animate({scrollTop: scrollTo});
+                        $('#left-bar-portal-'+result.data.id).animate({backgroundColor: 'rgb(25, 180, 155)'}, 2000).animate({backgroundColor: '#1C1F22'}, 2000);
+
+                        $("#ajax-preloader").hide();
                     }
-                })
+                    else{
+                        alert('Already exists');
+                        $("#ajax-preloader").hide();
+                    }
+                }
+            })
+        }
+
+
+
+
+
+        function hideAllBlocks(){
+            $('#preview-portal').hide();
+            $('#search-feed-fail').hide();
+            $('#user-url-feed').hide();
+            $('#found-feed').hide();
+            $('#new-portal-feed-feed').hide();
+            $('#processing-portals').hide();
+        }
+
+{#        var $valRE = /^((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/g;#}
+{#        var $valRE = /(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,63}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?/;#}
+        var $valRE = /(https?:\/\/)?(www\.)?([-а-яa-zёЁцушщхъфырэчстью0-9_\.]{2,}\.)(рф|[a-z]{2,6})((\/[-а-яёЁцушщхъфырэчстьюa-z0-9_]{1,})?\/?([a-z0-9_-]{2,}\.[a-z]{2,6})?(\?[a-z0-9_]{2,}=[-0-9]{1,})?((\&[a-z0-9_]{2,}=[-0-9]{1,}){1,})?)/g;
+        $('#uap').keyup(function() {
+            if ($('#uap').val() == '') {
+                hideAllBlocks();
             }
             else {
-                $('#search-feed-fail').hide();
-                $('#found-feed').hide();
-                $('#uap').autocomplete({
-                    source: function (request, response) {
-                        $.ajax({
-                            url: "/news/rss/get_matches=" + $('#uap').val().replace(/\./g, ""),
-                            dataType: "json",
-                            data: {
-                                'csrfmiddlewaretoken': '{{ csrf_token }}',
-                                q: request.term
-                            },
-                            success: function (data) {
-                                response($.map(data.slice(0, 5), function (item) {
-                                    return {
-                                        id: item.id,
-                                        label: item.name
-                                    };
-                                }));
+                if ($('#uap').val().match($valRE) && $('#uap').val() != '') {
+                    $('#processing-portals').show();
+                    $.ajax({
+                        type: "POST",
+                        {#                    async: true,#}
+                        dataType: "json",
+                        data: {
+                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                            'url': $('#uap').val()
+                        },
+                        url: "/news/find_rss/",
+                        success: function (data) {
+                            if (data.response == true) {
+                                $('#search-feed-fail').hide();
+                                $('#user-url').html($('#uap').val());
+                                if (data.exists != true) {
+                                    $('#user-url-feed').html(data.feed);
+                                    $('#found-feed').show();
+
+                                    $.ajax({
+                                        {#                                    async: true,#}
+                                        type: "POST",
+                                        data: {
+                                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                            'url': $('#uap').val()
+                                        },
+                                        url: "/news/browser/sag/"
+                                    });
+                                    $.ajax({
+                                        url: "/news/browser/gfnr/",
+                                        {#                                async: true,#}
+                                        type: "POST",
+                                        dataType: "json",
+                                        data: {
+                                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                            'url': $('#uap').val()
+                                        },
+                                        success: function (data) {
+                                            $('#new-portal-feed-feed').append(
+                                                    data.data
+                                            )
+                                        }
+                                    })
+                                }
+                                else {
+                                    $.ajax({
+                                        url: "/news/gcrp=" + data.pid,
+                                        dataType: 'json',
+                                        data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                        success: function (data) {
+                                            $('#preview-portal').html(
+                                                    data.string.replace('{cover}', data.data.cover)
+                                                            .replace('{favicon}', data.data.favicon)
+                                                            .replace('{portal}', data.data.portal)
+                                                            .replace('{description}', data.data.description)
+                                                            .replace('{follows}', data.data.follows)
+                                            ).removeAttr('hidden');
+
+                                            $('#ppc-follow').click(function () {
+
+                                            })
+
+                                        }
+                                    })
+                                }
                             }
-                        })
-                    },
-                    select: function (event, ui) {
-                        $.ajax({
-                            url: "/news/gcrp=" + ui.item.id,
-                            dataType: 'json',
-                            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                            success: function (data) {
-                                $('#preview-portal').html(
-                                        data.string.replace('{cover}', data.data.cover)
-                                                .replace('{portal}', data.data.portal)
-                                                .replace('{description}', data.data.description)
-                                                .replace('{follows}', data.data.follows)
-                                ).removeAttr('hidden');
-
-                                $('#ppc-follow').click(function () {
-
-                                })
-
+                            else {
+                                $('#found-feed').hide();
+                                $('#search-feed-fail').show();
                             }
-                        })
-                    },
-                    open: function () {
-                        $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
-                    },
-                    close: function () {
-                        $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
-                    }
-                })
+                            $('#processing-portals').hide();
+                        }
+                    });
+                }
+                else {
+                    $('#search-feed-fail').hide();
+                    $('#found-feed').hide();
+                    $('#uap').autocomplete({
+                        source: function (request, response) {
+                            $.ajax({
+                                url: "/news/rss/get_matches=" + $('#uap').val().replace(/\./g, ""),
+                                dataType: "json",
+                                data: {
+                                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                    q: request.term
+                                },
+                                success: function (data) {
+                                    response($.map(data.slice(0, 5), function (item) {
+                                        return {
+                                            id: item.id,
+                                            label: item.name
+                                        };
+                                    }));
+                                }
+                            })
+                        },
+                        select: function (event, ui) {
+                            $.ajax({
+                                url: "/news/gcrp=" + ui.item.id,
+                                dataType: 'json',
+                                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                success: function (data) {
+                                    $('#preview-portal').html(
+                                            data.string.replace('{cover}', data.data.cover)
+                                                    .replace('{favicon}', data.data.favicon)
+                                                    .replace('{portal}', data.data.portal)
+                                                    .replace('{description}', data.data.description)
+                                                    .replace('{follows}', data.data.follows)
+                                    ).removeAttr('hidden');
+
+                                    $('#ppc-follow').click(function () {
+
+                                    })
+
+                                }
+                            })
+                        },
+                        open: function () {
+                            $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+                        },
+                        close: function () {
+                            $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+                        }
+                    })
+                }
+                return false;
             }
-            return false;
         });
     </script>
-
 
 </body>
 </html>

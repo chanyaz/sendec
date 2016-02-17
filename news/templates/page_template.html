@@ -19,10 +19,10 @@
 </style>
 
 
-<div class="dyn-news-2" style="height: inherit; margin-bottom: 5%;">
+<div class="dyn-news-2 container" style="height: inherit; margin-bottom: 5%;">
     {% paginate 30 total_news %}
     {% for i in total_news %}
-        <div class="sect-2-top">
+        <div class="col-md-4">
             <div class="current_news">
                 <div class="cat cat-left">
                     <a href="/news/{{ i.id|get_news_category }}">{{ i.id|get_news_category|upper }}</a>

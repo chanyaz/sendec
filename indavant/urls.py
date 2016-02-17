@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.models import User, Group
+from django.views.generic.base import RedirectView
 
 
 # API MODELS
@@ -37,7 +38,7 @@ router = routers.DefaultRouter()
 # router.register(r'news', NewsViewSet)
 
 
-
+#import debug_toolbar
 
 urlpatterns = patterns('',
 
@@ -56,6 +57,11 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include('api.urls')),
     url(r'^auth/', include('loginsys.urls')),
+
+
+   # url(r'^debug/', include(debug_toolbar.urls)),
+
+
     url(r'^ext/', include("news.urls")),
     url(r'^favourite/', include('favourite.urls')),
     url(r'^news/', include('news.urls')),
@@ -78,6 +84,13 @@ urlpatterns = patterns('',
     url(r'^closet/subs/$', 'news.views.closet_subscribe'),
     url(r'^closet/(?P<lang>\w+)/$', 'news.views.render_close_page'),
 
+
+
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicons/favicon.ico')),
+    url(r'^robots\.txt$', 'news.views.render_robots'),
+
+(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+        'document_root': settings.MEDIA_ROOT}),
 
     url(r'^$', 'news.views.main_page_load'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

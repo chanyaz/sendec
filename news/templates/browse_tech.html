@@ -6,19 +6,17 @@
 {% block browse_portals_tech %}
 
     <style>
-    #left-control-portals{
-            position: fixed;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            z-index: 989;
-            height: 100%;
-            margin-top: -5.5%;
-            float: left;
-            width: 16.1%;
-            left: 0;
-    }
-
-
+        #left-control-portals{
+                position: fixed;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                z-index: 989;
+                height: 100%;
+                margin-top: -5.5%;
+                float: left;
+                width: 16.1%;
+                left: 0;
+        }
 
         #browser{
             width: 82%;
@@ -30,16 +28,17 @@
 
         .rss_portal_preview{
             position: relative;
-            width: 20%;
-            min-height: 10em;
-            max-height: 28em;
-{#            height: inherit;#}
+            width: 30%;
+            height: 300px;
             float: left;
             margin-left: 1%;
             background: white;
             opacity: 1;
+            margin-bottom: 20px;
+            border: solid 1px lightgrey;
         }
         .rss_tech_middle{
+            height: 100px;
             padding: 2%;
         }
         .rss_tech_title{
@@ -53,6 +52,7 @@
             margin-top: 1%;
         }
         .rss_tech_btn{
+            height: 50px;
             margin-top: 1%;
         }
 
@@ -65,51 +65,15 @@
         }
 
         #browser-middle{
+            height: inherit;
             width: 100%;
-            border: solid 1px red;
+{#            border: solid 1px red;#}
         }
 
         #browser-technology{
             width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-{#            background: url('{% static 'static/img/rss-technology/back.jpg' %}') no-repeat center;#}
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-entertainment{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-{#            background: url('{% static 'static/img/rss-entertainment/back.jpg' %}') no-repeat center;#}
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-auto{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-            background: url('{% static 'static/img/rss-auto/back.jpg' %}') no-repeat center;
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-space{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-{#            background: url('{% static 'static/img/rss-space/back.jpg' %}') no-repeat center;#}
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-bio{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-{#            background: url('{% static 'static/img/rss-bio/back.jpg' %}') no-repeat center;#}
+{#            height: 500px;#}
+{#            border: solid 1px blue;#}
             background-size: cover;
             margin-bottom: 50px;
         }
@@ -124,17 +88,6 @@
         }
 
 
-        .current_rss_news{
-            width: 20%;
-            height: 20em;
-            margin-left: 1%;
-            margin-top: 1%;
-            border-radius: 5px;
-            box-shadow: 0 0 5px black;
-            float: left;
-            background-color: white;
-            opacity: 0.7;
-        }
     </style>
 
     <script>
@@ -206,17 +159,17 @@
                             </li>
                         </ul>
                         <ul>
-                            <li class="cd-label">Main</li>
+                            <li class="cd-label">{% trans 'Main' %}</li>
                             <li class="has-children overview active" onclick="changeStatePortals(this);">
                                 <a href="#">Overview</a>
                                 <ul>
-                                    <li><a href="/news/usernews/">My feed</a></li>
-                                    <li><a href="/favourite/">Saved articles</a></li>
+                                    <li><a href="/news/usernews/">{% trans 'My feed' %}</a></li>
+                                    <li><a href="/favourite/">{% trans 'Saved articles' %}</a></li>
                                 </ul>
                             </li>
                         <li>
                             <li class="has-children overview active" onclick="changeStatePortals(this);">
-                                <a href="">Properties</a>
+                                <a href="">{% trans 'Properties' %}</a>
                                 <ul>
                                     <li class="cd-label">Show type</li>
                                     <li><a href="">blocks</a></li>
@@ -226,7 +179,7 @@
                             </li>
                         </li>
                             <li id="side-bar-portals" class="has-children notifications active">
-                                <a id="side-bar-portals-link" href="#" onclick="changeStatePortals(this);">Portals</a>
+                                <a id="side-bar-portals-link" href="#" onclick="changeStatePortals(this);">{% trans 'Portals' %}</a>
 
                                 <ul class="user-rss">
                                     {% for current_portal in user_rss_portals %}
@@ -244,10 +197,10 @@
                             </li>
                         </ul>
                         <ul style="margin-bottom: 50px;">
-                            <li class="cd-label">Configures</li>
+                            <li class="cd-label">{% trans 'Configures' %}</li>
                             <li class="has-children bookmarks">
-                                <a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>Manage portals</a>
-                                <a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>Browse portals</a>
+                                <a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>{% trans 'Manage portals' %}</a>
+                                <a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>{% trans 'Browse portals' %}</a>
                             </li>
                         </ul>
                     </nav>
@@ -258,38 +211,26 @@
 
 
             <div id="browser">
-
-                    <div id="browser-main-title">
-                        <h2>Collect your own collection of news</h2>
-                    </div>
-
-
-
-             <div id="add-user-portal" style="width:80%; margin-left: auto; margin-right: auto; margin-bottom: 50px;">
-
-
-                <div class="google-news-below-shares" style="margin-left: auto; margin-right: auto; width:728px; height: 90px; background-color: #00fff9;"></div>
-
-
-                <input name="user_portal"
-                       type="text"
-                       id="uap"
-                       placeholder="Drop the key word"
-                       class=""
-                       style="width:100%;">
-                <div hidden id="preview-portal" style="margin-top:15px; width: 350px; margin-left: auto; margin-right: auto; height: 300px;">
-{#
+                <div id="browser-main-title">
+                    <h2>{% trans 'Pick your own collection of news' %}</h2>
                 </div>
-            </div>
-
-
-
+                <div id="add-user-portal" style="width:80%; margin-left: auto; margin-right: auto; margin-bottom: 50px;">
+                    <div class="google-news-below-shares" style="margin-left: auto; margin-right: auto; width:728px; height: 90px; background-color: #00fff9;"></div>
+                    <input name="user_portal"
+                           type="text"
+                           id="uap"
+                           placeholder="{% trans 'Drop the key word or url' %}"
+                           class=""
+                           style="width:100%;">
+                    <div hidden id="preview-portal" style="margin-top:15px; width: 350px; margin-left: auto; margin-right: auto; height: 300px;"></div>
+                </div>
 
                     <div id="browser-middle">
-                    
                         <div id="browser-categories">
                             <div id="browser-technology">
-                                <div class="category-main-title"><h2 style="color: white;">TECHNOLOGY</h2></div>
+                                <div class="category-main-title">
+                                    <h2 style="color: black;">{% trans 'TECHNOLOGY' %}</h2>
+                                </div>
                                 {% for i in rss_tech %}
                                     <div class="rss_portal_preview"
                                          id="rss_id_"
@@ -297,18 +238,19 @@
                                          onclick=""
                                          data-current-rss-news-id="">
                                         <div class="rss_tech_cover"
-                                             style="width: 100%;
+                                             style="width: 96%;
+                                                     margin-left: auto;
+                                                     margin-right: auto;
                                                      height: 150px;
-    {#                                                 {% if i.cover != '[]' %}#}
-                                                        background: url('{{ i.cover }}') no-repeat center;
-    {#                                                 {% endif %}#}
+                                                     margin-top: 2%;
+                                                     background: url('{{ i.cover }}') no-repeat center center;
                                                      background-size: cover;">
-    {#                                        <img src="{{ i.cover }}" width="100%" height="150px"/>#}
                                         </div>
                                         <div class="rss_tech_middle">
                                             <div class="rss_tech_title"><b>{{ i.portal }}</b></div>
-                                            <div class="rss_tech_description"><i>{{ i.description|safe|truncatechars:100 }}</i></div>
-                                            <div class="rss_tech_configs">Followers:&nbsp;{{ i.follows }}</div>
+                                            <div class="rss_tech_description"><i>{{ i.description|safe|truncatechars:60 }}</i></div>
+                                            <div class="rss_tech_configs">{% trans 'Followers:' %}&nbsp;{{ i.follows }}
+                                            {% trans 'Articles:' %}&nbsp;6000055</div>
                                         </div>
                                         <div class="rss_tech_btn" style="width:100%;">
                                             <button class="btn btn-success"
@@ -317,9 +259,6 @@
                                         </div>
                                     </div>
                                 {% endfor %}
-                                <div class="rss_tech_all">
-                                    Show more
-                                </div>
                             </div>
 
                         </div>

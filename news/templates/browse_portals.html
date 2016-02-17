@@ -28,35 +28,6 @@
         }
 
 
-        .rss_portal_preview{
-            position: relative;
-            width: 20%;
-            min-height: 10em;
-            max-height: 28em;
-{#            height: inherit;#}
-            float: left;
-            margin-left: 1%;
-            background: white;
-            opacity: 1;
-        }
-        .rss_tech_middle{
-            padding: 2%;
-        }
-        .rss_tech_title{
-            text-align: center;
-            margin-top: 1%;
-        }
-        .rss_tech_description{
-            margin-top: 1%;
-        }
-        .rss_tech_configs{
-            margin-top: 1%;
-        }
-        .rss_tech_btn{
-            margin-top: 1%;
-        }
-
-
         #browser-main-title{
             width: 100%;
             text-align: center;
@@ -69,51 +40,6 @@
             border: solid 1px red;
         }
 
-        #browser-technology{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-{#            background: url('{% static 'static/img/rss-technology/back.jpg' %}') no-repeat center;#}
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-entertainment{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-{#            background: url('{% static 'static/img/rss-entertainment/back.jpg' %}') no-repeat center;#}
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-auto{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-            background: url('{% static 'static/img/rss-auto/back.jpg' %}') no-repeat center;
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-space{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-{#            background: url('{% static 'static/img/rss-space/back.jpg' %}') no-repeat center;#}
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-bio{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-{#            background: url('{% static 'static/img/rss-bio/back.jpg' %}') no-repeat center;#}
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
         .category-main-title{
             position: relative;
             width: 100%;
@@ -123,18 +49,18 @@
             text-align: center;
         }
 
-
-        .current_rss_news{
-            width: 20%;
-            height: 20em;
-            margin-left: 1%;
-            margin-top: 1%;
-            border-radius: 5px;
-            box-shadow: 0 0 5px black;
-            float: left;
-            background-color: white;
-            opacity: 0.7;
-        }
+{##}
+{#        .current_rss_news{#}
+{#            width: 20%;#}
+{#            height: 20em;#}
+{#            margin-left: 1%;#}
+{#            margin-top: 1%;#}
+{#            border-radius: 5px;#}
+{#            box-shadow: 0 0 5px black;#}
+{#            float: left;#}
+{#            background-color: white;#}
+{#            opacity: 0.7;#}
+{#        }#}
     </style>
 
     <script>
@@ -175,6 +101,7 @@
 {#                                '<span class="count"></span></a>' + '</li><br>';#}
                         {#                    alert(string);#}
                         table.append(result.string.replace('{portal_id}', result.data.id)
+                                .replace('{favicon}', result.data.favicon)
                                 .replace('{portal_verbose}', result.data.verbose)
                                 .replace('{portal_name}', result.data.portal));
 
@@ -206,17 +133,17 @@
                             </li>
                         </ul>
                         <ul>
-                            <li class="cd-label">Main</li>
+                            <li class="cd-label">{% trans 'Main' %}</li>
                             <li class="has-children overview active" onclick="changeStatePortals(this);">
-                                <a href="#">Overview</a>
+                                <a href="#">{% trans 'Overview' %}</a>
                                 <ul>
-                                    <li><a href="/news/usernews/">My feed</a></li>
-                                    <li><a href="/favourite/">Saved articles</a></li>
+                                    <li><a href="/news/usernews/">{% trans 'My feed' %}</a></li>
+                                    <li><a href="/favourite/">{% trans 'Saved articles' %}</a></li>
                                 </ul>
                             </li>
                         <li>
                             <li class="has-children overview active" onclick="changeStatePortals(this);">
-                                <a href="">Properties</a>
+                                <a href="">{% trans 'Properties' %}</a>
                                 <ul>
                                     <li class="cd-label">Show type</li>
                                     <li><a href="">blocks</a></li>
@@ -226,7 +153,7 @@
                             </li>
                         </li>
                             <li id="side-bar-portals" class="has-children notifications active">
-                                <a id="side-bar-portals-link" href="#" onclick="changeStatePortals(this);">Portals</a>
+                                <a id="side-bar-portals-link" href="#" onclick="changeStatePortals(this);">{% trans 'Portals' %}</a>
 
                                 <ul class="user-rss">
                                     {% for current_portal in user_rss_portals %}
@@ -244,10 +171,10 @@
                             </li>
                         </ul>
                         <ul style="margin-bottom: 50px;">
-                            <li class="cd-label">Configures</li>
+                            <li class="cd-label">{% trans 'Configures' %}</li>
                             <li class="has-children bookmarks">
-                                <a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>Manage portals</a>
-                                <a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>Browse portals</a>
+                                <a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>{% trans 'Manage portals' %}</a>
+                                <a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>{% trans 'Browse portals' %}</a>
                             </li>
                         </ul>
                     </nav>
@@ -260,7 +187,7 @@
             <div id="browser">
 
                     <div id="browser-main-title">
-                        <h2>Collect your own collection of news</h2>
+                        <h2>{% trans 'Pick your own collection of news' %}</h2>
                     </div>
 
                 <div id="add-user-portal" style="width:80%; margin-left: auto; margin-right: auto; margin-bottom: 50px;">
@@ -269,21 +196,43 @@
                 <div class="google-news-below-shares" style="margin-left: auto; margin-right: auto; width:728px; height: 90px; background-color: #00fff9;"></div>
 
 
-                <input name="user_portal"
-                       type="text"
-                       id="uap"
-                       placeholder="Drop the key word or link"
-                       class=""
-                       style="width:100%; z-index: 9999;">
+                    <input name="user_portal"
+                           type="text"
+                           id="uap"
+                           data-target="#processing-modal"
+                           placeholder="{% trans 'Drop the key word or link' %}"
+                           class="form-control"
+                           style="width:100%; z-index: 9999; margin-left: 0;">
+
+
+
+
+                    <div id="processing-portals" class="progress progress-striped active" hidden>
+                      <div class="progress-bar progress-bar-danger"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        <span class="sr-only">{% trans 'Loading...' %}</span>
+                          {% trans 'Wait please' %}
+                      </div>
+                    </div>
+
+
 
                     <div hidden id="search-feed-fail">
-                        Sorry, we can't find RSS-channel on this portal. Try another one or search by key-word.
+                        {% trans "Sorry, we can't work with this portal. Try another one or search by key-word." %}
                     </div>
                     <div id="found-feed" hidden style="text-align: center;">
-                        We find RSS-channel on <span id="user-url"></span> and add it to our Database.
+                        {% trans 'We find RSS-channel on' %} <span id="user-url"></span> {% trans 'and add it to our Database.' %}
                         <br>Thanks a lot!<br>
                         <p>Feed:&nbsp;<span id="user-url-feed" style="font-weight: bold;"></span>
                         <p>Enjoy Reading!
+                    </div>
+                    <div id="new-portal-block">
+                        {% trans 'We are collecting news for current portals. Wait please. Or you can read the latest news almost now by click' %}
+                        <a href="">{% trans 'here' %}</a>.
+
+                            <div id="new-portal-feed-feed">
+
+                        </div>
+
                     </div>
                  <div hidden id="preview-portal" style="margin-top:15px; width: 350px; margin-left: auto; margin-right: auto; height: 300px;">
 {#                    <div id="preview-portal-content" style="border: solid 1px lightgrey; border-radius: 5px;">#}
@@ -313,7 +262,7 @@
                                             <div class="video-container-browse">
                                                 <div class="title-container">
                                                     <div class="headline">
-                                                            <h1>Technology</h1>
+                                                            <h1>{% trans 'Technology' %}</h1>
                                                     </div>
                                                     <div class="description">
                                                         <div class="inner">
@@ -338,7 +287,7 @@
                                             <div class="video-container-browse">
                                                 <div class="title-container">
                                                     <div class="headline">
-                                                            <h1>Entertainment</h1>
+                                                            <h1>{% trans 'Entertainment' %}</h1>
                                                     </div>
                                                     <div class="description">
                                                         <div class="inner">
@@ -363,7 +312,7 @@
                                             <div class="video-container-browse">
                                                 <div class="title-container">
                                                     <div class="headline">
-                                                            <h1>Auto</h1>
+                                                            <h1>{% trans 'Auto' %}</h1>
                                                     </div>
                                                     <div class="description">
                                                         <div class="inner">
@@ -388,7 +337,7 @@
                                             <div class="video-container-browse">
                                                 <div class="title-container">
                                                     <div class="headline">
-                                                            <h1>Space</h1>
+                                                            <h1>{% trans 'Spase' %}</h1>
                                                     </div>
                                                     <div class="description">
                                                         <div class="inner">
@@ -413,7 +362,7 @@
                                             <div class="video-container-browse">
                                                 <div class="title-container">
                                                     <div class="headline">
-                                                            <h1>Bio-technology</h1>
+                                                            <h1>{% trans 'Bio-technology' %}</h1>
                                                     </div>
                                                     <div class="description">
                                                         <div class="inner">

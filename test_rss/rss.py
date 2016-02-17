@@ -336,12 +336,13 @@ def fill_rss_portals():
         if len(count) == 0:
             cur_iter += 1
             categories = {"Technology": 1, "Entertainment": 2, "Auto": 3, "Space": 4, "BIO": 5}
-            query = "INSERT INTO rss_portals(portal, portal_base_link, follows, description, cover, verbose_name, category_id) VALUES(%s, %s, %s, %s, %s,%s,%s)"
+            query = "INSERT INTO rss_portals(portal, portal_base_link, follows, description, cover, favicon, verbose_name, category_id) VALUES(%s, %s, %s, %s, %s,%s,%s,%s)"
             data_query = (file_list['object-%s'%i]["name"],
                           file_list['object-%s'%i]["base_link"],
                           0,
                           file_list['object-%s'%i]["description"],
                           file_list['object-%s'%i]["cover"],
+                          file_list['object-%s'%i]["favicon"],
                           file_list['object-%s'%i]["verbose"],
                           categories[file_list['object-%s'%i]["category"]])
             cursor.execute(query, data_query)

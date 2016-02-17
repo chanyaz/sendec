@@ -15,24 +15,16 @@ class Aggregator(object):
     host = ""
     password = "test"
 
-    def __init__(self, *args, **kwargs):
-        self.main_func(urls=self.get_feed_urls())
-
+    def __init__(self, urls, *args, **kwargs):
+        self.urls_array = urls
+        # self.main_func(urls=self.get_feed_urls())
+        self.main_func(urls=self.urls_array)
 
     def connect_to_database(self, db_name, user, host, password):
         return psycopg2.connect("dbname='%s' user='%s' host='%s' password='%s'" % (db_name, user, host, password))
 
-    def get_feed_urls(self):
-        urls = []
-        db = self.connect_to_database(db_name=self.db_name, user=self.user, host=self.host, password=self.password)
-        cursor = db.cursor()
-        query = "SELECT link FROM rss_channels"
-        cursor.execute(query)
-        url_feeds = cursor.fetchall()
-        db.close()
-        for i in range(len(url_feeds)):
-            urls.append(url_feeds[i][0])
-        return urls
+    # def get_feed_urls(self):
+    #     return self.urls_array
 
     def parse_current_url(self, url=''):
         url_parse = feedparser.parse(url)
@@ -96,7 +88,7 @@ class Aggregator(object):
                     if i.get('width') == '100%' or i.get('height') == '100%':
                         width = 1920
                         height = 1080
-                        array.append({'size': str(width*height), 'src': i.get('src')})
+                        array.append({'size': str(round(width*height)), 'src': i.get('src')})
                     else:
                         array.append({'size': str(round(int(i.get('width'))*int(i.get('height')))), 'src': i.get('src')})
                 else:
@@ -105,9 +97,6 @@ class Aggregator(object):
 
 
     def main_func(self, urls):
-
-
-
         db = self.connect_to_database(db_name=self.db_name, user=self.user, host=self.host, password=self.password)
         cursor = db.cursor()
         num = 0
@@ -134,60 +123,57 @@ class Aggregator(object):
                 except IndexError:
                     date_posted = data["date"]
 
-
                 query_0 = "SELECT ID FROM news_rss WHERE link=%s"
                 data_query_0 = [data["link"]]
                 cursor.execute(query_0, data_query_0)
                 count = cursor.fetchall()
 
-                import re
-                match_2 = re.findall(r'src=\"(.*?)\"\s.*/>', data["content"])
-                if len(match_2) >= 1:
-                    data["main_cover"] = str(match_2[0])
-                else:
-                    data["main_cover"] = str(match_2)
-                if len(match_2) == 0:
-                    match_3 = re.findall(r'src=\"(.*?)\"\s.*/>', data["description"])
-                    a = str(match_3)
-
-                    if len(match_3) >= 1:
-                        data["main_cover"] = str(match_3[0])
-                    else:
-                        data["main_cover"] = str(match_3)
-
-
-                data["content"] = data["content"].replace("\xa0", " ").replace("%", "%%").replace("> ", "> ").replace(" </", "</").replace(" <", " <").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
-                data["title"] = data["title"].replace('"', '').replace("\xa0", " ").replace("%", "%%").replace("> ", "> ").replace(" </", "</").replace(" <", " <").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
-                data["description"] = data["description"].replace("\xa0", "").replace("%", "%%").replace("> ", "> ").replace(" </", "</").replace(" <", " <").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
-
-
-                if data["main_cover"] == '[]':
-                    end = self.result(data['link'])
-                    if end != False:
-                        max_item = 0
-                        for i in range(len(end)):
-                            if int(end[i]['size']) > max_item:
-                                max_item = int(end[i]['size'])
-                        for i in range(len(end)):
-                            if int(end[i]['size']) == max_item:
-                                current_cover = end[i]['src']
-                                data["main_cover"] = current_cover
-
-
-                match_tabs = re.findall(r'[\s]{2,}', data["description"])
-                for i in match_tabs:
-                    data["description"] = data["description"].replace(i, " ")
-                data["description"] = data["description"].replace("\n", "").replace("\t", "")
-
-                query_for_rss = "SELECT * FROM rss_portals"
-                cursor.execute(query_for_rss)
-                portals_list = cursor.fetchall()
-
-                for current_portal in portals_list:
-                    if current_portal[2] in data["link"] or data['link'] in current_portal[2] or current_portal[2].split('.')[0] in data['link']:
-                        current_rss_news_id = current_portal[0]    # CURRENT PORTAL ID
-                        current_rss_news_cat_id = current_portal[8]
                 if len(count) == 0:
+                    import re
+                    match_2 = re.findall(r'src=\"(.*?)\"\s.*/>', data["content"])
+                    if len(match_2) >= 1:
+                        data["main_cover"] = str(match_2[0])
+                    else:
+                        data["main_cover"] = str(match_2)
+                    if len(match_2) == 0:
+                        match_3 = re.findall(r'src=\"(.*?)\"\s.*/>', data["description"])
+                        a = str(match_3)
+
+                        if len(match_3) >= 1:
+                            data["main_cover"] = str(match_3[0])
+                        else:
+                            data["main_cover"] = str(match_3)
+
+                    data["content"] = data["content"].replace("\xa0", " ").replace("%", "%%").replace("> ", "> ").replace(" </", "</").replace(" <", " <").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
+                    data["title"] = data["title"].replace('"', '').replace("\xa0", " ").replace("%", "%%").replace("> ", "> ").replace(" </", "</").replace(" <", " <").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
+                    data["description"] = data["description"].replace("\xa0", "").replace("%", "%%").replace("> ", "> ").replace(" </", "</").replace(" <", " <").replace("\n<", "<").replace("\n", " ").replace("'", "&rsquo;")
+
+                    if data["main_cover"] == '[]':
+                        end = self.result(data['link'])
+                        if end != False:
+                            max_item = 0
+                            for i in range(len(end)):
+                                if int(end[i]['size']) > max_item:
+                                    max_item = int(end[i]['size'])
+                            for i in range(len(end)):
+                                if int(end[i]['size']) == max_item:
+                                    current_cover = end[i]['src']
+                                    data["main_cover"] = current_cover
+
+                    match_tabs = re.findall(r'[\s]{2,}', data["description"])
+                    for i in match_tabs:
+                        data["description"] = data["description"].replace(i, " ")
+                    data["description"] = data["description"].replace("\n", "").replace("\t", "")
+
+
+                    query_for_rss = "SELECT * FROM rss_portals"
+                    cursor.execute(query_for_rss)
+                    portals_list = cursor.fetchall()
+
+                    for current_portal in portals_list:
+                        if current_portal[2] in data["link"] or data['link'] in current_portal[2] or current_portal[2].split('.')[0] in data['link']:
+                            current_rss_news_id = current_portal[0]    # CURRENT PORTAL ID
+                            current_rss_news_cat_id = current_portal[8                                                                                  ]
                     query = """INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author, nuid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
                     data_query = (data["title"],
                                   date_posted,
@@ -198,7 +184,7 @@ class Aggregator(object):
                                   data["content"],
                                   data["author"],
                                   ''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _
-                                                      in range(33)))
+                                          in range(33)))
                     cursor.execute(query, data_query)
                     query_2 = "SELECT ID FROM news_rss WHERE title=%s"
                     data_query_2 = [data["title"]]
@@ -218,19 +204,14 @@ class Aggregator(object):
 
                     db.commit()
                     instance = self.get_amount_of_user_readers(current_rss_news_id)
-                    # user_amount = instance[0]
                     users = [i[0] for i in instance[1]]
                     for i in range(len(users)):
                         self.set_user_rss_read(users[i], current_rss_id, current_rss_news_id)
-                    # print("Inserted from: ", url)
+                        # else:
+                        #     pass
+                    print("Add one news form ", url)
                 else:
-                    pass
-                # print("Already exists: ", url)
-        print("================END ONE MORE LOOP====================")
+                    break
         db.close()
-        return 0
+        print("End adding news")
 
-
-if __name__ == "__main__":
-    while True:
-        Aggregator()

@@ -7,13 +7,25 @@ from django.contrib import auth
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsComments, NewsWatches, NewsCommentsReplies, RssNewsCovers, TopNews, NewsPortal,UserRssNewsReading
+from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsWatches, RssNewsCovers, TopNews, NewsPortal,UserRssNewsReading
 import datetime
 import json
 from userprofile.models import UserLikesNews, UserSettings, UserProfile, UserRssPortals
-from .forms import NewsCommentsForm, NewsCommentsRepliesForm
 from django.core.mail import send_mail
 from favourite.models import RssSaveNews
+
+
+
+
+
+def render_robots(requets):
+    return render_to_response('robots.txt')
+def render_cn_ver(request):
+    args = {}
+    args.update(csrf(request))
+    return render_to_response("insydia.com.html", args)
+
+
 
 # def global_redirect(request):
 #     if request.COOKIES.get("translate-version"):
@@ -35,45 +47,37 @@ from favourite.models import RssSaveNews
 #     return main_page_load(request, translate="chinese")
 
 
-def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None):
-# def main_page_load(request, template="index_new.html", page_template="page_template.html", extra_context=None, translate="english"):
+def main_page_load(request, template="index_beta.html", page_template="page_template.html", extra_context=None):
+    instance = render_news_by_sendec(request)
+    name_map = {'id': 'id',
+                'news_title': 'news_title',
+                'news_post_date': 'news_post_date',
+                # 'news_category': 'news_category_id',
+                'news_author': 'news_author_id',
+                # "slug": "slug",
+                }
     args = {
-        #test "video_first": TopVideoContent.objects.all().values()[0],
-        #test "video_top": TopVideoContent.objects.all().values()[1:3],
         "current_year": datetime.datetime.now().year,
         "title": "Home Page | ",
         "news_block": True,
-        # "breaking_news": render_news_by_sendec(request).order_by("-news_post_date")[0],
-        "total_middle_news": render_news_by_sendec(request).order_by("-news_post_date")[0:4],
-        "total_bottom_news": render_news_by_sendec(request).order_by("-news_post_date")[4:6],
-        # "interest": get_interesting_news(request)[:3],
+        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
+        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
         "interest": get_hottest_news(request),
-        "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4],
-
-
-        "before_reviews": render_news_by_sendec(request).order_by("-news_post_date")[6:9],
-
-        "total_news": get_total_news,
+        "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
+        "before_reviews": instance[6:9],#.order_by("-news_post_date")[6:9].values(),
+        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9;", translations=name_map)),#get_total_news),
         "page_template": page_template,
         "top_news": get_top_total_news(request),
-        #test "latest_review": get_latest_reviews(request),
         "left_bar": True,
     }
-    # if translate == "russian":
-    #     args["translate"] = "ru"
-    # if render_news_by_sendec(request).order_by("-news_post_date")[4:13].count() > 0:
-    #     args["total_bottom_news"] = render_news_by_sendec(request).order_by("-news_post_date")[4:13]
-
     if request.is_ajax():
         template = page_template
-
     args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args["footer_news"] = get_news_for_footer(request)[:3]
     response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
-    # response.set_cookie("translate-version", translate)
     return response
 
 
@@ -85,24 +89,53 @@ def get_hottest_news(request):
     # try:
     watches = NewsWatches.objects.order_by("-watches").values("news_id").values("news_id")
     if watches.count() >= 4:
-        return News.objects.filter(id__in=watches[:4]).defer("news_portal_name").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").values()
+        return News.objects.filter(id__in=watches[:4]).defer("news_portal_name").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").order_by("-news_post_date").values()[:4]
     else:
-        return News.objects.all().defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").order_by("news_post_date").values()[:4]
+        return News.objects.all().defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").order_by("-news_post_date").values()[:4]
 
 
 def get_top_total_news(request):
-    return TopNews.objects.all()[:4].defer("top_news_post_text_english").defer("top_news_post_text_russian").defer("top_news_post_text_chinese").values()
+    name_map = {'id': 'id',
+                'top_news_title': 'top_news_title',
+                'top_news_post_date': 'top_news_post_date',
+                # 'news_category': 'news_category_id',
+                'top_news_author': 'top_news_author_id',
+                "slug": "slug",
+                }
+    # return TopNews.objects.all()[:4].defer("top_news_post_text_english").defer("top_news_post_text_russian").defer("top_news_post_text_chinese").values()
+    return TopNews.objects.raw("SELECT id, top_news_title, top_news_author_id, top_news_post_date, slug  FROM news_top ORDER BY id DESC limit 1;", translations=name_map)
 
 
 def get_total_news():
-    return News.objects.all().order_by("-news_post_date").defer("news_post_text_english").defer("news_post_text_russian").defer("news_post_text_chinese").values()[9:]
+    name_map = {'id': 'id',
+                'news_title': 'news_title',
+                'news_post_date': 'news_post_date',
+                # 'news_category': 'news_category_id',
+                'news_author': 'news_author_id',
+                # "slug": "slug",
+                }
+    #return News.objects.all().values()[9:]
+    return News.objects.raw("SELECT id, news_title, news_post_date, news_author FROM "
+                            "(SELECT ROW_NUMBER() OVER (PARTITION BY id ORDER BY news_post_date DESC) AS OrderedDate, * FROM news) as newsList"
+                            "WHERE OrderedDate=5 ORDER BY news_post_date DESC;", translations=name_map)
 
 
 def render_news_by_sendec(request, **kwargs):
+    name_map = {'id': 'id',
+                'news_title': 'news_title',
+                'news_post_date': 'news_post_date',
+                'news_category': 'news_category_id',
+                "slug": "slug",
+                }
+    # if len(kwargs) > 0:
+    #     instance = News.objects.raw("SELECT id, news_title from news ORDER BY news_post_date news limit 9;", translations=name_map).filter(news_category_id=kwargs["category_id"]).exclude(id=kwargs["news_id"])
+    #     return instance
+    # else:
     if len(kwargs) > 0:
-        return News.objects.all().filter(news_category_id=kwargs["category_id"]).exclude(id=kwargs["news_id"]).values()
+        category_id = kwargs['category_id']
+        return News.objects.raw("SELECT id, news_title from news WHERE news_category_id in (%s);" % category_id, translations=name_map)
     else:
-        return News.objects.all().values()
+        return News.objects.raw("SELECT id, news_title, news_post_date from news ORDER BY news_post_date DESC;", translations=name_map)
 
 
 def get_company_news(request, news_id, company_id):
@@ -116,30 +149,40 @@ def get_latest_news_total(request):
     return latest_10_news
 
 
-def render_current_top_news(request, category_id, news_id):
-    current_news = TopNews.objects.get(id=news_id)
+def render_current_top_news(request, news_id, slug):
+    # current_top_news = TopNews.objects.get(slug=slug)
     args = {
-        "title": "%s | " % current_news.top_news_title,
-        "current_news_values": current_news,
-        "other_materials": render_news_by_sendec(request, news_id=news_id,
-                                                 category_id=category_id).exclude(id=news_id)[:3],
-        "other_materials_count": render_news_by_sendec(request, news_id=news_id,
-                                                 category_id=category_id).exclude(id=news_id)[:3].count(),
-        "latest_news": get_company_news(request, news_id, current_news.top_news_company_owner_id)[:5],
-        "company_name": str(Companies.objects.get(id=current_news.top_news_company_owner_id)).capitalize(),
-        "current_day": datetime.datetime.now().day,
-        "comments_total": comments_load(request, news_id),
-        "replies_total": replies_load(request, news_id),
-        "liked": check_like(request, news_id),
-        "disliked": check_dislike(request, news_id),
-        "like_amount": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count(),
-        "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count(),
-        "current_news_title": current_news.top_news_title,
+        # "title": "%s | " % current_news.top_news_title,
+        # "current_news_values": current_news,
+        "other_materials": current_news_other_materials(request, news_id),
+        # "other_materials_count": render_news_by_sendec(request).exclude(id=news_id)[:3].count(),
+        # "latest_news": get_company_news(request, news_id, current_news.top_news_company_owner_id)[:5],
+        # "company_name": str(Companies.objects.get(id=current_news.top_news_company_owner_id)).capitalize(),
+        # "current_day": datetime.datetime.now().day,
+        # "current_news_title": current_news.top_news_title,
         #"external_link": shared_news_link(request, news_id),
         "left_bar": True,
     }
-
-    args.update(check_english(current_news, flag=1))
+    translation = {
+        "id": "id",
+        "top_news_title": "top_news_title",
+        "news_category": "top_news_category_id",
+        "news_post_date": "top_news_post_date",
+        "news_post_text_english": "top_news_post_text_english",
+        "news_portal_name": "top_news_portal_name_id",
+        "news_company_owner": "top_news_company_owner_id",
+        "news_author": "top_news_author_id",
+        "news_main_cover": "top_news_main_cover",
+        "news_tags": "top_news_tags",
+        "slug": "slug",
+    }
+    current_top_news = TopNews.objects.raw("SELECT * FROM news_top where slug='%s';" % slug, translations=translation)
+    # category_id = current_top_news[0].news_category
+    args["title"] = "%s | " % current_top_news[0].top_news_title
+    args["current_news_values"] = current_top_news[0]
+    # args["company_name"] = str(Companies.objects.get(id=current_news[0].news_company_owner)).capitalize(),
+    args["current_news_title"] = current_top_news[0].top_news_title,
+    args.update(check_english(current_top_news[0], flag=1))
 
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
@@ -152,38 +195,58 @@ def render_current_top_news(request, category_id, news_id):
 
 # def render_current_news(request, category_id, news_id, slug):
 def render_current_news(request, year, month, day, news_id, slug):
-    current_news = News.objects.get(slug=slug)
-    category_id = current_news.news_category_id
     args = {
-        "title": "%s | " % current_news.news_title,
-        "current_news_values": current_news,
-        "other_materials": render_news_by_sendec(request, news_id=news_id,
-                                                 category_id=category_id).exclude(id=news_id)[:3],
-        "other_materials_count": render_news_by_sendec(request, news_id=news_id,
-                                                 category_id=category_id).exclude(id=news_id)[:3].count(),
-        "latest_news": get_company_news(request, news_id, current_news.news_company_owner_id)[:5],
-        "company_name": str(Companies.objects.get(id=current_news.news_company_owner_id)).capitalize(),
+        # "title": "%s | " % current_news.news_title,
+        # "current_news_values": current_news,
+        "other_materials": current_news_other_materials(request, news_id),
+        # "other_materials_count": current_news_other_materials(request, news_id)[:3],
+        # "latest_news": get_company_news(request, news_id, current_news.news_company_owner_id)[:5],
         "current_day": datetime.datetime.now().day,
-        "comments_total": comments_load(request, news_id),
-        "replies_total": replies_load(request, news_id),
-        "liked": check_like(request, news_id),
-        "disliked": check_dislike(request, news_id),
-        "like_amount": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count(),
-        "dislike_amount": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count(),
-        "current_news_title": current_news.news_title,
-        ##"external_link": shared_news_link(request, news_id),
         "left_bar": True,
     }
-
-    args.update(check_english(current_news, flag=0))
+    # current_news = News.objects.get(slug=slug)
+    # category_id = current_news.news_category_id
+    # cookie = request.COOKIES.get('lang')
+    # if cookie == "eng":
+    translation = {
+        "id": "id",
+        "news_title": "news_title",
+        "news_category": "news_category_id",
+        "news_post_date": "news_post_date",
+        "news_post_text_english": "news_post_text_english",
+        "news_portal_name": "news_portal_name_id",
+        "news_company_owner": "news_company_owner_id",
+        "news_author": "news_author_id",
+        "news_main_cover": "news_main_cover",
+        "news_tags": "news_tags",
+        "slug": "slug",
+    }
+    current_news = News.objects.raw("SELECT * FROM news where id=%s;" % news_id, translations=translation)
+    category_id = current_news[0].news_category
+    args["title"] = "%s | " % current_news[0].news_title
+    args["current_news_values"] = current_news[0]
+    # args["company_name"] = str(Companies.objects.get(id=current_news[0].news_company_owner)).capitalize(),
+    args["current_news_title"] = current_news[0].news_title,
+    args.update(check_english(current_news[0], flag=0))
 
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-    # addition_news_watches(request, news_id)
+    addition_news_watches(request, news_id)
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response("current_news.html", args)
+    return render_to_response("current_news_beta.html", args)
+
+
+def current_news_other_materials(request, news_id):
+    translation = {
+        "id": "id",
+        "news_title": "news_title",
+        "news_post_date": "news_post_date",
+    }
+    return News.objects.raw("SELECT id, news_title, news_post_date from news where id not in (%s) "
+                            "ORDER BY news_post_date DESC limit 4;" % news_id,
+                            translations=translation)
 
 
 def check_english(news, flag):
@@ -228,7 +291,7 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
             "if_zero": "<p>Wow, you are reading all of our portals. Would you like to <a href='/about/contacts/'>tell</a> us something?</p><p>Or you just can "
                        "write which portal you want to see here and we will try to add it to our database with pleasure.</p>"
                        "<p>You are our <b>HERO</b>, man!</p>",
-            "new_user_news": get_rss_filterd(request, user.id),
+            "new_user_news": get_rss_filterd(request, user.id).distinct(),
             "user_rss_portals": get_user_rss_portals(request, user_id=user.id),
             "left_bar": False,
             "here_private": True,
@@ -252,6 +315,7 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
         else:
             args["zero"] = False
         args["footer_news"] = get_news_for_footer(request)[:3]
+        args["body_color"] = True
         return render_to_response(template, context=args, context_instance=RequestContext(request))
 
 
@@ -390,7 +454,7 @@ def set_shown(request, news_id):
     return HttpResponse()
 
 
-@login_required(login_url="/auth/login/")
+# @login_required(login_url="/auth/login/")
 def addition_news_watches(request, news_id):
     instance = NewsWatches.objects.filter(news_id=news_id)
     if instance.exists():
@@ -692,139 +756,6 @@ def get_space_news(request):
 
 
 #   ################################### END SPACE ##############################3
-
-
-@login_required(login_url="/auth/login")
-def comment_send(request, category_id, news_id):
-    user_instance = User.objects.get(username=auth.get_user(request).username)
-    args = {
-        "username": user_instance,
-    }
-    args.update(csrf(request))
-    if request.POST:
-        form = NewsCommentsForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.news_attached = News.objects.get(id=news_id)
-            comment.comments_author = user_instance
-            form.save()
-    return HttpResponseRedirect("/news/%s/%s/" % (category_id, news_id), args)
-
-
-def comments_load(request, news_id):
-    return NewsComments.objects.filter(news_attached=news_id).order_by("-comments_post_date").values()
-
-
-@login_required(login_url="/auth/login/")
-def reply_send(request, news_id, comment_id):
-    user_instance = User.objects.get(username=auth.get_user(request).username)
-    news_instance = News.objects.get(id=news_id)
-    args = {
-        "username": user_instance,
-    }
-    args.update(csrf(request))
-    if request.POST:
-        form = NewsCommentsRepliesForm(request.POST)
-        if form.is_valid():
-            reply = form.save(commit=False)
-            reply.comment_attached = NewsComments.objects.get(id=comment_id)
-            reply.news_attached = news_instance
-            reply.reply_author = user_instance
-            form.save()
-    return HttpResponseRedirect("/news/%s/%s/" % (news_instance.news_category_id, news_id), args)
-
-
-def replies_load(request, news_id):
-    return NewsCommentsReplies.objects.filter(news_attached=news_id).order_by("reply_post_date").values()
-
-
-@login_required(login_url="/auth/login/")
-def add_like_news(request, news_id):
-    user_instance = User.objects.get(username=auth.get_user(request).username)
-    if UserLikesNews.objects.filter(user_id=user_instance.id).filter(news_id=news_id).exists():
-        user_like_instance = UserLikesNews.objects.filter(user_id=user_instance.id).get(news_id=news_id)
-        user_like_instance.dislike = False
-        user_like_instance.like = True
-        user_like_instance.save()
-    else:
-        instance = News.objects.get(id=news_id)
-        instance.news_likes += 1
-        instance.save()
-        UserLikesNews.objects.create(
-            like=True,
-            dislike=False,
-            news_id=news_id,
-            user_id=user_instance.id
-        )
-    return HttpResponse()
-
-
-@login_required(login_url="/auth/login/")
-def add_dislike_news(request, news_id):
-    user_instance = User.objects.get(username=auth.get_user(request).username)
-    if UserLikesNews.objects.filter(user_id=user_instance.id).filter(news_id=news_id).exists():
-        user_dislike_instance = UserLikesNews.objects.filter(user_id=user_instance.id).get(news_id=news_id)
-        user_dislike_instance.dislike = True
-        user_dislike_instance.like = False
-        user_dislike_instance.save()
-    else:
-        instance = News.objects.get(id=news_id)
-        instance.news_likes += 1
-        instance.save()
-        UserLikesNews.objects.create(
-            like=False,
-            dislike=True,
-            news_id=news_id,
-            user_id=user_instance.id
-        )
-    return HttpResponse()
-
-
-def check_like_amount(request, news_id):
-    return HttpResponse(json.dumps({"likes": UserLikesNews.objects.filter(news_id=news_id).filter(like=True).count()}),
-                        content_type="application/json")
-
-
-def check_dislike_amount(request, news_id):
-    return HttpResponse(json.dumps({"dislikes": UserLikesNews.objects.filter(news_id=news_id).filter(dislike=True).count()}),
-                        content_type="application/json")
-
-
-#def delete_comment(request, comment_id):
-#    args = {}
-#    args.update(csrf(request))
-#    news_instance = News.objects.get(id=NewsComments.objects.get(id=int(comment_id)).news_attached_id)
-#    if User.objects.get(username=auth.get_user(request).username).is_staff:
-#        instance = NewsComments.objects.get(id=int(comment_id))
-#        instance.delete()
-#    else:
-#        pass
-#    return HttpResponseRedirect("/news/%s/%s/" % (news_instance.news_category_id, news_instance.id), args)
-
-
-#def delete_reply(request, reply_id):
-#    args = {}
-#    args.update(csrf(request))
-#    news_instance = News.objects.get(id=NewsCommentsReplies.objects.get(id=int(reply_id)).news_attached_id)
-#    if User.objects.get(username=auth.get_user(request).username).is_staff:
-#        instance = NewsCommentsReplies.objects.get(id=int(reply_id))
-#        instance.delete()
-#    else:
-#        pass
-#    return HttpResponseRedirect("/news/%s/%s/" % (news_instance.news_category_id, news_instance.id), args)
-
-
-#def shared_news_link(request, news_id):
-#    news = News.objects.get(id=news_id)
-#    shared_link = "http://127.0.0.1:8000/ext/trans/{0}/{1}/".format(news.news_category_id, news.id)
-#    return shared_link
-
-
-#def external_transition(request, cat_id, news_id):
-#    news_instance = NewsWatches.objects.get(news_id=news_id)
-#    news_instance.external_transition += 1
-#    news_instance.save()
-#    return HttpResponseRedirect("/news/%s/%s/" % (cat_id, news_id))
 
 
 def get_user_rss_news(request, user_id):
@@ -1169,9 +1100,6 @@ def render_manager_portal(request):
         "username": user_instance,
 
         "user_rss_portals": get_user_rss_portals(request, user_id=user_instance.id),
-
-        "test": RssPortals.objects.get(portal="Appleinsider"),
-
         "left_bar": False,
         "here_private": True,
     }
@@ -1335,48 +1263,65 @@ def follow_current_rss_portal(request, uuid, pid):
     args = {}
     args.update(csrf(request))
     user = User.objects.get(id=UserProfile.objects.get(uuid=uuid).user_id)
-    user_rss_instance = UserRssPortals.objects.get(portal_id=pid, user_id=user.id)
-    if user_rss_instance.check == False:
-        user_rss_instance.check = True
-        user_rss_instance.save()
-        rss_portal_instance = RssPortals.objects.get(id=int(pid))
-        rss_portal_instance.follows += 1
-        rss_portal_instance.save()
+    try:
+        user_rss_instance = UserRssPortals.objects.get(portal_id=pid, user_id=user.id)
+        if user_rss_instance.check == False:
+            user_rss_instance.check = True
+            user_rss_instance.save()
+            rss_portal_instance = RssPortals.objects.get(id=int(pid))
+            rss_portal_instance.follows += 1
+            rss_portal_instance.save()
+            data = {
+                'data': RssPortals.objects.get(id=pid).get_json(),
+                'exists': False,
+                'string': """<li id="left-bar-portal-{portal_id}">
+    <a><span class="cprs" onclick="showCurrentPortalNews({portal_verbose});">{portal_name}</span>
+    <span class="count"></span></a></li>""",
+            }
+
+
+
+            portal_news_instance = RssNews.objects.filter(portal_name_id=int(pid))
+            count_news = portal_news_instance.count() # amount of news on this portal
+
+            list_of_news = portal_news_instance.order_by("-date_posted").values('id')
+
+            for i in range(count_news):
+                if i < 5:
+                    UserRssNewsReading.objects.create(
+                        user_id=user.id,
+                        rss_news_id=list_of_news[i]['id'],
+                        rss_portal_id=int(pid),
+                        read=False
+                    )
+                else:
+                     UserRssNewsReading.objects.create(
+                        user_id=user.id,
+                        rss_news_id=list_of_news[i]['id'],
+                        rss_portal_id=int(pid),
+                        read=True
+                    )
+            return HttpResponse(json.dumps(data), content_type="application/json")
+        else:
+            user_rss_instance.check = True
+            user_rss_instance.save()
+            return HttpResponse(json.dumps({'exists': True}), content_type="application/json")
+    except UserRssPortals.DoesNotExist:
+        UserRssPortals.objects.create(
+            user_id=user.id,
+            portal_id=pid,
+            check=True,
+            position=0,
+            rate=0.0
+        )
         data = {
             'data': RssPortals.objects.get(id=pid).get_json(),
             'exists': False,
             'string': """<li id="left-bar-portal-{portal_id}">
 <a><span class="cprs" onclick="showCurrentPortalNews({portal_verbose});">{portal_name}</span>
 <span class="count"></span></a></li>""",
-        }
-
-
-
-        portal_news_instance = RssNews.objects.filter(portal_name_id=int(pid))
-        count_news = portal_news_instance.count() # amount of news on this portal
-
-        list_of_news = portal_news_instance.order_by("-date_posted").values('id')
-
-        for i in range(count_news):
-            if i < 5:
-                UserRssNewsReading.objects.create(
-                    user_id=user.id,
-                    rss_news_id=list_of_news[i]['id'],
-                    rss_portal_id=int(pid),
-                    read=False
-                )
-            else:
-                 UserRssNewsReading.objects.create(
-                    user_id=user.id,
-                    rss_news_id=list_of_news[i]['id'],
-                    rss_portal_id=int(pid),
-                    read=True
-                )
+            }
         return HttpResponse(json.dumps(data), content_type="application/json")
-    else:
-        user_rss_instance.check = True
-        user_rss_instance.save()
-        return HttpResponse(json.dumps({'exists': True}), content_type="application/json")
 
 
 def set_current_news_as_read(request, rss_id):
@@ -1414,16 +1359,18 @@ def get_current_rss_portal(request, rss_id):
     args = {}
     args.update(csrf(request))
 
+    # portal_id = RssNews.objects.get(id=int(rss_id))[0].portal_name_id
+
     data_response = {
         'string': """<div id="preview-portal-content" style="border: solid 1px lightgrey; border-radius: 5px;">
                         <div id="ppc-cover" style="width: 350px; height: 150px; background: url('{cover}') no-repeat center; background-size: cover;"></div>
-                        <div id="ppc-name"><b>{portal}</b></div>
+                        <div id="ppc-name"><img src="{favicon}" width="32px" height="32px" /><b>{portal}</b></div>
                         <div id="ppc-description"><i>{description}</i></div>
                         <div id="ppc-params">Followers:&nbsp;{follows}</div>
                         <div id="ppc-follow">
-                            <button id="ppc-follow" class="btn btn-success">Follow</button>
+                            <button id="ppc-follow" onclick="followCurrentRssPortal('%s','%s','%s');" class="btn btn-success">Follow</button>
                         </div>
-                    </div>""",
+                    </div>""" % (User.objects.get(username=auth.get_user(request).username).profile.uuid, rss_id, rss_id),
         "data": RssPortals.objects.get(id=int(rss_id)).get_portal_full(),
     }
 
@@ -1433,39 +1380,156 @@ def get_current_rss_portal(request, rss_id):
 def search_rss(request):
     from feedfinder2 import find_feeds
     import tldextract
+    from .models import RSSChannels
+    import lxml.html
+    import urllib, urllib.request as r
+    from urllib import error
+    import uuid
     args = {}
+    data_response = {}
     args.update(csrf(request))
     if request.POST:
         url = request.POST['url']
         feeds = find_feeds(url)
+        # print(feeds)
         url_instance = tldextract.extract(url)
         url_domain, url_suffix = url_instance.domain, url_instance.suffix
 
-        category = NewsCategory.objects.get(category_name="Technology").id
+        try:
+            favicon = ""
+            # home_page_url = "http://"+url_domain+"."+url_suffix
 
-        if not RssPortals.objects.filter(portal_base_link__contains=url_domain+"."+url_suffix).exists():
-            RssPortals.objects.create(
-                portal=str(url_domain).capitalize(),
-                portal_base_link=url_domain+"."+url_suffix,
-                follows=0,
-                description="",
-                cover="",
-                verbose_name=url_domain,
-                category_id=1
-            )
+
+            home_page_url = r.urlopen("http://"+url_domain+"."+url_suffix).__dict__["url"]
+
+
+            req = urllib.request.Request(home_page_url, headers={'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 YaBrowser/16.2.0.1818 (beta) Safari/537.36'})
+            favicons = lxml.html.parse(r.urlopen(req)).xpath('//link[@rel="shortcut icon"]/@href')
+            if len(favicons) > 0:
+                favicon = favicons[0]
+            if len(favicons) == 0:
+                favicons = lxml.html.parse(url).xpath('//link[@rel="icon"]/@href')
+                if len(favicons) > 0: favicon = favicons[0]
+            elif len(favicons) == 0:
+                favicons = lxml.html.parse(url).xpath('//link[@rel="apple-touch-icon-precomposed"]/@href')
+                if len(favicons) > 0: favicon = favicons[0]
+            elif len(favicon) == 0:
+                favicons = lxml.html.parse(url).xpath('//link[@rel="apple-touch-icon"]/@href')
+                if len(favicons) > 0: favicon = favicons[0]
+            # if len(favicons) == 0:
+            #     favicon = ""
+            # else:
+            #     favicon = favicons[0]
+            # if url_domain+"."+url_suffix not in favicon:
+            else:
+                favicon = ""
+            if favicon != '' and 'http' not in favicon:
+                favicon = home_page_url+favicon
+            # if favicon[:2] == '//':
+            #     favicon = str(favicons[0])[2:]
+            # else:
+            #     favicon = "%sfavicon.ico" % url
+        except OSError or urllib.error.HTTPError:
+            favicon = ""
+
+
+
+        ##################### GET DESCRIPTION ############################
+        description = ""
+        try:
+            "http://www.useragentstring.com/"
+            # url = url_domain+"."+url_suffix
+            # home_page_url = "http://"+url_domain+"."+url_suffix
+
+
+            home_page_url = r.urlopen("http://"+url_domain+"."+url_suffix).__dict__["url"]
+
+
+            req = urllib.request.Request(home_page_url, headers={'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 YaBrowser/16.2.0.1818 (beta) Safari/537.36'})
+            description = lxml.html.parse(r.urlopen(req)).xpath('//meta[@name="description"]//@content')
+            if len(description)>0:description=description[0]
+            if description == '':
+                description = lxml.html.parse(r.urlopen(req)).xpath('//title')[0].text
+            if description == '':
+                description = lxml.html.parse(r.urlopen(req)).xpath('//meta[@name="twitter:description"]//@content')[0]
+        except urllib.error.HTTPError:
+            description = ""
+        ################### END GETTING DESCRIPTION #######################
+
+
+
+        if RssPortals.objects.filter(portal_base_link=str(url_domain+"."+url_suffix), portal=str(url_domain).capitalize(), verbose_name=url_domain).exists() == False:
+            if feeds:
+                RssPortals.objects.create(
+                    portal=str(url_domain).capitalize(),
+                    portal_base_link=url_domain+"."+url_suffix,
+                    follows=0,
+                    description=description,
+                    cover="",
+                    favicon=favicon,
+                    verbose_name=url_domain,
+                    category_id=1,
+                    puid=uuid.uuid3(uuid.NAMESPACE_DNS, "%s" % str(url_domain+"."+url_suffix))
+                )
+                if RssPortals.objects.get(portal_base_link=url_domain+"."+url_suffix).favicon == '':
+                    send_mail_about_favicon(request, str(url_domain+"."+url_suffix))
+                for i in feeds:
+                    RSSChannels.objects.create(
+                        portal_id=RssPortals.objects.get(portal=str(url_domain).capitalize()).id,
+                        link=i
+                    )
         else:
+            data_response['pid'] = RssPortals.objects.get(portal=str(url_domain).capitalize()).id
+            data_response['exists'] = True
             pass
         if len(feeds) > 0:
             data_url = True
-            data_response = {
-                "data": data_url,
-                "feed": feeds,
-                'response': True
-            }
+            data_response["data"] = data_url
+            data_response["feed"] = feeds
+            data_response['response'] = True
         else:
-            data_response = {
-                'response': False
-            }
+            data_response['response'] = False
         return HttpResponse(json.dumps(data_response), content_type="application/json")
     else:
         raise 404
+
+
+def send_mail_about_favicon(request, portal):
+    from django.conf import settings
+
+    subject = "[FAVICON] Didn't load favicon"
+    body = """Didn't load favicon of %s via user "Browser Portal"
+    """ % (portal)
+
+    send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [settings.DEFAULT_FROM_EMAIL])
+    return HttpResponse(json.dumps({'report': 'send'}), content_type="application/json")
+
+
+def aggregate_current_feeds(request):
+    from feedfinder2 import find_feeds
+    from .aggregator import Aggregator
+    if request.POST:
+        url = request.POST['url']
+        feeds = find_feeds(url)
+        Aggregator(urls=feeds)
+    return HttpResponse(json.dumps({'gather': 'started'}), content_type="application/json")
+
+
+def get_latest_articles_of_new_rss(request):
+    from .models import RSSChannels
+    import tldextract
+    args = {}
+    args.update(csrf(request))
+    if request.POST:
+        url = request.POST['url']
+        url_instance = tldextract.extract(url)
+        url_domain = str(url_instance.domain).capitalize()
+        pid = RssPortals.objects.get(portal=url_domain).id
+
+        instance = RssNews.objects.filter(portal_name_id=pid).order_by("-date_posted")[0].get_json_rss()
+
+        data_response = {
+            "data": instance,
+        }
+
+        return HttpResponse(json.dumps(data_response), content_type="application/json")

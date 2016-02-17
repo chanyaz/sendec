@@ -72,6 +72,10 @@ def get_rss_portal_name(value):
     return RssPortals.objects.get(id=int(value)).portal
 
 
+@register.filter(name="get_rss_portal_favicon")
+def get_rss_portal_favicon(value):
+    return RssPortals.objects.get(id=int(value)).favicon
+
 @register.filter(name="get_rss_verbose_name")
 def get_rss_verbose_name(value):
     return RssPortals.objects.get(id=int(value)).verbose_name

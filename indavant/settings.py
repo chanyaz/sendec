@@ -28,6 +28,8 @@ SECRET_KEY = 'rbktijp2tx(1e_#)7s99w=@y6xj&&3xj8ev5b9yuxd%at%+y14'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+
 ALLOWED_HOSTS = []
 
 
@@ -58,7 +60,33 @@ INSTALLED_APPS = (
     "rss",
     #"imagekit",
     "sorl.thumbnail",
+    #"debug_toolbar",
 )
+
+# INTERNAL_IPS = ('127.0.0.1',)
+# DEBUG_TOOLBAR_PATCH_SETTINGS = False
+# DEBUG_TOOLBAR_PANELS = [
+#     'debug_toolbar.panels.versions.VersionsPanel',
+#     'debug_toolbar.panels.timer.TimerPanel',
+#     'debug_toolbar.panels.settings.SettingsPanel',
+#     'debug_toolbar.panels.headers.HeadersPanel',
+#     'debug_toolbar.panels.request.RequestPanel',
+#     'debug_toolbar.panels.sql.SQLPanel',
+#     'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+#     'debug_toolbar.panels.templates.TemplatesPanel',
+#     'debug_toolbar.panels.cache.CachePanel',
+#     'debug_toolbar.panels.signals.SignalsPanel',
+#     'debug_toolbar.panels.logging.LoggingPanel',
+#     'debug_toolbar.panels.redirects.RedirectsPanel',
+# ]
+# CONFIG_DEFAULTS = {
+#     # Toolbar options
+#     'RESULTS_CACHE_SIZE': 3,
+#     'SHOW_COLLAPSED': True,
+#     # Panel options
+#     'SQL_WARNING_THRESHOLD': 100,   # milliseconds
+# }
+
 
 NORECAPTCHA_SITE_KEY = "6Lc1dhMTAAAAACgdoXQlzfJSkghbnkZuONW_P3xj"
 NORECAPTCHA_SECRET_KEY = "6Lc1dhMTAAAAAKjKI4WP8wmvsowHxSAyuE0isjyp"
@@ -86,6 +114,7 @@ MIDDLEWARE_CLASSES = (
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
     'django.middleware.locale.LocaleMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 MAINTENANCE_MODE = False
 MAINTENANCE_URL = "503.html"
@@ -117,6 +146,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.core.context_processors.i18n',
                 'django.core.context_processors.request',
+                'django.core.context_processors.media',
             ],
         },
     },
@@ -169,6 +199,7 @@ DATABASES = {
         "PASSWORD": 'test',
         'HOST': '',
         'PORT': '',
+        'CONN_MAX_AGE': 600,
     }
 }
 
@@ -205,8 +236,8 @@ STATICFILES_DIRS = (
 )
 
 
-MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 
 import json

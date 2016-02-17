@@ -3,141 +3,13 @@
 {% load i18n %}
 {% block register %}
     <!--suppress ALL -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <script src="{% static 'static/js/jquery.js' %}"></script>
     <script src="{% static 'static/js/jquery.min.js' %}"></script>
     <script src="{% static 'static/js/jquery-ui.js' %}"></script>
-
-    <script>
-        $(document).ready(function(){
-            ProgressBarPopUpHide();
-        });
-        function ProgressBarPopUpShow(){
-                $("#progress-popup-window").show();
-        }
-
-        function ProgressBarPopUpHide(){
-            $("#progress-popup-window").hide();
-        }
-    </script>
-    <script>$(document).ready(function(){$("#progress-bar").progressbar({value: false});})</script>
-    <style>
-    .background-image{
-            top: 0;
-            width: 100%;
-            height: 100%;
-            position: fixed;
-{#            -webkit-filter: blur(1px);#}
-{#            -moz-filter: blur(1px);#}
-{#            -o-filter: blur(1px);#}
-{#            -ms-filter: blur(1px);#}
-{#            filter: blur(1px);#}
-
-{#  display: block;#}
-            background: url('{{ background_url }}') no-repeat center;
-            background-size: cover;
-        }
-        #auth_reg{
-            width: 50%;
-            margin-left: auto;
-            margin-right:auto;
-{#            border: solid 1px red;#}
-            position: relative;
-        }
-        #auth_reg_top{
-            min-height: 81%;
-        }
-    #auth_reg_logo{
-        color: white;
-        width: 4.5em;
-        margin-left: auto;
-        margin-right: auto;
-        font-family: Georgia, Times, "Times New Roman", serif;
-        font-size: 30px;
-        margin-top: 2%;
-        margin-bottom: 2%;
-{#        border: solid 1px red;#}
-    }
-
-
-    #reg-password{
-{#        width: 50em;#}
-{#        margin-left: auto;#}
-{#        margin-right: auto;#}
-{#        border: solid 1px red;#}
-    }
-    .form-fields{
-{#        width: 3em;#}
-        margin-left: auto;
-        margin-right: auto;
-{#        border: solid 1px blue;#}
-    }
-    .form-field{
-        width: 20em;
-        margin-left: auto;
-        margin-right: auto;
-{#        border: solid 1px purple;#}
-{#        border: solid 1px red;#}
-    }
-    .form-control{
-        margin-left: 0;
-    }
-    .form-field-link{
-        width: 20em;
-        margin-left: auto;
-        margin-right: auto;
-{#        border: solid 1px blue;#}
-        text-align: center;
-    }
-    ul{
-        list-style-type: none;
-    }
-    #auth_reg_footer{
-        position: relative;
-        color: white;
-{#        width: 100%;#}
-        margin-left: auto;
-        margin-right: auto;
-{#        border: solid 1px red;#}
-    }
-
-
-
-    #progress-popup-window{
-            z-index: 900;
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            margin: -10% 0 auto -0.7%;
-        }
-        #progress-popup-window-content {
-            z-index: 800;
-            width:  48.5%;
-            margin: 15% auto 0 20.5%;
-            height: 30%;
-            background-color: #d5d5d5;
-        }
-        #progress-bar{margin-left: 30%;width: 40%;height: 5%;}
-        .text{padding-top: 5%;text-align: center;padding-bottom: 3%;}
-
-
-        .form-group{
-{#            border: solid 1px greenyellow;#}
-        }
-
-        .reg-error{
-            font-family: Georgia, Times, "Times New Roman", serif;
-            color: red;
-            float: right;
-        }
-
-        a:hover{
-            text-decoration: none;
-            color: rgb(25, 180, 155);
-        }
-
-    </style>
     <script>
         $(document).ready(function(){
             $("#user-register-name").focusout(function() {
@@ -163,107 +35,217 @@
             });
         })
     </script>
-
-    <div id="progress-popup-window">
-        <div id="progress-popup-window-content">
-            <div class="text">
-                {% trans 'Please, wait while we are preparing your profile.' %}
-                <br>
-                {% trans 'You will be able to use service in a minute.' %}
-            </div>
-            <div id="progress-bar"></div>
-        </div>
-    </div>
+    <script>$(document).ready(function(){$("#progress-bar").progressbar({value: false});})</script>
+    <style>
+        body{background: black;}
+        @media(max-device-width: 767px){.background-image{opacity: 0;visibility: hidden;}}
+        #auth-register{height:90%;margin-top: 3%;position: relative;}
+        .background-image{top: 0;margin-left: 0;width: 100%;height: 100%;position: absolute;background: black;}
+        #auth-video{margin-left: 1%;margin-top: -3%;}
+        .form-field-link a:hover{text-decoration: none;color: #F62A00;}
+        ul{list-style-type: none;}
+        .form-control{margin-left:0;}
+        #auth_login_logo a{text-decoration: none;color: #F62A00;}
+        #auth_login_logo a:hover{text-decoration: none;color: #1E656D;}
+        footer{position: absolute;bottom: 0;width: 100%;}
+        html{overflow-x: hidden;}
+        .auth-button{margin-top:3%;position:relative;}
+    </style>
 
     <div class="background-image"></div>
-
-    <div id="auth_reg">
-        <div id="auth_reg_top">
-            <div id="auth_reg_logo">
-                <a href="/">INSYDIA</a>
-            </div>
-            <div id="auth_reg_form">
-                <form id="reg-password"
-                      class="form-horizontal"
-                      method="POST"
-                      action="/auth/register/">
-                    {% csrf_token %}
-                    <div class="form-fields">
-                        <div class="form-group">
+{##}
+{#    <div id="auth_reg">#}
+{#        <div id="auth_reg_top">#}
+{#            <div id="auth_reg_logo">#}
+{#                <a href="/">INSYDIA</a>#}
+{#            </div>#}
+{#            <div id="auth_reg_form">#}
+{#                <form id="reg-password"#}
+{#                      class="form-horizontal"#}
+{#                      method="POST"#}
+{#                      action="/auth/register/">#}
+{#                    {% csrf_token %}#}
+{#                    <div class="form-fields">#}
+{#                        <div class="form-group">#}
     {#                        <label class="col-md-4 control-label" for="user-register-password">Username:</label>#}
-                            <div class="form-field">
-                                <input  name="username"
-                                        required="required"
-                                        id="user-register-name"
-                                        class="form-control"
-                                        type="text"
-                                        placeholder="{% trans 'Username' %}">
-                                <span id="span-check-username" class="reg-error">
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group">
+{#                            <div class="form-field">#}
+{#                                <input  name="username"#}
+{#                                        required="required"#}
+{#                                        id="user-register-name"#}
+{#                                        class="form-control"#}
+{#                                        type="text"#}
+{#                                        placeholder="{% trans 'Username' %}">#}
+{#                                <span id="span-check-username" class="reg-error">#}
+{#                                </span>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
     {#                        <label class="col-md-4 control-label" for="user-register-password">Username:</label>#}
-                            <div class="form-field">
-                                <input  name="email"
-                                        required="required"
-                                        id="user-register-email"
-                                        class="form-control"
-                                        type="text"
-                                        pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"
-                                        placeholder="{% trans 'E-mail' %}">
-                            </div>
+{#                            <div class="form-field">#}
+{#                                <input  name="email"#}
+{#                                        required="required"#}
+{#                                        id="user-register-email"#}
+{#                                        class="form-control"#}
+{#                                        type="text"#}
+{#                                        pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"#}
+{#                                        placeholder="{% trans 'E-mail' %}">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+    {#                        <label class="col-md-4 control-label" for="user-register-password">Password:</label>#}
+{#                            <div class="form-field">#}
+{#                                {{ form.password1 }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+    {#                        <label class="col-md-4 control-label" for="user-register-password">Password:</label>#}
+{#                            <div class="form-field">#}
+{#                                {{ form.password2 }}#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <!--<div class="form-group">#}
+{#                            <div class="form-field">#}
+{#                                <label id="remembering">#}
+{#                                    <input type="checkbox"#}
+{#                                           id="check-remember"#}
+{#                                           name="remember-true"#}
+{#                                           value="remember-true">#}
+{#                                    Remember&nbsp;me#}
+{#                                </label>#}
+{#                            </div>#}
+{#                        </div>-->#}
+{##}
+{##}
+{#                        {{ reg_error }}#}
+{##}
+{##}
+{#                       <div class="form-group">#}
+{#                            <div class="form-field">#}
+{#                                <input id="reg-submit" class="btn btn-success form-field" value="{% trans 'Sign up' %}" type="submit" onclick="">#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{##}
+{#                        <div class="help-links">#}
+{#                            <div class="form-field">#}
+{#                                <input id="reg-submit" class="btn btn-default form-field" value="{% trans 'Sign in' %}" onclick="location.href='/auth/login/';">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    <div id="auth_reg_footer" class="container-fluid container">#}
+{#        <div class="row row-centered" style="width: 40%;margin-left: auto;margin-right: auto;">#}
+{#            {% include 'footer_loginsys.html' %}#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
+
+
+    <div id="auth-register" class="row">
+        <div class=" container">
+            <div class="col-md-4 col-md-offset-4">
+                <div class=" col-md-4 col-md-offset-3 text-center">
+                    <h1 style="color: #F62A00;">INSYDIA</h1>
+                </div>
+                <div class="panel-body">
+                    <form role="form"
+                          method="POST"
+                          action="/auth/register/">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input name="username"
+                                   required="required"
+                                   id="user-register-name"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="{% trans 'Username' %}">
                         </div>
                         <div class="form-group">
-    {#                        <label class="col-md-4 control-label" for="user-register-password">Password:</label>#}
-                            <div class="form-field">
-                                {{ form.password1 }}
-                            </div>
+                            <input name="email"
+                                   required="required"
+                                   id="user-register-email"
+                                   class="form-control"
+                                   type="text"
+                                   pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"
+                                   placeholder="{% trans 'E-mail' %}">
                         </div>
                         <div class="form-group">
-    {#                        <label class="col-md-4 control-label" for="user-register-password">Password:</label>#}
-                            <div class="form-field">
-                                {{ form.password2 }}
-                            </div>
+                            {{ form.password1 }}
                         </div>
-
-                        <!--<div class="form-group">
-                            <div class="form-field">
-                                <label id="remembering">
-                                    <input type="checkbox"
-                                           id="check-remember"
-                                           name="remember-true"
-                                           value="remember-true">
-                                    Remember&nbsp;me
-                                </label>
-                            </div>
-                        </div>-->
-
-
-                        {{ reg_error }}
-
-
-                       <div class="form-group">
-                            <div class="form-field">
-                                <input id="reg-submit" class="btn btn-success form-field" value="{% trans 'Sign up' %}" type="submit" onclick="">
-                            </div>
+                        <div class="form-group">
+                            {{ form.password2 }}
                         </div>
+                        <input type="submit" value="{% trans 'SIGN UP' %}" class="btn btn-danger btn-block">
 
-
-                        <div class="help-links">
-                            <div class="form-field">
-                                <input id="reg-submit" class="btn btn-default form-field" value="{% trans 'Sign in' %}" onclick="location.href='/auth/login/';">
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                        <a href="/auth/login/"><span class="auth-button btn btn-primary btn-block">{% trans 'SIGN IN' %}</span></a>
+                    </form>
+                </div>
+    		</div>
+    	</div>
+    </div>
+    <footer class="text-center">
+        <div class="container">
+            <div class="text-center col-md-4 col-md-offset-4">
+                <ul class=" list-inline">
+                    <li class="footer-list-element">
+                        <a href="/about/advertisers/">{% trans 'Advertisement' %}</a>
+                    </li>&nbsp;|&nbsp;
+                    <li class="footer-list-element">
+                        <a href="/about/contacts/">{% trans 'Contacts' %}</a>
+                    </li>&nbsp;|&nbsp;
+                    <li class="footer-list-element">
+                        <a href="/about">{% trans 'About us' %}</a>
+                    </li>
+                </ul>
+                <ul id="footer-social" class="list-inline" style="list-style-type: none;">
+                    <li>
+                        <a class="social" href="https://telegram.me/insydia" target="_blank">
+                            <span class="fa fa-paper-plane"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://facebook.com/" target="_blank">
+                            <span class="fa fa-facebook"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://linkedin.com/">
+                            <span class="fa fa-linkedin"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://vk.com/" target="_blank">
+                            <span class="fa fa-vk"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://twitter.com/" target="_blank">
+                            <span class="fa fa-twitter"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://instagram.com/" target="_blank">
+                            <span class="fa fa-instagram"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://youtube.com/" target="_blank">
+                            <span class="fa fa-youtube"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="/rss" target="_blank">
+                            <span class="fa fa-rss"></span>
+                        </a>
+                    </li>
+                </ul>
+                <div id="copyrights" class="" style="color: white">INSYDIA, 2015{% now "Y" as current_year %}{% if current_year != '2015' %}-{% now "Y" %}{% endif %}</div>
             </div>
         </div>
-    </div>
-
-    <div id="auth_reg_footer" class="container-fluid container">
-        <div class="row row-centered" style="width: 40%;margin-left: auto;margin-right: auto;">
-            {% include 'footer_loginsys.html' %}
-        </div>
-    </div>
+    </footer>
 {% endblock %}

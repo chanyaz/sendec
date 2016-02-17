@@ -40,6 +40,7 @@ class PostAdminTopNewsForm(forms.ModelForm):
 
 class PostAdminTopNews(admin.ModelAdmin):
     form = PostAdminTopNewsForm
+    prepopulated_fields = {'slug': ('top_news_title', )}
 
 
 class RSSNewsAdminForm(forms.ModelForm):

@@ -1,18 +1,18 @@
 from django import forms
-from .models import News, NewsComments, NewsCommentsReplies
+from .models import News#, NewsComments, NewsCommentsReplies
 from django.forms import ModelForm
 from nocaptcha_recaptcha.fields import NoReCaptchaField
-
-class NewsCommentsForm(ModelForm):
-    class Meta:
-        model = NewsComments
-        fields = ["comments_text"]
-
-
-class NewsCommentsRepliesForm(ModelForm):
-    class Meta:
-        model = NewsCommentsReplies
-        fields = ["reply_text"]
+#
+# class NewsCommentsForm(ModelForm):
+#     class Meta:
+#         model = NewsComments
+#         fields = ["comments_text"]
+#
+#
+# class NewsCommentsRepliesForm(ModelForm):
+#     class Meta:
+#         model = NewsCommentsReplies
+#         fields = ["reply_text"]
 
 
 class SendReportForm(forms.Form):

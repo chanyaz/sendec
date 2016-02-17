@@ -1,14 +1,16 @@
 {% load endless %}
 {% load staticfiles %}
 {% load my %}
+{% load i18n %}
 
 
     <div class="companies-endless" style="height: inherit;">
         <table id="company-table">
                             <tr>
-                                <th class="table-logo tbi">Logo</th>
-                                <th class="table-name tbi">Name</th>
-                                <th class="table-articles tbi">Articles</th>
+                                <th class="table-logo tbi">{% trans 'Logo' %}</th>
+                                <th class="table-name tbi">{% trans 'Name' %}</th>
+                                <th class="table-articles tbi">{% trans 'Articles' %}</th>
+                                <th class="table-location tbi">{% trans 'Location' %}</th>
                             </tr>
         {% paginate 20 companies %}
         {% for current_company in companies %}

@@ -3892,6 +3892,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: relative;
   display: block;
 }
+
+.nav > li > .active{
+  border-bottom: solid 2px #F62A00;
+  color: #F62A00;
+}
+
 .nav > li > a {
   position: relative;
   display: block;
@@ -4428,6 +4434,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: white;
   font-size: 1.1em;
 }
+
+.navbar-default .navbar-nav > li > a.active{
+  color: #F62A00;
+}
+
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #ff6e1f;
@@ -5321,7 +5332,7 @@ a.list-group-item-danger.active:focus {
 }
 .panel {
   margin-bottom: 20px;
-  background-color: #fff;
+  /*background-color: #fff;*/
   border: 1px solid transparent;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);

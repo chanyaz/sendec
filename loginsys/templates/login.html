@@ -1,111 +1,24 @@
 {% load staticfiles %}
 {% load i18n %}
 {% block login %}
-<link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
     <style>
-
-    @media (max-device-width: 600px){
-        body{
-            background: url('/static/static/img/login/3.jpg') no-repeat center;
-            background-size: cover;
-        }
-        #auth_login{
-            height: 100%;
-            width: 100%;
-            margin-left: auto;
-            margin-right:auto;
-            position: relative;
-        }
-        #auth_login_logo{
-            position: relative;
-{#            width: 4.5em;#}
-{#            margin: 5% auto 2% auto;#}
-            font-family: Georgia, Times, "Times New Roman", serif;
-            font-size: 10em;
-            color: white;
-            text-align: center;
-        }
-        .background-image{visibility: hidden;}
-        #login-password input{font-size: 3em; height: 3em; margin-bottom: 2%;}
-
-        .help-links{width:100%;}
-        #create-acc-btn{width:100%;}
-        #help-signin{font-size: 5em;}
-        .form-field-link{
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-        }
-        .footer-auth{width: 100%; position: relative; margin-left: auto;margin-right: auto;}
-        .footer-rt{}
-        #auth_login_footer{width:100%;}
-        #auth_login_footer .ftr-lf{visibility: hidden}
-        #auth_login_footer #ftr-rt-top{width: 100%; text-align: center}
-        #auth_login_footer .footer-list-top{width: 100%; font-size: 2em; text-align: center}
-    }
-
-    @media (min-device-width: 600px){
-        #auth_login{
-            height: 80%;
-            width: 50%;
-            margin-left: auto;
-            margin-right:auto;
-            position: relative;
-        }
-        #auth_login_logo{
-            width: 4.5em;
-            margin: 5% auto 2% auto;
-            font-family: Georgia, Times, "Times New Roman", serif;
-            font-size: 30px;
-            color: white;
-        }
-        .form-field{
-            width: 20em;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .background-image{
-            top: 0;
-            margin-left: 0;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            background: black;
-        }
-        .form-field-link{
-            width: 20em;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-        }
-        #auth_login_footer{position: relative;color: white;margin-left: auto;margin-right: auto;  }
-        .footer-auth{width: 40%;margin-left: auto;margin-right: auto;}
-    }
-
-
-        #auth-video{
-            margin-left: 1%;
-            margin-top: -3%;
-        }
-
-        #auth_login_top{
-            min-height: 81%;
-        }
-        .form-fields{
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        #signin{margin-left: 3%;}
-        #create-acc-btn{margin-left:3%;}
-
+        body{background: black;}
+        @media(max-device-width: 767px){.background-image{opacity: 0;visibility: hidden;}}
+        #auth-login{height:90%;margin-top: 3%;position: relative;}
+        .background-image{top: 0;margin-left: 0;width: 100%;height: 100%;position: absolute;background: black;}
+        #auth-video{margin-left: 1%;margin-top: -3%;}
         .form-field-link a:hover{text-decoration: none;color: #F62A00;}
         ul{list-style-type: none;}
-        .error-message{color: white;}
+        .form-control{margin-left:0;}
         #auth_login_logo a{text-decoration: none;color: #F62A00;}
         #auth_login_logo a:hover{text-decoration: none;color: #1E656D;}
+        footer{position: absolute;bottom: 0;width: 100%;}
+        html{overflow-x: hidden;}
+        .auth-button{margin-top:3%;position:relative;}
     </style>
 
     <div class="background-image">
@@ -113,60 +26,90 @@
             <source src="{% static 'static/video/loginsys/hoverboard.mp4' %}" type="video/mp4" />
         </video>
     </div>
-    <div id="auth_login">
-        <div id="auth_login_top">
-            <div id="auth_login_logo"><a href="/">INSYDIA</a></div>
-            <div id="auth_login_form">
-                <form id="login-password"
-                      class="form-horizontal"
-                      method="POST"
-                      action="/auth/login/">
-                    {% csrf_token %}
-                    <div class="form-fields">
+    <div id="auth-login" class="row">
+        <div class=" container">
+            <div class="col-md-4 col-md-offset-4">
+                <div class=" col-md-4 col-md-offset-3 text-center">
+                    <h1 style="color: #F62A00;">INSYDIA</h1>
+                </div>
+                <div class="panel-body">
+                    <form role="form"
+                          method="POST"
+                          action="/auth/login/">
+                        {% csrf_token %}
                         <div class="form-group">
-                            <div class="form-field">
-                                {{ form.username }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-field">
-                                {{ form.password }}
-                            </div>
+                            {{ form.username }}
                         </div>
                         <div class="form-group">
-                            <div class="form-field">
-                                <input id="signin" class="btn btn-success form-field form-control" value="{% trans 'Sign in' %}" type="submit" onclick="">
-                            </div>
+                            {{ form.password }}
                         </div>
-                        <div class="form-group">
-                            <div class="form-field">
-                                <span class="error-message">
-                                    {{ login_error }}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="help-links">
-                            <div class="form-group">
-                                <div class="form-field">
-                                    <a href="/auth/register/">
-                                        <input id="create-acc-btn" class="btn form-field" value="{% trans 'Create Account' %}">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="form-field-link" id="help-signin">
-                                <a href="{% url "password_reset_recover" %}">{% trans "Can't log in?" %}</a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                        <input type="submit" value="{% trans 'SIGN IN' %}" class="btn btn-danger btn-block">
+
+                        <a href="/auth/register/"><span class="auth-button btn btn-primary btn-block">{% trans 'SIGN UP' %}</span></a>
+                        <a href="/auth/cant_login/"><span class="auth-button btn btn-link btn-block">{% trans "Can't sign in?" %}</span></a>
+                    </form>
+                </div>
+    		</div>
+    	</div>
+    </div>
+    <footer class="text-center">
+        <div class="container">
+            <div class="text-center col-md-4 col-md-offset-4">
+                <ul class=" list-inline">
+                    <li class="footer-list-element">
+                        <a href="/about/advertisers/">{% trans 'Advertisement' %}</a>
+                    </li>&nbsp;|&nbsp;
+                    <li class="footer-list-element">
+                        <a href="/about/contacts/">{% trans 'Contacts' %}</a>
+                    </li>&nbsp;|&nbsp;
+                    <li class="footer-list-element">
+                        <a href="/about">{% trans 'About us' %}</a>
+                    </li>
+                </ul>
+                <ul id="footer-social" class="list-inline" style="list-style-type: none;">
+                    <li>
+                        <a class="social" href="https://telegram.me/insydia" target="_blank">
+                            <span class="fa fa-paper-plane"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://facebook.com/" target="_blank">
+                            <span class="fa fa-facebook"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://linkedin.com/">
+                            <span class="fa fa-linkedin"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://vk.com/" target="_blank">
+                            <span class="fa fa-vk"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://twitter.com/" target="_blank">
+                            <span class="fa fa-twitter"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://instagram.com/" target="_blank">
+                            <span class="fa fa-instagram"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://youtube.com/" target="_blank">
+                            <span class="fa fa-youtube"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="/rss" target="_blank">
+                            <span class="fa fa-rss"></span>
+                        </a>
+                    </li>
+                </ul>
+                <div id="copyrights" class="" style="color: white">INSYDIA, 2015{% now "Y" as current_year %}{% if current_year != '2015' %}-{% now "Y" %}{% endif %}</div>
             </div>
         </div>
-    </div>
-
-    <div id="auth_login_footer" class="container-fluid container">
-        <div class="row row-centered footer-auth">
-            {% include 'footer_loginsys.html' %}
-        </div>
-    </div>
-
+    </footer>
 {% endblock %}

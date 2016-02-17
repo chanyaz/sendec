@@ -11,6 +11,18 @@ body {
     overflow-x: hidden;
     /*margin-top: 100px;*/
 }
+body > *{
+    font-family: Georgia, Times, "Times New Roman", serif;
+}
+
+::-webkit-scrollbar{
+    margin-left:-0.5em;
+    width: 0.5em;
+    height: 2em;
+}
+::-webkit-scrollbar-thumb {
+  background: slategray;
+}
 
 header{
     position: relative;
@@ -135,7 +147,7 @@ vertical-align: middle;
 #page-wrapper {
     width: 100%;
     padding: 0;
-    /*background-color: #fff;*/
+    background-color: #fff;
 }
 
 .sect{
@@ -331,7 +343,7 @@ ul.alert-dropdown {
 
 #wrapper-main-content {
   /*padding-top: 70px;*/
-  width: 100%;
+  /*width: 100%;*/
 }
 
 /*-------------------------------*/
@@ -1847,7 +1859,8 @@ Sidebar
   top: 0;
   width: 100%;
   padding: 45px 0 0;
-  background-color: #2c3136;
+  /*background-color: #2c3136;*/
+  background-color: slategray;
   visibility: hidden;
   opacity: 0;
   max-height: 100vh;
@@ -2104,7 +2117,8 @@ Sidebar
   position: relative;
   width: 100%;
   display: none;
-  background-color: #1c1f22;
+  /*background-color: #1c1f22;*/
+  background-color: slategray;
 }
 .has-children > a::after {
   /* arrow icon */

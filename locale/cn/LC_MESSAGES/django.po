@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2016, Insydia
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR <eprivalov@insydia.com>, 2016.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-15 23:54+0000\n"
+"POT-Creation-Date: 2016-02-14 12:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: favourite/templates/liked_news.html:62
+msgid "FAVOURITE ARTICLES"
+msgstr ""
+
+#: favourite/templates/liked_news.html:68
+msgid "Your favourite articles"
+msgstr ""
 
 #: loginsys/forms.py:13 loginsys/forms.py:56
 msgid "The two password fields didn't match."
@@ -33,8 +41,8 @@ msgstr ""
 msgid "Enter the same password as above, for verification."
 msgstr ""
 
-#: loginsys/forms.py:59 loginsys/templates/register.html:200
-#: userprofile/templates/profile.html:180
+#: loginsys/forms.py:59 loginsys/templates/register.html:166
+#: userprofile/templates/profile.html:183
 msgid "Username"
 msgstr ""
 
@@ -42,190 +50,435 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: loginsys/templates/footer_loginsys.html:41
-msgid "Terms and Conditions"
+#: loginsys/templates/footer_loginsys.html:29 loginsys/templates/login.html:60
+#: loginsys/templates/register.html:196 templates/footer.html:146
+#: templates/footer_usernews.html:125
+msgid "Advertisement"
 msgstr ""
 
-#: loginsys/templates/footer_loginsys.html:44
-msgid "Privacy Policy"
-msgstr ""
-
-#: loginsys/templates/footer_loginsys.html:47
-msgid "Advertiser"
-msgstr ""
-
-#: loginsys/templates/footer_loginsys.html:50 templates/footer.html:86
+#: loginsys/templates/footer_loginsys.html:32 loginsys/templates/login.html:63
+#: loginsys/templates/register.html:199 templates/footer.html:145
+#: templates/footer_usernews.html:124
 msgid "Contacts"
 msgstr ""
 
-#: loginsys/templates/footer_loginsys.html:53 templates/footer.html:85
+#: loginsys/templates/footer_loginsys.html:35 loginsys/templates/login.html:66
+#: loginsys/templates/register.html:202 templates/footer.html:144
+#: templates/footer_usernews.html:123
 msgid "About us"
 msgstr ""
 
-#: loginsys/templates/login.html:127 loginsys/templates/register.html:255
-#: templates/index_new.html:696
-msgid "Sign in"
+#: loginsys/templates/login.html:46 loginsys/templates/register.html:185
+msgid "SIGN IN"
 msgstr ""
 
-#: loginsys/templates/login.html:142
-msgid "Create Account"
+#: loginsys/templates/login.html:48 loginsys/templates/register.html:183
+msgid "SIGN UP"
 msgstr ""
 
-#: loginsys/templates/login.html:147
-msgid "Can't log in?"
+#: loginsys/templates/login.html:49
+msgid "Can't sign in?"
 msgstr ""
 
-#: loginsys/templates/register.html:170
-msgid "Please, wait while we are preparing your profile."
-msgstr ""
-
-#: loginsys/templates/register.html:172
-msgid "You will be able to use service in a minute."
-msgstr ""
-
-#: loginsys/templates/register.html:214 templates/contacts.html:44
-#: templates/contacts.html.py:61
+#: loginsys/templates/register.html:175 templates/contacts.html:54
+#: templates/contacts.html.py:71
 msgid "E-mail"
 msgstr ""
 
-#: loginsys/templates/register.html:248 templates/index_new.html:701
-msgid "Sign up"
+#: news/templates/auto.html:313 news/templates/auto.html.py:330
+#: news/templates/auto.html:476 news/templates/bio.html:313
+#: news/templates/bio.html.py:330 news/templates/bio.html:476
+#: news/templates/current_company_news.html:50
+#: news/templates/current_news.html:319 news/templates/entertainment.html:313
+#: news/templates/entertainment.html:330 news/templates/entertainment.html:476
+#: news/templates/space.html:313 news/templates/space.html.py:330
+#: news/templates/space.html:476 news/templates/technology.html:313
+#: news/templates/technology.html.py:330 news/templates/technology.html:476
+#: news/templates/top_news.html:319 news/templates/total.html:475
+#: news/templates/total.html.py:496 news/templates/total.html:677
+#: search/templates/search.html:172
+msgid "By"
 msgstr ""
 
-#: news/templates/companies.html:51 search/templates/search.html:176
-#: templates/footer.html:75
+#: news/templates/auto.html:343 news/templates/bio.html:343
+#: news/templates/entertainment.html:343 news/templates/space.html:343
+#: news/templates/technology.html:343 news/templates/total.html:513
+msgid "Interesting articles"
+msgstr ""
+
+#: news/templates/browse_auto.html:324 news/templates/browse_auto.html:357
+#: news/templates/browse_auto.html:390 news/templates/browse_auto.html:423
+#: news/templates/browse_auto.html:456 news/templates/browse_bio.html:324
+#: news/templates/browse_bio.html.py:357 news/templates/browse_bio.html:390
+#: news/templates/browse_bio.html.py:423 news/templates/browse_bio.html:456
+#: news/templates/browse_ent.html:324 news/templates/browse_ent.html.py:357
+#: news/templates/browse_ent.html:390 news/templates/browse_ent.html.py:423
+#: news/templates/browse_ent.html:456 news/templates/browse_space.html:324
+#: news/templates/browse_space.html:357 news/templates/browse_space.html:390
+#: news/templates/browse_space.html:423 news/templates/browse_space.html:456
+#: news/templates/browse_tech.html:258
+msgid "Follow"
+msgstr ""
+
+#: news/templates/browse_portals.html:136 news/templates/browse_tech.html:162
+#: news/templates/manage_portals.html:104 news/templates/user_news.html:432
+msgid "Main"
+msgstr ""
+
+#: news/templates/browse_portals.html:138
+#: news/templates/manage_portals.html:106 news/templates/user_news.html:434
+msgid "Overview"
+msgstr ""
+
+#: news/templates/browse_portals.html:140 news/templates/browse_tech.html:166
+#: news/templates/manage_portals.html:108
+msgid "My feed"
+msgstr ""
+
+#: news/templates/browse_portals.html:141 news/templates/browse_tech.html:167
+#: news/templates/manage_portals.html:109 news/templates/user_news.html:438
+msgid "Saved articles"
+msgstr ""
+
+#: news/templates/browse_portals.html:146 news/templates/browse_tech.html:172
+msgid "Properties"
+msgstr ""
+
+#: news/templates/browse_portals.html:156 news/templates/browse_tech.html:182
+#: news/templates/manage_portals.html:114 news/templates/user_news.html:443
+msgid "Portals"
+msgstr ""
+
+#: news/templates/browse_portals.html:174 news/templates/browse_tech.html:200
+#: news/templates/manage_portals.html:132 news/templates/user_news.html:465
+msgid "Configures"
+msgstr ""
+
+#: news/templates/browse_portals.html:176 news/templates/browse_tech.html:202
+#: news/templates/manage_portals.html:134 news/templates/user_news.html:467
+msgid "Manage portals"
+msgstr ""
+
+#: news/templates/browse_portals.html:177 news/templates/browse_tech.html:203
+#: news/templates/manage_portals.html:135 news/templates/user_news.html:468
+msgid "Browse portals"
+msgstr ""
+
+#: news/templates/browse_portals.html:190 news/templates/browse_tech.html:215
+msgid "Pick your own collection of news"
+msgstr ""
+
+#: news/templates/browse_portals.html:203
+msgid "Drop the key word or link"
+msgstr ""
+
+#: news/templates/browse_portals.html:212 templates/index_new.html:1250
+msgid "Loading..."
+msgstr ""
+
+#: news/templates/browse_portals.html:213
+msgid "Wait please"
+msgstr ""
+
+#: news/templates/browse_portals.html:220
+msgid ""
+"Sorry, we can't work with this portal. Try another one or search by key-word."
+msgstr ""
+
+#: news/templates/browse_portals.html:223
+msgid "We find RSS-channel on"
+msgstr ""
+
+#: news/templates/browse_portals.html:223
+msgid "and add it to our Database."
+msgstr ""
+
+#: news/templates/browse_portals.html:229
+msgid ""
+"We are collecting news for current portals. Wait please. Or you can read the "
+"latest news almost now by click"
+msgstr ""
+
+#: news/templates/browse_portals.html:230
+msgid "here"
+msgstr ""
+
+#: news/templates/browse_portals.html:265 rss/templates/rss.html:72
+#: templates/footer.html:129 templates/footer_usernews.html:108
+msgid "Technology"
+msgstr ""
+
+#: news/templates/browse_portals.html:290 rss/templates/rss.html:83
+#: templates/footer.html:130 templates/footer_usernews.html:109
+msgid "Entertainment"
+msgstr ""
+
+#: news/templates/browse_portals.html:315 rss/templates/rss.html:94
+#: templates/footer.html:131 templates/footer_usernews.html:110
+msgid "Auto"
+msgstr ""
+
+#: news/templates/browse_portals.html:340
+msgid "Spase"
+msgstr ""
+
+#: news/templates/browse_portals.html:365
+msgid "Bio-technology"
+msgstr ""
+
+#: news/templates/browse_tech.html:222
+msgid "Drop the key word or url"
+msgstr ""
+
+#: news/templates/browse_tech.html:232 templates/index_new.html:617
+#: templates/index_new.html.py:619 templates/index_new.html:843
+#: templates/index_new.html.py:1003
+msgid "TECHNOLOGY"
+msgstr ""
+
+#: news/templates/browse_tech.html:252
+msgid "Followers:"
+msgstr ""
+
+#: news/templates/browse_tech.html:253
+msgid "Articles:"
+msgstr ""
+
+#: news/templates/companies.html:62 search/templates/search.html:199
+#: templates/footer.html:134 templates/footer_usernews.html:113
 msgid "Companies"
 msgstr ""
 
-#: news/templates/companies.html:53
+#: news/templates/companies.html:64
 msgid "Here you can search news of the certain company which do you want."
 msgstr ""
 
-#: news/templates/companies.html:63
+#: news/templates/companies.html:74
 msgid "Search company"
 msgstr ""
 
-#: news/templates/companies.html:71 search/templates/search.html:140
-#: userprofile/templates/profile.html:329
+#: news/templates/companies.html:82 search/templates/search.html:157
+#: templates/index_new.html:699
 msgid "Search"
 msgstr ""
 
-#: news/templates/companies.html:86
+#: news/templates/companies.html:97 news/templates/companies_endless.html:10
 msgid "Logo"
 msgstr ""
 
-#: news/templates/companies.html:87 templates/contacts.html:55
+#: news/templates/companies.html:98 news/templates/companies_endless.html:11
+#: templates/contacts.html:65
 msgid "Name"
 msgstr ""
 
-#: news/templates/companies.html:88 search/templates/search.html:212
-#: search/templates/search.html.py:227
-#: userprofile/templates/moderator_profile.html:49
-#: userprofile/templates/profile.html:136
+#: news/templates/companies.html:99 news/templates/companies_endless.html:12
+#: search/templates/search.html:240 search/templates/search.html.py:256
+#: userprofile/templates/moderator_profile.html:108
+#: userprofile/templates/profile.html:139
 msgid "Articles"
 msgstr ""
 
-#: news/templates/current_company.html:40
+#: news/templates/companies.html:100 news/templates/companies_endless.html:13
+msgid "Location"
+msgstr ""
+
+#: news/templates/current_company.html:52
 #, python-format
 msgid "All %(company.name)s's news"
 msgstr ""
 
-#: news/templates/current_news.html:108 news/templates/top_news.html:107
-#: search/templates/search.html:155
-msgid "By"
-msgstr ""
-
-#: news/templates/current_news.html:118
+#: news/templates/current_news.html:345 news/templates/top_news.html:345
 msgid "Edit"
 msgstr ""
 
-#: news/templates/current_news.html:249 news/templates/top_news.html:195
+#: news/templates/current_news.html:443 news/templates/top_news.html:443
+msgid "Recommendations of"
+msgstr ""
+
+#: news/templates/current_news.html:511 news/templates/top_news.html:511
+msgid "Please enable JavaScript to view the"
+msgstr ""
+
+#: news/templates/current_news.html:511 news/templates/top_news.html:511
+msgid "comments powered by Disqus."
+msgstr ""
+
+#: news/templates/current_news.html:523 news/templates/top_news.html:523
 #, python-format
 msgid "News&nbsp;of&nbsp;%(company_name)s"
 msgstr ""
 
-#: news/templates/top_news.html:159
-#, python-format
-msgid "Recommendations&nbsp;of&nbsp;%(current_news_values.top_news_category)s"
+#: news/templates/current_news_comments.html:22 templates/contacts.html:102
+#: userprofile/templates/profile.html:95
+msgid "Send"
 msgstr ""
 
-#: news/templates/total.html:474
-msgid "RECENTLY NEWS"
+#: news/templates/manage_portals.html:177
+msgid "Portal name"
 msgstr ""
 
-#: news/templates/total.html:520
-msgid "Interesting articles"
+#: news/templates/manage_portals.html:178
+msgid "Description"
 msgstr ""
 
-#: news/templates/user_news.html:262
-msgid "At this time you have no one portals to syndicate for you."
+#: news/templates/manage_portals.html:179
+msgid "Configs"
 msgstr ""
 
-#: news/templates/user_news.html:264
+#: news/templates/manage_portals.html:192
+msgid "unfollow"
+msgstr ""
+
+#: news/templates/manage_portals.html:198
+msgid "You have no one portals yet. Would you like pick your own collection?"
+msgstr ""
+
+#: news/templates/manage_portals.html:200
+msgid "You just need to"
+msgstr ""
+
+#: news/templates/manage_portals.html:200
+msgid "open"
+msgstr ""
+
+#: news/templates/manage_portals.html:200
+msgid "portals browser."
+msgstr ""
+
+#: news/templates/manage_portals.html:202
+msgid "If you have any questions or offers,"
+msgstr ""
+
+#: news/templates/manage_portals.html:202
+msgid "write"
+msgstr ""
+
+#: news/templates/manage_portals.html:202
+msgid "to us, please."
+msgstr ""
+
+#: news/templates/top_news.html:297
 msgid ""
-"Would you like to choose any one? <a href=\"/profile/#settings-form\">Click</"
-"a> to set your own preferences."
+"Your browser does not support the video tag. I suggest you upgrade your "
+"browser."
 msgstr ""
 
-#: news/templates/user_news.html:267
-msgid "The most popular portals."
+#: news/templates/user_news.html:437
+msgid "My Feed"
 msgstr ""
 
-#: news/templates/user_news.html:299
+#: news/templates/user_news.html:497
 msgid "Recommended portals"
 msgstr ""
 
-#: news/templates/user_news.html:307
+#: news/templates/user_news.html:505
 msgid "Your current portals "
 msgstr ""
 
-#: news/templates/user_news.html:312
+#: news/templates/user_news.html:510
 msgid "Done"
 msgstr ""
 
-#: news/templates/user_news.html:320
+#: news/templates/user_news.html:518
 msgid "All"
 msgstr ""
 
-#: search/templates/search.html:127
+#: news/templates/user_news.html:549
+msgid "FEED"
+msgstr ""
+
+#: news/templates/user_news.html:579
+msgid ""
+"At this time we cant find any news of chosen portals. We think that there "
+"will appear later."
+msgstr ""
+
+#: news/templates/user_news.html:591
+msgid "The most popular portals."
+msgstr ""
+
+#: rss/templates/rss.html:57
+msgid "RSS Feed"
+msgstr ""
+
+#: rss/templates/rss.html:61
+msgid "Latest"
+msgstr ""
+
+#: rss/templates/rss.html:63 rss/templates/rss.html.py:74
+#: rss/templates/rss.html:85 rss/templates/rss.html.py:96
+#: rss/templates/rss.html:107 rss/templates/rss.html.py:118
+msgid "Today"
+msgstr ""
+
+#: rss/templates/rss.html:67 rss/templates/rss.html.py:78
+#: rss/templates/rss.html:89 rss/templates/rss.html.py:100
+#: rss/templates/rss.html:111 rss/templates/rss.html.py:122
+msgid "This week"
+msgstr ""
+
+#: rss/templates/rss.html:105 templates/footer.html:132
+#: templates/footer_usernews.html:111
+msgid "Space"
+msgstr ""
+
+#: rss/templates/rss.html:116 templates/footer.html:133
+#: templates/footer_usernews.html:112 templates/index_new.html:641
+#: templates/index_new.html.py:643 templates/index_new.html:1023
+msgid "BIO"
+msgstr ""
+
+#: rss/templates/rss.html:128
+msgid "Company feed"
+msgstr ""
+
+#: rss/templates/rss.html:130
+msgid "Use this form if you want to get RSS for certain company"
+msgstr ""
+
+#: rss/templates/rss.html:144
+msgid "Get"
+msgstr ""
+
+#: search/templates/search.html:144
 msgid "No one matches. Please, try another request word"
 msgstr ""
 
-#: search/templates/search.html:137
+#: search/templates/search.html:154 templates/index_new.html:713
 msgid "What are you looking for?"
 msgstr ""
 
-#: search/templates/search.html:146
+#: search/templates/search.html:163
 msgid "Popular news"
 msgstr ""
 
-#: search/templates/search.html:168
+#: search/templates/search.html:185
 msgid "Results for "
 msgstr ""
 
-#: search/templates/search.html:169
+#: search/templates/search.html:186
 msgid "matches"
 msgstr ""
 
-#: search/templates/search.html:170
+#: search/templates/search.html:187
 msgid "match"
 msgstr ""
 
-#: search/templates/search.html:175
+#: search/templates/search.html:194
 msgid "News"
 msgstr ""
 
-#: search/templates/search.html:177
+#: search/templates/search.html:204
 msgid "Moderators"
 msgstr ""
 
-#: search/templates/search.html:230
-#: userprofile/templates/moderator_profile.html:45
-#: userprofile/templates/profile.html:132
+#: search/templates/search.html:259
+#: userprofile/templates/moderator_profile.html:104
+#: userprofile/templates/profile.html:135
 msgid "Rate"
 msgstr ""
 
-#: search/templates/search.html:246
+#: search/templates/search.html:277
 msgid "Latest news"
 msgstr ""
 
@@ -337,377 +590,359 @@ msgid ""
 "&nbsp;|&nbsp;St.&nbsp;Petersburg,&nbsp;Russia"
 msgstr ""
 
-#: templates/contacts.html:37
+#: templates/contacts.html:47
 msgid "CONTACT INFORMATION"
 msgstr ""
 
-#: templates/contacts.html:43
+#: templates/contacts.html:53
 msgid "Cell"
 msgstr ""
 
-#: templates/contacts.html:45
+#: templates/contacts.html:55
 msgid "On cooperation"
 msgstr ""
 
-#: templates/contacts.html:47
+#: templates/contacts.html:57
 msgid "Contact with us"
 msgstr ""
 
-#: templates/contacts.html:67 templates/contacts.html.py:74
+#: templates/contacts.html:77 templates/contacts.html.py:84
 msgid "Message"
 msgstr ""
 
-#: templates/contacts.html:92 userprofile/templates/profile.html:93
-msgid "Send"
-msgstr ""
-
-#: templates/contacts.html:102
+#: templates/contacts.html:112
 msgid "OUR TEAM"
 msgstr ""
 
-#: templates/contacts.html:109
+#: templates/contacts.html:119
 msgid "Founder"
 msgstr ""
 
-#: templates/contacts.html:110
+#: templates/contacts.html:120
 msgid "Evgeniy Privalov"
 msgstr ""
 
-#: templates/contacts.html:112
+#: templates/contacts.html:122
 msgid "St. Petersburg"
 msgstr ""
 
-#: templates/contacts.html:120
+#: templates/contacts.html:130
 msgid "Co-Founder"
 msgstr ""
 
-#: templates/contacts.html:121
+#: templates/contacts.html:131
 msgid "Anton Tinishov"
 msgstr ""
 
-#: templates/contacts.html:123
+#: templates/contacts.html:133
 msgid "St.Petersburg"
 msgstr ""
 
-#: templates/contacts.html:131
+#: templates/contacts.html:141
 msgid "At this time we need in"
 msgstr ""
 
-#: templates/contacts.html:134
+#: templates/contacts.html:144
 msgid "LOCALIZATION"
 msgstr ""
 
-#: templates/contacts.html:135
+#: templates/contacts.html:145
 msgid "EDITORS & REPORTERS"
 msgstr ""
 
-#: templates/contacts.html:138
+#: templates/contacts.html:148
 msgid "PROGRAMMER"
 msgstr ""
 
-#: templates/contacts.html:141
+#: templates/contacts.html:151
 msgid "MARKETING"
 msgstr ""
 
-#: templates/contacts.html:147
+#: templates/contacts.html:157
 msgid "Join to us"
 msgstr ""
 
-#: templates/contacts.html:154
+#: templates/contacts.html:164
 msgid "Social Networks"
 msgstr ""
 
-#: templates/footer.html:37
-msgid "LATEST NEWS"
+#: templates/footer.html:94 templates/footer_usernews.html:77
+msgid "RECENT NEWS"
 msgstr ""
 
-#: templates/footer.html:69
+#: templates/footer.html:128 templates/footer_usernews.html:107
 msgid "Categories"
 msgstr ""
 
-#: templates/footer.html:70
-msgid "Technology"
-msgstr ""
-
-#: templates/footer.html:71
-msgid "Entertainment"
-msgstr ""
-
-#: templates/footer.html:72
-msgid "Auto"
-msgstr ""
-
-#: templates/footer.html:73
-msgid "Space"
-msgstr ""
-
-#: templates/footer.html:74 templates/index_new.html:747
-msgid "BIO"
-msgstr ""
-
-#: templates/footer.html:76
+#: templates/footer.html:135 templates/footer_usernews.html:114
 msgid "Reviews"
 msgstr ""
 
-#: templates/footer.html:78 templates/index_new.html:765
+#: templates/footer.html:137 templates/footer_usernews.html:116
+#: templates/index_new.html:659 templates/index_new.html.py:661
+#: templates/index_new.html:1041
 msgid "PRIVATE"
 msgstr ""
 
-#: templates/footer.html:84
+#: templates/footer.html:143 templates/footer_usernews.html:122
 msgid "Quick links"
 msgstr ""
 
-#: templates/footer.html:87
-msgid "Advertisers"
-msgstr ""
-
-#: templates/footer.html:101
+#: templates/footer.html:160
 msgid "International Editions: "
 msgstr ""
 
-#: templates/index_new.html:43
+#: templates/index_new.html:75
 #, python-format
 msgid "%(title)sInsydia"
 msgstr ""
 
-#: templates/index_new.html:564
-msgid "HOME"
+#: templates/index_new.html:606
+msgid "Toggle navigation"
 msgstr ""
 
-#: templates/index_new.html:570 templates/index_new.html.py:727
-msgid "TECHNOLOGY"
-msgstr ""
-
-#: templates/index_new.html:576 templates/index_new.html.py:732
+#: templates/index_new.html:623 templates/index_new.html.py:625
+#: templates/index_new.html:849 templates/index_new.html.py:1008
 msgid "ENTERTAINMENT"
 msgstr ""
 
-#: templates/index_new.html:582 templates/index_new.html.py:603
-#: templates/index_new.html:737
+#: templates/index_new.html:629 templates/index_new.html.py:631
+#: templates/index_new.html:855 templates/index_new.html.py:876
+#: templates/index_new.html:1013
 msgid "AUTO"
 msgstr ""
 
-#: templates/index_new.html:588 templates/index_new.html.py:742
+#: templates/index_new.html:635 templates/index_new.html.py:637
+#: templates/index_new.html:861 templates/index_new.html.py:1018
 msgid "SPACE"
 msgstr ""
 
-#: templates/index_new.html:594 templates/index_new.html.py:757
-msgid "REVIEWS"
-msgstr ""
-
-#: templates/index_new.html:599
-msgid "DROPDOWN HEADING"
-msgstr ""
-
-#: templates/index_new.html:608
-msgid "PHONES"
-msgstr ""
-
-#: templates/index_new.html:613
-msgid "PC"
-msgstr ""
-
-#: templates/index_new.html:618
-msgid "SPACE SHUTTLES"
-msgstr ""
-
-#: templates/index_new.html:623
-msgid "OTHER"
-msgstr ""
-
-#: templates/index_new.html:631
-msgid "PROFILE"
-msgstr ""
-
-#: templates/index_new.html:639
-msgid "ABOUT US"
-msgstr ""
-
-#: templates/index_new.html:645
-msgid "CONTACT US"
-msgstr ""
-
-#: templates/index_new.html:651
-msgid "ADVERTISER"
-msgstr ""
-
-#: templates/index_new.html:671 templates/index_new.html.py:675
-msgid "SEARCH"
-msgstr ""
-
-#: templates/index_new.html:689
-msgid "Log out"
-msgstr ""
-
-#: templates/index_new.html:722
-msgid "LATEST"
-msgstr ""
-
-#: templates/index_new.html:752
+#: templates/index_new.html:647 templates/index_new.html.py:649
+#: templates/index_new.html:1028
 msgid "COMPANIES"
 msgstr ""
 
-#: templates/index_new.html:776
-msgid "ALL"
+#: templates/index_new.html:653 templates/index_new.html.py:655
+#: templates/index_new.html:867 templates/index_new.html.py:1033
+msgid "REVIEWS"
 msgstr ""
 
-#: templates/index_new.html:777
-msgid "GAMES"
-msgstr ""
-
-#: templates/index_new.html:778
-msgid "MEDIA"
-msgstr ""
-
-#: templates/index_new.html:802
-msgid "What are you looking for"
-msgstr ""
-
-#: templates/index_new.html:879
-msgid "SHARE"
-msgstr ""
-
-#: templates/index_new.html:999
-msgid "Your portals"
-msgstr ""
-
-#: templates/index_new.html:1007 userprofile/templates/profile.html:372
-msgid "Save"
-msgstr ""
-
-#: templates/index_new.html:1012 userprofile/templates/profile.html:305
-msgid "Cancel"
-msgstr ""
-
-#: templates/index_new.html:1018
-msgid "CLOSE"
-msgstr ""
-
-#: test_rss/save.html:34
-msgid "SHOW&nbsp;MORE"
-msgstr ""
-
-#: test_rss/save.html:55
-msgid "Home"
-msgstr ""
-
-#: userprofile/templates/moderator_profile.html:75
-#, python-format
-msgid "%(moderator)s's&nbsp;articles"
-msgstr ""
-
-#: userprofile/templates/profile.html:93
-msgid " new email with confirmation code."
-msgstr ""
-
-#: userprofile/templates/profile.html:97
+#: templates/index_new.html:677 userprofile/templates/profile.html:99
 msgid "Profile"
 msgstr ""
 
-#: userprofile/templates/profile.html:112
+#: templates/index_new.html:678
+msgid "Private news"
+msgstr ""
+
+#: templates/index_new.html:681
+msgid "Sign out"
+msgstr ""
+
+#: templates/index_new.html:685 templates/index_new.html.py:972
+msgid "Sign in"
+msgstr ""
+
+#: templates/index_new.html:837
+msgid "HOME"
+msgstr ""
+
+#: templates/index_new.html:872
+msgid "DROPDOWN HEADING"
+msgstr ""
+
+#: templates/index_new.html:881
+msgid "PHONES"
+msgstr ""
+
+#: templates/index_new.html:886
+msgid "PC"
+msgstr ""
+
+#: templates/index_new.html:891
+msgid "SPACE SHUTTLES"
+msgstr ""
+
+#: templates/index_new.html:896
+msgid "OTHER"
+msgstr ""
+
+#: templates/index_new.html:904
+msgid "PROFILE"
+msgstr ""
+
+#: templates/index_new.html:912
+msgid "ABOUT US"
+msgstr ""
+
+#: templates/index_new.html:918
+msgid "CONTACT US"
+msgstr ""
+
+#: templates/index_new.html:924
+msgid "ADVERTISER"
+msgstr ""
+
+#: templates/index_new.html:947 templates/index_new.html.py:951
+msgid "SEARCH"
+msgstr ""
+
+#: templates/index_new.html:965
+msgid "Log out"
+msgstr ""
+
+#: templates/index_new.html:977
+msgid "Sign up"
+msgstr ""
+
+#: templates/index_new.html:998
+msgid "LATEST"
+msgstr ""
+
+#: templates/index_new.html:1052
+msgid "ALL"
+msgstr ""
+
+#: templates/index_new.html:1053
+msgid "GAMES"
+msgstr ""
+
+#: templates/index_new.html:1054
+msgid "MEDIA"
+msgstr ""
+
+#: templates/index_new.html:1176
+msgid "Close"
+msgstr ""
+
+#: templates/index_new.html:1307
+msgid "Your portals"
+msgstr ""
+
+#: templates/index_new.html:1315
+msgid "Save"
+msgstr ""
+
+#: templates/index_new.html:1320 userprofile/templates/profile.html:308
+msgid "Cancel"
+msgstr ""
+
+#: templates/index_new.html:1326
+msgid "CLOSE"
+msgstr ""
+
+#: userprofile/templates/moderator_profile.html:115
+#: userprofile/templates/profile.html:242
+msgid "Facebook:"
+msgstr ""
+
+#: userprofile/templates/moderator_profile.html:118
+#: userprofile/templates/profile.html:264
+msgid "Twitter:"
+msgstr ""
+
+#: userprofile/templates/moderator_profile.html:121
+#: userprofile/templates/profile.html:276
+msgid "VK:"
+msgstr ""
+
+#: userprofile/templates/moderator_profile.html:124
+#: userprofile/templates/profile.html:253
+msgid "Linkedin:"
+msgstr ""
+
+#: userprofile/templates/moderator_profile.html:127
+msgid "E-mail:"
+msgstr ""
+
+#: userprofile/templates/profile.html:95
+msgid " new email with confirmation code."
+msgstr ""
+
+#: userprofile/templates/profile.html:114
 msgid "Upload photo"
 msgstr ""
 
-#: userprofile/templates/profile.html:121
-#: userprofile/templates/profile.html:408
+#: userprofile/templates/profile.html:124
 msgid "Accept"
 msgstr ""
 
-#: userprofile/templates/profile.html:128
+#: userprofile/templates/profile.html:131
 msgid "Status"
 msgstr ""
 
-#: userprofile/templates/profile.html:128
+#: userprofile/templates/profile.html:131
 msgid "moderator"
 msgstr ""
 
-#: userprofile/templates/profile.html:139
+#: userprofile/templates/profile.html:142
 msgid "See all"
 msgstr ""
 
-#: userprofile/templates/profile.html:147
-#: userprofile/templates/profile.html:161
+#: userprofile/templates/profile.html:150
+#: userprofile/templates/profile.html:164
 msgid "Delete Account"
 msgstr ""
 
-#: userprofile/templates/profile.html:150
-#: userprofile/templates/profile.html:165
+#: userprofile/templates/profile.html:153
+#: userprofile/templates/profile.html:168
 msgid "Delete All Articles"
 msgstr ""
 
-#: userprofile/templates/profile.html:155
+#: userprofile/templates/profile.html:158
 msgid "Want to be a freelance editor?"
 msgstr ""
 
-#: userprofile/templates/profile.html:156
+#: userprofile/templates/profile.html:159
 msgid "It's easy"
 msgstr ""
 
-#: userprofile/templates/profile.html:156
+#: userprofile/templates/profile.html:159
 msgid "click here"
 msgstr ""
 
-#: userprofile/templates/profile.html:193
-#: userprofile/templates/profile.html:198
+#: userprofile/templates/profile.html:196
+#: userprofile/templates/profile.html:201
 msgid "First name"
 msgstr ""
 
-#: userprofile/templates/profile.html:203
-#: userprofile/templates/profile.html:208
+#: userprofile/templates/profile.html:206
+#: userprofile/templates/profile.html:211
 msgid "Last name"
 msgstr ""
 
-#: userprofile/templates/profile.html:228
+#: userprofile/templates/profile.html:231
 msgid "Your phone number"
 msgstr ""
 
-#: userprofile/templates/profile.html:237
+#: userprofile/templates/profile.html:240
 msgid "Social Networks(Moderator Mode)"
 msgstr ""
 
-#: userprofile/templates/profile.html:285
+#: userprofile/templates/profile.html:247
+msgid "Facebook"
+msgstr ""
+
+#: userprofile/templates/profile.html:258
+msgid "Linkedin"
+msgstr ""
+
+#: userprofile/templates/profile.html:269
+msgid "Twitter"
+msgstr ""
+
+#: userprofile/templates/profile.html:281
+msgid "VK"
+msgstr ""
+
+#: userprofile/templates/profile.html:288
 msgid "Perosnal email"
 msgstr ""
 
-#: userprofile/templates/profile.html:290
+#: userprofile/templates/profile.html:293
 msgid "Personal email"
 msgstr ""
 
-#: userprofile/templates/profile.html:303
+#: userprofile/templates/profile.html:306
 msgid "Save Changes"
-msgstr ""
-
-#: userprofile/templates/profile.html:311
-msgid "change"
-msgstr ""
-
-#: userprofile/templates/profile.html:319
-msgid "Key word"
-msgstr ""
-
-#: userprofile/templates/profile.html:325
-msgid "Enter key word"
-msgstr ""
-
-#: userprofile/templates/profile.html:342
-msgid "Choose portals which news would you like to view."
-msgstr ""
-
-#: userprofile/templates/profile.html:345
-msgid "Choose"
-msgstr ""
-
-#: userprofile/templates/profile.html:361
-msgid "Chosen"
-msgstr ""
-
-#: userprofile/templates/profile.html:382
-msgid ""
-"Would you like to get notification about latest news and reviews?\n"
-"                        To take it just write your email and we will send "
-"you a link to continue."
-msgstr ""
-
-#: userprofile/templates/profile.html:400
-msgid "Enter your email"
 msgstr ""

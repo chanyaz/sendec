@@ -2,14 +2,9 @@
 {% load i18n %}
 {% load cache %}
 <style>
-    @media(max-device-width: 600px){
-        .ftr-rt{margin-top: 2%; color: #1E656D; font-size: 1.5em;}
-        #copyrights{color: #1E656D; text-align: center; font-size: 1em;}
-    }
-    @media(min-device-width: 600px){
-        .ftr-rt{float:right; margin-top: 2%; color: #1E656D;}
-        #copyrights{margin-top: -1.7%; margin-left: 14%; color: #1E656D;}
-    }
+
+    .ftr-rt{float:right; margin-top: 2%; color: #1E656D;}
+    #copyrights{margin-top: -1.7%; margin-left: 14%; color: #1E656D;}
 
     #footer-div-2{  bottom: 20px;  font-family: Georgia, Times, "Times New Roman", serif  }
     .footer-list-top .footer-list-element{list-style-type: none;display: inline;width: 100%;}
@@ -20,7 +15,7 @@
     .ftr-rt a:hover{  text-decoration: none;  color: #F62A00;  }
 </style>
 
-<div id="footer-div-2">
+<div id="footer-div-2" class="container">
     <div class="">
         <div class="footer-bottom-block">
             <div class="global-left">
@@ -31,7 +26,7 @@
                     <div id="ftr-rt-top">
                         <ul class="footer-list-top">
                             <li class="footer-list-element">
-                                <a href="/about/advertisers/">{% trans 'Advertiser' %}</a>
+                                <a href="/about/advertisers/">{% trans 'Advertisement' %}</a>
                             </li>&nbsp;|&nbsp;
                             <li class="footer-list-element">
                                 <a href="/about/contacts/">{% trans 'Contacts' %}</a>

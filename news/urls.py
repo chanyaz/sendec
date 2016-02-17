@@ -1,10 +1,10 @@
-from django.conf.urls import include, url
+from django.conf.urls import include, url, patterns
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
 
-urlpatterns = [
+urlpatterns = patterns('',
     url(r'^cl&t=0&id=(?P<news_id>\w+)&lang_code=(?P<lang_code>\w+)', 'news.views.change_languages'),
     url(r'^cl&t=1&id=(?P<news_id>\w+)&lang_code=(?P<lang_code>\w+)', 'news.views.change_languages_top_news'),
     url(r'^change_portals_order/', 'news.views.change_rates'),
@@ -35,8 +35,8 @@ urlpatterns = [
 
 
     # Dislikes
-    url(r'^add_dislike/n=(?P<news_id>\w+)', 'news.views.add_dislike_news'),
-    url(r'^check_dislike/n=(?P<news_id>\w+)', 'news.views.check_dislike_amount'),
+    # url(r'^add_dislike/n=(?P<news_id>\w+)', 'news.views.add_dislike_news'),
+    # url(r'^check_dislike/n=(?P<news_id>\w+)', 'news.views.check_dislike_amount'),
 
     # Latest news
     url(r'^update_latest/', "news.views.update_latest_news"),
@@ -48,10 +48,10 @@ urlpatterns = [
     #url(r'^rd=(?P<reply_id>\w+)/', 'news.views.delete_reply'),
 
 
-    #url(r'^comments=(?P<category_id>\w+)&(?P<news_id>\w+)/', 'news.views.render_current_news_comments'),
-    url(r'^send/cat=(?P<category_id>\w+)&id=(?P<news_id>\w+)/', 'news.views.comment_send'),
-    url(r'^reply/nid=(?P<news_id>\w+)&cid=(?P<comment_id>\w+)/', 'news.views.reply_send'),
-    url(r"^load=(?P<news_id>\w+)", "news.views.comments_load"),
+    # url(r'^comments=(?P<category_id>\w+)&(?P<news_id>\w+)/', 'news.views.render_current_news_comments'),
+    # url(r'^send/cat=(?P<category_id>\w+)&id=(?P<news_id>\w+)/', 'news.views.comment_send'),
+    # url(r'^reply/nid=(?P<news_id>\w+)&cid=(?P<comment_id>\w+)/', 'news.views.reply_send'),
+    # url(r"^load=(?P<news_id>\w+)", "news.views.comments_load"),
 
     # Top news
     # url(r'^top/', "news.views.render_top_news_page"),
@@ -61,6 +61,8 @@ urlpatterns = [
     #url(r'^usernews/', 'news.views.render_user_news'),
     #url(r'^usernews/(?P<portal_verbose>\w+)', 'news.views.get_rss_news_current_portal'),
     url(r'^manager/', 'news.views.render_manager_portal'),
+    url(r'^browser/gfnr/', 'news.views.get_latest_articles_of_new_rss'),
+    url(r'^browser/sag/', 'news.views.aggregate_current_feeds'),
     url(r'^browser/tech', 'news.views.render_browse_tech_portals'),
     url(r'^browser/', 'news.views.render_browser_portals'),
     url(r'^usernews/page/(?P<portal>\w+)$', 'news.views.render_current_portal_news'),
@@ -68,7 +70,8 @@ urlpatterns = [
 
 
 
-    url(r'^top/(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_top_news'),
+    # url(r'^top/(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_top_news'),
+    url(r'^top/(?P<news_id>\w+)/(?P<slug>[-\w]+)/$', 'news.views.render_current_top_news'),
     url(r'^top/translate/', 'news.views.translate_news_from_top'),
 
     # url(r'^(?P<category_id>\w+)/(?P<news_id>\w+)/(?P<slug>[-\w]+)/$', 'news.views.render_current_news'),
@@ -104,4 +107,4 @@ urlpatterns = [
     url(r'^space/', 'news.views.render_space_news'),
 
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
