@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 {% load staticfiles %}
-{% load jsonate_tags %}
 {% load i18n %}
 {% load cache %}
 {% load my %}
@@ -234,7 +233,6 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-    {% cache 600 navbar %}
     <nav class="navbar navbar-default" role="navigation" style="top: 0; z-index: 999;">
         <div class="container-fluid container" id="navfluid">
             <div class="navbar-header pull-left">
@@ -313,7 +311,6 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    {% endcache %}
     <div id="nav-search-bar"
          hidden
          style="position: absolute; z-index: 999; background: rgba(0, 0, 0, 0.7); width: 100%; height: 60px;">
@@ -449,7 +446,6 @@
                     </li>
                 </ul>
             </nav>
-            <div id="wrapper-main-content" class="row">
                 <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
                     <span class="hamb-top"></span>
                     <span class="hamb-middle"></span>
@@ -473,7 +469,7 @@
                                 {% block notify %}{% endblock %}
                                 {% block current_category %}{% endblock %}
                                 <div class="news-block" id="news-block">
-                                    {% block latest %}{% endblock %}
+{#                                    {% block latest %}{% endblock %}#}
                                     {% block technology %}{% endblock %}
                                     {% block entertainment %}{% endblock %}
                                     {% block auto %}{% endblock %}
@@ -1150,6 +1146,34 @@
                 return false;
             }
         });
+    </script>
+<script src="{% static 'static/js/swipe.js' %}"></script>
+    <script>
+      $(document).ready(function() {
+             $("#myCarousel").swiperight(function() {
+                  $(this).carousel('prev');
+                    });
+               $("#myCarousel").swipeleft(function() {
+                  $(this).carousel('next');
+           });
+        });
+    </script>
+    <script>
+    $(document).ready(function() {
+
+                        //Enable swiping...
+                        $(".carousel-inner").swipe( {
+                            //Generic swipe handler for all directions
+                            swipeLeft:function(event, direction, distance, duration, fingerCount) {
+                                $(this).parent().carousel('prev');
+                            },
+                            swipeRight: function() {
+                                $(this).parent().carousel('next');
+                            },
+                            //Default is 75px, set to 0 for demo so any distance triggers swipe
+                            threshold:0
+                        });
+                    });
     </script>
 </body>
 </html>

@@ -107,4 +107,4 @@ urlpatterns = patterns('',
     url(r'^space/', 'news.views.render_space_news'),
 
 
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

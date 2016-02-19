@@ -421,54 +421,54 @@
 
             <main class="cd-main-content">
 
-		<nav class="cd-side-nav-2">
-            <ul>
-                <li id="left-panel-main-title" style="z-index:919; color: ivory; text-align: center; font-family: Georgia, Times, 'Times New Roman', serifs">
-                    <a href="/" style="font-size: 30px">INSYDIA</a>
-                </li>
-            </ul>
-			<ul>
+                <nav class="cd-side-nav-2">
+                    <ul>
+                        <li id="left-panel-main-title" style="z-index:919; color: ivory; text-align: center; font-family: Georgia, Times, 'Times New Roman', serifs">
+                            <a href="/" style="font-size: 30px">INSYDIA</a>
+                        </li>
+                    </ul>
+                    <ul>
 
-				<li class="cd-label">{% trans 'Main' %}</li>
-				<li class="has-children overview active" onclick="changeStatePortals(this);">
-					<a href="#">{% trans 'Overview' %}</a>
+                        <li class="cd-label">{% trans 'Main' %}</li>
+                        <li class="has-children overview active" onclick="changeStatePortals(this);">
+                            <a href="#">{% trans 'Overview' %}</a>
 
-					<ul>
-						<li><a href="/news/usernews/">{% trans 'My Feed' %}</a></li>
-						<li><a href="/favourite/">{% trans 'Saved articles' %}</a></li>
-{#						<li><a href="#0">Category 2</a></li>#}
-					</ul>
-				</li>
-				<li id="side-bar-portals" class="has-children notifications active">
-					<a id="side-bar-portals-link" href="#" onclick="changeStatePortals(this);">{% trans 'Portals' %}</a>
+                            <ul>
+                                <li><a href="/news/usernews/">{% trans 'My Feed' %}</a></li>
+                                <li><a href="/favourite/">{% trans 'Saved articles' %}</a></li>
+        {#						<li><a href="#0">Category 2</a></li>#}
+                            </ul>
+                        </li>
+                        <li id="side-bar-portals" class="has-children notifications active">
+                            <a id="side-bar-portals-link" href="#" onclick="changeStatePortals(this);">{% trans 'Portals' %}</a>
 
-					<ul>
-                        {% for current_portal in user_rss_portals %}
-                            <li><a>
-                                <span class="portal-favicon">
-                                    <img src="{{ current_portal.portal_id|get_rss_portal_favicon }}" width="16px" height="16px" />
-                                </span>
-                                <span class="cprs" onclick="showCurrentPortalNews('{{ current_portal.portal_id|get_rss_verbose_name }}');">
-                                    {{ current_portal.portal_id|get_rss_portal_name }}
-                                </span>
-                                {% if current_portal.portal_id|get_unread_news:username.id != 0 %}
-                                    <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>
-                                {% endif %}
-                                </a>
-                            </li>
-                        {% endfor %}
-					</ul>
-				</li>
-			</ul>
+                            <ul>
+                                {% for current_portal in user_rss_portals %}
+                                    <li><a>
+                                        <span class="portal-favicon">
+                                            <img src="{{ current_portal.portal_id|get_rss_portal_favicon }}" width="16px" height="16px" />
+                                        </span>
+                                        <span class="cprs" onclick="showCurrentPortalNews('{{ current_portal.portal_id|get_rss_verbose_name }}');">
+                                            {{ current_portal.portal_id|get_rss_portal_name }}
+                                        </span>
+                                        {% if current_portal.portal_id|get_unread_news:username.id != 0 %}
+                                            <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>
+                                        {% endif %}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
 
-			<ul style="    margin-bottom: 50px;">
-				<li class="cd-label">{% trans 'Configures' %}</li>
-				<li class="has-children bookmarks">
-					<a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>{% trans 'Manage portals' %}</a>
-					<a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>{% trans 'Browse portals' %}</a>
-				</li>
-			</ul>
-        </nav>
+                    <ul style="    margin-bottom: 50px;">
+                        <li class="cd-label">{% trans 'Configures' %}</li>
+                        <li class="has-children bookmarks">
+                            <a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>{% trans 'Manage portals' %}</a>
+                            <a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>{% trans 'Browse portals' %}</a>
+                        </li>
+                    </ul>
+                </nav>
 
 {#		<div class="content-wrapper">#}
 {#			<h1>Responsive Sidebar Navigation</h1>#}

@@ -64,8 +64,11 @@ def main_page_load(request, template="index_beta.html", page_template="page_temp
         "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
         "interest": get_hottest_news(request),
         "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
-        "before_reviews": instance[6:9],#.order_by("-news_post_date")[6:9].values(),
-        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9;", translations=name_map)),#get_total_news),
+        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
+
+        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
+
+        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
         "page_template": page_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
@@ -85,13 +88,40 @@ def get_latest_reviews(request):
     return News.objects.filter(news_category_id=6).order_by("-news_post_date").values()[0]
 
 
+def get_before_reviews(request):
+    translation = {
+        "id": "id",
+        "news_title": "news_title",
+        "news_post_date": "news_post_date",
+        "news_author": "news_author_id",
+        "news_company_owner": "news_company_owner_id",
+        "news_main_cover": "news_main_cover",
+        "slug": "slug",
+        "news_post_text_english": "news_post_text_english",
+    }
+    return News.objects.raw("SELECT id, news_title, news_post_date, news_author_id, news_company_owner_id, news_main_cover,"
+                            "slug, news_post_text_english FROM news ORDER BY news_post_date DESC OFFSET 6 LIMIT 3;", translations=translation)
+
 def get_hottest_news(request):
-    # try:
+    translation = {
+        "id": "id",
+        "news_title": "news_title",
+        "news_post_date": "news_post_date",
+        "news_author": "news_author_id",
+        "news_company_owner_": "news_company_owner_id",
+        "news_main_cover": "news_main_cover",
+        "slug": "slug"
+    }
     watches = NewsWatches.objects.order_by("-watches").values("news_id").values("news_id")
-    if watches.count() >= 4:
-        return News.objects.filter(id__in=watches[:4]).defer("news_portal_name").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").order_by("-news_post_date").values()[:4]
+    # print(watches)
+    watches_list = [int(watches[i]["news_id"]) for i in range(len(watches[:4]))]
+    # print("new list: ", watches_list)
+    if len(watches_list) >= 4:
+        return News.objects.raw("SELECT n.id, n.news_title, n.news_post_date, n.news_author_id, n.news_company_owner_id, n.news_main_cover FROM news n INNER JOIN news_watches nw ON n.id=nw.news_id ORDER BY nw.watches DESC LIMIT 4", translations=translation)
+        # return News.objects.filter(id__in=watches[:4]).defer("news_portal_name").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").order_by("-news_post_date").values()[:4]
     else:
-        return News.objects.all().defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").order_by("-news_post_date").values()[:4]
+        return News.objects.all().order_by("-news_post_date").values()[:4]
+        #return News.objects.raw("SELECT ")
 
 
 def get_top_total_news(request):
@@ -495,30 +525,39 @@ def render_current_category(request, category_name):
 
 
 def render_technology_news(request, template="technology.html", tech_template="tech_template.html", extra_context=None):
+    instance = render_news_by_sendec(request, category_id=1)
+    name_map = {'id': 'id',
+                'news_title': 'news_title',
+                'news_post_date': 'news_post_date',
+                # 'news_category': 'news_category_id',
+                'news_author': 'news_author_id',
+                # "slug": "slug",
+                }
     args = {
-        "title": "Technology | ",
-        "category_title": "TECHNOLOGY",
+        "current_year": datetime.datetime.now().year,
+        "title": "Technology News | ",
+        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
+        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
+        "interest": get_hottest_news(request),
+        "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
+        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
 
-        "top_news": get_top_category_news(request, category_name="Technology"),
-        "total_middle_news": get_category_news_offset(request, category_name="Technology")[1:5],
-        "total_bottom_news": get_category_news_offset(request, category_name="Technology")[5:7],
-        "interest": get_category_news_offset(request, category_name="Technology")[7:11],
+        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
 
-        "tech_template": tech_template,
-        "total_news": get_category_news_offset(request, category_name="Technology")[11:],
-
+        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "page_template": tech_template,
+        "top_news": get_top_total_news(request),
         "left_bar": True,
-        "here_tech": True,
     }
     if request.is_ajax():
         template = tech_template
-
+    args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-    args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response(template, args, context_instance=RequestContext(request))
+    response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
+    return response
 
 
 def get_technology_news(request):
@@ -542,30 +581,39 @@ def get_top_category_news(request, *args, **kwargs):
 
 
 def render_auto_news(request, template="auto.html", auto_template="auto_template.html", extra_context=None):
+    instance = render_news_by_sendec(request, category_id=3)
+    name_map = {'id': 'id',
+                'news_title': 'news_title',
+                'news_post_date': 'news_post_date',
+                # 'news_category': 'news_category_id',
+                'news_author': 'news_author_id',
+                # "slug": "slug",
+                }
     args = {
-        "title": "Auto | ",
-        "category_title": "AUTO",
+        "current_year": datetime.datetime.now().year,
+        "title": "Auto News | ",
+        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
+        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
+        "interest": get_hottest_news(request),
+        "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
+        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
 
-        "top_news": get_top_category_news(request, category_name="Auto"),
-        "total_middle_news": get_category_news_offset(request, category_name="Auto")[1:5],
-        "total_bottom_news": get_category_news_offset(request, category_name="Auto")[5:7],
-        "interest": get_category_news_offset(request, category_name="Auto")[7:11],
+        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
 
-        "auto_template": auto_template,
-        "total_news": get_category_news_offset(request, category_name="Auto")[11:],
-
+        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "page_template": auto_template,
+        "top_news": get_top_total_news(request),
         "left_bar": True,
-        "here_auto": True,
     }
     if request.is_ajax():
         template = auto_template
-
+    args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-    args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response(template, args, context_instance=RequestContext(request))
+    response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
+    return response
 
 
 def get_auto_news(request):
@@ -574,29 +622,39 @@ def get_auto_news(request):
 
 
 def render_bio_news(request, template="bio.html", bio_template="bio_template.html", extra_context=None):
+    instance = render_news_by_sendec(request, category_id=5)
+    name_map = {'id': 'id',
+                'news_title': 'news_title',
+                'news_post_date': 'news_post_date',
+                # 'news_category': 'news_category_id',
+                'news_author': 'news_author_id',
+                # "slug": "slug",
+                }
     args = {
-        "title": "Bio Technology | ",
-        "category_title": "Bio Technology",
-        "top_news": get_top_category_news(request, category_name="BIO"),
-        "total_middle_news": get_category_news_offset(request, category_name="BIO")[1:5],
-        "total_bottom_news": get_category_news_offset(request, category_name="BIO")[5:7],
-        "interest": get_category_news_offset(request, category_name="BIO")[7:11],
+        "current_year": datetime.datetime.now().year,
+        "title": "Bio-tech news | ",
+        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
+        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
+        "interest": get_hottest_news(request),
+        "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
+        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
 
-        "bio_template": bio_template,
-        "total_news": get_category_news_offset(request, category_name="BIO")[11:],
+        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
 
+        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "page_template": bio_template,
+        "top_news": get_top_total_news(request),
         "left_bar": True,
-        "here_bio": True,
     }
     if request.is_ajax():
         template = bio_template
-
+    args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-    args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response(template, args, context_instance=RequestContext(request))
+    response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
+    return response
 
 
 def get_bit_news(request):
@@ -658,31 +716,39 @@ def get_companies_news(request, company_id):
 
 
 def render_entertainment_news(request, template="entertainment.html", ent_template="ent_template.html", extra_context=None):
+    instance = render_news_by_sendec(request, category_id=2)
+    name_map = {'id': 'id',
+                'news_title': 'news_title',
+                'news_post_date': 'news_post_date',
+                # 'news_category': 'news_category_id',
+                'news_author': 'news_author_id',
+                # "slug": "slug",
+                }
     args = {
-        "title": "Entertainment | ",
-        "category_title": "ENTERTAINMENT",
-        "category_flag": "ent",
+        "current_year": datetime.datetime.now().year,
+        "title": "Entertainment News | ",
+        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
+        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
+        "interest": get_hottest_news(request),
+        "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
+        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
 
-        "top_news": get_top_category_news(request, category_name="Entertainment"),
-        "total_middle_news": get_category_news_offset(request, category_name="Entertainment")[1:5],
-        "total_bottom_news": get_category_news_offset(request, category_name="Entertainment")[5:7],
-        "interest": get_category_news_offset(request, category_name="Entertainment")[7:11],
+        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
 
-        "ent_template": ent_template,
-        "total_news": get_category_news_offset(request, category_name="Entertainment")[11:],
-
+        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "page_template": ent_template,
+        "top_news": get_top_total_news(request),
         "left_bar": True,
-        "here_ent": True,
     }
     if request.is_ajax():
         template = ent_template
-
+    args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-    args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response(template, args, context_instance=RequestContext(request))
+    response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
+    return response
 
 
 def get_entertainment_news(request):
@@ -726,29 +792,39 @@ def render_reviews_news(request):
 
 
 def render_space_news(request, template="space.html", space_template="space_template.html", extra_context=None):
+    instance = render_news_by_sendec(request, category_id=4)
+    name_map = {'id': 'id',
+                'news_title': 'news_title',
+                'news_post_date': 'news_post_date',
+                # 'news_category': 'news_category_id',
+                'news_author': 'news_author_id',
+                # "slug": "slug",
+                }
     args = {
-        "title": "Space | ",
-        "category_title": "SPACE",
-        "top_news": get_top_category_news(request, category_name="Space"),
-        "total_middle_news": get_category_news_offset(request, category_name="Space")[1:5],
-        "total_bottom_news": get_category_news_offset(request, category_name="Space")[5:7],
-        "interest": get_category_news_offset(request, category_name="Space")[7:11],
+        "current_year": datetime.datetime.now().year,
+        "title": "Space News | ",
+        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
+        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
+        "interest": get_hottest_news(request),
+        "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
+        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
 
-        "space_template": space_template,
-        "total_news": get_category_news_offset(request, category_name="Space")[11:],
+        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
 
+        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "page_template": space_template,
+        "top_news": get_top_total_news(request),
         "left_bar": True,
-        "here_space": True,
     }
     if request.is_ajax():
         template = space_template
-
+    args.update(csrf(request))
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-    args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response(template, args, RequestContext(request))
+    response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
+    return response
 
 
 def get_space_news(request):

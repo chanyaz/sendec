@@ -1,33 +1,11 @@
-{% load endless %}
 {% load staticfiles %}
+{% load thumbnail %}
 {% load my %}
 {% load i18n %}
-{% load thumbnail %}
-<style>
-        .sect{width: 23%; margin-bottom: 1%;}
-{#        .current_news{box-shadow: 0 0 10px rgba(0,0,0,0.5); height: 350px; width: 100%; float: left;}#}
-        .news-title{font-size: 17px; margin-top: 1.5%; font-family: Georgia, Times, "Times New Roman", serif}
-        .main-page-news-cover{max-width: 100%; max-height: 100%; height: 200px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;}
-        .text_post{width: 100%;}
-    .sect-2-top{
-        width: 30%;
-        display: inline-block;
-        margin-right: 1%;
-        margin-top: 3%;
-        height:400px;
-        max-height: 400px;
-    }
-    .current_news{
-{#        border: solid 1px red;#}
-        height: 400px;
-    }
-</style>
-
-{% if flavour != 'mobile' %}
+ {% if flavour != 'mobile' %}
     <div class="dyn-news-2 container" style="height: inherit; margin-bottom: 5%; margin-left: -3%;">
-        {% paginate 30 total_news %}
         <div id="top-4-news"  class="col-xs-12" style="float: left;">
-            {% for i in total_news %}
+            {% for i in pre_total %}
                     <div class="" style="width: 31%; float: left; margin-right: 1%; margin-bottom: 5%; border-bottom: solid 1px lightgrey;">
                     <div class="current_news">
                         <div class="cat cat-left">
@@ -59,44 +37,45 @@
                         </div>
                     </div>
                 </div>
-
-                {% if  forloop.last %}
-                    <div class="paginate-ad" style="margin-top: -10%;">
-                        <div class="col-md-4" style="float: left;">
-                            <div class="cat cat-left">
-                                <a>ADVERTISEMENT</a>
-                            </div>
-                            <div class="">
-                                <div style="float: left; margin-top:0; width: 300px;height: 250px;background-color: #00fff9"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="float: left;">
-                            <div class="cat cat-left">
-                                <a>ADVERTISEMENT</a>
-                            </div>
-                            <div class="">
-                                <div style="float: left; margin-top:0; width: 300px;height: 250px;background-color: #00fff9"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="cat cat-left">
-                                <a>ADVERTISEMENT</a>
-                            </div>
-                            <div class="">
-                                <div style="float: left; margin-top:0; width: 300px;height: 250px;background-color: #00fff9"></div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
             {% endfor %}
         </div>
     </div>
-    {% show_more %}
+
+                                <div class="two-news-item col-md-12" style="margin-bottom: 5%;">
+                                        <div class="cat cat-left col-xs-12">
+                                            <a href="/news/{{ total_bottom_news.1.id|get_news_category }}">
+                                                {{ total_bottom_news.1.id|get_news_category|upper }}
+                                            </a>
+                                        </div>
+                                        <div class="news-cover container col-sm-10 col-md-9">
+                                            <a href="/news/{{ total_bottom_news.1.news_post_date.year }}/{{ total_bottom_news.1.news_post_date.month }}/{{ total_bottom_news.1.news_post_date.day }}/{{ total_bottom_news.1.id }}/{{ total_bottom_news.1.slug }}">
+                                                <div class="cover-top-middle" style="float: left;
+                                                        height: 300px;
+                                                        width: 100%;
+                                                        background: url('/media/{{ total_bottom_news.0.news_main_cover }}') no-repeat center;
+                                                        background-size: cover;"></div>
+                                            </a>
+                                        </div>
+                                        <div class="right-middle-top col-xs-12 col-md-3">
+                                            <div id="big-news-one" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
+                                            <a href="/news/{{ total_bottom_news.1.news_post_date.year }}/{{ total_bottom_news.1.news_post_date.month }}/{{ total_bottom_news.1.news_post_date.day }}/{{ total_bottom_news.0.id }}/{{ total_bottom_news.0.slug }}">
+                                                    <b>{{ total_bottom_news.1.news_title }}</b>
+                                                </a>
+                                            </div>
+                                            <div class="params">
+                                                <i>{% trans 'By' %}&nbsp;<span class="article-author">
+                                                    <a href="/profile/m/{{ total_bottom_news.1.news_author }}/">{{ total_bottom_news.1.news_author }}</a>
+                                                </span>
+                                                    &nbsp;|&nbsp;<span class="publushed">{{ total_bottom_news.1.news_post_date.date|date }}</span></i>
+                                            </div>
+                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">{{ total_bottom_news.1.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
+                                        </div>
+                                    </div>
+
 {% else %}
     <div class="dyn-news-2 container" style="height: inherit; margin-bottom: 5%; margin-left: -3%;">
-        {% paginate 30 total_news %}
         <div id="paginate-list" style="float: left;">
-            {% for i in total_news %}
+            {% for i in pre_total %}
                 <div class="container-fluid col-md-6 mobile-container">
                     <div class="current_news_mas_mobile news-news mobile-news">
                         <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
@@ -126,14 +105,4 @@
             {% endfor %}
         </div>
     </div>
-    {% show_more %}
 {% endif %}
-<hr width="100%">
-
-
-{##}
-{#<script>#}
-{#    $('.dyn-news').masonry({#}
-{#        itemSelector: '.special-pos'#}
-{#    })#}
-{#</script>#}

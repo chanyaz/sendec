@@ -155,3 +155,8 @@ def get_cover_last_article(value):
 @register.filter(name="get_description")
 def get_description(value):
     return RssPortals.objects.get(id=int(value)).description
+
+
+@register.filter(name="divide")
+def divide(value, arg):
+    return (int(value) / int(arg)) if int(arg) != 0 else 0

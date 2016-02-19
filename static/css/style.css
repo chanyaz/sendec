@@ -886,8 +886,8 @@ figure.effect-duke:hover p {
 	/*color: @red;*/
 	border: none;
 }
-.carousel-control.left {height: 250px;  color: black; width: 7%; z-index: 100; position: absolute;}
-.carousel-control.right {height: 250px;  color: black; width: 7%; z-index: 100; position: absolute;}
+.carousel-control.left {height: 100%;  color: black; width: 7%; z-index: 100; position: absolute;}
+.carousel-control.right {height: 100%;  color: black; width: 7%; z-index: 100; position: absolute;}
 
 .control-arrow{
     /*border: solid 1px white;*/
@@ -1383,11 +1383,40 @@ figure.effect-duke:hover p {
     width: 100%;
     /*background: linear-gradient(to top, #F62A00, black, #1E656D);*/
     background: linear-gradient(to top, #F62A00, black, #00293C);
-    opacity: 0.6;
-    position: relative;
+    opacity: 0.8;
+    position: absolute;
     height: 100%;
-    z-index: 9999;
+    z-index: 999;
+    bottom:0;
 }
+.inner-item-back:hover{
+    opacity: 0.5;
+           -webkit-animation: fadeInFromNone 0.3s ease-out;
+            -moz-animation: fadeInFromNone 0.3s ease-out;
+            -o-animation: fadeInFromNone 0.3s ease-out;
+            animation: fadeInFromNone 0.3s ease-out;
+}
+
+        @-webkit-keyframes fadeInFromNone {
+            0% {opacity: 0.8;}
+            50% {opacity: 0.65;}
+            100% {opacity: 0.5;}
+        }
+        @-moz-keyframes fadeInFromNone {
+             0% {opacity: 0.8;}
+            50% {opacity: 0.65;}
+            100% {opacity: 0.5;}
+        }
+        @-o-keyframes fadeInFromNone {
+            0% {opacity: 0.8;}
+            50% {opacity: 0.65;}
+            100% {opacity: 0.5;}
+        }
+        @keyframes fadeInFromNone {
+             0% {opacity: 0.8;}
+            50% {opacity: 0.65;}
+            100% {opacity: 0.5;}
+        }
 
 .carousel-inner-item-author{
     position: absolute;

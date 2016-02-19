@@ -1,0 +1,67 @@
+{% load thumbnail %}
+<style>
+    .title > *{
+{#        font-sieze: 1em;#}
+        font-sieze: 16px;
+    }
+    .news-title-mobile > a{
+        color: black;
+    }
+    .mobile-title{
+        line-height: 1em;
+{#        font-size: 1em;#}
+        font-size: 16px;
+        margin-top: 0;
+    }
+    .params{
+        padding-left: 10px;
+{#        font-size: 0.8em;#}
+        font-size: 16px;
+    }
+    .current_news_mas_mobile{
+        height: inherit;
+        width: 100%;
+        position: relative;
+        float: left;
+        margin-bottom: 2em;
+    }
+    .mobile-container{
+        border-bottom: solid 1px lightgrey;
+        margin-bottom: 1em;
+    }
+</style>
+
+<div id="top-4-news"  class="col-xs-12" style="float: left;">
+    {% for i in total_middle_news %}
+        <div class="container-fluid col-md-6 mobile-container">
+            <div class="current_news_mas_mobile news-news mobile-news">
+                <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                    <div class="middle-news-cover" style="/* float: left; *//* cursor: pointer; */">
+                        {% thumbnail i.news_main_cover '100x100' crop='center' as im %}
+                            <img src="{{ im.url }}" class="col-xs-6 mobile-top"/>
+                        {% endthumbnail %}
+                    </div>
+                </a>
+                <div class="title total-container col-xs-8" id="title-{{ i.id }}"
+                     style="float: right;">
+                    <div class="news-title-mobile" style="line-height: 0.9em; margin-top: 0;">
+                        <a class="mobile-title" href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                            <b>{{ i.news_title|safe }}</b>
+                        </a>
+                    </div>
+                </div>
+                <div class="params total-container col-xs-8" style="float: right;">
+                    <i>Автор&nbsp;<span class="article-author">
+                        <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
+                    </span>
+                        &nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
+                </div>
+            </div>
+        </div>
+        <hr width="100%">
+    {% endfor %}
+</div>
+
+<div id="top-mobile-ad">
+    1
+</div>

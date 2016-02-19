@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     #"imagekit",
     "sorl.thumbnail",
     #"debug_toolbar",
+    "django_mobile",
 )
 
 # INTERNAL_IPS = ('127.0.0.1',)
@@ -103,6 +104,8 @@ CKEDITOR_CONFIGS = {
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_mobile.middleware.MobileDetectionMiddleware',
+    'django_mobile.middleware.SetFlavourMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -122,6 +125,15 @@ MAINTENANCE_FILE = "503.html"
 
 
 ROOT_URLCONF = 'indavant.urls'
+
+
+TEMPLATE_LOADERS = (
+    ('django_mobile.loader.CachedLoader', (
+          'django_mobile.loader.Loader',
+          'django.template.loaders.filesystem.Loader',
+          'django.template.loaders.app_directories.Loader',
+    )),
+)
 
 
 TEMPLATES = [
@@ -147,6 +159,7 @@ TEMPLATES = [
                 'django.core.context_processors.i18n',
                 'django.core.context_processors.request',
                 'django.core.context_processors.media',
+                'django_mobile.context_processors.flavour',
             ],
         },
     },
@@ -231,9 +244,12 @@ LOCALE_PATHS = (
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    ("static", os.path.join(BASE_DIR, 'static')),
-)
+if DEBUG == True:
+    STATICFILES_DIRS = (
+        ("static", os.path.join(BASE_DIR, 'static')),
+    )
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

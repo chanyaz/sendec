@@ -1,6 +1,7 @@
 {% load endless %}
 {% load staticfiles %}
 {% load my %}
+{% load i18n %}
 {% load thumbnail %}
 <style>
         .sect{width: 23%; margin-bottom: 1%;}
@@ -16,55 +17,119 @@
         height:400px;
         max-height: 400px;
     }
+    .current_news{
+{#        border: solid 1px red;#}
+        height: 400px;
+    }
 </style>
 
-
-<div class="dyn-news-2 container" style="height: inherit; margin-bottom: 5%;">
-    {% paginate 30 total_news %}
-    {% for i in total_news %}
-        <div class="col-md-4">
-            <div class="current_news">
-                <div class="cat cat-left">
-                    <a href="/news/{{ i.id|get_news_category }}">{{ i.id|get_news_category|upper }}</a>
-                </div>
-                {% if i.news_main_cover != '' %}
-                    <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                        {% if i.news_main_cover|check_format == True %}
-                            <div class="middle-news-cover" style="max-width: 100%;cursor: pointer;max-height: 100%;">
-                            {% thumbnail i.news_main_cover '350x210' as im %}
-                                <img src="{{ im.url }}" />
-                            {% endthumbnail %}
-                            </div>
-                        {% else %}
-                            <div class="middle-news-cover" style="max-width: 100%;cursor:pointer;max-height: 100%;height: 210px;
-                                     background: url('{% static 'static/img/companies_cover/' %}{{ i.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center;
-                                     background-size: cover;"></div>
-                        {% endif %}
-                    </a>
-                {% endif %}
-                <div class="title"
-                     id="title-{{ i.id }}"
-                     style="margin-top: 5%;">
-                    <div class="news-title">
+{% if flavour != 'mobile' %}
+    <div class="dyn-news-2 container" style="height: inherit; margin-bottom: 5%; margin-left: -3%;">
+        {% paginate 30 total_news %}
+        <div id="top-4-news"  class="col-xs-12" style="float: left;">
+            {% for i in total_news %}
+                    <div class="" style="width: 31%; float: left; margin-right: 1%; margin-bottom: 5%; border-bottom: solid 1px lightgrey;">
+                    <div class="current_news">
+                        <div class="cat cat-left">
+                            <a href="/news/{{ i.id|get_news_category }}">{{ i.id|get_news_category|upper }}</a>
+                        </div>
                         <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                            <b>{{ i.news_title|safe }}</b>
+                                <div class="middle-news-cover" style="max-width: 100%;cursor: pointer;max-height: 100%;">
+                                {% thumbnail i.news_main_cover '310x200' crop='center' as im %}
+                                    <img src="{{ im.url }}" height="{{ im.height }}" width="100%"/>
+                                {% endthumbnail %}
+                                </div>
                         </a>
+                        <div class="title"
+                             id="title-{{ i.id }}"
+                             style="margin-top: 2%;">
+                            <div class="news-title">
+                                <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                    <b>{{ i.news_title|safe }}</b>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="params">
+                            <i>{% trans 'By' %}&nbsp;<span class="article-author">
+                                <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
+                            </span>&nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
+                        </div>
+                        <div class="news-text" style="margin-top: 5%; ">
+                            {{ i.news_post_text_english|safe|truncatechars:150 }}
+                        </div>
                     </div>
                 </div>
-            <div class="params">
-                <span class="glyphicon glyphicon-eye-open" style="float: left;"></span>
-                <div class="watches" style="float: left;">
-{#                    {{ i.id|count_watches }}#}
-                </div>
-                <div class="publushed" style="float: right;">{{ i.news_post_date }}</div>
-            </div>
-            </div>
+
+                {% if  forloop.last %}
+                    <div class="paginate-ad" style="margin-top: -10%;">
+                        <div class="col-md-4" style="float: left;">
+                            <div class="cat cat-left">
+                                <a>ADVERTISEMENT</a>
+                            </div>
+                            <div class="">
+                                <div style="float: left; margin-top:0; width: 300px;height: 250px;background-color: #00fff9"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="float: left;">
+                            <div class="cat cat-left">
+                                <a>ADVERTISEMENT</a>
+                            </div>
+                            <div class="">
+                                <div style="float: left; margin-top:0; width: 300px;height: 250px;background-color: #00fff9"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="cat cat-left">
+                                <a>ADVERTISEMENT</a>
+                            </div>
+                            <div class="">
+                                <div style="float: left; margin-top:0; width: 300px;height: 250px;background-color: #00fff9"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
-    {% endfor %}
-</div>
+    </div>
+    {% show_more %}
+{% else %}
+    <div class="dyn-news-2 container" style="height: inherit; margin-bottom: 5%; margin-left: -3%;">
+        {% paginate 30 total_news %}
+        <div id="paginate-list" style="float: left;">
+            {% for i in total_news %}
+                <div class="container-fluid col-md-6 mobile-container">
+                    <div class="current_news_mas_mobile news-news mobile-news">
+                        <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                            <div class="middle-news-cover" style="/* float: left; *//* cursor: pointer; */">
+                                {% thumbnail i.news_main_cover '100x100' crop='center' as im %}
+                                    <img src="{{ im.url }}" class="col-xs-6 mobile-top"/>
+                                {% endthumbnail %}
+                            </div>
+                        </a>
+                        <div class="title total-container col-xs-8" id="title-{{ i.id }}"
+                             style="float: right;">
+                            <div class="news-title-mobile" style="line-height: 0.9em; margin-top: 0;">
+                                <a class="mobile-title" href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                    <b>{{ i.news_title|safe }}</b>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="params total-container col-xs-8" style="float: right;">
+                            <i>Автор&nbsp;<span class="article-author">
+                                <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
+                            </span>
+                                &nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
+                        </div>
+                    </div>
+                </div>
+                <hr width="100%">
+            {% endfor %}
+        </div>
+    </div>
+    {% show_more %}
+{% endif %}
 <hr width="100%">
 
-{% show_more %}
 
 {##}
 {#<script>#}

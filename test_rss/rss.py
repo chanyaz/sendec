@@ -443,10 +443,11 @@ def fill_news():
 
     for i in range(end):
         try:
-            if news[file_list[i]]['category'] == "technology" and news[file_list[i]]['date'] != "date":
+            for j in [2,3,4,5]:
+            # if news[file_list[i]]['category'] == "technology" and news[file_list[i]]['date'] != "date":
                 cur_iter += 1
                 news_title = news[file_list[i]]["title"]
-                news_category_id = 1    # Technology
+                news_category_id = j    # Technology
                 news_post_date = news[file_list[i]]["date"]
                 news_post_text_english = news[file_list[i]]["text"]
                 news_post_text_russian = news[file_list[i]]["text"]
@@ -459,7 +460,7 @@ def fill_news():
                 news_dislikes = 0
                 photo = ""
                 news_tags = ""
-                slug = "a-a-a-%s" % i
+                slug = "%s-a-a-a-%s" % (j, i)
 
 
                 query_set = "INSERT INTO news(news_title, news_category_id, news_post_date, news_post_text_english, " \
