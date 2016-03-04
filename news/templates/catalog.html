@@ -1,0 +1,380 @@
+{% extends 'index_beta.html' %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% load i18n %}
+{% load my %}
+{% block catalog %}
+    <style>
+    #catalog{min-height:100%; padding-bottom:2.5em; position: relative;}
+        .catalog-left{float: left; width: 18%; position: fixed;}
+        .catalog-right{float: right; width: 78%; background: white;padding-left: 15px;}
+    .private-top {
+          position: relative;
+          margin-top: -2%;
+          width: 100%;
+          height: 400px;
+      }
+      .private-top-background{
+          position: absolute;
+          width: 100%;
+          height: 400px;
+          background: url('{% static 'static/img/rss/top-back-12jpg' %}') no-repeat center;
+          opacity: 1;
+        }
+        .private-top-content{position: absolute; height: 100%;}
+        .private-top-title{margin-top:1%;}
+        .private-top-title > h1{
+            color: ivory;
+        }
+        .private-top-search{margin-top:5%;}
+        #bottom-counter{
+            position: absolute;
+            bottom: 0;
+        }
+        #bottom-counter > h4{
+            color: ivory;
+        }
+
+        .current-popular-portal{
+            width: 24%;
+            height: 200px;
+            float: left;
+            margin-right: 5px;
+            margin-bottom: 15px;
+        }
+        .portal-picture{width:100%;height:150px;}
+        .mobile-portal-picture{width:100%;height:120px;}
+        .portal-name{position:absolute;bottom:0;}
+        .mobile-portal-name{bottom:0;}
+        .portal-bottom{position:absolute;bottom:5%;width:100%;}
+        .mobile-portal-bottom{bottom:5%;width:100%;}
+        .portal-footer{position:absolute;bottom:0;}
+        .mobile-portal-footer{bottom:0;}
+        .portal-link>h3{font-size: 16px;color: #F62A00;}
+
+
+        #left-control-portals{
+            position: fixed;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            z-index: 989;
+            height: 100%;
+            margin-top: -5.5%;
+            float: left;
+            width: 16.1%;
+            left: 0;
+        }
+
+
+
+        #browser{
+            width: 100%;
+            float: right;
+            position: relative;
+            min-height: 300px;
+        }
+
+
+        #browser-main-title{
+            width: 100%;
+            text-align: center;
+            font-family: Georgia, Times, "Times New Roman", serif;
+            font-size: 16px;
+        }
+
+        #browser-middle{
+            width: 100%;
+            border: solid 1px red;
+        }
+
+        .category-main-title{
+            position: relative;
+            width: 100%;
+            font-family:Georgia, Times, "Times New Roman", serif;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+        }
+        #fadeandscale {
+            background: white;
+            width: 50%;
+            height: 90%;
+            overflow-y: scroll;
+        -webkit-transform: scale(0.8);
+           -moz-transform: scale(0.8);
+            -ms-transform: scale(0.8);
+                transform: scale(0.8);
+        }
+        .popup_visible #fadeandscale {
+            -webkit-transform: scale(1);
+               -moz-transform: scale(1);
+                -ms-transform: scale(1);
+                    transform: scale(1);
+        }
+        .cur-pw-item > li{width:100%; height:inherit; margin-bottom: 15px;}
+        .cur-pw-ar-cover{float: left; width: 30%;}
+        .cur-pw-ar-content{float: right; width: 70%;}
+        .cont-cover{width:100%; height: 100px; float: left;}
+        .cont-cover:hover{cursor:pointer;}
+        .cur-pw-td{color: white;overflow-y:scroll;}
+        .cur-pw-right{
+            top: 80%;
+            color: white;
+            position: absolute;
+            text-align: center;
+        }
+        .cur-pw-left{
+            width: 100%;
+            padding: 0 5%;
+            margin-top: 2%;
+            font-family: Georgia,Times,sans-serif;
+            font-size: 17px;
+        }
+        .cur-pw-left img{
+            max-height: 800px;
+            max-width: 100%;
+            height: inherit;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        .cur-pw-top{position: relative;}
+        .cur-pw-cover{
+            width:100%;
+            height: 150px;
+        }
+        .fl-btn{width:100%;}
+        .cur-pw-background{width: 100%; height: 200px; background: url('{% static 'static/img/rss/top-back-12jpg' %}') no-repeat center; background-size: cover;}
+        .cur-pw-btn-fl{position: absolute;bottom:0;right:0;}
+        .cur-pw-btn-bck{position: absolute;bottom:0;left:0;}
+
+        .item-active{background: #F62A00; color: white;}
+        .item-active:hover{background: #F62A00; color: white;}
+
+    .notification{
+        position: fixed;
+        z-index: 100002;
+        background: #F62A00;
+        width: 30%;
+        height: 50px;
+        top: 25%;
+        left: 35%;
+    }
+    .notify-text{
+
+        color: white;
+    }
+
+    </style>
+
+
+    <div id="catalog" class="container-fluid container col-xs-12">
+        {% if flavour != 'mobile' %}
+        <div class="catalog-left">
+        {% else %}
+        <div class="catalog-top">
+        {% endif %}
+            <div class="list-group">
+                {% if flavour != 'mobile' %}
+                <ul class="list-group">
+                  <li id="technology-item" class="list-group-item item-active" data-cid="1" onclick="loadCurrentCategoryPortals(1); return false;">Technology</li>
+                  <li id="entertainment-item" class="list-group-item" data-cid="2" onclick="loadCurrentCategoryPortals(2); return false;">Entertainment</li>
+                  <li id="auto-item" class="list-group-item" data-cid="3" onclick="loadCurrentCategoryPortals(3);return false;">Auto</li>
+                  <li id="space-item" class="list-group-item" data-cid="4" onclick="loadCurrentCategoryPortals(4);return false;">Space</li>
+                  <li id="bio-news" class="list-group-item" data-cid="6" onclick="loadCurrentCategoryPortals(5);return false;">BIO</li>
+                </ul>
+                <ul class="list-group to-usernews">
+                    <a href="/news/usernews/">
+                        <li id="catalog-usernews" class="list-group-item" onclick="">
+                            My news
+                        </li>
+                    </a>
+                    <a href="/news/browser/">
+                        <li id="catalog-browser" class="list-group-item">
+                            Browser
+                        </li>
+                    </a>
+                    <a href="/news/manager/">
+                        <li id="catalog-manager" class="list-group-item">
+                            Manager
+                        </li>
+                    </a>
+                </ul>
+                {% else %}
+                    <ul class="list-group" style="display: inline-block;">
+                      <li id="technology-item" class="col-xs-6 list-group-item item-active" style="display: inline-block;" data-cid="1" onclick="loadCurrentCategoryPortals(1); return false;">Technology</li>
+                      <li id="entertainment-item" class="col-xs-6 list-group-item" style="display: inline-block;" data-cid="2" onclick="loadCurrentCategoryPortals(2); return false;">Entertainment</li>
+                      <li id="auto-item" class="col-xs-5 list-group-item" style="display: inline-block;" data-cid="3" onclick="loadCurrentCategoryPortals(3);return false;">Auto</li>
+                      <li id="space-item" class="col-xs-5 list-group-item" style="display: inline-block;" data-cid="4" onclick="loadCurrentCategoryPortals(4);return false;">Space</li>
+                      <li id="bio-news" class="col-x-6 list-group-item" style="display: inline-block;" data-cid="6" onclick="loadCurrentCategoryPortals(5);return false;">BIO</li>
+                    </ul>
+                    <ul class="list-group to-usernews">
+                    <a href="/news/usernews/">
+                        <li id="catalog-usernews" class="list-group-item" onclick="">
+                            My news
+                        </li>
+                    </a>
+                    <a href="/news/browser/">
+                        <li id="catalog-browser" class="list-group-item">
+                            Browser
+                        </li>
+                    </a>
+                    <a href="/news/manager/">
+                        <li id="catalog-manager" class="list-group-item">
+                            Manager
+                        </li>
+                    </a>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+        {% if flavour != 'mobile' %}
+            <div class="catalog-right col-md-12 col-xs-12 panel">
+        {% else %}
+            <div class="catalog-bottom col-md-12 col-xs-12 panel">
+        {% endif %}
+            <div class="text-center"><h3>CATALOG</h3></div>
+            <div class="portals-list">
+                {% for i in rss_tech %}
+                    {% if flavour != 'mobile' %}
+                        <div onclick="showCurrentPortalData('{{ i.id }}'); return false;" class="fadeandscale_open current-popular-portal col-md-2" id="portal-{{ i.id }}" data-alt-id="{{ i.puid }}">
+                    {% else %}
+                        <div onclick="showCurrentPortalData('{{ i.id }}'); return false;" class="col-xs-6 fadeandscale_open mobile-current-popular-portal col-md-2" id="portal-{{ i.id }}" data-alt-id="{{ i.puid }}">
+                    {% endif %}
+                        <a href="">
+                        {% if flavour != 'mobile' %}
+                            <div class="portal-picture" style="background: url('{{ i.cover }}') no-repeat center; background-size: cover;"></div>
+                        {% else %}
+                            <div class="mobile-portal-picture" style="background: url('{{ i.cover }}') no-repeat center; background-size: cover;"></div>
+                        {% endif %}
+                        </a>
+                    {% if flavour != 'mobile' %}
+                        <div class="portal-bottom">
+                        {% else %}
+                        <div class="mobile-portal-bottom">
+                            {% endif %}
+                            <span class="portal-logo">{{ i.favicon }}</span>
+                    {% if flavour != 'mobile' %}
+                            <span class="portal-name">
+                            {% else %}
+                        <span class="mobile-portal-name">
+                                {% endif %}
+                                <a href="" class="portal-link" onclick="showCurrentPortalData('{{ i.id }}'); return false;">
+                                    <h3>{{ i.portal }}</h3>
+                                </a>
+                            </span>
+                        </div>
+                    {% if flavour != 'mobile' %}
+                        <div class="portal-footer">
+                        {% else %}
+                        <div class="mobile-portal-footer">
+                            {% endif %}
+                            <span class="">Followers:&nbsp;{{ i.follows }}</span>&nbsp;|&nbsp;
+                            <span class="">Articles:&nbsp;{{ i.id|rss_articles_amount }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <div id="fadeandscale" class="fadeandscale">
+        <div class="cur-pw-content"></div>
+    </div>
+    <div class="notification" hidden>
+        <div class="notify-text text-center"></div>
+    </div>
+
+    <script src="{% static 'static/js/jquery.ba-hashchange.min.js' %}"></script>
+{#    <script src="{% static 'static/js/dynamicpage.js' %}"></script>#}
+
+
+    <script src="//cdn.rawgit.com/vast-engineering/jquery-popup-overlay/1.7.11/jquery.popupoverlay.js"></script>
+    <script>
+        function showCurrentPortalData(i) {
+            $.ajax({
+                type: "POST",
+                url: "/news/preview_portal="+i+"/",
+                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                success: function (data) {
+                    $('#fadeandscale').popup({
+                        autoopen: true,
+                        pagecontainer: '.container',
+                        transition: 'all 0.3s'
+                    });
+                    $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
+                }
+            })
+        }
+     </script>
+
+
+
+    <script>
+        $(document).ready(function(){
+            $('.list-group-item').click(function(){
+                if($(this).hasClass('item-active')){}
+                else{
+                    $('.item-active').removeClass('item-active');
+                    $(this).addClass('item-active')
+                }
+            })
+        })
+    </script>
+
+
+    <script>
+        function loadCurrentCategoryPortals(i) {
+            var homeLoader = $('body').loadingIndicator({
+                useImage: false
+            }).data("loadingIndicator");
+            if($('.loading-indicator-wrapper').hasClass('loader-hidden')){
+                $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');
+            }
+            $.ajax({
+                type: "POST",
+                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                url: "/news/catalog/gcrc=" + i + "/",
+                success: function (data) {
+                    $('.portals-list').html(data.data);
+                }
+            }).done(function () {
+                homeLoader.hide();
+            })
+        }
+    </script>
+    <script>
+        function loadCurrentArticle(i){
+            var homeLoader = $('body').loadingIndicator({
+					useImage: false
+				}).data("loadingIndicator");
+            if($('.loading-indicator-wrapper').hasClass('loader-hidden')){
+                $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');
+            }
+            $.ajax({
+                type: "POST",
+                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                url: "/news/gcr="+i+"/",
+                success: function(data){
+                    $parsedData = data.data;
+                    $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
+                    if ($parsedData.content.length === 0) {
+                        $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+                    else {
+                        $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+                    $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
+                    $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
+                    $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
+                    homeLoader.hide();
+                }
+            })
+        }
+
+
+    </script>
+
+
+
+{% endblock %}

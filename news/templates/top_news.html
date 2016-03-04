@@ -1,51 +1,14 @@
-{% extends 'index_new.html' %}
+{% extends 'index_beta.html' %}
 {% load staticfiles %}
 {% load my %}
 {% load i18n %}
 {% load cache %}
+{% load thumbnail %}
 {% block current_news %}
-
     <script>
-        $("li[title='More Options']").hide();
-    </script>
-
-    <script>
-        function add_like_news(news_id) {
+        function changeArticleLanguage(top_news_id, lang_code){
             $.ajax({
-                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                type: "POST",
-                url: "/news/add_like/n=" + news_id,
-                success: $.get("/news/check_like/n=" + news_id).done(function (data) {
-                    $(".news_likes_amount_"+news_id).text(data.likes);
-                    $(".liked").text("Liked");
-                    $(".disliked").text("Dislikes:")
-                })
-            });
-        }
-    </script>
-    <script>
-        function add_dislike_news(news_id) {
-                $.ajax({
-                    data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                    type: "POST",
-                    url: "/news/add_dislike/n=" + news_id,
-                    success: $.get("/news/check_dislike/n=" + news_id).done(function (data) {
-                        $(".news_dislikes_amount_"+news_id).text(data.dislikes);
-                        $(".disliked").text("Disliked");
-                        $(".liked").text("Likes:")
-                    })
-                });
-            }
-    </script>
-    <script>
-        $(document).ready(function(){
-            $("img").style.width='100px';
-        })
-    </script>
-    <script>
-        function changeArticleLanguage(news_id, lang_code){
-            $.ajax({
-                url: "/news/cl&t=0&id="+news_id+"&lang_code="+lang_code,
+                url: "/news/cl&t=0&id="+top_news_id+"&lang_code="+lang_code,
                 type: "POST",
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}'
@@ -72,125 +35,31 @@
         }
     </script>
     <style>
-
-        #current-news-page{
-            height: 100%;
-            margin-bottom: 5%;
-        }
-
-        .share-list-item{float: left;margin-left: 1%; width: 24%; height:1.5em;}
-        .container-fluid{
-{#            border: solid 1px lightgrey;#}
-        }
-        .tre{float: left; width: 70%; border-right: solid 1px lightgrey;}
-        .page-header{
-            text-align: center;
-            margin-right: auto;
-            margin-left: auto;
-            width: 50%;
-            font-size: 30px;
-            color: #F62A00;
-            border-bottom: solid 1px #F62A00;
-            font-family: Georgia, Times, "Times New Roman", serif
-        }
-        .date-and-author{
-            margin-right: auto;
-            margin-left: auto;
-            margin-bottom: 1%;
-            width: 100%;
-            text-align: center;
-        }
-        .date-and-author a{
-            color: #F62A00;
-        }
-
-        .date-and-author a:hover{
-            text-decoration: none;
-            color: #1E656D;
-        }
-
-        .news-settings{height: 2em; width: 100%; text-transform: uppercase;}
-        .shares{margin-left: -6%; margin-top: -1%;}
-        .share-title{margin-left: 15%; font-family: Arial, Helvetica, sans-serif}
+        #current-news-page{height: 100%;margin-bottom: 5%;}
+        .page-header{text-align: center;border-bottom: solid 1px #F62A00;}
+        .page-header > h1 {font-size: 30px;color: #F62A00;}
+        .date-and-author{margin-right: auto;margin-left: auto;margin-bottom: 1%;width: 100%;text-align: center;}
+        .date-and-author a{color: #F62A00;}
+        .date-and-author a:hover{text-decoration: none;color: #1E656D;}
         ul{list-style-type: none;}
         .news-cover{
-{#            display: flex;#}
-{#            align-items: baseline;#}
-{#            max-width: 100%; #}
-{#            max-height: 100%; #}
-{#            margin-top: -100px;#}
-{#            min-height: 200px; #}
-{#            height: 100%;#}
-{#            width: 100%;#}
-{#            border: solid 1px red;#}
-        }
-        .news-cover img{
-{#            margin-top: -5%;#}
-        }
+        {% thumbnail current_top_news_values.top_news_main_cover 'x500'  as im %}
+            background: url('{{ im.url }}') no-repeat center;
+        {% endthumbnail %}background-size: cover;width: 100%;height: 500px;max-height: 600px;margin-top: -1.5%;}
+        @media(max-device-width: 767px){.news-cover{background-size: contain;height: 210px;margin-top: -6%;}}
+        @media(min-device-width: 1600px){.news-cover{background-size: cover;height: 600px;max-height: 900px;}}
+        #translates{margin-bottom: 2%;width: 8em;height: 2em;margin-left:auto;margin-right: auto;}
+        .translate-list{margin-left: -2em;}
+        .translate-list-item{display: inline;float: left;width: 2em;height: 2em;cursor: pointer;}
+        .news-post-text{margin-bottom: 5%;padding:0;}
+        .news-post-text > h2{font-size: 16px;line-height: 1.5em}
+        .news-post-text img{position: relative;min-width: 100%;width:200%;max-width: 200%;margin-left: -50%;margin-right: 50%;}
+        .news-post-text img.middle-size{position: relative;min-width: 100%;width:100%;margin-left: auto;margin-right: auto;}
+        .news-post-text-mobile{margin-bottom: 5%;}
+        .news-post-text-mobile > *{font-size: 16px;}
+        .news-post-text-mobile img{position: relative;min-width: 100%;width:100%;max-width: 100%;}
 
-
-        #translates{
-            margin-bottom: 2%;
-            width: 8em;
-{#            border: solid 1px red;#}
-            height: 2em;
-            margin-left:auto;
-            margin-right: auto;
-        }
-        .translate-list{
-            margin-left: -2em;
-        }
-        .translate-list-item{
-            display: inline;
-            float: left;
-            width: 2em;
-            height: 2em;
-            cursor: pointer;
-        }
-
-        .current-cover{
-            max-width:100%;
-            max-height: 100%;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .news-cover-bottom{max-width: 100%; max-height: 100%; margin-top: 0; height: 175px;}
-        .news-title-bottom{font-family: Georgia, Times, "Times New Roman", serif; font-size: 15px;}
-        .current-other-news{height: 20em; float: left; margin-left: 0; margin-right: 1.2%; margin-top: 1%; width: 32%; box-shadow: 0 0 1px black;}
-        .news-post-text{
-            margin-right: auto;
-            margin-left: auto;
-            margin-bottom: 5%;
-            width: 50%;
-{#            margin: 4% 15%; #}
-            font-family: Georgia,Times,sans-serif;
-            font-size: 19px;}
-        .news-post-text img{
-            position: relative;
-            min-width: 100%;
-            width:200%;
-            max-width: 200%;
-            margin-left: -50%;
-            margin-right: 50%;
-        }
-
-        .news-post-text img.middle-size{
-            position: relative;
-            min-width: 100%;
-            width:100%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        #share-news{
-            position: relative;
-            margin-left: auto;
-            margin-right: auto;
-            height: 30px;
-            width: 50%;
-            margin-bottom: 100px;
-        }
+        #share-news{position: relative;height: 30px;}
         #share-news > ul{width:100%; height: 30px; list-style-type: none; position: absolute; padding-left: 0;}
         #share-news > ul > li{float: left; height: 30px;width: 25%; text-align: center; padding-top: 4px;}
         #share-news > ul > li > a{color: ivory; text-decoration: none;}
@@ -204,348 +73,389 @@
         #share-news > .share .linkedin:hover{background-color: #008bb6; cursor: pointer;}
         #share-news > .share .vk{background-color: #45668e;}
         #share-news > .share .vk:hover{background-color: #45568e; cursor: pointer;}
-
-
-        .news_tags{
-            font-family: Georgia, Times, "Times New Roman", serif;
-            margin-left: 25%;
-            width: 50%;
-            height: 50px;
-            margin-bottom: 10px;
-        }
-        .tags-title{
-            font-weight: bold;
-            font-size: 25px;
-            float: left;
-            margin-right: 15px;
-        }
-
-        .current-tag{
-            min-width: 75px;
-            padding: 3px 7px;
-            border: solid 1px #1E656D;
-            float: left;
-            margin-right: 15px;
-            text-align: center;
-            font-size: 20px;
-        }
-
-{#        .nav-bar{margin-left: 63%;}#}
-        .liked{float: left;}
-        .disliked{float: left;}
-{#        .other-materials{height: {% if other_materials_count <= 3 %} 25em {% elif other_materials_count <= 6 %} 52em {% elif other_materials_count <= 9 %} 77em {% elif other_materials_count <= 12 %} 103em {% endif %}}#}
-        .recom-text{
-{#            background: linear-gradient(to right, rgb(45, 62, 80) 1%, transparent);#}
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            font-size: 20px;
-            font-family: Georgia, Times, "Times New Roman", serif
-        }
-        .recom-span-text{
-            width: 100%;
-{#            border: solid 1px red;#}
-            margin-left: -72%;
-            text-align: left;
-            color: #F62A00;
-        }
-        .recom-title a{
-            text-decoration: none;
-            color: black;
-        }
-        .recom-title a:hover{
-            text-decoration: none;
-            color: #F62A00;
-        }
-
-
-        .portal{float: left;}
-        .current-rss-news{width: 32%; height: 25em; margin-left: 1%; margin-top: 1%; float: left;}
-        .news-image{background: url('/media/{{ current_other.news_main_cover }}') no-repeat center; width: 100%; height: 50%;}
-        .right-news-block{width: 28%; float: right; height: 100%;}
-        .right-block-content{width: 100%;}
-        .latest-news{}
-        .latest-news-cover{float: left; height: 50%; width: 25%;}
-        .latest-news-content{height:60px;padding-left: 5%; width:75%; float: right; font-family: Georgia, Times, "Times New Roman", serif}
-        .latest-current-news{margin-top: 5%; height: 60px; border-bottom: dotted 1px lightgrey}
-        .latest-header{text-align: center;}
-{#        .translate-list-item{width:2em; height: 2em;}#}
-{#        .translate-list-item:hover{cursor: pointer;}#}
+        .top_news_tags{font-family: Georgia, Times, "Times New Roman", serif;margin-left: 25%;width: 50%;height: 50px;margin-bottom: 10px;}
+        .tags-title{font-weight: bold;font-size: 25px;float: left;margin-right: 15px;}
+        .current-tag{min-width: 75px;padding: 3px 7px;border: solid 1px #1E656D;float: left;margin-right: 15px;text-align: center;font-size: 20px;}
+        .recom-text{font-size: 20px;font-family: Georgia, Times, "Times New Roman", serif}
+        .recom-span-text{color: #F62A00;}
+        .recom-title a{text-decoration: none;color: black;}
+        .recom-title a:hover{text-decoration: none;color: #F62A00;}
         #to-russian{background: url('{% static 'static/img/rus.png' %}') no-repeat center;background-size:cover;}
         #to-english{background: url('{% static 'static/img/uk.png' %}') no-repeat center;background-size:cover}
         #to-chinese{background: url('{% static 'static/img/china.png' %}') no-repeat center;background-size:cover}
+        #comments-block{width: 70%; float: left;}
+    .bn-title{
+            bottom: 0;
+            position: absolute;
+            z-index: 998;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, #F62A00, black);
+            opacity: 0.8;
+            box-sizing: border-box;
+            display: block;
+        }
+        .bn-title:hover{
+            opacity: 0.5;
+           -webkit-animation: fadeInFromNone 0.3s ease-out;
+            -moz-animation: fadeInFromNone 0.3s ease-out;
+            -o-animation: fadeInFromNone 0.3s ease-out;
+            animation: fadeInFromNone 0.3s ease-out;
+        }
+        @-webkit-keyframes fadeInFromNone {
+            0% {opacity: 0.8;}
+            50% {opacity: 0.65;}
+            100% {opacity: 0.5;}
+        }
+        @-moz-keyframes fadeInFromNone {
+             0% {opacity: 0.8;}
+            50% {opacity: 0.65;}
+            100% {opacity: 0.5;}
+        }
+        @-o-keyframes fadeInFromNone {
+            0% {opacity: 0.8;}
+            50% {opacity: 0.65;}
+            100% {opacity: 0.5;}
+        }
+        @keyframes fadeInFromNone {
+             0% {opacity: 0.8;}
+            50% {opacity: 0.65;}
+            100% {opacity: 0.5;}
+        }
+    .om-title-text{
+            position: absolute;
+            bottom: 45%;
+            z-index: 999;
+            font-size: 1.8em;
+            color: ivory;
+            text-shadow: 0 0 20px black;
+        }
+    .om-title-text-small{
+         position: absolute;
+            z-index: 999;
+        bottom: 45%;
+            font-size: 14px;
+            color: ivory;
+            text-shadow: 0 0 20px black;
+    }
+        .om-title-text>a{color: ivory;}
+        .om-title-text-small>a{color:ivory;}
+        .om-title-author{
+            position: absolute;
+            z-index: 999;
+            font-size: 15px;
+        }
     </style>
 
-    {% if current_news_values.top_news_main_cover|check_format == True %}
-        <div class="news-cover" style="background: url('/media/{{ current_news_values.top_news_main_cover }}') no-repeat center; background-size: cover; width: 100%; height: 500px; max-height: 600px; margin-top: -1.5%;"></div>
+    {% if current_top_news_values.top_news_main_cover|check_format == True %}
+        <div class="news-cover"></div>
     {% else %}
-        <div class="homepage-hero-module-top">
+        <div class="homepage-hero-module" style="height: 450px;">
             <div class="video-container">
                 <div class="title-container">
                     <div class="headline">
-                            <h1>{{ current_news_values.top_news_title }}</h1>
+                            <h1>{{ current_top_news_title }}</h1>
                     </div>
                     <div class="description">
                         <div class="inner">
-                            <a href="/search/?q={{ current_news_values.top_news_company_owner_id|get_company_owner_name|lower}}">{{ current_news_values.top_news_company_owner_id|get_company_owner_name|upper }}</a>
+                            <a href="/search/?q={{ current_top_news_values.company.name|lower}}">{{ current_top_news_values.company.name|upper }}</a>
                         </div>
                     </div>
                 </div>
-{#                <div class="filter"></div>#}
                 <video autoplay loop class="fillWidth" poster="{% static 'static/img/companies_logo/spacex.png' %}">
-                    <source src="{% static 'static/video/falcon9.mp4' %}" type="video/mp4"/>{% trans 'Your browser does not support the video tag. I suggest you upgrade your browser.' %}</video>
+                    <source src="{% static 'static/video/falcon9.mp4' %}" type="video/mp4"/>Your browser does not support the video tag. I suggest you upgrade your browser.</video>
                 <div class="poster hidden">
                     <img src="" alt="">
                 </div>
             </div>
         </div>
     {% endif %}
-
-    <div class="container-fluid" id="current-news-page" data-news-id="{{ current_news_values.id }}">
-{#        {% if current_news_values.news_main_cover != '' %}#}
-{#                <div class="news-cover">#}
-{#                    <img class="current-cover" src="/media/{{ current_news_values.news_main_cover }}"/>#}
-{#                </div>#}
-{#            {% endif %}#}
-
-        <div class="">
-
-            <div class="page-header">
-                {{ current_news_values.top_news_title }}
+    <div class="" id="current-news-page" data-news-id="{{ current_top_news_values.id }}">
+        <article class="">
+            <div class="page-header col-md-6 col-md-offset-3">
+                <h1>{{ current_top_news_title }}</h1>
             </div>
-{#        {% cache 600 date-and-author %}#}
-            <div class="date-and-author">
-                <h5><span style="color: black;">{% trans 'By' %}</span>
-                    <a class="author-span" href="/search/?q={{ current_news_values.top_news_author }}"><i>{{ current_news_values.top_news_author_id|get_article_author }}</i></a>
-                    &nbsp;<span style="color: black;">{{ current_news_values.top_news_post_date.date|date }}</span></h5>
+            <div class="date-and-author col-md-6 col-md-offset-3">
+                <h5>
+                    {% cache 600 at %}
+                    <span class="at" style="color: black;">{% trans 'By' %}</span>
+                    {% endcache %}
+                    <a class="author-span" href="/search/?q={{ current_top_news_values.top_news_author }}"><i>{{ current_top_news_values.author.username }}</i></a>
+                    &nbsp;<span style="color: black;">{{ current_top_news_values.top_news_post_date.date|date }}</span>
+                </h5>
             </div>
             <div id="translates">
                 <ol class="translate-list" style="list-style-type: none;">
                     {% if rus == True %}
                         <li id="to-russian"
-                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'rus');"
+                            onclick="changeArticleLanguage('{{ current_top_news_values.id }}', 'rus');"
                             class="translate-list-item"></li>
                     {% endif %}
                     {% if eng == True %}
                         <li id="to-english"
-                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'eng');"
+                            onclick="changeArticleLanguage('{{ current_top_news_values.id }}', 'eng');"
                             class="translate-list-item"></li>
                     {% endif %}
                     {% if ch == True %}
                         <li id="to-chinese"
-                            onclick="changeArticleLanguage('{{ current_news_values.id }}', 'ch');"
+                            onclick="changeArticleLanguage('{{ current_top_news_values.id }}', 'ch');"
                             class="translate-list-item"></li>
                     {% endif %}
                 </ol>
             </div>
-
             {% if username.is_staff %}
                 <div class="for-god" style="float: right;">
-                    <a href="http://127.0.0.1:8000/admin/news/news/{{ current_news_values.id }}/">{% trans 'Edit' %}</a>
+                    <a href="http://127.0.0.1:8000/admin/news/news/{{ current_top_news_values.id }}/">{% trans 'Edit' %}</a>
                 </div>
             {% endif %}
-{#        {% endcache %}#}
-            <!--    <div class="news-settings">
-                <div class="shares">
-                    <ul>
-                        <li class="share-list-item">
-                            <div id="fb-share"
-                                 style="background-color: #3B5998;border-radius: 3px; color: white;"
-                                 onmouseover="this.style.backgroundColor='#3B7298'; this.style.cursor='pointer';"
-                                 onmouseout="this.style.backgroundColor='#3B5998';"
-                                 onclick="window.open('http://facebook.com/sharer/sharer.php?u='+window.location.href,
-                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
-                                <div class="fb-share-icon" style="margin-left: 2%; margin-top: 0.75%; float: left; background: url('{% static 'static/img/facebook-white.png' %}') no-repeat center; background-size: cover; width: 1.3em; height: 1.3em;"></div>
-                                <div class="share-title">facebook</div>
-                            </div>
-                        </li>
-                        <li class="share-list-item">
-                            <div id="vk-share" style="background-color: #45668e; border-radius: 3px; color: white;"
-                                 onmouseover="this.style.backgroundColor='#457998'; this.style.cursor='pointer';"
-                                 onmouseout="this.style.backgroundColor='#45668e';"
-                                 onclick="window.open('https://twitter.com/intent/tweet?original_referer='+window.location.href+'&ref_src=twsrc%5Etfw&text='+'{{ current_news_values.news_title }}'+'%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+window.location.href+'&via=InsydiaNews',
-                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
-                                <div class="vk-share-icon" style="margin-left: 2%; margin-top: 1.1%; float: left; background: url('{% static 'static/img/vk-white.png' %}') no-repeat center; background-size: cover; width: 1.6em; height: 1em;"></div>
-                                <div class="share-title">VK</div>
-                            </div>
-                        </li>
-                        <li class="share-list-item">
-                            <div id="twitter-share" style="background-color: #55acee; border-radius: 3px; color: white;"
-                                 onmouseover="this.style.backgroundColor='#55bdee';this.style.cursor='pointer';"
-                                 onmouseout="this.style.backgroundColor='#55acee';"
-                                 onclick="window.open('https://twitter.com/intent/tweet?original_referer='+window.location.href+'&ref_src=twsrc%5Etfw&text='+'{{ current_news_values.news_title }}'+'%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+window.location.href+'&via=InsydiaNews',
-                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
-                                <div class="twitter-share-icon" style="margin-left: 2%; margin-top: 0.5%; float: left; background: url('{% static 'static/img/twitter-white.png' %}') no-repeat center; background-size: cover; width: 1.5em; height: 1.3em;"></div>
-                                <div class="share-title">Twitter</div>
-                            </div>
-                        </li>
-                        <li class="share-list-item">
-                            <div id="linkedin-share" style="background-color: #0077b5; border-radius: 3px; color: white;"
-                                 onmouseover="this.style.backgroundColor='#0088b5';this.style.cursor='pointer';"
-                                 onmouseout="this.style.backgroundColor='#0077b5';"
-                                 onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+window.location.href+'&title='+'{{ current_news_values.news_title }}'+'&summary='+'summary',
-                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
-                                <div class="linkedin-share-icon" style="margin-left: 2%; margin-top: 1%; float: left; background: url('{% static 'static/img/linkedin-white.png' %}') no-repeat center; background-size: cover; width: 1.3em; height: 1.1em;"></div>
-                                <div class="share-title">Linkedin</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>-->
+            {% if flavour != 'mobile' %}
+                <main role="main" class="news-post-text col-md-6 col-sm-6 col-md-offset-3">
+            {% else %}
+                <main role="main" class="news-post-text-mobile col-md-6 col-sm-6 col-md-offset-3">
+            {% endif %}
+                <h2>
+                    {% if current_top_news_values.top_news_post_text_english %}
+                        {{ current_top_news_values.top_news_post_text_english|safe|linebreaks }}
+                    {% elif current_top_news_values.top_news_post_text_russian %}
+                        {{ current_top_news_values.top_news_post_text_russian|safe|linebreaks }}
+                    {% else %}
+                        {{ current_top_news_values.top_news_post_text_chinese|safe|linebreaks }}
+                    {% endif %}
+                </h2>
+            </main>
 
-
-            <div class="news-post-text">
-                {% if current_news_values.top_news_post_text_english %}
-                    {{ current_news_values.top_news_post_text_english|safe|linebreaks }}
-                {% elif current_news_values.top_news_post_text_russian %}
-                    {{ current_news_values.top_news_post_text_russian|safe|linebreaks }}
-                {% else %}
-                    {{ current_news_values.top_news_post_text_chinese|safe|linebreaks }}
-                {% endif %}
-            </div>
-
-
-{#            <div style="margin-top: -5%;" class='shareaholic-canvas' data-app='share_buttons' data-app-id='22745115'></div>#}
-
-
-            <div id="share-news">
+            <section id="share-news" class="row-centered col-md-6  col-md-offset-3">
                 <ul class="share list">
-                    <li class="share facebook"><a href="http://faceboaok.com/sharer/sharer.php?u=https://insydia.com/news/{{ current_news_values.news_category_id }}/{{ current_news_values.id }}/" onclick="window.open('http://facebook.com/sharer/sharer.php?u='+window.location.href,
+                    <li class="share facebook"><a href="http://faceboaok.com/sharer/sharer.php?u=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('http://facebook.com/sharer/sharer.php?u='+window.location.href,
                                  'JSSite', 'width=420,height=330,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-facebook"></span> facebook</div></a></li>
-                    <li class="share twitter"><a href="https://twitter.com/intent/tweet?original_referer=https://insydia.com/news/{{ current_news_values.news_category_id }}/{{ current_news_values.id }}/" onclick="window.open('https://twitter.com/intent/tweet?original_referer='+window.location.href+'&ref_src=twsrc%5Etfw&text='+'{{ current_news_values.news_title }}'+'%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+window.location.href+'&via=InsydiaNews',
+                    <li class="share twitter"><a href="https://twitter.com/intent/tweet?original_referer=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('https://twitter.com/intent/tweet?original_referer='+window.location.href+'&ref_src=twsrc%5Etfw&text='+'{{ current_top_news_values.top_news_title }}'+'%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+window.location.href+'&via=InsydiaNews',
                                  'JSSite', 'width=420,height=330,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-twitter"></span> twitter</div></a></li>
-                    <li class="share linkedin"><a href="https://www.linkedin.com/shareArticle?mini=true&url=https://insydia.com/news/{{ current_news_values.news_category_id }}/{{ current_news_values.id }}/" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+window.location.href+'&title='+'{{ current_news_values.news_title }}'+'&summary='+'summary',
+                    <li class="share linkedin"><a href="https://www.linkedin.com/shareArticle?mini=true&url=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+window.location.href+'&title='+'{{ current_top_news_values.top_news_title }}'+'&summary='+'summary',
                                  'JSSite', 'width=420,height=430,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-linkedin"></span> linkedin</div></a></li>
-                    <li class="share vk"><a href="https://vk.com/share.php?url=https://insydia.com/news/{{ current_news_values.news_category_id }}/{{ current_news_values.id }}/" onclick="window.open('https://vk.com/share.php?url='+window.location.href,
+                    <li class="share vk"><a href="https://vk.com/share.php?url=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('https://vk.com/share.php?url='+window.location.href,
                                  'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-vk"></span> vk</div></a></li>
                 </ul>
-            </div>
-
-
-
-            {% if current_news_values.top_news_tags != '' %}
-                <div class="news_tags">
-                    {% for i in current_news_values.top_news_tags.split %}
+            </section>
+            {% if current_top_news_values.top_news_tags != '' %}
+                <div class="top_news_tags">
+                    {% for i in current_top_news_values.top_news_tags.split %}
                         <a href=""><div class="current-tag">{{ i }}</div></a>
                     {% endfor %}
                 </div>
             {% endif %}
-
-
-            <div class="google-news-below-shares" style="margin-left: auto; margin-right: auto; width:728px; height: 90px; background-color: #00fff9;"></div>
-
-
-            {% if other_materials_count > 0 %}
-                <hr width="100%">
-                <div class="container-fluid container">
-                    <div class="recom-text row row-centered">
-                        <span class="recom-span-text">{% trans 'Recommendations of' %}{{ current_news_values.top_news_category }}</span>
-                    </div>
-                </div>
-                <div class="other-materials container-fluid container" style="margin-top: 2%;">
-                    {% for current_middle_news in other_materials %}
-                    <div class="sect-2-top" style="width: 350px; margin-right: 2%; margin-bottom: 3%; float: left">
-                                    {% if current_middle_news.news_main_cover == '' %}
-                                        <div class="current_news news-news">
-                                    {% else %}
-                                        <div class="current_news_mas news-news">
-                                    {% endif %}
-    {#                                        <div class="current_news_top"#}
-    {#                                             onmouseover="this.style.cursor='pointer';"#}
-    {#                                             style="position:relative; height: 92%;">#}
-    {#                                        <div class="category-name">#}
-    {#                                            <a class="category-link" href="/news/{{ current_middle_news.id|get_news_category }}/">#}
-    {#                                                <span class="category-name-content">#}
-    {#                                                    &nbsp;{{ current_middle_news.id|get_news_category }}&nbsp;#}
-    {#                                                </span>#}
-    {#                                            </a>#}
-    {#                                        </div>#}
-
-
-{#                                            <div class="cat cat-left">#}
-{#                                                <span href="/news/{{ current_middle_news.id|get_news_category }}">{{ current_middle_news.id|get_news_category|upper }}</span>#}
-{#                                            </div>#}
-                                            {% if current_middle_news.news_main_cover != '' %}
-                                                <a href="/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/">
-                                                    <div class="middle-news-cover"
-                                                         title="{{ current_middle_news.news_title|safe }}"
-                                                         style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ current_middle_news.news_main_cover }}') no-repeat center; background-size: cover;">
-                                                    </div>
-                                                </a>
-                                            {% endif %}
-                                            <div class="recom-title" style="margin-top: 5%;">
-                                                <a href="/news/{{ current_middle_news.news_category_id }}/{{ current_middle_news.id }}/">
-                                                    <b>{{ current_middle_news.news_title|safe }}</b>
-                                                </a>
-                                            </div>
-{#                                    <div class="params">#}
-{#                                        <span class="glyphicon glyphicon-eye-open" style="float: left;"></span>#}
-{#                                        <div class="watches" style="float: left;">{{ current_middle_news.id|count_watches }}</div>#}
-{#                                        <div class="publushed" style="float: right;">{{ current_middle_news.news_post_date }}</div>#}
-{#                                    </div>#}
-    {#                                        </div>#}
-    {#                                        <div class="current_news_bottom">#}
-    {#                                            SEE LATER#}
-    {#                                        </div>#}
-                                    </div>
-                                </div>
-                                        {% endfor %}
-
-                        </div>
-                </div>
-            {% endif %}
-            <hr width="100%">
-            <div class="container-fluid container">
-                <div class="row row-centered">
-                    <div id="comments-block" style="width: 70%; float: left;">
-                        <div id="disqus_thread"></div>
-                        <script>
-                            (function(){
-                                var d = document, s = d.createElement('script');
-                                s.src = '//indavant.disqus.com/embed.js';
-                                s.setAttribute('data-timestamp', +new Date());
-                                (d.head || d.body).appendChild(s);
-                            })();
-                        </script>
-                        <noscript>{% trans 'Please enable JavaScript to view the' %} <a href="https://disqus.com/?ref_noscript" rel="nofollow">{% trans 'comments powered by Disqus.' %}</a></noscript>
-                    </div>
-                    <div class="adver-near-comments" style="float: right; width: 300px; height: 660px; background-color: #00fff9"></div>
-                </div>
+            <div class="desktop-ad google-news-below-shares row row-centered col-md-10 col-md-offset-1"
+                 style="
+                 margin-left: auto;
+                 margin-right: auto;
+                 width:980px;
+                 height: 120px;
+                 background-color: #00fff9;">
             </div>
+        </article>
 
-
+        <hr width="100%">
+        <div class="container-fluid container text-center">
+            <div class="recom-text row row-centered">
+                <span class="recom-span-text">{% trans 'MORE ON INSYDIA ' %}</span>
+            </div>
         </div>
-        <!--<div class="right-news-block">
-            <div class="right-block-content">
-                <div class="latest-news">
-                    <div class="latest-header">
-                        {% blocktrans %}News&nbsp;of&nbsp;{{ company_name }}{% endblocktrans %}
-                    </div>
-                    <div class="latest-titles">
-                        {% for i in latest_news %}
-                            <div class="latest-current-news"
-                                 onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';"
-                                 onmouseover="this.style.cursor='pointer'; $('#lnt'+{{ i.id }}).css('color', 'blue');"
-                                 onmouseout="$('#lnt'+{{ i.id }}).css('color', 'black');">
-                                <div class="latest-news-cover"
-                                     style="background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: contain;"></div>
-                                <div class="latest-news-content">
-                                    <span id="lnt{{ i.id }}"
-                                          class="title"
-                                          onmouseover="this.style.color='blue'; style.cursor='pointer';"
-                                          onmouseout="this.style.color='black';"
-                                          onclick="location.href='/news/{{ i.news_category_id }}/{{ i.id }}/';">
-                                        {{ i.news_title }}
+
+
+        {% if flavour != 'mobile' %}
+            <div class="other-materials container-fluid container" style="margin-top: 0; height: 750px;">
+                <div class="other-top">
+                    <div class="ot-left col-xs-7" style="height: 350px;">
+                        <div class="other-article">
+                            <a href="/news/{{ other_materials.0.news_post_date.year }}/{{ other_materials.0.news_post_date.month }}/{{ other_materials.0.news_post_date.day }}/{{ other_materials.0.id }}/{{ other_materials.0.slug }}">
+                                <div class="oa-back" style="position:absolute; width:100%; height:350px; background: url('/media/{{ other_materials.0.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                <div class="bn-title col-md-12"></div>
+                            </a>
+                            <div class="om-title-text text-center col-md-12">
+                                <a href="/news/{{ other_materials.0.news_post_date.year }}/{{ other_materials.0.news_post_date.month }}/{{ other_materials.0.news_post_date.day }}/{{ other_materials.0.id }}/{{ other_materials.0.slug }}">
+                                    {% if lang == 'eng' %}
+                                        {{ other_materials.0.news_title_english }}
+                                    {% elif lang == 'rus' %}
+                                        {{ other_materials.0.news_title_russian }}
+                                    {% else %}
+                                        {{ other_materials.0.tnews_title_chinese }}
+                                    {% endif %}
+                                </a>
+                                <div class="om-title-author col-md-12 text-center">
+                                    <span class="top-author">
+                                        {% trans 'By' %}&nbsp;
+                                        <a href="/profile/m/{{ other_materials.0.news_author }}">{{ other_materials.0.news_author }}</a>
+                                    </span>
+                                    <span class="top-date">
+                                        {{ other_materials.0.news_post_date.date|date }}
                                     </span>
                                 </div>
                             </div>
-                        {% endfor %}
+                        </div>
+                    </div>
+                    <div class="ot-right col-xs-5" style="height: 350px;">
+                        <div class="otr-top col-xs-12" style=" padding-left: 0; padding-right: 0;height: 175px;">
+                            <div class="otrt-left col-xs-6" style="height: 175px;">
+                                <div class="other-article">
+                                    <a href="/news/{{ other_materials.1.news_post_date.year }}/{{ other_materials.1.news_post_date.month }}/{{ other_materials.1.news_post_date.day }}/{{ other_materials.1.id }}/{{ other_materials.1.slug }}">
+                                        <div class="oa-back" style="position:absolute; width:100%; height:175px; background: url('/media/{{ other_materials.1.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                        <div class="bn-title col-md-12"></div>
+                                    </a>
+                                    <div class="om-title-text-small text-center col-md-12">
+                                        <a href="/news/{{ other_materials.1.news_post_date.year }}/{{ other_materials.1.news_post_date.month }}/{{ other_materials.1.news_post_date.day }}/{{ other_materials.1.id }}/{{ other_materials.1.slug }}">
+                                            {% if lang == 'eng' %}
+                                                {{ other_materials.1.news_title_english }}
+                                            {% elif lang == 'rus' %}
+                                                {{ other_materials.1.news_title_russian }}
+                                            {% else %}
+                                                {{ other_materials.1.tnews_title_chinese }}
+                                            {% endif %}
+                                        </a>
+                                        <div class="om-title-author col-md-12 text-center">
+                                            <span class="top-author">
+                                                {% trans 'By' %}&nbsp;
+                                                <a href="/profile/m/{{ other_materials.1.news_author }}">{{ other_materials.1.news_author }}</a>
+                                            </span>
+                                            <span class="top-date">
+                                                {{ other_materials.1.top_news_post_date.date|date }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="otrt-right col-xs-6" style="height:175px;">
+                                <div class="other-article">
+                                    <a href="/news/{{ other_materials.2.news_post_date.year }}/{{ other_materials.2.news_post_date.month }}/{{ other_materials.2.news_post_date.day }}/{{ other_materials.2.id }}/{{ other_materials.2.slug }}">
+                                        <div class="oa-back" style="position:absolute; width:100%; height:175px; background: url('/media/{{ other_materials.2.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                        <div class="bn-title col-md-12"></div>
+                                    </a>
+                                    <div class="om-title-text-small text-center col-md-12">
+                                        <a href="/news/{{ other_materials.2.news_post_date.year }}/{{ other_materials.2.news_post_date.month }}/{{ other_materials.2.news_post_date.day }}/{{ other_materials.2.id }}/{{ other_materials.2.slug }}">
+                                            {% if lang == 'eng' %}
+                                                {{ other_materials.2.news_title_english }}
+                                            {% elif lang == 'rus' %}
+                                                {{ other_materials.2.news_title_russian }}
+                                            {% else %}
+                                                {{ other_materials.2.tnews_title_chinese }}
+                                            {% endif %}
+                                        </a>
+                                        <div class="om-title-author col-md-12 text-center">
+                                            <span class="top-author">
+                                                {% trans 'By' %}&nbsp;
+                                                <a href="/profile/m/{{ other_materials.2.news_author }}">{{ other_materials.2.news_author }}</a>
+                                            </span>
+                                            <span class="top-date">
+                                                {{ other_materials.2.news_post_date.date|date }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="otr-bottom col-xs-12" style="height: 175px;">
+                            <div class="other-article">
+                                <a href="/news/{{ other_materials.3.news_post_date.year }}/{{ other_materials.3.news_post_date.month }}/{{ other_materials.3.news_post_date.day }}/{{ other_materials.3.id }}/{{ other_materials.3.slug }}">
+                                    <div class="oa-back" style="position:absolute; width:100%; height:175px; background: url('/media/{{ other_materials.3.news_main_cover }}') no-repeat center; background-size: cover;"></div>
+                                    <div class="bn-title col-md-12"></div>
+                                </a>
+                                <div class="om-title-text-small text-center col-md-12">
+                                    <a href="/news/{{ other_materials.3.news_post_date.year }}/{{ other_materials.3.news_post_date.month }}/{{ other_materials.3.news_post_date.day }}/{{ other_materials.3.id }}/{{ other_materials.3.slug }}">
+                                        {% if lang == 'eng' %}
+                                            {{ other_materials.3.news_title_english }}
+                                        {% elif lang == 'rus' %}
+                                            {{ other_materials.3.news_title_russian }}
+                                        {% else %}
+                                            {{ other_materials.3.tnews_title_chinese }}
+                                        {% endif %}
+                                    </a>
+                                    <div class="om-title-author col-md-12 text-center">
+                                        <span class="top-author">
+                                            {% trans 'By' %}&nbsp;
+                                            <a href="/profile/m/{{ other_materials.3.news_author }}">{{ other_materials.0.top_news_author }}</a>
+                                        </span>
+                                        <span class="top-date">
+                                            {{ other_materials.3.news_post_date.date|date }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="google-news-right" style="width: 300px; height: 600px; background-color: #00fff9"></div>
+                <div class="other-bottom container-fluid">
+                    <div class="before-reviews container col-md-12" style="margin-top: 3%;">
+                        {% for i in other_materials_bottom %}
+                            <div class="col-md-4" >
+                                <div class="current_news news-news">
+                                        <div class="cat col-xs-12" style="float: left; margin-top: -20px">
+                                            <a href="/news/{{ i.id|get_news_category }}">
+                                                {{ i.id|get_news_category|upper }}
+                                            </a>
+                                        </div>
+                                        {% if i.top_news_main_cover != '' %}
+                                            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                                <div class="middle-news-cover col-xs-12"
+                                                     style="max-width: 100%; max-height: 100%; height: 210px;">
+                                                <img src="{% thumbnail i.top_news_main_cover '310x210' crop='center'%}" />
+                                                </div>
+                                            </a>
+                                        {% endif %}
+                                        <div class="news-title col-xs-12">
+                                            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                                <b>{% if lang == 'eng' %}
+                                                        {{ i.news_title_english|safe }}
+                                                    {% elif lang == 'rus' %}
+                                                        {{ i.news_title_russian|safe }}
+                                                    {% else %}
+                                                        {{ i.tnews_title_chinese|safe }}
+                                                    {% endif %}</b>
+                                            </a>
+                                        </div>
+                                    <div class="params col-xs-12">
+                                        <i>{% trans 'By' %}&nbsp;<span class="article-author">
+                                            <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
+                                        </span>&nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
+                                    </div>
+                                <div class="news-text col-xs-12">
+                                    {% if lang == 'eng' %}
+                                        {{ i.teaser_english|safe|truncatechars:128 }}
+                                    {% elif lang == 'rus' %}
+                                        {{ i.teaser_russian|safe|truncatechars:128 }}
+                                    {% else %}
+                                        {{ i.teaser_chinese|safe|truncatechars:128 }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
             </div>
-        </div>-->
+        {% else %}
+            {% include 'mobile_other_materials.html' %}
+        {% endif %}
+
+
+            <hr width="100%">
+            <div class="container-fluid container">
+                <div class="container container-fluid col-md-12">
+                    {% if flavour != 'mobile' %}
+                        <div id="comments-block">
+                    {% else %}
+                        <div id="comments-block-mobile">
+                    {% endif %}
+                        <div id="disqus_thread"></div>
+                    <script>
+                        (function(){
+                            var d = document, s = d.createElement('script');
+                            s.src = '//indavant.disqus.com/embed.js';
+                            s.setAttribute('data-timestamp', +new Date());
+                            (d.head || d.body).appendChild(s);
+                        })();
+                    </script>
+                    <noscript>{% trans 'Please enable JavaScript to view the'%} <a href="https://disqus.com/?ref_noscript" rel="nofollow">{% trans 'comments powered by Disqus.' %}</a></noscript>
+                </div>
+                <div class="desktop-ad adver-near-comments" style="float: right; width: 300px; height: 660px; background-color: #00fff9"></div>
+            </div>
+        </div>
     </div>
-{#        <script type='text/javascript' src='//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js' data-shr-siteid='74b93909eb1e8d0eaf0922a55d663ca4' data-cfasync='false' async='async'></script>#}
 {% endblock %}

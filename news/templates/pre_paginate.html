@@ -23,7 +23,15 @@
                              style="margin-top: 2%;">
                             <div class="news-title">
                                 <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                    <b>{{ i.news_title|safe }}</b>
+                                    <b>
+                                        {% if lang == 'eng' %}
+                                            {{ i.news_title_english|safe }}
+                                        {% elif lang == 'rus' %}
+                                            {{ i.news_title_russian|safe }}
+                                        {% else %}
+                                            {{ i.news_title_chinese|safe }}
+                                        {% endif %}
+                                    </b>
                                 </a>
                             </div>
                         </div>
@@ -33,7 +41,13 @@
                             </span>&nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
                         </div>
                         <div class="news-text" style="margin-top: 5%; ">
-                            {{ i.news_post_text_english|safe|truncatechars:150 }}
+                            {% if lang == 'eng' %}
+                                {{ i.teaser_english|safe }}
+                            {% elif lang == 'rus' %}
+                                {{ i.teaser_russian|safe }}
+                            {% else %}
+                                {{ i.teaser_chinese|safe }}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -59,7 +73,15 @@
                                         <div class="right-middle-top col-xs-12 col-md-3">
                                             <div id="big-news-one" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
                                             <a href="/news/{{ total_bottom_news.1.news_post_date.year }}/{{ total_bottom_news.1.news_post_date.month }}/{{ total_bottom_news.1.news_post_date.day }}/{{ total_bottom_news.0.id }}/{{ total_bottom_news.0.slug }}">
-                                                    <b>{{ total_bottom_news.1.news_title }}</b>
+                                                    <b>
+                                                        {% if lang == 'eng' %}
+                                                            {{ total_bottom_news.1.news_title_english|safe }}
+                                                        {% elif lang == 'rus' %}
+                                                            {{ total_bottom_news.1.news_title_russian|safe }}
+                                                        {% else %}
+                                                            {{ total_bottom_news.1.news_title_chinese|safe }}
+                                                        {% endif %}
+                                                    </b>
                                                 </a>
                                             </div>
                                             <div class="params">
@@ -68,7 +90,15 @@
                                                 </span>
                                                     &nbsp;|&nbsp;<span class="publushed">{{ total_bottom_news.1.news_post_date.date|date }}</span></i>
                                             </div>
-                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">{{ total_bottom_news.1.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
+                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">
+                                                {% if lang == 'eng' %}
+                                                    {{ total_bottom_news.1.teaser_english|safe }}
+                                                {% elif lang == 'rus' %}
+                                                    {{ total_bottom_news.1.teaser_russian|safe }}
+                                                {% else %}
+                                                    {{ total_bottom_news.1.teaser_chinese|safe }}
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
 
@@ -89,7 +119,15 @@
                              style="float: right;">
                             <div class="news-title-mobile" style="line-height: 0.9em; margin-top: 0;">
                                 <a class="mobile-title" href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                    <b>{{ i.news_title|safe }}</b>
+                                    <b>
+                                        {% if lang == 'eng' %}
+                                            {{ i.news_title_english|safe }}
+                                        {% elif lang == 'rus' %}
+                                            {{ i.news_title_russian|safe }}
+                                        {% else %}
+                                            {{ i.news_title_chinese|safe }}
+                                        {% endif %}
+                                    </b>
                                 </a>
                             </div>
                         </div>

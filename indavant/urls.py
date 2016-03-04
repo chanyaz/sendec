@@ -55,6 +55,7 @@ urlpatterns = patterns('',
     url(r'^about/', include('news.urls')),
     url(r'^about', 'news.views.render_about_page'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^advert/', include('advert.urls')),
     url(r'^api/', include('api.urls')),
     url(r'^auth/', include('loginsys.urls')),
 

@@ -62,6 +62,7 @@ INSTALLED_APPS = (
     "sorl.thumbnail",
     #"debug_toolbar",
     "django_mobile",
+    "advert",
 )
 
 # INTERNAL_IPS = ('127.0.0.1',)
@@ -142,6 +143,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'templates'),  # Main templates
                  os.path.join(BASE_DIR, 'loginsys/templates'),  # Login system templates
                  os.path.join(BASE_DIR, 'news/templates'),  # News templates
+                 os.path.join(BASE_DIR, 'news/mobile'),  # News templates
                  os.path.join(BASE_DIR, 'news/templatetags'),
                  os.path.join(BASE_DIR, 'userprofile/templates'),  # User profile's templates
                  os.path.join(BASE_DIR, 'favourite/templates'),  # User favourite news templates

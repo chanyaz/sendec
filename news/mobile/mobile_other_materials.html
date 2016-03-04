@@ -1,0 +1,115 @@
+{% load staticfiles %}
+{% load my %}
+{% load i18n %}
+{% load thumbnail %}
+
+<style>
+    #before-reviews{cursor: pointer;float: left;width: 100%;height: 400px;position:relative;}
+    @media(max-device-width: 767px){
+        #before-reviews{margin-top:5%;}
+        .before-reviews{margin-bottom:5%;}
+        #latest-news, #before-reviews{
+            height: 280px;
+        }
+
+        .top-total-content{
+            height: 280px;
+            background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;
+            background-size: contain;
+        }
+    }
+    .bn-title{
+        bottom: 0;
+        position: absolute;
+        z-index: 998;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, #F62A00, black);
+        opacity: 0.8;
+        box-sizing: border-box;
+        display: block;
+    }
+    .bn-title:hover{
+        opacity: 0.5;
+       -webkit-animation: fadeInFromNone 0.3s ease-out;
+        -moz-animation: fadeInFromNone 0.3s ease-out;
+        -o-animation: fadeInFromNone 0.3s ease-out;
+        animation: fadeInFromNone 0.3s ease-out;
+    }
+    @-webkit-keyframes fadeInFromNone {
+        0% {opacity: 0.8;}
+        50% {opacity: 0.65;}
+        100% {opacity: 0.5;}
+    }
+    @-moz-keyframes fadeInFromNone {
+         0% {opacity: 0.8;}
+        50% {opacity: 0.65;}
+        100% {opacity: 0.5;}
+    }
+    @-o-keyframes fadeInFromNone {
+        0% {opacity: 0.8;}
+        50% {opacity: 0.65;}
+        100% {opacity: 0.5;}
+    }
+    @keyframes fadeInFromNone {
+         0% {opacity: 0.8;}
+        50% {opacity: 0.65;}
+        100% {opacity: 0.5;}
+    }
+    .bn-title-text{
+        position: absolute;
+        bottom: 45%;
+        z-index: 999;
+        font-size: 1.8em;
+        color: ivory;
+        text-shadow: 0 0 20px black;
+    }
+    .bn-title-text > a{
+        color: ivory;
+    }
+    .bn-title-author{
+        position: absolute;
+        z-index: 999;
+        font-size: 15px;
+    }
+    .top-author > a{color: #F62A00;}
+</style>
+
+<div class="other-materials container col-md-12" style="margin-top: 3%;">
+    {% for i in other_materials %}
+        <div id="before-reviews">
+            <div class="before-reviews"
+                 style="
+                 height: 280px;
+                {% thumbnail i.news_main_cover '400x400' crop='center' as im %}
+                    background: url('{{ im.url }}') no-repeat center;
+                    background-size: cover;
+                {% endthumbnail %}
+                 ">
+            </div>
+            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                <div class="bn-title col-md-12"></div>
+            </a>
+            <div class="om-title-text-small text-center col-md-12">
+                <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                        {% if lang == 'eng' %}
+                            {{ i.news_title_english }}
+                        {% elif lang == 'rus' %}
+                            {{ i.news_title_russian }}
+                        {% else %}
+                            {{ i.news_title_chinese }}
+                        {% endif %}
+                    </a>
+                <div class="om-title-author col-md-12 col-xs-11 text-center">
+                    <span class="top-author">
+                        {% trans 'By' %}&nbsp;
+                        <a href="/profile/m/{{ i.news_author }}">{{ i.news_author }}</a>
+                    </span>
+                    <span class="top-date">
+                        {{ i.news_post_date.date|date }}
+                    </span>
+                </div>
+            </div>
+        </div>
+{% endfor %}
+</div>

@@ -68,141 +68,118 @@
     }
 
 </style>
-<div id="footer-div">
+<div id="footer-div" class="col-xs-10 col-xs-offset-2">
     <div class="footer-bottom-block row row-centered">
-            <div class="footer-top">
-                <ul id="main-footer-list">
-                    <li class="main-footer-item">
-                        <ul>
-                            <li><h3 class="footer-title">{% trans 'RECENT NEWS' %}</h3></li>
-                            {% for i in footer_news %}
-                                <li>
-                                    <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
-                                       <div class="footer-current-news">
-                                           {% if i.news_main_cover|check_format == True %}
-                                                <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover  ;"></div>
-                                           {% else %}
-                                               <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('{% static 'static/img/companies_cover/' %}{{ i.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover  ;"></div>
-                                           {% endif %}
-                                            <div class="footer-news-content" style="margin-left: 35%; height: 60px;">
-                                                <span id="lnt{{ i.id }}" class="title">
-                                                    {{ i.news_title|truncatechars:"60" }}
-                                                </span>
-                                            </div>
+        <div class="footer-top">
+            <ul id="main-footer-list">
+                <li class="col-xs-2">
+                    <div id="footer-logo">
+                        <img src="{% static 'static/img/favicons/all/white_trans.png' %}" width="128px" height="128px"/>
+                        <span class="footer-logo" hidden><h1>INSYDIA</h1></span>
+                    </div>
+                </li>
+                <li class="col-xs-4">
+                    <ul>
+                        <li><h3 class="footer-title">{% trans 'RECENT NEWS' %}</h3></li>
+                        {% for i in footer_news %}
+                            <li>
+                                <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
+                                   <div class="footer-current-news">
+                                       {% if i.news_main_cover|check_format == True %}
+                                            <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover  ;"></div>
+                                       {% else %}
+                                           <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('{% static 'static/img/companies_cover/' %}{{ i.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center; background-size: cover  ;"></div>
+                                       {% endif %}
+                                        <div class="footer-news-content" style="margin-left: 35%; height: 60px;">
+                                            <span id="lnt{{ i.id }}" class="title">
+                                                {{ i.news_title|truncatechars:"60" }}
+                                            </span>
                                         </div>
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="col-xs-3">
+                    <ul>
+                        <li><h3 class="footer-title">{% trans 'Categories' %}</h3></li>
+                        <li class="footer-list-item"><a href="/news/technology/">{% trans 'Technology' %}</a></li>
+                        <li class="footer-list-item"><a href="/news/entertainment/">{% trans 'Entertainment' %}</a></li>
+                        <li class="footer-list-item"><a href="/news/auto/">{% trans 'Auto' %}</a></li>
+                        <li class="footer-list-item"><a href="/news/space/">{% trans 'Space' %}</a></li>
+                        <li class="footer-list-item"><a href="/news/bio/">{% trans 'BIO' %}</a></li>
+                        <li class="footer-list-item"><a href="/news/companies/">{% trans 'Companies' %}</a></li>
+                        <li class="footer-list-item"><a href="/news/reviews/">{% trans 'Reviews' %}</a></li>
+                        {% if username.username %}
+                            <li class="footer-list-item"><a href="/news/reviews/">{% trans 'PRIVATE' %}</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li class="col-xs-3">
+                    <ul>
+                        <li><h3 class="footer-title">{% trans 'Quick links' %}</h3></li>
+                        <li class="footer-list-item"><a href="/about">{% trans 'About us' %}</a></li>
+                        <li class="footer-list-item"><a href="/about/contacts/">{% trans 'Contacts' %}</a></li>
+                        <li class="footer-list-item"><a href="/about/advertisers/">{% trans 'Advertisement' %}</a></li>
+                        <li class="footer-list-item"><a href="/rss/">{% trans 'RSS feed' %}</a></li>
+                        <li class="footer-list-item"><a href="">{% trans 'Hiring' %}</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <hr width="100%">
+        <div class="footer-middle" style="width:84%; text-align: center; margin-left: auto; margin-right: auto;">
+            <div class="middle-text">
+                <span class="footer-main-title">INSYDIA</span>, 2015{% now "Y" as current_year %}{% if current_year != '2015' %}-{% now "Y" %}{% endif %}
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="bottom-left" style="float: left; font-size: 30px; margin-left: 3%;"><a class="footer-main-title-link" href="/">INSYDIA</a></div>
+            <div class="bottom-right" style="float: right; margin-right: 5%;">
+                <ul id="footer-social" style="list-style-type: none;">
+                    <li>
+                        <a class="social" href="https://telegram.me/insydia" target="_blank">
+                            <span class="fa fa-paper-plane"></span>
+                        </a>
                     </li>
-                    <li class="main-footer-item">
-                        <ul>
-                            <li><h3 class="footer-title"></h3></li>
-                            <li>2</li>
-                            <li>3</li>
-                        </ul>
+                    <li>
+                        <a class="social" href="https://facebook.com/" target="_blank">
+                            <span class="fa fa-facebook"></span>
+                        </a>
                     </li>
-                    <li class="main-footer-item">
-                        <ul>
-                            <li><h3 class="footer-title">{% trans 'Categories' %}</h3></li>
-                            <li class="footer-list-item"><a href="/news/technology/">{% trans 'Technology' %}</a></li>
-                            <li class="footer-list-item"><a href="/news/entertainment/">{% trans 'Entertainment' %}</a></li>
-                            <li class="footer-list-item"><a href="/news/auto/">{% trans 'Auto' %}</a></li>
-                            <li class="footer-list-item"><a href="/news/space/">{% trans 'Space' %}</a></li>
-                            <li class="footer-list-item"><a href="/news/bio/">{% trans 'BIO' %}</a></li>
-                            <li class="footer-list-item"><a href="/news/companies/">{% trans 'Companies' %}</a></li>
-                            <li class="footer-list-item"><a href="/news/reviews/">{% trans 'Reviews' %}</a></li>
-                            {% if username.username %}
-                                <li class="footer-list-item"><a href="/news/reviews/">{% trans 'PRIVATE' %}</a></li>
-                            {% endif %}
-                        </ul>
+                    <li>
+                        <a class="social" href="https://linkedin.com/">
+                            <span class="fa fa-linkedin"></span>
+                        </a>
                     </li>
-                    <li class="main-footer-item">
-                        <ul>
-                            <li><h3 class="footer-title">{% trans 'Quick links' %}</h3></li>
-                            <li class="footer-list-item"><a href="/about">{% trans 'About us' %}</a></li>
-                            <li class="footer-list-item"><a href="/about/contacts/">{% trans 'Contacts' %}</a></li>
-                            <li class="footer-list-item"><a href="/about/advertisers/">{% trans 'Advertisement' %}</a></li>
-{#                            <li class="footer-list-item"><a href="">API</a></li>#}
-{#                            <li class="footer-list-item"><a href=""><img src="{% static 'static/img/app_store.png' %}" width="100em" /></a></li>#}
-{#                            <li class="footer-list-item"><a href=""><img src="{% static 'static/img/app_android.png' %}" width="106em" style="margin-left: -1%;"/></a></li>#}
-                        </ul>
+                    <li>
+                        <a class="social" href="https://vk.com/" target="_blank">
+                            <span class="fa fa-vk"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://twitter.com/" target="_blank">
+                            <span class="fa fa-twitter"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://instagram.com/" target="_blank">
+                            <span class="fa fa-instagram"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="https://youtube.com/" target="_blank">
+                            <span class="fa fa-youtube"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social" href="/rss" target="_blank">
+                            <span class="fa fa-rss"></span>
+                        </a>
                     </li>
                 </ul>
             </div>
-            <hr width="100%">
-            <div class="footer-middle" style="width:84%; text-align: center; margin-left: auto; margin-right: auto;">
-                <div class="middle-text">
-                    <span class="footer-main-title">INSYDIA</span>, 2015{% now "Y" as current_year %}{% if current_year != '2015' %}-{% now "Y" %}{% endif %}
-                </div>
-{#                <ul id="footer-list-top">#}
-{#                    <li>{% trans 'International Editions: ' %}</li>#}
-{#                    <li class="footer-list-item">#}
-{#                        <a href="">EN</a>#}
-{#                    </li>&nbsp;|&nbsp;#}
-{#                    <li class="footer-list-item">#}
-{#                        <a href="">RU</a>#}
-{#                    </li>&nbsp;|&nbsp;#}
-{#                    <li class="footer-list-item">#}
-{#                        <a href="">CH</a>#}
-{#                    </li>#}
-{#                </ul>#}
-            </div>
-
-            <div class="footer-bottom">
-                <div class="bottom-left" style="float: left; font-size: 30px; margin-left: 3%;"><a class="footer-main-title-link" href="/">INSYDIA</a></div>
-                <div class="bottom-right" style="float: right; margin-right: 5%;">
-                    <ul id="footer-social" style="list-style-type: none;">
-                        <li>
-                            <a class="social" href="https://telegram.me/insydia" target="_blank">
-                                <span class="fa fa-paper-plane"></span>
-{#                                <img src="{% static 'static/img/telegram' %}" width="30px" />#}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social" href="https://facebook.com/" target="_blank">
-                                <span class="fa fa-facebook"></span>
-{#                                <img src="{% static 'static/img/facebook.png' %}" width="30px">#}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social" href="https://linkedin.com/">
-                                <span class="fa fa-linkedin"></span>
-{#                                <img src="{% static 'static/img/linkedin.png' %}" width="30px">#}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social" href="https://vk.com/" target="_blank">
-                                <span class="fa fa-vk"></span>
-{#                                <img src="{% static 'static/img/vk.png' %}" width="30px">#}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social" href="https://twitter.com/" target="_blank">
-                                <span class="fa fa-twitter"></span>
-{#                                <img src="{% static 'static/img/twitter.png' %}" width="30px">#}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social" href="https://instagram.com/" target="_blank">
-                                <span class="fa fa-instagram"></span>
-{#                                <img src="{% static 'static/img/instagram.png' %}" width="30px">#}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social" href="https://youtube.com/" target="_blank">
-                                <span class="fa fa-youtube"></span>
-{#                                <img src="{% static 'static/img/youtube.png' %}" width="30px">#}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social" href="/rss" target="_blank">
-                                <span class="fa fa-rss"></span>
-{#                                <img src="{% static 'static/img/rss.png' %}" width="30px">#}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
+    </div>
 </div>

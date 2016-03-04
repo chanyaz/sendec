@@ -19,71 +19,71 @@ msgstr ""
 
 #: favourite/templates/liked_news.html:62
 msgid "FAVOURITE ARTICLES"
-msgstr ""
+msgstr "最喜爱的文章"
 
 #: favourite/templates/liked_news.html:68
 msgid "Your favourite articles"
-msgstr ""
+msgstr "你的喜爱的文章"
 
 #: loginsys/forms.py:13 loginsys/forms.py:56
 msgid "The two password fields didn't match."
-msgstr ""
+msgstr "两次输入密码不一致"
 
 #: loginsys/forms.py:15 loginsys/forms.py:66
 msgid "Password"
-msgstr ""
+msgstr "密码"
 
 #: loginsys/forms.py:21
 msgid "Password confirmation"
-msgstr ""
+msgstr "确认密码"
 
 #: loginsys/forms.py:27
 msgid "Enter the same password as above, for verification."
-msgstr ""
+msgstr "请再次输入密码"
 
 #: loginsys/forms.py:59 loginsys/templates/register.html:166
 #: userprofile/templates/profile.html:183
 msgid "Username"
-msgstr ""
+msgstr "帐号"
 
 #: loginsys/templates/cant_login.html:102
 msgid "Reset"
-msgstr ""
+msgstr "取消"
 
 #: loginsys/templates/footer_loginsys.html:29 loginsys/templates/login.html:60
 #: loginsys/templates/register.html:196 templates/footer.html:146
 #: templates/footer_usernews.html:125
 msgid "Advertisement"
-msgstr ""
+msgstr "广告"
 
 #: loginsys/templates/footer_loginsys.html:32 loginsys/templates/login.html:63
 #: loginsys/templates/register.html:199 templates/footer.html:145
 #: templates/footer_usernews.html:124
 msgid "Contacts"
-msgstr ""
+msgstr " 联系我们"
 
 #: loginsys/templates/footer_loginsys.html:35 loginsys/templates/login.html:66
 #: loginsys/templates/register.html:202 templates/footer.html:144
 #: templates/footer_usernews.html:123
 msgid "About us"
-msgstr ""
+msgstr "关于我们"
 
 #: loginsys/templates/login.html:46 loginsys/templates/register.html:185
 msgid "SIGN IN"
-msgstr ""
+msgstr "登录"
 
 #: loginsys/templates/login.html:48 loginsys/templates/register.html:183
 msgid "SIGN UP"
-msgstr ""
+msgstr "注册"
 
 #: loginsys/templates/login.html:49
 msgid "Can't sign in?"
-msgstr ""
+msgstr "忘记密码?"
 
 #: loginsys/templates/register.html:175 templates/contacts.html:54
 #: templates/contacts.html.py:71
 msgid "E-mail"
-msgstr ""
+msgstr "邮箱"
 
 #: news/templates/auto.html:313 news/templates/auto.html.py:330
 #: news/templates/auto.html:476 news/templates/bio.html:313
@@ -98,13 +98,13 @@ msgstr ""
 #: news/templates/total.html.py:496 news/templates/total.html:677
 #: search/templates/search.html:172
 msgid "By"
-msgstr ""
+msgstr "作者"
 
 #: news/templates/auto.html:343 news/templates/bio.html:343
 #: news/templates/entertainment.html:343 news/templates/space.html:343
 #: news/templates/technology.html:343 news/templates/total.html:513
 msgid "Interesting articles"
-msgstr ""
+msgstr "有兴趣的文章"
 
 #: news/templates/browse_auto.html:324 news/templates/browse_auto.html:357
 #: news/templates/browse_auto.html:390 news/templates/browse_auto.html:423
@@ -118,422 +118,421 @@ msgstr ""
 #: news/templates/browse_space.html:423 news/templates/browse_space.html:456
 #: news/templates/browse_tech.html:258
 msgid "Follow"
-msgstr ""
+msgstr "追随"
 
 #: news/templates/browse_portals.html:136 news/templates/browse_tech.html:162
 #: news/templates/manage_portals.html:104 news/templates/user_news.html:432
 msgid "Main"
-msgstr ""
+msgstr "首页"
 
 #: news/templates/browse_portals.html:138
 #: news/templates/manage_portals.html:106 news/templates/user_news.html:434
 msgid "Overview"
-msgstr ""
+msgstr "概述"
 
 #: news/templates/browse_portals.html:140 news/templates/browse_tech.html:166
 #: news/templates/manage_portals.html:108
 msgid "My feed"
-msgstr ""
+msgstr "我的消息流"
 
 #: news/templates/browse_portals.html:141 news/templates/browse_tech.html:167
 #: news/templates/manage_portals.html:109 news/templates/user_news.html:438
 msgid "Saved articles"
-msgstr ""
+msgstr "保存的文章"
 
 #: news/templates/browse_portals.html:146 news/templates/browse_tech.html:172
-msgid "Properties"
-msgstr ""
+msgid "Configures"
+msgstr "设置"
 
 #: news/templates/browse_portals.html:156 news/templates/browse_tech.html:182
 #: news/templates/manage_portals.html:114 news/templates/user_news.html:443
 msgid "Portals"
-msgstr ""
+msgstr "友情链接"
 
 #: news/templates/browse_portals.html:174 news/templates/browse_tech.html:200
 #: news/templates/manage_portals.html:132 news/templates/user_news.html:465
 msgid "Configures"
-msgstr ""
+msgstr "设置"
 
 #: news/templates/browse_portals.html:176 news/templates/browse_tech.html:202
 #: news/templates/manage_portals.html:134 news/templates/user_news.html:467
 msgid "Manage portals"
-msgstr ""
+msgstr "管理追随者"
 
 #: news/templates/browse_portals.html:177 news/templates/browse_tech.html:203
 #: news/templates/manage_portals.html:135 news/templates/user_news.html:468
 msgid "Browse portals"
-msgstr ""
+msgstr "友情链接的分类"
 
 #: news/templates/browse_portals.html:190 news/templates/browse_tech.html:215
 msgid "Pick your own collection of news"
-msgstr ""
+msgstr "收集各自的专辑"
 
 #: news/templates/browse_portals.html:203
 msgid "Drop the key word or link"
-msgstr ""
+msgstr "请输入关键字或链接"
 
 #: news/templates/browse_portals.html:212 templates/index_new.html:1250
 msgid "Loading..."
-msgstr ""
+msgstr "加载"
 
 #: news/templates/browse_portals.html:213
 msgid "Wait please"
-msgstr ""
+msgstr "请您等一等"
 
 #: news/templates/browse_portals.html:220
 msgid ""
 "Sorry, we can't work with this portal. Try another one or search by key-word."
-msgstr ""
+msgstr "对不起，我们不能用这个链接. 请试试另一个或输入关键字"
 
 #: news/templates/browse_portals.html:223
 msgid "We find RSS-channel on"
-msgstr ""
+msgstr "我们找到消息流在"
 
 #: news/templates/browse_portals.html:223
 msgid "and add it to our Database."
-msgstr ""
+msgstr "加入我们的数据库了"
 
 #: news/templates/browse_portals.html:229
-msgid ""
-"We are collecting news for current portals. Wait please. Or you can read the "
-"latest news almost now by click"
-msgstr ""
+msgid "We are collecting news for current portals. Wait please. Or you can read the latest news almost now by click"
+msgstr "现在我们找新闻在这个链接呢. 请等一下. 或者如果您想看看最新消息就点击"
 
 #: news/templates/browse_portals.html:230
 msgid "here"
-msgstr ""
+msgstr "在这里"
 
 #: news/templates/browse_portals.html:265 rss/templates/rss.html:72
 #: templates/footer.html:129 templates/footer_usernews.html:108
 msgid "Technology"
-msgstr ""
+msgstr "科技"
 
 #: news/templates/browse_portals.html:290 rss/templates/rss.html:83
 #: templates/footer.html:130 templates/footer_usernews.html:109
 msgid "Entertainment"
-msgstr ""
+msgstr "娱乐"
 
 #: news/templates/browse_portals.html:315 rss/templates/rss.html:94
 #: templates/footer.html:131 templates/footer_usernews.html:110
 msgid "Auto"
-msgstr ""
+msgstr "汽车"
 
 #: news/templates/browse_portals.html:340
 msgid "Spase"
-msgstr ""
+msgstr "太空"
 
 #: news/templates/browse_portals.html:365
 msgid "Bio-technology"
-msgstr ""
+msgstr "生物技术"
 
 #: news/templates/browse_tech.html:222
 msgid "Drop the key word or url"
-msgstr ""
+msgstr "请输入关键字或链接"
 
 #: news/templates/browse_tech.html:232 templates/index_new.html:617
 #: templates/index_new.html.py:619 templates/index_new.html:843
 #: templates/index_new.html.py:1003
 msgid "TECHNOLOGY"
-msgstr ""
+msgstr "科技"
 
 #: news/templates/browse_tech.html:252
 msgid "Followers:"
-msgstr ""
+msgstr "追随者"
 
 #: news/templates/browse_tech.html:253
 msgid "Articles:"
-msgstr ""
+msgstr "文章"
 
 #: news/templates/companies.html:62 search/templates/search.html:199
 #: templates/footer.html:134 templates/footer_usernews.html:113
 msgid "Companies"
-msgstr ""
+msgstr "公司"
 
 #: news/templates/companies.html:64
 msgid "Here you can search news of the certain company which do you want."
-msgstr ""
+msgstr "在这里可以找到具体公司的新闻"
 
 #: news/templates/companies.html:74
 msgid "Search company"
-msgstr ""
+msgstr "搜索公司"
 
 #: news/templates/companies.html:82 search/templates/search.html:157
 #: templates/index_new.html:699
 msgid "Search"
-msgstr ""
+msgstr "搜索"
 
 #: news/templates/companies.html:97 news/templates/companies_endless.html:10
 msgid "Logo"
-msgstr ""
+msgstr "公司标记"
 
 #: news/templates/companies.html:98 news/templates/companies_endless.html:11
 #: templates/contacts.html:65
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #: news/templates/companies.html:99 news/templates/companies_endless.html:12
 #: search/templates/search.html:240 search/templates/search.html.py:256
 #: userprofile/templates/moderator_profile.html:108
 #: userprofile/templates/profile.html:139
 msgid "Articles"
-msgstr ""
+msgstr "文章"
 
-#: news/templates/companies.html:100 news/templates/companies_endless.html:13
+#: news/templates/companies.html:100
+#: news/templates/companies_endless.html:13
 msgid "Location"
-msgstr ""
+msgstr "地区"
 
 #: news/templates/current_company.html:52
 #, python-format
 msgid "All %(company.name)s's news"
-msgstr ""
+msgstr "%(company.name)s的所有的消息"
 
 #: news/templates/current_news.html:345 news/templates/top_news.html:345
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #: news/templates/current_news.html:443 news/templates/top_news.html:443
 msgid "Recommendations of"
-msgstr ""
+msgstr "为您推荐"
 
 #: news/templates/current_news.html:511 news/templates/top_news.html:511
 msgid "Please enable JavaScript to view the"
-msgstr ""
+msgstr "请您放开 JavaScript 运行权限"
 
 #: news/templates/current_news.html:511 news/templates/top_news.html:511
 msgid "comments powered by Disqus."
-msgstr ""
+msgstr "如果您想看看Disqus的评价"
 
 #: news/templates/current_news.html:523 news/templates/top_news.html:523
 #, python-format
 msgid "News&nbsp;of&nbsp;%(company_name)s"
-msgstr ""
+msgstr "%(company_name)s的消息"
 
 #: news/templates/current_news_comments.html:22 templates/contacts.html:102
 #: userprofile/templates/profile.html:95
 msgid "Send"
-msgstr ""
+msgstr "提交"
 
 #: news/templates/manage_portals.html:177
 msgid "Portal name"
-msgstr ""
+msgstr "名称"
 
 #: news/templates/manage_portals.html:178
 msgid "Description"
-msgstr ""
+msgstr "详情"
 
 #: news/templates/manage_portals.html:179
-msgid "Configs"
-msgstr ""
+msgid "Configures"
+msgstr "设置"
 
 #: news/templates/manage_portals.html:192
 msgid "unfollow"
-msgstr ""
+msgstr "取消关注"
 
 #: news/templates/manage_portals.html:198
 msgid "You have no one portals yet. Would you like pick your own collection?"
-msgstr ""
+msgstr "现在一个链接你也不追随呢. 您愿意收集各自的专辑吗?"
 
 #: news/templates/manage_portals.html:200
 msgid "You just need to"
-msgstr ""
+msgstr "简直"
 
 #: news/templates/manage_portals.html:200
 msgid "open"
-msgstr ""
+msgstr "翻开"
 
 #: news/templates/manage_portals.html:200
 msgid "portals browser."
-msgstr ""
+msgstr "友情链接的分类"
 
 #: news/templates/manage_portals.html:202
 msgid "If you have any questions or offers,"
-msgstr ""
+msgstr "如果您有什么的问题或者建议就"
 
 #: news/templates/manage_portals.html:202
 msgid "write"
-msgstr ""
+msgstr "给我们"
 
 #: news/templates/manage_portals.html:202
 msgid "to us, please."
-msgstr ""
+msgstr "写一封信"
 
 #: news/templates/top_news.html:297
 msgid ""
 "Your browser does not support the video tag. I suggest you upgrade your "
 "browser."
-msgstr ""
+msgstr "您的浏览器不支持视频. 我们劝您升级浏览器"
 
 #: news/templates/user_news.html:437
 msgid "My Feed"
-msgstr ""
+msgstr "我的消息流"
 
 #: news/templates/user_news.html:497
 msgid "Recommended portals"
-msgstr ""
+msgstr "为您推荐:"
 
 #: news/templates/user_news.html:505
 msgid "Your current portals "
-msgstr ""
+msgstr "您的追随"
 
 #: news/templates/user_news.html:510
 msgid "Done"
-msgstr ""
+msgstr "完成了"
 
 #: news/templates/user_news.html:518
 msgid "All"
-msgstr ""
+msgstr "所有的"
 
 #: news/templates/user_news.html:549
 msgid "FEED"
-msgstr ""
+msgstr "消息流"
 
 #: news/templates/user_news.html:579
 msgid ""
 "At this time we cant find any news of chosen portals. We think that there "
 "will appear later."
-msgstr ""
+msgstr "现在在这个链接什么的消息我们都找不了. 我们脑力激荡呢. "
 
 #: news/templates/user_news.html:591
 msgid "The most popular portals."
-msgstr ""
+msgstr "热门链接"
 
 #: rss/templates/rss.html:57
 msgid "RSS Feed"
-msgstr ""
+msgstr "消息流"
 
 #: rss/templates/rss.html:61
 msgid "Latest"
-msgstr ""
+msgstr "最新"
 
 #: rss/templates/rss.html:63 rss/templates/rss.html.py:74
 #: rss/templates/rss.html:85 rss/templates/rss.html.py:96
 #: rss/templates/rss.html:107 rss/templates/rss.html.py:118
 msgid "Today"
-msgstr ""
+msgstr "今日"
 
 #: rss/templates/rss.html:67 rss/templates/rss.html.py:78
 #: rss/templates/rss.html:89 rss/templates/rss.html.py:100
 #: rss/templates/rss.html:111 rss/templates/rss.html.py:122
 msgid "This week"
-msgstr ""
+msgstr "周内"
 
 #: rss/templates/rss.html:105 templates/footer.html:132
 #: templates/footer_usernews.html:111
 msgid "Space"
-msgstr ""
+msgstr "太空"
 
 #: rss/templates/rss.html:116 templates/footer.html:133
 #: templates/footer_usernews.html:112 templates/index_new.html:641
 #: templates/index_new.html.py:643 templates/index_new.html:1023
 msgid "BIO"
-msgstr ""
+msgstr "生物材料"
 
 #: rss/templates/rss.html:128
 msgid "Company feed"
-msgstr ""
+msgstr "公司的消息流"
 
 #: rss/templates/rss.html:130
 msgid "Use this form if you want to get RSS for certain company"
-msgstr ""
+msgstr "如果您愿意收到这家公司的消息流就用这种程式 "
 
 #: rss/templates/rss.html:144
 msgid "Get"
-msgstr ""
+msgstr "收到"
 
 #: search/templates/search.html:144
 msgid "No one matches. Please, try another request word"
-msgstr ""
+msgstr "抱歉，没有找到与“запрос” 相关的内容"
 
 #: search/templates/search.html:154 templates/index_new.html:713
 msgid "What are you looking for?"
-msgstr ""
+msgstr "我们要搜索什么?"
 
 #: search/templates/search.html:163
 msgid "Popular news"
-msgstr ""
+msgstr "热门新闻"
 
 #: search/templates/search.html:185
 msgid "Results for "
-msgstr ""
+msgstr "我们为您找到 相关"
 
 #: search/templates/search.html:186
 msgid "matches"
-msgstr ""
+msgstr "结果约”цифра”个"
 
 #: search/templates/search.html:187
 msgid "match"
-msgstr ""
+msgstr "结果约”цифра”个"
 
 #: search/templates/search.html:194
 msgid "News"
-msgstr ""
+msgstr "新闻"
 
 #: search/templates/search.html:204
 msgid "Moderators"
-msgstr ""
+msgstr "主持人"
 
 #: search/templates/search.html:259
 #: userprofile/templates/moderator_profile.html:104
 #: userprofile/templates/profile.html:135
 msgid "Rate"
-msgstr ""
+msgstr "排名"
 
 #: search/templates/search.html:277
 msgid "Latest news"
-msgstr ""
+msgstr "最新消息"
 
 #: templates/403.html:10
 msgid ""
 "What are you up? You don't have permission for this action.<br>\n"
 "                    We remember you. Would you like to risk again?"
-msgstr ""
+msgstr "你干什么? 不可以做这样. 我们记住了你. 你想再一次试试吗? "
 
 #: templates/404.html:8
 msgid "Page not found."
-msgstr ""
+msgstr "抱歉，编程出现错误"
 
 #: templates/404.html:9
 msgid "But we have found for you this cute sea lion. Good luck searching."
-msgstr ""
+msgstr "但是我们找到一只可爱的小海狮.好运搜索"
 
 #: templates/503.html:5
 msgid "Maintenance"
-msgstr ""
+msgstr "系统维护"
 
 #: templates/503.html:18
 msgid "Web-site is under development. Please, come later."
-msgstr ""
+msgstr "网站正在开发中。请稍后就来."
 
 #: templates/503.html:19
 msgid ""
 "To contact with us you can write <a href=\"mailto:support@insydia.com"
 "\">support@insydia.com</a> or call <a href=\"tel:79315790696\">"
 "+7-931-579-06-96</a>."
-msgstr ""
+msgstr "联系我们"
 
 #: templates/503.html:22
 msgid "Thank you for your consideration."
-msgstr ""
+msgstr "感谢你能谅解"
 
 #: templates/503.html:23
 msgid "Insydia Team"
-msgstr ""
+msgstr "Insydia 团队"
 
 #: templates/about.html:18
 msgid "ABOUT"
-msgstr ""
+msgstr "关于我们"
 
 #: templates/about.html:20
 msgid "Insydia is a ..."
-msgstr ""
+msgstr "Insydia就是"
 
 #: templates/about.html:24
 msgid "GRATITUDE"
-msgstr ""
+msgstr "感谢"
 
 #: templates/advertisers.html:10
 msgid "ADVERTISEMENT"
-msgstr ""
+msgstr "广告"
 
 #: templates/advertisers.html:13
 msgid "So,"
@@ -541,41 +540,41 @@ msgstr ""
 
 #: templates/confirm.html:6
 msgid "Title"
-msgstr ""
+msgstr "标题"
 
 #: templates/confirm.html:25
 msgid "Hi"
-msgstr ""
+msgstr "你好"
 
 #: templates/confirm.html:27
 msgid "Please confirm"
-msgstr ""
+msgstr "请确认"
 
 #: templates/confirm.html:28
 msgid "If you do it, you will get access to the hidden features of the portal"
-msgstr ""
+msgstr "如果您完成 就得到接触连接的高级功能"
 
 #: templates/confirm.html:29
 msgid "Thank you!"
-msgstr ""
+msgstr "谢谢您"
 
 #: templates/confirm.html:34
 msgid "Confirm your e-mail "
-msgstr ""
+msgstr "确认您的邮箱"
 
 #: templates/confirm.html:39
 msgid "Cheers"
-msgstr ""
+msgstr "致热诚的敬意"
 
 #: templates/confirm.html:41
 msgid "Your Insydia Team"
-msgstr ""
+msgstr "Insydia 团队"
 
 #: templates/confirm.html:48
 msgid ""
 "If you did not sign up or request for email confirmation, please ignore this "
 "email."
-msgstr ""
+msgstr "如果您没注册或者没询问确认邮箱 那别理这封信"
 
 #: templates/confirm.html:59
 #, python-format
@@ -592,55 +591,56 @@ msgstr ""
 
 #: templates/contacts.html:47
 msgid "CONTACT INFORMATION"
-msgstr ""
+msgstr "联系方式"
 
 #: templates/contacts.html:53
 msgid "Cell"
-msgstr ""
+msgstr "电话"
 
 #: templates/contacts.html:55
 msgid "On cooperation"
-msgstr ""
+msgstr "合作的问题"
 
 #: templates/contacts.html:57
 msgid "Contact with us"
-msgstr ""
+msgstr "联系我们"
 
 #: templates/contacts.html:77 templates/contacts.html.py:84
 msgid "Message"
-msgstr ""
+msgstr "发消息"
 
 #: templates/contacts.html:112
 msgid "OUR TEAM"
-msgstr ""
+msgstr "我们队"
 
 #: templates/contacts.html:119
 msgid "Founder"
-msgstr ""
+msgstr "创业者"
 
 #: templates/contacts.html:120
 msgid "Evgeniy Privalov"
-msgstr ""
+msgstr "Evgeniy Privalov"
 
 #: templates/contacts.html:122
 msgid "St. Petersburg"
-msgstr ""
+msgstr "圣彼得堡"
 
 #: templates/contacts.html:130
 msgid "Co-Founder"
-msgstr ""
+msgstr "共同创办人"
 
 #: templates/contacts.html:131
 msgid "Anton Tinishov"
-msgstr ""
+msgstr "Anton Tinishov"
 
 #: templates/contacts.html:133
 msgid "St.Petersburg"
-msgstr ""
+msgstr "圣彼得堡"
 
 #: templates/contacts.html:141
-msgid "At this time we need in"
-msgstr ""
+msgid
+ "At this time we need in"
+msgstr "现在我们需要"
 
 #: templates/contacts.html:144
 msgid "LOCALIZATION"
@@ -648,49 +648,49 @@ msgstr ""
 
 #: templates/contacts.html:145
 msgid "EDITORS & REPORTERS"
-msgstr ""
+msgstr "编辑和记者"
 
 #: templates/contacts.html:148
 msgid "PROGRAMMER"
-msgstr ""
+msgstr "开发者"
 
 #: templates/contacts.html:151
 msgid "MARKETING"
-msgstr ""
+msgstr "营销人员"
 
 #: templates/contacts.html:157
 msgid "Join to us"
-msgstr ""
+msgstr "加入我们"
 
 #: templates/contacts.html:164
 msgid "Social Networks"
-msgstr ""
+msgstr "社会网络"
 
 #: templates/footer.html:94 templates/footer_usernews.html:77
 msgid "RECENT NEWS"
-msgstr ""
+msgstr "最新消息"
 
 #: templates/footer.html:128 templates/footer_usernews.html:107
 msgid "Categories"
-msgstr ""
+msgstr "类别"
 
 #: templates/footer.html:135 templates/footer_usernews.html:114
 msgid "Reviews"
-msgstr ""
+msgstr "评论"
 
 #: templates/footer.html:137 templates/footer_usernews.html:116
 #: templates/index_new.html:659 templates/index_new.html.py:661
 #: templates/index_new.html:1041
 msgid "PRIVATE"
-msgstr ""
+msgstr "我的新闻"
 
 #: templates/footer.html:143 templates/footer_usernews.html:122
 msgid "Quick links"
-msgstr ""
+msgstr "快速链接"
 
 #: templates/footer.html:160
 msgid "International Editions: "
-msgstr ""
+msgstr "国际版"
 
 #: templates/index_new.html:75
 #, python-format
@@ -704,48 +704,48 @@ msgstr ""
 #: templates/index_new.html:623 templates/index_new.html.py:625
 #: templates/index_new.html:849 templates/index_new.html.py:1008
 msgid "ENTERTAINMENT"
-msgstr ""
+msgstr "娱乐"
 
 #: templates/index_new.html:629 templates/index_new.html.py:631
 #: templates/index_new.html:855 templates/index_new.html.py:876
 #: templates/index_new.html:1013
 msgid "AUTO"
-msgstr ""
+msgstr "娱乐"
 
 #: templates/index_new.html:635 templates/index_new.html.py:637
 #: templates/index_new.html:861 templates/index_new.html.py:1018
 msgid "SPACE"
-msgstr ""
+msgstr "太空"
 
 #: templates/index_new.html:647 templates/index_new.html.py:649
 #: templates/index_new.html:1028
 msgid "COMPANIES"
-msgstr ""
+msgstr "公司"
 
 #: templates/index_new.html:653 templates/index_new.html.py:655
 #: templates/index_new.html:867 templates/index_new.html.py:1033
 msgid "REVIEWS"
-msgstr ""
+msgstr "评论"
 
 #: templates/index_new.html:677 userprofile/templates/profile.html:99
 msgid "Profile"
-msgstr ""
+msgstr "设定档"
 
 #: templates/index_new.html:678
 msgid "Private news"
-msgstr ""
+msgstr "我的新闻"
 
 #: templates/index_new.html:681
 msgid "Sign out"
-msgstr ""
+msgstr "退出登录"
 
 #: templates/index_new.html:685 templates/index_new.html.py:972
 msgid "Sign in"
-msgstr ""
+msgstr "登录"
 
 #: templates/index_new.html:837
 msgid "HOME"
-msgstr ""
+msgstr "首页"
 
 #: templates/index_new.html:872
 msgid "DROPDOWN HEADING"
@@ -753,59 +753,59 @@ msgstr ""
 
 #: templates/index_new.html:881
 msgid "PHONES"
-msgstr ""
+msgstr "手机"
 
 #: templates/index_new.html:886
 msgid "PC"
-msgstr ""
+msgstr "电脑"
 
 #: templates/index_new.html:891
 msgid "SPACE SHUTTLES"
-msgstr ""
+msgstr "太空飞行器"
 
 #: templates/index_new.html:896
 msgid "OTHER"
-msgstr ""
+msgstr "更多"
 
 #: templates/index_new.html:904
 msgid "PROFILE"
-msgstr ""
+msgstr "设定档"
 
 #: templates/index_new.html:912
 msgid "ABOUT US"
-msgstr ""
+msgstr "关于我们"
 
 #: templates/index_new.html:918
 msgid "CONTACT US"
-msgstr ""
+msgstr "联系我们"
 
 #: templates/index_new.html:924
 msgid "ADVERTISER"
-msgstr ""
+msgstr "广告"
 
 #: templates/index_new.html:947 templates/index_new.html.py:951
 msgid "SEARCH"
-msgstr ""
+msgstr "搜索"
 
 #: templates/index_new.html:965
 msgid "Log out"
-msgstr ""
+msgstr "退出登录"
 
 #: templates/index_new.html:977
 msgid "Sign up"
-msgstr ""
+msgstr "注册"
 
 #: templates/index_new.html:998
 msgid "LATEST"
-msgstr ""
+msgstr "最新"
 
 #: templates/index_new.html:1052
 msgid "ALL"
-msgstr ""
+msgstr "所有的"
 
 #: templates/index_new.html:1053
 msgid "GAMES"
-msgstr ""
+msgstr "游戏"
 
 #: templates/index_new.html:1054
 msgid "MEDIA"
@@ -813,23 +813,23 @@ msgstr ""
 
 #: templates/index_new.html:1176
 msgid "Close"
-msgstr ""
+msgstr "关闭"
 
 #: templates/index_new.html:1307
 msgid "Your portals"
-msgstr ""
+msgstr "您的追随"
 
 #: templates/index_new.html:1315
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: templates/index_new.html:1320 userprofile/templates/profile.html:308
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: templates/index_new.html:1326
 msgid "CLOSE"
-msgstr ""
+msgstr "关闭"
 
 #: userprofile/templates/moderator_profile.html:115
 #: userprofile/templates/profile.html:242
@@ -857,67 +857,67 @@ msgstr ""
 
 #: userprofile/templates/profile.html:95
 msgid " new email with confirmation code."
-msgstr ""
+msgstr "新的邮箱和"
 
 #: userprofile/templates/profile.html:114
 msgid "Upload photo"
-msgstr ""
+msgstr "上传照片"
 
 #: userprofile/templates/profile.html:124
 msgid "Accept"
-msgstr ""
+msgstr "上传"
 
 #: userprofile/templates/profile.html:131
 msgid "Status"
-msgstr ""
+msgstr "动态"
 
 #: userprofile/templates/profile.html:131
 msgid "moderator"
-msgstr ""
+msgstr "主持人"
 
 #: userprofile/templates/profile.html:142
 msgid "See all"
-msgstr ""
+msgstr "翻开所有的"
 
 #: userprofile/templates/profile.html:150
 #: userprofile/templates/profile.html:164
 msgid "Delete Account"
-msgstr ""
+msgstr "删除帐户"
 
 #: userprofile/templates/profile.html:153
 #: userprofile/templates/profile.html:168
 msgid "Delete All Articles"
-msgstr ""
+msgstr "删除所有的我的文章"
 
 #: userprofile/templates/profile.html:158
 msgid "Want to be a freelance editor?"
-msgstr ""
+msgstr "您原来当我们自由编辑吗?"
 
 #: userprofile/templates/profile.html:159
 msgid "It's easy"
-msgstr ""
+msgstr "简直"
 
 #: userprofile/templates/profile.html:159
 msgid "click here"
-msgstr ""
+msgstr "点击下方"
 
 #: userprofile/templates/profile.html:196
 #: userprofile/templates/profile.html:201
 msgid "First name"
-msgstr ""
+msgstr "名字"
 
 #: userprofile/templates/profile.html:206
 #: userprofile/templates/profile.html:211
 msgid "Last name"
-msgstr ""
+msgstr "贵姓"
 
 #: userprofile/templates/profile.html:231
 msgid "Your phone number"
-msgstr ""
+msgstr "手机号"
 
 #: userprofile/templates/profile.html:240
 msgid "Social Networks(Moderator Mode)"
-msgstr ""
+msgstr "社会网络(主持人模式) "
 
 #: userprofile/templates/profile.html:247
 msgid "Facebook"
@@ -937,12 +937,12 @@ msgstr ""
 
 #: userprofile/templates/profile.html:288
 msgid "Perosnal email"
-msgstr ""
+msgstr "邮箱"
 
 #: userprofile/templates/profile.html:293
 msgid "Personal email"
-msgstr ""
+msgstr "邮箱"
 
 #: userprofile/templates/profile.html:306
 msgid "Save Changes"
-msgstr ""
+msgstr "保存修改"

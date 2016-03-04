@@ -89,7 +89,12 @@ def get_user_photo(value):
 
 @register.filter(name="get_rss_news_cover")
 def get_rss_news_cover(value):
-    return RssNewsCovers.objects.get(rss_news_id=int(value)).main_cover
+    try:
+        return RssNewsCovers.objects.get(rss_news_id=int(value)).main_cover
+    except RssNewsCovers.DoesNotExist:
+        return False
+
+
 
 @register.filter(name="get_rss_news_title")
 def get_rss_news_title(value):
@@ -109,6 +114,11 @@ def get_portal_link(value):
 @register.filter(name="company_articles_amount")
 def company_articles_amount(value):
     return News.objects.filter(news_company_owner_id=int(value)).count()
+
+
+@register.filter(name="rss_articles_amount")
+def rss_articles_amount(value):
+    return RssNews.objects.filter(portal_name_id=int(value)).count()
 
 
 @register.filter(name="devide")
@@ -160,3 +170,8 @@ def get_description(value):
 @register.filter(name="divide")
 def divide(value, arg):
     return (int(value) / int(arg)) if int(arg) != 0 else 0
+
+
+@register.filter(name="get_news_cover")
+def get_news_cover(value):
+    return 1

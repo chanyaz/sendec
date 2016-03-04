@@ -35,7 +35,7 @@ def render_user_profile_page(request):
     }
 
     if user_instance.is_staff:
-        args["god"] = get_god_data(request, user_instance.username)
+        args["god"] = get_god_data(request, user_instance.username) if get_god_data(request, user_instance.username) != False else ""
 
 
     args.update(csrf(request))
@@ -50,7 +50,7 @@ def render_user_profile_page(request):
     args["special_text"] = "To get special information you can enter key-word here and we will try to find and provide " \
                            "you with this information."
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response("profile.html", args)
+    return render_to_response("profile.html", args, context_instance=RequestContext(request ))
 
 
 def get_news_for_footer(request):
@@ -265,7 +265,10 @@ def save_special_fields(request, god, fields):
 
 
 def get_god_data(request, god):
-    return ModeratorSpecialFields.objects.get(user_id=User.objects.get(username=god).id)
+    try:
+        return ModeratorSpecialFields.objects.get(user_id=User.objects.get(username=god).id)
+    except ModeratorSpecialFields.DoesNotExist:
+        return False
 
 
 def send_access_report(request):

@@ -1,3 +1,8 @@
 from django.contrib import admin
+from .models import RssSaveNews
 
-# Register your models here.
+
+class RssSaveNewsAdmin(admin.ModelAdmin):
+    model = RssSaveNews
+
+admin.site.register(RssSaveNews, RssSaveNewsAdmin)

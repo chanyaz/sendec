@@ -1,0 +1,14 @@
+{
+  "site":{
+    "url-1": "http://sbhse.engineering.asu.edu/academics/careers-and-employment/companies-that-hire-biomedical-engineers/",
+    "url-2": "http://www.ranker.com/list/biomedical-engineering-companies/reference",
+    "url-3": "https://en.wikipedia.org/wiki/List_of_largest_biotechnology_companies",
+    "url-4": ""
+  },
+  "portal-1":{
+    "name": "Medical News Today",
+    "verbose": "medicalnewstoday",
+    "url": "http://rss.medicalnewstoday.com/pharma_industry.xml"
+  }
+
+}

@@ -1,4 +1,4 @@
-{% extends 'index_new.html' %}
+{% extends 'index_beta.html' %}
 {% load staticfiles %}
 {% load my %}
 {% load i18n %}
@@ -70,7 +70,7 @@
                             <div class="col-md-7">
                                 <input type="text"
                                        autocomplete="off"
-                                       id="company-search"
+                                       id="companies-search"
                                        placeholder="{% trans 'Search company' %}"
     {#                                       oninput="searchCurrentCompany('Telegram');"#}
     {#                                   onsubmit="searchCurrentCompany($(this).val);"#}
@@ -123,52 +123,53 @@
 {% endblock %}
 
 <script>
-
-    $("#company-search").autocomplete({
-        source: function( request, response ) {
-        $.ajax({
-          url: "/news/companies/cs="+$('#company-search').val().replace(/\./g, ""),
-          dataType: "json",
-          data: {
-              'csrfmiddlewaretoken': '{{ csrf_token }}',
-              q: request.term
+{##}
+{#    $("#company-search").autocomplete({#}
+{#        source: function( request, response ) {#}
+{#        $.ajax({#}
+{#          url: "/news/companies/cs="+$('#company-search').val().replace(/\./g, ""),#}
+{#          dataType: "json",#}
+{#          data: {#}
+{#              'csrfmiddlewaretoken': '{{ csrf_token }}',#}
+{#              q: request.term#}
 {#              term: $('#company-search').val().replace(/\./g, "")#}
-          },
-          success: function( data ) {
-              response($.map(data, function(item){
-                  return{
-                      id: item.id,
-                      label: item.name,
-                      value: item.name,
-                      verbose: item.verbose
-                  };
-              }));
-          }
-        });
-      },
-        minLength: 1,
-        maxLength: 10,
+{#          },#}
+{#          success: function( data ) {#}
+{#              response($.map(data, function(item){#}
+{#                  return{#}
+{#                      id: item.id,#}
+{#                      label: item.name,#}
+{#                      value: item.name,#}
+{#                      verbose: item.verbose#}
+{#                  };#}
+{#              }));#}
+{#          }#}
+{#        });#}
+{#      },#}
+{#        minLength: 1,#}
+{#        maxLength: 10,#}
 {#      select: function( event, ui ) {#}
 {#        log( ui.item ?#}
 {#          "Selected: " + ui.item.label :#}
 {#          "Nothing selected, input was " + this.value);#}
 {#      },#}
-        select:function(event, ui){
-            var targetOffset = $("#"+ui.item.id).offset().top;
-            $('html, body').animate({
-                scrollTop: targetOffset
-            });
+{#        select:function(event, ui){#}
+{#            alert(ui.item.id);#}
+{#            var targetOffset = $("#"+ui.item.id).offset().top;#}
+{#            $('html, body').animate({#}
+{#                scrollTop: targetOffset#}
+{#            });#}
 {#            var a = $("#company-search").val().toLowerCase();#}
 {#            getCompanyID(ui.item.id);#}
 {#            alert(ui.item.id);#}
-            $('#'+ ui.item.id).animate({backgroundColor: "#00C0FF"}, 2000).animate({backgroundColor: "transparent" }, 2000);
-        },
-
-      open: function() {
-        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-      },
-      close: function() {
-        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-      }
-    })
+{#            $('#'+ ui.item.id).animate({backgroundColor: "#00C0FF"}, 2000).animate({backgroundColor: "transparent" }, 2000);#}
+{#        },#}
+{##}
+{#      open: function() {#}
+{#        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );#}
+{#      },#}
+{#      close: function() {#}
+{#        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );#}
+{#      }#}
+{#    })#}
 </script>

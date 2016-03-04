@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import psycopg2
 import feedparser
 import lxml.html
@@ -6,7 +7,9 @@ from urllib import error
 import datetime
 from random import choice
 import string
-
+import re
+import tldextract
+import time
 
 class Aggregator(object):
 
@@ -83,31 +86,31 @@ class Aggregator(object):
     def parse_img(self, url):
         try:
             return lxml.html.parse(r.urlopen(url)).xpath('//img')
-        except error.HTTPError:
-            return False
+        except:
+            return []
 
     def result(self, url):
-        if self.parse_img(url) == False:
+        print(self.parse_img(url))
+        if not self.parse_img(url=url):
             return False
         else:
             array = []
             for i in self.parse_img(url):
                 if i.get('width') and i.get('height'):
-                    if i.get('width') == '100%' or i.get('height') == '100%':
-                        width = 1920
-                        height = 1080
+                    if "%" in i.get('width') or "%" in i.get('height'):
+                        width = 800
+                        height = 600
                         array.append({'size': str(width*height), 'src': i.get('src')})
                     else:
-                        array.append({'size': str(round(int(i.get('width'))*int(i.get('height')))), 'src': i.get('src')})
+                        width, height = i.get('width'), i.get('height')
+                        match_w, match_h = re.findall("(\d+)", width), re.findall("(\d+)", height)
+                        width, height = match_w[0], match_h[0]
+                        array.append({'size': int(float(width)*float(height)), 'src': i.get('src')})
                 else:
                     pass
             return array
 
-
     def main_func(self, urls):
-
-
-
         db = self.connect_to_database(db_name=self.db_name, user=self.user, host=self.host, password=self.password)
         cursor = db.cursor()
         num = 0
@@ -120,16 +123,22 @@ class Aggregator(object):
                     new_date = data["date"].split()
                     time = new_date[4].split(":")
 
-
                     if len(new_date[1]) > len(new_date[2]):
                         tmp = new_date[1][:3]
                         new_date[1] = new_date[2][:2]
                         new_date[2] = tmp
 
-
-                    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-                    mon = months.index(new_date[2])+1
-
+                    month_ru = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
+                    if str(new_date[2]).encode("utf-8").lower() in month_ru:
+                        mon = month_ru.index(str(new_date[2]).encode("utf-8").lower())+1
+                    else:
+                        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+                        mon = months.index(new_date[2])+1
+                    # print("hour", time[0])
+                    # print("minute", time[1])
+                    # print("sec", time[2])
+                    if time[0] in [24, "24"]:
+                        time[0] = "00"
                     date_posted = datetime.datetime(int(new_date[3][:4]), mon, int(new_date[1]), int(time[0]), int(time[1]), int(time[2]))
                 except IndexError:
                     date_posted = data["date"]
@@ -140,7 +149,6 @@ class Aggregator(object):
                 cursor.execute(query_0, data_query_0)
                 count = cursor.fetchall()
 
-                import re
                 match_2 = re.findall(r'src=\"(.*?)\"\s.*/>', data["content"])
                 if len(match_2) >= 1:
                     data["main_cover"] = str(match_2[0])
@@ -183,8 +191,16 @@ class Aggregator(object):
                 cursor.execute(query_for_rss)
                 portals_list = cursor.fetchall()
 
+
+                # print("data: ", data)
+                n = tldextract.extract(data['link'])
+                n_d, n_s = n.domain, n.suffix
+                new_url = n_d+"."+n_s
                 for current_portal in portals_list:
-                    if current_portal[2] in data["link"] or data['link'] in current_portal[2] or current_portal[2].split('.')[0] in data['link']:
+
+                    if current_portal[2] in new_url or new_url in current_portal[2] or current_portal[2].split('.')[0] in new_url:
+                        print("portal id: ", current_portal[0])
+                        # print("cat id: ", current_portal[8])
                         current_rss_news_id = current_portal[0]    # CURRENT PORTAL ID
                         current_rss_news_cat_id = current_portal[8]
                 if len(count) == 0:
@@ -218,14 +234,11 @@ class Aggregator(object):
 
                     db.commit()
                     instance = self.get_amount_of_user_readers(current_rss_news_id)
-                    # user_amount = instance[0]
                     users = [i[0] for i in instance[1]]
                     for i in range(len(users)):
                         self.set_user_rss_read(users[i], current_rss_id, current_rss_news_id)
-                    # print("Inserted from: ", url)
                 else:
                     pass
-                # print("Already exists: ", url)
         print("================END ONE MORE LOOP====================")
         db.close()
         return 0
@@ -234,3 +247,4 @@ class Aggregator(object):
 if __name__ == "__main__":
     while True:
         Aggregator()
+        time.sleep(60*60)   # One hour remaining

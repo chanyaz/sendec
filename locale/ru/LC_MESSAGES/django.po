@@ -580,7 +580,7 @@ msgstr "Пожалуйста, повторите"
 
 #: templates/confirm.html:28
 msgid "If you do it, you will get access to the hidden features of the portal"
-msgstr "Если Вы это сделаете, Вы получите доступ к скрытым функциям сайта"
+msgstr "Если Вы это сделаете, Вы получите расширенный доступ."
 
 #: templates/confirm.html:29
 msgid "Thank you!"

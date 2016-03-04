@@ -5,6 +5,10 @@ from nocaptcha_recaptcha.fields import NoReCaptchaField
 #
 # class NewsCommentsForm(ModelForm):
 #     class Meta:
+
+
+
+
 #         model = NewsComments
 #         fields = ["comments_text"]
 #

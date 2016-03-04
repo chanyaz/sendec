@@ -1,4 +1,4 @@
-{% extends 'index_new.html' %}
+{% extends 'index_beta.html' %}
 {% load staticfiles %}
 {% load my %}
 {% load jsonate_tags %}
@@ -8,6 +8,7 @@
 {#        <script src="{% static 'static/js/modernizr.js' %}"></script>#}
 
     <style>
+
         .pagination ul{list-style-type: none;}
         .pagination li{margin-left: 1%;margin-right: 1%;float: left;}
 
@@ -44,12 +45,6 @@
             width: 33%;
             padding: 0.5% 0.5%;
             height: 25em;
-{#            min-height: 20em;#}
-{#            max-height: 25em;#}
-{#            margin-left: 1%;#}
-{#            margin-bottom: 1%;#}
-{#            border-radius: 5px;#}
-{#            box-shadow: 0 0 5px black;#}
             border: solid 2px lightgrey;
             float: left;
 {#            margin-right: 1%;#}
@@ -275,7 +270,7 @@
 
 
     </style>
-{#    <script src="{% static 'static/js/jquery-latest.js' %}"></script>#}
+{#    <script="{% static 'static/js/jquery-latest.js' %}"></script>#}
 {#    <script src="{% static 'static/js/jquery.js' %}"></script>#}
 {#    <script src="{% static 'static/js/jquery-ui.js' %}"></script>#}
 
@@ -397,23 +392,29 @@
 
 
         function showCurrentPortalNews(portal){
-            $('#ajax-preloader').show();
+            var homeLoader = $('body').loadingIndicator({
+					useImage: false
+				}).data("loadingIndicator");
+            if($('.loading-indicator-wrapper').hasClass('loader-hidden')){
+                $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');
+            }
             $.ajax({
                 method: "POST",
                 url: "/news/usernews/page/"+portal,
                 data:{csrfmiddlewaretoken: "{{ csrf_token }}"},
                 success: function(data){
                     $('#rss-news').html(data);
-                    $('#ajax-preloader').hide();
+                    homeLoader.hide();
                 },
                 error: function(result){
                     alert("Oh,"+portal+"'s news have been broken. Try later, please.\nWe are working on this problem.");
-                    $('#ajax-preloader').hide();
+                    homeLoader.hide();
                 }
             })
         }
 
     </script>
+
 
     <div class="container-fluid container usernews">
         <div class="row row-centered row-offcanvas row-offcanvas-left">
@@ -589,42 +590,49 @@
                 padding-top:0;
               }
             }
-            .side-bat-brand{
+            .side-bat-brand {
                 position: absolute;
                 bottom: 0;
             }
 
+            #side-list{padding-left:0;}
+            #side-list > li.side-list-item{height: 40px; margin-bottom: 5px;}
+            #side-list > li.side-list-item > a{}
+            .side-text{color:black;}
         </style>
             <nav>
                 <div class="col-xs-6 col-sm-2 sidebar-offcanvas fixed" id="sidebar" role="navigation">
-                    <ul class="nav">
-                        <li class="active">
+                    <ul id="side-list" class="nav">
+                        <li class="side-list-item active">
                             <a href="">
                                 <i class="fa fa-user"></i>
-                                My Feed
+                                <span class="side-text">My Feed</span>
                             </a>
                         </li>
-                        <li class="active">
+                        <li class="side-list-item">
                             <a href="/favourite/">
                                 <i class="fa fa-thumbs-o-up"></i>
-                                Saved articles
+                                <span class="side-text">Saved articles</span>
                             </a>
                         </li>
-                        <li class="active">
-                            <a href="">Portals</a>
+                        <li>
+                            <a>
+                                <span class="side-text">Portals</span>
+                            </a>
                             <!-- user portals list-->
-                            <ul>
+                            <ul class="nav">
                                 {% for current_portal in user_rss_portals %}
-                                    <li><a>
-                                        <span class="portal-favicon">
-                                            <img src="{{ current_portal.portal_id|get_rss_portal_favicon }}" width="16px" height="16px" />
-                                        </span>
-                                        <span class="cprs" onclick="showCurrentPortalNews('{{ current_portal.portal_id|get_rss_verbose_name }}');">
-                                            {{ current_portal.portal_id|get_rss_portal_name }}
-                                        </span>
-                                        {% if current_portal.portal_id|get_unread_news:username.id != 0 %}
-                                            <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>
-                                        {% endif %}
+                                    <li>
+                                        <a style="cursor: pointer;" onclick="showCurrentPortalNews('{{ current_portal.portal_id|get_rss_verbose_name }}');">
+                                            <span class="portal-favicon">
+                                                <img src="{{ current_portal.portal_id|get_rss_portal_favicon }}" width="16px" height="16px" />
+                                            </span>
+                                            <span class="cprs">
+                                                <span class="side-text">{{ current_portal.portal_id|get_rss_portal_name|truncatechars:15 }}</span>
+                                            </span>
+                                            {% if current_portal.portal_id|get_unread_news:username.id != 0 %}
+                                                <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>
+                                            {% endif %}
                                         </a>
                                     </li>
                                 {% endfor %}
@@ -632,11 +640,17 @@
                             <!-- /user portals list -->
                         </li>
                         <hr width="100%">
-                        <li>
-                            <a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>{% trans 'Manage portals' %}</a>
+                        <li class="side-list-item">
+                            <a href="/news/manager/">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <span class="side-text">{% trans 'Manage portals' %}</span>
+                            </a>
                         </li>
-                        <li>
-                            <a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>{% trans 'Browse portals' %}</a>
+                        <li class="side-list-item">
+                            <a href="/news/browser/">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <span class="side-text">{% trans 'Browse portals' %}</span>
+                            </a>
                         </li>
                     </ul>
     {#                <div class="side-bat-brand">Copyright&nbsp;&#0169;&nbsp;Insydia, {% now "Y" %}</div>#}
@@ -777,9 +791,9 @@
         </div>
     </div>
     <hr width="100%">
-    <div class="usernews-footer" style="margin-left: 16.1%; width: 83.9%;">
-        {% include 'footer_usernews.html' %}
-    </div>
+{#    <div class="usernews-footer" style="margin-left: 16.1%; width: 83.9%;">#}
+{#        {% include 'footer_usernews.html' %}#}
+{#    </div>#}
 
 {#    <script src="{% static 'static/js/jquery.menu-aim.js' %}"></script>#}
 {#    <script src="{% static 'static/js/main.js' %}"></script>#}
@@ -793,4 +807,5 @@
             }
         }
     </script>
+
 {% endblock %}

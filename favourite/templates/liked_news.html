@@ -1,62 +1,106 @@
-{% extends 'index_new.html' %}
+{% extends 'index_beta.html' %}
 {% load staticfiles %}
 {% load my %}
 {% load i18n %}
 {% load jsonate_tags %}
 {% block favourite %}
     <style>
-        #rss-news{
-            width: 100%;
-            margin-left: 1%;
+        #rss-news {width: 100%;margin-left: 1%;height: 100%;min-height: 100%;}
+        #fav-main-title{text-align: center;}
+        .fav-footer{bottom: 10px;}
+        .favourites{min-height: 30em;}
+        .has-children a:hover{text-decoration: none;color: #F62A00;}
+        #left-panel-main-title a:hover{text-decoration: none;color: #F62A00;}
+        .sidebar-offcanvas{
+            background-color: #F1F3CE;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding-top: 5%;
             height: 100%;
-            min-height:100%;
+            overflow-y: scroll;
         }
-        .current_rss_news{
-            width: 20%;
-            height: 20em;
-            margin-left: 1%;
-            margin-top: 1%;
-            border-radius: 5px;
-            box-shadow: 0 0 5px black;
-            float: left;
+        @media screen and (max-width: 767px) {
+          .row-offcanvas {
             position: relative;
+            -webkit-transition: all 0.25s ease-out;
+            -moz-transition: all 0.25s ease-out;
+            transition: all 0.25s ease-out;
+          }
+          .sidebar-offcanvas{right: -41.6%;}
+          .sidebar-offcanvas{left:-41.6%;}
+          .row-offcanvas-right.active{right:41.6%;}
+          .row-offcanvas-left.active{left:41.6%;}
+          .sidebar-offcanvas{position:absolute;top:0;width:41.6%;}
+          #sidebar{padding-top:0;}
         }
-        .current_rss_news:hover{
-            box-shadow: 0 0 5px blue;
-        }
-        .portal{float: left;}
-{#        .news-image{background: url('') no-repeat center; background-size: cover;  width: 100%; height: 50%;}#}
-        .navigation{
-            float: left;
-        }
-
-        #fav-main-title{
-            text-align: center;
-        }
-
-
-    .fav-footer{
-        bottom: 10px;
-    }
-
-    .favourites{
-        min-height: 30em;
-    }
-    .fav-title{
-        font-family:Georgia, Times, "Times New Roman", serif;
-        font-size: 16px;
-    }
-
-    .fav-delete{
-        position: absolute;
-        bottom: 10px;
-        margin-left: 80%;
-    }
+        .side-bat-brand {position: absolute;bottom: 0;}
+        #side-list{padding-left:0;}
+        #side-list > li.side-list-item{height: 40px; margin-bottom: 5px;}
+        #side-list > li.side-list-item > a{}
+        .side-text{color:black;}
 
     </style>
     <div class="container-fluid container favourites">
         <div class="row row-centered">
-            <div id="rss-news">
+            <!-- BOOTSTRAP NEW SIDEBAR -->
+            <nav>
+                <div class="col-xs-2 col-sm-2 col-md-2 sidebar-offcanvas fixed" id="sidebar" role="navigation">
+                    <ul id="side-list" class="nav">
+                        <li class="side-list-item active">
+                            <a href="/news/usernews/">
+                                <i class="fa fa-user"></i>
+                                <span class="side-text">My Feed</span>
+                            </a>
+                        </li>
+                        <li class="side-list-item">
+                            <a href="/favourite/">
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <span class="side-text">Saved articles</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="side-text">Portals</span>
+                            </a>
+                            <!-- user portals list-->
+                            <ul class="nav">
+                                {% for current_portal in user_rss_portals %}
+                                    <li>
+                                        <a style="cursor: pointer;" onclick="showCurrentPortalNews('{{ current_portal.portal_id|get_rss_verbose_name }}');">
+                                            <span class="portal-favicon">
+                                                <img src="{{ current_portal.portal_id|get_rss_portal_favicon }}" width="16px" height="16px" />
+                                            </span>
+                                            <span class="cprs">
+                                                <span class="side-text">{{ current_portal.portal_id|get_rss_portal_name|truncatechars:15 }}</span>
+                                            </span>
+                                            {% if current_portal.portal_id|get_unread_news:username.id != 0 %}
+                                                <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>
+                                            {% endif %}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <!-- /user portals list -->
+                        </li>
+                        <hr width="100%">
+                        <li class="side-list-item">
+                            <a href="/news/manager/">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <span class="side-text">{% trans 'Manage portals' %}</span>
+                            </a>
+                        </li>
+                        <li class="side-list-item">
+                            <a href="/news/browser/">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <span class="side-text">{% trans 'Browse portals' %}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- /SIDEBAR -->
+            <div id="rss-news-new" class="col-xs-10 col-md-10" style="float: right;">
                 {% if fav_len < 1 %}
                     <div id="fav-main-title">
                         <h2>{% trans 'FAVOURITE ARTICLES' %}</h2>
@@ -64,34 +108,35 @@
                         <br>You can <a href="/news/usernews/">go</a> to your rss collection or to the <a href="/">latest</a> articles
                     </div>
                 {% else %}
-                    <div id="fav-main-title">
-                        <h2>{% trans 'Your favourite articles' %}</h2>
-                    </div>
-                    {% for i in favs %}
-                        <div class="current_rss_news rss-rss"
-                             id="rss_id_{{ i.id }}"
-                             data-indx="{{ i.nuid }}"
-                             onclick="RssPreviewPopUpShow('{{ i.id }}')"
-                             data-current-rss-news-id="{{ i.id }}">
-{#                            <div class="portal">By <a href="/search/?q={{ i.portal_name_id }}">{{ i.portal_name_id }}</a></div>#}
-{#                            <div class="published">&nbsp;|&nbsp;{{ i.date_posted.time }}</div>#}
-                            <div class="fav-news-image" style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;"></div>
-                            <div class="fav-title"><b>{{ i.id|get_rss_news_title }}</b></div>
-                            {#                            <div class="description">{{ i.post_text|safe|striptags|truncatewords:"9" }}</div>#}
-                            <div class="navigation">{{ i.id|get_rss_portal_name }}&nbsp;|&nbsp;{{ i.id|get_rss_news_date|date }}</div>
-
-                            <div class="fav-delete"><span onclick="removeRssFavourite('{{ i.id }}');">forget</span></div>
+                    <div class="load-more">
+                        <div class="endless_page_template" style="margin-left: 1%;">
+                            {% block js %}
+                                <script src="{% static 'static/js/jquery.js' %}"></script>
+                                <script src="{% static 'static/js/endless-pagination.js' %}"></script>
+                                <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+                                <script>
+                                    $(document).ready(function() {
+                                        $.endlessPaginate({
+                                            paginateOnScroll: false,
+                                            paginateOnScrollChunkSize: 1
+                                        });
+                                    });
+                                </script>
+                            {% endblock %}
+                            <div class="rss-mas">
+                                {% include fav_template %}
+                            </div>
                         </div>
-                    {% endfor %}
+                    </div>
                 {% endif %}
             </div>
         </div>
     </div>
 
 
-    <div class="fav-footer">
-        {% include 'footer.html' %}
-    </div>
+{#    <div class="fav-footer">#}
+{#        {% include 'footer_usernews.html' %}#}
+{#    </div>#}
 
 
     <script>

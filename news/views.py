@@ -7,14 +7,14 @@ from django.contrib import auth
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsWatches, RssNewsCovers, TopNews, NewsPortal,UserRssNewsReading
+from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsWatches, RssNewsCovers, TopNews, NewsPortal,UserRssNewsReading, RSSChannels
 import datetime
 import json
 from userprofile.models import UserLikesNews, UserSettings, UserProfile, UserRssPortals
 from django.core.mail import send_mail
 from favourite.models import RssSaveNews
 
-
+import urllib.request as r
 
 
 
@@ -46,33 +46,51 @@ def render_cn_ver(request):
 # def translate_chinese(request):
 #     return main_page_load(request, translate="chinese")
 
+def get_region_code():
+    url = "http://ip-api.com/json"
+    t = r.urlopen(url)
+    data = json.loads(t.read().decode(t.info().get_param('charset') or 'utf-8'))
+    return data['countryCode']
+
 
 def main_page_load(request, template="index_beta.html", page_template="page_template.html", extra_context=None):
     instance = render_news_by_sendec(request)
     name_map = {'id': 'id',
-                'news_title': 'news_title',
+                'news_title_english': 'news_title_english',
+                'news_title_russian': 'news_title_russian',
+                'news_title_chinese': 'news_title_chinese',
                 'news_post_date': 'news_post_date',
-                # 'news_category': 'news_category_id',
                 'news_author': 'news_author_id',
-                # "slug": "slug",
                 }
     args = {
         "current_year": datetime.datetime.now().year,
         "title": "Home Page | ",
         "news_block": True,
-        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
-        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
-        "interest": get_hottest_news(request),
+        "total_middle_news": instance[0:4],
+        "total_bottom_news": instance[4:6],
+        "interest": get_hottest_news(request, category_id=5),
         "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
-        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
+        "before_reviews": get_before_reviews(request, category_id=None),
 
-        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
+        "pre_total": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
 
-        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "total_news": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
         "page_template": page_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
     }
+
+    # LANGUAGE SETTER
+    if not request.COOKIES.get('lang'):
+        region = get_region_code()
+        if region == 'RU': args['lang'] = 'rus'
+        elif region == "US": args['lang'] = 'eng'
+        else: args['lang'] = 'ch'
+    else:
+        if 'rus' in request.COOKIES.get('lang'): args['lang'] = 'rus'
+        elif 'eng' in request.COOKIES.get('lang'): args['lang'] = 'eng'
+        elif 'ch' in request.COOKIES.get('lang'): args['lang'] = 'ch'
+
     if request.is_ajax():
         template = page_template
     args.update(csrf(request))
@@ -81,79 +99,96 @@ def main_page_load(request, template="index_beta.html", page_template="page_temp
         args["search_private"] = True
     args["footer_news"] = get_news_for_footer(request)[:3]
     response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
+    # COOKIE SETTER
+    if not request.COOKIES.get('lang'):
+        region = get_region_code()
+        if region == 'RU': response.set_cookie("lang", "rus")
+        elif region == "US": response.set_cookie("lang", "eng")
+        else: response.set_cookie("lang", "ch")
+    else:
+        pass
     return response
 
 
 def get_latest_reviews(request):
     return News.objects.filter(news_category_id=6).order_by("-news_post_date").values()[0]
-
-
-def get_before_reviews(request):
+def get_before_reviews(request, category_id):
     translation = {
         "id": "id",
-        "news_title": "news_title",
+        "news_title_english": "news_title_english",
+        "news_title_russian": "news_title_russian",
+        "news_title_chinese": "news_title_chinese",
         "news_post_date": "news_post_date",
         "news_author": "news_author_id",
         "news_company_owner": "news_company_owner_id",
         "news_main_cover": "news_main_cover",
+        "teaser_english": "teaser_english",
+        "teaser_russian": "teaser_russian",
+        "teaser_chinese": "teaser_chinese",
         "slug": "slug",
-        "news_post_text_english": "news_post_text_english",
     }
-    return News.objects.raw("SELECT id, news_title, news_post_date, news_author_id, news_company_owner_id, news_main_cover,"
-                            "slug, news_post_text_english FROM news ORDER BY news_post_date DESC OFFSET 6 LIMIT 3;", translations=translation)
-
-def get_hottest_news(request):
+    if category_id != None:
+        return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, teaser_english, teaser_russian, teaser_chinese, news_post_date, news_author_id, news_company_owner_id, news_main_cover,"
+                                "slug FROM news WHERE news_category_id=%s ORDER BY news_post_date DESC OFFSET 6 LIMIT 3;" % category_id, translations=translation)
+    else:
+        return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, teaser_english, teaser_russian, teaser_chinese, news_post_date, news_author_id, news_company_owner_id, news_main_cover,"
+                                "slug FROM news ORDER BY news_post_date DESC OFFSET 6 LIMIT 3;", translations=translation)
+def get_hottest_news(request, category_id):
     translation = {
         "id": "id",
-        "news_title": "news_title",
+        "news_title_english": "news_title_english",
+        "news_title_russian": "news_title_russian",
+        "news_title_chinese": "news_title_chinese",
         "news_post_date": "news_post_date",
         "news_author": "news_author_id",
         "news_company_owner_": "news_company_owner_id",
         "news_main_cover": "news_main_cover",
         "slug": "slug"
     }
-    watches = NewsWatches.objects.order_by("-watches").values("news_id").values("news_id")
-    # print(watches)
-    watches_list = [int(watches[i]["news_id"]) for i in range(len(watches[:4]))]
-    # print("new list: ", watches_list)
-    if len(watches_list) >= 4:
-        return News.objects.raw("SELECT n.id, n.news_title, n.news_post_date, n.news_author_id, n.news_company_owner_id, n.news_main_cover FROM news n INNER JOIN news_watches nw ON n.id=nw.news_id ORDER BY nw.watches DESC LIMIT 4", translations=translation)
-        # return News.objects.filter(id__in=watches[:4]).defer("news_portal_name").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_post_text_english").order_by("-news_post_date").values()[:4]
+    # watches = NewsWatches.objects.order_by("-watches").values("news_id").values("news_id")
+    # watches_list = [int(watches[i]["news_id"]) for i in range(len(watches[:4]))]
+    # if len(watches_list) >= 4:
+    if category_id != None:
+        return News.objects.raw("SELECT n.id, n.news_title_english, n.news_title_russian, n.news_title_chinese, n.news_post_date, n.news_author_id, n.news_company_owner_id, n.news_main_cover FROM news n INNER JOIN news_watches nw ON n.id=nw.news_id WHERE n.news_category_id=%s ORDER BY nw.watches DESC LIMIT 4" % category_id, translations=translation)
     else:
-        return News.objects.all().order_by("-news_post_date").values()[:4]
-        #return News.objects.raw("SELECT ")
-
-
+        return News.objects.raw("SELECT n.id, n.news_title_english, n.news_title_russian, n.news_title_chinese, n.news_post_date, n.news_author_id, n.news_company_owner_id, n.news_main_cover FROM news n INNER JOIN news_watches nw ON n.id=nw.news_id ORDER BY nw.watches DESC LIMIT 4", translations=translation)
+    # else:
+    #     return News.objects.all().order_by("-news_post_date").values()[:4]
 def get_top_total_news(request):
     name_map = {'id': 'id',
-                'top_news_title': 'top_news_title',
+                'top_news_title_english': 'top_news_title_english',
+                'top_news_title_russian': 'top_news_title_russian',
+                'top_news_title_chinese': 'top_news_title_chinese',
                 'top_news_post_date': 'top_news_post_date',
                 # 'news_category': 'news_category_id',
                 'top_news_author': 'top_news_author_id',
                 "slug": "slug",
                 }
     # return TopNews.objects.all()[:4].defer("top_news_post_text_english").defer("top_news_post_text_russian").defer("top_news_post_text_chinese").values()
-    return TopNews.objects.raw("SELECT id, top_news_title, top_news_author_id, top_news_post_date, slug  FROM news_top ORDER BY id DESC limit 1;", translations=name_map)
-
-
+    return TopNews.objects.raw("SELECT id, top_news_title_english, top_news_title_russian, top_news_title_chinese, top_news_author_id, top_news_post_date, slug  FROM news_top ORDER BY id DESC limit 1;", translations=name_map)
 def get_total_news():
     name_map = {'id': 'id',
-                'news_title': 'news_title',
+                'news_title_english': 'news_title_english',
+                'news_title_russian': 'news_title_english',
+                'news_title_chinese': 'news_title_chinese',
                 'news_post_date': 'news_post_date',
                 # 'news_category': 'news_category_id',
                 'news_author': 'news_author_id',
                 # "slug": "slug",
                 }
     #return News.objects.all().values()[9:]
-    return News.objects.raw("SELECT id, news_title, news_post_date, news_author FROM "
+    return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, teaser_english, teaser_russian, teaser_chinese, news_post_date, news_author FROM "
                             "(SELECT ROW_NUMBER() OVER (PARTITION BY id ORDER BY news_post_date DESC) AS OrderedDate, * FROM news) as newsList"
                             "WHERE OrderedDate=5 ORDER BY news_post_date DESC;", translations=name_map)
-
-
 def render_news_by_sendec(request, **kwargs):
     name_map = {'id': 'id',
-                'news_title': 'news_title',
+                'news_title_english': 'news_title_english',
+                'news_title_russian': 'news_title_russian',
+                'news_title_chinese': 'news_title_chinese',
                 'news_post_date': 'news_post_date',
+                'teaser_english': 'teaser_english',
+                'teaser_russian': 'teaser_russian',
+                'teaser_chinese': 'teaser_chinese',
                 'news_category': 'news_category_id',
                 "slug": "slug",
                 }
@@ -163,84 +198,67 @@ def render_news_by_sendec(request, **kwargs):
     # else:
     if len(kwargs) > 0:
         category_id = kwargs['category_id']
-        return News.objects.raw("SELECT id, news_title from news WHERE news_category_id in (%s);" % category_id, translations=name_map)
+        return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, teaser_english, teaser_russian, teaser_chinese from news WHERE news_category_id in (%s);" % category_id, translations=name_map)
     else:
-        return News.objects.raw("SELECT id, news_title, news_post_date from news ORDER BY news_post_date DESC;", translations=name_map)
-
-
+        return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, teaser_english, teaser_russian, teaser_chinese, news_post_date from news ORDER BY news_post_date DESC;", translations=name_map)
 def get_company_news(request, news_id, company_id):
     current_company_news = News.objects.filter(news_company_owner=
                                                company_id).exclude(id=news_id).order_by("-news_post_date")
     return current_company_news
-
-
 def get_latest_news_total(request):
     latest_10_news = News.objects.all().order_by("-news_post_date")
     return latest_10_news
-
-
 def render_current_top_news(request, news_id, slug):
     # current_top_news = TopNews.objects.get(slug=slug)
-    args = {
-        # "title": "%s | " % current_news.top_news_title,
-        # "current_news_values": current_news,
-        "other_materials": current_news_other_materials(request, news_id),
-        # "other_materials_count": render_news_by_sendec(request).exclude(id=news_id)[:3].count(),
-        # "latest_news": get_company_news(request, news_id, current_news.top_news_company_owner_id)[:5],
-        # "company_name": str(Companies.objects.get(id=current_news.top_news_company_owner_id)).capitalize(),
-        # "current_day": datetime.datetime.now().day,
-        # "current_news_title": current_news.top_news_title,
-        #"external_link": shared_news_link(request, news_id),
-        "left_bar": True,
-    }
     translation = {
         "id": "id",
-        "top_news_title": "top_news_title",
-        "news_category": "top_news_category_id",
-        "news_post_date": "top_news_post_date",
-        "news_post_text_english": "top_news_post_text_english",
-        "news_portal_name": "top_news_portal_name_id",
-        "news_company_owner": "top_news_company_owner_id",
-        "news_author": "top_news_author_id",
-        "news_main_cover": "top_news_main_cover",
-        "news_tags": "top_news_tags",
+        "top_news_title_english": "top_news_title_english",
+        "top_news_title_russian": "top_news_title_russian",
+        "top_news_title_chinese": "top_news_title_chinese",
+        "top_news_category": "top_news_category_id",
+        "top_news_post_date": "top_news_post_date",
+        "top_news_post_text_english": "top_news_post_text_english",
+        "top_news_portal_name": "top_news_portal_name_id",
+        "top_news_company_owner": "top_news_company_owner_id",
+        "top_news_author": "top_news_author_id",
+        "top_news_main_cover": "top_news_main_cover",
+        "top_news_tags": "top_news_tags",
         "slug": "slug",
     }
     current_top_news = TopNews.objects.raw("SELECT * FROM news_top where slug='%s';" % slug, translations=translation)
-    # category_id = current_top_news[0].news_category
-    args["title"] = "%s | " % current_top_news[0].top_news_title
-    args["current_news_values"] = current_top_news[0]
-    # args["company_name"] = str(Companies.objects.get(id=current_news[0].news_company_owner)).capitalize(),
-    args["current_news_title"] = current_top_news[0].top_news_title,
+    args = {
+        "other_materials": current_top_news_other_materials(request, news_id),
+        "other_materials_bottom": current_top_news_other_materials_bottom(request, news_id),
+        "left_bar": True
+    }
+    args["current_top_news_values"] = current_top_news[0]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+        args["title"] = "%s | " % current_top_news[0].top_news_title_english
+        args["current_top_news_title"] = current_top_news[0].top_news_title_english
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+        args["title"] = "%s | " % current_top_news[0].top_news_title_russian
+        args["current_top_news_title"] = current_top_news[0].top_news_title_russian
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
+        args["title"] = "%s | " % current_top_news[0].top_news_title_chinese
+        args["current_top_news_title"] = current_top_news[0].top_news_title_chinese
+
     args.update(check_english(current_top_news[0], flag=1))
 
     if auth.get_user(request).username:
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
-    # addition_news_watches(request, news_id)
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("top_news.html", args, context_instance=RequestContext(request))
-
-
-# def render_current_news(request, category_id, news_id, slug):
 def render_current_news(request, year, month, day, news_id, slug):
-    args = {
-        # "title": "%s | " % current_news.news_title,
-        # "current_news_values": current_news,
-        "other_materials": current_news_other_materials(request, news_id),
-        # "other_materials_count": current_news_other_materials(request, news_id)[:3],
-        # "latest_news": get_company_news(request, news_id, current_news.news_company_owner_id)[:5],
-        "current_day": datetime.datetime.now().day,
-        "left_bar": True,
-    }
-    # current_news = News.objects.get(slug=slug)
-    # category_id = current_news.news_category_id
-    # cookie = request.COOKIES.get('lang')
-    # if cookie == "eng":
     translation = {
         "id": "id",
-        "news_title": "news_title",
+        "news_title_english": "news_title_english",
+        "news_title_russian": "news_title_russian",
+        "news_title_chinese": "news_title_chinese",
         "news_category": "news_category_id",
         "news_post_date": "news_post_date",
         "news_post_text_english": "news_post_text_english",
@@ -252,11 +270,35 @@ def render_current_news(request, year, month, day, news_id, slug):
         "slug": "slug",
     }
     current_news = News.objects.raw("SELECT * FROM news where id=%s;" % news_id, translations=translation)
+    args = {
+        "other_materials": current_news_other_materials(request, news_id, current_news[0].news_category_id),
+        "other_materials_bottom": current_news_other_materials_bottom(request, news_id, current_news[0].news_category_id),
+        "current_day": datetime.datetime.now().day,
+        "left_bar": True,
+    }
+    if not request.COOKIES.get('lang'):
+        region = get_region_code()
+        if region == 'RU': args['lang'] = 'rus'
+        elif region == "US": args['lang'] = 'eng'
+        else: args['lang'] = 'ch'
+    else:
+        if 'rus' in request.COOKIES.get('lang'):
+            args['lang'] = 'rus'
+            args["title"] = "%s | " % current_news[0].news_title_russian
+            args["current_news_title"] = current_news[0].news_title_russian
+        elif 'eng' in request.COOKIES.get('lang'):
+            args['lang'] = 'eng'
+            args["title"] = "%s | " % current_news[0].news_title_english
+            args["current_news_title"] = current_news[0].news_title_english
+        elif 'ch' in request.COOKIES.get('lang'):
+            args['lang'] = 'ch'
+            args["title"] = "%s | " % current_news[0].news_title_chinese
+            args["current_news_title"] = current_news[0].news_title_chinese
+
+
     category_id = current_news[0].news_category
-    args["title"] = "%s | " % current_news[0].news_title
     args["current_news_values"] = current_news[0]
     # args["company_name"] = str(Companies.objects.get(id=current_news[0].news_company_owner)).capitalize(),
-    args["current_news_title"] = current_news[0].news_title,
     args.update(check_english(current_news[0], flag=0))
 
     if auth.get_user(request).username:
@@ -265,19 +307,60 @@ def render_current_news(request, year, month, day, news_id, slug):
     addition_news_watches(request, news_id)
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
-    return render_to_response("current_news_beta.html", args)
+    response = render_to_response("current_news_beta.html", args, context_instance=RequestContext(request))
+    if not request.COOKIES.get('lang'):
+        region = get_region_code()
+        if region == 'RU': response.set_cookie("lang", "rus")
+        elif region == "US": response.set_cookie("lang", "eng")
+        else: response.set_cookie("lang", "ch")
+    else:
+        pass
+    return response
 
 
-def current_news_other_materials(request, news_id):
+def current_news_other_materials(request, news_id, category_id):
+    translation = {
+        "id": "id",
+        "news_title_english": "news_title_english",
+        "news_title_russian": "news_title_russian",
+        "news_title_chinese": "news_title_chinese",
+        "news_post_date": "news_post_date",
+        "news_main_cover": "news_main_cover"
+    }
+    return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_main_cover from news WHERE news_category_id=%s ORDER BY news_post_date DESC limit 4;" % category_id,
+                            translations=translation)
+def current_news_other_materials_bottom(request, news_id, category_id):
     translation = {
         "id": "id",
         "news_title": "news_title",
         "news_post_date": "news_post_date",
+        "news_main_cover": "news_main_cover"
     }
-    return News.objects.raw("SELECT id, news_title, news_post_date from news where id not in (%s) "
-                            "ORDER BY news_post_date DESC limit 4;" % news_id,
+    return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_main_cover from news WHERE news_category_id=%s ORDER BY news_post_date DESC OFFSET 4 limit 3;" % category_id,
                             translations=translation)
 
+def current_top_news_other_materials(request, news_id):
+    translation = {
+        "id": "id",
+        "news_title_english": "news_title_english",
+        "news_title_russian": "news_title_russian",
+        "news_title_chinese": "news_title_chinese",
+        "news_post_date": "news_post_date",
+        "news_main_cover": "news_main_cover"
+    }
+    return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_main_cover from news ORDER BY news_post_date DESC limit 4;",
+                            translations=translation)
+def current_top_news_other_materials_bottom(request, news_id):
+    translation = {
+        "id": "id",
+        "news_title_english": "news_title_english",
+        "news_title_russian": "news_title_russian",
+        "news_title_chinese": "news_title_chinese",
+        "news_post_date": "news_post_date",
+        "news_main_cover": "news_main_cover"
+    }
+    return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_main_cover from news ORDER BY news_post_date DESC OFFSET 4 limit 3;",
+                            translations=translation)
 
 def check_english(news, flag):
     args = {}
@@ -302,7 +385,7 @@ def check_english(news, flag):
 
 
 @login_required(login_url="/auth/login/")
-def render_user_news(request, template="user_news.html", rss_template="rss_template.html", extra_context=None):
+def render_user_news(request, template="user_news_beta.html", rss_template="rss_template.html", extra_context=None):
     user = User.objects.get(username=auth.get_user(request).username)
     if get_user_rss_portals(request, user_id=user.id).count() == 0:
         """If RSS portals list is empty for current user
@@ -346,6 +429,12 @@ def render_user_news(request, template="user_news.html", rss_template="rss_templ
             args["zero"] = False
         args["footer_news"] = get_news_for_footer(request)[:3]
         args["body_color"] = True
+        if "eng" in request.COOKIES.get('lang'):
+            args['lang'] = 'eng'
+        elif "rus" in request.COOKIES.get('lang'):
+            args['lang'] = 'rus'
+        elif "ch" in request.COOKIES.get('lang'):
+            args['lang'] = 'ch'
         return render_to_response(template, context=args, context_instance=RequestContext(request))
 
 
@@ -382,10 +471,77 @@ def get_rss_news_pagination(request, current_page, next_page):
 
 
 def get_current_rss_news(request, news_id):
+    news_instance = RssNews.objects.get(id=int(news_id))
     instance = RssNews.objects.get(id=int(news_id)).get_json_rss()
+
+
+    b = ""
+    if request.COOKIES.get("lang") == "eng": b = "Close"
+    elif request.COOKIES.get("lang") == "rus": b = "Закрыть"
+    elif request.COOKIES.get("lang") == "cn": b = "cn"
+
+
+    string = """<div class="cur-pw-top" data-rss-id="{data_id}">
+    <div class="cur-pw-background"></div>
+    <div class="cur-pw-btn-bck"></div>
+
+    <div class="cur-pw-description col-md-12" style="position: absolute; top: 3em;">
+        <h1 class="rss-title-preview-new text-center">{title}</h1>
+        <div class="cur-pw-td text-center">By <span class="rss-author-new">{author}</span></div>
+    </div>
+        <div class="col-md-12 col-xs-12" style="position: absolute; bottom: 0;">
+            <ul id="rss-share-list" class="">
+                <li class="rss-share-item">
+                    <a data-target-link="{link}" class="rss-share-facebook" onclick="window.open(
+                        'http://facebook.com/sharer/sharer.php?u='+$(this).attr('data-target-link'),
+                         'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
+                        <span class="fa fa-facebook social-rss" style="font-size: 1.5em; "></span>
+                    </a>
+                </li>
+                <li class="rss-share-item">
+                    <a data-target-link="{link}" class="rss-share-vk" onclick="window.open('https://vk.com='+$(this).attr('data-target-link'),
+                         'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
+                        <span class="fa fa-vk social-rss" style="font-size: 1.5em;"></span>
+                    </a>
+                </li>
+                <li class="rss-share-item">
+                    <a data-target-link="{link}" class="rss-share-twitter"
+                    onclick="window.open('https://twitter.com/intent/tweet?original_referer='+'https://insydia.com/'+'&ref_src=twsrc%5Etfw&%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+$(this).attr('data-target-link')+'&via=InsydiaNews',
+                         'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
+                        <span class="fa fa-twitter social-rss" style="font-size: 1.5em;"></span>
+                    </a>
+                </li>
+                <li class="rss-share-item">
+                    <a data-target-link="{link}" class="rss-share-linkedin" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+$(this).attr('data-target-link')+'&title='+'TITLE'+'&summary='+'summary',
+                         'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
+                        <span class="fa fa-linkedin social-rss" style="font-size: 1.5em;"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+</div>
+
+</div>
+
+<div class="rss-preview-body"></div>
+    """.format(title=news_instance.title,
+               author=news_instance.author if news_instance.author else news_instance.portal_name,
+               read=123,
+               data_id=news_instance.id,
+               likes=321,
+               link=news_instance.link,
+               body=news_instance.content_value if news_instance.content_value else news_instance.post_text)
+
+
+
+
+
     response_data = {
         "data": instance,
+        "string": string,
     }
+
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
@@ -403,6 +559,12 @@ def render_top_news_page(request):
         args["search_private"] = True
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response("top_news.html", args)
 
 
@@ -517,6 +679,12 @@ def render_current_category(request, category_name):
         args["search_private"] = True
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response("current_category.html", args)
 
 #   ###########################################################################
@@ -527,24 +695,24 @@ def render_current_category(request, category_name):
 def render_technology_news(request, template="technology.html", tech_template="tech_template.html", extra_context=None):
     instance = render_news_by_sendec(request, category_id=1)
     name_map = {'id': 'id',
-                'news_title': 'news_title',
+                "news_title_english": "news_title_english",
+                "news_title_russian": "news_title_russian",
+                "news_title_chinese": "news_title_chinese",
                 'news_post_date': 'news_post_date',
-                # 'news_category': 'news_category_id',
                 'news_author': 'news_author_id',
-                # "slug": "slug",
                 }
     args = {
         "current_year": datetime.datetime.now().year,
         "title": "Technology News | ",
-        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
-        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
-        "interest": get_hottest_news(request),
+        "total_middle_news": instance[0:4],
+        "total_bottom_news": instance[4:6],
+        "interest": get_hottest_news(request, category_id=1),
         "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
-        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
+        "before_reviews": get_before_reviews(request, category_id=1),
 
-        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
+        "pre_total": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news WHERE news_category_id=1 ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
 
-        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "total_news": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news WHERE news_category_id=1 ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
         "page_template": tech_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
@@ -556,6 +724,12 @@ def render_technology_news(request, template="technology.html", tech_template="t
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
     return response
 
@@ -585,22 +759,20 @@ def render_auto_news(request, template="auto.html", auto_template="auto_template
     name_map = {'id': 'id',
                 'news_title': 'news_title',
                 'news_post_date': 'news_post_date',
-                # 'news_category': 'news_category_id',
                 'news_author': 'news_author_id',
-                # "slug": "slug",
                 }
     args = {
         "current_year": datetime.datetime.now().year,
         "title": "Auto News | ",
-        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
-        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
-        "interest": get_hottest_news(request),
+        "total_middle_news": instance[0:4],
+        "total_bottom_news": instance[4:6],
+        "interest": get_hottest_news(request, category_id=3),
         "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
-        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
+        "before_reviews": get_before_reviews(request, category_id=3),
 
-        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
+        "pre_total": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news WHERE news_category_id=3 ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
 
-        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "total_news": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news WHERE news_category_id=3 ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
         "page_template": auto_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
@@ -612,6 +784,12 @@ def render_auto_news(request, template="auto.html", auto_template="auto_template
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
     return response
 
@@ -626,22 +804,20 @@ def render_bio_news(request, template="bio.html", bio_template="bio_template.htm
     name_map = {'id': 'id',
                 'news_title': 'news_title',
                 'news_post_date': 'news_post_date',
-                # 'news_category': 'news_category_id',
                 'news_author': 'news_author_id',
-                # "slug": "slug",
                 }
     args = {
         "current_year": datetime.datetime.now().year,
         "title": "Bio-tech news | ",
-        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
-        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
-        "interest": get_hottest_news(request),
+        "total_middle_news": instance[0:4],
+        "total_bottom_news": instance[4:6],
+        "interest": get_hottest_news(request, category_id=5),
         "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
-        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
+        "before_reviews": get_before_reviews(request, category_id=5),
 
-        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
+        "pre_total": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news WHERE news_category_id=5 ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
 
-        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "total_news": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news WHERE news_category_id=5 ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
         "page_template": bio_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
@@ -653,6 +829,12 @@ def render_bio_news(request, template="bio.html", bio_template="bio_template.htm
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
     return response
 
@@ -679,6 +861,12 @@ def render_companies_news(request, template="companies.html", companies_endless=
     # if request.is_ajax():
     #     template = companies_endless
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response(template, args, context_instance=RequestContext(request))
 
 
@@ -705,6 +893,12 @@ def render_current_company(request, company_name, template="current_company.html
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response(template, args, context_instance=RequestContext(request))
 
 
@@ -720,22 +914,20 @@ def render_entertainment_news(request, template="entertainment.html", ent_templa
     name_map = {'id': 'id',
                 'news_title': 'news_title',
                 'news_post_date': 'news_post_date',
-                # 'news_category': 'news_category_id',
                 'news_author': 'news_author_id',
-                # "slug": "slug",
                 }
     args = {
         "current_year": datetime.datetime.now().year,
         "title": "Entertainment News | ",
-        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
-        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
-        "interest": get_hottest_news(request),
+        "total_middle_news": instance[0:4],
+        "total_bottom_news": instance[4:6],
+        "interest": get_hottest_news(request, category_id=2),
         "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
-        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
+        "before_reviews": get_before_reviews(request, category_id=2),
 
-        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
+        "pre_total": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news WHERE news_category_id=2 ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
 
-        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "total_news": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news WHERE news_category_id=2 ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
         "page_template": ent_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
@@ -747,6 +939,12 @@ def render_entertainment_news(request, template="entertainment.html", ent_templa
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
     return response
 
@@ -771,6 +969,12 @@ def render_latest_news(request):
         args["search_private"] = True
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response("latest.html", args)
 
 
@@ -788,6 +992,12 @@ def render_reviews_news(request):
         args["search_private"] = True
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response("reviews.html", args)
 
 
@@ -796,22 +1006,18 @@ def render_space_news(request, template="space.html", space_template="space_temp
     name_map = {'id': 'id',
                 'news_title': 'news_title',
                 'news_post_date': 'news_post_date',
-                # 'news_category': 'news_category_id',
                 'news_author': 'news_author_id',
-                # "slug": "slug",
                 }
     args = {
         "current_year": datetime.datetime.now().year,
         "title": "Space News | ",
-        "total_middle_news": instance[0:4],#.order_by("-news_post_date")[0:4].values(),
-        "total_bottom_news": instance[4:6],#.order_by("-news_post_date")[4:6].values(),
-        "interest": get_hottest_news(request),
+        "total_middle_news": instance[0:4],
+        "total_bottom_news": instance[4:6],
+        "interest": get_hottest_news(request, category_id=4),
         "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
-        "before_reviews": get_before_reviews(request),#.order_by("-news_post_date")[6:9].values(),
-
-        "pre_total": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
-
-        "total_news": list(News.objects.raw("SELECT id, news_title, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "before_reviews": get_before_reviews(request, category_id=4),
+        "pre_total": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news WHERE news_category_id=4 ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
+        "total_news": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news WHERE news_category_id=4 ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
         "page_template": space_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
@@ -823,6 +1029,12 @@ def render_space_news(request, template="space.html", space_template="space_temp
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     response = render_to_response([template, "footer.html"], context=args, context_instance=RequestContext(request))
     return response
 
@@ -878,26 +1090,21 @@ def remove_rss_portal_from_feed(request, uuid, pid):
     user_rss_instance = UserRssPortals.objects.get(portal_id=pid, user_id=user.id)
     user_rss_instance.check = False
     user_rss_instance.save()
-
     rss_portal_instance = RssPortals.objects.get(id=int(pid))
     rss_portal_instance.follows -= 1
     rss_portal_instance.save()
+    # portal_news_instance = RssNews.objects.filter(portal_name_id=int(pid))
+    # count_news = portal_news_instance.count() # amount of news on this portal
+    # list_of_news = portal_news_instance.order_by("-date_posted").values('id')
+    # for i in range(count_news):
+    #     user_rss_instance = UserRssNewsReading.objects.get(user_id=user.id, rss_news_id=list_of_news[i]['id'])
+    #     user_rss_instance.delete()
 
-
-
-
-
-    portal_news_instance = RssNews.objects.filter(portal_name_id=int(pid))
-    count_news = portal_news_instance.count() # amount of news on this portal
-
-    list_of_news = portal_news_instance.order_by("-date_posted").values('id')
-
-    for i in range(count_news):
-        user_rss_instance = UserRssNewsReading.objects.get(user_id=user.id, rss_news_id=list_of_news[i]['id'])
-        user_rss_instance.delete()
-
-    # return render_to_response("user_news.html", args, context_instance=RequestContext(request))
-    return HttpResponseRedirect("/news/usernews/")
+    data_response = {
+        "uuid": str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
+        "id": pid
+    }
+    return HttpResponse(json.dumps(data_response), content_type="application/json")
 
 
 
@@ -912,14 +1119,13 @@ def save_rss_news(request, rss_id):
         )
     else:
         pass
-    return HttpResponse()
+    return HttpResponse(json.dumps({"process": "added"}), content_type="application/json")
 
 
 def forget_rss_news(request, rss_id):
-    instance = RssSaveNews.objects.get(id=rss_id)
+    instance = RssSaveNews.objects.get(rss_id=int(rss_id))
     instance.delete()
-    # instance.save()
-    return HttpResponse()
+    return HttpResponse(json.dumps({"process": "removed"}), content_type="application/json")
 
 
 def get_interesting_news(request):
@@ -947,7 +1153,7 @@ def render_contacts_page(request):
     from news.forms import SendReportForm
     args = {
         "title": "Contacts |",
-        "email": "support@insydia.com",
+        "email": "info@insydia.com",
         "phone": "+7-931-579-06-96",
         "cooperation": "advert@insydia.com",
         "form": SendReportForm,
@@ -959,6 +1165,12 @@ def render_contacts_page(request):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response("contacts.html", args)
 
 
@@ -975,6 +1187,12 @@ def render_about_page(request):
     args["expression"] = """We express our gratitude for the financial and moral support to Afanasyev M.J.
 (Associate Professor of "Instrumentation Technology")."""
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response("about.html", args)
 
 
@@ -989,6 +1207,12 @@ def render_adertisers_page(request):
         args["username"] = User.objects.get(username=auth.get_user(request).username)
         args["search_private"] = True
     args["footer_news"] = get_news_for_footer(request)[:3]
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response("advertisers.html", args)
 
 
@@ -1130,7 +1354,7 @@ def get_rss_news_current_portal(request, portal_verbose):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-def render_current_portal_news(request, portal, template="user_news.html", page_template="current_portal_rss_news.html", extra_context=None):
+def render_current_portal_news(request, portal, template="user_news_beta.html", page_template="current_portal_rss_news.html", extra_context=None):
     try:
         portal_instance = RssPortals.objects.get(verbose_name=portal)
 
@@ -1145,6 +1369,12 @@ def render_current_portal_news(request, portal, template="user_news.html", page_
         if request.is_ajax():
             template = page_template
         args["footer_news"] = get_news_for_footer(request)[:3]
+        if "eng" in request.COOKIES.get('lang'):
+            args['lang'] = 'eng'
+        elif "rus" in request.COOKIES.get('lang'):
+            args['lang'] = 'rus'
+        elif "ch" in request.COOKIES.get('lang'):
+            args['lang'] = 'ch'
         return render_to_response(template, args, context_instance=RequestContext(request))
     except RssPortals.DoesNotExist:
         return page_not_found(request)
@@ -1170,24 +1400,30 @@ def get_news_for_footer(request):
     return News.objects.order_by("-news_post_date").defer("news_dislikes").defer("news_likes").defer("news_post_text_english").defer("news_post_text_chinese").defer("news_post_text_russian").defer("news_author").defer("news_portal_name")
 
 
+@login_required(login_url="/auth/login/")
 def render_manager_portal(request):
     user_instance = User.objects.get(username=auth.get_user(request).username)
     args = {
         "username": user_instance,
-
         "user_rss_portals": get_user_rss_portals(request, user_id=user_instance.id),
         "left_bar": False,
         "here_private": True,
+        "footer_news": get_news_for_footer(request)[:3],
     }
     args.update(csrf(request))
-
-    return render_to_response("manage_portals.html", args)
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
+    return render_to_response("manage_portals.html", args, context_instance=RequestContext(request))
 
 
 def get_all_rss_portals(request):
     return RssPortals.objects.all().values()
 
-
+@login_required(login_url="/auth/login/")
 def render_browser_portals(request, template="browse_portals.html", browse_template="browse_template.html", extra_context=None):
     user_instance = User.objects.get(username=auth.get_user(request).username)
     args = {
@@ -1197,24 +1433,30 @@ def render_browser_portals(request, template="browse_portals.html", browse_templ
         "user_rss_portals": get_user_rss_portals(request, user_id=user_instance.id),
         "left_bar": False,
         "here_private": True,
+        "browser": True,
+
+        "portals_count": RssPortals.objects.count(),
+        "channels_count": RSSChannels.objects.count(),
+        "most_popular": RssPortals.objects.order_by("follows")[:12],
 
 
-        "rss_tech": RssPortals.objects.filter(category=1).exclude(
-            id__in=get_user_rss_portals(request, user_id=user_instance.id).values("portal_id")
-        ).order_by("-follows")[:4],
-
-
-
-        "rss_ent": RssPortals.objects.filter(category=2).order_by("-follows")[:4],
-        "rss_auto": RssPortals.objects.filter(category=3).order_by("-follows")[:4],
-        "rss_space": RssPortals.objects.filter(category=4).order_by("-follows")[:4],
-        "rss_bio": RssPortals.objects.filter(category=5).order_by("-follows")[:4],
+        "rss_tech": RssPortals.objects.filter(category_id=1).order_by("-follows")[:4],
+        "rss_ent": RssPortals.objects.filter(category_id=2).order_by("-follows")[:4],
+        "rss_auto": RssPortals.objects.filter(category_id=3).order_by("-follows")[:4],
+        "rss_space": RssPortals.objects.filter(category_id=4).order_by("-follows")[:4],
+        "rss_bio": RssPortals.objects.filter(category_id=5).order_by("-follows")[:4],
+        "footer_news": get_news_for_footer(request)[:3],
     }
     args.update(csrf(request))
 
     if request.is_ajax():
         template = browse_template
-
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response(template, args, context_instance=RequestContext(request))
 
 
@@ -1237,7 +1479,12 @@ def render_browse_tech_portals(request, template="browse_tech.html", browse_tech
 
     if request.is_ajax():
         template = browse_tech_portals
-
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response(template, args, context_instance=RequestContext(request))
 
 
@@ -1306,6 +1553,13 @@ def render_close_page(request, lang):
         args["sub_title"] = "訂閱新聞"
         args["subs"] = "我們將宣布推出我們的項目通過消息的電子郵件。"
         args["subs_success"] = "感謝您的訂閱。當我們回來，我們會送你一個消息。"
+
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     return render_to_response("close_site.html", args)
 
 
@@ -1348,15 +1602,9 @@ def follow_current_rss_portal(request, uuid, pid):
             rss_portal_instance.follows += 1
             rss_portal_instance.save()
             data = {
-                'data': RssPortals.objects.get(id=pid).get_json(),
-                'exists': False,
-                'string': """<li id="left-bar-portal-{portal_id}">
-    <a><span class="cprs" onclick="showCurrentPortalNews({portal_verbose});">{portal_name}</span>
-    <span class="count"></span></a></li>""",
+                'uuid': str(user.profile.uuid),
+                'id': pid
             }
-
-
-
             portal_news_instance = RssNews.objects.filter(portal_name_id=int(pid))
             count_news = portal_news_instance.count() # amount of news on this portal
 
@@ -1391,11 +1639,8 @@ def follow_current_rss_portal(request, uuid, pid):
             rate=0.0
         )
         data = {
-            'data': RssPortals.objects.get(id=pid).get_json(),
-            'exists': False,
-            'string': """<li id="left-bar-portal-{portal_id}">
-<a><span class="cprs" onclick="showCurrentPortalNews({portal_verbose});">{portal_name}</span>
-<span class="count"></span></a></li>""",
+            'uuid': str(user.profile.uuid),
+            'id': pid
             }
         return HttpResponse(json.dumps(data), content_type="application/json")
 
@@ -1422,11 +1667,16 @@ def get_rss_matches(request, word):
     args = {}
     args.update(csrf(request))
 
-    instance = RssNews.objects.filter(Q(title__contains=word) |
-                                      Q(post_text__contains=word) |
-                                      Q(portal_name__portal__contains=word) |
-                                      Q(portal_name__description__contains=word) |
-                                      Q(content_value__contains=word)).distinct("portal_name__portal")
+    instance = RssNews.objects.filter(Q(title__contains=str(word).capitalize()) |
+                                      Q(title__contains=str(word).lower()) |
+                                      Q(post_text__contains=str(word).capitalize()) |
+                                      Q(post_text__contains=str(word).lower()) |
+                                      Q(portal_name__portal__contains=str(word).capitalize()) |
+                                      Q(portal_name__portal__contains=str(word).lower()) |
+                                      Q(portal_name__description__contains=str(word).capitalize()) |
+                                      Q(portal_name__description__contains=str(word).lower()) |
+                                      Q(content_value__contains=str(word).capitalize())  |
+                                      Q(content_value__contains=str(word).lower())).distinct("portal_name__portal")
 
     return HttpResponse(json.dumps([i.get_portal_json() for i in instance.all()]), content_type="application/json")
 
@@ -1550,10 +1800,11 @@ def search_rss(request):
                 if RssPortals.objects.get(portal_base_link=url_domain+"."+url_suffix).favicon == '':
                     send_mail_about_favicon(request, str(url_domain+"."+url_suffix))
                 for i in feeds:
-                    RSSChannels.objects.create(
-                        portal_id=RssPortals.objects.get(portal=str(url_domain).capitalize()).id,
-                        link=i
-                    )
+                    if 'comment' not in i:
+                        RSSChannels.objects.create(
+                            portal_id=RssPortals.objects.get(portal=str(url_domain).capitalize()).id,
+                            link=i
+                        )
         else:
             data_response['pid'] = RssPortals.objects.get(portal=str(url_domain).capitalize()).id
             data_response['exists'] = True
@@ -1565,6 +1816,7 @@ def search_rss(request):
             data_response['response'] = True
         else:
             data_response['response'] = False
+
         return HttpResponse(json.dumps(data_response), content_type="application/json")
     else:
         raise 404
@@ -1588,7 +1840,8 @@ def aggregate_current_feeds(request):
         url = request.POST['url']
         feeds = find_feeds(url)
         Aggregator(urls=feeds)
-    return HttpResponse(json.dumps({'gather': 'started'}), content_type="application/json")
+        return HttpResponse(json.dumps({'end': 'true'}), content_type="application/json")
+
 
 
 def get_latest_articles_of_new_rss(request):
@@ -1609,3 +1862,273 @@ def get_latest_articles_of_new_rss(request):
         }
 
         return HttpResponse(json.dumps(data_response), content_type="application/json")
+
+
+def popup_current_portal(request, portal_id):
+    args = {}
+    args.update(csrf(request))
+
+    l = request.COOKIES.get("lang")
+    b = ""
+    if l == "eng": b = "By"
+    elif l == "ch": b = "ch"
+    elif l == "rus": b = "Автор"
+
+
+    instance = RssPortals.objects.get(id=portal_id)
+    # news_instance = RssNews.objects.filter(portal_name_id=portal_id)
+    translation = {
+        "id": "id",
+        "title": "title",
+        "date_posted": "date_posted",
+        "portal_name_id": "portal_name_id",
+        "author": "author",
+        "nuid": "nuid"
+    }
+    news_instance = list(RssNews.objects.raw("SELECT id, title, date_posted, portal_name_id, author, nuid FROM news_rss WHERE portal_name_id=%s" % portal_id, translations=translation))
+
+    news_instance_offset = news_instance[:12]
+    string_offset = ""
+    for i in news_instance_offset:
+        string_offset += """<div class="cur-pw-articles">
+<ul class="cur-pw-item" style="padding-left: 0;">
+    <li class="col-xs-12" style="height:120px;border-bottom: solid 1px lightgrey;">
+        <div class="cur-pw-ar">
+            <div class="cur-pw-ar-cover col-md-3">
+                <div class="cont-cover" onclick="loadCurrentArticle('%s');return false;" style="background: url('%s') no-repeat center; background-size: cover;"></div>
+            </div>
+            <div class="cur-pw-ar-content col-md-9">
+                <div class="cur-pw-ar-t" onclick="loadCurrentArticle('%s'); return false;">%s</div>
+                <div class="cur-pw-ar-par">
+                    %s&nbsp;<span style="color: #F62A00;">%s</span>
+                    &nbsp;|&nbsp;
+                    <span>%s</span>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+</div>
+""" % (i.id,
+       i.get_main_cover(),
+       i.id,
+       i.title,
+       b,
+       i.author,
+       i.date_posted.strftime("%b, %d %Y"))
+
+    string = """<div class="cur-pw-top">
+<div class="cur-pw-background"></div>
+<div class="cur-pw-btn-bck"></div>
+
+<div class="cur-pw-btn-bck">
+    <button class="btn-close-rss btn btn-primary" onclick="hideCurrentRssPortal();return false;">Close</button>
+</div>
+
+"""
+
+    if UserRssPortals.objects.get(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username).id).check == False or\
+        UserRssPortals.objects.get(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username)).DoesNotExist:
+        string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
+        <button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal('{uuid}', '{id}', '{id}');
+            return false;">Follow</button>
+    </div>
+    """.format(uuid=str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
+               id=instance.id)
+    else:
+        string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
+        <button class="btn-fl-rss btn btn-primary" onclick="unfollowCurrentRssPortal('{uuid}', '{id}', '{id}'); return
+        false;">Unfollow</button></div>""".\
+            format(uuid=str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
+                   id=instance.id)
+
+    string += """<div class="cur-pw-description col-md-12" style="position: absolute; top: 3em;">
+        <h1 class="text-center">%s</h1>
+        <div class="cur-pw-td text-center">%s</div>
+    </div>
+        <div class="cur-pw-right text-center col-xs-6 col-xs-offset-3">
+            <span class="cur-pw-follows">Followers: %s</span>&nbsp;|&nbsp;
+            <span class="cur-pw-articles-amount">Articles: %s</span>
+        </div>
+</div>
+</div>
+<div class="cur-pw-left col-md-12">
+    %s
+</div>
+    """ % (instance.portal,
+           instance.description,
+           instance.follows,
+           len(news_instance),
+           string_offset)
+
+
+    data_response = {
+        "data": string,
+    }
+
+    return HttpResponse(json.dumps(data_response), content_type="application/json")
+
+
+def render_catalog(request):
+    args = {
+        "username":User.objects.get(username=auth.get_user(request).username),
+        "rss_tech": RssPortals.objects.filter(category_id=1).order_by("-follows")[:12],
+        "footer_news": get_news_for_footer(request)[:3],
+    }
+    args.update(csrf(request))
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
+    return render_to_response("catalog.html", args, context_instance=RequestContext(request))
+
+
+def render_current_category_portals(request, category_id):
+    args = {}
+    args.update(csrf(request))
+    news_instance = RssPortals.objects.filter(category_id=int(category_id)).order_by("-follows")
+
+
+    string="""<div class="portals-list">
+    """
+
+    for i in news_instance:
+        string += """<div onclick="showCurrentPortalData('%s'); return false;" class="fadeandscale_open current-popular-portal col-md-2" id="portal-%s" data-alt-id="%s">
+                <a href="">
+                    <div class="portal-picture" style="background: url('%s') no-repeat center; background-size: cover;"></div>
+                </a>
+                <div class="portal-bottom">
+                    <span class="portal-logo">%s</span>
+                    <span class="portal-name">
+                        <a href="" class="portal-link">
+                            <h3>%s</h3>
+                        </a>
+                    </span>
+                </div>
+                <div class="portal-footer">
+                    <span class="">Followers:&nbsp;%s</span>&nbsp;|&nbsp;
+                    <span class="">Articles:&nbsp;%s</span>
+                </div>
+            </div>
+        """ % (i.id,
+               i.id,
+               i.puid,
+               i.cover,
+               i.favicon,
+               i.portal,
+               i.follows,
+               len(list(RssNews.objects.raw("SELECT id FROM news_rss WHERE category_id=%s and portal_name_id=%s" % (category_id, i.id)))))
+
+    string += "</div>"
+
+    data_response = {
+        "data": [i.get_portal_full for i in news_instance.all()],
+        "string": string,
+    }
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
+    return HttpResponse(json.dumps({"data": string}), content_type="application/json")
+
+
+def popup_new_portal(request):
+    import tldextract
+    args = {}
+    args.update(csrf(request))
+
+    l = request.COOKIES.get("lang")
+    b = ""
+    if l == "eng": b = "By"
+    elif l == "ch": b = "ch"
+    elif l == "rus": b = "Автор"
+
+    if request.POST:
+        url = request.POST['url']
+        url_instance = tldextract.extract(url)
+        url_domain = url_instance.domain
+        portal_id = RssPortals.objects.get(portal=str(url_domain).capitalize()).id
+
+        instance = RssPortals.objects.get(id=portal_id)
+        news_instance = RssNews.objects.filter(portal_name_id=portal_id)
+
+        news_instance_offset = news_instance[:12]
+        string_offset = ""
+        for i in news_instance_offset:
+            string_offset += """<div class="cur-pw-articles">
+    <ul class="cur-pw-item" style="padding-left: 0;">
+        <li class="col-xs-12" style="height:120px;border-bottom: solid 1px lightgrey;">
+            <div class="cur-pw-ar">
+                <div class="cur-pw-ar-cover col-md-3">
+                    <div class="cont-cover" onclick="loadCurrentArticle('%s');return false;" style="background: url('%s') no-repeat center; background-size: cover;"></div>
+                </div>
+                <div class="cur-pw-ar-content col-md-9">
+                    <div class="cur-pw-ar-t" onclick="loadCurrentArticle('%s'); return false;">%s</div>
+                    <div class="cur-pw-ar-par">
+                        %s&nbsp;<span style="color: #F62A00;">%s</span>
+                        &nbsp;|&nbsp;
+                        <span>%s</span>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    </div>
+    """ % (i.id,
+           i.get_main_cover(),
+           i.id,
+           i.title,
+           b,
+           i.author,
+           i.date_posted.strftime("%b, %d %Y"))
+
+        string = """<div class="cur-pw-top">
+    <div class="cur-pw-background"></div>
+    <div class="cur-pw-btn-bck"></div>"""
+
+        if UserRssPortals.objects.filter(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username).id).exists() == False or\
+            UserRssPortals.objects.get(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username)).DoesNotExist:
+            string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
+            <button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal('{uuid}', '{id}', '{id}');
+                return false;">Follow</button>
+        </div>
+        """.format(uuid=str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
+                   id=instance.id)
+        else:
+            string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
+            <button class="btn-fl-rss btn btn-primary" onclick="unfollowCurrentRssPortal('{uuid}', '{id}', '{id}'); return
+            false;">Unfollow</button></div>""".\
+                format(uuid=str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
+                       id=instance.id)
+
+        string += """<div class="cur-pw-description col-md-12" style="position: absolute; top: 3em;">
+            <h1 class="text-center">%s</h1>
+            <div class="cur-pw-td text-center">%s</div>
+        </div>
+            <div class="cur-pw-right text-center col-xs-6 col-xs-offset-3">
+                <span class="cur-pw-follows">Followers: %s</span>&nbsp;|&nbsp;
+                <span class="cur-pw-articles-amount">Articles: %s</span>
+            </div>
+    </div>
+    </div>
+    <div class="cur-pw-left col-md-12">
+        %s
+    </div>
+        """ % (instance.portal,
+               instance.description,
+               instance.follows,
+               news_instance.count(),
+               string_offset)
+
+
+        data_response = {
+            "data": string,
+        }
+
+        return HttpResponse(json.dumps(data_response), content_type="application/json")
+    else:
+        return HttpResponse()

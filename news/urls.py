@@ -69,6 +69,8 @@ urlpatterns = patterns('',
     url(r'^usernews/$', 'news.views.render_user_news'),
 
 
+    url(r'^catalog/gcrc=(?P<category_id>\d+)/', 'news.views.render_current_category_portals'),
+    url(r'^catalog/', 'news.views.render_catalog'),
 
     # url(r'^top/(?P<category_id>\w+)/(?P<news_id>\w+)/', 'news.views.render_current_top_news'),
     url(r'^top/(?P<news_id>\w+)/(?P<slug>[-\w]+)/$', 'news.views.render_current_top_news'),
@@ -80,6 +82,9 @@ urlpatterns = patterns('',
     # url(r'^(?P<slug>[-\w]+)/$', 'news.views.render_current_news'),
 
 
+
+    url(r'^preview_portal=(?P<portal_id>\d+)/', 'news.views.popup_current_portal'),
+    url(r'^preview_new/', 'news.views.popup_new_portal'),
 
 
     #url(r'^(?P<category_name>\w+)/', 'news.views.render_current_category'),

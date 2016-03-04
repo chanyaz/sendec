@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% load staticfiles %}
+{% load i18n %}
+{% load cache %}
+{% load my %}
+{% load thumbnail %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="IT, space, computers, auto, bio, entertainment">
+    <meta name="robots" content="all">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="category" content="Technology">
+    <meta name="revisit" content="5 days">
+    <meta name="author" content="Evgeniy Privalov">
+    <meta name="COPYRIGHT" content="COPYRIGHT (c) 2016 by Evgeniy Privalov">
+    <meta name="description" content="Web-service with top IT, Auto, Space and BIO news. We provide you Hi-Tech news from all around the World.">
+    <meta name="reply-to" content="saqel@yandex.ru">
+    <meta http-equiv="content-language" content="en">
+    <meta name="google" content="notranslate">
+    <meta name="application-name" content="Insydia">
+    <meta name="msapplication-TileColor" content="#F62A00">
+    <meta name="msapplication-square70x70logo" content="">
+    <meta name="msapplication-square150x150logo" content="">
+    <meta name="msapplication-wide310x150logo" content="">
+    <meta name="msapplication-square310x310logo" content="">
+    <meta name="msapplication-notification" content="frequency=30;polling-uri=;polling-uri2=;polling-uri3=;polling-uri4=;polling-uri5=">
+    <link rel="canonical" href="https://insydia.com/" />
+    <link rel="alternate" type="application/rss+xml" title="Latest news" href="https://insydia.com/rss/news&channel=latest">
+    <link rel="alternate" type="application/rss+xml" title="Technology" href="https://insydia.com/rss/news&channel=technology">
+    <link rel="alternate" type="application/rss+xml" title="Entertainment" href="https://insydia.com/rss/news&channel=entertainment">
+    <link rel="alternate" type="application/rss+xml" title="Auto" href="https://insydia.com/rss/news&channel=auto">
+    <link rel="alternate" type="application/rss+xml" title="Space" href="https://insydia.com/rss/news&channel=space">
+    <link rel="alternate" type="application/rss+xml" title="BIO" href="https://insydia.com/rss/news&channel=bio">
+    <meta property="og:title" content="Insydia" />
+    <meta property="og:type" content="News" />
+    <meta property="og:url" content="https://insydia.com/" />
+    <meta property="og:image" content="" />
+    <meta property="og:image:width" content="150" />
+    <meta property="og:image:height" content="150" />
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:site" content="@InsydiaNews" />
+    <meta property="twitter:title" content="Insydia" />
+    <meta property="twitter:description" content="Web-service with top IT, Auto, Space and BIO news. We provide you Hi-Tech news from all around the World." />
+    <meta property="twitter:image" content="" />
+    <link rel="alternate" hreflang="ru-ru" href="https://insydia.com/ru/">
+    <link rel="alternate" hreflang="en-us" href="https://insydia.com/en/">
+    <link rel="alternate" hreflang="cn-cn" href="https://insydia.com/cn/">
+    <meta name='yandex-verification' content='5e44980913d08dad' />
+    <meta name="google-site-verification" content="y6Xw9KEH5CLn8NGw7Q2xWyettWl8PNt06hQVCjG2EBs" />
+    <title>{% blocktrans %}{{ title }}Insydia{% endblocktrans %}</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'static/css/jquery.loading-indicator.css' %}">
+    <link rel="stylesheet" href="{% static 'static/css/alertify.default.css' %}">
+    <link rel="stylesheet" href="{% static 'static/css/alertify.core.css' %}">
+    <link rel="stylesheet" href="{% static 'static/css/alertify.bootstrap.css' %}">
+    <link rel="shortcut icon" href="{% static 'static/img/favicons/favicon.ico' %}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="">
+    <link rel="apple-touch-icon" sizes="76x76" href="">
+    <link rel="apple-touch-icon" sizes="120x120" href="">
+    <link rel="apple-touch-icon" sizes="152x152" href="">
+    <link rel="icon" sizes="196x196" href="">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript">
+        $(document).ready(function(){var $sb = $('.search-bar');$sb.focusout(function(){$sb.fadeOut("fast");})})
+        function validate_form ( ) {valid = true;if ( document.search_form.q.value == "" ) {alert ( "Please, complete the field." );valid = false;}return valid;}
+        function SearchClick(flag){if(flag === 0) {$('.search-bar').fadeIn("fast");$('#textplace-search').focus();} else{$('.search-bar-wide').fadeIn("fast");$('#textplace-search').focus();}}
+    </script>
+    <script>
+        jQuery(function($){
+            $(document).mouseup(function (e){
+                var div = $(".preview-rss-news-content");
+                if (!div.is(e.target)
+                    && div.has(e.target).length === 0) {
+                    $(".preview-rss-news").hide();
+                    $("html").css("overflowY", "auto");
+                }
+            });
+        });
+        $(document).ready(function(){
+            $(this).keydown(function(eventObject){
+                if (eventObject.which == 27)
+                    $('.preview-rss-news').hide();
+                    hideLeftBar();
+                    $("html").css("overflowY", "auto");
+            });
+        });
+        function add_like_rss(rss_id) {
+            $.ajax({
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                type: "POST",
+                url: "/news/add_like_rss/r="+rss_id,
+                success: function(){
+                    $(".rss-item-save").html(
+                            "<img onclick='add_like_rss("+$.parseJSON(i).id+")' class='rss-save' src='{% static 'static/img/plus_blue.png' %}' width='30px' alt='Save' />"
+                    );
+                }
+            });
+        }
+    </script>
+    <style>
+        body{background-color: #F1F3CE;}
+        #wrapper-new{background-color: #F1F3CE;}
+        #ajax-preloader {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            opacity: 0.5;
+            background-color: #FFFFFF;
+        }
+        #ajax-preloader #ajax-preloader-content{
+            margin: 21% auto 0 42%;
+            width:  30%;
+            height: 70%;
+            padding: 10px;
+        }
+        .preview-rss-news {
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            overflow: auto;
+            position: fixed;
+            top: 0;
+        }
+        .preview-rss-news .preview-rss-news-content{
+            font-family: Georgia, Times, "Times New Roman", serif;
+            margin: 0 auto 0 22%;
+            width:  60%;
+{#            height: auto;#}
+{#            min-height:100%;#}
+            padding: 0;
+            background-color: ivory;
+            box-shadow: 0 0 10px #000;
+        }
+        .li-cat{float: left;margin-left: 1%;}
+        .navigation-profile:hover .fa-user{color: yellow;}
+        .rss-body img {
+            margin-left: auto;
+            margin-right: auto;
+            height: 100%;
+            width: inherit;
+            max-width: 100%;
+            max-height: 300px;
+            display: block;
+        }
+        .rss-body iframe{
+            margin-left: auto;
+            margin-right: auto;
+            height: 100%;
+            width: inherit;
+            max-width: 100%;
+            max-height: 315px;
+            display: block;
+        }
+        #rss-share-list li{float:left;}
+        #rss-properties-list li{float: left;}
+        .rss-share-item{
+            width: 50px;
+            margin-bottom:0;
+            margin-left: 0;
+            text-align: center;
+{#            border: solid 1px red;#}
+        }
+        #rss-properties-list{
+            right:0;
+{#            width: 12em;#}
+{#            margin-right: -1%;#}
+{#            float: right;#}
+            list-style-type: none;
+        }
+        #rss-properties-list li{
+            margin-left: 0.5em;
+        }
+        #wrapper-new{min-height: 100%;}
+        #news-block{
+            height: 100%;
+            width: 100%;
+        }
+        .user-image input[type='text']{width: 80%;}
+        .total-body{padding-top: 2%;}
+        .total-body-closer{
+            z-index:100003;
+            position: fixed;
+            margin-left: 75.5%;
+            font-size: 2em;
+            background-color: rgba(165, 165, 165, 0.5);
+            top: 5%;
+        }
+        .close-rss-preview{margin-left: auto;margin-right: auto;}
+        .total-body-closer a{color: #F62A00}
+        .total-body-closer a:hover{color: #1E656D;cursor: pointer;}
+        .rss-preview-title{margin-top: -5%;margin-left: 2%;}
+        .rss-preview-author{float: left;}
+        .rss-preview-date-published{float: left;}
+        .rss-preview-parent-link{float: right;width: 6em;}
+        .rss-preview-shares{
+{#            background-color: rgb(45, 62, 80);#}
+            height: 2.5em;
+        }
+        #rss-share-list{
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 0;
+            padding-right: 0;
+            width: 202px;
+{#            border: solid 1px blue;#}
+            list-style-type: none;
+        }
+        #rss-share-list li{margin-right: 0;}
+        #rss-share-list a{color: white;}
+        #rss-share-list a:active{color: #333333;}
+        .rss-preview-body{
+            width: 100%;
+            padding: 0 5%;
+            margin-top: 2%;
+            font-family: Georgia,Times,sans-serif;
+            font-size: 17px;
+        }
+        .rss-preview-body h3{color: black}
+        .rss-preview-body img{
+            max-height: 800px;
+            max-width: 100%;
+            height: inherit;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        .rss-preview-body > * {max-width: 100%;}
+        #live{display: none;}
+        ul{list-style-type: none;}
+        .other{
+            min-height: 100%;
+            height: 100%;
+            background-color: #F1F3CE;
+        }
+        h2{color: black;}
+        a:hover{text-decoration: none;color: #F62A00;}
+        .social-rss:hover{cursor: pointer;color: #F62A00;}
+
+
+
+
+        #current-rss-preview {
+            background: white;
+            width: 50%;
+            height: 90%;
+            overflow-y: scroll;
+        -webkit-transform: scale(0.8);
+           -moz-transform: scale(0.8);
+            -ms-transform: scale(0.8);
+                transform: scale(0.8);
+        }
+        .popup_visible #current-rss-preview {
+            -webkit-transform: scale(1);
+               -moz-transform: scale(1);
+                -ms-transform: scale(1);
+                    transform: scale(1);
+        }
+        .cur-pw-item > li{width:100%; height:inherit; margin-bottom: 15px;}
+        .cur-pw-description > .rss-title-preview-new{font-size:26px;}
+        .cur-pw-td > .rss-author-new{color: #F62A00;}
+        .cur-pw-ar-cover{float: left; width: 30%;}
+        .cur-pw-ar-content{float: right; width: 70%;}
+        .cont-cover{width:100%; height: 100px; float: left;}
+        .cont-cover:hover{cursor:pointer;}
+        .cur-pw-td{color: white;}
+        .cur-pw-right{
+            top: 80%;
+            color: white;
+            position: absolute;
+            text-align: center;
+        }
+        .cur-pw-left{
+            width: 100%;
+            padding: 0 5%;
+            margin-top: 2%;
+            font-family: Georgia,Times,sans-serif;
+            font-size: 17px;
+        }
+        .cur-pw-left img{
+            max-height: 800px;
+            max-width: 100%;
+            height: inherit;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        .cur-pw-top{position: relative;}
+        .cur-pw-cover{
+            width:100%;
+            height: 150px;
+        }
+        .fl-btn{width:100%;}
+        .cur-pw-background{width: 100%; height: 200px; background: url('{% static 'static/img/rss/top-back-12jpg' %}') no-repeat center; background-size: cover;}
+        .cur-pw-btn-fl{position: absolute;bottom:0;right:0;}
+        .cur-pw-btn-bck{position: absolute;bottom:0;left:0;}
+
+
+
+
+
+    </style>
+    <script src="{% static 'static/js/jquery.js' %}"></script>
+    <script src="{% static 'static/js/jquery.min.js' %}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+{% if here_private %}
+<body style="background: white;">
+{% else %}
+<body>
+{% endif %}
+    <header>
+        <nav class="navbar navbar-default" role="navigation" style="top: 0; z-index: 999;">
+            <div class="container-fluid container" id="navfluid">
+                <div class="navbar-header pull-left">
+                  <a class="navbar-brand" href="/">INSYDIA</a>
+                </div>
+                <div class="navbar-header ">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar">
+                        <span class="sr-only">{% trans 'Toggle navigation' %}</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="navigationbar">
+                  <ul class="nav navbar-nav">
+                      {% if here_tech == True %}
+                        <li><a class="active" href="/news/technology/">{% trans 'TECHNOLOGY' %}</a></li>
+                      {% else %}
+                          <li><a href="/news/technology/">{% trans 'TECHNOLOGY' %}</a></li>
+                      {% endif %}
+                      {% if here_ent == True %}
+                        <li><a class="active" href="/news/entertainment/">{% trans 'ENTERTAINMENT' %}</a></li>
+                      {% else %}
+                        <li><a href="/news/entertainment/">{% trans 'ENTERTAINMENT' %}</a></li>
+                      {% endif %}
+                      {% if here_auto == True %}
+                          <li><a class="active" href="/news/auto/">{% trans 'AUTO' %}</a></li>
+                      {% else %}
+                          <li><a href="/news/auto/">{% trans 'AUTO' %}</a></li>
+                      {% endif %}
+                      {% if here_space == True %}
+                            <li><a class="active" href="/news/space/">{% trans 'SPACE' %}</a></li>
+                      {% else %}
+                          <li><a href="/news/space/">{% trans 'SPACE' %}</a></li>
+                      {% endif %}
+                      {% if here_bio == True %}
+                            <li><a class="active" href="/news/bio/">{% trans 'BIO' %}</a></li>
+                      {% else %}
+                          <li><a href="/news/bio/">{% trans 'BIO' %}</a></li>
+                      {% endif %}
+                      {% if here_companies == True %}
+                          <li><a class="active" href="/news/companies/">{% trans 'COMPANIES' %}</a></li>
+                      {% else %}
+                          <li><a href="/news/companies/">{% trans 'COMPANIES' %}</a></li>
+                      {% endif %}
+                      {% if here_review == True %}
+                          <li><a class="active" href="/news/reviews/">{% trans 'REVIEWS' %}</a></li>
+                      {% else %}
+                          <li><a href="/news/reviews/">{% trans 'REVIEWS' %}</a></li>
+                      {% endif %}
+                      {% if here_private == True %}
+                          <li><a class="active" href="/news/usernews/">{% trans 'PRIVATE' %}</a></li>
+                      {% else %}
+                          <li><a href="/news/usernews/">{% trans 'PRIVATE' %}</a></li>
+                      {% endif %}
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a><span id="nav-search-btn" class="glyphicon glyphicon-search"></span></a></li>
+                      {% if username.username %}
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                              {{ username.username }}<span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a href="/profile/">{% trans 'Profile' %}</a></li>
+                            <li><a href="/news/usernews/">{% trans 'Private news' %}</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/auth/logout/">{% trans 'Sign out' %}</a></li>
+                          </ul>
+                        </li>
+                      {% else %}
+                          <li><a href="/auth/login/">{% trans 'Sign in' %}</a></li>
+                      {% endif %}
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div id="nav-search-bar"
+         hidden
+         style="position: absolute; z-index: 999; background: rgba(0, 0, 0, 0.7); width: 100%; height: 60px;">
+        <ul class="nav navbar-nav" style="width: 80%; margin-left: 10%; height: 60px; position: relative">
+            <li style="float: left; width: 10%; font-size: 1.5em; height: 60px;"><a><div class="" style="vertical-align: baseline;"><span class="glyphicon glyphicon-search" style="color: #F62A00; position: relative;">{% trans 'Search' %}</span></div></a></li>
+            <li style="width: 85%; margin-left:5%; float: right;">
+                <form class="navbar-form navbar-left"
+                      action="/search/"
+                      style="width: 100%;"
+                      method="get"
+                      name="search_form"
+                      onsubmit="return validate_form();"
+                      role="search">
+                    <div class="form-field" style="width: 100%;">
+                        <div class="form-group" style="width: 100%;">
+                            <input placeholder="{% trans 'What are you looking for?' %}"
+                                   type="search"
+                                   name="q"
+                                   autocomplete="off"
+                                   id="search-field"
+                                   class=""
+                                   style="float: left; background: none; border: none; border-bottom: solid 1px lightgrey;
+                                   outline: none; width:80%; font-size: 2em; color: white;">
+                            <button type="submit"
+                                    class="btn"
+                                    style="color:white; background: #F62A00; float: right; margin-right: 10%; margin-top: 1%;">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </li>
+        </ul>
+    </div>
+    </header>
+    <main id="total-wrapper" class="">
+        <div class="overlay"></div>
+        {% if left_bar == True %}
+            <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                <ul class="nav sidebar-nav">
+                    <li class="sidebar-brand"> <a href="/"> INSYDIA </a> </li>
+                    <li>
+                        <a href="/">
+                            <i class="fa fa-fw fa-home"></i>
+                            {% trans 'HOME' %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/news/technology/">
+                            <i class="fa fa-fw fa-folder"></i>
+                            {% trans 'TECHNOLOGY' %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/news/entertainment/">
+                            <i class="fa fa-fw fa-file-o"></i>
+                            {% trans 'ENTERTAINMENT' %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/news/auto/">
+                            <i class="fa fa-fw fa-cog"></i>
+                            {% trans 'AUTO' %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/news/space/">
+                            <i class="fa fa-fw fa-cog"></i>
+                            {% trans 'SPACE' %}
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-fw fa-plus"></i>
+                            {% trans 'REVIEWS' %}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header">
+                                {% trans 'DROPDOWN HEADING' %}
+                            </li>
+                            <li>
+                                <a href="#">
+                                    {% trans 'AUTO' %}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    {% trans 'PHONES' %}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    {% trans 'PC' %}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    {% trans 'SPACE SHUTTLES' %}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    {% trans 'OTHER' %}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% if username.username %}
+                        <li>
+                            <a href="/profile/">
+                                {% trans 'PROFILE' %}
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <li>
+                        <a href="/about">
+                            <i class="fa fa-fw fa-bank"></i>
+                            {% trans 'ABOUT US' %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about/contacts/">
+                            <i class="fa fa-fw fa-dropbox"></i>
+                            {% trans 'CONTACT US' %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about/advertisers/">
+                            <i class="fa fa-fw fa-twitter"></i>
+                            {% trans 'ADVERTISER' %}
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+                <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                    <span class="hamb-top"></span>
+                    <span class="hamb-middle"></span>
+                    <span class="hamb-bottom"></span>
+                </button>
+        {% else %}
+            <div id="wrapper-main-content" class="row">
+        {% endif %}
+            <div id="wrapper-new" class="">
+                <div id="page-wrapper">
+                    <div class="row row-centered">
+                    {% if here_private %}
+                        <div class="other" style="background: white;">
+                    {% else %}
+                        <div class="other">
+                    {% endif %}
+                            <div id="flex-block">
+                                {% block current_news %}{% endblock %}
+                                {% if news_block == True %}
+                                    {% include 'news_block_new.html' %}
+                                {% endif %}
+                                {% block user_profile %}{% endblock %}
+                                    {% block moderator_page %}{% endblock %}
+                                {% block favourite %}{% endblock %}
+                                {% block notify %}{% endblock %}
+                                {% block current_category %}{% endblock %}
+                                <div class="news-block" id="news-block">
+{#                                    {% block latest %}{% endblock %}#}
+                                    {% block technology %}{% endblock %}
+                                    {% block entertainment %}{% endblock %}
+                                    {% block auto %}{% endblock %}
+                                    {% block space %}{% endblock %}
+                                    {% block bio %}{% endblock %}
+                                    {% block companies %}{% endblock %}
+                                        {% block current_company %}{% endblock %}
+                                    {% block reviews %}{% endblock %}
+                                    {% block user_news %}{% endblock %}
+                                        {% block manager %}{% endblock %}
+                                        {% block browse_portals %}{% endblock %}
+                                            {% block browse_portals_tech %}{% endblock %}
+                                        {% block catalog %}{% endblock %}
+                                    {% block search %}{% endblock %}
+                                    {% block page_not_found %}{% endblock %}
+                                    {% block access_denied %}{% endblock %}
+                                    {% block about %}{% endblock %}
+                                        {% block contacts %}{% endblock %}
+                                        {% block advertisers %}{% endblock %}
+                                    {% block api %}{% endblock %}
+                                    {% block feed %}{% endblock %}
+                                </div>
+                            </div>
+                            <a href="#0" class="cd-top">Top</a>
+                        </div>
+                        {% block settings %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="footer-lol">
+        {% include 'footer.html' %}
+    </div>
+
+
+
+
+
+    <article id="current-rss-preview" class="fadeandscale" hidden>
+        <div class="preview-content"></div>
+    </article>
+
+
+    <div id="close-preview" class="total-body-closer fadeandscale" hidden>
+        <ul id="" data-rss-id="" class="text-center" style="padding-left:10px; padding-right:10px;width:50px;">
+            <li class="social-rss">
+                <span class="glyphicon glyphicon-remove" style="font-size: 0.75em;color:white;"></span>
+            </li>
+            <li class="rss-item-save social-rss"
+                onclick="setRssFavourite($('.cur-pw-top').attr('data-rss-id'));">
+                <span class="glyphicon glyphicon-plus text-muted"
+                      style="font-size: 0.75em;color:white;"></span>
+            </li>
+            <li class="rss-item-send social-rss" style="">
+                <a href="mailto:">
+                    <span class="glyphicon glyphicon-send text-muted"
+                    style="font-size: 0.75em;color:white;"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div id="preview-rss-news"
+         hidden
+         style="z-index: 999;"
+         class="preview-rss-news"
+         data-nuid=""
+         onkeydown="if(event.keyCode == 27){RssPreviewPopUpHide();}">
+        <div class="preview-rss-news-content">
+            <div class="total-body">
+                <div class="total-body-closer" onclick="RssPreviewPopUpHide();">
+                    <a title="{% trans 'Close' %}"><span class="close-rss-preview glyphicon glyphicon-remove"></span></a>
+                </div>
+                <div class="rss-preview-title"></div>
+                <div class="" style="height: 10px;">
+                    <div class="rss-preview-author"></div>
+                    <div class="rss-preview-date-published"></div>
+                    <div class="rss-preview-parent-link"></div>
+                </div>
+                <hr width="100%">
+                <div class="rss-preview-shares" data-news-link="">
+                    <ul id="rss-share-list">
+                        <li class="rss-share-item" style="margin-right: -0.5em;">
+                            <a data-target-link="" class="rss-share-facebook" onclick="window.open(
+                                'http://facebook.com/sharer/sharer.php?u='+$(this).attr('data-target-link'),
+                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
+                                <span class="fa fa-facebook social-rss" style="font-size: 2.5em; "></span>
+                            </a>
+                        </li>
+                        <li class="rss-share-item">
+                            <a data-target-link="" class="rss-share-vk" onclick="window.open('https://vk.com='+$(this).attr('data-target-link'),
+                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
+                                <span class="fa fa-vk social-rss" style="font-size: 2.5em;"></span>
+                            </a>
+                        </li>
+                        <li class="rss-share-item">
+                            <a data-target-link="" class="rss-share-twitter"
+                            onclick="window.open('https://twitter.com/intent/tweet?original_referer='+'https://insydia.com/'+'&ref_src=twsrc%5Etfw&%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+$(this).attr('data-target-link')+'&via=InsydiaNews',
+                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
+                                <span class="fa fa-twitter social-rss" style="font-size: 2.5em;"></span>
+                            </a>
+                        </li>
+                        <li class="rss-share-item">
+                            <a data-target-link="" class="rss-share-linkedin" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+$(this).attr('data-target-link')+'&title='+'TITLE'+'&summary='+'summary',
+                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
+                                <span class="fa fa-linkedin social-rss" style="font-size: 2.5em;"></span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul id="rss-properties-list" data-rss-id="">
+                        <li class="rss-item-save glyphicon glyphicon-plus text-muted social-rss"
+                            onclick="setRssFavourite($('#rss-properties-list').attr('data-rss-id'));"
+                            style="font-size: 2em;"></li>
+                        <a href="mailto:">
+                            <li class="rss-item-send glyphicon glyphicon-send text-muted social-rss"  style="font-size: 2em;"></li>
+                        </a>
+                    </ul>
+                </div>
+                <div class="rss-preview-body"></div>
+
+                <div class="google-news-rss-bottom" style="margin-left:auto; margin-right:auto; bottom: 5em;  width: 468px; height: 60px; background-color: #00fff9"></div>
+
+            </div>
+        </div>
+    </div>
+    <div id="ajax-preloader" hidden>
+        <div id="ajax-preloader-content">
+            <img src='{% static 'static/img/load.GIF' %}' alt='{% trans "Loading..." %}' />
+        </div>
+    </div>
+
+    <script src="{% static 'static/js/jquery-ui.js' %}"></script>
+    <script type="text/javascript" src="{% static 'static/js/jquery.cookie.js' %}"></script>
+    <script src="{% static 'static/js/endless-pagination.js' %}"></script>
+    <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+    <script src="{% static 'static/js/alertify.js' %}"></script>
+    <script src="{% static 'static/js/alertify.min.js' %}"></script>
+    <script src="{% static 'static/js/jquery.popupoverlay.js' %}"></script>
+    <script>
+        function setRssFavourite(news_id){
+            $.ajax({
+                type: "POST",
+                url: "/news/add_like_rss/r="+news_id,
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function(){
+                    alertify.success("{% trans 'New favourite article' %}");
+                }
+            });
+            alertify.success("{% trans 'New favourite article' %}");
+        }
+    </script>
+    <script>
+        $(document).ready(function(event){
+            RssPreviewPopUpHide();
+            $("#current-rss-preview").keyup(function(e){
+                if(e.keyCode == 27) {
+                    $('#close-preview').hide();
+                }
+            });
+        });
+        $(document).on('click', function(event) {
+              if (!$(event.target).closest('#current-rss-preview').length && !$(event.target).closest('#close-preview').length) {
+                // Hide the menus.
+                  $('#close-preview').hide();
+              }
+            });
+        function RssPreviewPopUpShow(i){
+             $.ajax({
+                 type: "POST",
+                 url: "/news/scar="+i,
+                 data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                 success: function(){
+                    $('#rss-title-'+i).addClass('rss-title-read');
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/news/gcr="+i+"/",
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function(data) {
+                    $('#current-rss-preview').popup({
+                        autoopen: true,
+                        pagecontainer: '.container',
+                        transition: 'all 0.3s'
+                    });
+                    $('#close-preview').fadeIn();
+                    $('.preview-content').html(data.string);
+
+
+{#                    $("html").css("overflowY", "hidden");#}
+                    $parsedData = data.data;
+{#                    $(".rss-preview-title").html("<h2 style='color: #F62A00;'>" + $parsedData.title + "</h2>");#}
+{#                    if ($parsedData.author.length !== 0) {#}
+{#                        $(".rss-preview-author").html("Author: " + "<span class='rss-author-name' style='color: #F62A00'>" + $parsedData.author + "</span>" + "&nbsp;|&nbsp;");#}
+{#                    }#}
+{#                    $('#preview-rss-news').attr('data-nuid', $parsedData.nuid);#}
+{#                    $('#rss-properties-list').attr('data-rss-id', $parsedData.id);#}
+{#                    $('.rss-share-facebook').attr('data-target-link', $parsedData.link);#}
+{#                    $('.rss-share-vk').attr('data-target-link', $parsedData.link);#}
+{#                    $('.rss-share-twitter').attr('data-target-link', $parsedData.link);#}
+{#                    $('.rss-share-linkedin').attr('data-target-link', $parsedData.link);#}
+{#                    $(".rss-preview-parent-link").html("<a target='_blank' href='" + $parsedData.link + "'>To&nbsp;original<span class='glyphicon glyphicon-chevron-right text-muted'></span></a>");#}
+                    {#                    var d = new Date($parsedData.date_posted);#}
+{#                    $(".rss-preview-date-published").html("Published: " + $parsedData.date);//"&nbsp;|&nbsp;"+ d.toDateString().substring(4)+"&nbsp;"+d.toTimeString().substring(0,5));#}
+                    if ($parsedData.content.length === 0) {
+                        $(".rss-preview-body").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "' target='_blank'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+                    else {
+                        $(".rss-preview-body").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "' target='_blank'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+{#                    $.ajax({#}
+{#                        type: "POST",#}
+{#                        url: "/news/cua="+$parsedData.portal,#}
+{#                        data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},#}
+{#                        success: function(data){#}
+{#                            $('#cprs-count-'+$parsedData.portal).html(#}
+{#                                    data.data#}
+{#                            );#}
+{#                        }#}
+{#                    });#}
+{#                    $(".preview-rss-news").show();#}
+                }
+            });
+        }
+        function RssPreviewPopUpHide(){
+            $(".preview-rss-news").hide();
+            $("html").css("overflowY", "auto");
+        }
+
+    </script>
+    <div id="live"></div>
+    <script>
+        $(document).ready(function () {
+          var trigger = $('.hamburger'),
+              overlay = $('.overlay'),
+             isClosed = false;
+
+            trigger.click(function () {
+              hamburger_cross();
+            });
+
+            function hamburger_cross() {
+
+              if (isClosed == true) {
+                overlay.hide();
+                trigger.removeClass('is-open');
+                trigger.addClass('is-closed');
+                isClosed = false;
+              } else {
+                overlay.show();
+                trigger.removeClass('is-closed');
+                trigger.addClass('is-open');
+                isClosed = true;
+              }
+          }
+          $('[data-toggle="offcanvas"]').click(function () {
+                $('#total-wrapper').toggleClass('toggled');
+          });
+        });
+    </script>
+    <script>
+        $('.tabs-list a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show')
+        });
+        $(document).ready(function(){
+                $(this).keydown(function(eventObject){
+                    if (eventObject.which == 27)
+                        $('.preview-rss-news').hide();
+                        $("html").css("overflowY", "auto");
+                });
+            });
+    </script>
+    <script src="{% static 'static/js/masonry.js' %}" ></script>
+    <script src="{% static 'static/js/masonry.min.js' %}" ></script>
+    <script src="{% static 'static/js/jquery.loading-indicator.js' %}"></script>
+    <script src="{% static 'static/js/jquery.loading-indicator.min.js' %}"></script>
+    <script>
+        $('.any40items').masonry({
+            itemSelector: '.rss-rss',
+        });
+        $('#middle-news-special').masonry({
+            itemSelector: '.sect-2'
+        });
+        $('.recently-news-other').masonry({
+            itemSelector: '.special-pos'
+        });
+        $(window).ready(function(){
+            $('#interests').carousel({
+                interval: 3000
+            });
+        });
+        $("#submit").click(function() {
+            var inputValue = $("#company-search").val().replace(/\./g, "").toLowerCase();
+            $(".current_company").each(function () {
+                if ($(this).attr("id") == inputValue) {
+                    $('html,body').animate({
+                        scrollTop: $(this).offset().top
+                    });
+                }
+            });
+        });
+        $("#company-search").keyup(function(e){
+            if(e.keyCode == 13) {
+                var inputValue = $("#company-search").val().replace(/\./g, "").toLowerCase();
+                $(".current_company").each(function () {
+                    if ($(this).attr("id") == inputValue) {
+                        $('html,body').animate({
+                            scrollTop: $(this).offset().top
+                        });
+                    }
+                });
+            }
+        });
+        $(document).ready(function(){
+            var offset = 100,
+                offset_opacity = 1200,
+                scroll_top_duration = 700,
+                $back_to_top = $('.cd-top');
+
+            $(window).scroll(function(){
+                ( $(this).scrollTop() > offset ) ? $back_to_top.addClass('cd-is-visible') : $back_to_top.removeClass('cd-is-visible cd-fade-out');
+                if( $(this).scrollTop() > offset_opacity ) {
+                    $back_to_top.addClass('cd-fade-out');
+                }
+            });
+            $back_to_top.on('click', function(event){
+                event.preventDefault();
+                $('body,html').animate({
+                    scrollTop: 0
+                    }, scroll_top_duration
+                );
+            });
+
+        });
+        function getCompanyID(name){
+            $.ajax({
+                type: "POST",
+                url: "/news/comp/gid="+name,
+                data:{
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(data){
+                    return data.data.id
+                }
+            })
+        }
+    $("#company-search").autocomplete({
+        source: function( request, response ) {
+        $.ajax({
+          url: "/news/companies/cs="+$('#company-search').val().replace(/\./g, ""),
+          dataType: "json",
+          data: {
+              'csrfmiddlewaretoken': '{{ csrf_token }}',
+              q: request.term
+          },
+          success: function( data ) {
+              response($.map(data, function(item){
+                  return{
+                      id: item.id,
+                      label: item.name,
+                      logo: item.logo,
+                      verbose: item.verbose
+                  };
+              }));
+          }
+        });
+      },
+        minLength: 1,
+        maxLength: 10,
+        select:function(event, ui){
+            var targetOffset = $("#"+ui.item.id).offset().top;
+            $('html, body').animate({
+                scrollTop: targetOffset
+            });
+            $('#'+ ui.item.id).animate({backgroundColor: "#00C0FF"}, 2000).animate({backgroundColor: "transparent" }, 2000);
+        }
+    }).data("ui-autocomplete")._renderItem = function(ul, item){
+        var inner_html = '<a><div><img src="{% static "static/img/companies_logo/" %}'+item.verbose+'.png" width="20" />'+item.label+'</div></a>';
+            return $("<li></li>")
+                    .data("item.autocomplete", item)
+                    .append(inner_html)
+                    .appendTo(ul);
+        };
+    </script>
+    <script>
+        String.prototype.replaceAt = function(index, char) {
+            return this.substr(0, index) + "<span style='font-weight:bold;color:#F62A00;'>" + char + "</span>";
+        };
+        $.ui.autocomplete.prototype._renderItem = function(ul, item) {
+            this.term = this.term.toLowerCase();
+            var resultStr = item.label.toLowerCase();
+            var t = "";
+            while (resultStr.indexOf(this.term) != -1) {
+                var index = resultStr.indexOf(this.term);
+                t = t + item.label.replaceAt(index, item.label.slice(index, index + this.term.length));
+                resultStr = resultStr.substr(index + this.term.length);
+                item.label = item.label.substr(index + this.term.length);
+            }
+            return $("<li></li>").data("item.autocomplete", item).append("<a>" + t + item.label + "</a>").appendTo(ul);
+        };
+    </script>
+    <script>
+        $('#rss-company-form').submit(function(){location.href='/rss/news&channel=company&name='+$('#company-name');});
+        $('#company-name').autocomplete({
+            source: function(request, response){
+                $.ajax({
+                    url: "/news/companies/cs="+$('#company-name').val().replace(/\./g, ""),
+                    dataType: "json",
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        q: request.term
+                    },
+                    success: function( data ) {
+                        response($.map(data, function(item){
+                            return{
+                                id: item.id,
+                                label: item.name,
+                                value: item.name,
+                                verbose: item.verbose
+                            };
+                        }));
+                    }
+                });
+            },
+            minLength: 1,
+            maxLength: 10,
+            select: function(event, ui){
+                location.href='/rss/news&channel=company&name='+ui.item.verbose;
+            },
+            open: function(){
+                $(this).removeClass('ui-corner-all').addClass('ui-corner-top');
+            },
+            close: function(){
+                $(this).removeClass('ui-corner-top').addClass('ui-corner-all');
+            }
+        }).data("autocomplete")._renderItem = function(ul, item){
+            return $("<li></li>").data("item.autocomplete", item).append("<a>"+item.label+"<br>"+item.name+"</a>").appendTo(ul);
+        };
+    </script>
+    <script>
+        document.cookie = "lang=eng";
+        $.ajax({
+            type: "POST",
+            url: "http://ip-api.com/json",
+            dataType: "json",
+            success:function(data){
+                if(data.country == "Russia"){
+                }
+                else{
+                }
+            }
+        });
+        function getCookie(name) {
+            var matches = document.cookie.match(new RegExp(
+                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+    </script>
+    <script>
+        $(function() {
+        $(".tabs-to-dropdown").each(function() {
+            var resizeTimeout   = 20;
+            var tabBar          = $(this).children(".tab-bar");
+            var tabList         = tabBar.children("ul");
+            var tabListItem     = tabList.children("li");
+
+            var dropdown        = $(this).children(".dropdown");
+            var dropdownToggle  = dropdown.children(".dropdown-toggle");
+            var dropdownList    = dropdown.children("ul");
+
+            var clickHandler = ("ontouchstart" in document.documentElement ? "touchstart": "click");
+
+            var tabsToDropdown  = function() {
+                var tabBarWidth = tabBar.width();
+                tabListItem.each(function(index) {
+                    var dropdownListItem  = dropdownList.children("li").eq(index);
+                    var tabListItemOffset = $(this).position().left;// + $(this).outerWidth();
+
+                    if (tabListItemOffset >= tabBarWidth) {
+                        $(this).addClass("ttd-hide"); dropdownListItem.addClass("ttd-show");
+                    } else {
+                        $(this).removeClass("ttd-hide"); dropdownListItem.removeClass("ttd-show");
+                    }
+                });
+
+                tabList.children(".ttd-hide").length > 0 ? dropdown.addClass("ttd-show"): dropdown.removeClass("ttd-show");
+            };
+
+            tabListItem.clone().appendTo(dropdownList);
+
+
+
+            tabsToDropdown();
+            $(window).bind("resize", function(){
+                if(typeof sizeWait != "undefined") { clearTimeout(sizeWait); }
+                sizeWait = setTimeout(function(){
+                    tabsToDropdown();
+                },resizeTimeout);
+            });
+
+            dropdown.bind(clickHandler, function(e) { e.stopPropagation(); });
+            $(document).bind(clickHandler, function() { dropdown.removeClass("ttd-open"); });
+            dropdownToggle.bind(clickHandler, function(e) { dropdown.toggleClass("ttd-open"); e.stopPropagation(); });
+        });
+    });
+
+    </script>
+    <script>
+        $( document ).ready(function() {
+            scaleVideoContainer();
+            initBannerVideoSize('.video-container video');
+            $(window).on('resize', function() {
+                scaleVideoContainer();
+                scaleBannerVideoSize('.video-container video');
+            });
+        });
+        function scaleVideoContainer() {
+
+            var height = $(window).height();
+            var unitHeight = parseInt(height) + 'px';
+            $('.homepage-hero-module-top').css('height',unitHeight);
+        }
+        function initBannerVideoSize(element){
+            $(element).each(function(){
+                $(this).data('height', $(this).height());
+                $(this).data('width', $(this).width());
+            });
+            scaleBannerVideoSize(element);
+        }
+        function scaleBannerVideoSize(element){
+            var windowWidth = $(window).width(),
+                windowHeight = $(window).height(),
+                videoWidth,
+                videoHeight;
+            console.log(windowHeight);
+            $(element).each(function(){
+                var videoAspectRatio = $(this).data('height')/$(this).data('width'),
+                    windowAspectRatio = windowHeight/windowWidth;
+                if (videoAspectRatio > windowAspectRatio) {
+                    videoWidth = windowWidth;
+                    videoHeight = videoWidth * videoAspectRatio;
+                    $(this).css({'top' : -(videoHeight - windowHeight) / 2 + 'px', 'margin-left' : 0});
+                } else {
+                    videoHeight = windowHeight;
+                    videoWidth = videoHeight / videoAspectRatio;
+                    $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
+                }
+                $(this).width(videoWidth).height(videoHeight);
+                $('.homepage-hero-module-top .video-container video').addClass('fadeIn animated');
+            });
+        }
+        $('#nav-search-btn').click(function(){
+            if($(this).hasClass('active-search-btn')){
+                $('#nav-search-bar').slideUp();
+                $('#nav-search-btn').removeClass('active-search-btn');
+            }
+            else{
+                $('#nav-search-btn').addClass('active-search-btn');
+                $('#nav-search-bar').slideDown();
+            }
+        });
+        $(document).ready(function(){
+            $(this).keydown(function(eventObject){
+                if(eventObject.which == 27){
+                    $("#nav-search-bar").slideUp();
+                }
+            })
+        });
+    </script>
+    <script>
+        function followCurrentRssPortal(uuid,pid, id){
+            $.ajax({
+                url: "/news/arp&uid="+uuid+"&pid="+pid+"/",
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(result){
+                    alertify.success("{% trans 'Subscription added' %}");
+
+
+
+                    if(result.exists == false) {
+                        $('.cur-pw-btn-fl').html('<button class="follow-btn btn btn-primary">Unfollow</button>');
+                        $("#left-bar-portal-" + id).slideToggle();
+                        var table = $('.user-rss');
+                        table.append(result.string.replace('{portal_id}', result.data.id)
+                                .replace('{portal_verbose}', result.data.verbose)
+                                .replace('{portal_name}', result.data.portal));
+
+                        var scrollTo = $('#left-bar-portal-'+result.data.id).offset().top;
+                        $('#left-control-portals').animate({scrollTop: scrollTo});
+                        $('#left-bar-portal-'+result.data.id).animate({backgroundColor: 'rgb(25, 180, 155)'}, 2000).animate({backgroundColor: '#1C1F22'}, 2000);
+                    }
+                    else{
+                        alert('Already exists');
+                    }
+                }
+            })
+        }
+function hideAllBlocks(){
+            $('#preview-portal').hide();
+            $('#search-feed-fail').hide();
+            $('#user-url-feed').hide();
+            $('#found-feed').hide();
+            $('#new-portal-feed-feed').hide();
+            $('#processing-portals').hide();
+        }
+        var $valRE = /(https?:\/\/)?(www\.)?([-а-яa-zёЁцушщхъфырэчстью0-9_\.]{2,}\.)(рф|[a-z]{2,6})((\/[-а-яёЁцушщхъфырэчстьюa-z0-9_]{1,})?\/?([a-z0-9_-]{2,}\.[a-z]{2,6})?(\?[a-z0-9_]{2,}=[-0-9]{1,})?((\&[a-z0-9_]{2,}=[-0-9]{1,}){1,})?)/g;
+        $('#uap').keyup(function() {
+            if ($('#uap').val() == '') {
+                hideAllBlocks();
+            }
+            else {
+                if ($('#uap').val().match($valRE) && $('#uap').val() != '') {
+                    var homeLoader = $('body').loadingIndicator({
+                        useImage: false
+                    }).data("loadingIndicator");
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                            'url': $('#uap').val()
+                        },
+                        url: "/news/find_rss/",
+                        success: function (data) {
+                            if (data.response == true) {
+                                if (data.exists != true) {
+                                    // found announce
+                                    $.ajax({
+                                        type: "POST",
+                                        data: {
+                                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                            'url': $('#uap').val()
+                                        },
+                                        url: "/news/browser/sag/",
+                                        success: function(){
+                                            homeLoader.hide();
+                                            $.ajax({
+                                        url: "/news/preview_new/",
+                                        type: "POST",
+                                        data: {
+                                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                            'url': $('#uap').val()
+                                        },
+                                        success: function (data) {
+                                            // portal preview show
+                                            $('#fadeandscale').popup({
+                                                autoopen: true,
+                                                pagecontainer: '.container',
+                                                transition: 'all 0.3s'
+                                            });
+                                            $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
+                                        }
+                                    });
+                                        }
+{#                                    }).done(function(){#}
+{#                                        $.ajax({#}
+{#                                        url: "/news/preview_new/",#}
+{#                                        dataType: 'json',#}
+{#                                        data: {#}
+{#                                            'csrfmiddlewaretoken': '{{ csrf_token }}',#}
+{#                                            'url': $('#uap').val()#}
+{#                                        },#}
+{#                                        success: function (data) {#}
+{#                                            // portal preview show#}
+{#                                            $('#fadeandscale').popup({#}
+{#                                                autoopen: true,#}
+{#                                                pagecontainer: '.container',#}
+{#                                                transition: 'all 0.3s'#}
+{#                                            });#}
+{#                                            $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");#}
+{#                                        }#}
+{#                                    });#}
+                                    });
+                                }
+                                else {
+                                    $.ajax({
+                                        url: "/news/preview_new/",
+                                        dataType: 'json',
+                                        data: {
+                                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                            'url': $('#uap').val()
+                                        },
+                                        success: function (data) {
+                                            // portal preview show
+                                            $('#fadeandscale').popup({
+                                                autoopen: true,
+                                                pagecontainer: '.container',
+                                                transition: 'all 0.3s'
+                                            });
+                                            $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
+                                        }
+                                    });
+
+                                }
+                            }
+                            else {
+
+                            }
+                            // processing hide
+                        }
+                    });
+{#                    homeLoader.hide();#}
+                }
+                else {
+                    $('#search-feed-fail').hide();
+                    $('#found-feed').hide();
+                    $('#uap').autocomplete({
+                        source: function (request, response) {
+                            $.ajax({
+                                url: "/news/rss/get_matches=" + $('#uap').val().replace(/\./g, ""),
+                                dataType: "json",
+                                data: {
+                                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                    q: request.term
+                                },
+                                success: function (data) {
+                                    response($.map(data.slice(0, 5), function (item) {
+                                        return {
+                                            id: item.id,
+                                            label: item.name
+                                        };
+                                    }));
+                                }
+                            })
+                        },
+                        select: function (event, ui) {
+                            $.ajax({
+                                url: "/news/preview_portal=" + ui.item.id+"/",
+                                dataType: 'json',
+                                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                success: function (data) {
+                                    // portal preview show
+                                    $('#fadeandscale').popup({
+                                        autoopen: true,
+                                        pagecontainer: '.container',
+                                        transition: 'all 0.3s'
+                                    });
+                                    $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
+                                }
+                            })
+                        }
+{#                        open: function () {#}
+{#                            $(this).removeClass("ui-corner-top").addClass("ui-corner-all");#}
+{#                        },#}
+{#                        close: function () {#}
+{#                            $(this).removeClass("ui-corner-top").addClass("ui-corner-all");#}
+{#                        }#}
+                    })
+                }
+                return false;
+            }
+        });
+    </script>
+    <script src="{% static 'static/js/swipe.js' %}"></script>
+    <script>
+      $(document).ready(function() {
+             $("#myCarousel").swiperight(function() {
+                  $(this).carousel('prev');
+                    });
+               $("#myCarousel").swipeleft(function() {
+                  $(this).carousel('next');
+           });
+        });
+    </script>
+    <script>
+    $(document).ready(function() {
+
+                        //Enable swiping...
+                        $(".carousel-inner").swipe( {
+                            //Generic swipe handler for all directions
+                            swipeLeft:function(event, direction, distance, duration, fingerCount) {
+                                $(this).parent().carousel('prev');
+                            },
+                            swipeRight: function() {
+                                $(this).parent().carousel('next');
+                            },
+                            //Default is 75px, set to 0 for demo so any distance triggers swipe
+                            threshold:0
+                        });
+                    });
+    </script>
+</body>
+</html>

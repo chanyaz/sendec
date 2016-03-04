@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 from .models import News, NewsPortal, NewsCategory, Companies, RssNews, RssPortals, TopVideoContent, TopNews, \
-    NewsWatches, UserRssNewsReading, RSSChannels
+    NewsWatches, UserRssNewsReading, RSSChannels,RssNewsCovers
 from ckeditor.widgets import CKEditorWidget
 
 
@@ -40,7 +40,7 @@ class PostAdminTopNewsForm(forms.ModelForm):
 
 class PostAdminTopNews(admin.ModelAdmin):
     form = PostAdminTopNewsForm
-    prepopulated_fields = {'slug': ('top_news_title', )}
+    prepopulated_fields = {'slug': ('top_news_title_english', )}
 
 
 class RSSNewsAdminForm(forms.ModelForm):
@@ -68,8 +68,10 @@ class PostAdminForm(forms.ModelForm):
 
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
-    prepopulated_fields = {'slug': ('news_title', )}
-    list_display = ['news_title', 'news_category', 'news_portal_name', 'news_company_owner', 'news_author',  'news_likes', 'news_dislikes', 'news_post_date',]
+    prepopulated_fields = {'slug': ('news_title_english', )}
+    list_display = ['news_title_english', 'news_title_russian', 'news_title_chinese', 'news_category',
+                    'news_portal_name', 'news_company_owner', 'news_author',  'news_likes', 'news_dislikes',
+                    'news_post_date',]
     list_filter = ['news_category', 'news_portal_name', 'news_company_owner', 'news_author',]
 
 
@@ -118,3 +120,4 @@ admin.site.register(Companies, AompaniesEditorAdmin)
 admin.site.register(RssNews, RSSAdmin)
 admin.site.register(UserRssNewsReading)
 admin.site.register(RSSChannels, RssChannelAdmin)
+admin.site.register(RssNewsCovers)

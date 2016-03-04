@@ -1,4 +1,4 @@
-{% extends 'index_new.html' %}
+{% extends 'index_beta.html' %}
 {% load staticfiles %}
 {% load my %}
 {% load i18n %}
@@ -310,122 +310,16 @@
                     </div>
                 </form>
 
-{#                <hr width="100%">#}
-{#                <a href="/profile/cp/">{% trans 'change' %}</a>#}
-
-
-{#            #}
-{#                <h3>Settings</h3>#}
-{#                <div class="special-info">#}
-{#                    <div class="special-info-speech">#}
-{#                        {{ special_text }}#}
-{#                    </div>#}
-{#                    <form action="/profile/urp/"#}
-{#                          method="POST"#}
-{#                          class="form-horizontal"#}
-{#                          role="form">#}
-{#                        {% csrf_token %}#}
-{#                        <label class="col-md-2 control-label">{% trans 'Key word' %}:</label>#}
-{#                        <div class="col-md-8" id="keywords">#}
-{#                            <input name="keyword"#}
-    {#                               disabled#}
-{#                                   class="form-control"#}
-{#                                   type="text"#}
-{#                                   placeholder="{% trans 'Enter key word' %}"#}
-{#                                   spellcheck="true">#}
-{#                        </div>#}
-{#                        <div class="col-md-1">#}
-{#                            <input type="submit" value="{% trans 'Search' %}">#}
-{#                        </div>#}
-{#                    </form>#}
-{#                </div>#}
-{#                <form id="settings-form"#}
-{#                      action="/profile/add_portals"#}
-{#                      method="get"#}
-{#                      class="form-horizontal"#}
-{#                      role="form"#}
-{#                      onsubmit="selectAllOptions('source-to-show');">#}
-{#                    {% csrf_token %}#}
-{#                    <div id="chooser">#}
-{#                        <div class="other-side">#}
-{#                            <div class="choice-portal">#}
-{#                                {% trans 'Choose portals which news would you like to view.' %}#}
-{#                                <div class="form-to-choose">#}
-{#                                    <div class="chooser">#}
-{#                                        <label for="source-ignore">{% trans 'Choose' %}</label><br>#}
-{#                                        <select multiple#}
-{#                                                id="source-ignore"#}
-{#                                                size="10">#}
-{#                                            {% for portal in test %}#}
-{#                                                <option value="{{ portal.portal_id }}" id="id{{ portal.portal_id }}">{{ portal.portal_id|get_rss_portal_name }}</option>#}
-{#                                            {% endfor %}#}
-{#                                        </select>#}
-{#                                    </div>#}
-{#                                    <div class="buttons-to-choose">#}
-{#                                        <br><br><br>#}
-{#                                        <input type="button" id="moveto" name="moveto" value=">>" onclick="return exchangeSelectData('source-ignore');">#}
-{#                                        <br>#}
-{#                                        <input type="button" id="moveout" name="moveout" value="<<" onclick="return removeSelectedData();">#}
-{#                                    </div>#}
-{#                                    <div class="choosen">#}
-{#                                        <label for="source-to-show">{% trans 'Chosen' %}</label><br>#}
-{#                                        <select  multiple#}
-{#                                                 id="source-to-show"#}
-{#                                                 name="source-to-show"#}
-{#                                                 size="10">#}
-{#                                            {% for i in test_2 %}#}
-{#                                                <option value="{{ i.portal_id }}" id="id{{ i.portal_id }}">{{ i.portal_id|get_rss_portal_name }}</option>#}
-{#                                            {% endfor %}#}
-{#                                        </select>#}
-{#                                    </div>#}
-{#                                    <br>#}
-{#                                    <input class="btn btn-primary" type="submit" value="{% trans 'Save' %}">#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </form>#}
-{##}
-{#                <hr width="100%">#}
-{#                <div class="subscribe">#}
-{#                    <div class="subscribe-speech">#}
-{#                        {% blocktrans %}Would you like to get notification about latest news and reviews?#}
-{#                        To take it just write your email and we will send you a link to continue.{% endblocktrans %}#}
-{#                    </div>#}
-{#                    <form id="request-subscribe-form"#}
-{#                          action=""#}
-{#                          method="get"#}
-{#                          class="form-horizontal"#}
-{#                          role="form">#}
-{#                        {% csrf_token %}#}
-{#                        <div class="form-group">#}
-{#                            <label class="col-lg-1 control-label"></label>#}
-{#                            <div class="col-lg-9">#}
-{#                                <input disabled="disabled"#}
-{#                                       type="email"#}
-{#                                       class="form-control"#}
-{#                                       name="sub-email"#}
-{#                                       autocomplete="off"#}
-{#                                       id="sub-email"#}
-{#                                       placeholder="{% trans 'Enter your email' %}">#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="form-group">#}
-{#                            <div class=""#}
-{#                                 style="width: 5em; margin-top: -1.5%; margin-left: auto; margin-right: auto;">#}
-{#                                <input type="submit"#}
-{#                                       class="btn btn-primary"#}
-{#                                       value="{% trans 'Accept' %}">#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </form>#}
-{#                </div>#}
             </div>
         </div>
     </div>
 
-    <div class="profile-footer" style="margin-top: 100px;">
-        {% include 'footer.html' %}
-    </div>
+    {% if flavour != 'mobile' %}
+        <div class="profile-footer" style="margin-top: 100px;">
+            {% include 'footer.html' %}
+        </div>
+    {% else %}
+        {% include 'mobile/mobile_footer.html' %}
+    {% endif %}
 
 {% endblock %}

@@ -46,7 +46,15 @@
                      style="float: right;">
                     <div class="news-title-mobile" style="line-height: 0.9em; margin-top: 0;">
                         <a class="mobile-title" href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                            <b>{{ i.news_title|safe }}</b>
+                            <b>
+                                {% if lang == 'eng' %}
+                                    {{ i.news_title_english|safe }}
+                                {% elif lang == 'rus' %}
+                                    {{ i.news_title_russian|safe }}
+                                {% else %}
+                                    {{ i.news_title_chinese|safe }}
+                                {% endif %}
+                            </b>
                         </a>
                     </div>
                 </div>
@@ -60,8 +68,4 @@
         </div>
         <hr width="100%">
     {% endfor %}
-</div>
-
-<div id="top-mobile-ad">
-    1
 </div>

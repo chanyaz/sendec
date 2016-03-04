@@ -3,27 +3,43 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.context_processors import csrf
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, RequestContext
 from userprofile.models import UserLikesNews
 from news.models import RssNews
 from .models import RssSaveNews
+from news.views import get_user_rss_portals
 
 
 
 @login_required(login_url="/auth/login/")
-def render_liked_news_page(request):
+def render_liked_news_page(request, template="liked_news.html", fav_template="fav_template.html", extra_context=None):
     user_instance = User.objects.get(username=auth.get_user(request).username)
     args = {
         "username": User.objects.get(username=auth.get_user(request).username),
-        "favs": get_favourite_news(request, user_instance),
-        "fav_len": get_favourite_news(request, user_instance).count(),
+        "favs": list(get_favourite_news(request, user_instance)),
+        "fav_template": fav_template,
+        "user_rss_portals": get_user_rss_portals(request, user_id=user_instance.id),
+        "here_private": True,
     }
+    if request.is_ajax():
+        template = fav_template
     args.update(csrf(request))
-    return render_to_response("liked_news.html", args)
+    response = render_to_response(template, context=args, context_instance=RequestContext(request))
+    return response
 
 
 def get_favourite_news(request, user):
-    return RssSaveNews.objects.filter(user_id=user.id).values()
+    translation = {
+        "id": "id",
+        "title": "title",
+        "date_posted": "date_posted",
+        "portal_name_id": "portal_name_id",
+        "author_id": "author_id"
+    }
+    instance = RssSaveNews.objects.raw("SELECT n.id, n.title, n.date_posted, n.portal_name_id, n.author FROM news_rss n "
+                                       "INNER JOIN rss_save r ON r.rss_id=n.id and r.user_id=%s" % user.id, translations=translation)
+    #return RssSaveNews.objects.filter(user_id=user.id).values()
+    return instance
 
 
 def add_fav(request, news_id):

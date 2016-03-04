@@ -1,4 +1,4 @@
-{% extends 'index_new.html' %}
+{% extends 'index_beta.html' %}
 {% load staticfiles %}
 {% load my %}
 {% load i18n %}
@@ -35,6 +35,7 @@
         .moderator-info-item{float: left;}
         .search{width: 100%; height: inherit; min-height: 800px;}
         .left-side-search{width: 70%; height: inherit; float: left;}
+        .mobile-side-search{height: inherit;}
         .search-error-text{text-align: center;}
         .no_results{margin-left: 25%;}
         #input-search-field{width: 60%; float: left;}
@@ -45,6 +46,7 @@
         .cur_pop_news{float: left; width: 48%; height: 300px; margin: 0 1%; position: relative;}
         .image{opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;}
         #match-variation{text-align: left; font-size: 20px;}
+        #mobile-match-variation > h1{font-size: 20px; color: black; margin: 0; padding: 0;}
         .current_searched{
             margin-bottom: 3em;
             height: 13em;
@@ -133,12 +135,21 @@
         float: right;
         margin-top: 2%;
     }
+    .tabs-list{margin-bottom: 20px;}
+    #tabs > ul > li > a.mobile-search-list-link{padding: 0}
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{background: #F1F3CE; border: none;}
+    .mobile-list-item{width:33%;}
+    .mobile-search-list-link{padding-left:0; font-size:12px;}
     </style>
     <div class="container-fluid container">
         <div class="row row-centered">
             <div class="search-block">
                 <div class="search">
-                    <div class="left-side-search">
+                    {% if flavour != 'mobile' %}
+                        <div class="left-side-search">
+                    {% else %}
+                        <div class="mobile-side-search">
+                    {% endif %}
                         {% if empty_result %}
                             <div class="search-error-text">
                                 {% trans 'No one matches. Please, try another request word' %}<br><br>
@@ -181,29 +192,51 @@
                                 </div>
                             </div>
                         {% else %}
-                            <div id="match-variation">
-                                <b>{% trans 'Results for ' %}&laquo;{{ search_word }}&raquo;</b>
-                                &nbsp;<h5>&#40;{{ matches_amount }}&nbsp;{% if matches_amount > 1 %}{% trans 'matches' %}
-                            {% else %}{% trans 'match' %}
-                            {% endif %}&#41;</h5><hr>
+                            {% if flavour != 'mobile' %}
+                                <div id="match-variation">
+                            {% else %}
+                                <div id="mobile-match-variation">
+                            {% endif %}
+                                <h1><b>{% trans 'Results for ' %}&laquo;{{ search_word }}&raquo;</b></h1>
+                                    &nbsp;<h5>&#40;{{ matches_amount }}&nbsp;{% if matches_amount > 1 %}{% trans 'matches' %}
+                                    {% else %}{% trans 'match' %}
+                                    {% endif %}&#41;</h5><hr>
                             </div>
                             <div id="tabs">
                                 <ul class="tabs-list nav nav-tabs" role="tablist">
-                                    <li role="presentation">
-                                        <a href="#an" class="active" aria-controls="an" role="tab" data-toggle="tab">
-                                            {% trans 'News' %}&nbsp;({{ news_count|default:0 }})
-                                        </a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a href="#ac" class="active" aria-controls="ac" role="tab" data-toggle="tab">
-                                            {% trans 'Companies' %}&nbsp;({{ companies_count|default:0 }})
-                                        </a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a href="#au" class="active" aria-controls="au" role="tab" data-toggle="tab">
-                                            {% trans 'Moderators' %}&nbsp;({{ users_count|default:0 }})
-                                        </a>
-                                    </li>
+                                    {% if flavour != 'mobile' %}
+                                        <li role="presentation">
+                                            <a href="#an" class="search-list-link active" aria-controls="an" role="tab" data-toggle="tab">
+                                                {% trans 'News' %}&nbsp;({{ news_count|default:0 }})
+                                            </a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#ac" class="search-list-link active" aria-controls="ac" role="tab" data-toggle="tab">
+                                                {% trans 'Companies' %}&nbsp;({{ companies_count|default:0 }})
+                                            </a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#au" class="search-list-link active" aria-controls="au" role="tab" data-toggle="tab">
+                                                {% trans 'Moderators' %}&nbsp;({{ users_count|default:0 }})
+                                            </a>
+                                        </li>
+                                    {% else %}
+                                        <li role="presentation" class="mobile-list-item">
+                                            <a href="#an" class="mobile-search-list-link active" aria-controls="an" role="tab" data-toggle="tab" style="padding-left: 0; text-align:center;">
+                                                {% trans 'News' %}&nbsp;({{ news_count|default:0 }})
+                                            </a>
+                                        </li>
+                                        <li role="presentation" class="mobile-list-item">
+                                            <a href="#ac" class="mobile-search-list-link active" aria-controls="ac" role="tab" data-toggle="tab" style="padding-left: 0;">
+                                                {% trans 'Companies' %}&nbsp;({{ companies_count|default:0 }})
+                                            </a>
+                                        </li>
+                                        <li role="presentation" class="mobile-list-item">
+                                            <a href="#au" class="mobile-search-list-link active" aria-controls="au" role="tab" data-toggle="tab" style="padding-left: 0;">
+                                                {% trans 'Moderators' %}&nbsp;({{ users_count|default:0 }})
+                                            </a>
+                                        </li>
+                                    {% endif %}
                                 </ul>
                                 <div class="clr"></div>
 {#                                <section class="block">#}
@@ -268,8 +301,8 @@
                             </div>
                         {% endif %}
                     </div>
+                    {% if flavour != 'mobile' %}
                     <div class="right-side-block">
-
                         <div class="advert-google" style="width: 300px; height: 300px; background: lightblue;"></div>
 
                         <div class="latest-news">
@@ -287,7 +320,13 @@
                                             <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
                                                 <span id="lnt{{ i.id }}"
                                                       class="title">
-                                                    {{ i.news_title }}
+                                                    {% if lang == 'eng' %}
+                                                        {{ i.news_title_english }}
+                                                    {% elif lang == 'rus' %}
+                                                        {{ i.news_title_russian }}
+                                                    {% else %}
+                                                        {{ i.news_title_chinese }}
+                                                    {% endif %}
                                                 </span>
                                             </a>
                                         </div>
@@ -296,14 +335,13 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 
 
-    {% include 'footer.html' %}
+{#    {% include 'footer.html' %}#}
 
 {% endblock %}
-{#    <script src="{% static 'static/js/jquery.js' %}"></script>#}
-{#    <script src="{% static 'static/js/jquery-ui.js' %}"></script>#}

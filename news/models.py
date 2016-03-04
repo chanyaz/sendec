@@ -7,6 +7,11 @@ from django.contrib.auth.models import User
 #from imagekit.processors import ResizeToFit, Adjust,ResizeToFill
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
+# from favourite.models import RssSaveNews
+from django.contrib.postgres.fields import ArrayField
+from djorm_pgarray.fields import ArrayField
+
+
 
 
 def upload_news_cover(instance, filename):
@@ -87,9 +92,16 @@ class News(models.Model):
         verbose_name = "News"
         verbose_name_plural = "News"
 
-    news_title = models.CharField(max_length=512)
+    news_title_english = models.CharField(max_length=512)
+    news_title_russian = models.CharField(max_length=512)
+    news_title_chinese = models.CharField(max_length=512)
     news_category = models.ForeignKey(NewsCategory)
     news_post_date = models.DateTimeField(auto_now_add=True)
+
+    teaser_english = models.TextField(max_length=512)
+    teaser_russian = models.TextField(max_length=512)
+    teaser_chinese = models.TextField(max_length=512)
+
     news_post_text_english = models.TextField(max_length=4096, blank=True, default="Empty")
     news_post_text_russian = models.TextField(max_length=4096, blank=True, default="Empty")
     news_post_text_chinese = models.TextField(max_length=4096, blank=True, default="Empty")
@@ -114,7 +126,7 @@ class News(models.Model):
     # Information
     news_likes = models.IntegerField(default=0)
     news_dislikes = models.IntegerField(default=0)
-    news_tags = models.CharField(max_length=128, blank=True)
+    news_tags = ArrayField(dbtype="varchar(255)")
     slug = models.SlugField(max_length=256, unique=True, blank=True)
 
     def get_absolute_url(self):
@@ -133,7 +145,7 @@ class News(models.Model):
         return self.id
 
     def __str__(self):
-        return self.news_title
+        return self.news_title_english
 
     # def __unicode__(self):
     #     return self.news_post_text_russian
@@ -179,9 +191,16 @@ class TopNews(models.Model):
         verbose_name = "Top"
         verbose_name_plural = "Top news"
 
-    top_news_title = models.CharField(max_length=512)
+    top_news_title_english = models.CharField(max_length=512, blank=False)
+    top_news_title_russian = models.CharField(max_length=512, blank=True)
+    top_news_title_chinese = models.CharField(max_length=512, blank=True)
     top_news_category = models.ForeignKey(NewsCategory)
     top_news_post_date = models.DateTimeField(auto_now_add=True)
+
+    teaser_english = models.TextField(max_length=512, blank=False)
+    teaser_russian = models.TextField(max_length=512, blank=False)
+    teaser_chinese = models.TextField(max_length=512, blank=False)
+
     top_news_post_text_english = models.TextField(max_length=4096)
     top_news_post_text_russian = models.TextField(max_length=4096)
     top_news_post_text_chinese = models.TextField(max_length=4096)
@@ -201,7 +220,7 @@ class TopNews(models.Model):
 
 
     def __str__(self):
-        return self.top_news_title
+        return self.top_news_title_english
 
     def get_absolute_url(self):
         return "news/top/%s/%s" % (self.id, str(self.slug))
@@ -367,14 +386,32 @@ class RssNews(models.Model):
             "link": self.link,
             "content": self.content_value,#.replace("\u2019", "&rsquo;"),
             "author": self.author,
+            "cover": self.get_main_cover(),
+            "fav": self.get_rss_fav(),
         }
 
+    def get_rss_fav(self):
+        from favourite.models import RssSaveNews
+        rss_instance = RssSaveNews.objects.filter(rss_id=self.id)
+        try:
+            if rss_instance.exists() == True:
+                return True
+            else:
+                return False
+        except RssSaveNews.objects.get(rss_id=self.id).DoesNotExist:
+            return False
 
     def get_portal_json(self):
         return {
             "id": self.portal_name_id,
             "name": str(RssPortals.objects.get(id=self.portal_name_id).portal)
         }
+
+    def get_main_cover(self):
+        try:
+            return str(RssNewsCovers.objects.get(rss_news_id=self.id).main_cover)
+        except RssNewsCovers.DoesNotExist:
+            return ""
 
 
 class UserRssNewsReading(models.Model):
@@ -392,6 +429,9 @@ class RssNewsCovers(models.Model):
         db_table = "rss_news_covers"
     rss_news = models.ForeignKey(RssNews, related_name="rss_covers")
     main_cover = models.TextField(max_length=512)
+
+    def __str__(self):
+        return self.rss_news.portal_name.portal
 
 
 

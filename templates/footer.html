@@ -4,14 +4,12 @@
 {% load my %}
 {% load thumbnail %}
 <style>
-    #footer-div{color: white;height: inherit;background-color: #00293C;-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);box-shadow: 0 0 10px rgba(0,0,0,0.5);width: 100%;font-family: Georgia, Times, "Times New Roman", serif;position: relative;}
+    #footer-div{color: white;background-color: #00293C;-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);box-shadow: 0 0 10px rgba(0,0,0,0.5);width: 100%;font-family: Georgia, Times, "Times New Roman", serif;position: absolute;}
     #footer-div a:hover{color: #F62A00;text-decoration: none;}
     .social:active{color: white;text-decoration: none;}
     #footer-social li{display: inline;}
     #footer-list-top li{display: inline;}
-
     .footer-logo{float: right;}
-
     .main-footer-item-logo {width: 15%;float: left;}
     .main-footer-item {width: 25%;float: left;}
     .footer-top{height: 250px;}
@@ -56,7 +54,7 @@
         })
     </script>
 {% if flavour != 'mobile' %}
-    <div id="footer-div">
+    <footer id="footer-div">
         <div class="container-fluid container">
             <div class="footer-bottom-block row row-centered">
                 <div class="footer-top">
@@ -90,7 +88,13 @@
                                            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
                                                 <div class="footer-news-content" style="margin-left: 35%; height: 60px;">
                                                     <span id="lnt{{ i.id }}">
-                                                        {{ i.news_title|truncatechars:"60" }}
+                                                        {% if lang == 'eng' %}
+                                                            {{ i.news_title_english|truncatechars:"60" }}
+                                                        {% elif lang == 'rus' %}
+                                                            {{ i.news_title_russian|truncatechars:"60" }}
+                                                        {% else %}
+                                                            {{ i.news_title_chinese|truncatechars:"60" }}
+                                                        {% endif %}
                                                     </span>
                                                 </div>
                                             </a>
@@ -101,51 +105,40 @@
                         </li>
                         {% cache 600 footer-3 %}
                         <li id="footer-3" class="col-md-3">
-                            <ul>
-                                <li><h3 class="footer-title">{% trans 'Categories' %}</h3></li>
-                                <li class="footer-list-item"><a href="/news/technology/">{% trans 'Technology' %}</a></li>
-                                <li class="footer-list-item"><a href="/news/entertainment/">{% trans 'Entertainment' %}</a></li>
-                                <li class="footer-list-item"><a href="/news/auto/">{% trans 'Auto' %}</a></li>
-                                <li class="footer-list-item"><a href="/news/space/">{% trans 'Space' %}</a></li>
-                                <li class="footer-list-item"><a href="/news/bio/">{% trans 'BIO' %}</a></li>
-                                <li class="footer-list-item"><a href="/news/companies/">{% trans 'Companies' %}</a></li>
-                                <li class="footer-list-item"><a href="/news/reviews/">{% trans 'Reviews' %}</a></li>
-                                {% if username.username %}
-                                    <li class="footer-list-item"><a href="/news/reviews/">{% trans 'PRIVATE' %}</a></li>
-                                {% endif %}
-                            </ul>
+                            <nav role="navigation">
+                                <ul>
+                                    <li><h3 class="footer-title">{% trans 'Categories' %}</h3></li>
+                                    <li class="footer-list-item"><a href="/news/technology/">{% trans 'Technology' %}</a></li>
+                                    <li class="footer-list-item"><a href="/news/entertainment/">{% trans 'Entertainment' %}</a></li>
+                                    <li class="footer-list-item"><a href="/news/auto/">{% trans 'Auto' %}</a></li>
+                                    <li class="footer-list-item"><a href="/news/space/">{% trans 'Space' %}</a></li>
+                                    <li class="footer-list-item"><a href="/news/bio/">{% trans 'BIO' %}</a></li>
+                                    <li class="footer-list-item"><a href="/news/companies/">{% trans 'Companies' %}</a></li>
+                                    <li class="footer-list-item"><a href="/news/reviews/">{% trans 'Reviews' %}</a></li>
+                                    {% if username.username %}
+                                        <li class="footer-list-item"><a href="/news/reviews/">{% trans 'PRIVATE' %}</a></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
                         </li>
                     {% endcache %}
-                    {% cache 600 footer-4 %}
+{#                    {% cache 600 footer-4 %}#}
                         <li id="footer-4" class="col-md-3">
-                            <ul>
-                                <li><h3 class="footer-title">{% trans 'Quick links' %}</h3></li>
-                                <li class="footer-list-item"><a href="/about">{% trans 'About us' %}</a></li>
-                                <li class="footer-list-item"><a href="/about/contacts/">{% trans 'Contacts' %}</a></li>
-                                <li class="footer-list-item"><a href="/about/advertisers/">{% trans 'Advertisement' %}</a></li>
-                            </ul>
+                            <nav role="navigation">
+                                <ul>
+                                    <li><h3 class="footer-title">{% trans 'Quick links' %}</h3></li>
+                                    <li class="footer-list-item"><a href="/about">{% trans 'About us' %}</a></li>
+                                    <li class="footer-list-item"><a href="/about/contacts/">{% trans 'Contacts' %}</a></li>
+                                    <li class="footer-list-item"><a href="/about/advertisers/">{% trans 'Advertisement' %}</a></li>
+                                    <li class="footer-list-item"><a href="/rss/">{% trans 'RSS feeds' %}</a></li>
+                                    <li class="footer-list-item"><a href="/rss/">{% trans 'Hiring' %}</a></li>
+                                </ul>
+                            </nav>
                         </li>
-                    {% endcache %}
+{#                    {% endcache %}#}
                     </ul>
                 </div>
                 <hr width="100%">
-    {#            <div class="footer-middle" style="text-align: center;">#}
-    {#        <div class="middle-text">#}
-    {#            <span class="footer-main-title">INSYDIA</span>, 2015{% now "Y" as current_year %}{% if current_year != '2015' %}-{% now "Y" %}{% endif %}#}
-    {#        </div>#}
-    {#        <ul id="footer-list-top">#}
-    {#            <li>{% trans 'International Editions: ' %}</li>#}
-    {#            <li class="footer-list-item">#}
-    {#                <a href="/en/">EN</a>#}
-    {#            </li>&nbsp;|&nbsp;#}
-    {#            <li class="footer-list-item">#}
-    {#                <a href="/ru/">RU</a>#}
-    {#            </li>&nbsp;|&nbsp;#}
-    {#            <li class="footer-list-item">#}
-    {#                <a href="/cn/">CH</a>#}
-    {#            </li>#}
-    {#        </ul>#}
-    {#    </div>#}
             {% cache 600 footer-bottom %}
                 <div class="footer-bottom">
                     <div class="bottom-left" style="float: left; font-size: 30px;"><a class="footer-main-title-link" href="/">INSYDIA</a></div>
@@ -197,7 +190,7 @@
             {% endcache %}
             </div>
         </div>
-    </div>
+    </footer>
 {% else %}
     <div id="footer-div">
         <div class="container-fluid container">

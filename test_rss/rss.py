@@ -5,6 +5,8 @@ import os
 import string
 from random import choice, randint
 import lxml.html
+import uuid
+import random
 
 def fill_start_data_news():
     #db = sqlite3.connect(BASE_DIR+"\\db.sqlite3")
@@ -336,7 +338,7 @@ def fill_rss_portals():
         if len(count) == 0:
             cur_iter += 1
             categories = {"Technology": 1, "Entertainment": 2, "Auto": 3, "Space": 4, "BIO": 5}
-            query = "INSERT INTO rss_portals(portal, portal_base_link, follows, description, cover, favicon, verbose_name, category_id) VALUES(%s, %s, %s, %s, %s,%s,%s,%s)"
+            query = "INSERT INTO rss_portals(portal, portal_base_link, follows, description, cover, favicon, verbose_name, category_id, puid) VALUES(%s, %s, %s, %s, %s,%s,%s,%s, %s)"
             data_query = (file_list['object-%s'%i]["name"],
                           file_list['object-%s'%i]["base_link"],
                           0,
@@ -344,7 +346,9 @@ def fill_rss_portals():
                           file_list['object-%s'%i]["cover"],
                           file_list['object-%s'%i]["favicon"],
                           file_list['object-%s'%i]["verbose"],
-                          categories[file_list['object-%s'%i]["category"]])
+                          categories[file_list['object-%s'%i]["category"]],
+			  str(uuid.uuid4()),
+			 )
             cursor.execute(query, data_query)
             db.commit()
 
@@ -443,33 +447,43 @@ def fill_news():
 
     for i in range(end):
         try:
-            for j in [2,3,4,5]:
+            for j in [1,2,3,4,5]:
             # if news[file_list[i]]['category'] == "technology" and news[file_list[i]]['date'] != "date":
                 cur_iter += 1
-                news_title = news[file_list[i]]["title"]
+                news_title_english = "[eng]"+news[file_list[i]]["title"]
+                news_title_russian = "[rus]"+news[file_list[i]]["title"]
+                news_title_chinese = "[ch]"+news[file_list[i]]["title"]
                 news_category_id = j    # Technology
                 news_post_date = news[file_list[i]]["date"]
+                teaser_english = "[eng] Teaser"
+                teaser_russian = "[rus] Teaser"
+                teaser_chinese = "[ch] Teaser"
                 news_post_text_english = news[file_list[i]]["text"]
                 news_post_text_russian = news[file_list[i]]["text"]
                 news_post_text_chinese = news[file_list[i]]["text"]
                 news_portal_name_id = 1    # Insydia
-                news_company_owner_id = 2    # Insydia
-                news_author_id = 2    # Saqel
+                news_company_owner_id = 1    # Insydia
+                news_author_id = 1    # Saqel
                 news_main_cover = ""    # None
                 news_likes = 0
                 news_dislikes = 0
                 photo = ""
-                news_tags = ""
-                slug = "%s-a-a-a-%s" % (j, i)
+                news_tags = "{}"
+                slug = "%s-b-a-a-%s" % (j, i)
 
 
-                query_set = "INSERT INTO news(news_title, news_category_id, news_post_date, news_post_text_english, " \
-                            "news_post_text_russian, news_post_text_chinese, news_portal_name_id, news_company_owner_id, news_author_id, " \
-                            "news_main_cover, photo, news_likes, news_dislikes, news_tags, slug) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-                data_query_set = (news_title,
+                query_set = "INSERT INTO news(news_title_english, news_title_russian, news_title_chinese, news_category_id, news_post_date, news_post_text_english, " \
+                            "teaser_english, teaser_russian, teaser_chinese, news_post_text_russian, news_post_text_chinese, news_portal_name_id, news_company_owner_id, news_author_id, " \
+                            "news_main_cover, photo, news_likes, news_dislikes, news_tags, slug) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                data_query_set = (news_title_english,
+                                  news_title_russian,
+                                  news_title_chinese,
                                   news_category_id,
                                   news_post_date,
                                   news_post_text_english,
+                                  teaser_english,
+                                  teaser_russian,
+                                  teaser_chinese,
                                   news_post_text_russian,
                                   news_post_text_chinese,
                                   news_portal_name_id,
@@ -479,11 +493,12 @@ def fill_news():
                                   photo,
                                   news_likes,
                                   news_dislikes,
-                                  news_tags,slug)
+                                  news_tags,
+                                  slug)
                 cursor.execute(query_set, data_query_set)
                 db.commit()
                 #print(cur_iter, data_query_set)
-                print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "Dealed with ", news_title)
+                print("Iter #", cur_iter, "Complete..........", cur_iter/end*100, "%", "Dealed with ", news_title_english)
         except KeyError:
             print(news[file_list[i]])
     db.close()

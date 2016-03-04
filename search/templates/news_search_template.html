@@ -3,6 +3,7 @@
 {% load endless %}
 {% load thumbnail %}
 
+{% if flavour != 'mobile' %}
 <div class="search-news-block">
     {% paginate 5 results %}
     {% if matches_amount > 0 %}
@@ -22,7 +23,15 @@
                         <div id="current_searched_content_title_{{ i.id }}"
                              class="current_searched_content_title">
                             <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                <b>{{ i.news_title }}</b>
+                                <b>
+                                    {% if lang == 'eng' %}
+                                        {{ i.news_title_english }}
+                                    {% elif lang == 'rus' %}
+                                        {{ i.news_title_russian }}
+                                    {% else %}
+                                        {{ i.news_title_chinese }}
+                                    {% endif %}
+                                </b>
                             </a>
                         </div>
                         <div class="current_searched_content_post">
@@ -52,4 +61,49 @@
         {% endfor %}
     {% endif %}
 </div>
+{% else %}
+<div class="dyn-news-2 container" style="height: inherit; margin-bottom: 5%; margin-left: -3%;">
+        {% paginate 30 results %}
+        {% if matches_amount > 0 %}
+            <div id="paginate-list" style="float: left;">
+            {% for i in results %}
+                <div class="container-fluid col-md-6 mobile-container">
+                    <div class="current_news_mas_mobile news-news mobile-news">
+                        <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                            <div class="middle-news-cover" style="/* float: left; *//* cursor: pointer; */">
+                                {% thumbnail i.news_main_cover '100x100' crop='center' as im %}
+                                    <img src="{{ im.url }}" class="col-xs-6 mobile-top"/>
+                                {% endthumbnail %}
+                            </div>
+                        </a>
+                        <div class="title total-container col-xs-8" id="title-{{ i.id }}"
+                             style="float: right;">
+                            <div class="news-title-mobile" style="line-height: 0.9em; margin-top: 0;">
+                                <a class="mobile-title" href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                    <b>
+                                        {% if lang == 'eng' %}
+                                            {{ i.news_title_english }}
+                                        {% elif lang == 'rus' %}
+                                            {{ i.news_title_russian }}
+                                        {% else %}
+                                            {{ i.news_title_chinese }}
+                                        {% endif %}
+                                    </b>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="params total-container col-xs-8" style="float: right;">
+                            <i>Автор&nbsp;<span class="article-author">
+                                <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
+                            </span>
+                                &nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
+                        </div>
+                    </div>
+                </div>
+                <hr width="100%">
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+{% endif %}
 {% show_more %}

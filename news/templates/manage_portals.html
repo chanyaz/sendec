@@ -1,4 +1,4 @@
-{% extends 'index_new.html' %}
+{% extends 'index_beta.html' %}
 {% load i18n %}
 {% load my %}
 {% load staticfiles %}
@@ -13,7 +13,7 @@
         #manager-portals{
             min-height: 300px;
              border: solid 1px lightgrey;
-            width: 82%;
+{#            width: 82%;#}
 {#            margin-left: 1%;#}
             float: right;
             margin-bottom: 50px;
@@ -62,62 +62,69 @@
         font-size: 16px;
         text-align: center;
     }
+        .has-children a:hover{text-decoration: none;color: #F62A00;}
+        #left-panel-main-title a:hover{text-decoration: none;color: #F62A00;}
+        .sidebar-offcanvas{
+            background-color: #F1F3CE;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding-top: 5%;
+            height: 100%;
+            overflow-y: scroll;
+        }
+        @media screen and (max-width: 767px) {
+          .row-offcanvas {
+            position: relative;
+            -webkit-transition: all 0.25s ease-out;
+            -moz-transition: all 0.25s ease-out;
+            transition: all 0.25s ease-out;
+          }
+          .sidebar-offcanvas{right: -41.6%;}
+          .sidebar-offcanvas{left:-41.6%;}
+          .sidebar-offcanvas{position:absolute;top:0;width:41.6%;}
+          #sidebar{padding-top:0;}
+        }
+        #side-list{padding-left:0;}
+        #side-list > li.side-list-item{height: 40px; margin-bottom: 5px;}
+        #side-list > li.side-list-item > a{}
+        .side-text{color:black;}
 
     </style>
 
-    <script>
 
-
-
-        function removeUserRssPortal(uuid,pid, id){
-{#            $("#ajax-preloader").show();#}
-            var $link = "/news/update_user_rss_news/";
-{#            var csrftoken = getCookie('csrftoken');#}
-            $.ajax({
-                url: "/news/rrp&uid="+uuid+"&pid="+pid+"/",
-                type: "POST",
-                data: {
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function(result){
-                    $("#user-rss-"+id).slideToggle();
-                    $("#left-bar-portal-"+id).slideUp('slow').detach();
-{#                    $("#manager-portals").load("/news/manager/");#}
-{#                    $("#ajax-preloader").hide();#}
-                }
-            })
-        }
-    </script>
-
-
-<div class="container-fluid container manager">
+<div class=" manager">
     <div class="row row-centered">
-        <div id="left-control-portals">
-            <main class="cd-main-content">
-                <nav class="cd-side-nav-2">
-                    <ul>
-                        <li id="left-panel-main-title" style="z-index:919; color: white; text-align: center; font-family: Georgia, Times, 'Times New Roman', serifs">
-                            <a href="/" style="font-size: 30px">INSYDIA</a>
+        <!-- BOOTSTRAP NEW SIDEBAR -->
+            <nav>
+                <div class="col-xs-2 col-sm-2 col-md-2 sidebar-offcanvas fixed" id="sidebar" role="navigation">
+                    <ul id="side-list" class="nav">
+                        <li class="side-list-item active">
+                            <a href="/news/usernews/">
+                                <i class="fa fa-user"></i>
+                                <span class="side-text">My Feed</span>
+                            </a>
                         </li>
-                    </ul>
-                    <ul>
-                        <li class="cd-label">{% trans 'Main' %}</li>
-                        <li class="has-children overview active" onclick="changeStatePortals(this);">
-                            <a href="#">{% trans 'Overview' %}</a>
-                            <ul>
-                                <li><a href="/news/usernews/">{% trans 'My feed' %}</a></li>
-                                <li><a href="/favourite/">{% trans 'Saved articles' %}</a></li>
-        {#						<li><a href="#0">Category 2</a></li>#}
-                            </ul>
+                        <li class="side-list-item">
+                            <a href="/favourite/">
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <span class="side-text">Saved articles</span>
+                            </a>
                         </li>
-                        <li id="side-bar-portals" class="has-children notifications active">
-                            <a id="side-bar-portals-link" href="#" onclick="changeStatePortals(this);">{% trans 'Portals' %}</a>
-                            <ul class="user-rss">
+                        <li>
+                            <a>
+                                <span class="side-text">Portals</span>
+                            </a>
+                            <!-- user portals list-->
+                            <ul class="nav">
                                 {% for current_portal in user_rss_portals %}
-                                    <li id="left-bar-portal-{{ current_portal.id }}">
-                                        <a>
-                                            <span class="cprs" onclick="showCurrentPortalNews('{{ current_portal.portal_id|get_rss_verbose_name }}');">
-                                                {{ current_portal.portal_id|get_rss_portal_name }}
+                                    <li>
+                                        <a style="cursor: pointer;" onclick="showCurrentPortalNews('{{ current_portal.portal_id|get_rss_verbose_name }}');">
+                                            <span class="portal-favicon">
+                                                <img src="{{ current_portal.portal_id|get_rss_portal_favicon }}" width="16px" height="16px" />
+                                            </span>
+                                            <span class="cprs">
+                                                <span class="side-text">{{ current_portal.portal_id|get_rss_portal_name|truncatechars:15 }}</span>
                                             </span>
                                             {% if current_portal.portal_id|get_unread_news:username.id != 0 %}
                                                 <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>
@@ -126,68 +133,55 @@
                                     </li>
                                 {% endfor %}
                             </ul>
+                            <!-- /user portals list -->
+                        </li>
+                        <hr width="100%">
+                        <li class="side-list-item">
+                            <a href="/news/manager/">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <span class="side-text">{% trans 'Manage portals' %}</span>
+                            </a>
+                        </li>
+                        <li class="side-list-item">
+                            <a href="/news/browser/">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <span class="side-text">{% trans 'Browse portals' %}</span>
+                            </a>
                         </li>
                     </ul>
-                    <ul style="margin-bottom: 50px;">
-                        <li class="cd-label">{% trans 'Configures' %}</li>
-                        <li class="has-children bookmarks">
-                            <a href="/news/manager/"><span class="glyphicon glyphicon-cog"></span>{% trans 'Manage portals' %}</a>
-                            <a href="/news/browser/"><span class="glyphicon glyphicon-plus-sign"></span>{% trans 'Browse portals' %}</a>
-                        </li>
-                    </ul>
-                </nav>
-	        </main>
+                </div>
+            </nav>
+            <!-- /SIDEBAR -->
+        <div class="swiper-bottom-nav text-center">
+            <ul>
+                <li style="display: inline-block; font-size: 20px;"><a href="/news/usrnews/">{% trans 'Private news' %}</a></li>&nbsp;*&nbsp;<li style="display: inline-block; font-size: 20px;"><a href="/news/browser/">{% trans 'Browser' %}</a></li>
+            </ul>
         </div>
-        <div id="manager-portals">
+    {% if flavour != 'mobile' %}
+        <div id="manager-portals-2" class="col-xs-10" style="float:right;">
+            {% else %}
+        <div id="manager-portals-2" class="col-xs-12" style="">
+        {% endif %}
             <div id="manager-title">
                 <h2>Manager</h2>
             </div>
-
-
-{#            <div id="add-user-portal" style="width:80%; margin-left: auto; margin-right: auto; margin-bottom: 50px;">#}
-{##}
-{##}
-{#                <div class="google-news-below-shares" style="margin-left: auto; margin-right: auto; width:728px; height: 90px; background-color: #00fff9;"></div>#}
-{##}
-{##}
-{#                <input name="user_portal"#}
-{#                       type="text"#}
-{#                       id="uap"#}
-{#                       placeholder="Drop the key word"#}
-{#                       class=""#}
-{#                       style="width:100%;">#}
-{#                <div hidden id="preview-portal" style="margin-top:15px; width: 350px; margin-left: auto; margin-right: auto; height: 300px;">#}
-{#                    <div id="preview-portal-content" style="border: solid 1px lightgrey; border-radius: 5px;">#}
-{#                        <div id="ppc-cover" style="width: 350px; height: 150px; background: url('{{ test.cover }}') no-repeat center; background-size: cover;"></div>#}
-{#                        <div id="ppc-name"><b>{{ test.portal }}</b></div>#}
-{#                        <div id="ppc-description"><i>{{ test.description }}</i></div>#}
-{#                        <div id="ppc-params">Followers:&nbsp;{{ test.follows }}</div>#}
-{#                        <div id="ppc-follow">#}
-{#                            <button class="btn btn-success">Follow</button>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-
-
-
             {% if user_rss_portals|length > 0 %}
                 <table id="user-rss-table">
                 <tr>
-                    <th class="table-rss-name">{% trans 'Portal name' %}</th>
-                    <th class="table-rss-describe">{% trans 'Description' %}</th>
-                    <th class="table-rss-configs">{% trans 'Configs' %}</th>
+                    <th class="table-rss-name text-center">{% trans 'Portal name' %}</th>
+                    <th class="table-rss-describe text-center">{% trans 'Description' %}</th>
+                    <th class="table-rss-configs text-center">{% trans 'Configs' %}</th>
                 </tr>
                     {% for i in user_rss_portals %}
                         <tr class="current-rss-portal"
                             id="user-rss-{{ i.id }}">
-                            <td class="td-rp-name">
+                            <td class="td-rp-name col-md-12 col-xs-12">
                                 <div>
                                     <img style="float: left;" src="" width="32px" height="32px"/>
                                     <div style="">{{ i.portal_id|get_rss_portal_name }}</div>
                                 </div>
                             </td>
-                            <td class="td-rp-description"><div>{{ i.portal_id|get_description }}</div></td>
+                            <td class="td-rp-description col-md-12"><div>{{ i.portal_id|get_description }}</div></td>
                             <td class="td-rp-btn"><div><button onclick="removeUserRssPortal('{{ username.profile.uuid }}', '{{ i.portal_id }}', '{{ i.id }}');"
                                              class="btn btn-success">{% trans 'unfollow' %}</button></div></td>
                         </tr>
@@ -205,12 +199,6 @@
         </div>
     </div>
 </div>
-    <div class="usernews-footer" style="margin-left: 16.1%;
-    width: 83.9%;
-    border: solid 1px red;">
-        {% include 'footer_usernews.html' %}
-    </div>
-
      <script>
         function changeStatePortals(element){
             if (!$(element).parent().hasClass('active')) {
@@ -220,6 +208,20 @@
                 $(element).parent().removeClass('active');
             }
         }
-    </script>
 
+        function removeUserRssPortal(uuid,pid, id){
+            $.ajax({
+                url: "/news/rrp&uid="+uuid+"&pid="+pid+"/",
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(result){
+                    alertify.error("{% trans 'Subscription remove' %}");
+                    $("#user-rss-"+id).slideToggle();
+                    $("#left-bar-portal-"+id).slideUp('slow').detach();
+                }
+            })
+        }
+    </script>
 {% endblock %}

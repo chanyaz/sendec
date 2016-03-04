@@ -5,56 +5,88 @@
 
 <style>
     .clear-both{height: 10px;}
-            .sect-2{
-            width: 100%;
-            display: inline-block;
-{#            margin-right: 1%;#}
-            margin-top: 3%;
-            max-height: 150px;
-        }
-
     .current_searched_content_title{
         color: white;
         font-family: Georgia, Times, "Times New Roman", serif;
         font-size: 22px;
     }
+        .current_searched{
+            margin-bottom: 3em;
+            height: 13em;
+            font-family: Georgia, Times, "Times New Roman", serif;
+            border-bottom: solid 1px lightgrey;
+        }
+        .current_searched_cover{width: 30%;height: 10em;float: left;}
+        .current_searched_content_title > a{ color:black }
+        .current_searched_content_title > a:hover{ color:#F62A00; }
+        .md-bt-ct{position:relative; margin-top:2%;}
+        .current_searched_content_post{margin-top: 3%;font-size: 13px;}
+        .current_searched_content_author{position: relative;float: left;}
+        .current_searched_content_author a{text-decoration: none;color: #F62A00;}
+        .current_searched_content_author a:hover{text-decoration: none;color: #1E656D;}
+        .latest-news-content > a{color: #F62A00;text-decoration: none;}
+        .latest-news-content > a:hover{color: #1E656D;text-decoration: none;}
+        .current_searched_content{height:10em;}
+        .current_searched_content_top{
+            position: relative;
+            height: 87%;
+            margin-left: 35%;
+        }
+        .searched-category-name{z-index: 900;float: right;}
+        .searched-category-name-content{
+                background-color: #1E656D;
+                color: ivory;
+                font-family: Georgia, Times, "Times New Roman", serif;
+                text-transform: uppercase;
+        }
+        .searched-category-link:hover{text-decoration: none;}
 </style>
 
 <div class="company_news" style="height: inherit; margin-bottom: 5%;">
 {% paginate 20 news %}
 {% for i in news %}
-    <div class="sect-2">
-        <div class="current_news"
-             onmouseout="this.style.backgroundColor='';">
-            <div class="current_searched_content">
-                <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                    <div class="current-news-left" style="float: left;">
-                        <div class="current_searched_cover">
-                            <img src="{% thumbnail i.news_main_cover '300x150' crop='center' %}" />
-                        </div>
+    <div class="current_searched">
+        <div class="current_searched_content">
+            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}/">
+                <div class="current_searched_cover"
+                     style="
+                             {% thumbnail i.news_main_cover '350x210' as im %}
+                             background: url('{{ im.url }}') no-repeat center;
+                             {% endthumbnail %}
+                             background-size: cover;">
+                </div>
+
+            </a>
+            <div class="current_searched_content_top">
+                <div id="current_searched_content_title_{{ i.id }}"
+                     class="current_searched_content_title">
+                    <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                        <b>{{ i.news_title }}</b>
+                    </a>
+                </div>
+                <div class="current_searched_content_post">
+                    {{ i.news_post_text_english|safe|striptags|truncatechars:"200" }}
+                </div>
+
+                <div class="md-bt-ct">
+                    <div class="current_searched_content_author">
+                        By&nbsp;--&nbsp;<a href="/search/?q={{ i.news_author }}">{{ i.news_author }}</a>
                     </div>
-                </a>
-                <div class="current-news-right" style="margin-left: 310px; height: 150px;">
-        {#                <div class="current_searched_content_portal">#}
-        {#                    {{ current_news.news_portal_name_id|get_portal_name }}#}
-        {#                </div>#}
-        {#                <div class="current_searched_content_date">#}
-        {#                    &nbsp;|&nbsp;{{ current_news.news_post_date.date }}#}
-        {#                </div>#}
-                    <div class="current_searched_content_title">
-                        <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                            {{ i.news_title }}
-                        </a>
-                    </div>
-                    <div class="current_searched_content_post">
-                        {% trans 'By' %}&nbsp;{{ current_news.id|default:"insydia" }}&nbsp;on
-                        {{ i.news_post_date.date|date }}
+                    <div class="current_searched_content_date">
+                        &nbsp;|&nbsp;{{ i.news_post_date.date }}
                     </div>
                 </div>
+
+            </div>
+            <div class="searched-category-name">
+                <a class="searched-category-link" href="/news/{{ i.news_category_id }}/{{ i.id }}/">
+                    <span class="searched-category-name-content">
+                        &nbsp;{{ i.id|get_news_category }}&nbsp;
+                    </span>
+                </a>
             </div>
         </div>
     </div>
 {% endfor %}
 </div>
 {% show_more %}
-<div class="clear-both"></div>
