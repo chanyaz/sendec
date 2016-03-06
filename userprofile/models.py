@@ -63,7 +63,9 @@ class ModeratorSpecialFields(models.Model):
     twitter = models.CharField(max_length=128)
     vk = models.CharField(max_length=128)
     linkedin = models.CharField(max_length=128)
+    # instagram = models.CharField(max_length=128)
     personal_email = models.EmailField(max_length=128)
+    # description = models.CharField(max_length=256)
 
     def __str__(self):
         return self.user.username

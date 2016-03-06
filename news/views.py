@@ -253,6 +253,8 @@ def render_current_top_news(request, news_id, slug):
     args.update(csrf(request))
     args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("top_news.html", args, context_instance=RequestContext(request))
+
+
 def render_current_news(request, year, month, day, news_id, slug):
     translation = {
         "id": "id",
@@ -269,7 +271,7 @@ def render_current_news(request, year, month, day, news_id, slug):
         "news_tags": "news_tags",
         "slug": "slug",
     }
-    current_news = News.objects.raw("SELECT * FROM news where id=%s;" % news_id, translations=translation)
+    current_news = News.objects.raw("SELECT * FROM news where slug='%s';" % slug, translations=translation)
     args = {
         "other_materials": current_news_other_materials(request, news_id, current_news[0].news_category_id),
         "other_materials_bottom": current_news_other_materials_bottom(request, news_id, current_news[0].news_category_id),
@@ -327,7 +329,7 @@ def current_news_other_materials(request, news_id, category_id):
         "news_post_date": "news_post_date",
         "news_main_cover": "news_main_cover"
     }
-    return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_main_cover from news WHERE news_category_id=%s ORDER BY news_post_date DESC limit 4;" % category_id,
+    return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_main_cover from news WHERE news_category_id=%s and id != %s ORDER BY news_post_date DESC limit 4;" % (category_id, news_id),
                             translations=translation)
 def current_news_other_materials_bottom(request, news_id, category_id):
     translation = {
@@ -543,6 +545,79 @@ def get_current_rss_news(request, news_id):
     }
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+def get_current_rss_news_mobile(request, news_id):
+    news_instance = RssNews.objects.get(id=int(news_id))
+    instance = RssNews.objects.get(id=int(news_id)).get_json_rss()
+
+
+    b = ""
+    if request.COOKIES.get("lang") == "eng": b = "Close"
+    elif request.COOKIES.get("lang") == "rus": b = "Закрыть"
+    elif request.COOKIES.get("lang") == "cn": b = "cn"
+
+
+    string = """<div class="cur-pw-top" data-rss-id="{data_id}">
+    <div class="cur-pw-background"></div>
+    <div class="cur-pw-btn-bck"></div>
+
+    <div class="cur-pw-description col-md-12" style="position: absolute; top:0;">
+        <h1 class="rss-title-preview-new text-center">{title}</h1>
+        <div class="cur-pw-td text-center">By <span class="rss-author-new">{author}</span></div>
+    </div>
+        <div class="pull-left" style="position: absolute; bottom: 0; left:0;">
+            <button class="btn btn-primary" onclick="RssPreviewArticleMobileHide();return false;" style="font-size:10px;">Close</button>
+        </div>
+        <div class="col-md-12 col-xs-9 col-xs-offset-2" style="position: absolute; bottom: 0;">
+            <ul id="rss-share-list" class="">
+                <li class="rss-share-item">
+                    <a data-target-link="{link}" class="rss-share-facebook" onclick="window.open(
+                        'http://facebook.com/sharer/sharer.php?u='+$(this).attr('data-target-link'),
+                         'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
+                        <span class="fa fa-facebook social-rss" style="font-size: 1.5em; "></span>
+                    </a>
+                </li>
+                <li class="rss-share-item">
+                    <a data-target-link="{link}" class="rss-share-vk" onclick="window.open('https://vk.com='+$(this).attr('data-target-link'),
+                         'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
+                        <span class="fa fa-vk social-rss" style="font-size: 1.5em;"></span>
+                    </a>
+                </li>
+                <li class="rss-share-item">
+                    <a data-target-link="{link}" class="rss-share-twitter"
+                    onclick="window.open('https://twitter.com/intent/tweet?original_referer='+'https://insydia.com/'+'&ref_src=twsrc%5Etfw&%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+$(this).attr('data-target-link')+'&via=InsydiaNews',
+                         'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
+                        <span class="fa fa-twitter social-rss" style="font-size: 1.5em;"></span>
+                    </a>
+                </li>
+                <li class="rss-share-item">
+                    <a data-target-link="{link}" class="rss-share-linkedin" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+$(this).attr('data-target-link')+'&title='+'TITLE'+'&summary='+'summary',
+                         'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
+                        <span class="fa fa-linkedin social-rss" style="font-size: 1.5em;"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+</div>
+
+</div>
+
+<div class="rss-preview-body"></div>
+    """.format(title=news_instance.title,
+               author=news_instance.author if news_instance.author else news_instance.portal_name,
+               read=123,
+               data_id=news_instance.id,
+               likes=321,
+               link=news_instance.link,
+               body=news_instance.content_value if news_instance.content_value else news_instance.post_text)
+    response_data = {
+        "data": instance,
+        "string": string,
+    }
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
 
 
 def get_rss_news(request):
@@ -875,13 +950,14 @@ def get_companies(request):
 
 
 def render_current_company(request, company_name, template="current_company.html", company_news="current_company_news.html", extra_context=None):
+    from search import views as sv
     company = Companies.objects.get(verbose_name=company_name)
     args = {
         "title": company.name+" | ",
         "company": company,
         "company_news": company_news,
         "news": get_companies_news(request, company.id),
-
+        "latest_news": sv.get_latest_news_total(request)[:5],
         "left_bar": True,
     }
     args.update(csrf(request))
@@ -1177,7 +1253,6 @@ def render_contacts_page(request):
 def render_about_page(request):
     args = {
         "title": "About |",
-
         "left_bar": True,
     }
     args.update(csrf(request))
@@ -1888,18 +1963,18 @@ def popup_current_portal(request, portal_id):
     news_instance = list(RssNews.objects.raw("SELECT id, title, date_posted, portal_name_id, author, nuid FROM news_rss WHERE portal_name_id=%s" % portal_id, translations=translation))
 
     news_instance_offset = news_instance[:12]
-    string_offset = ""
+    string_offset = """<div class="cur-pw-articles">
+<ul class="cur-pw-item" style="padding-left: 0;">"""
     for i in news_instance_offset:
-        string_offset += """<div class="cur-pw-articles">
-<ul class="cur-pw-item" style="padding-left: 0;">
-    <li class="col-xs-12" style="height:120px;border-bottom: solid 1px lightgrey;">
+        string_offset += """
+    <li class="col-xs-12" style="height:200px;border-bottom: solid 1px lightgrey;">
         <div class="cur-pw-ar">
             <div class="cur-pw-ar-cover col-md-3">
                 <div class="cont-cover" onclick="loadCurrentArticle('%s');return false;" style="background: url('%s') no-repeat center; background-size: cover;"></div>
             </div>
             <div class="cur-pw-ar-content col-md-9">
                 <div class="cur-pw-ar-t" onclick="loadCurrentArticle('%s'); return false;">%s</div>
-                <div class="cur-pw-ar-par">
+                <div class="cur-pw-ar-par" style="font-size:14px;">
                     %s&nbsp;<span style="color: #F62A00;">%s</span>
                     &nbsp;|&nbsp;
                     <span>%s</span>
@@ -1907,8 +1982,6 @@ def popup_current_portal(request, portal_id):
             </div>
         </div>
     </li>
-</ul>
-</div>
 """ % (i.id,
        i.get_main_cover(),
        i.id,
@@ -1916,7 +1989,7 @@ def popup_current_portal(request, portal_id):
        b,
        i.author,
        i.date_posted.strftime("%b, %d %Y"))
-
+    string_offset+="""</ul></div>"""
     string = """<div class="cur-pw-top">
 <div class="cur-pw-background"></div>
 <div class="cur-pw-btn-bck"></div>
@@ -1967,6 +2040,109 @@ def popup_current_portal(request, portal_id):
     }
 
     return HttpResponse(json.dumps(data_response), content_type="application/json")
+
+def popup_current_portal_mobile(request, portal_id):
+    args = {}
+    args.update(csrf(request))
+
+    l = request.COOKIES.get("lang")
+    b = ""
+    if l == "eng": b = "By"
+    elif l == "ch": b = "ch"
+    elif l == "rus": b = "Автор"
+
+
+    instance = RssPortals.objects.get(id=portal_id)
+    # news_instance = RssNews.objects.filter(portal_name_id=portal_id)
+    translation = {
+        "id": "id",
+        "title": "title",
+        "date_posted": "date_posted",
+        "portal_name_id": "portal_name_id",
+        "author": "author",
+        "nuid": "nuid"
+    }
+    news_instance = list(RssNews.objects.raw("SELECT id, title, date_posted, portal_name_id, author, nuid FROM news_rss WHERE portal_name_id=%s" % portal_id, translations=translation))
+
+    news_instance_offset = news_instance[:12]
+    string_offset = """<div class="cur-pw-articles">
+<ul class="cur-pw-item" style="padding-left: 0;">"""
+    for i in news_instance_offset:
+        string_offset += """
+    <li class="col-xs-12" style="height:200px;border-bottom: solid 1px lightgrey;">
+        <div class="cur-pw-ar">
+            <div class="cur-pw-ar-cover col-md-3">
+                <div class="cont-cover" onclick="loadCurrentArticle('%s');return false;" style="background: url('%s') no-repeat center; background-size: cover;"></div>
+            </div>
+            <div class="cur-pw-ar-content col-md-9">
+                <div class="cur-pw-ar-t" onclick="loadCurrentArticle('%s'); return false;">%s</div>
+                <div class="cur-pw-ar-par" style="font-size:14px;">
+                    %s&nbsp;<span style="color: #F62A00;">%s</span>
+                    &nbsp;|&nbsp;
+                    <span>%s</span>
+                </div>
+            </div>
+        </div>
+    </li>
+""" % (i.id,
+       i.get_main_cover(),
+       i.id,
+       i.title,
+       b,
+       i.author,
+       i.date_posted.strftime("%b, %d %Y"))
+    string_offset+="""</ul></div>"""
+    string = """<div class="cur-pw-top">
+<div class="cur-pw-background"></div>
+<div class="cur-pw-btn-bck"></div>
+
+<div class="cur-pw-btn-bck">
+    <button class="btn-close-rss btn btn-primary" onclick="hideCurrentRssPortal();return false;">Close</button>
+</div>
+
+"""
+
+    if UserRssPortals.objects.get(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username).id).check == False or\
+        UserRssPortals.objects.get(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username)).DoesNotExist:
+        string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
+        <button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal('{uuid}', '{id}', '{id}');
+            return false;">Follow</button>
+    </div>
+    """.format(uuid=str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
+               id=instance.id)
+    else:
+        string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
+        <button class="btn-fl-rss btn btn-primary" onclick="unfollowCurrentRssPortal('{uuid}', '{id}', '{id}'); return
+        false;">Unfollow</button></div>""".\
+            format(uuid=str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
+                   id=instance.id)
+
+    string += """<div class="cur-pw-description col-md-12" style="position: absolute; top: 0;">
+        <h1 class="text-center">%s</h1>
+        <div class="cur-pw-td text-center">%s</div>
+    </div>
+        <div class="text-center col-xs-6 col-xs-offset-3" style="bottom:5px;font-size:10px;color: white; position:absolute;text-clign:center;">
+            <span class="cur-pw-follows">Followers: %s</span>&nbsp;|&nbsp;
+            <span class="cur-pw-articles-amount">Articles: %s</span>
+        </div>
+</div>
+</div>
+<div class="cur-pw-left col-md-12">
+    %s
+</div>
+    """ % (instance.portal,
+           instance.description,
+           instance.follows,
+           len(news_instance),
+           string_offset)
+
+
+    data_response = {
+        "data": string,
+    }
+
+    return HttpResponse(json.dumps(data_response), content_type="application/json")
+
 
 
 def render_catalog(request):
@@ -2036,6 +2212,58 @@ def render_current_category_portals(request, category_id):
     return HttpResponse(json.dumps({"data": string}), content_type="application/json")
 
 
+def render_current_category_portals_mobile(request, category_id):
+    args = {}
+    args.update(csrf(request))
+    news_instance = RssPortals.objects.filter(category_id=int(category_id)).order_by("-follows")
+
+
+    string="""<div class="portals-list">
+    """
+
+    for i in news_instance:
+        string += """<div onclick="showCurrentPortalData('%s'); return false;" class="col-xs-6 fadeandscale_open mobile-current-popular-portal col-md-2" id="portal-%s" data-alt-id="%s">
+                <a href="">
+                    <div class="portal-picture" style="background: url('%s') no-repeat center; background-size: cover;"></div>
+                </a>
+                <div class="mobile-portal-bottom">
+                    <span class="portal-logo">%s</span>
+                    <span class="mobile-portal-name">
+                        <a href="" class="portal-link">
+                            <h3>%s</h3>
+                        </a>
+                    </span>
+                </div>
+                <div class="mobile-portal-footer">
+                    <span class="">Followers:&nbsp;%s</span>&nbsp;|&nbsp;
+                    <span class="">Articles:&nbsp;%s</span>
+                </div>
+            </div>
+        """ % (i.id,
+               i.id,
+               i.puid,
+               i.cover,
+               i.favicon,
+               i.portal,
+               i.follows,
+               len(list(RssNews.objects.raw("SELECT id FROM news_rss WHERE category_id=%s and portal_name_id=%s" % (category_id, i.id)))))
+
+    string += "</div>"
+
+    data_response = {
+        "data": [i.get_portal_full for i in news_instance.all()],
+        "string": string,
+    }
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
+    return HttpResponse(json.dumps({"data": string}), content_type="application/json")
+
+
+
 def popup_new_portal(request):
     import tldextract
     args = {}
@@ -2057,10 +2285,10 @@ def popup_new_portal(request):
         news_instance = RssNews.objects.filter(portal_name_id=portal_id)
 
         news_instance_offset = news_instance[:12]
-        string_offset = ""
+        string_offset = """<div class="cur-pw-articles">
+    <ul class="cur-pw-item" style="padding-left: 0;">"""
         for i in news_instance_offset:
-            string_offset += """<div class="cur-pw-articles">
-    <ul class="cur-pw-item" style="padding-left: 0;">
+            string_offset += """
         <li class="col-xs-12" style="height:120px;border-bottom: solid 1px lightgrey;">
             <div class="cur-pw-ar">
                 <div class="cur-pw-ar-cover col-md-3">
@@ -2076,8 +2304,6 @@ def popup_new_portal(request):
                 </div>
             </div>
         </li>
-    </ul>
-    </div>
     """ % (i.id,
            i.get_main_cover(),
            i.id,
@@ -2085,7 +2311,7 @@ def popup_new_portal(request):
            b,
            i.author,
            i.date_posted.strftime("%b, %d %Y"))
-
+        string_offset+="""</ul></div>"""
         string = """<div class="cur-pw-top">
     <div class="cur-pw-background"></div>
     <div class="cur-pw-btn-bck"></div>"""
@@ -2132,3 +2358,112 @@ def popup_new_portal(request):
         return HttpResponse(json.dumps(data_response), content_type="application/json")
     else:
         return HttpResponse()
+
+
+def popup_new_portal_mobile(request):
+    import tldextract
+    args = {}
+    args.update(csrf(request))
+
+    l = request.COOKIES.get("lang")
+    b = ""
+    if l == "eng": b = "By"
+    elif l == "ch": b = "ch"
+    elif l == "rus": b = "Автор"
+
+    if request.POST:
+        url = request.POST['url']
+        url_instance = tldextract.extract(url)
+        url_domain = url_instance.domain
+        portal_id = RssPortals.objects.get(portal=str(url_domain).capitalize()).id
+
+        instance = RssPortals.objects.get(id=portal_id)
+        news_instance = RssNews.objects.filter(portal_name_id=portal_id)
+
+        news_instance_offset = news_instance[:12]
+        string_offset = """<div class="cur-pw-articles">
+    <ul class="cur-pw-item" style="padding-left: 0;">"""
+        for i in news_instance_offset:
+            string_offset += """
+        <li class="col-xs-12" style="height:120px;border-bottom: solid 1px lightgrey;">
+            <div class="cur-pw-ar">
+                <div class="cur-pw-ar-cover col-md-3">
+                    <div class="cont-cover" onclick="loadCurrentArticle('%s');return false;" style="background: url('%s') no-repeat center; background-size: cover;"></div>
+                </div>
+                <div class="cur-pw-ar-content col-md-9">
+                    <div class="cur-pw-ar-t" onclick="loadCurrentArticle('%s'); return false;">%s</div>
+                    <div class="cur-pw-ar-par">
+                        %s&nbsp;<span style="color: #F62A00;">%s</span>
+                        &nbsp;|&nbsp;
+                        <span>%s</span>
+                    </div>
+                </div>
+            </div>
+        </li>
+    """ % (i.id,
+           i.get_main_cover(),
+           i.id,
+           i.title,
+           b,
+           i.author,
+           i.date_posted.strftime("%b, %d %Y"))
+        string_offset+="""</ul></div>"""
+        string = """<div class="cur-pw-top">
+<div class="cur-pw-background"></div>
+<div class="cur-pw-btn-bck"></div>
+
+<div class="cur-pw-btn-bck">
+    <button class="btn-close-rss btn btn-primary" onclick="hideCurrentRssPortal();return false;">Close</button>
+</div>
+
+"""
+        if UserRssPortals.objects.filter(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username).id).exists() == False or\
+            UserRssPortals.objects.get(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username)).DoesNotExist:
+            string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
+            <button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal('{uuid}', '{id}', '{id}');
+                return false;">Follow</button>
+        </div>
+        """.format(uuid=str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
+                   id=instance.id)
+        else:
+            string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
+            <button class="btn-fl-rss btn btn-primary" onclick="unfollowCurrentRssPortal('{uuid}', '{id}', '{id}'); return
+            false;">Unfollow</button></div>""".\
+                format(uuid=str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
+                       id=instance.id)
+
+        string += """<div class="cur-pw-description col-md-12" style="position: absolute; top: 0;">
+        <h1 class="text-center">%s</h1>
+        <div class="cur-pw-td text-center">%s</div>
+    </div>
+        <div class="text-center col-xs-6 col-xs-offset-3" style="bottom:5px;font-size:10px;color: white; position:absolute;text-clign:center;">
+            <span class="cur-pw-follows">Followers: %s</span>&nbsp;|&nbsp;
+            <span class="cur-pw-articles-amount">Articles: %s</span>
+        </div>
+</div>
+</div>
+<div class="cur-pw-left col-md-12">
+    %s
+</div>
+        """ % (instance.portal,
+               instance.description,
+               instance.follows,
+               news_instance.count(),
+               string_offset)
+
+
+        data_response = {
+            "data": string,
+        }
+
+        return HttpResponse(json.dumps(data_response), content_type="application/json")
+    else:
+        return HttpResponse()
+
+
+def render_job_page(request):
+    args={}
+    args.update(csrf(request))
+    response=render_to_response("hire.html", args, context_instance=RequestContext(request))
+    response.status_code=200
+    return response

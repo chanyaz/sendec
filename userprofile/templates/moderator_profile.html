@@ -1,136 +1,97 @@
-{% extends 'index_new.html' %}
+{% extends 'index_beta.html' %}
 {% load my %}
 {% load i18n %}
 {% load staticfiles %}
 {% block moderator_page %}
 
     <style>
-{#        .current_searched{height: 112px;box-shadow: 0 0 5px #5e5e5e; margin: 2% 0.25% 0.25% 0.25%; font-family: Georgia, Times, "Times New Roman", serif}#}
-{#        .current_searched_cover{width: 20%; height: 112px; float: left;}#}
-{#        .current_searched_content_title{margin-left: 21%;}#}
-{#        .current_searched_content_portal{float: left; margin-left: 1%;}#}
-{#        .current_searched_content{position: relative;}#}
-{#        .current_searched_content_top{height: 6.7em;float: left;}#}
-{#        .searched-category-name{#}
-{#            float: right;#}
-{#            position: absolute;#}
-{#            z-index: 900;#}
-{#          margin-left: 90%;#}
-{#          float: right;#}
-{#        }#}
-{#        .searched-category-name-content{#}
-{#                background-color: blue;#}
-{#                color: white;#}
-{#                font-family: Georgia, Times, "Times New Roman", serif;#}
-{#                text-transform: uppercase;#}
-{#        }#}
-{#        .searched-category-link:hover{#}
-{#            text-decoration: none;#}
-{#        }#}
-
-
-.md-bt-ct{position:relative; margin-top:2%;}
-        .current_searched_content_post{
-            margin-top: 3%;
-            font-size: 13px;
-        }
-        .current_searched_content_author{
-            position: relative;
-            float: left;
-        }
-        .current_searched_content_author a{
-            text-decoration: none;
-            color: #F62A00;
-        }
-        .current_searched_content_author a:hover{
-            text-decoration: none;
-            color: #1E656D;
-        }
-
-.current_searched{
-            margin-bottom: 3em;
-            height: 13em;
-            font-family: Georgia, Times, "Times New Roman", serif;
-            border-bottom: solid 1px lightgrey;
-        }
-
-        .search-news-block{
-            height: inherit;
-            margin-bottom: 20px;
-        }
-
-        .current_searched_content{
-            height:10em;
-        }
-        .current_searched_content_top{
-            position: relative;
-            height: 87%;
-            margin-left: 35%;
-        }
-        .searched-category-name{
-            z-index: 900;
-            float: right;
-        }
-        .searched-category-name-content{
-                background-color: #1E656D;
-                color: ivory;
-                font-family: Georgia, Times, "Times New Roman", serif;
-                text-transform: uppercase;
-        }
-        .searched-category-link:hover{
-            text-decoration: none;
-        }
-
-        .searched_company_name{
-            margin-bottom: 5%;
-            height: 3em;
-        }
-
+        .md-bt-ct{position:relative; margin-top:2%;}
+        .current_searched_content_post{margin-top: 3%;font-size: 13px}
+        .current_searched_content_author{position: relative;float: left}
+        .current_searched_content_author a{text-decoration: none;color: #F62A00}
+        .current_searched_content_author a:hover{text-decoration: none;color: #1E656D}
+        .current_searched{margin-bottom: 3em;height: 13em;font-family: Georgia, Times, "Times New Roman", serif;border-bottom: solid 1px lightgrey}
+        .search-news-block{height: inherit;margin-bottom: 20px}
+        .current_searched_content{height:10em}
+        .current_searched_content_top{position: relative;height: 87%;margin-left: 35%}
+        .searched-category-name{z-index: 900;float: right}
+        .searched-category-name-content{background-color: #F62A00;color: ivory;font-family: Georgia, Times, "Times New Roman", serif;text-transform: uppercase}
+        .current_searched_content_title>a{color:black}
+        .current_searched_content_title>a:hover{color:#F62A00}
+        .searched-category-link:hover{text-decoration: none}
+        .searched_company_name{margin-bottom: 5%;height: 3em}
+        .moderator-chars{padding: 10px;}
+        .moderator-socials{padding-left: 0;list-style-type:none;}
+        .ms-item{display: inline-block; font-size: 20px; margin-right: 5px;}
+        .ms-item>a{color:rgba(1,1,1,0.5)}
+        .ms-item>a:hover{color:#F62A00}
     </style>
-
     <div class="container-fluid container">
         <div class="row row-centered">
-             <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="text-center">
-                    {% if moderator.profile.user_photo != '' %}
-                        <img id="moderator-photo" src="/media/{{ moderator.profile.user_photo }}" alt="avatar" width="200" />
-                    {% else %}
-                        <img id="moderator-photo" src="{% static 'static/img/default_profile.png' %}" width="60%" />
-                    {% endif %}
-                </div>
-            <hr width="100%">
-                <div class="moderator-chars">
-                    <div id="moderator-rate">
-                        <label class="col-md-5">{% trans 'Rate' %}:&nbsp;{{ moderator.profile.user_rate }}</label>
+            <div class="pull-left col-xs-9">
+                <div class="col-xs-12" style="background: lightgrey;">
+                    <div class="text-center col-xs-3">
+                        {% if moderator.profile.user_photo != '' %}
+                            <img id="moderator-photo" src="/media/{{ moderator.profile.user_photo }}" alt="avatar"  width="128px" height="128px"/>
+                        {% else %}
+                            <img id="moderator-photo" src="{% static 'static/img/default_profile.png' %}" width="128px" height="128px"/>
+                        {% endif %}
+                        <div class="col-xs-6">{% trans 'Rate' %}:&nbsp;{{ moderator.profile.user_rate }}</div>
+                        <div class="col-xs-6">{% trans 'Articles' %}:&nbsp;{{ articles_count }}</div>
                     </div>
-{#                    <hr width="100%">#}
-                    <div id="moderator-articles">
-                        <label class="col-md-5">{% trans 'Articles' %}:&nbsp;{{ articles_count }}</label>
-                    </div>
-                </div>
-            <hr width="100%">
-                 <div class="moderator-data">
-                        <div id="moderator-socials">
-                            <div class="moderator-facebook">
-                                {% trans 'Facebook:' %}&nbsp;<a target="_blank" href="https://facebook.com/{{ god.facebook }}">{{ god.facebook }}</a>
-                            </div>
-                            <div class="moderator-twitter">
-                                {% trans 'Twitter:' %}&nbsp;<a target="_blank" href="https://twitter.com/{{ god.twitter }}">{{ god.twitter }}</a>
-                            </div>
-                            <div class="moderator-vk">
-                                {% trans 'VK:' %}&nbsp;<a target="_blank" href="https://vk.com/{{ god.vk }}">{{ god.vk }}</a>
-                            </div>
-                            <div class="moderator-linkedin">
-                                {% trans 'Linkedin:' %}&nbsp;<a target="_blank" href="https://linkedin.com/in/{{ god.linkedin }}/">{{ god.linkedin }}</a>
-                            </div>
-                            <div class="moderator-email">
-                                {% trans 'E-mail:' %}&nbsp;<a target="_blank" href="mailto:{{ god.personal_email }}">{{ god.personal_email }}</a>
-                            </div>
+                    <div class="moderator-chars col-xs-9">
+                        <div class="md-text col-xs-12" style="background: lightblue;">
+                            123<br>
+                            123<br>
+                            123<br>
+                            123<br>
+                            123<br>
+                            123<br>
+                            123<br>
+                            123<br>
+                        </div>
+                        <div id="moderator-socials" class="col-xs-12">
+                            <ul class="moderator-socials">
+                                {% if god.values.0.facebook != '' %}
+                                    <li class="ms-item">
+                                        <a target="_blank" href="https://facebook.com/{{ god.facebook }}/">
+                                            <span class="fa fa-facebook-square"></span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if current_user.god.values.0.twitter != '' %}
+                                    <li class="ms-item">
+                                        <a target="_blank" href="https://instagram.com/{{ current_user.god.values.0.twitter }}/">
+                                            <span class="fa fa-twitter"></span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if current_user.god.values.0.linkedin != '' %}
+                                    <li class="ms-item">
+                                        <a target="_blank" href="https://linkedin.com/in/{{ current_user.god.values.0.linkedin }}/">
+                                            <span class="fa fa-linkedin"></span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if current_user.god.values.0.vk != ''%}
+                                    <li class="ms-item">
+                                        <a target="_blank" href="https://vk.com/{{ current_user.god.values.0.vk }}/">
+                                            <span class="fa fa-vk"></span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if current_user.god.values.0.instagram != '' %}
+                                    <li class="ms-item">
+                                        <a target="_blank" href="https://instagram.com/{{ current_user.god.values.0.instagram }}/">
+                                            <span class="fa fa-instagram"></span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
                         </div>
                     </div>
-             <hr width="100%">
-            </div>
-            <div class="col-md-7 col-sm-6 col-xs-12 personal-info">
+                </div>
+                <div class="col-xs-12 personal-info">
                 <h3>Articles&nbsp;{{ moderator.id|get_article_author }}</h3>
                 <div class="load-more">
                     <div class="endless_page_template">
@@ -150,6 +111,10 @@
                         {% include page_template %}
                     </div>
                    </div>
+            </div>
+            </div>
+            <div class="pull-right col-xs-3">
+                <div style="float: left; margin-top:0; width: 300px;height: 250px;background-color: #00fff9"></div>
             </div>
         </div>
     </div>

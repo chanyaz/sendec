@@ -54,7 +54,10 @@ def check_reading_category(value_cid, value_username):
 def get_article_author(value):
     first_name = User.objects.get(id=value).first_name
     second_name = User.objects.get(id=value).last_name
-    return first_name.capitalize()+" "+second_name.capitalize()
+    if first_name and second_name:
+        return first_name.capitalize()+" "+second_name.capitalize()
+    else:
+        return User.objects.get(id=value).username
 
 
 @register.filter(name="get_portal_name")
@@ -139,9 +142,9 @@ def count_watches(value):
 
 @register.filter(name="check_format")
 def check_format(value):
-    if str(value)[-4:] in ['.jpg', '.png', 'jpeg']:
+    if str(value).lower()[-4:] in ['.jpg', '.png', 'jpeg']:
         return True
-    elif str(value)[-4:] in ['.mp4']:
+    elif str(value).lower()[-4:] in ['.mp4']:
         return False
 
 

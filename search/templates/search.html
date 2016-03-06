@@ -3,8 +3,6 @@
 {% load my %}
 {% load i18n %}
 {% block search %}
-{#    <script src="{% static 'static/js/jquery.js' %}"></script>#}
-{#    <script src="{% static 'static/js/jquery-ui.js' %}"></script>#}
     <script type="text/javascript">
         function validate_form ( ) {
         	valid = true;
@@ -17,129 +15,67 @@
     </script>
     <style>
         ul.tabs{list-style-type: none;margin: 0;padding: 0;}
-        ul.tabs li{
-            border: gray solid 1px;
-            border-bottom: none;
-            float: left;
-            margin: 0 .25em 0 0;
-            padding: .25em .5em;
-        }
-        ul.tabs li a{color: gray;font-weight: bold;text-decoration: none;}
-{#        ul.tabs li.active{background: gray;}#}
-        ul.tabs li.active a{color: white;}
-        .clr{clear: both;}
-        .moderator{width: 50%;height: auto;padding-bottom: 4em;}
-        .photo{height: 50px;float: left;width: 25%;border: solid 1px red;}
-        .content{float: right;width: 75%;height: 50px;border: solid 1px purple;}
-        .moderator-info{margin-left: -12%;list-style-type: none;}
-        .moderator-info-item{float: left;}
-        .search{width: 100%; height: inherit; min-height: 800px;}
-        .left-side-search{width: 70%; height: inherit; float: left;}
-        .mobile-side-search{height: inherit;}
-        .search-error-text{text-align: center;}
-        .no_results{margin-left: 25%;}
-        #input-search-field{width: 60%; float: left;}
-        #input-search-submit{margin-left: 1%;}
-        .popular-news{margin-top: 3%; height: auto;}
-        .text-top-popular{text-align: center;}
-        #pop-news{width: 90%; margin-left: 1%; height: auto; float: left;}
-        .cur_pop_news{float: left; width: 48%; height: 300px; margin: 0 1%; position: relative;}
-        .image{opacity:1; width: 100%; height: 150px; background: url('{% static 'static/img/bn-2.png' %}') no-repeat center;}
-        #match-variation{text-align: left; font-size: 20px;}
-        #mobile-match-variation > h1{font-size: 20px; color: black; margin: 0; padding: 0;}
-        .current_searched{
-            margin-bottom: 3em;
-            height: 13em;
-            font-family: Georgia, Times, "Times New Roman", serif;
-            border-bottom: solid 1px lightgrey;
-        }
-
-        .search-news-block{
-            height: inherit;
-            margin-bottom: 20px;
-        }
-        .news_search_template{margin-bottom: 50px;}
-
-        .current_searched_cover{
-            width: 30%;
-            height: 10em;
-{#            max-height:10em;#}
-            float: left;
-        }
-        .current_searched_content_title > a{ color:black }
-        .current_searched_content_title > a:hover{ color:#F62A00; }
-
-        .md-bt-ct{position:relative; margin-top:2%;}
-        .current_searched_content_post{
-            margin-top: 3%;
-            font-size: 13px;
-        }
-        .current_searched_content_author{
-            position: relative;
-            float: left;
-        }
-        .current_searched_content_author a{
-            text-decoration: none;
-            color: #F62A00;
-        }
-        .current_searched_content_author a:hover{
-            text-decoration: none;
-            color: #1E656D;
-        }
-
-        .right-side-block{width: 28%; float: right;}
-
-        .latest-news-cover{float: left; height: 50%; width: 25%;}
-        .latest-news-content{height:60px;padding-left: 5%; width:75%; float: right; font-family: Georgia, Times, "Times New Roman", serif}
-        .latest-news-content > a{color: #F62A00;text-decoration: none;}
-        .latest-news-content > a:hover{color: #1E656D;text-decoration: none;}
-
-        .latest-current-news{margin-top: 5%; height: 60px; border-bottom: dotted 1px lightgrey}
-        .latest-header{text-align: center;}
-
-        .current_searched_content{
-            height:10em;
-        }
-        .current_searched_content_top{
-            position: relative;
-            height: 87%;
-            margin-left: 35%;
-        }
-        .searched-category-name{
-            z-index: 900;
-            float: right;
-        }
-        .searched-category-name-content{
-                background-color: #1E656D;
-                color: ivory;
-                font-family: Georgia, Times, "Times New Roman", serif;
-                text-transform: uppercase;
-        }
-        .searched-category-link:hover{
-            text-decoration: none;
-        }
-
-        .searched_company_name{
-            margin-bottom: 5%;
-            height: 3em;
-        }
-    .company-cover{
-        float: left;
-    }
-    .company-name{
-        float: left;
-        margin-top: 2%;
-        margin-left: 20%;
-    }
-    .company-articles{
-        float: right;
-        margin-top: 2%;
-    }
-    .tabs-list{margin-bottom: 20px;}
-    #tabs > ul > li > a.mobile-search-list-link{padding: 0}
-    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{background: #F1F3CE; border: none;}
-    .mobile-list-item{width:33%;}
-    .mobile-search-list-link{padding-left:0; font-size:12px;}
+        ul.tabs li{border:gray solid 1px;border-bottom:none;float:left;margin:0 .25em 0 0;padding:.25em .5em;}
+        ul.tabs li a{color:gray;font-weight:bold;text-decoration:none}
+        ul.tabs li.active a{color:white}
+        .clr{clear:both;}
+        .moderator{width:50%;height:auto;padding-bottom:4em}
+        .content{float:right;width:75%;height:100px;}
+        .moderator-info{padding-left: 0; margin-left: -4%;list-style-type:none;}
+        .moderator-info-item{width:100%;}
+        .username > h1{color:black; font-size:20px;padding-bottom: 8px; margin-top:8px;}
+        .search{width:100%;height:inherit;min-height:800px}
+        .left-side-search{width:70%;height:inherit;float:left}
+        .mobile-side-search{height:inherit}
+        .search-error-text{text-align:center}
+        .no_results{margin-left:25%}
+        #input-search-field{width:60%;float:left}
+        #input-search-submit{margin-left:1%}
+        .popular-news{margin-top:3%;height:auto}
+        .text-top-popular{text-align:center}
+        #pop-news{width:90%;margin-left:1%;height:auto;float:left}
+        .cur_pop_news{float:left;width:48%;height:300px;margin: 0 1%;position:relative}
+        .image{opacity:1;width:100%;height:150px;background:url('{% static 'static/img/bn-2.png' %}') no-repeat center}
+        #match-variation{text-align:left;font-size:20px}
+        #match-variation>h1{font-size:25px;color:black;margin:0;padding:0}
+        #mobile-match-variation>h1{font-size:20px;color:black;margin:0;padding:0}
+        .current_searched{margin-bottom:3em;height:13em;font-family:Georgia,Times,"Times New Roman",serif;border-bottom:solid 1px lightgrey}
+        .search-news-block{height:inherit;margin-bottom:20px}
+        .news_search_template{margin-bottom:50px}
+        .current_searched_cover{width:30%;height:10em;float:left}
+        .current_searched_content_title>a{color:black}
+        .current_searched_content_title>a:hover{color:#F62A00}
+        .md-bt-ct{position:relative;margin-top:2%;}
+        .current_searched_content_post{margin-top:3%;font-size:13px;}
+        .current_searched_content_author{position:relative;float:left;}
+        .current_searched_content_author a{text-decoration:none;color:#F62A00;}
+        .current_searched_content_author a:hover{text-decoration:none;color:#1E656D;}
+        .right-side-block{width:28%;float:right;}
+        .latest-news-cover{float:left;height:100%;width:25%;}
+        .latest-news-content{height:60px;padding-left:5%;width:75%;float:right;font-family:Georgia,Times,"Times New Roman",serif}
+        .latest-news-content>a{color:black;text-decoration:none;}
+        .latest-news-content>a:hover{color: #F62A00;text-decoration: none;}
+        .latest-current-news{margin-top:5%;height:60px;border-bottom:dotted 1px lightgrey}
+        .latest-header{text-align:center;}
+        .current_searched_content{height:10em;}
+        .current_searched_content_top{position:relative;height:87%;margin-left:35%;}
+        .searched-category-name{z-index:900;float:right;}
+        .searched-category-name-content{background-color:#F62A00;color:ivory;font-family:Georgia,Times,"Times New Roman",serif;text-transform:uppercase;}
+        .searched-category-link:hover{text-decoration:none;}
+        .searched_company_name{margin-bottom:5%;height:3em;}
+        .company-cover{float:left;}
+        .company-name{float:left;margin-top:2%;margin-left:20%;}
+        .company-articles{float:right;margin-top:2%;}
+        .tabs-list{margin-bottom: 20px;}
+        #tabs > ul > li > a.mobile-search-list-link{padding: 0}
+        .tabs-list > li > a,
+        .tabs-list > li > a:hover,
+        .tabs-list > li > a:focus{background: #F1F3CE; border: none;}
+        .mobile-list-item{width:33%;}
+        .mobile-search-list-link{padding-left:0; font-size:12px;}
+        .ms-item{display: inline-block; font-size: 17px; margin-right: 5px;}
+        .ms-item>a{color:black}
+        .ms-item>a:hover{color:#F62A00}
     </style>
     <div class="container-fluid container">
         <div class="row row-centered">
@@ -281,15 +217,60 @@
                                             {% for current_user in users_matches %}
                                                 <div class="moderator"
                                                      onclick="location.href='/profile/m/{{ current_user.username }}/';">
-                                                    <div class="photo"></div>
+                                                {% if current_user.profile.user_photo != '' %}
+                                                    <div class="photo" style="float:left;border: solid 1px red;background: url('{{ current_user.profile.avatar }}') no-repeat center; background-size: cover; width: 25%; height: 100px;"></div>
+                                                {% else %}
+                                                    <div class="photo" style="float:left;border: solid 1px red;width: 25%; height: 100px;">
+                                                    <span class="glyphicon glyphicon-user" style="font-size: 7em"></span>
+                                                    </div>
+                                                {% endif %}
                                                     <div class="content">
-                                                        <div class="username">{{ current_user.username }}</div>
+                                                        <div class="username" style="padding-left: 10%;"><h1>{{ current_user.id|get_article_author }}</h1></div>
                                                         <ul class="moderator-info">
-                                                            <li class="moderator-info-item">
-                                                                <div class="articles">{% trans 'Articles' %}:&nbsp;{{ current_user.profile.written_articles }}&nbsp;|&nbsp;</div>
+                                                            <li class="moderator-info-item mii-bottom">
+                                                                <ul class="moderator-socials">
+                                                                    <li class="ms-item"><div class="articles">{% trans 'Articles' %}:&nbsp;{{ current_user.profile.written_articles }}&nbsp;|&nbsp;</div></li>
+                                                                    <li class="ms-item"><div class="articles">{% trans 'Rate' %}:&nbsp;{{ current_user.profile.user_rate }}</div></li>
+                                                                </ul>
                                                             </li>
                                                             <li class="moderator-info-item">
-                                                                <div class="articles">{% trans 'Rate' %}:&nbsp;{{ current_user.profile.user_rate }}</div>
+                                                                <ul class="moderator-socials">
+                                                                    {% if current_user.god.values.0.facebook != '' %}
+                                                                        <li class="ms-item">
+                                                                            <a target="_blank" href="https://facebook.com/{{ current_user.god.values.0.facebook }}/">
+                                                                                <span class="fa fa-facebook"></span>
+                                                                            </a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                    {% if current_user.god.values.0.twitter != '' %}
+                                                                        <li class="ms-item">
+                                                                            <a target="_blank" href="https://instagram.com/{{ current_user.god.values.0.twitter }}/">
+                                                                                <span class="fa fa-twitter"></span>
+                                                                            </a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                    {% if current_user.god.values.0.linkedin != '' %}
+                                                                        <li class="ms-item">
+                                                                            <a target="_blank" href="https://linkedin.com/in/{{ current_user.god.values.0.linkedin }}/">
+                                                                                <span class="fa fa-linkedin"></span>
+                                                                            </a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                    {% if current_user.god.values.0.vk != ''%}
+                                                                        <li class="ms-item">
+                                                                            <a target="_blank" href="https://vk.com/{{ current_user.god.values.0.vk }}/">
+                                                                                <span class="fa fa-vk"></span>
+                                                                            </a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                    {% if current_user.god.values.0.instagram != '' %}
+                                                                        <li class="ms-item">
+                                                                            <a target="_blank" href="https://instagram.com/{{ current_user.god.values.0.instagram }}/">
+                                                                                <span class="fa fa-instagram"></span>
+                                                                            </a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                </ul>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -312,14 +293,13 @@
                             <div class="latest-titles">
                                 {% for i in latest_news %}
                                     <div class="latest-current-news">
-                                        <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
+                                        <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}/">
                                             <div class="latest-news-cover"
                                              style="background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: contain;"></div>
                                         </a>
                                         <div class="latest-news-content">
                                             <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                                <span id="lnt{{ i.id }}"
-                                                      class="title">
+                                                <span id="lnt{{ i.id }}">
                                                     {% if lang == 'eng' %}
                                                         {{ i.news_title_english }}
                                                     {% elif lang == 'rus' %}
@@ -340,8 +320,4 @@
             </div>
         </div>
     </div>
-
-
-{#    {% include 'footer.html' %}#}
-
 {% endblock %}

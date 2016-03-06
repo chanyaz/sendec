@@ -4,42 +4,37 @@
 {% load i18n %}
 
 <style>
-    .clear-both{height: 10px;}
-    .current_searched_content_title{
-        color: white;
-        font-family: Georgia, Times, "Times New Roman", serif;
-        font-size: 22px;
-    }
-        .current_searched{
-            margin-bottom: 3em;
-            height: 13em;
-            font-family: Georgia, Times, "Times New Roman", serif;
-            border-bottom: solid 1px lightgrey;
-        }
-        .current_searched_cover{width: 30%;height: 10em;float: left;}
-        .current_searched_content_title > a{ color:black }
-        .current_searched_content_title > a:hover{ color:#F62A00; }
-        .md-bt-ct{position:relative; margin-top:2%;}
-        .current_searched_content_post{margin-top: 3%;font-size: 13px;}
-        .current_searched_content_author{position: relative;float: left;}
-        .current_searched_content_author a{text-decoration: none;color: #F62A00;}
-        .current_searched_content_author a:hover{text-decoration: none;color: #1E656D;}
-        .latest-news-content > a{color: #F62A00;text-decoration: none;}
-        .latest-news-content > a:hover{color: #1E656D;text-decoration: none;}
+{#    .current_searched_content_title{color: white;font-family: Georgia, Times, "Times New Roman", serif;font-size: 22px;}#}
+{#        .current_searched{margin-bottom: 3em;height: 13em;font-family: Georgia, Times, "Times New Roman", serif;border-bottom: solid 1px lightgrey}#}
+{#        .current_searched_cover{width: 30%;height: 10em;float: left;}#}
+{#        .current_searched_content_title > a{ color:black }#}
+{#        .current_searched_content_title > a:hover{ color:#F62A00; }#}
+{#        .md-bt-ct{position:relative; margin-top:2%;}#}
+{#        .current_searched_content_post{margin-top: 3%;font-size: 13px;}#}
+{#        .current_searched_content_author{position: relative;float: left;}#}
+{#        .current_searched_content_author a{text-decoration: none;color: #F62A00;}#}
+{#        .current_searched_content_author a:hover{text-decoration: none;color: #1E656D;}#}
+{#        .latest-news-content>a{color: #F62A00;text-decoration: none;}#}
+{#        .latest-news-content>a:hover{color: #1E656D;text-decoration: none;}#}
+{#        .current_searched_content{height:10em;}#}
+{#        .current_searched_content_top{position: relative;height: 87%;margin-left: 35%}#}
+{#        .searched-category-name{z-index: 900;float: right;}#}
+{#        .searched-category-name-content{background-color: #1E656D;color: ivory;font-family: Georgia, Times, "Times New Roman", serif;text-transform: uppercase}#}
+{#        .searched-category-link:hover{text-decoration: none;}#}
+        .current_searched{margin-bottom:3em;height:13em;font-family:Georgia,Times,"Times New Roman",serif;border-bottom:solid 1px lightgrey}
+        .current_searched_cover{width:30%;height:10em;float:left}
+        .current_searched_content_title>a{color:black}
+        .current_searched_content_title>a:hover{color:#F62A00}
+        .md-bt-ct{position:relative;margin-top:2%;}
+        .current_searched_content_post{margin-top:3%;font-size:13px;}
+        .current_searched_content_author{position:relative;float:left;}
+        .current_searched_content_author a{text-decoration:none;color:#F62A00;}
+        .current_searched_content_author a:hover{text-decoration:none;color:#1E656D;}
         .current_searched_content{height:10em;}
-        .current_searched_content_top{
-            position: relative;
-            height: 87%;
-            margin-left: 35%;
-        }
-        .searched-category-name{z-index: 900;float: right;}
-        .searched-category-name-content{
-                background-color: #1E656D;
-                color: ivory;
-                font-family: Georgia, Times, "Times New Roman", serif;
-                text-transform: uppercase;
-        }
-        .searched-category-link:hover{text-decoration: none;}
+        .current_searched_content_top{position:relative;height:87%;margin-left:35%;}
+        .searched-category-name{z-index:900;float:right;}
+        .searched-category-name-content{background-color:#F62A00;color:ivory;font-family:Georgia,Times,"Times New Roman",serif;text-transform:uppercase;}
+        .searched-category-link:hover{text-decoration:none;}
 </style>
 
 <div class="company_news" style="height: inherit; margin-bottom: 5%;">
@@ -49,11 +44,10 @@
         <div class="current_searched_content">
             <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}/">
                 <div class="current_searched_cover"
-                     style="
-                             {% thumbnail i.news_main_cover '350x210' as im %}
-                             background: url('{{ im.url }}') no-repeat center;
-                             {% endthumbnail %}
-                             background-size: cover;">
+                     style="background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
+                    {% thumbnail i.news_main_cover '350x210' as im %}
+                        <img src="{{ im.url }}" width="100%" height="100%" />
+                    {% endthumbnail %}
                 </div>
 
             </a>
@@ -61,7 +55,15 @@
                 <div id="current_searched_content_title_{{ i.id }}"
                      class="current_searched_content_title">
                     <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                        <b>{{ i.news_title }}</b>
+                        <b>
+                            {% if lang == 'eng' %}
+                                {{ i.news_title_english }}
+                            {% elif lang == 'rus' %}
+                                {{ i.news_title_russian }}
+                            {% else %}
+                                {{ i.news_title_chinese }}
+                            {% endif %}
+                        </b>
                     </a>
                 </div>
                 <div class="current_searched_content_post">
@@ -70,7 +72,7 @@
 
                 <div class="md-bt-ct">
                     <div class="current_searched_content_author">
-                        By&nbsp;--&nbsp;<a href="/search/?q={{ i.news_author }}">{{ i.news_author }}</a>
+                        By&nbsp;--&nbsp;<a href="/search/?q={{ i.news_author_id|get_username }}">{{ i.news_author_id|get_article_author }}</a>
                     </div>
                     <div class="current_searched_content_date">
                         &nbsp;|&nbsp;{{ i.news_post_date.date }}
@@ -78,6 +80,7 @@
                 </div>
 
             </div>
+
             <div class="searched-category-name">
                 <a class="searched-category-link" href="/news/{{ i.news_category_id }}/{{ i.id }}/">
                     <span class="searched-category-name-content">

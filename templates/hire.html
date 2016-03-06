@@ -11,7 +11,7 @@
         header{position: relative;z-index:1;}
         section{width:100%;height:100%}
         #head-back{width:100%;height:100%;
-            background: url('{% static "static/img/about/back-4.jpg" %}') no-repeat center;
+            background: url('{% static "static/img/about/career.jpg" %}') no-repeat center;
             -webkit-background-size: cover;
             background-size: cover;
             -webkit-filter: url(#blur);
@@ -108,45 +108,23 @@
         .bounce {@include animation(bounce 2s infinite);}
 
 
-        /********************* advert description *********************/
-        #advert-description{width:100%;height:100%;background:black;}
-        #ad-list{width:100%;padding-top:2%}
-        #adl-title{width:100%}
-        #adl-title>h1{font-size:26px;color:white;padding:0;margin:0;text-align: center}
-        #ads-desc{width:100%;margin-top:5%}
-        #add-left{width:50%;float:left}
-        #add-right{width:50%;float:right}
-        #add-l-title{width:100%;text-align: center}
-        #add-l-title>h2{font-size:20px;color:white;padding:0;margin:0}
-        #add-l-content{color:white;font-size:16px;width:60%;margin:2% 20%}
-        #add-l-content>p>a{color:#F62A00}
-        #add-l-content>p>a:hover{color:white}
-        #add-r-title{width:100%;text-align: center}
-        #add-r-title>h2{font-size:20px;color:white;padding:0;margin:0}
-        #add-r-content{color:white;font-size:16px;width:60%;margin:2% 20%}
-        /************************ STARTUPS *******************************/
-        #startups{position: relative}
-        #su{width:100%;height:100%;position: relative}
-        #su-back{
-            width:100%;
-            height:100%;
-            position:absolute;
-            background: url('{% static "static/img/about/back-5.jpg" %}') no-repeat center;
-            -webkit-background-size: cover;
-            background-size: cover;
-            -webkit-filter: url(#blur);
-            filter: url(#blur);
-            -webkit-filter: blur(1px);
-            filter: blur(1px);
-            filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='1');
-            -webkit-transition: 1s -webkit-filter linear;
-            transition: 1s filter linear;
-        }
-        #su-title{width:100%;text-align:center;position:absolute;}
-        #su-title>h1{color:white;margin:0;padding:0;margin-top:2%}
-        #su-content{color:white;font-size:20px;width:50%;left:45%;padding:2%;position:absolute;top:15%;border: solid 1px lightgrey; border-radius: 5px;}
-        #su-content>p>a{color:#F62A00}
-        #su-content>p>a:hover{color:white}
+        /********************* advantages *********************/
+        #advantages{width:100%;height:100%;background:white}
+
+        /********************* job team ***********************/
+        #job-team{width:100%;height:100%;background:black}
+
+        /********************** description *******************/
+        #description{width:100%;height:100%;background:white}
+
+        /********************** work **************************/
+        #work{width:100%;height:100%;background:black}
+
+        /********************* conditions *********************/
+        #conditions{width:100%;height:100%;background:white}
+
+        /*********************** resume ***********************/
+        #resume{width:100%;height:100%;background:black}
 </style>
 
 
@@ -158,68 +136,29 @@
             <div id="head-menu"><a href="/">{% trans 'BACK TO SITE' %}</a></div>
             <div id="head-logo">INSYDIA</div>
             <div id="head-title" class="col-xs-12 text-center">
-                <h1>{% trans 'MEDIA KIT' %}</h1>
+                <h1>{% trans 'CAREER' %}</h1>
             </div>
             <div id="head-description" class="col-xs-12 text-center">
-                    {% blocktrans %}You have selected the best place for your advertising{% endblocktrans %}
-                <p>{% blocktrans %}После прохождения бета-теста мы дополним данную страницу, указав всю необходиую информацтю для
-                рекламодателя.{% endblocktrans %}</p>
+                {% trans 'Join to our team and change the media industry' %}
             </div>
         </header>
-        <section id="advert-description">
-            <div id="ad-list">
-                <div id="adl-title">
-                    <h1>{% trans 'Types of advertisement' %}</h1>
-                </div>
-
-                <div id="ads-desc">
-                    <div id="add-left">
-                        <div id="add-l-title">
-                            <h2>{% trans 'Articles' %}</h2>
-                        </div>
-                        <div id="add-l-content">
-                            <p>{% blocktrans %}Если вы хотите заказать у нас статью о вашем продукте/проекте, напишите нам на почу
-                            <a href="mailto:advert@insydia.com">advert@insydia.com</a>.{% endblocktrans %}</p>
-                            <p>{% blocktrans %}Мы работаем над проектами любого типа и формата. Мы не имеем каких-либо рамок или
-                            особых требований. Единственное, что вы должны понимать - мы занимаемся
-                            созданием статей лишь в категориях Технологии, Развлечения, Автомобили, Космос,
-                            Био-технологии, при условии, что в них идёт упоминание о Hi-Tech.{% endblocktrans %}</p>
-                        </div>
-                    </div>
-                    <div id="add-right">
-                        <div id="add-r-title">
-                            <h2>{% trans 'Context' %}</h2>
-                        </div>
-                        <div id="add-r-content">
-                            {% blocktrans %}<p>Помимо написания статей мы предлагаем вам разместить у нас свою рекламу в виде
-                            контексного/информационного блока. В скором времени мы активируем данную
-                            функцию и Вы получите полный доступ к работе с рекламой этого типа.</p>
-                            <p>Данный вид рекламы заключается в том, что нет необходимости связываться с нами.
-                            Вы сами выбираете способ отображения, время, в течении которого будет вестись показ,
-                            а так же вам открываеся доступ к загрузке своей рекламы непосредственно на наш сервер
-                            в удобном для вас формате будь то изображение, анимация или видео-ролик.</p>
-                            <p>Более подробное описание и инструкции мы выложим сразу, как только включим эту
-                            услугу.</p>{% endblocktrans %}
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <section id="advantages">
+            <div class="section-title">advantages</div>
         </section>
-        <section id="startups">
-            <div id="su">
-                <div id="su-back"></div>
-                <div id="su-title">
-                    <h1>{% trans 'Advertisement for startups' %}</h1>
-                </div>
-                <div id="su-content">
-                    <p>{% blocktrans %}Если вы являетесь участником стартапа и хотите рассказать о своей задумке большому числу
-                    заинтересованных людей, то мы предлагаем вам на выгодных условиях начать своё восхождение в
-                    мир высоких технологий. Ваша реклама не будет отличаться от контента рекламодателей, у которых
-                    нету подобных привелегий. Вы будете на равне со всеми, что поможет вашему проекту.{% endblocktrans %}</p>
-                    <p>{% blocktrans %}По вопросам сотрудничества свяжитесь с нами по почте
-                    <a href="mailto:startups@insydia.com">startups@insydia.com</a>.{% endblocktrans %}</p>
-                </div>
-            </div>
+        <section id="job-team">
+            <div class="section-title">team</div>
+        </section>
+        <section id="description">
+            <div class="section-title">description</div>
+        </section>
+        <section id="work">
+            <div class="section-title">work</div>
+        </section>
+        <section id="conditions">
+            <div class="section-title">conditions</div>
+        </section>
+        <section id="resume">
+            <div class="section-title">resume</div>
         </section>
 
     <script src="{% static 'static/js/jquery.js' %}"></script>

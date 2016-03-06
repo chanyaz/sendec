@@ -7,16 +7,7 @@
     <style>
         .pagination ul{list-style-type: none;}
         .pagination li{margin-left: 1%;margin-right: 1%;float: left;}
-        .rss_portal_preview{
-            position: relative;
-            width: 20%;
-            min-height: 10em;
-            max-height: 28em;
-            float: left;
-            margin-left: 1%;
-            background: white;
-            opacity: 1;
-        }
+        .rss_portal_preview{position: relative;width: 20%;min-height: 10em;max-height: 28em;float: left;margin-left: 1%;background: white;opacity: 1}
         .rss_tech_middle{padding: 2%;}
         .rss_tech_title{text-align: center;margin-top: 1%;}
         .rss_tech_description{margin-top: 1%;}
@@ -217,12 +208,7 @@
         font-size: 18px;
         background: #fff;
         width: 60%;
-
-        /* Center slide text vertically */
-{#        display: -webkit-box;#}
         display: -ms-flexbox;
-{#        display: -webkit-flex;#}
-{#        display: flex;#}
         -webkit-box-pack: center;
         -ms-flex-pack: center;
         -webkit-justify-content: center;
@@ -232,13 +218,9 @@
         -webkit-align-items: center;
         align-items: center;
     }
-    .swiper-slide:nth-child(2n) {
-        width: 40%;
-    }
-    .swiper-slide:nth-child(3n) {
-        width: 20%;
-    }
-    .swiper-bottom-nav > ul > li > a{color: #F62A00;}
+        .swiper-slide:nth-child(2n) {width: 40%}
+        .swiper-slide:nth-child(3n) {width: 20%}
+        .swiper-bottom-nav > ul > li > a{color: #F62A00;}
     </style>
     <script>
         String.prototype.format = function(placeholders) {
@@ -292,8 +274,6 @@
                 }
             })
         }
-
-
         function followCurrentRssPortal(uuid,pid, id){
             $("#ajax-preloader").show();
             var csrftoken = getCookie('csrftoken');
@@ -311,8 +291,6 @@
                 }
             })
         }
-
-
         function userPortalsListEdit(){
             $('#all-portals-link').hide();
             $('.current_portal_item').attr('onclick', '');
@@ -340,8 +318,6 @@
             });
             location.reload();
         }
-
-
         function showCurrentPortalNews(portal){
             var homeLoader = $('body').loadingIndicator({
 					useImage: false
@@ -380,18 +356,18 @@
                         <li class="side-list-item active">
                             <a href="">
                                 <i class="fa fa-user"></i>
-                                <span class="side-text">My Feed</span>
+                                <span class="side-text">{% trans 'My Feed' %}</span>
                             </a>
                         </li>
                         <li class="side-list-item">
                             <a href="/favourite/">
                                 <i class="fa fa-thumbs-o-up"></i>
-                                <span class="side-text">Saved articles</span>
+                                <span class="side-text">{% trans 'Saved articles' %}</span>
                             </a>
                         </li>
                         <li>
                             <a>
-                                <span class="side-text">Portals</span>
+                                <span class="side-text">{% trans 'Portals' %}</span>
                             </a>
                             <!-- user portals list-->
                             <ul class="nav">
@@ -443,14 +419,8 @@
                                         <span class="swiper-portal-name">{{ current_portal.portal_id|get_rss_portal_name }}</span>
                                     </div>
                                 </div>
-{#                                <div class="swiper-slide swiper-slide-active"#}
-{#                                     style="width: 81px; margin-right: 30px; background: lightblue;">{{ current_portal.portal_id|get_rss_portal_name }}</div>#}
-{#                                <div class="swiper-slide swiper-slide-next"#}
-{#                                     style="width: 81px; margin-right: 30px; background: lightblue;">{{ current_portal.portal_id|get_rss_portal_name }}</div>#}
                             {% endfor %}
                         </div>
-                        <!-- Add Pagination -->
-                        <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
                     </div>
                 <div class="swiper-bottom-nav text-center">
                     <ul>
@@ -502,6 +472,7 @@
     <hr width="100%">
     <script>
     function showCurrentPortalData(i) {
+        {% if flavour != 'mobile' %}
         $.ajax({
             type: "POST",
             url: "/news/preview_portal="+i+"/",
@@ -515,8 +486,73 @@
                 $('.cur-pw-top').append("<div class='cur-pw-btn-close'><button class='btn-close-rss btn btn-primary' onclick='$('#fadeandscale-mobile').hide();'>Close</button></div>");
                 $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
             }
-        })
+        });
+        {% else %}
+           $.ajax({
+            type: "POST",
+            url: "/news/preview_portal_m="+i+"/",
+            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+            success: function (data) {
+                $('#fadeandscale-mobile').popup({
+                    autoopen: true,
+                    pagecontainer: '.container',
+                    transition: 'all 0.3s'
+                });
+                $('.cur-pw-top').append("<div class='cur-pw-btn-close'><button class='btn-close-rss btn btn-primary' onclick='$('#fadeandscale-mobile').hide();'>Close</button></div>");
+                $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
+            }
+        });
+        {% endif %}
     }
+    function loadCurrentArticle(i){
+            var homeLoader = $('body').loadingIndicator({
+					useImage: false
+				}).data("loadingIndicator");
+            if($('.loading-indicator-wrapper').hasClass('loader-hidden')){
+                $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');
+            }
+            {% if flavour != 'mobile' %}
+            $.ajax({
+                type: "POST",
+                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                url: "/news/gcr="+i+"/",
+                success: function(data){
+                    $parsedData = data.data;
+                    $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
+                    if ($parsedData.content.length === 0) {
+                        $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+                    else {
+                        $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+                    $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
+                    $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
+                    $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
+                    homeLoader.hide();
+                }
+            });
+            {% else %}
+                $.ajax({
+                type: "POST",
+                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                url: "/news/gcr_m="+i+"/",
+                success: function(data){
+                    $parsedData = data.data;
+                    $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
+                    if ($parsedData.content.length === 0) {
+                        $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+                    else {
+                        $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+                    $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
+                    $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
+                    $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
+                    homeLoader.hide();
+                }
+            });
+            {% endif %}
+        }
     function hideCurrentRssPortal(){
         $('#fadeandscale').hide();
         $('#fadeandscale-mobile').popup('hide');

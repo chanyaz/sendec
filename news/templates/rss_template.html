@@ -1,11 +1,8 @@
 {% load endless %}
 {% load my %}
 {% load staticfiles %}
-{% load jsonate_tags %}
 {% load thumbnail %}
-
 <div class="any40items" style="height: inherit;">
-
 {% paginate 20 new_user_news %}
     {% for i in new_user_news %}
         {% if flavour != 'mobile' %}

@@ -53,7 +53,7 @@ urlpatterns = patterns('',
 
 
     url(r'^about/', include('news.urls')),
-    url(r'^about', 'news.views.render_about_page'),
+    url(r'^about', 'news.views.render_contacts_page'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^advert/', include('advert.urls')),
     url(r'^api/', include('api.urls')),
@@ -65,6 +65,7 @@ urlpatterns = patterns('',
 
     url(r'^ext/', include("news.urls")),
     url(r'^favourite/', include('favourite.urls')),
+    url(r'^job/', 'news.views.render_job_page'),
     url(r'^news/', include('news.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^news/', include('news.urls')),

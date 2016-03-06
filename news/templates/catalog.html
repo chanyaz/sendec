@@ -5,43 +5,18 @@
 {% load my %}
 {% block catalog %}
     <style>
-    #catalog{min-height:100%; padding-bottom:2.5em; position: relative;}
-        .catalog-left{float: left; width: 18%; position: fixed;}
-        .catalog-right{float: right; width: 78%; background: white;padding-left: 15px;}
-    .private-top {
-          position: relative;
-          margin-top: -2%;
-          width: 100%;
-          height: 400px;
-      }
-      .private-top-background{
-          position: absolute;
-          width: 100%;
-          height: 400px;
-          background: url('{% static 'static/img/rss/top-back-12jpg' %}') no-repeat center;
-          opacity: 1;
-        }
-        .private-top-content{position: absolute; height: 100%;}
+        #catalog{min-height:100%;padding-bottom:2.5em;position:relative}
+        .catalog-left{float:left;width:18%;position:fixed}
+        .catalog-right{float:right;width:78%;background:white;padding-left:15px}
+        .private-top{position:relative;margin-top:-2%;width:100%;height:400px}
+        .private-top-background{position: absolute;width:100%;height:400px;background:url('{% static 'static/img/rss/top-back-12jpg' %}') no-repeat center;opacity: 1}
+        .private-top-content{position: absolute; height:100%;}
         .private-top-title{margin-top:1%;}
-        .private-top-title > h1{
-            color: ivory;
-        }
+        .private-top-title>h1{color:ivory}
         .private-top-search{margin-top:5%;}
-        #bottom-counter{
-            position: absolute;
-            bottom: 0;
-        }
-        #bottom-counter > h4{
-            color: ivory;
-        }
-
-        .current-popular-portal{
-            width: 24%;
-            height: 200px;
-            float: left;
-            margin-right: 5px;
-            margin-bottom: 15px;
-        }
+        #bottom-counter{position:absolute;bottom:0}
+        #bottom-counter>h4{color:ivory}
+        .current-popular-portal{width:24%;height:200px;float:left;margin-right:5px;margin-bottom:15px}
         .portal-picture{width:100%;height:150px;}
         .mobile-portal-picture{width:100%;height:120px;}
         .portal-name{position:absolute;bottom:0;}
@@ -51,122 +26,35 @@
         .portal-footer{position:absolute;bottom:0;}
         .mobile-portal-footer{bottom:0;}
         .portal-link>h3{font-size: 16px;color: #F62A00;}
-
-
-        #left-control-portals{
-            position: fixed;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            z-index: 989;
-            height: 100%;
-            margin-top: -5.5%;
-            float: left;
-            width: 16.1%;
-            left: 0;
-        }
-
-
-
-        #browser{
-            width: 100%;
-            float: right;
-            position: relative;
-            min-height: 300px;
-        }
-
-
-        #browser-main-title{
-            width: 100%;
-            text-align: center;
-            font-family: Georgia, Times, "Times New Roman", serif;
-            font-size: 16px;
-        }
-
-        #browser-middle{
-            width: 100%;
-            border: solid 1px red;
-        }
-
-        .category-main-title{
-            position: relative;
-            width: 100%;
-            font-family:Georgia, Times, "Times New Roman", serif;
-            font-size: 16px;
-            color: white;
-            text-align: center;
-        }
-        #fadeandscale {
-            background: white;
-            width: 50%;
-            height: 90%;
-            overflow-y: scroll;
-        -webkit-transform: scale(0.8);
-           -moz-transform: scale(0.8);
-            -ms-transform: scale(0.8);
-                transform: scale(0.8);
-        }
-        .popup_visible #fadeandscale {
-            -webkit-transform: scale(1);
-               -moz-transform: scale(1);
-                -ms-transform: scale(1);
-                    transform: scale(1);
-        }
-        .cur-pw-item > li{width:100%; height:inherit; margin-bottom: 15px;}
-        .cur-pw-ar-cover{float: left; width: 30%;}
-        .cur-pw-ar-content{float: right; width: 70%;}
-        .cont-cover{width:100%; height: 100px; float: left;}
-        .cont-cover:hover{cursor:pointer;}
-        .cur-pw-td{color: white;overflow-y:scroll;}
-        .cur-pw-right{
-            top: 80%;
-            color: white;
-            position: absolute;
-            text-align: center;
-        }
-        .cur-pw-left{
-            width: 100%;
-            padding: 0 5%;
-            margin-top: 2%;
-            font-family: Georgia,Times,sans-serif;
-            font-size: 17px;
-        }
-        .cur-pw-left img{
-            max-height: 800px;
-            max-width: 100%;
-            height: inherit;
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
+        #left-control-portals{position:fixed;overflow-y:scroll;overflow-x:hidden;z-index:989;height:100%;margin-top:-5.5%;float:left;width:16.1%;left:0}
+        #browser{width:100%;float:right;position:relative;min-height:300px}
+        #browser-main-title{width:100%;text-align:center;font-family:Georgia,Times,"Times New Roman",serif;font-size:16px}
+        #browser-middle{width:100%;border:solid 1px red}
+        .category-main-title{position:relative;width:100%;font-family:Georgia,Times,"Times New Roman", serif;font-size:16px;color:white;text-align:center}
+        #fadeandscale{background:white;width:50%;height:90%;overflow-y:scroll;-webkit-transform:scale(0.8);-moz-transform:scale(0.8);-ms-transform:scale(0.8);transform:scale(0.8)}
+        .popup_visible #fadeandscale{-webkit-transform:scale(1);-moz-transform:scale(1);-ms-transform:scale(1);transform:scale(1)}
+        #fadeandscale-mobile{background:white;width:100%;height:100%;overflow-y:scroll;-webkit-transform:scale(1);-moz-transform:scale(1);-ms-transform:scale(1);transform:scale(1)}
+        .popup_visible #fadeandscale-mobile{-webkit-transform: scale(1);-moz-transform: scale(1);-ms-transform: scale(1);transform: scale(1)}
+        .cur-pw-item>li{width:100%;height:inherit;margin-bottom:15px}
+        .cur-pw-ar-cover{float:left;width:30%}
+        .cur-pw-ar-content{float:right;width:70%}
+        .cont-cover{width:100%;height:100px;float:left}
+        .cont-cover:hover{cursor:pointer}
+        .cur-pw-td{color:white;overflow-y:scroll}
+        .cur-pw-right{top:80%;color:white;position:absolute;text-align:center}
+        .cur-pw-left{width:100%;padding:0 5%;margin-top:2%;font-family:Georgia,Times,sans-serif;font-size:17px}
+        .cur-pw-left img{max-height:800px;max-width:100%;height:inherit;margin-left:auto !important;margin-right:auto !important}
         .cur-pw-top{position: relative;}
-        .cur-pw-cover{
-            width:100%;
-            height: 150px;
-        }
+        .cur-pw-cover{width:100%;height:150px}
         .fl-btn{width:100%;}
-        .cur-pw-background{width: 100%; height: 200px; background: url('{% static 'static/img/rss/top-back-12jpg' %}') no-repeat center; background-size: cover;}
-        .cur-pw-btn-fl{position: absolute;bottom:0;right:0;}
-        .cur-pw-btn-bck{position: absolute;bottom:0;left:0;}
-
-        .item-active{background: #F62A00; color: white;}
-        .item-active:hover{background: #F62A00; color: white;}
-
-    .notification{
-        position: fixed;
-        z-index: 100002;
-        background: #F62A00;
-        width: 30%;
-        height: 50px;
-        top: 25%;
-        left: 35%;
-    }
-    .notify-text{
-
-        color: white;
-    }
-
+        .cur-pw-background{width:100%;height:200px;background:url('{% static 'static/img/rss/top-back-12jpg' %}') no-repeat center; background-size: cover;}
+        .cur-pw-btn-fl{position:absolute;bottom:0;right:0}
+        .cur-pw-btn-bck{position:absolute;bottom:0;left:0}
+        .item-active{background:#F62A00;color:white}
+        .item-active:hover{background:#F62A00;color: white}
+        .notification{position:fixed;z-index:100002;background:#F62A00;width:30%;height:50px;top:25%;left:35%}
+        .notify-text{color:white}
     </style>
-
-
     <div id="catalog" class="container-fluid container col-xs-12">
         {% if flavour != 'mobile' %}
         <div class="catalog-left">
@@ -276,21 +164,21 @@
             </div>
         </div>
     </div>
-
-
+{% if flavour != 'mobile' %}
     <div id="fadeandscale" class="fadeandscale">
         <div class="cur-pw-content"></div>
     </div>
+{% else %}
+    <div id="fadeandscale-mobile" class="fadeandscale">
+        <div class="cur-pw-content-mobile"></div>
+    </div>
+{% endif %}
     <div class="notification" hidden>
         <div class="notify-text text-center"></div>
     </div>
-
-    <script src="{% static 'static/js/jquery.ba-hashchange.min.js' %}"></script>
-{#    <script src="{% static 'static/js/dynamicpage.js' %}"></script>#}
-
-
     <script src="//cdn.rawgit.com/vast-engineering/jquery-popup-overlay/1.7.11/jquery.popupoverlay.js"></script>
     <script>
+        {% if flavour != 'mobile' %}
         function showCurrentPortalData(i) {
             $.ajax({
                 type: "POST",
@@ -306,11 +194,25 @@
                 }
             })
         }
-     </script>
-
-
-
-    <script>
+        {% else %}
+            function showCurrentPortalData(i) {
+            $.ajax({
+                type: "POST",
+                url: "/news/preview_portal_m="+i+"/",
+                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                success: function (data) {
+                    $('#fadeandscale-mobile').popup({
+                        autoopen: true,
+                        pagecontainer: '.container',
+                        transition: 'all 0.3s'
+                    }).css({
+                        'background': 'white'
+                    });
+                    $('.cur-pw-content-mobile').html(data.data).replace('{by}', "{% trans 'By' %}");
+                }
+            })
+        }
+        {% endif %}
         $(document).ready(function(){
             $('.list-group-item').click(function(){
                 if($(this).hasClass('item-active')){}
@@ -319,11 +221,10 @@
                     $(this).addClass('item-active')
                 }
             })
-        })
-    </script>
-
-
-    <script>
+        });
+        function hideCurrentRssPortal(){
+            $('#fadeandscale-mobile').popup('hide');
+        }
         function loadCurrentCategoryPortals(i) {
             var homeLoader = $('body').loadingIndicator({
                 useImage: false
@@ -331,6 +232,7 @@
             if($('.loading-indicator-wrapper').hasClass('loader-hidden')){
                 $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');
             }
+            {% if flavour != 'mobile' %}
             $.ajax({
                 type: "POST",
                 data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
@@ -340,10 +242,20 @@
                 }
             }).done(function () {
                 homeLoader.hide();
-            })
+            });
+            {% else %}
+                $.ajax({
+                type: "POST",
+                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                url: "/news/catalog/gcrc_m=" + i + "/",
+                success: function (data) {
+                    $('.portals-list').html(data.data);
+                }
+            }).done(function () {
+                homeLoader.hide();
+            });
+            {% endif %}
         }
-    </script>
-    <script>
         function loadCurrentArticle(i){
             var homeLoader = $('body').loadingIndicator({
 					useImage: false
@@ -351,6 +263,7 @@
             if($('.loading-indicator-wrapper').hasClass('loader-hidden')){
                 $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');
             }
+            {% if flavour != 'mobile' %}
             $.ajax({
                 type: "POST",
                 data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
@@ -369,12 +282,28 @@
                     $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
                     homeLoader.hide();
                 }
-            })
+            });
+            {% else %}
+                $.ajax({
+                type: "POST",
+                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                url: "/news/gcr_m="+i+"/",
+                success: function(data){
+                    $parsedData = data.data;
+                    $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
+                    if ($parsedData.content.length === 0) {
+                        $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+                    else {
+                        $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+                    $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
+                    $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
+                    $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
+                    homeLoader.hide();
+                }
+            });
+            {% endif %}
         }
-
-
     </script>
-
-
-
 {% endblock %}

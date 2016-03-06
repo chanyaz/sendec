@@ -7,23 +7,9 @@
 {% block politics %}
     <style>
         .total-news-block{width: 100%; height: 100%;}
-        .total-top{
-            margin-bottom: 70%;
-            height:100%;
-        }
-        #latest-news{
-            cursor: pointer;
-            float: left;
-            width: 100%;
-            height: 400px;
-            position:relative;
-        }
-        .top-total-content{
-            height: 400px;
-            background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;
-            background-size: cover;
-        }
-
+        .total-top{margin-bottom: 70%;height:100%}
+        #latest-news{cursor: pointer;float: left;width: 100%;height: 400px;position:relative}
+        .top-total-content{height: 400px;background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;background-size: cover}
         @media(max-device-width: 767px){
             #latest-news{
                 height: 280px;
@@ -293,10 +279,6 @@
                                                     {% if i.news_main_cover|check_format == True %}
                                                         <div class="middle-news-cover"
                                                              style="cursor: pointer;">
-{#                                                                     height: 216px;#}
-{#                                                                     width: 384px;">#}
-            {#                                                                        background: url('/media/{{ i.news_main_cover }}') no-repeat center;#}
-            {#                                                                        background-size: cover;">#}
                                                             {% thumbnail i.news_main_cover '384x216' crop='center' as im %}
                                                                 <img src="{{ im.url }}" width="384px" height="216px"/>
                                                             {% endthumbnail %}
@@ -339,21 +321,8 @@
 
                         </div>
                         <div class="media-block">
-{##}
-{#                            <div class="latest-reviews">#}
-{#                                <div class="col-md-12">#}
-{#                                    {% thumbnail latest_review.news_main_cover 'x500' as im %}#}
-{#                                        <img src="{{ im.url }}" />#}
-{#                                    {% endthumbnail %}#}
-{#                                </div>#}
-{#                                <div class="review-title-back" style="position: absolute; width: 100%; height: 100px; bottom:0; background-color: black; opacity: 0.3;"></div>#}
-{#                                <div class="review-title" style="position: absolute; bottom: 5%; width: 100%; text-align: center; font-size: 40px; color: white;"><a href="">{{ latest_review.news_title }}</a></div>#}
-{#                            </div>#}
-
                             <hr width="100%">
-
                             <div class="google-news-right" style="margin-left: auto; margin-right: auto; width: 970px; height: 90px; background-color: #00fff9"></div>
-
                             <hr width="100%">
                             <div class="recently-news col-md-12">
                                 <div class="two-news col-xs-12 container">
@@ -373,7 +342,6 @@
                                             </a>
                                         </div>
                                         <div class="right-middle-top col-xs-12 col-md-3">
-{#                                             style="float: right; width: 28%; margin-left: 2%;"#}
                                             <div id="big-news-one" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
                                             <a href="/news/{{ total_bottom_news.0.news_post_date.year }}/{{ total_bottom_news.0.news_post_date.month }}/{{ total_bottom_news.0.news_post_date.day }}/{{ total_bottom_news.0.id }}/{{ total_bottom_news.0.slug }}">
                                                     <b>{{ total_bottom_news.0.news_title }}</b>
@@ -391,7 +359,6 @@
                                     <hr class="separator-line" width="100%">
                                     <div class="two-news-item col-md-12" style="margin-top: 50px;">
                                         <div class="right-middle-top col-md-3 col-xs-12">
-{#                                             style="float: left; width: 28%; margin-right: 2%; ">#}
                                             <div id="big-news-two" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
                                                 <a href="/news/{{ total_bottom_news.1.news_post_date.year }}/{{ total_bottom_news.1.news_post_date.month }}/{{ total_bottom_news.1.news_post_date.day }}/{{ total_bottom_news.1.id }}/{{ total_bottom_news.1.slug }}">
                                                     <b>{{ total_bottom_news.1.news_title }}</b>
@@ -437,8 +404,6 @@
                                                                              z-index:1;
                                                                              height: 250px;
                                                                              width: 100%;">
-{#                                                                             background: url('/media/{{ interest.0.news_main_cover }}') no-repeat center;#}
-{#                                                                             background-size: cover;">#}
                                                             {% thumbnail interest.0.news_main_cover '569x250' crop='center' as im %}
                                                                 <img src="{{ im.url }}" />
                                                             {% endthumbnail %}
@@ -466,8 +431,6 @@
                                                                              z-index:1;
                                                                              height: 250px;
                                                                              width: 100%;">
-{#                                                                             background: url('/media/{{ interest.0.news_main_cover }}') no-repeat center;#}
-{#                                                                             background-size: cover;">#}
                                                             {% thumbnail interest.1.news_main_cover '569x250' crop='center' as im %}
                                                                 <img src="{{ im.url }}" />
                                                             {% endthumbnail %}
@@ -497,8 +460,6 @@
                                                                              z-index:1;
                                                                              height: 250px;
                                                                              width: 100%;">
-{#                                                                             background: url('/media/{{ interest.0.news_main_cover }}') no-repeat center;#}
-{#                                                                             background-size: cover;">#}
                                                             {% thumbnail interest.2.news_main_cover '569x250' crop='center' as im %}
                                                                 <img src="{{ im.url }}" />
                                                             {% endthumbnail %}
@@ -526,8 +487,6 @@
                                                                              z-index:1;
                                                                              height: 250px;
                                                                              width: 100%;">
-{#                                                                             background: url('/media/{{ interest.0.news_main_cover }}') no-repeat center;#}
-{#                                                                             background-size: cover;">#}
                                                             {% thumbnail interest.3.news_main_cover '569x250' crop='center' as im %}
                                                                 <img src="{{ im.url }}" />
                                                             {% endthumbnail %}
@@ -561,7 +520,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="before-reviews container" style="margin-top: 3%;">
                                         {% for i in before_reviews %}
                                             <div class="col-md-4" >

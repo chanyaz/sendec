@@ -231,9 +231,10 @@ def check_username(request, username):
 def render_help_login(request):
     from password_reset.forms import PasswordRecoveryForm
     args = {
-        "username": User.objects.get(username=auth.get_user(request).username),
         "form": PasswordRecoveryForm,
     }
+    if auth.get_user(request).username:
+        args["username"] = User.objects.get(username=auth.get_user(request).username)
     args.update(csrf(request))
 
     args["background_url"] = "/static/static/img/login/{file_num}.jpg".format(file_num=randint(1, 27))

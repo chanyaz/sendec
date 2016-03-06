@@ -10,13 +10,13 @@ urlpatterns = patterns('',
     url(r'^change_portals_order/', 'news.views.change_rates'),
     url(r'^add_portals/', 'news.views.set_user_portals'),
     url(r'^about/', 'news.views.render_about_page'),
-    url(r'^contacts/', 'news.views.render_contacts_page'),
     url(r'^advertisers/', 'news.views.render_adertisers_page'),
     url(r'^send_report/', 'news.views.send_report'),
     url(r"^test_rendering/", "news.views.test_rendering"),
 
     url(r'^update_user_rss_news/', 'news.views.get_updated_rss'),
     url(r'^update_user_rss/', 'news.views.get_updated_user_rss'),
+    url(r'^gcr_m=(?P<news_id>\w+)/', 'news.views.get_current_rss_news_mobile'),
     url(r'^gcr=(?P<news_id>\w+)/', 'news.views.get_current_rss_news'),
 
     # External Transitions
@@ -69,6 +69,7 @@ urlpatterns = patterns('',
     url(r'^usernews/$', 'news.views.render_user_news'),
 
 
+    url(r'^catalog/gcrc_m=(?P<category_id>\d+)/', 'news.views.render_current_category_portals_mobile'),
     url(r'^catalog/gcrc=(?P<category_id>\d+)/', 'news.views.render_current_category_portals'),
     url(r'^catalog/', 'news.views.render_catalog'),
 
@@ -83,7 +84,9 @@ urlpatterns = patterns('',
 
 
 
+    url(r'^preview_portal_m=(?P<portal_id>\d+)/', 'news.views.popup_current_portal_mobile'),
     url(r'^preview_portal=(?P<portal_id>\d+)/', 'news.views.popup_current_portal'),
+    url(r'^preview_new_m/', 'news.views.popup_new_portal_mobile'),
     url(r'^preview_new/', 'news.views.popup_new_portal'),
 
 
@@ -92,7 +95,7 @@ urlpatterns = patterns('',
     url(r'^bio/', 'news.views.render_bio_news'),
 
     url(r'^companies/cs=(?P<company>\w+)', 'news.views.get_match_company'),
-    url(r'^companies/', 'news.views.render_companies_news'),
+    url(r'^companies/', view='news.views.render_companies_news'),
     # url(r'^/blink-to-company/(?P<company_name>\w+)', 'news.views.blink_to_company'),
     # url(r'^comp/gid=(?P<company_verbose>\w+)', 'news.views.get_company_id'),
 
@@ -109,7 +112,7 @@ urlpatterns = patterns('',
     url(r'^scar=(?P<rss_id>\w+)', 'news.views.set_current_news_as_read'),
     url(r'^arp&uid=(?P<uuid>[^/]+)&pid=(?P<pid>\w+)/', 'news.views.follow_current_rss_portal'),
     url(r'^rrp&uid=(?P<uuid>[^/]+)&pid=(?P<pid>\w+)/', 'news.views.remove_rss_portal_from_feed'),
-    url(r'^space/', 'news.views.render_space_news'),
+    url(r'^space/', view='news.views.render_space_news'),
 
 
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

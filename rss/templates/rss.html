@@ -3,57 +3,32 @@
 {% load my  %}
 {% load i18n %}
 {% block feed %}
-
     <style>
-    #feed{
-        height: 100%;
-        min-height: 50em;
-    }
-    #feeds-list{
-        float: left;
-        width:70%;
-    }
-    #feeds-table{
-        width: 100%;
-    }
-    .table-item{
-        height: 30px;
-    }
-    .table-item:hover{
-        background-color: #0fbfb3;
-    }
-        .channel-name{
-            font-weight: bold;
-            width: 50%;
-        }
-        .channel-today{
-            width: 25%;
-        }
-        .channel-week{
-            width: 25%;
-        }
-
-        #rss-company-form{
-            width:100%;
-            position: relative;
-        }
-    #company-name{
-        float: left;
-        width: 65%
-    }
-    #search-rss-company{
-        float: right;
-        width: 25%;
-    }
-
+        #feed{height:100%;min-height:50em}
+        .feed-title{width:100%;border-bottom:dashed 3px lightgrey;margin-bottom:10px}
+        .feed-title>h1{color:black;font-size:30px;padding:0;margin:0}
+        #feeds-list{float:left;width:70%}
+        #feeds-list>h4{color:black;font-size:20px;padding:0;margin:0}
+        #feeds-table{width:100%}
+        .table-item{height:30px}
+        .table-item:hover{background-color:#F62A00;color:white}
+{#        .table-item:hover a{color:white;}#}
+        .channel-name{font-weight:bold;width:50%;}
+        .channel-today{width:25%;}
+        .channel-week{width:25%;}
+        #rss-company-form{width:100%;position:relative;}
+        #company-name{float:left;width:65%}
+        #search-rss-company{background:#F62A00}
+        #search-rss-company:hover{background: #ff4c0e}
+        #search-rss-company{float:right;width:25%}
+        .news-title>a{color:black}
+        .news-title>a:hover{color:#F62A00}
     </style>
-
-
     <div id="feed" class="container-fluid container">
         <div class="row row-centered">
             <div class="feed-content">
                 <div id="feeds-list">
-                    <div class="feed-title" style=" width: 100%; border-bottom: dashed 3px lightgrey; margin-bottom: 10px;">
+                    <div class="feed-title">
                         <h1>{% trans 'RSS Feed' %}</h1>
                     </div>
                     <table id="feeds-table">
@@ -125,10 +100,6 @@
                         </tr>
                     </table>
                     <hr width="100%">
-                    <h4>{% trans 'Company feed' %}:</h4>
-                    <span>
-                        {% trans 'Use this form if you want to get RSS for certain company' %}.
-                    </span>
                     <form id="rss-company-form"
                           action="/rss/gcr/"
                           method="POST"
@@ -139,11 +110,12 @@
                                 <input type="text"
                                        class="form-control"
                                        id="company-name"
+                                       placeholder="{% trans 'Which company would you like to search?' %}"
                                        name="rss-company">
                                 <input type="submit"
                                        value="{% trans 'Get' %}"
                                        id="search-rss-company"
-                                       class="form-control btn btn-info">
+                                       class="form-control btn btn-warning">
                             </div>
                         </div>
                     </form>
@@ -157,25 +129,32 @@
             <div id="latest-news">
                 {% for i in latest_news %}
                     <div class="sect-2-top" style="width: 33%; margin-right: 2%; margin-bottom: 3%; float: left">
-                        <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                            <div class="current_news_mas news-news">
+                        <div class="current_news_mas news-news">
+                            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
                                 <div class="middle-news-cover"
                                      style="max-width: 100%; max-height: 100%; height: 210px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;">
                                     <div class="mask"></div>
                                 </div>
-                                <div class="title" style="margin-top: 5%;">
-                                    <div class="news-title">
-                                        <b>{{ i.news_title|safe }}</b>
-                                    </div>
+                            </a>
+                            <div class="title" style="margin-top: 5%;">
+                                <div class="news-title">
+                                    <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                        <b>
+                                            {% if lang == 'eng' %}
+                                                {{ i.news_title_english }}
+                                            {% elif lang == 'rus' %}
+                                                {{ i.news_title_russian }}
+                                            {% else %}
+                                                {{ i.news_title_chinese }}
+                                            {% endif %}
+                                        </b>
+                                    </a>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
     </div>
-
-    {% include 'footer.html' %}
-
 {% endblock %}

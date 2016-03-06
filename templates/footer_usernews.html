@@ -83,7 +83,7 @@
                         <li><h3 class="footer-title">{% trans 'RECENT NEWS' %}</h3></li>
                         {% for i in footer_news %}
                             <li>
-                                <a href="/news/{{ i.news_category_id }}/{{ i.id }}/">
+                                <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
                                    <div class="footer-current-news">
                                        {% if i.news_main_cover|check_format == True %}
                                             <div class="footer-news-cover" style="float: left; height: 50px; width: 75px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover  ;"></div>
@@ -92,7 +92,13 @@
                                        {% endif %}
                                         <div class="footer-news-content" style="margin-left: 35%; height: 60px;">
                                             <span id="lnt{{ i.id }}" class="title">
-                                                {{ i.news_title|truncatechars:"60" }}
+                                                 {% if lang == 'eng' %}
+                                                    {{ i.news_title_english }}
+                                                {% elif lang == 'rus' %}
+                                                    {{ i.news_title_russian }}
+                                                {% else %}
+                                                    {{ i.news_title_chinese }}
+                                                {% endif %}
                                             </span>
                                         </div>
                                     </div>

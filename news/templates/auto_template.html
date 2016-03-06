@@ -8,14 +8,7 @@
     .news-title{font-size: 17px; margin-top: 1.5%; font-family: Georgia, Times, "Times New Roman", serif}
     .main-page-news-cover{max-width: 100%; max-height: 100%; height: 200px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;}
     .text_post{width: 100%;}
-    .sect-2-top{
-        width: 30%;
-        display: inline-block;
-        margin-right: 1%;
-        margin-top: 3%;
-        height:400px;
-        max-height: 400px;
-    }
+    .sect-2-top{width: 30%;display: inline-block;margin-right: 1%;margin-top: 3%;height:400px;max-height: 400px}
     .current_news{height: 400px;}
 </style>
 
@@ -55,7 +48,6 @@
                         </div>
                     </div>
                 </div>
-
                 {% if forloop.last %}
                     <div class="row row-centered col-xs-12 pull-center" style="height: 90px; background-color: #00fff9"></div>
                 {% endif %}

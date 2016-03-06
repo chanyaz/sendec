@@ -30,29 +30,30 @@ def render_search_page(request, template="search.html", news_search_template="ne
         if search_word is "":
             args["erorr_empty_field"] = True
         else:
-            translation = {
-                "id": "id",
-                "news_title_english": "news_title_english",
-                "news_title_russian": "news_title_russian",
-                "news_title_chinese": "news_title_chinese",
-                "teaser_english": "teaser_english",
-                "teaser_russian": "teaser_russian",
-                "teaser_chinese": "teaser_chinese",
-                "news_post_date": "news_post_date",
-                "slug": "slug"
-            }
+            # translation = {
+            #     "id": "id",
+            #     "news_title_english": "news_title_english",
+            #     "news_title_russian": "news_title_russian",
+            #     "news_title_chinese": "news_title_chinese",
+            #     "teaser_english": "teaser_english",
+            #     "teaser_russian": "teaser_russian",
+            #     "teaser_chinese": "teaser_chinese",
+            #     "news_post_date": "news_post_date",
+            #     "slug": "slug"
+            # }
+            #
+            # query = "SELECT id, news_title_english, news_title_russian, news_title_chinese, teaser_english, teaser_chinese, teaser_russian, slug, news_post_date FROM news " \
+            #         " WHERE news_title_english LIKE %{phrase}%" \
+            #         " or news_title_russian LIKE %{phrase}%" \
+            #         " or news_title_chinese LIKE %{phrase}%" \
+            #         " or teaser_english LIKE %{phrase}%" \
+            #         " or teaser_russian LIKE %{phrase}%" \
+            #         " or teaser_chinese LIKE %{phrase}%".format(phrase=search_word)
+            #
+            # data = News.objects.raw(raw_query=query, translations=translation)
 
-            query = "SELECT id, news_title_english, news_title_russian, news_title_chinese, teaser_english, teaser_chinese, teaser_russian, slug, news_post_date FROM news " \
-                    " WHERE news_title_english LIKE %{phrase}%" \
-                    " or news_title_russian LIKE %{phrase}%" \
-                    " or news_title_chinese LIKE %{phrase}%" \
-                    " or teaser_english LIKE %{phrase}%" \
-                    " or teaser_russian LIKE %{phrase}%" \
-                    " or teaser_chinese LIKE %{phrase}%".format(phrase=search_word)
-
-            data = News.objects.raw(raw_query=query, translations=translation)
-
-            args["results"] = list(get_search_result(request, search_word=search_word))
+            args["results"] = get_search_result(request, search_word=search_word)
+            args["news_count"] = get_search_result(request, search_word=search_word).count()
             args["matches_amount"] = get_matches_amount(request, search_word)
             args["users_matches"] = get_search_among_users(request, search_word)
             args["companies_matches"] = get_company(request, search_word).values()
@@ -190,8 +191,9 @@ def get_popular_news(request):
 
 
 def get_search_among_users(request, search_word):
-    return User.objects.filter(is_staff=True).filter(Q(username__contains=search_word))
-
+    return User.objects.filter(is_staff=True).filter(Q(username__contains=str(search_word).capitalize()) |
+                                                     Q(username__contains=str(search_word).upper()) |
+                                                     Q(username__contains=str(search_word).lower()))
 
 def get_company(request, search_word):
     return Companies.objects.filter(Q(name__contains=search_word) | Q(verbose_name__contains=search_word) |

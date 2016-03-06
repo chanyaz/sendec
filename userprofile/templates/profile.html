@@ -4,36 +4,6 @@
 {% load i18n %}
 {% block user_profile %}
     <script>
-        function exchangeSelectData(value){
-            if(value === "source-ignore") {
-                var n = document.getElementById("source-ignore").options.selectedIndex;
-                var val = document.getElementById("source-ignore").options[n].value;
-                var text = document.getElementById("source-ignore").options[n].text;
-                document.getElementById("source-to-show").options.add(new Option(text, val));
-                document.getElementById("source-ignore").options.remove(n);
-            }
-            else if(value === "source-ignore-2"){
-                var n_2 = document.getElementById("source-ignore-2").options.selectedIndex;
-                var val_2 = document.getElementById("source-ignore-2").options[n_2].value;
-                var text_2 = document.getElementById("source-ignore-2").options[n_2].text;
-                document.getElementById("source-to-show-2").options.add(new Option(text_2, val_2));
-                document.getElementById("source-ignore-2").options.remove(n_2);
-            }
-        }
-        function removeSelectedData(){
-            var n = document.getElementById("source-to-show").options.selectedIndex;
-            var val = document.getElementById("source-to-show").options[n].value;
-            var text = document.getElementById("source-to-show").options[n].text;
-            document.getElementById("source-ignore").options.add(new Option(text, val));
-            document.getElementById("source-to-show").options.remove(n);
-        }
-        function selectAllOptions(selStr)
-        {
-            var selObj = document.getElementById(selStr);
-            for (var i=0; i<selObj.options.length; i++) {
-                selObj.options[i].selected = true;
-            }
-        }
         var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
         function Validate(oForm) {
             var arrInputs = oForm.getElementsByTagName("input");
@@ -76,19 +46,20 @@
         });
     </script>
     <style>
+        #page-wrapper{background:#F1F3CE}
+        .confirm-email{padding-left:2%}
+        .profile>.header-username>h1{font-size:30px;color:black;padding:2%;margin-top: -5%;}
+        .personal-info>h2,
+        #moderator-social-networks>h2{color:black;font-size:25px;padding:2%;margin:0}
         #confirm-email-label{color: red;}
         #chooser-avatar{display: none;}
         #change-photo, #change-user-data{border: solid 1px lightgrey;}
-        .special-info{height: 6em;}
-        #keywords{float: left;}
-{#        #settings-form{border: solid 1px lightgrey;}#}
-        .other-side{height: inherit;}
-        .chooser{float: left;}
-        #source-ignore{width: 300px;}
-        .buttons-to-choose{float: left;}
-        #source-to-show{width: 300px;}
+        .user-login>h4{font-size:18px;padding:2% 3%;margin:0;color:black}
     </style>
-    <div class="container-fluid container">
+    <div class="container-fluid container profile">
+        <div class="header-username">
+            <h1 class="page-header">{% trans 'Profile'%}:&nbsp;{{ username.username }}</h1>
+        </div>
         {% if username.is_active == False %}
             <div class="confirm-email">
                 <label id="confirm-email-label">
@@ -96,7 +67,6 @@
                 </label>
             </div>
         {% endif %}
-        <h1 class="page-header">{% trans 'Profile'%}:&nbsp;{{ username.username }}</h1>
         <div class="row row-centered">
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="text-center">
@@ -173,7 +143,7 @@
                 </div>
             </div>
             <div class="col-md-7 col-sm-6 col-xs-12 personal-info" id="change-user-data">
-                <h3>Personal info</h3>
+                <h2>Personal info</h2>
                 <form action="/profile/change/"
                       method="POST"
                       class="form-horizontal"
@@ -181,15 +151,8 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label class="col-md-3 control-label">{% trans 'Username' %}:</label>
-                        <div class="col-md-8">
-{#                            <input  readonly#}
-{#                                    name="userlogin"#}
-{#                                    class="form-control"#}
-{#                                    type="text"#}
-{#                                    placeholder="Username"#}
-{#                                    value="{{ username.username }}"#}
-{#                                    spellcheck="true">#}
-                            {{ username.username }}
+                        <div class="col-md-8 user-login">
+                            <h4>{{ username.username }}</h4>
                         </div>
                     </div>
                     <div class="form-group">
@@ -218,6 +181,7 @@
                             <input name="email"
                                    class="form-control"
                                    type="email"
+                                   pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"
                                    placeholder="example@gmail.com"
                                    value="{{ username.email }}">
                         </div>
@@ -232,12 +196,9 @@
                                    value="{{ username.profile.user_cell_number }}">
                         </div>
                     </div>
-
-
-
                     {% if username.is_staff %}
                         <div id="moderator-social-networks">
-                        <h3>{% trans 'Social Networks(Moderator Mode)' %}</h3>
+                        <h2>{% trans 'Social Networks(Moderator Mode)' %}</h2>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{% trans 'Facebook:' %}</label>
                                 <div class="col-lg-8">
@@ -248,7 +209,6 @@
                                            value="{{ god.facebook }}">
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{% trans 'Linkedin:' %}</label>
                                 <div class="col-lg-8">
@@ -259,7 +219,6 @@
                                            value="{{ god.linkedin }}">
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{% trans 'Twitter:' %}</label>
                                 <div class="col-lg-8">
@@ -270,8 +229,6 @@
                                            value="{{ god.twitter }}">
                                 </div>
                             </div>
-
-
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{% trans 'VK:' %}</label>
                                 <div class="col-lg-8">
@@ -282,24 +239,19 @@
                                            value="{{ god.vk }}">
                                 </div>
                             </div>
-
-
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{% trans 'Perosnal email' %}:</label>
                                 <div class="col-lg-8">
                                     <input name="personal_email"
                                            class="form-control"
                                            type="text"
+                                           pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"
                                            placeholder="{% trans 'Personal email' %}"
                                            value="{{ god.personal_email }}">
                                 </div>
                             </div>
                         </div>
-
                     {% endif %}
-
-
-
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
@@ -313,7 +265,6 @@
             </div>
         </div>
     </div>
-
     {% if flavour != 'mobile' %}
         <div class="profile-footer" style="margin-top: 100px;">
             {% include 'footer.html' %}

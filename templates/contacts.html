@@ -1,211 +1,755 @@
-{% extends 'index_new.html' %}
 {% load my %}
 {% load i18n %}
 {% load staticfiles %}
-{% block contacts %}
-    <script>
-        function changeState() {
-            var element = document.getElementById('user-message');
-            if(element.style.display == 'block'){element.style.display = 'none';}
-            else {element.style.display = 'block';}
+{% load thumbnail %}
+<title>About Insydia | Insydia</title>
+<link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'static/css/style_beta.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<style                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          >
+        header{position: relative;z-index:1;}
+        section{width:100%;height:100%}
+        #head-back{width:100%;height:100%;
+            background: url('{% static "static/img/about/back-3.jpg" %}') no-repeat center;
+            -webkit-background-size: cover;
+            background-size: cover;
+            -webkit-filter: url(#blur);
+             filter: url(#blur);
+             -webkit-filter: blur(3px);
+             filter: blur(3px);
+             filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='3');
+             -webkit-transition: 1s -webkit-filter linear;
+             transition: 1s filter linear;
         }
-    </script>
-    <style xmlns="http://www.w3.org/1999/html">
-        .contact-list{list-style-type: none;}
-        .contact-list-item{margin-top:2%;}
-        .team-list{margin-left: -10%;list-style-type: none;}
-        .team-list-item{width: 45%;float: left;margin-left: 5%;box-shadow: 0 0 5px black; border-radius: 3px;}
-        .contact-link{color: #3036ff;}
-        .contact-link:hover{text-decoration: none;color: #79daff;}
-        .team-link{text-decoration: none;}
-        .team-link:hover{text-decoration: none;}
-        .photo{height: 77px;float: left;width: 25%;background: url('{% static 'static/img/default_profile.png' %}') no-repeat center; background-size: cover;}
-        .content{float: right;width: 75%;height: auto;padding-left: 5%;}
-        .contacts-left{float: left; width: 70%;}
-        .contact-us-text{color: lightblue;}
-        #user-message{display: none;}
-        #user-message-message{resize: none}
-        .captcha{margin-left: 5%;}
-        #report-submit{margin-left: 38%;}
-        img{float: left;}
-        .contacts-right{float: right; width: 30%;}
-        .expression{margin-top: 5%; text-align: left; margin-left: auto; margin-right: auto; width: 65%;}
+        #head-menu{position:absolute;top:5%;left:5%;color:white;font-size:20px}
+        #head-menu>a{color:white;}
+        #head-menu>a:hover{color:#F62A00;}
+        #head-logo{position:absolute;top:5%;right:5%;color:white;font-size:20px}
+        #head-title{position: absolute;top:40%;padding:10px;}
+        #head-title>h1{font-size:72px;color:white}
+        #head-description{position:absolute;top:55%;color:white;font-size:20px}
 
-        .contact-page{
-            margin-top: 5%;
-            font-family: Georgia, Times, "Times New Roman", serif;
+@-moz-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+@-webkit-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    -ms-transform: translateY(-15px);
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+.head-arrow {
+    position:absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -20px;
+  width: 40px;
+  height: 40px;
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0yOTMuNzUxLDQ1NS44NjhjLTIwLjE4MSwyMC4xNzktNTMuMTY1LDE5LjkxMy03My42NzMtMC41OTVsMCwwYy0yMC41MDgtMjAuNTA4LTIwLjc3My01My40OTMtMC41OTQtNzMuNjcyICBsMTg5Ljk5OS0xOTBjMjAuMTc4LTIwLjE3OCw1My4xNjQtMTkuOTEzLDczLjY3MiwwLjU5NWwwLDBjMjAuNTA4LDIwLjUwOSwyMC43NzIsNTMuNDkyLDAuNTk1LDczLjY3MUwyOTMuNzUxLDQ1NS44Njh6Ii8+DQo8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMjIwLjI0OSw0NTUuODY4YzIwLjE4LDIwLjE3OSw1My4xNjQsMTkuOTEzLDczLjY3Mi0wLjU5NWwwLDBjMjAuNTA5LTIwLjUwOCwyMC43NzQtNTMuNDkzLDAuNTk2LTczLjY3MiAgbC0xOTAtMTkwYy0yMC4xNzgtMjAuMTc4LTUzLjE2NC0xOS45MTMtNzMuNjcxLDAuNTk1bDAsMGMtMjAuNTA4LDIwLjUwOS0yMC43NzIsNTMuNDkyLTAuNTk1LDczLjY3MUwyMjAuMjQ5LDQ1NS44Njh6Ii8+DQo8L3N2Zz4=);
+  background-size: contain;
+}
+
+.bounce {
+  -moz-animation: bounce 2s infinite;
+  -webkit-animation: bounce 2s infinite;
+  animation: bounce 2s infinite;
+}
+
+.head-arrow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left:-20px;
+  width: 40px;
+  height: 40px;
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0yOTMuNzUxLDQ1NS44NjhjLTIwLjE4MSwyMC4xNzktNTMuMTY1LDE5LjkxMy03My42NzMtMC41OTVsMCwwYy0yMC41MDgtMjAuNTA4LTIwLjc3My01My40OTMtMC41OTQtNzMuNjcyICBsMTg5Ljk5OS0xOTBjMjAuMTc4LTIwLjE3OCw1My4xNjQtMTkuOTEzLDczLjY3MiwwLjU5NWwwLDBjMjAuNTA4LDIwLjUwOSwyMC43NzIsNTMuNDkyLDAuNTk1LDczLjY3MUwyOTMuNzUxLDQ1NS44Njh6Ii8+DQo8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMjIwLjI0OSw0NTUuODY4YzIwLjE4LDIwLjE3OSw1My4xNjQsMTkuOTEzLDczLjY3Mi0wLjU5NWwwLDBjMjAuNTA5LTIwLjUwOCwyMC43NzQtNTMuNDkzLDAuNTk2LTczLjY3MiAgbC0xOTAtMTkwYy0yMC4xNzgtMjAuMTc4LTUzLjE2NC0xOS45MTMtNzMuNjcxLDAuNTk1bDAsMGMtMjAuNTA4LDIwLjUwOS0yMC43NzIsNTMuNDkyLTAuNTk1LDczLjY3MUwyMjAuMjQ5LDQ1NS44Njh6Ii8+DQo8L3N2Zz4=);
+  background-size: contain;
+}
+
+.bounce {
+  @include animation(bounce 2s infinite);
+}
+        /****************** DESCRIPTION **********************************/
+        #total-description{background: #1E656D; position:relative;height:1200px}
+        #description-back{width:100%;height:550px;
+            background: url('{% static "static/img/about/what-we-do.jpg" %}') no-repeat center;
+            -webkit-background-size: cover;
+            background-size:cover;
+            -webkit-filter: url(#blur);
+             filter: url(#blur);
+             -webkit-filter: blur(3px);
+             filter: blur(3px);
+             filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='3');
+             -webkit-transition: 1s -webkit-filter linear;
+             transition: 1s filter linear;
+        }
+        #description-title{position: absolute;width:100%;text-align: center;top:3%;}
+        #description-title>h1{font-size:30px;color:white;padding:0;margin:0;text-transform: uppercase;margin-left:35%;width:30%; border: solid 1px white;}
+        #desc-arrow {
+            z-index:1;
+          position: absolute;
+          top: 30%;
+          width: 100%;
+          padding-bottom:3%;
+          background-color: #1E656D;
+        }
+        #desc-arrow:before, #desc-arrow:after {
+          content:'';
+          position: absolute;
+          bottom: 100%;
+          width: 50%;
+          padding-bottom:inherit;
+          background-color: inherit;
+        }
+        #desc-arrow:before {
+          right: 50%;
+          -ms-transform-origin: 100% 100%;
+          -webkit-transform-origin: 100% 100%;
+          transform-origin: 100% 100%;
+          -ms-transform: skewX(67.5deg);
+          -webkit-transform: skewX(67.5deg);
+          transform: skewX(67.5deg);
+        }
+        #desc-arrow:after {
+          left: 50%;
+          -ms-transform-origin: 0 100%;
+          -webkit-transform-origin: 0 100%;
+          transform-origin: 0 100%;
+          -ms-transform: skewX(-67.5deg);
+          -webkit-transform: skewX(-67.5deg);
+          transform: skewX(-67.5deg);
+        }
+        #description-content{
+            width: 100%;
+            height:80%;
+            position:absolute;
+            display: inline-block;
+            top: 20%;
+        }
+        #description-text{
+            position: relative;
+            width:78%;
+            top:32%;
+            padding-top:2%;
+            margin-left:11%;
+        }
+        #description-text>h2{
+            font-size: 20px;
+            color:white;
+            padding:0;
+            margin:0;
+        }
+        #description-btns{
+            width:100%;
+            margin-top:15%;
+            margin-left:40%;
         }
 
+        .request-btn>a>.request-content{
+            height: 75px;
+            position: relative;
+            top:20px;
+            color:white;
+        }
+    .request-btn {
+         float: left;
+            background: none;
+            border: solid 1px white;
+            outline: none;
+            width:20%;
+            height:75px;
+            text-align:center;
+
+            font-size: 1.5em;
+            color: white;
+            margin-right: 5%;
+            margin-top:2%;
+          display: inline-block;
+          vertical-align: middle;
+          -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+          box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          -moz-osx-font-smoothing: grayscale;
+          position: relative;
+          -webkit-transition-property: color;
+          transition-property: color;
+          -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+    }
+.request-btn:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #2098d1;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.request-btn:hover, .request-btn:focus, .request-btn:active {
+  color: white;
+}
+.request-btn:hover:before, .request-btn:focus:before, .request-btn:active:before {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+
+
+
+
+        /******************** TEAM *****************************/
+        #team{background: white; height:3400px; position:relative}
+        #team-back{width:100%;height:550px;
+            background: url('{% static "static/img/about/team.jpg" %}') no-repeat center;
+            -webkit-background-size: cover;
+            background-size:cover;
+            -webkit-filter: url(#blur);
+             filter: url(#blur);
+             -webkit-filter: blur(1px);
+             filter: blur(1px);
+             filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='3');
+             -webkit-transition: 1s -webkit-filter linear;
+             transition: 1s filter linear;
+        }
+        #team-title{position: absolute;width:100%;text-align: center;top:7%;height:40px;}
+        #team-title>h1{margin-top:10px; font-size:30px;color:white;padding:0;margin:0;text-transform: uppercase;margin-left:30%;width:40%; border: solid 1px white;}
+
+
+.team-arrow {
+    z-index:1;
+  position: absolute;
+  top: 16%;
+  width: 100%;
+  padding-bottom:3%;
+  background-color: white;
+}
+.team-arrow:before, .team-arrow:after {
+  content:'';
+  position: absolute;
+  bottom: 100%;
+  width: 50%;
+  padding-bottom:inherit;
+  background-color: inherit;
+}
+.team-arrow:before {
+  right: 50%;
+  -ms-transform-origin: 100% 100%;
+  -webkit-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+  -ms-transform: skewX(67.5deg);
+  -webkit-transform: skewX(67.5deg);
+  transform: skewX(67.5deg);
+}
+.team-arrow:after {
+  left: 50%;
+  -ms-transform-origin: 0 100%;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -ms-transform: skewX(-67.5deg);
+  -webkit-transform: skewX(-67.5deg);
+  transform: skewX(-67.5deg);
+}
+
+        #teammates{width:100%;padding:5%; padding-top:2%;}
+        .person{width:50%;float:left;margin-bottom:5%}
+        .photo{width:75%;height:350px;background:lightseagreen; margin:0 12.5%;}
+        .teammate-name{width:100%; text-align: center; margin:2% 0;}
+        .teammate-name>h1{font-size:30px;color:black;padding:0;margin:0}
+        .position{width:100%; text-align: center; margin-top:0;margin-bottom: 2%;}
+        .position>h2{font-size:20px;color:black;padding:0;margin:0}
+        .separator{}
+        .text{width:100%;padding:0 12.5%;margin-bottom:3%}
+        .text>h3{font-size:16px;color:black;padding:0;margin:0;line-height: 1.5em}
+        .socials{}
+        .social-list{list-style-type: none; margin:0 12.5%; padding:0}
+        .sl-item{display:inline-block; font-size:26px;margin-right:2%}
+        .sl-item>a{color:black}
+        .sl-item>a:hover{color:#F62A00}
+
+
+        /************************* CONTACTS **************************/
+        #contacts{background: white; position: relative; height:830px}
+        #c-cover{width:100%;height:550px;
+            background: url('{% static "static/img/about/contact-2.jpg" %}') no-repeat 75%;
+            -webkit-background-size: cover;
+            background-size: cover;
+            -webkit-filter: url(#blur);
+             filter: url(#blur);
+             -webkit-filter: blur(2px);
+             filter: blur(2px);
+             filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='2');
+             -webkit-transition: 1s -webkit-filter linear;
+             transition: 1s filter linear;
+        }
+        #c-title{position: absolute;width:100%;text-align: center;top:30%;}
+        #c-title>h1{font-size:30px;color:white;padding:0;margin:0;text-transform: uppercase;margin-left: 40%;width:20%; border: solid 1px white;}
+        #c-emails{width:100%}
+        .c-list{list-style-type: none;padding:0;width:100%;margin:0}
+        .c-item{display:inline-block;width:25%;float:left;text-align:center}
+        #c-center{width:84%; position:absolute;z-index:2; height:350px;margin:0 8%;}
+        #cc-left{width:50%;height:300px;float:left;padding:2%}
+        #cc-contacts{height:150px;margin-top:2%;}
+        .ccc-item{height:30px;}
+        .cc-icon{color:#F62A00; font-size:20px;}
+        #cc-right{width:50%;height:200px;float:right;padding:2%}
+
+        #cc-left>div>h1{font-size:30px;padding:0;margin:0;color:#F62A00}
+        #cc-left>div>form{width:100%;height:130px}
+        #cc-left>div>form>.form-input{
+            float: left;
+            background: none;
+            border: none;
+            border-bottom: solid 1px lightgrey;
+            outline: none;
+            width:45%;
+            font-size: 1.5em;
+            color: black;
+            margin-right: 5%;
+            margin-top:2%;
+        }
+        #cc-left>div>form>#form-text{
+            background: none;
+            border: none;
+            border-bottom: solid 1px lightgrey;
+            outline: none;
+            width:100%;
+            font-size: 1.5em;
+            color: black;
+            margin-top:2%;
+        }
+        #cc-left>div>form>.form-btn{
+            float: left;
+            background: none;
+            border: solid 1px lightgrey;
+            outline: none;
+            width:30%;
+            font-size: 1.5em;
+            color: black;
+            margin-top:2%;
+            margin-left:12.5%;
+        }
+
+
+
+        .cb-list{padding:0;list-style-type: none;margin-top:5%;}
+        .cbl-item{float: left;color:white; margin-left:2%;height:90px;width:90px;text-align:center;border:solid 1px lightgrey;}
+        .cbl-item>a{color:white}
+        .sm-link{width:90px; height:90px}
+        .cbl-item>a>div>span{font-size:2em; padding-top:35%;}
+        .fb{background:#3b5998}
+        .fb:hover{background:white}
+        .fb a:hover{color:#3b5998}
+        .tw{background:#55acee}
+        .tw:hover{background:white}
+        .tw a:hover{color:#55acee}
+        .ln{background:#0077b5}
+        .ln:hover{background:white}
+        .ln a:hover{color:#0077b5}
+        .vk{background:#45668e}
+        .vk:hover{background:white}
+        .vk a:hover{color:#45668e}
+        .in{background:#3f729b}
+        .in:hover{background:white}
+        .in a:hover{color:#3f729b}
+
+.arrow {
+    z-index:1;
+  position: absolute;
+  top: 60%;
+  width: 100%;
+  padding-bottom:3%;
+  background-color: white;
+}
+.arrow:before, .arrow:after {
+  content:'';
+  position: absolute;
+  bottom: 100%;
+  width: 50%;
+  padding-bottom:inherit;
+  background-color: inherit;
+}
+.arrow:before {
+  right: 50%;
+  -ms-transform-origin: 100% 100%;
+  -webkit-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+  -ms-transform: skewX(67.5deg);
+  -webkit-transform: skewX(67.5deg);
+  transform: skewX(67.5deg);
+}
+.arrow:after {
+  left: 50%;
+  -ms-transform-origin: 0 100%;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -ms-transform: skewX(-67.5deg);
+  -webkit-transform: skewX(-67.5deg);
+  transform: skewX(-67.5deg);
+}
     </style>
 
-
-
-
-    <div class="container-fluid container contact-page">
-        <div class="row row-centered">
-            <span class="contact-title">
-                <h2>{% trans 'CONTACT INFORMATION' %}</h2>
-            </span>
-            <div id="contacts" class="col-xs-12 col-centered col-fixed">
-                <div class="contacts-left">
-                    <div class="contacts-left-top">
-                        <div class="contacts-left-top-left">
-                            {% trans 'Cell' %}:&nbsp;{{ phone }}<br>
-                            {% trans 'E-mail'%}:&nbsp;<a href="mailto:{{ email }}">{{ email }}</a><br>
-                            {% trans 'On cooperation' %}:&nbsp;<a href="mailto:{{ cooperation }}?subject=[Cooperation] ">{{ cooperation }}</a>
-                            <hr width="1%">
-                            <span class="contact-us-text" onmouseover="this.style.cursor='pointer';" onclick="changeState();">{% trans 'Contact with us' %}</span>
-                            <div  id="user-message">
-                                <form class="form-horizontal"
-                                      role="form"
-                                      method="POST"
-                                      action="/about/send_report/">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="user-message-name">{% trans 'Name' %}:</label>
-                                        <div class="col-md-5">
-                                            {{ form.username }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="user-message-email">{% trans 'E-mail' %}:</label>
-                                        <div class="col-md-5">
-                                            {{ form.email }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="user-message-message">{% trans 'Message' %}:</label>
-                                        <div class="col-md-5">
-                                            <textarea class="form-control"
-                                                      name="message"
-                                                      required="required"
-                                                      id="user-message-message"
-                                                      rows="10"
-                                                      placeholder="{% trans 'Message' %}"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="user-message-message"></label>
-                                        <div class="col-md-5">
-                                            <div class="captcha">
-                                                {{ form.captcha }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <script src="//www.google.com/recaptcha/api.js" async defer></script>
-                                    <div class="form-group">
-                                        <label class="col-lg-4 control-label"></label>
-                                        <div class="col-md-8">
-                                            <input type="submit"
-                                                   class="btn btn-primary"
-                                                   id="report-submit"
-                                                   value="{% trans 'Send' %}">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <hr width="1%">
+        <!-- INTRO -->
+        <header>
+            <div id="head-back"></div>
+            <div class="head-arrow bounce"></div>
+            <div id="head-menu"><a href="/">{% trans 'BACK TO SITE' %}</a></div>
+            <div id="head-logo">INSYDIA</div>
+            <div id="head-title" class="col-xs-12 text-center">
+                <h1>INSYDIA</h1>
+            </div>
+            <div id="head-description" class="col-xs-12 text-center">
+                {% trans 'Insydia was founded at March 2016.' %}
+            </div>
+        </header>
+        <!-- PORTAL DESCRIPTION -->
+        <section id="total-description">
+            <div id="description-back"></div>
+            <div id="description-content">
+                <div id="description-title"><h1>{% trans 'WHAT WE DO' %}</h1></div>
+                <div id="desc-arrow"></div>
+                <div id="description-text">
+{% blocktrans %}<h2>Проект Insydia начинает свою историю летом 2015 года, когда наш основатель заметил, что в рускоязычном сегменте
+Интернета очень мало информации о высоких технологиях по сравнению с, например, англоязычном. С того момента
+мы начали работу по созданию сервиса, который помог бы русскоговорящим людям получить больше информации
+из мира Hi-Tech. Мы не просто хотим искать и собирать новости, мы хотим предоставлять нашим посетителям
+такой контент, который редко встречается где-либо, но может оказаться
+очень интересным. Большую ставку мы делаем на стартапы нашей страны, мы хотим помочь им, хотим, чтобы о них узнали не
+только в России, но и во всём мире(для чего мы будем писать о вас на трёх самых популярных языках мира), ведь это
+открывает для них практически неограниченные возможности от поиска сотрудников до получения инвестиций со всего мира,
+а так же эта информация может стать вдохновением для любого мечтателя, желающего создать что-то интересное,
+полезное и нужное. Развитие высокотехнологичной индустрии начинается с идеи и распространения информации о ней и
+мы готовы помочь вам с последним.</h2>{% endblocktrans %}
+                    <div id="description-btns">
+                        <div class="request-btn">
+                            <a href="/about/advertisers/">
+                                <div class="request-content">{% trans 'Media kit' %}</div>
+                            </a>
                         </div>
                     </div>
-                    <div class="contacts-left-bottom">
-                        <div class="team-title">
-                            <h2>{% trans 'OUR TEAM' %}</h2>
-                        </div>
-                        <ul class="team-list">
-                            <li class="team-list-item">
-                                <div class="Founder">
-                                    <div class="photo"></div>
-                                    <div class="content">
-                                        <b>{% trans 'Founder' %}</b>:<br>
-                                        {% trans 'Evgeniy Privalov' %}<br>
-                                        <a href="email:eprivalov@insydia.com">eprivalov@insydia.com</a><br>
-                                        {% blocktrans %}St. Petersburg{% endblocktrans %}<br>
-                                        <div class="">
-                                            Хочет рекламировать проект раздавая листовки у метро, учится пасти котов
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="team-list-item">
-                                <div class="CTO">
-                                    <div class="photo"></div>
-                                    <div class="content">
-                                        <b>{% trans 'Co-Founder' %}</b>:<br>
-                                        {% trans 'Anton Tinishov' %}<br>
-                                        <a href="mailto:atinishov@insydia.com">atinishov@insydia.com</a><br>
-                                        {% blocktrans %}St.Petersburg{% endblocktrans %}<br>
-                                        <div class="">
-                                            Разматывает спутавшиеся наушники и всё в это роде. Ценее него только наш
-                                            шпион.
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <hr width="0">
-                        <div id="vacancy">
-                            <div class="vacancy-text">
-                                {% trans 'At this time we need in' %}:
-                            </div>
-                            <div id="vacancy-left" style="width: 30%; float: left; margin-left: 1%; border: solid 1px red;">
-                                {% trans 'LOCALIZATION' %}
-                                <br>{% trans 'EDITORS & REPORTERS' %}
-                            </div>
-                            <div id="vacancy-center" style="width: 30%; float: left;margin-left: 1%;border: solid 1px red;">
-                                {% trans 'PROGRAMMER' %}
-                            </div>
-                            <div id="vacancy-right" style="width: 30%; float: left;margin-left: 1%;border: solid 1px red;">
-                                {% trans 'MARKETING' %}
-                            </div>
-                        </div>
-                        <hr width="100%">
-                        <div>
-                            <span class="join-team">
-                                <a class="team-link" href="">{% trans 'Join to us' %}</a>
-                            </span>
-                        </div>
-                        <hr width="100%">
-                        </div>
-                    </div>
-                <div class="contacts-right">
-                    {% trans 'Social Networks' %}
-                    <hr width="100%">
-                    <ul class="contact-list">
-                        <li class="contact-list-item">
-                            <a class="contact-link" href="https://vk.com/insydianews/">
-                                <img src="{% static 'static/img/vk.png' %}" width="8%" alt="VK"/>VK
-                            </a>
-                        </li>
-                        <li class="contact-list-item">
-                            <a class="contact-link" href="">
-                                <img src="{% static 'static/img/facebook.png' %}" width="8%" alt="Facebook"/>Facebook
-                            </a>
-                        </li>
-                        <li class="contact-list-item">
-                            <a class="contact-link" href="https://www.linkedin.com/groups/8442725">
-                                <img src="{% static 'static/img/linkedin.png' %}" width="8%" alt="Linkedin"/>Linkedin
-                            </a>
-                        </li>
-                        <li class="contact-list-item">
-                            <a class="contact-link" href="http://www.youtube.com/channel/UCbF570qpf1uJUef5y_l3OkA">
-                                <img src="{% static 'static/img/youtube.png' %}" width="8%" alt="YoutTube"/>YouTube
-                            </a>
-                        </li>
-                        <li class="contact-list-item">
-                            <a class="contact-link" href="https://twitter.com/insydianews">
-                                <img src="{% static 'static/img/twitter.png' %}" width="8%" alt="Twitter"/>Twitter
-                            </a>
-                        </li>
-                        <li class="contact-list-item">
-                            <a class="contact-link" href="https://plus.google.com/u/0/b/113571107578727495097/113571107578727495097">
-                                <img src="{% static 'static/img/google+.png' %}" width="8%" alt="Google+"/>Google+
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
-        </div>
-    </div>
-        <script src='//www.google.com/recaptcha/api.js'></script>
-
-{% endblock %}
+        </section>
+        <!-- TEAMMATES -->
+        <section id="team">
+            <div id="team-back"></div>
+            <div id="team-title"><h1>{% trans 'collaborators' %}</h1></div>
+            <div class="team-arrow"></div>
+            <div id="teammates">
+                <div id="person1" class="person">
+                    <div class="photo"></div>
+                    <div class="teammate-name"><h1>{% trans 'Eugene Privalov' %}</h1></div>
+                    <div class="position"><h2>{% trans 'CEO, Founder, Publisher' %}</h2></div>
+                    <div class="separator"></div>
+                    <div class="text">
+                        <h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                        </h3>
+                    </div>
+                    <div class="socials">
+                        <ul class="social-list">
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="person2" class="person">
+                    <div class="photo"></div>
+                    <div class="teammate-name"><h1>{% trans 'Anton Tinishov' %}</h1></div>
+                    <div class="position"><h2>{% trans 'CTO, Co-founder, Advisor' %}</h2></div>
+                    <div class="separator"></div>
+                    <div class="text">
+                        <h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                        </h3>
+                    </div>
+                    <div class="socials">
+                        <ul class="social-list">
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="person3" class="person">
+                    <div class="photo"></div>
+                    <div class="teammate-name"><h1>{% trans 'Stanislav Privalov' %}</h1></div>
+                    <div class="position"><h2>{% trans 'Finance advisor' %}</h2></div>
+                    <div class="separator"></div>
+                    <div class="text">
+                        <h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                        </h3>
+                    </div>
+                    <div class="socials">
+                        <ul class="social-list">
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="person4" class="person">
+                    <div class="photo"></div>
+                    <div class="teammate-name"><h1>{% trans 'Kate Vlasova' %}</h1></div>
+                    <div class="position"><h2>{% trans 'English localizer' %}</h2></div>
+                    <div class="separator"></div>
+                    <div class="text">
+                        <h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                        </h3>
+                    </div>
+                    <div class="socials">
+                        <ul class="social-list">
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="person5" class="person">
+                    <div class="photo"></div>
+                    <div class="teammate-name"><h1>{% trans 'Mary Konosova' %}</h1></div>
+                    <div class="position"><h2>{% trans 'Chinese localizer' %}</h2></div>
+                    <div class="separator"></div>
+                    <div class="text">
+                        <h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                        </h3>
+                    </div>
+                    <div class="socials">
+                        <ul class="social-list">
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="person6" class="person">
+                    <div class="photo"></div>
+                    <div class="teammate-name"><h1>{% trans 'Nikita Illin' %}</h1></div>
+                    <div class="position"><h2>{% trans 'Video editor' %}</h2></div>
+                    <div class="separator"></div>
+                    <div class="text">
+                        <h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                        </h3>
+                    </div>
+                    <div class="socials">
+                        <ul class="social-list">
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="person7" class="person">
+                    <div class="photo"></div>
+                    <div class="teammate-name"><h1>{% trans 'Elizaveta Karceva' %}</h1></div>
+                    <div class="position"><h2>{% trans 'Design advisor, logo creator' %}</h2></div>
+                    <div class="separator"></div>
+                    <div class="text">
+                        <h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                        </h3>
+                    </div>
+                    <div class="socials">
+                        <ul class="social-list">
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="person8" class="person">
+                    <div class="photo"></div>
+                    <div class="teammate-name"><h1>{% trans 'Artem Panin' %}</h1></div>
+                    <div class="position"><h2>{% trans 'Crucial advisor' %}</h2></div>
+                    <div class="separator"></div>
+                    <div class="text">
+                        <h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                        </h3>
+                    </div>
+                    <div class="socials">
+                        <ul class="social-list">
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CONTACTS -->
+        <section id="contacts">
+            <div id="get-in-touch">
+                <div id="c-cover"></div>
+                <div id="c-title"><h1>{% trans 'get in touch' %}</h1></div>
+                <div class="arrow">
+                    <div id="c-emails">
+                        <ul class="c-list">
+                        <li class="c-item">
+                            <div class="">
+                                <div class="">{% trans 'Take special info' %}</div>
+                                <div class=""><a href="mailto:info@insydia.com">info@insydia.com</a></div>
+                            </div>
+                        </li>
+                        <li class="c-item">
+                            <div class="">
+                                <div class="">{% trans 'Advertisements' %}</div>
+                                <div class=""><a href="mailto:advert@insydia.com">advert@insydia.com</a></div>
+                            </div>
+                        </li>
+                        <li class="c-item">
+                            <div class="">
+                                <div class="">{% trans 'Need in support?' %}</div>
+                                <div class=""><a href="mailto:support@insydia.com">support@insydia.com</a></div>
+                            </div>
+                        </li>
+                        <li class="c-item">
+                            <div class="">
+                                <div class="">{% trans 'For partners' %}</div>
+                                <div class=""><a href="mailto:partners@insydia.com">partners@insydia.com</a></div>
+                            </div>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                <div id="c-center">
+                    <div id="cc-left">
+                        <div id="">
+                            <h1>{% trans 'Say hello.' %}</h1>
+                            <form method="POST" action="">
+                                <input class="form-input" name="form-name" id="form-name" placeholder="{% trans 'Your name' %}">
+                                <input class="form-input" name="form-email" id="form-email" type="email" placeholder="{% trans 'Your email' %}">
+                                <input name="text" id="form-text" placeholder="{% trans 'Type message' %}">
+                                <input class="form-btn" type="submit" id="form-submit">
+                                <input class="form-btn" type="reset" id="form-reset">
+                            </form>
+                        </div>
+                        <div id="cc-contacts">
+                            <div class="ccc-item">
+                                <span class="cc-icon glyphicon glyphicon-envelope"></span><a href="mailto:info@insydia.com">info@insydia.com</a>
+                            </div>
+                            <div class="ccc-item">
+                                <span class="cc-icon glyphicon glyphicon-earphone"></span><a href="tel:79315790696">+7 (931) 579 06 96</a>
+                            </div>
+                            <div class="ccc-item">
+                                <span class="cc-icon glyphicon glyphicon-map-marker"></span><span class="">{% trans 'Alpiyskiy pereulok 15k2 | suit 1411' %}</span>
+                                    <br><span style="margin-left:4%;">{% trans 'St. Petersburg, Russian Federation, 192239' %}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="cc-right">
+                        <ul class="cb-list">
+                            <li class="cbl-item fb">
+                                <a href="https://facebook.com/insydiaofficial/" target="_blank">
+                                    <div class="sm-link">
+                                        <span class="sm fa fa-facebook"></span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="cbl-item tw">
+                                <a href="https://twitter.com/insydianews" target="_blank">
+                                    <div class="sm-link">
+                                        <span class="sm fa fa-twitter"></span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="cbl-item ln">
+                                <a href="https://linkedin.com/insydia" target="_blank">
+                                    <div class="sm-link">
+                                        <span class="sm fa fa-linkedin"></span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="cbl-item vk">
+                                <a href="https://vk.com/insydianews" target="_blank">
+                                    <div class="sm-link">
+                                        <span class="sm fa fa-vk"></span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="cbl-item in">
+                                <a href="https://instagram.com/insydiaofficial" target="_blank">
+                                    <div class="sm-link">
+                                        <span class="sm fa fa-instagram"></span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <script src="{% static 'static/js/jquery.js' %}"></script>
+    <script src="{% static 'static/js/jquery.min.js' %}"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

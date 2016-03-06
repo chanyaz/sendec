@@ -6,14 +6,8 @@
 {% load thumbnail %}
 {% block politics %}
     <style>
-        .total-container{
-            margin-left: -15px;
-            margin-right: -15px;
-        }
-        .mobile-top{
-            margin-left: -30px;
-            margin-right: -30px;
-        }
+        .total-container{margin-left: -15px;margin-right: -15px}
+        .mobile-top{margin-left: -30px;margin-right: -30px}
         .total-news-block{width: 100%; height: 100%;}
         .total-top{margin-bottom: 70%;height:100%;}
         #latest-news, #before-reviews{cursor: pointer;float: left;width: 100%;height: 400px;position:relative;}
@@ -21,141 +15,43 @@
         @media(max-device-width: 767px){
             #before-reviews{margin-top:5%;}
             .before-reviews{margin-bottom:5%;}
-            #latest-news, #before-reviews{
-                height: 280px;
-            }
-
-            .top-total-content{
-                height: 280px;
-                background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;
-                background-size: contain;
-            }
+            #latest-news, #before-reviews{height: 280px}
+            .top-total-content{height: 280px;background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;background-size: cover}
         }
-        .bn-title{
-            bottom: 0;
-            position: absolute;
-            z-index: 998;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, #F62A00, black);
-            opacity: 0.8;
-            box-sizing: border-box;
-            display: block;
-        }
-        .bn-title:hover{
-            opacity: 0.5;
-           -webkit-animation: fadeInFromNone 0.3s ease-out;
-            -moz-animation: fadeInFromNone 0.3s ease-out;
-            -o-animation: fadeInFromNone 0.3s ease-out;
-            animation: fadeInFromNone 0.3s ease-out;
-        }
-        @-webkit-keyframes fadeInFromNone {
-            0% {opacity: 0.8;}
-            50% {opacity: 0.65;}
-            100% {opacity: 0.5;}
-        }
-        @-moz-keyframes fadeInFromNone {
-             0% {opacity: 0.8;}
-            50% {opacity: 0.65;}
-            100% {opacity: 0.5;}
-        }
-        @-o-keyframes fadeInFromNone {
-            0% {opacity: 0.8;}
-            50% {opacity: 0.65;}
-            100% {opacity: 0.5;}
-        }
-        @keyframes fadeInFromNone {
-             0% {opacity: 0.8;}
-            50% {opacity: 0.65;}
-            100% {opacity: 0.5;}
-        }
-        .bn-title-text{
-            position: absolute;
-            bottom: 45%;
-            z-index: 999;
-            font-size: 1.8em;
-            color: ivory;
-            text-shadow: 0 0 20px black;
-        }
-        .bn-title-text > a{
-            color: ivory;
-        }
-        .bn-title-author{
-{#            position: absolute;#}
-            z-index: 999;
-            font-size: 15px;
-        }
-        .top-author > a{
-            color: #F62A00;
-        }
-
-
-        .news-title a{
-            color: black;
-            font-size: 17px;
-            margin-top: 1.5%;
-            font-family: Georgia, Times, "Times New Roman", serif
-        }
+        .bn-title{bottom: 0;position: absolute;z-index: 998;width: 100%;height: 100%;background: linear-gradient(to top, #F62A00, black);opacity: 0.8;box-sizing: border-box;display: block}
+        .bn-title:hover{opacity: 0.5;-webkit-animation: fadeInFromNone 0.3s ease-out;-moz-animation: fadeInFromNone 0.3s ease-out;-o-animation: fadeInFromNone 0.3s ease-out;animation: fadeInFromNone 0.3s ease-out}
+        @-webkit-keyframes fadeInFromNone{0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
+        @-moz-keyframes fadeInFromNone{0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
+        @-o-keyframes fadeInFromNone {0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
+        @keyframes fadeInFromNone{0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
+        .bn-title-text{position: absolute;bottom: 45%; z-index: 999;font-size: 1.8em;color: ivory;text-shadow: 0 0 20px black}
+        .bn-title-text>a{color: ivory;}
+        .bn-title-author{z-index: 999;font-size: 15px;}
+        .top-author>a{color: #F62A00}
+        .news-title a{color: black;font-size: 17px;margin-top: 1.5%;font-family: Georgia, Times, "Times New Roman", serif}
         .news-title a:hover{color: #F62A00;}
-        .current_news{
-            min-height: 150px;
-            max-height: 400px;
-            height: 400px;
-            width: 100%;
-            position: relative;
-            float: left;
-{#            border: solid 1px red;#}
-        }
-            .current_news_mas{margin-bottom: 50px;}
-        #announce-reviews{
-            position: relative;
-            width: 100%;
-            height: 250px;
-            border: solid 1px lightblue;
-            margin-top: 15px;
-            margin-bottom: 40px;
-        }
+        .current_news{min-height: 150px;max-height: 400px;height: 400px;width: 100%;position: relative;float: left}
+        .current_news_mas{margin-bottom: 50px;}
+        #announce-reviews{position: relative;width: 100%;height: 250px;border: solid 1px lightblue;margin-top: 15px;margin-bottom: 40px}
         .before-reviews{height: 400px;}
         .title-top-middle a{text-decoration: none;color: black;}
         .title-top-middle a:hover{text-decoration: none;color: #F62A00;}
-        .article-author > a{color: #F62A00;}
-        .article-author > a:hover{color: #1E656D;}
-
+        .article-author>a{color: #F62A00;}
+        .article-author>a:hover{color: #1E656D;}
         @media (min-width: 768px){
-            #interests{
-                width: 1024px;
-                height: 200px;
-                margin-left: -5%;
-            }
-            .carousel-image{
-                width: 100%;
-                height: 300px;
-            }
+            #interests{width: 1024px;height: 200px;margin-left: -5%}
+            .carousel-image{width: 100%;height: 300px}
         }
         @media (min-width: 1170px){
-            #interests{
-                width: 1366px;
-                height: 300px;
-                margin-left: -10%;
-            }
-            .carousel-image{
-                width: 100%;
-                height: 300px;
-            }
+            #interests{width: 1366px;height: 300px;margin-left: -10%}
+            .carousel-image{width: 100%;height: 300px}
         }
         @media (min-width: 1920px) {
-            #interests {
-                width: 1960px;
-                height: 500px;
-                margin-left: -38%;
-            }
-            .carousel-image{
-                width: 100%;
-                height: 500px;
-            }
+            #interests{width: 1960px;height: 500px;margin-left: -38%}
+            .carousel-image{width: 100%;height: 500px}
         }
-    #mobile-slider > li{display: inline;}
-    #mobile-slider{padding-left: 0;}
+        #mobile-slider > li{display: inline;}
+        #mobile-slider{padding-left: 0;}
     </style>
     <div class="container-fluid container">
         <div class="total-container">
@@ -205,22 +101,12 @@
                                                     </div>
                                                     {% if i.news_main_cover != '' %}
                                                         <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                                            {% if i.news_main_cover|check_format == True %}
                                                                 <div class="middle-news-cover"
                                                                      style="cursor: pointer;">
                                                                     {% thumbnail i.news_main_cover '330x216' crop='center' as im %}
                                                                         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/>
                                                                     {% endthumbnail %}
                                                                 </div>
-                                                            {% else %}
-                                                                    <div class="middle-news-cover"
-                                                                     style="max-width: 100%;
-                                                                             cursor:pointer;
-                                                                             max-height: 100%;
-                                                                             height: 210px;
-                                                                                background: url('{% static 'static/img/companies_cover/' %}{{ current_middle_news.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center;
-                                                                                background-size: cover;"></div>
-                                                            {% endif %}
                                                         </a>
                                                     {% endif %}
                                                     <div class="title col-xs-12"
@@ -271,9 +157,6 @@
                         <div class="media-block">
                     {% endif %}
                             <hr width="100%">
-
-{#                            <div class="google-news-right" style="margin-left: auto; margin-right: auto; width: 970px; height: 90px; background-color: #00fff9"></div>#}
-
                             <hr width="100%">
                             <div class="recently-news col-md-12">
                                 <div class="two-news col-xs-12 container">
@@ -315,7 +198,6 @@
                                             <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">{{ total_bottom_news.0.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
                                         </div>
                                     </div>
-{#                                    <hr class="separator-line" width="100%">#}
                                 </div>
                                 <hr width="100%">
                                 <div class="interested">
@@ -331,8 +213,6 @@
                                                                 <div class="carousel-image carousel-inner-item-left"
                                                                          style="position: relative;
                                                                                  z-index:1;">
-    {#                                                                             height: 250px;#}
-    {#                                                                             width: 100%;">#}
                                                                 {% thumbnail interest.0.news_main_cover '800x400' crop='center' as im %}
                                                                     <img src="{{ im.url }}" class="carousel-image" />
                                                                 {% endthumbnail %}
@@ -462,122 +342,6 @@
                                     </div>
                                         </div>
                                     {% else %}
-{#                                        <div class="col-xs-12 col-md-12" style="overflow-x: scroll; overflow-y: hidden;">#}
-{#                                            <ul id="mobile-slider" class="col-xs-12 col-md-12">#}
-{#                                                <li><div class="col-xs-12" style="float: left;" id="before-reviews-{{ interest.0.id }}">#}
-{#                                                    <div class="before-reviews"#}
-{#                                                         style="#}
-{#                                                         height: 280px;#}
-{#                                                        {% thumbnail interest.0.news_main_cover '400x400' crop='center' as im %}#}
-{#                                                            background: url('{{ im.url }}') no-repeat center;#}
-{#                                                            background-size: cover;#}
-{#                                                        {% endthumbnail %}#}
-{#                                                         ">#}
-{#                                                    </div>#}
-{#                                                    <a href="/news/{{ interest.0.news_post_date.year }}/{{ interest.0.news_post_date.month }}/{{ interest.0.news_post_date.day }}/{{ interest.0.id }}/{{ interest.0.slug }}">#}
-{#                                                        <div class="bn-title col-md-12"></div>#}
-{#                                                    </a>#}
-{#                                                    <div class="bn-title-text text-center col-md-12">#}
-{#                                                        <a href="/news/{{ interest.0.news_post_date.year }}/{{ interest.0.news_post_date.month }}/{{ interest.0.news_post_date.day }}/{{ interest.0.id }}/{{ interest.0.slug }}">#}
-{#                                                                {{ interest.0.news_title }}#}
-{#                                                            </a>#}
-{#                                                        <div class="bn-title-author col-md-12 col-xs-11 text-center">#}
-{#                                                            <span class="top-author">#}
-{#                                                                {% trans 'By' %}&nbsp;#}
-{#                                                                <a href="/profile/m/{{ interest.0.news_author }}">{{ interest.0.news_author }}</a>#}
-{#                                                            </span>#}
-{#                                                            <span class="top-date">#}
-{#                                                                {{ interest.0.news_post_date.date|date }}#}
-{#                                                            </span>#}
-{#                                                        </div>#}
-{#                                                    </div>#}
-{#                                                </div></li>#}
-{#                                                <li><div class="col-xs-12" style="float: left;" id="before-reviews-{{ interest.1.id }}">#}
-{#                                                    <div class="before-reviews"#}
-{#                                                         style="#}
-{#                                                         height: 280px;#}
-{#                                                        {% thumbnail interest.1.news_main_cover '400x400' crop='center' as im %}#}
-{#                                                            background: url('{{ im.url }}') no-repeat center;#}
-{#                                                            background-size: cover;#}
-{#                                                        {% endthumbnail %}#}
-{#                                                         ">#}
-{#                                                    </div>#}
-{#                                                    <a href="/news/{{ interest.1.news_post_date.year }}/{{ interest.1.news_post_date.month }}/{{ interest.1.news_post_date.day }}/{{ interest.1.id }}/{{ interest.1.slug }}">#}
-{#                                                        <div class="bn-title col-md-12"></div>#}
-{#                                                    </a>#}
-{#                                                    <div class="bn-title-text text-center col-md-12">#}
-{#                                                        <a href="/news/{{ interest.1.news_post_date.year }}/{{ interest.1.news_post_date.month }}/{{ interest.1.news_post_date.day }}/{{ interest.1.id }}/{{ interest.1.slug }}">#}
-{#                                                                {{ interest.1.news_title }}#}
-{#                                                            </a>#}
-{#                                                        <div class="bn-title-author col-md-12 col-xs-11 text-center">#}
-{#                                                            <span class="top-author">#}
-{#                                                                {% trans 'By' %}&nbsp;#}
-{#                                                                <a href="/profile/m/{{ interest.1.news_author }}">{{ interest.0.news_author }}</a>#}
-{#                                                            </span>#}
-{#                                                            <span class="top-date">#}
-{#                                                                {{ interest.1.news_post_date.date|date }}#}
-{#                                                            </span>#}
-{#                                                        </div>#}
-{#                                                    </div>#}
-{#                                                </div></li>#}
-{#                                                <li><div class="col-xs-12" style="float: left;" id="before-reviews-{{ interest.2.id }}">#}
-{#                                                    <div class="before-reviews"#}
-{#                                                         style="#}
-{#                                                         height: 280px;#}
-{#                                                        {% thumbnail interest.2.news_main_cover '400x400' crop='center' as im %}#}
-{#                                                            background: url('{{ im.url }}') no-repeat center;#}
-{#                                                            background-size: cover;#}
-{#                                                        {% endthumbnail %}#}
-{#                                                         ">#}
-{#                                                    </div>#}
-{#                                                    <a href="/news/{{ interest.2.news_post_date.year }}/{{ interest.2.news_post_date.month }}/{{ interest.2.news_post_date.day }}/{{ interest.2.id }}/{{ interest.2.slug }}">#}
-{#                                                        <div class="bn-title col-md-12"></div>#}
-{#                                                    </a>#}
-{#                                                    <div class="bn-title-text text-center col-md-12">#}
-{#                                                        <a href="/news/{{ interest.2.news_post_date.year }}/{{ interest.2.news_post_date.month }}/{{ interest.2.news_post_date.day }}/{{ interest.2.id }}/{{ interest.2.slug }}">#}
-{#                                                                {{ interest.2.news_title }}#}
-{#                                                            </a>#}
-{#                                                        <div class="bn-title-author col-md-12 col-xs-11 text-center">#}
-{#                                                            <span class="top-author">#}
-{#                                                                {% trans 'By' %}&nbsp;#}
-{#                                                                <a href="/profile/m/{{ interest.2.news_author }}">{{ interest.2.news_author }}</a>#}
-{#                                                            </span>#}
-{#                                                            <span class="top-date">#}
-{#                                                                {{ interest.2.news_post_date.date|date }}#}
-{#                                                            </span>#}
-{#                                                        </div>#}
-{#                                                    </div>#}
-{#                                                </div></li>#}
-{#                                                <li><div class="col-xs-12" style="float: left;" id="before-reviews-{{ interest.3.id }}">#}
-{#                                                    <div class="before-reviews"#}
-{#                                                         style="#}
-{#                                                         height: 280px;#}
-{#                                                        {% thumbnail interest.3.news_main_cover '400x400' crop='center' as im %}#}
-{#                                                            background: url('{{ im.url }}') no-repeat center;#}
-{#                                                            background-size: cover;#}
-{#                                                        {% endthumbnail %}#}
-{#                                                         ">#}
-{#                                                    </div>#}
-{#                                                    <a href="/news/{{ interest.3.news_post_date.year }}/{{ interest.3.news_post_date.month }}/{{ interest.3.news_post_date.day }}/{{ interest.3.id }}/{{ interest.3.slug }}">#}
-{#                                                        <div class="bn-title col-md-12"></div>#}
-{#                                                    </a>#}
-{#                                                    <div class="bn-title-text text-center col-md-12">#}
-{#                                                        <a href="/news/{{ interest.3.news_post_date.year }}/{{ interest.3.news_post_date.month }}/{{ interest.3.news_post_date.day }}/{{ interest.3.id }}/{{ interest.3.slug }}">#}
-{#                                                                {{ interest.3.news_title }}#}
-{#                                                            </a>#}
-{#                                                        <div class="bn-title-author col-md-12 col-xs-11 text-center">#}
-{#                                                            <span class="top-author">#}
-{#                                                                {% trans 'By' %}&nbsp;#}
-{#                                                                <a href="/profile/m/{{ interest.3.news_author }}">{{ interest.3.news_author }}</a>#}
-{#                                                            </span>#}
-{#                                                            <span class="top-date">#}
-{#                                                                {{ interest.3.news_post_date.date|date }}#}
-{#                                                            </span>#}
-{#                                                        </div>#}
-{#                                                    </div>#}
-{#                                                </div></li>#}
-{#                                            </ul>#}
-{#                                        </div>#}
                                     {% endif %}
                                 </div>
                                 {% if flavour != 'mobile' %}
@@ -668,18 +432,8 @@
                                     {% endfor %}
                                 {% endif %}
                                 </div>
-
-{#                    #}
-                                <hr width="100%">
-{#                                <div id="announce-reviews" class="col-md-12 col-xs-12">#}
-{#                                    reviews#}
-{#                                </div>#}
-
-
+                         <hr width="100%">
                                 {% include 'pre_paginate.html' %}
-
-
-
                                 <div class="load-more">
                                     <div class="endless_page_template">
                                         {% block js %}

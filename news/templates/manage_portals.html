@@ -4,98 +4,35 @@
 {% load staticfiles %}
 {% load thumbnail %}
 {% block manager %}
-
     <style>
-    .manager{
-        position: relative;
-        min-height: 300px;
-    }
-        #manager-portals{
-            min-height: 300px;
-             border: solid 1px lightgrey;
-{#            width: 82%;#}
-{#            margin-left: 1%;#}
-            float: right;
-            margin-bottom: 50px;
-        }
-
-        #left-control-portals{
-            position: fixed;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            z-index: 989;
-            height: 100%;
-            margin-top: -5.5%;
-            float: left;
-            width: 16.1%;
-            left: 0;
-    }
-    #manager-title{
-        width: 100%;
-        text-align: center;
-    }
-
-    #user-rss-table{
-        width: 100%;
-    }
-    .td-rp-name{
-        width: 25%;
-    }
-    .td-rp-description{
-        width: 60%;
-    }
-    .td-rp-btn{
-        width: 15%;
-    }
-
-    .current-rss-portal{
-        height: 75px;
-        margin-bottom: 2px;
-        border-bottom: solid 1px lightgrey;
-    }
-    .current-rss-portal:hover{
-        background: rgba(28, 244, 216, 0.15);
-    }
-    #manager-answer{
-        width: 100%;
-        font-family:Georgia, Times, "Times New Roman", serif;
-        font-size: 16px;
-        text-align: center;
-    }
-        .has-children a:hover{text-decoration: none;color: #F62A00;}
-        #left-panel-main-title a:hover{text-decoration: none;color: #F62A00;}
-        .sidebar-offcanvas{
-            background-color: #F1F3CE;
-            position: fixed;
-            left: 0;
-            top: 0;
-            padding-top: 5%;
-            height: 100%;
-            overflow-y: scroll;
-        }
-        @media screen and (max-width: 767px) {
-          .row-offcanvas {
-            position: relative;
-            -webkit-transition: all 0.25s ease-out;
-            -moz-transition: all 0.25s ease-out;
-            transition: all 0.25s ease-out;
-          }
-          .sidebar-offcanvas{right: -41.6%;}
-          .sidebar-offcanvas{left:-41.6%;}
-          .sidebar-offcanvas{position:absolute;top:0;width:41.6%;}
-          #sidebar{padding-top:0;}
-        }
-        #side-list{padding-left:0;}
-        #side-list > li.side-list-item{height: 40px; margin-bottom: 5px;}
-        #side-list > li.side-list-item > a{}
-        .side-text{color:black;}
-
+    .manager{position: relative;min-height: 300px;}
+    #manager-portals{min-height: 300px;border: solid 1px lightgrey;float: right;margin-bottom: 50px}
+    #left-control-portals{position: fixed;overflow-y: scroll;overflow-x: hidden;z-index: 989;height: 100%;margin-top: -5.5%;float: left;width: 16.1%;left: 0}
+    #manager-title{width: 100%;text-align: center}
+    #user-rss-table{width: 100%}
+    .td-rp-name{width: 25%}
+    .td-rp-description{width: 60%}
+    .td-rp-btn{width: 15%}
+    .current-rss-portal{height: 75px;margin-bottom: 2px;border-bottom: solid 1px lightgrey}
+    .current-rss-portal:hover{background: rgba(28, 244, 216, 0.15)}
+    #manager-answer{width: 100%;font-family:Georgia, Times, "Times New Roman", serif;font-size: 16px;text-align: center}
+    .has-children a:hover{text-decoration: none;color: #F62A00;}
+    #left-panel-main-title a:hover{text-decoration: none;color: #F62A00;}
+    .sidebar-offcanvas{background-color: #F1F3CE;position: fixed;left: 0;top: 0;padding-top: 5%;height: 100%;overflow-y: scroll}
+@media screen and (max-width: 767px){ .row-offcanvas {position: relative;-webkit-transition: all 0.25s ease-out;-moz-transition: all 0.25s ease-out;transition: all 0.25s ease-out;}
+    .sidebar-offcanvas{right: -41.6%;}
+  .sidebar-offcanvas{left:-41.6%;}
+  .sidebar-offcanvas{position:absolute;top:0;width:41.6%;}
+  #sidebar{padding-top:0;}}
+#side-list{padding-left:0;}
+#side-list>li.side-list-item{height: 40px; margin-bottom: 5px;}
+#side-list>li.side-list-item>a{}
+.side-text{color:black;}
     </style>
 
 
 <div class=" manager">
     <div class="row row-centered">
-        <!-- BOOTSTRAP NEW SIDEBAR -->
             <nav>
                 <div class="col-xs-2 col-sm-2 col-md-2 sidebar-offcanvas fixed" id="sidebar" role="navigation">
                     <ul id="side-list" class="nav">
@@ -115,7 +52,6 @@
                             <a>
                                 <span class="side-text">Portals</span>
                             </a>
-                            <!-- user portals list-->
                             <ul class="nav">
                                 {% for current_portal in user_rss_portals %}
                                     <li>
@@ -133,7 +69,6 @@
                                     </li>
                                 {% endfor %}
                             </ul>
-                            <!-- /user portals list -->
                         </li>
                         <hr width="100%">
                         <li class="side-list-item">
@@ -151,7 +86,6 @@
                     </ul>
                 </div>
             </nav>
-            <!-- /SIDEBAR -->
         <div class="swiper-bottom-nav text-center">
             <ul>
                 <li style="display: inline-block; font-size: 20px;"><a href="/news/usrnews/">{% trans 'Private news' %}</a></li>&nbsp;*&nbsp;<li style="display: inline-block; font-size: 20px;"><a href="/news/browser/">{% trans 'Browser' %}</a></li>
@@ -208,7 +142,6 @@
                 $(element).parent().removeClass('active');
             }
         }
-
         function removeUserRssPortal(uuid,pid, id){
             $.ajax({
                 url: "/news/rrp&uid="+uuid+"&pid="+pid+"/",

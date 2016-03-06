@@ -35,118 +35,66 @@
         }
     </script>
     <style>
-        #current-news-page{height: 100%;margin-bottom: 5%;}
-        .page-header{text-align: center;border-bottom: solid 1px #F62A00;}
-        .page-header > h1 {font-size: 30px;color: #F62A00;}
-        .date-and-author{margin-right: auto;margin-left: auto;margin-bottom: 1%;width: 100%;text-align: center;}
-        .date-and-author a{color: #F62A00;}
-        .date-and-author a:hover{text-decoration: none;color: #1E656D;}
-        ul{list-style-type: none;}
+        #current-news-page{height:100%;margin-bottom:5%}
+        .page-header{text-align:center;border-bottom:solid 1px #F62A00}
+        .page-header>h1{font-size:30px;color:#F62A00}
+        .date-and-author{margin-right:auto;margin-left:auto;margin-bottom:1%;width:100%;text-align:center}
+        .date-and-author a{color:#F62A00}
+        .date-and-author a:hover{text-decoration:none;color:#1E656D}
+        ul{list-style-type:none;}
         .news-cover{
         {% thumbnail current_top_news_values.top_news_main_cover 'x500'  as im %}
             background: url('{{ im.url }}') no-repeat center;
-        {% endthumbnail %}background-size: cover;width: 100%;height: 500px;max-height: 600px;margin-top: -1.5%;}
-        @media(max-device-width: 767px){.news-cover{background-size: contain;height: 210px;margin-top: -6%;}}
-        @media(min-device-width: 1600px){.news-cover{background-size: cover;height: 600px;max-height: 900px;}}
-        #translates{margin-bottom: 2%;width: 8em;height: 2em;margin-left:auto;margin-right: auto;}
-        .translate-list{margin-left: -2em;}
-        .translate-list-item{display: inline;float: left;width: 2em;height: 2em;cursor: pointer;}
-        .news-post-text{margin-bottom: 5%;padding:0;}
-        .news-post-text > h2{font-size: 16px;line-height: 1.5em}
-        .news-post-text img{position: relative;min-width: 100%;width:200%;max-width: 200%;margin-left: -50%;margin-right: 50%;}
-        .news-post-text img.middle-size{position: relative;min-width: 100%;width:100%;margin-left: auto;margin-right: auto;}
-        .news-post-text-mobile{margin-bottom: 5%;}
-        .news-post-text-mobile > *{font-size: 16px;}
-        .news-post-text-mobile img{position: relative;min-width: 100%;width:100%;max-width: 100%;}
-
-        #share-news{position: relative;height: 30px;}
-        #share-news > ul{width:100%; height: 30px; list-style-type: none; position: absolute; padding-left: 0;}
-        #share-news > ul > li{float: left; height: 30px;width: 25%; text-align: center; padding-top: 4px;}
-        #share-news > ul > li > a{color: ivory; text-decoration: none;}
-        #share-news > ul > li > a:hover{color: ivory; text-decoration: none;}
-        #share-news > .share{ color: ivory; font-family: Georgia, Times, "Times New Roman", serif;}
-        #share-news > .share .facebook{background-color: #3b5998;}
-        #share-news > .share .facebook:hover{background-color: #3b4998; cursor: pointer;}
-        #share-news > .share .twitter{background-color: #00aced;}
-        #share-news > .share .twitter:hover{background-color: #00bced; cursor: pointer;}
-        #share-news > .share .linkedin{background-color: #007bb6;}
-        #share-news > .share .linkedin:hover{background-color: #008bb6; cursor: pointer;}
-        #share-news > .share .vk{background-color: #45668e;}
-        #share-news > .share .vk:hover{background-color: #45568e; cursor: pointer;}
-        .top_news_tags{font-family: Georgia, Times, "Times New Roman", serif;margin-left: 25%;width: 50%;height: 50px;margin-bottom: 10px;}
-        .tags-title{font-weight: bold;font-size: 25px;float: left;margin-right: 15px;}
-        .current-tag{min-width: 75px;padding: 3px 7px;border: solid 1px #1E656D;float: left;margin-right: 15px;text-align: center;font-size: 20px;}
-        .recom-text{font-size: 20px;font-family: Georgia, Times, "Times New Roman", serif}
-        .recom-span-text{color: #F62A00;}
-        .recom-title a{text-decoration: none;color: black;}
-        .recom-title a:hover{text-decoration: none;color: #F62A00;}
-        #to-russian{background: url('{% static 'static/img/rus.png' %}') no-repeat center;background-size:cover;}
-        #to-english{background: url('{% static 'static/img/uk.png' %}') no-repeat center;background-size:cover}
-        #to-chinese{background: url('{% static 'static/img/china.png' %}') no-repeat center;background-size:cover}
-        #comments-block{width: 70%; float: left;}
-    .bn-title{
-            bottom: 0;
-            position: absolute;
-            z-index: 998;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, #F62A00, black);
-            opacity: 0.8;
-            box-sizing: border-box;
-            display: block;
-        }
-        .bn-title:hover{
-            opacity: 0.5;
-           -webkit-animation: fadeInFromNone 0.3s ease-out;
-            -moz-animation: fadeInFromNone 0.3s ease-out;
-            -o-animation: fadeInFromNone 0.3s ease-out;
-            animation: fadeInFromNone 0.3s ease-out;
-        }
-        @-webkit-keyframes fadeInFromNone {
-            0% {opacity: 0.8;}
-            50% {opacity: 0.65;}
-            100% {opacity: 0.5;}
-        }
-        @-moz-keyframes fadeInFromNone {
-             0% {opacity: 0.8;}
-            50% {opacity: 0.65;}
-            100% {opacity: 0.5;}
-        }
-        @-o-keyframes fadeInFromNone {
-            0% {opacity: 0.8;}
-            50% {opacity: 0.65;}
-            100% {opacity: 0.5;}
-        }
-        @keyframes fadeInFromNone {
-             0% {opacity: 0.8;}
-            50% {opacity: 0.65;}
-            100% {opacity: 0.5;}
-        }
-    .om-title-text{
-            position: absolute;
-            bottom: 45%;
-            z-index: 999;
-            font-size: 1.8em;
-            color: ivory;
-            text-shadow: 0 0 20px black;
-        }
-    .om-title-text-small{
-         position: absolute;
-            z-index: 999;
-        bottom: 45%;
-            font-size: 14px;
-            color: ivory;
-            text-shadow: 0 0 20px black;
-    }
+        {% endthumbnail %}background-size: cover;width: 100%;height: 500px;max-height: 600px;margin-top: -1.5%}
+        @media(max-device-width:767px){.news-cover{background-size:cover;height:210px;margin-top:-6%}}
+        @media(min-device-width:1600px){.news-cover{background-size:cover;height:600px;max-height:900px}}
+        #translates{margin-bottom:2%;width:8em;height:2em;margin-left:auto;margin-right:auto}
+        .translate-list{margin-left:-2em}
+        .translate-list-item{display:inline;float:left;width:2em;height:2em;cursor:pointer}
+        .news-post-text{margin-bottom:5%;padding:0}
+        .news-post-text>h2{font-size:16px;line-height:1.4;font-weight:300}
+        .news-post-text img{position:relative;min-width:100%;width:200%;max-width:200%;margin-left:-50%;margin-right:50%}
+        .news-post-text img.middle-size{position:relative;min-width:100%;width:100%;margin-left:auto;margin-right:auto}
+        .news-post-text-mobile{margin-bottom:5%}
+        .news-post-text-mobile>*{font-size:18px;line-height:1.4;font-weight:300}
+        .news-post-text-mobile img{position:relative;min-width:100%;width:100%;max-width:100%}
+        #share-news{position:relative;height:30px}
+        #share-news>ul{width:100%;height:30px;list-style-type:none;position:absolute;padding-left:0}
+        #share-news>ul>li{float:left;height:30px;width:25%;text-align:center;padding-top:4px}
+        #share-news>ul>li>a{color:ivory;text-decoration:none}
+        #share-news>ul>li>a:hover{color:ivory;text-decoration:none}
+        #share-news>.share{color:ivory;font-family:Georgia,Times,"Times New Roman",serif}
+        #share-news>.share .facebook{background-color:#3b5998}
+        #share-news>.share .facebook:hover{background-color:#3b4998;cursor:pointer}
+        #share-news>.share .twitter{background-color:#00aced}
+        #share-news>.share .twitter:hover{background-color:#00bced;cursor:pointer}
+        #share-news>.share .linkedin{background-color:#007bb6;}
+        #share-news>.share .linkedin:hover{background-color:#008bb6;cursor:pointer}
+        #share-news>.share .vk{background-color:#45668e}
+        #share-news>.share .vk:hover{background-color: #45568e; cursor: pointer;}
+        .top_news_tags{font-family:Georgia,Times,"Times New Roman",serif;margin-left:25%;width:50%;height:50px;margin-bottom:10px}
+        .tags-title{font-weight:bold;font-size:25px;float:left;margin-right:15px}
+        .current-tag{min-width:75px;padding:3px 7px;border:solid 1px #1E656D;float:left;margin-right:15px;text-align:center;font-size:20px}
+        .recom-text{font-size:20px;font-family:Georgia,Times,"Times New Roman",serif}
+        .recom-span-text{color:#F62A00}
+        .recom-title a{text-decoration:none;color:black}
+        .recom-title a:hover{text-decoration:none;color:#F62A00}
+        #to-russian{background:url('{% static 'static/img/rus.png' %}') no-repeat center;background-size:cover}
+        #to-english{background:url('{% static 'static/img/uk.png' %}') no-repeat center;background-size:cover}
+        #to-chinese{background:url('{% static 'static/img/china.png' %}') no-repeat center;background-size:cover}
+        #comments-block{width:70%;float:left}
+        .bn-title{bottom: 0;position: absolute;z-index: 998;width: 100%;height: 100%;background: linear-gradient(to top, #F62A00, black);opacity: 0.8;box-sizing: border-box;display: block}
+        .bn-title:hover{opacity: 0.5;-webkit-animation: fadeInFromNone 0.3s ease-out;-moz-animation: fadeInFromNone 0.3s ease-out;-o-animation: fadeInFromNone 0.3s ease-out;animation: fadeInFromNone 0.3s ease-out;}
+        @-webkit-keyframes fadeInFromNone {0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
+        @-moz-keyframes fadeInFromNone {0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
+        @-o-keyframes fadeInFromNone {0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
+        @keyframes fadeInFromNone {0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
+        .om-title-text{position: absolute;bottom: 45%;z-index: 999;font-size: 1.8em;color: ivory;text-shadow: 0 0 20px black}
+        .om-title-text-small{position: absolute;z-index: 999;bottom: 45%;font-size: 14px;color: ivory;text-shadow: 0 0 20px black}
         .om-title-text>a{color: ivory;}
         .om-title-text-small>a{color:ivory;}
-        .om-title-author{
-            position: absolute;
-            z-index: 999;
-            font-size: 15px;
-        }
+        .om-title-author{position: absolute;z-index: 999;font-size: 15px}
     </style>
-
     {% if current_top_news_values.top_news_main_cover|check_format == True %}
         <div class="news-cover"></div>
     {% else %}
@@ -154,7 +102,15 @@
             <div class="video-container">
                 <div class="title-container">
                     <div class="headline">
-                            <h1>{{ current_top_news_title }}</h1>
+                            <h1>
+                                {% if lang == 'eng' %}
+                                    {{ current_top_news_values.top_news_title_english }}
+                                {% elif lang == 'rus' %}
+                                    {{ current_top_news_values.top_news_title_russian }}
+                                {% else %}
+                                    {{ current_top_news_values.top_tnews_title_chinese }}
+                                {% endif %}
+                            </h1>
                     </div>
                     <div class="description">
                         <div class="inner">
@@ -173,7 +129,15 @@
     <div class="" id="current-news-page" data-news-id="{{ current_top_news_values.id }}">
         <article class="">
             <div class="page-header col-md-6 col-md-offset-3">
-                <h1>{{ current_top_news_title }}</h1>
+                <h1>
+                    {% if lang == 'eng' %}
+                        {{ current_top_news_values.top_news_title_english }}
+                    {% elif lang == 'rus' %}
+                        {{ current_top_news_values.top_news_title_russian }}
+                    {% else %}
+                        {{ current_top_news_values.top_tnews_title_chinese }}
+                    {% endif %}
+                </h1>
             </div>
             <div class="date-and-author col-md-6 col-md-offset-3">
                 <h5>
@@ -205,7 +169,8 @@
             </div>
             {% if username.is_staff %}
                 <div class="for-god" style="float: right;">
-                    <a href="http://127.0.0.1:8000/admin/news/news/{{ current_top_news_values.id }}/">{% trans 'Edit' %}</a>
+                        <a href="/admin/news/topnews/{{ current_top_news_values.id }}/">
+                        {% trans 'Edit' %}</a>
                 </div>
             {% endif %}
             {% if flavour != 'mobile' %}
@@ -223,18 +188,17 @@
                     {% endif %}
                 </h2>
             </main>
-
             <section id="share-news" class="row-centered col-md-6  col-md-offset-3">
-                <ul class="share list">
-                    <li class="share facebook"><a href="http://faceboaok.com/sharer/sharer.php?u=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('http://facebook.com/sharer/sharer.php?u='+window.location.href,
-                                 'JSSite', 'width=420,height=330,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-facebook"></span> facebook</div></a></li>
-                    <li class="share twitter"><a href="https://twitter.com/intent/tweet?original_referer=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('https://twitter.com/intent/tweet?original_referer='+window.location.href+'&ref_src=twsrc%5Etfw&text='+'{{ current_top_news_values.top_news_title }}'+'%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+window.location.href+'&via=InsydiaNews',
-                                 'JSSite', 'width=420,height=330,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-twitter"></span> twitter</div></a></li>
-                    <li class="share linkedin"><a href="https://www.linkedin.com/shareArticle?mini=true&url=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+window.location.href+'&title='+'{{ current_top_news_values.top_news_title }}'+'&summary='+'summary',
-                                 'JSSite', 'width=420,height=430,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-linkedin"></span> linkedin</div></a></li>
-                    <li class="share vk"><a href="https://vk.com/share.php?url=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('https://vk.com/share.php?url='+window.location.href,
-                                 'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-vk"></span> vk</div></a></li>
-                </ul>
+                    <ul class="share list">
+                        <li class="share facebook"><a href="http://faceboaok.com/sharer/sharer.php?u=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('http://facebook.com/sharer/sharer.php?u='+window.location.href,
+                                     'JSSite', 'width=420,height=330,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-facebook"></span> facebook</div></a></li>
+                        <li class="share twitter"><a href="https://twitter.com/intent/tweet?original_referer=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('https://twitter.com/intent/tweet?original_referer='+window.location.href+'&ref_src=twsrc%5Etfw&text='+'{{ current_top_news_values.top_news_title }}'+'%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+window.location.href+'&via=InsydiaNews',
+                                     'JSSite', 'width=420,height=330,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-twitter"></span> twitter</div></a></li>
+                        <li class="share linkedin"><a href="https://www.linkedin.com/shareArticle?mini=true&url=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+window.location.href+'&title='+'{{ current_top_news_values.top_news_title }}'+'&summary='+'summary',
+                                     'JSSite', 'width=420,height=430,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-linkedin"></span> linkedin</div></a></li>
+                        <li class="share vk"><a href="https://vk.com/share.php?url=https://insydia.com//news/{{ current_top_news_values.top_news_post_date.year }}/{{ current_top_news_values.top_news_post_date.month }}/{{ current_top_news_values.top_news_post_date.day }}/{{ current_top_news_values.id }}/{{ current_top_news_values.slug }}/" onclick="window.open('https://vk.com/share.php?url='+window.location.href,
+                                     'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes'); return false;"><div style="height: 30px; width:100%;"><span class="fa fa-vk"></span> vk</div></a></li>
+                    </ul>
             </section>
             {% if current_top_news_values.top_news_tags != '' %}
                 <div class="top_news_tags">
@@ -243,7 +207,10 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            <div class="desktop-ad google-news-below-shares row row-centered col-md-10 col-md-offset-1"
+        </article>
+        <hr width="100%">
+        <div class="container-fluid container text-center">
+                        <div class="google-news-below-shares"
                  style="
                  margin-left: auto;
                  margin-right: auto;
@@ -251,16 +218,11 @@
                  height: 120px;
                  background-color: #00fff9;">
             </div>
-        </article>
 
-        <hr width="100%">
-        <div class="container-fluid container text-center">
             <div class="recom-text row row-centered">
                 <span class="recom-span-text">{% trans 'MORE ON INSYDIA ' %}</span>
             </div>
         </div>
-
-
         {% if flavour != 'mobile' %}
             <div class="other-materials container-fluid container" style="margin-top: 0; height: 750px;">
                 <div class="other-top">
@@ -433,8 +395,6 @@
         {% else %}
             {% include 'mobile_other_materials.html' %}
         {% endif %}
-
-
             <hr width="100%">
             <div class="container-fluid container">
                 <div class="container container-fluid col-md-12">
@@ -454,7 +414,7 @@
                     </script>
                     <noscript>{% trans 'Please enable JavaScript to view the'%} <a href="https://disqus.com/?ref_noscript" rel="nofollow">{% trans 'comments powered by Disqus.' %}</a></noscript>
                 </div>
-                <div class="desktop-ad adver-near-comments" style="float: right; width: 300px; height: 660px; background-color: #00fff9"></div>
+                <div class="adver-near-comments" style="float: right; width: 300px; height: 250px; background-color: #00fff9"></div>
             </div>
         </div>
     </div>

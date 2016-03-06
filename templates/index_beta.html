@@ -55,7 +55,7 @@
     <link rel="stylesheet" href="{% static 'static/css/jquery.loading-indicator.css' %}">
     <link rel="stylesheet" href="{% static 'static/css/alertify.default.css' %}">
     <link rel="stylesheet" href="{% static 'static/css/alertify.core.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
     <link rel="stylesheet" href="{% static 'static/css/alertify.bootstrap.css' %}">
     <link rel="shortcut icon" href="{% static 'static/img/favicons/favicon.ico' %}" type="image/x-icon">
     <link rel="apple-touch-icon" href="">
@@ -71,114 +71,44 @@
         .navigation-profile:hover .fa-user{color: yellow;}
         #rss-share-list li{float:left;}
         #rss-properties-list li{float: left;}
-        .rss-share-item{
-            width: 50px;
-            margin-bottom:0;
-            margin-left: 0;
-            text-align: center;
-        }
+        .rss-share-item{width: 50px;margin-bottom:0;margin-left: 0;text-align: center}
         #wrapper-new{min-height: 100%;}
         #news-block{height: 100%;width: 100%; margin-bottom:50px;}
         .user-image input[type='text']{width: 80%;}
         .total-body{padding-top: 2%;}
-        .total-body-closer{
-            z-index:100003;
-            position: fixed;
-            margin-left: 75.5%;
-            font-size: 2em;
-            background-color: rgba(165, 165, 165, 0.5);
-            top: 5%;
-        }
+        .total-body-closer{z-index:100003;position: fixed;margin-left: 75.5%;font-size: 2em;background-color: rgba(165, 165, 165, 0.5);top: 5%}
         .total-body-closer a{color: #F62A00}
         .total-body-closer a:hover{color: #1E656D;cursor: pointer;}
-        #rss-share-list{
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: 0;
-            padding-right: 0;
-            width: 200px;
-            list-style-type: none;
-        }
+        #rss-share-list{margin-left: auto;margin-right: auto;padding-left: 0;padding-right: 0;width: 200px;list-style-type: none}
         #rss-share-list li{margin-right: 0;}
         #rss-share-list a{color: white;}
         #rss-share-list a:active{color: #333333;}
-        .rss-preview-body{
-            width: 100%;
-            padding: 0 5%;
-            margin-top: 2%;
-            font-family: Georgia,Times,sans-serif;
-            font-size: 17px;
-        }
+        .rss-preview-body{width: 100%;padding: 0 5%;margin-top: 2%;font-family: Georgia,Times,sans-serif;font-size: 17px}
         .rss-preview-body h3{color: black}
-        .rss-preview-body img{
-            max-height: 800px;
-            max-width: 100%;
-            height: inherit;
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
+        .rss-preview-body img{max-height: 800px;max-width: 100%;height: inherit;margin-left: auto !important;margin-right: auto !important}
         .rss-preview-body>*{max-width:100%}
         ul{list-style-type: none;}
         .other{min-height:100%;height:100%;background-color:#F1F3CE}
         h2{color: black;}
         a:hover{text-decoration: none;color: #F62A00;}
         .social-rss:hover{cursor: pointer;color: #F62A00;}
-        #current-rss-preview {
-            background: white;
-            width: 50%;
-            height: 90%;
-            overflow-y: scroll;
-        -webkit-transform: scale(0.8);
-           -moz-transform: scale(0.8);
-            -ms-transform: scale(0.8);
-                transform: scale(0.8);
-        }
-        #current-rss-preview-mobile {
-            background: white;
-            width: 100%;
-            height: 100%;
-            overflow-y: scroll;
-        -webkit-transform: scale(0.8);
-           -moz-transform: scale(0.8);
-            -ms-transform: scale(0.8);
-                transform: scale(0.8);
-        }
-        #current-rss-preview-mobile > .preview-content-mobile > .cur-pw-top > .cur-pw-description > .rss-title-preview-new {font-size: 20px;}
-
-        .popup_visible #current-rss-preview {
-            -webkit-transform: scale(1);
-               -moz-transform: scale(1);
-                -ms-transform: scale(1);
-                    transform: scale(1);
-        }
+        #current-rss-preview {background: white;width: 50%;height: 90%;overflow-y: scroll;-webkit-transform: scale(0.8);-moz-transform: scale(0.8);-ms-transform: scale(0.8);transform: scale(0.8)}
+        #current-rss-preview-mobile{background: white;width: 100%;height: 100%;overflow-y: scroll;-webkit-transform: scale(1);-moz-transform: scale(1);-ms-transform: scale(1);transform: scale(1)}
+        #current-rss-preview-mobile>.preview-content-mobile>.cur-pw-top>.cur-pw-description>.rss-title-preview-new {font-size: 20px;}
+        #current-rss-preview-mobile>.preview-content-mobile>.rss-preview-body>h1{font-size:28px}
+        #current-rss-preview-mobile>.preview-content-mobile>.rss-preview-body>h2{font-size:25px}
+        .popup_visible #current-rss-preview{-webkit-transform: scale(1); -moz-transform: scale(1);-ms-transform: scale(1);transform: scale(1)}
         .cur-pw-item > li{width:100%; height:inherit; margin-bottom: 15px;}
         .cur-pw-description > .rss-title-preview-new{font-size:26px;}
         .cur-pw-td > .rss-author-new{color: #F62A00;}
-        .cur-pw-ar-cover{float: left; width: 30%;}
-        .cur-pw-ar-content{float: right; width: 70%;}
-        .cont-cover{width:100%; height: 100px; float: left;}
+        .cur-pw-ar-cover{float:left;width:40%;padding-left:0;}
+        .cur-pw-ar-content{float:right;width:60%;padding-left:0;padding-right:0;}
+        .cont-cover{width:100%;height:100px;float:left;}
         .cont-cover:hover{cursor:pointer;}
         .cur-pw-td{color: white;}
-        .cur-pw-right{
-            top: 80%;
-            color: white;
-            position: absolute;
-            text-align: center;
-        }
-        .cur-pw-left{
-            width: 100%;
-            padding: 0 5%;
-            margin-top: 2%;
-            font-family: Georgia,Times,sans-serif;
-            font-size: 17px;
-        }
-        .cur-pw-left img{
-            max-height: 800px;
-            max-width: 100%;
-            height: inherit;
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
+        .cur-pw-right{top: 80%;color: white;position: absolute;text-align: center}
+        .cur-pw-left{width: 100%;padding: 0 5%;margin-top: 2%;font-family: Georgia,Times,sans-serif;font-size: 17px}
+        .cur-pw-left img{max-height: 800px;max-width: 100%;height: inherit;margin-left: auto !important;margin-right: auto !important}
         .cur-pw-top{position: relative;}
         .cur-pw-cover{width:100%;height: 150px}
         .fl-btn{width:100%;}
@@ -186,6 +116,7 @@
         .cur-pw-btn-fl{position: absolute;bottom:0;right:0;}
         .cur-pw-btn-bck{position: absolute;bottom:0;left:0;}
         .change:hover{cursor:pointer;}
+        .navbar-form-mobile{padding:10px 15px;margin-top:8px;margin-right:-15px;margin-bottom:8px;margin-left:-15px}
     </style>
     <script src="{% static 'static/js/jquery.js' %}"></script>
     <script src="{% static 'static/js/jquery.min.js' %}"></script>
@@ -274,6 +205,13 @@
                       <!-- change language -->
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                              {% if lang == 'eng' %}
+                                  <img src="{% static 'static/img/closet/uk.png' %}"/>
+                              {% elif lang == 'rus' %}
+                                  <img src="{% static 'static/img/closet/rus.png' %}"/>
+                              {% elif lang == 'ch' %}
+                                  <img src="{% static 'static/img/closet/ch.png' %}"/>
+                              {% endif %}
                               <span class="caret"></span>
                           </a>
                             <ul class="dropdown-menu">
@@ -292,6 +230,7 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+    {% if flavour != 'mobile' %}
         <div id="nav-search-bar"
          hidden
          style="top:51px;position: absolute; z-index: 999; background: rgba(0, 0, 0, 0.7); width: 100%; height: 60px;">
@@ -332,6 +271,41 @@
             </li>
         </ul>
     </div>
+    {% else %}
+        <div id="nav-search-bar"
+         hidden
+         style="position: absolute; z-index: 999; background: rgba(0, 0, 0, 0.7); width: 100%; height: 60px;">
+        <ul class="nav navbar-nav" style="margin-left: 2%; height: 60px; position: relative">
+            <li style="width: 100%;top:0;float: right;">
+                <form class="navbar-form-mobile navbar-left"
+                      action="/search/"
+                      style="width: 100%;"
+                      method="get"
+                      name="search_form"
+                      onsubmit="return validate_form();"
+                      role="search">
+                    <div class="form-field" style="width: 100%;">
+                        <div class="form-group" style="width: 100%;">
+                            <input placeholder="{% trans 'What searching?' %}"
+                                   type="search"
+                                   name="q"
+                                   autocomplete="off"
+                                   id="search-field"
+                                   class=""
+                                   style="float: left; background: none; border: none; border-bottom: solid 1px lightgrey;
+                                   outline: none; width:80%; font-size: 2em; color: white;">
+                            <button type="submit"
+                                    class="btn"
+                                    style="color:white; background: #F62A00; float: right;margin-top: 4%;">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
     </header>
     <main id="total-wrapper" class="">
         <div class="overlay"></div>
@@ -475,9 +449,9 @@
         </article>
         <div id="close-preview" class="total-body-closer fadeandscale" hidden>
             <ul id="" data-rss-id="" class="text-center" style="padding-left:10px; padding-right:10px;width:50px;">
-                <li class="social-rss">
-                    <span class="close-cur-rss glyphicon glyphicon-remove" style="font-size: 0.75em;color:white;"></span>
-                </li>
+{#                <li class="social-rss">#}
+{#                    <span class="close-cur-rss glyphicon glyphicon-remove" style="font-size: 0.75em;color:white;"></span>#}
+{#                </li>#}
                 <li class="rss-item-save social-rss"
                     onclick="setRssFavourite($('.cur-pw-top').attr('data-rss-id'));">
                     <span data-fav="0" class="rss-fav glyphicon glyphicon-plus text-muted"
@@ -545,7 +519,7 @@
     function validate_form() {
         valid = true;
         if (document.search_form.q.value == "") {
-            alert("Please, complete the field.");
+            alertify.alert("Please, complete search field.");
             valid = false;
         }
         return valid;
@@ -602,15 +576,16 @@
         }
     });
     function RssPreviewPopUpShow(i) {
-        $.ajax({
-            type: "POST",
-            url: "/news/scar=" + i,
-            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-            success: function () {
-                $('#rss-title-' + i).addClass('rss-title-read');
-            }
-        });
-        $.ajax({
+        {% if flavour != 'mobile' %}
+            $.ajax({
+                type: "POST",
+                url: "/news/scar=" + i,
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function () {
+                    $('#rss-title-' + i).addClass('rss-title-read');
+                }
+            });
+            $.ajax({
             type: "POST",
             url: "/news/gcr=" + i + "/",
             data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
@@ -622,10 +597,10 @@
                 $('.preview-content-mobile').html(data.string);
                 $parsedData = data.data;
                 if ($parsedData.content.length === 0) {
-                    $(".rss-preview-body").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "' target='_blank'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    $(".rss-preview-body").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
                 }
                 else {
-                    $(".rss-preview-body").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "' target='_blank'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    $(".rss-preview-body").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
                 }
                 if(data.data.fav == true){
                     $('.rss-item-save').attr('onclick', 'removeRssFavourite("{id}");'.replace("{id}", i));
@@ -637,7 +612,47 @@
                 }
             }
         });
+        {% else %}
+            $.ajax({
+            type: "POST",
+            url: "/news/scar=" + i,
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success: function () {
+                $('#rss-title-' + i).addClass('rss-title-read');
+            }
+        });
+            $.ajax({
+            type: "POST",
+            url: "/news/gcr_m=" + i + "/",
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success: function (data) {
+                $('#current-rss-preview').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
+                $('#current-rss-preview-mobile').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
+                $('#close-preview').fadeIn();
+                $('.preview-content').html(data.string);
+                $('.preview-content-mobile').html(data.string);
+                $parsedData = data.data;
+                if ($parsedData.content.length === 0) {
+                    $(".rss-preview-body").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a><button class='btn btn-primary' onclick='RssPreviewArticleMobileHide(); return false;'>Close</button>");
+                }
+                else {
+                    $(".rss-preview-body").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a><button class='btn btn-primary' onclick='RssPreviewArticleMobileHide(); return false;'>Close</button>");
+                }
+                if(data.data.fav == true){
+                    $('.rss-item-save').attr('onclick', 'removeRssFavourite("{id}");'.replace("{id}", i));
+                    $('.rss-fav').attr('data-fav', 1).css({'color': 'lime'})
+                }
+                else{
+                    $('.rss-item-save').attr('onclick', 'setRssFavourite("{id}");'.replace("{id}", i));
+                    $('.rss-fav').attr('data-fav', 0).css({'color': 'white'})
+                }
+            }
+        });
+        {% endif %}
     }
+            function RssPreviewArticleMobileHide(){
+                $('#current-rss-preview-mobile').popup('hide');
+            }
     function RssPreviewPopUpHide() {
         $(".preview-rss-news").hide();
         $("html").css("overflowY", "auto");
@@ -959,6 +974,7 @@
         $('#new-portal-feed-feed').hide();
         $('#processing-portals').hide();
     }
+    {% if flavour != 'mobile' %}
     var $valRE = /(https?:\/\/)?(www\.)?([-а-яa-zёЁцушщхъфырэчстью0-9_\.]{2,}\.)(рф|[a-z]{2,6})((\/[-а-яёЁцушщхъфырэчстьюa-z0-9_]{1,})?\/?([a-z0-9_-]{2,}\.[a-z]{2,6})?(\?[a-z0-9_]{2,}=[-0-9]{1,})?((\&[a-z0-9_]{2,}=[-0-9]{1,}){1,})?)/g;
     $('#uap').keyup(function () {
         if ($('#uap').val() == '') {
@@ -1069,12 +1085,12 @@
                             success: function (data) {
                                 // portal preview show
                                 $('#uap').blur();
-                                $('#fadeandscale').popup({
+                                $('#current-rss-preview').popup({
                                     autoopen: true,
                                     pagecontainer: '.container',
                                     transition: 'all 0.3s'
                                 });
-                                $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
+                                $('.preview-content').html(data.data).replace('{by}', "{% trans 'By' %}");
                             }
                         })
                     }
@@ -1083,6 +1099,133 @@
             return false;
         }
     });
+    {% else %}
+        var $valRE = /(https?:\/\/)?(www\.)?([-а-яa-zёЁцушщхъфырэчстью0-9_\.]{2,}\.)(рф|[a-z]{2,6})((\/[-а-яёЁцушщхъфырэчстьюa-z0-9_]{1,})?\/?([a-z0-9_-]{2,}\.[a-z]{2,6})?(\?[a-z0-9_]{2,}=[-0-9]{1,})?((\&[a-z0-9_]{2,}=[-0-9]{1,}){1,})?)/g;
+    $('#uap').keyup(function () {
+        if ($('#uap').val() == '') {
+            hideAllBlocks();
+        }
+        else {
+            if ($('#uap').val().match($valRE) && $('#uap').val() != '') {
+                var homeLoader = $('body').loadingIndicator({useImage: false}).data("loadingIndicator");
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'url': $('#uap').val()},
+                    url: "/news/find_rss/",
+                    success: function (data) {
+                        if (data.response == true) {
+                            if (data.exists != true) {
+                                // found announce
+                                $.ajax({
+                                    type: "POST",
+                                    data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'url': $('#uap').val()},
+                                    url: "/news/browser/sag/",
+                                    success: function () {
+                                        homeLoader.hide();
+                                        $.ajax({
+                                            url: "/news/preview_new_m/",
+                                            type: "POST",
+                                            data: {
+                                                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                                'url': $('#uap').val()
+                                            },
+                                            success: function (data) {
+                                                // portal preview show
+                                                $('#current-rss-preview-mobile').popup({
+                                                    autoopen: true,
+                                                    pagecontainer: '.container',
+                                                    transition: 'all 0.3s'
+                                                });
+                                                $('.preview-content-mobile').html(data.data).replace('{by}', "{% trans 'By' %}");
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                            else {
+                                $.ajax({
+                                    url: "/news/preview_new_m/",
+                                    dataType: 'json',
+                                    data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'url': $('#uap').val()},
+                                    success: function (data) {
+                                        $('#current-rss-preview-mobile').popup({
+                                            autoopen: true,
+                                            pagecontainer: '.container',
+                                            transition: 'all 0.3s'
+                                        });
+                                        $('.preview-content-mobile').html(data.data).replace('{by}', "{% trans 'By' %}");
+                                        $('#uap').blur();
+                                    }
+                                });
+                            }
+                        }
+                        else {
+                            homeLoader.hide();
+                            $('#uap').blur();
+                            var message = "Sorry, we can't work with this portal. But we will add it to our database, thank you, friend.";
+                            alertify.prompt(message, function (e, str) {
+                                // str is the input text
+                                if (e) {
+                                    // user clicked "ok"
+                                } else {
+                                    // user clicked "cancel"
+                                }
+                            }, "Write your email and we will keep you up to date wth this portal.");
+                        }
+                    },
+                    error: function(){
+                        homeLoader.hide();
+                        $('#uap').blur();
+                    }
+                });
+            }
+            else {
+                $('#search-feed-fail').hide();
+                $('#found-feed').hide();
+                $('#uap').autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "/news/rss/get_matches=" + $('#uap').val().replace(/\./g, ""),
+                            dataType: "json",
+                            data: {
+                                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                q: request.term
+                            },
+                            success: function (data) {
+                                response($.map(data.slice(0, 5), function (item) {
+                                    return {
+                                        id: item.id,
+                                        label: item.name
+                                    };
+                                }));
+                            }
+                        })
+                    },
+                    select: function (event, ui) {
+                        $.ajax({
+                            url: "/news/preview_portal=" + ui.item.id + "/",
+                            dataType: 'json',
+                            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                            success: function (data) {
+                                // portal preview show
+                                $('#uap').blur();
+                                $('#current-rss-preview-mobile').popup({
+                                    autoopen: true,
+                                    pagecontainer: '.container',
+                                    transition: 'all 0.3s'
+                                });
+                                $('.preview-content-mobile').html(data.data).replace('{by}', "{% trans 'By' %}");
+                            }
+                        })
+                    }
+                })
+            }
+            return false;
+        }
+    });
+    {% endif %}
+
     $(document).ready(function () {
         $("#myCarousel").swiperight(function () {
             $(this).carousel('prev');

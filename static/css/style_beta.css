@@ -573,7 +573,7 @@ ul.alert-dropdown {
 
 
 .title:hover, .rss-title:hover{
-    color: rgb(25, 180, 155);
+    color: #F62A00;
 }
 
 .rss-title-read{
@@ -618,7 +618,7 @@ ul.alert-dropdown {
 }
 .no-touch .cd-top:hover {
     visibility: visible;
-    background-color: #00C0FF;
+    background-color: #F62A00;
     opacity: 1;
 }
 
@@ -1021,7 +1021,7 @@ ul.alert-dropdown {
 
 
 .carousel-inner-item-title:hover{
-    color: rgb(25, 180, 155);
+    color: #F62A00;
     cursor: pointer;
     text-decoration: none;
 }
@@ -1993,3 +1993,8 @@ Sidebar
 /***************************** SWIPER ******************************/
 
 /*************************** END SWIPER ****************************/
+
+
+/*************************** TIMELINE ******************************/
+
+/************************* END TIMELINE ****************************/
