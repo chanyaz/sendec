@@ -1,0 +1,387 @@
+{% load my %}
+{% load i18n %}
+{% load staticfiles %}
+{% load thumbnail %}
+    <title>{% trans 'Carrer Insydia' %} | Insydia</title>
+    <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static/css/style_beta.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<style>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     >
+        header{position: relative;z-index:1;}
+        section{width:100%;height:100%}
+        #head-back{width:100%;height:100%;
+            background: url('{% static "static/img/about/career.jpg" %}') no-repeat center;
+            -webkit-background-size: cover;
+            background-size: cover;
+            -webkit-filter: url(#blur);
+             filter: url(#blur);
+             -webkit-filter: blur(3px);
+             filter: blur(3px);
+             filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='3');
+             -webkit-transition: 1s -webkit-filter linear;
+             transition: 1s filter linear;
+        }
+        #head-menu{position:absolute;top:5%;left:5%;color:white;font-size:20px}
+        #head-menu>a{color:#F62A00;}
+        #head-menu>a:hover{color:#1E656D;}
+        #head-logo{position:absolute;top:5%;right:5%;font-size:20px;color:#F62A00}
+        #head-title{position: absolute;top:25%;padding:10px;}
+        #head-title>h1{font-size:72px;color:white}
+        #head-description{position:absolute;top:40%;color:white;font-size:20px}
+
+        @-moz-keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {
+            -moz-transform: translateY(0);
+            transform: translateY(0);
+          }
+          40% {
+            -moz-transform: translateY(-30px);
+            transform: translateY(-30px);
+          }
+          60% {
+            -moz-transform: translateY(-15px);
+            transform: translateY(-15px);
+          }
+        }
+        @-webkit-keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+          }
+          40% {
+            -webkit-transform: translateY(-30px);
+            transform: translateY(-30px);
+          }
+          60% {
+            -webkit-transform: translateY(-15px);
+            transform: translateY(-15px);
+          }
+        }
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {
+            -moz-transform: translateY(0);
+            -ms-transform: translateY(0);
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+          }
+          40% {
+            -moz-transform: translateY(-30px);
+            -ms-transform: translateY(-30px);
+            -webkit-transform: translateY(-30px);
+            transform: translateY(-30px);
+          }
+          60% {
+            -moz-transform: translateY(-15px);
+            -ms-transform: translateY(-15px);
+            -webkit-transform: translateY(-15px);
+            transform: translateY(-15px);
+          }
+        }
+        .head-arrow {
+            position:absolute;
+          bottom: 0;
+          left: 50%;
+          margin-left: -20px;
+          width: 40px;
+          height: 40px;
+          background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0yOTMuNzUxLDQ1NS44NjhjLTIwLjE4MSwyMC4xNzktNTMuMTY1LDE5LjkxMy03My42NzMtMC41OTVsMCwwYy0yMC41MDgtMjAuNTA4LTIwLjc3My01My40OTMtMC41OTQtNzMuNjcyICBsMTg5Ljk5OS0xOTBjMjAuMTc4LTIwLjE3OCw1My4xNjQtMTkuOTEzLDczLjY3MiwwLjU5NWwwLDBjMjAuNTA4LDIwLjUwOSwyMC43NzIsNTMuNDkyLDAuNTk1LDczLjY3MUwyOTMuNzUxLDQ1NS44Njh6Ii8+DQo8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMjIwLjI0OSw0NTUuODY4YzIwLjE4LDIwLjE3OSw1My4xNjQsMTkuOTEzLDczLjY3Mi0wLjU5NWwwLDBjMjAuNTA5LTIwLjUwOCwyMC43NzQtNTMuNDkzLDAuNTk2LTczLjY3MiAgbC0xOTAtMTkwYy0yMC4xNzgtMjAuMTc4LTUzLjE2NC0xOS45MTMtNzMuNjcxLDAuNTk1bDAsMGMtMjAuNTA4LDIwLjUwOS0yMC43NzIsNTMuNDkyLTAuNTk1LDczLjY3MUwyMjAuMjQ5LDQ1NS44Njh6Ii8+DQo8L3N2Zz4=);
+          background-size: contain;
+        }
+
+        .bounce {
+          -moz-animation: bounce 2s infinite;
+          -webkit-animation: bounce 2s infinite;
+          animation: bounce 2s infinite;
+        }
+
+        .head-arrow {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          margin-left:-20px;
+          width: 40px;
+          height: 40px;
+          background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0yOTMuNzUxLDQ1NS44NjhjLTIwLjE4MSwyMC4xNzktNTMuMTY1LDE5LjkxMy03My42NzMtMC41OTVsMCwwYy0yMC41MDgtMjAuNTA4LTIwLjc3My01My40OTMtMC41OTQtNzMuNjcyICBsMTg5Ljk5OS0xOTBjMjAuMTc4LTIwLjE3OCw1My4xNjQtMTkuOTEzLDczLjY3MiwwLjU5NWwwLDBjMjAuNTA4LDIwLjUwOSwyMC43NzIsNTMuNDkyLDAuNTk1LDczLjY3MUwyOTMuNzUxLDQ1NS44Njh6Ii8+DQo8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMjIwLjI0OSw0NTUuODY4YzIwLjE4LDIwLjE3OSw1My4xNjQsMTkuOTEzLDczLjY3Mi0wLjU5NWwwLDBjMjAuNTA5LTIwLjUwOCwyMC43NzQtNTMuNDkzLDAuNTk2LTczLjY3MiAgbC0xOTAtMTkwYy0yMC4xNzgtMjAuMTc4LTUzLjE2NC0xOS45MTMtNzMuNjcxLDAuNTk1bDAsMGMtMjAuNTA4LDIwLjUwOS0yMC43NzIsNTMuNDkyLTAuNTk1LDczLjY3MUwyMjAuMjQ5LDQ1NS44Njh6Ii8+DQo8L3N2Zz4=);
+          background-size: contain;
+        }
+        .bounce {@include animation(bounce 2s infinite);}
+
+
+        /********************* advantages *********************/
+        #advantages{width:100%;height:50%;background:white}
+        #adv-table{margin-top:5%}
+        .advo-title h2,
+        .advt-title h2,
+        .advth-title h2 {font-size:20px;color:black;padding:0;margin:0; margin-bottom:5%}
+        .advo-description h3,
+        .advt-description h3,
+        .advth-description h3 {font-size:16px;color:rgba(1,1,1,0.5);padding:0;margin:0}
+
+        /********************* job team ***********************/
+        #teammates{width:100%;height:50%;background:black}
+        .t-title{margin-top:10%}
+        .t-title>h2{color:white;padding:0;margin:0;font-size:26px}
+        .t-description{margin-top:2%}
+        .t-description>h3{font-size:16px;margin:0;padding:0;color:white}
+
+        /********************** description *******************/
+        #description{width:100%;height:100%;background:white}
+        .desc-title{margin-top:2%}
+        .desc-title>h2{color:black;padding:0;margin:0;font-size:26px}
+        .desc-description{margin-top:2%}
+        .dd-title>h3{color:black;font-size:18px;padding:0;margin:5% 0}
+        .dd-description{width:75%;margin-left:12.5%}
+        .dd-description>h4{color:rgba(1,1,1,0.5);font-size:16px;padding:0;margin:5% 0}
+
+        /********************** work **************************/
+        #work{width:100%;height:100%;background:black}
+
+        /********************* conditions *********************/
+        #conditions{width:100%;height:100%;background:white}
+
+        /*********************** resume ***********************/
+        #resume{width:100%;height:100%;background:black}
+        .res-title{margin-top:5%}
+        .res-title>h2{color:white;padding:0;margin:0;font-size:26px}
+        .res-descriptoin{margin-top:2%}
+
+        footer{background: black}
+        .cf-title>h2{font-size:26px;color:white;padding:0;margin:2% 0;}
+        .cf-list{list-style-type: none;padding:0;margin-left:1%}
+        .cfl-item{display: inline-block;font-size:30px;margin-right:10px}
+        .cfl-item>a{color:white}
+        .cfl-item>a:hover{color:#F62A00}
+        .cf-brand{color:white}
+</style>
+
+
+        <main>
+        <!-- INTRO -->
+            <header>
+                <div id="head-back"></div>
+                <div class="head-arrow bounce"></div>
+                <div id="head-menu"><a href="/">{% trans 'BACK TO SITE' %}</a></div>
+                <div id="head-logo">INSYDIA</div>
+                <div id="head-title" class="col-xs-12 text-center">
+                    <h1>{% trans 'CAREER' %}</h1>
+                </div>
+                <div id="head-description" class="col-xs-12 text-center">
+                    {% trans 'Join to our team and change the media industry' %}
+                </div>
+            </header>
+            <section id="advantages">
+    {#            <div class="col-xs-12 text-center">ADVANTAGES</div>#}
+                <div id="adv-table" class="container container-fluid">
+                    <div class="row row-center col-xs-12">
+                        <div class="col-xs-4 text-center">
+                            <div class="adv-one">
+                                <div class="advo-image"></div>
+                                <div class="advo-title"><h2>{% trans 'Творите' %}</h2></div>
+                                <div class="advo-description">
+                                    <h3>{% blocktrans %}Мы занимаемся творчеством и нам это безумно нравится. Мы рады заниматься
+                                    каждой частью проекта, от самой маленькой до самой важной и трудной.{% endblocktrans %}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 text-center">
+                            <div class="adv-two">
+                                <div class="advt-image"></div>
+                                <div class="advt-title"><h2>{% trans 'Учитесь' %}</h2></div>
+                                <div class="advt-description">
+                                    <h3>{% blocktrans %}Мы всегда находимся в процессе обучения и изучения нового. Мы не стоим на месте
+                                    и хотим быть лучше и интереснее. У нас все учатся друг у друга и все готовы помочь
+                                    любому члену команды.{% endblocktrans %}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 text-center">
+                            <div class="adv-three">
+                                <div class="advt-image"></div>
+                                <div class="advth-title"><h2>{% trans 'Получайте удовольствие от работы' %}</h2></div>
+                                <div class="advth-description">
+                                    <h3>{% blocktrans %}Самое главное в работе это получать от неё удовольствие и радоваться каждому
+                                    приходу на неё. Мы будем строить наши условия труда именно по этой схеме и хотим,
+                                    чтобы каждый наш будущий сотрудник радовался и гордился своим местом работы.{% endblocktrans %}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="teammates">
+                <div id="t-table" class="container container-fluid">
+                    <div class="row row-center col-xs-12">
+                        <div class="t-title text-center">
+                            <h2>{% trans 'Family of Insydia' %}</h2>
+                        </div>
+                        <div class="t-description text-center">
+                            <h3>
+                                {% blocktrans %}
+                                    <p>Мы ещё маленькая команда, но у нас большие амбиции и мы понимаем, что
+                                    для достижения желаемых результатов нам нужны такие же энтузиасты, как мы.
+                                    Все вместе, командой, мы сможем создать что-то большое. В нашей команде
+                                    мы работаем очень усердно, постоянно обсуждаем новые решения и идеи. Мы
+                                    всегда оценим наших сотрудников, дав им право голоса и мнения по любому вопросу.</p>
+                                {% endblocktrans %}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="description">
+                <div id="desc-table" class="container container-fluid">
+                    <div class="row row-center col-xs-12">
+                        <div class="desc-title text-center">
+                            <h2>
+                                {% trans 'Какие наши сотрудники' %}
+                            </h2>
+                        </div>
+                        <div class="desc-description text-center">
+                            <div class="col-xs-6">
+                                <div class="dd-title text-center"><h3>{% trans 'Заинтересованные' %}</h3></div>
+                                <div class="dd-description text-center">
+                                    <h4>
+                                        {% blocktrans %}
+                                            Каждый участник проекта подходит к своему делу с горящими глазами,
+                                            готов приступить к новым задачам после завершения текущих.
+                                        {% endblocktrans %}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="dd-title text-center"><h3>{% trans 'Надёжные' %}</h3></div>
+                                <div class="dd-description text-center">
+                                    <h4>
+                                        {% blocktrans %}
+                                            Всегда поможем чем сможем, посоветуем как поступить в той или иной
+                                            ситуации ничего не требуя взамен, ведь мы одна команда, одна семья.
+                                        {% endblocktrans %}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="dd-title text-center"><h3>{% trans 'С чувством юмора' %}</h3></div>
+                                <div class="dd-description text-center">
+                                    <h4>
+                                        {% blocktrans %}
+                                            В любой момент времени мы можем взорвать место, где находимся,
+                                            истерическим смехом, причем повод может быть аболютно любой ведь
+                                            все мы очень разносторонние.
+                                        {% endblocktrans %}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="dd-title text-center"><h3>{% trans 'Разносторонние' %}</h3></div>
+                                <div class="dd-description text-center">
+                                    <h4>
+                                        {% blocktrans %}
+                                            Работать над определённым проектом или задачей это очень хорошо, но
+                                            мы не забываем и о том, что творится за их пределами. Мы все увлекаемся
+                                            различными вещами: кто-то катается на сноуборде в Альпах, кто-то
+                                            погружается на 10 метровую глубину в Атлантике, кто-то наизусить знает
+                                            то или иное художественное произведение и многое многое другое.
+                                        {% endblocktrans %}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="dd-title text-center"><h3>{% trans 'Творческие' %}</h3></div>
+                                <div class="dd-description text-center">
+                                    <h4>
+                                        {% blocktrans %}
+                                            Каждый член нашей семьи в той или иной степени, но очень творческий.
+                                            Системный администратор может жонглировать аппаратурой, локализаторы
+                                            готовят шикарные блюда, что рестораны позавидуют их мастерству. Мы все
+                                            очень разные и от того "слово".
+                                        {% endblocktrans %}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="dd-title text-center"><h3>{% trans 'Смелые' %}</h3></div>
+                                <div class="dd-description text-center">
+                                    <h4>
+                                        {% blocktrans %}
+                                            Прочитав наши планы можно подумать, что мы подобно Гераклу идём на великие
+                                            подвиги. И это от части так, ведь мы хотим многое изменить и
+                                            усовершенствовать в этом мире. Кто-то может сказать, что мы безумцы.
+                                            Но лишь безумцы меняют этот мир.
+                                        {% endblocktrans %}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="work">
+                <div class="section-title">work</div>
+            </section>
+            <section id="conditions">
+                <div class="section-title">conditions</div>
+            </section>
+            <section id="resume">
+                <div id="res-table" class="container container-fluid text-center">
+                    <div class="row row-center col-xs-12">
+                        <div class="res-title text-center">
+                            <h2>
+                                {% trans 'Присоединитесь к нам сегодня и измените медиа индустрию' %}
+                            </h2>
+                        </div>
+                        <div class="res-descriptoin text-center">
+                            <button class="">{% trans 'Отправить резюме' %}</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <div id="career-footer" class="container container-fluid">
+                <div class="row row-center text-center">
+                    <hr width="50%">
+                    <div class="cf-title text-center">
+                        <h2>
+                            {% trans 'Присоединяйтесь к нам' %}
+                        </h2>
+                    </div>
+                    <div class="cf-socials text-center">
+                        <ul class="cf-list">
+                            <li class="cfl-item">
+                                <a href="https://www.facebook.com/insydiaofficial/">
+                                    <span class="fa fa-facebook"></span>
+                                </a>
+                            </li>
+                            <li class="cfl-item">
+                                <a href="https://twitter.com/insydianews">
+                                    <span class="fa fa-twitter"></span>
+                                </a>
+                            </li>
+                            <li class="cfl-item">
+                                <a href="https://vk.com/insydianews">
+                                    <span class="fa fa-vk"></span>
+                                </a>
+                            </li>
+                            <li class="cfl-item">
+                                <a href="https://www.linkedin.com/company/insydia">
+                                    <span class="fa fa-linkedin"></span>
+                                </a>
+                            </li>
+                            <li class="cfl-item">
+                                <a href="https://instagram.com/insydiaofficial/">
+                                    <span class="fa fa-instagram"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="cf-brand">
+                        &copy;&nbsp;Insydia, {% now 'Y' %}
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    <script src="{% static 'static/js/jquery.js' %}"></script>
+    <script src="{% static 'static/js/jquery.min.js' %}"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

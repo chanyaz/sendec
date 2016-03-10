@@ -1,18 +1,19 @@
 {% load endless %}
 {% load my %}
+{% load i18n %}
 {% load staticfiles %}
 {% load thumbnail %}
-<div class="any40items" style="height: inherit;">
+<div class="any40items">
 {% paginate 20 new_user_news %}
     {% for i in new_user_news %}
         {% if flavour != 'mobile' %}
-            <div class="sect-new" style="cursor: pointer;">
+            <div class="sect-new">
                 <div class="current_rss_news rss-rss"
                      id="rss_id_{{ i.id }}"
                      data-indx="{{ i.nuid }}"
                      data-current-rss-news-id="{{ i.id }}">
         {% else %}
-            <div class="sect-new" style="cursor: pointer;">
+            <div class="sect-new">
                 <div class="current_rss_news rss-rss"
                      style="width: 100%;"
                      id="rss_id_{{ i.id }}"
@@ -28,8 +29,7 @@
                 {% if i.id|get_rss_news_cover != '' %}
                     <div class="news-image"
                          onclick="RssPreviewPopUpShow('{{ i.id }}')"
-                         style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;">
-
+                         style="background:url({{ i.id|get_rss_news_cover }}) no-repeat center;background-size:cover">
                     </div>
                 {% endif %}
             {% if i.id|check_read_rss:username.id == True %}
@@ -41,7 +41,35 @@
                      id="rss-title-{{ i.id }}"
                      onclick="RssPreviewPopUpShow('{{ i.id }}')">
             {% endif %}
-                    <b>{{ i.title|safe|striptags }}</b>
+                    <h1>
+                        <b>
+                            {{ i.title|safe|striptags }}
+                        </b>
+                    </h1>
+                </div>
+                <div class="rss-params">
+                    <div class="rp-top">
+                        <div class="rp-author pull-left">
+                            {% if i.author != '' %}
+                                {% trans 'By' %}&nbsp;<span class="rss-author-name">{{ i.author }}</span>
+                            {% else %}
+                                <span class="rss-author-name">{{ i.portal_name_id|get_rss_portal_name }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="rp-time pull-right">
+                            {{ i.date_posted.date|date }}
+                        </div>
+                    </div>
+                    <div class="rp-conf">
+                        <div class="rpc-left pull-left"><a href="{{ i.link }}">original</a></div>
+                        <div id="link-save-{{ i.id }}" class="rpc-right pull-right">
+                            {% if i.id|check_saved_rss:username.id == False %}
+                                <a href="#" onclick="setRssFavourite('{{ i.id }}'); return false;">save</a>
+                            {% else %}
+                                <a href="#" onclick="removeRssFavourite('{{ i.id }}'); return false;">unsave</a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

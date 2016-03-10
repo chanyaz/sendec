@@ -51,7 +51,7 @@
     <title>{% blocktrans %}{{ title }}Insydia{% endblocktrans %}</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'static/css/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static/css/style_beta.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{% static 'static/css/jquery.loading-indicator.css' %}">
     <link rel="stylesheet" href="{% static 'static/css/alertify.default.css' %}">
     <link rel="stylesheet" href="{% static 'static/css/alertify.core.css' %}">
@@ -100,10 +100,12 @@
         .popup_visible #current-rss-preview{-webkit-transform: scale(1); -moz-transform: scale(1);-ms-transform: scale(1);transform: scale(1)}
         .cur-pw-item > li{width:100%; height:inherit; margin-bottom: 15px;}
         .cur-pw-description > .rss-title-preview-new{font-size:26px;}
+        .cur-pw-description > .title-small{font-size:20px;}
         .cur-pw-td > .rss-author-new{color: #F62A00;}
         .cur-pw-ar-cover{float:left;width:40%;padding-left:0;}
         .cur-pw-ar-content{float:right;width:60%;padding-left:0;padding-right:0;}
-        .cont-cover{width:100%;height:100px;float:left;}
+        .cont-cover{
+            widows:                                                                                                                                                                                                                                                 ;dth:100%;height:100px;float:left;}
         .cont-cover:hover{cursor:pointer;}
         .cur-pw-td{color: white;}
         .cur-pw-right{top: 80%;color: white;position: absolute;text-align: center}
@@ -122,6 +124,14 @@
     <script src="{% static 'static/js/jquery.min.js' %}"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="{% static 'static/js/insydia.js' %}"></script>
+    <script>
+    $(document).ready(function(){
+                $('.change').on('click', function(){
+                    document.cookie = "lang="+$(this).attr('data-lang');
+                    location.reload();
+                })
+            });
+    </script>
 </head>
 {% if here_private %}
 <body style="background: white;">
@@ -132,7 +142,7 @@
         <nav class="navbar navbar-default" role="navigation" style="top: 0; z-index: 999;">
             <div class="container-fluid container" id="navfluid">
                 <div class="navbar-header pull-left">
-                  <a class="navbar-brand" href="/">INSYDIA <h5 class="pull-right">beta</h5></a>
+                  <a class="navbar-brand" href="/">INSYDIA <h5 class="navbar-brand-slogo pull-right">beta</h5></a>
                 </div>
                 <div class="navbar-header ">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar">
@@ -145,50 +155,85 @@
                 <div class="collapse navbar-collapse" id="navigationbar">
                   <ul class="nav navbar-nav">
                       {% if here_tech == True %}
-                        <li><a class="active" href="/news/technology/">{% trans 'TECHNOLOGY' %}</a></li>
+                        <li class="text-center"><a class="active" href="/news/technology/">{% trans 'TECHNOLOGY' %}</a></li>
                       {% else %}
-                          <li><a href="/news/technology/">{% trans 'TECHNOLOGY' %}</a></li>
+                          <li class="text-center"><a href="/news/technology/">{% trans 'TECHNOLOGY' %}</a></li>
                       {% endif %}
                       {% if here_ent == True %}
-                        <li><a class="active" href="/news/entertainment/">{% trans 'ENTERTAINMENT' %}</a></li>
+                        <li class="text-center"><a class="active" href="/news/entertainment/">{% trans 'ENTERTAINMENT' %}</a></li>
                       {% else %}
-                        <li><a href="/news/entertainment/">{% trans 'ENTERTAINMENT' %}</a></li>
+                        <li class="text-center"><a href="/news/entertainment/">{% trans 'ENTERTAINMENT' %}</a></li>
                       {% endif %}
                       {% if here_auto == True %}
-                          <li><a class="active" href="/news/auto/">{% trans 'AUTO' %}</a></li>
+                          <li class="text-center"><a class="active" href="/news/auto/">{% trans 'AUTO' %}</a></li>
                       {% else %}
-                          <li><a href="/news/auto/">{% trans 'AUTO' %}</a></li>
+                          <li class="text-center"><a href="/news/auto/">{% trans 'AUTO' %}</a></li>
                       {% endif %}
                       {% if here_space == True %}
-                            <li><a class="active" href="/news/space/">{% trans 'SPACE' %}</a></li>
+                          <li class="text-center"><a class="active" href="/news/space/">{% trans 'SPACE' %}</a></li>
                       {% else %}
-                          <li><a href="/news/space/">{% trans 'SPACE' %}</a></li>
+                          <li class="text-center"><a href="/news/space/">{% trans 'SPACE' %}</a></li>
                       {% endif %}
                       {% if here_bio == True %}
-                            <li><a class="active" href="/news/bio/">{% trans 'BIO' %}</a></li>
+                          <li class="text-center"><a class="active" href="/news/bio/">{% trans 'BIO' %}</a></li>
                       {% else %}
-                          <li><a href="/news/bio/">{% trans 'BIO' %}</a></li>
+                          <li class="text-center"><a href="/news/bio/">{% trans 'BIO' %}</a></li>
                       {% endif %}
                       {% if here_companies == True %}
-                          <li><a class="active" href="/news/companies/">{% trans 'COMPANIES' %}</a></li>
+                          <li class="text-center"><a class="active" href="/news/companies/">{% trans 'COMPANIES' %}</a></li>
                       {% else %}
-                          <li><a href="/news/companies/">{% trans 'COMPANIES' %}</a></li>
+                          <li class="text-center"><a href="/news/companies/">{% trans 'COMPANIES' %}</a></li>
                       {% endif %}
-{#                      {% if here_review == True %}#}
-{#                          <li><a class="active" href="//"></a></li>#}
-{#                      {% else %}#}
-{#                          <li><a href="//"></a></li>#}
-{#                      {% endif %}#}
                       {% if here_private == True %}
-                          <li><a class="active" href="/news/usernews/">{% trans 'PRIVATE' %}</a></li>
+                          <li class="text-center"><a class="active" href="/news/usernews/">{% trans 'PRIVATE' %}</a></li>
                       {% else %}
-                          <li><a href="/news/usernews/">{% trans 'PRIVATE' %}</a></li>
+                          <li class="text-center"><a href="/news/usernews/">{% trans 'PRIVATE' %}</a></li>
                       {% endif %}
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                    <li><a><span id="nav-search-btn" class="glyphicon glyphicon-search"></span></a></li>
+                    <li>
+                        {% if flavour != 'mobile' %}
+                        <a><span id="nav-search-btn" class="glyphicon glyphicon-search"></span></a>
+                        {% else %}
+                            <div id="nav-search-bar" style="position: absolute; z-index: 999; width: 95%; height: 60px;">
+                                <ul class="nav navbar-nav" style="height: 60px; position: relative">
+                                    <li style="width: 90%;top:0;float: right;">
+                                        <form class="navbar-form-mobile navbar-left"
+                                              action="/search/"
+                                              style="width: 100%;"
+                                              method="get"
+                                              name="search_form"
+                                              onsubmit="return validate_form();"
+                                              role="search">
+                                            <div class="form-field" style="width: 100%;">
+                                                <div class="form-group" style="width: 100%;">
+                                                    <input placeholder="{% trans 'What searching?' %}"
+                                                           type="search"
+                                                           name="q"
+                                                           autocomplete="off"
+                                                           id="search-field"
+                                                           class=""
+                                                           style="float: left; background: none; border: none; border-bottom: solid 1px lightgrey;
+                                                           outline: none; width:80%; font-size: 2em; color: white;margin-top:-8%">
+                                                    <button type="submit"
+                                                            class="btn"
+                                                            style="color:white; background: #F62A00; float: right;margin-top: -6%;">
+                                                        <span class="glyphicon glyphicon-search"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </li>
                       {% if username.username %}
-                        <li class="dropdown">
+                          {% if flavour != 'mobile' %}
+                            <li class="dropdown">
+                              {% else %}
+                              <li class="dropdown" style="margin-top:60px">
+                        {% endif %}
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                               {{ username.username }}<span class="caret"></span>
                           </a>
@@ -200,7 +245,13 @@
                           </ul>
                         </li>
                       {% else %}
-                          <li><a href="/auth/login/">{% trans 'Sign in' %}</a></li>
+                          {% if flavour != 'mobile' %}
+                            <li><a href="/auth/login/">{% trans 'Sign in' %}</a></li>
+                              {% else %}
+                              <li style="margin-top:60px">
+                                <a href="/auth/login/">{% trans 'Sign in' %}</a>
+                              </li>
+                              {% endif %}
                       {% endif %}
                       <!-- change language -->
                       <li class="dropdown">
@@ -215,14 +266,14 @@
                               <span class="caret"></span>
                           </a>
                             <ul class="dropdown-menu">
+                                <li class="change change-to-chinese" data-lang="ch">
+                                    <a><span><img src="{% static 'static/img/closet/ch.png' %}"/>中國</span></a>
+                                </li>
                                 <li class="change change-to-english" data-lang="eng">
                                     <a><span><img src="{% static 'static/img/closet/uk.png' %}"/>English</span></a>
                                 </li>
                                 <li class="change change-to-russian" data-lang="rus">
-                                    <a><span><img src="{% static 'static/img/closet/rus.png' %}"/>Russian</span></a>
-                                </li>
-                                <li class="change change-to-chinese" data-lang="ch">
-                                    <a><span><img src="{% static 'static/img/closet/ch.png' %}"/>Chinese</span></a>
+                                    <a><span><img src="{% static 'static/img/closet/rus.png' %}"/>Русский</span></a>
                                 </li>
                             </ul>
                       </li>
@@ -271,126 +322,12 @@
             </li>
         </ul>
     </div>
-    {% else %}
-        <div id="nav-search-bar"
-         hidden
-         style="position: absolute; z-index: 999; background: rgba(0, 0, 0, 0.7); width: 100%; height: 60px;">
-        <ul class="nav navbar-nav" style="margin-left: 2%; height: 60px; position: relative">
-            <li style="width: 100%;top:0;float: right;">
-                <form class="navbar-form-mobile navbar-left"
-                      action="/search/"
-                      style="width: 100%;"
-                      method="get"
-                      name="search_form"
-                      onsubmit="return validate_form();"
-                      role="search">
-                    <div class="form-field" style="width: 100%;">
-                        <div class="form-group" style="width: 100%;">
-                            <input placeholder="{% trans 'What searching?' %}"
-                                   type="search"
-                                   name="q"
-                                   autocomplete="off"
-                                   id="search-field"
-                                   class=""
-                                   style="float: left; background: none; border: none; border-bottom: solid 1px lightgrey;
-                                   outline: none; width:80%; font-size: 2em; color: white;">
-                            <button type="submit"
-                                    class="btn"
-                                    style="color:white; background: #F62A00; float: right;margin-top: 4%;">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </li>
-        </ul>
-    </div>
+{#    {% else %}#}
+
     {% endif %}
     </header>
     <main id="total-wrapper" class="">
-        <div class="overlay"></div>
-        {% if left_bar == True %}
-            <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-                <ul class="nav sidebar-nav">
-                    <li class="sidebar-brand"> <a href="/"> INSYDIA </a> </li>
-                    <li>
-                        <a href="/">
-                            <i class="fa fa-fw fa-home"></i>
-                            {% trans 'HOME' %}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/news/technology/">
-                            <i class="fa fa-fw fa-folder"></i>
-                            {% trans 'TECHNOLOGY' %}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/news/entertainment/">
-                            <i class="fa fa-fw fa-file-o"></i>
-                            {% trans 'ENTERTAINMENT' %}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/news/auto/">
-                            <i class="fa fa-fw fa-cog"></i>
-                            {% trans 'AUTO' %}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/news/space/">
-                            <i class="fa fa-fw fa-cog"></i>
-                            {% trans 'SPACE' %}
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-fw fa-plus"></i>
-                            {% trans '<later>' %}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li class="dropdown-header">
-                                {% trans '<later>' %}
-                            </li>
-                        </ul>
-                    </li>
-                    {% if username.username %}
-                        <li>
-                            <a href="/profile/">
-                                {% trans 'PROFILE' %}
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    <li>
-                        <a href="/about">
-                            <i class="fa fa-fw fa-bank"></i>
-                            {% trans 'ABOUT US' %}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/about/contacts/">
-                            <i class="fa fa-fw fa-dropbox"></i>
-                            {% trans 'CONTACT US' %}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/about/advertisers/">
-                            <i class="fa fa-fw fa-twitter"></i>
-                            {% trans 'ADVERTISER' %}
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
-                    <span class="hamb-top"></span>
-                    <span class="hamb-middle"></span>
-                    <span class="hamb-bottom"></span>
-                </button>
-        {% else %}
-            <div id="wrapper-main-content" class="row">
-        {% endif %}
+        <div id="wrapper-main-content" class="row">
             <div id="wrapper-new" class="">
                 <div id="page-wrapper">
                     <div class="row row-centered">
@@ -503,50 +440,114 @@
         <!-- for swiping on mobile devices TEST MODE-->
         <script src="{% static 'static/js/swipe.js' %}"></script>
         <script>
-            $(document).ready(function(){
-                $('.change').on('click', function(){
-{#                    document.cookie = 'lang=; expires=-1;';#}
-                    document.cookie = "lang="+$(this).attr('data-lang');
-                    location.reload();
-                })
-            });
-    $(document).ready(function () {
-        var $sb = $('.search-bar');
-        $sb.focusout(function () {
-            $sb.fadeOut("fast");
-        })
-    });
-    function validate_form() {
-        valid = true;
-        if (document.search_form.q.value == "") {
-            alertify.alert("Please, complete search field.");
-            valid = false;
-        }
-        return valid;
-    }
-    function SearchClick(flag) {
-        if (flag === 0) {
-            $('.search-bar').fadeIn("fast");
-            $('#textplace-search').focus();
-        } else {
-            $('.search-bar-wide').fadeIn("fast");
-            $('#textplace-search').focus();
-        }
-    }
-    function setRssFavourite(news_id) {
+function showCurrentPortalData(i) {
         $.ajax({
             type: "POST",
-            url: "/news/add_like_rss/r=" + news_id,
-            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-            success: function () {
-                alertify.success("{% trans 'New favourite article' %}");
-                $('.rss-fav').css({
-                    'color': 'lime'
+            url: "/news/preview_portal_m="+i+"/",
+            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+            success: function (data) {
+                $('#fadeandscale').popup({
+                    autoopen: true,
+                    pagecontainer: '.container',
+                    transition: 'all 0.3s'
+                }).css({
+                    'background': 'white'
                 });
-                $('.rss-item-save').attr('onclick', 'removeRssFavourite("{id}");'.replace("{id}", news_id));
+                $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
+
             }
-        });
+        })
     }
+    function loadCurrentArticle(i){
+{#                var homeLoader = $('body').loadingIndicator({#}
+{#                        useImage: false#}
+{#                    }).data("loadingIndicator");#}
+{#                if($('.loading-indicator-wrapper').hasClass('loader-hidden')){#}
+{#                    $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');#}
+{#                }#}
+                {% if flavour != 'mobile' %}
+                    $('#current-rss-preview').animate({
+                scrollTop: $('html, body').offset().top
+            });
+                $.ajax({
+                    type: "POST",
+                    data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                    url: "/news/gcr="+i+"/",
+                    success: function(data){
+                        $parsedData = data.data;
+                        $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
+                        if ($parsedData.content.length === 0) {
+                            $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                        }
+                        else {
+                            $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                        }
+                        $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
+                        $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
+                        $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
+                        homeLoader.hide();
+                    }
+                });
+                {% else %}
+                    $.ajax({
+                    type: "POST",
+                    data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                    url: "/news/gcr_m="+i+"/",
+                    success: function(data){
+                        $parsedData = data.data;
+                        $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
+                        if ($parsedData.content.length === 0) {
+                            $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                        }
+                        else {
+                            $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                        }
+                        $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalDataMobile('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
+                        $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
+                        $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
+                        homeLoader.hide();
+                    }
+                });
+                {% endif %}
+            }
+            $(document).ready(function () {
+                var $sb = $('.search-bar');
+                $sb.focusout(function () {
+                    $sb.fadeOut("fast");
+                })
+            });
+            function validate_form() {
+                valid = true;
+                if (document.search_form.q.value == "") {
+                    alertify.alert("Please, complete search field.");
+                    valid = false;
+                }
+                return valid;
+            }
+{#    function SearchClick(flag) {#}
+{#        if (flag === 0) {#}
+{#            $('.search-bar').fadeIn("fast");#}
+{#            $('#textplace-search').focus();#}
+{#        } else {#}
+{#            $('.search-bar-wide').fadeIn("fast");#}
+{#            $('#textplace-search').focus();#}
+{#        }#}
+{#    }#}
+        function setRssFavourite(news_id) {
+            $.ajax({
+                type: "POST",
+                url: "/news/add_like_rss/r=" + news_id,
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function () {
+                    alertify.success("{% trans 'New favourite article' %}");
+                    $('.rss-fav').css({
+                        'color': 'lime'
+                    });
+                    $('#link-save-'+news_id).html("<a href='#' onclick='removeRssFavourite('{id}'); return false;'>unsave</a>".replace("{id}", news_id));
+                    $('.rss-item-save').attr('onclick', 'removeRssFavourite("{id}");'.replace("{id}", news_id));
+                }
+            });
+        }
     function removeRssFavourite(news_id){
         $.ajax({
             type: "POST",
@@ -557,10 +558,15 @@
                 $('.rss-fav').css({
                     'color': 'white'
                 });
+                $('#link-save-'+news_id).html("<a href='#' onclick='setRssFavourite('{id}'); return false;'>save</a>".replace("{id}", news_id));
                 $('.rss-item-save').attr('onclick', 'setRssFavourite("{id}");'.replace("{id}", news_id));
             }
         })
     }
+            function hideCurrentRssPortal(){
+        $('#fadeandscale').hide();
+        $('#current-rss-preview-mobile').popup('hide');}
+        $('#fadeandscale-mobile').popup('hide');}
     $(document).ready(function (event) {
         RssPreviewPopUpHide();
         $("#current-rss-preview").keyup(function (e) {
@@ -571,7 +577,6 @@
     });
     $(document).on('click', function (event) {
         if (!$(event.target).closest('#current-rss-preview').length && !$(event.target).closest('#close-preview').length) {
-            // Hide the menus.
             $('#close-preview').hide();
         }
     });
@@ -584,6 +589,9 @@
                 success: function () {
                     $('#rss-title-' + i).addClass('rss-title-read');
                 }
+            });
+            $('#current-rss-preview').animate({
+                scrollTop: $('html, body').offset().top
             });
             $.ajax({
             type: "POST",
@@ -650,43 +658,14 @@
         });
         {% endif %}
     }
-            function RssPreviewArticleMobileHide(){
-                $('#current-rss-preview-mobile').popup('hide');
-            }
+    function RssPreviewArticleMobileHide(){
+        $('#current-rss-preview-mobile').popup('hide');
+    }
     function RssPreviewPopUpHide() {
         $(".preview-rss-news").hide();
         $("html").css("overflowY", "auto");
     }
-    $('.close-cur-rss').on('click', function(){});
 
-
-    $(document).ready(function () {
-        var trigger = $('.hamburger'),
-            overlay = $('.overlay'),
-            isClosed = false;
-
-        trigger.click(function () {
-            hamburger_cross();
-        });
-        function hamburger_cross() {
-
-            if (isClosed == true) {
-                overlay.hide();
-                trigger.removeClass('is-open');
-                trigger.addClass('is-closed');
-                isClosed = false;
-            } else {
-                overlay.show();
-                trigger.removeClass('is-closed');
-                trigger.addClass('is-open');
-                isClosed = true;
-            }
-        }
-
-        $('[data-toggle="offcanvas"]').click(function () {
-            $('#total-wrapper').toggleClass('toggled');
-        });
-    });
     $('.tabs-list a').click(function (e) {
         e.preventDefault();
         $(this).tab('show')
@@ -734,39 +713,40 @@
             });
         }
     });
-    $(document).ready(function () {
-        var offset = 100,
-            offset_opacity = 1200,
-            scroll_top_duration = 700,
-            $back_to_top = $('.cd-top');
-
-        $(window).scroll(function () {
-            ( $(this).scrollTop() > offset ) ? $back_to_top.addClass('cd-is-visible') : $back_to_top.removeClass('cd-is-visible cd-fade-out');
-            if ($(this).scrollTop() > offset_opacity) {
-                $back_to_top.addClass('cd-fade-out');
-            }
-        });
-        $back_to_top.on('click', function (event) {
-            event.preventDefault();
-            $('body,html').animate({
-                    scrollTop: 0
-                }, scroll_top_duration
-            );
-        });
-
-    });
-    function getCompanyID(name) {
-        $.ajax({
-            type: "POST",
-            url: "/news/comp/gid=" + name,
-            data: {
-                'csrfmiddlewaretoken': '{{ csrf_token }}'
-            },
-            success: function (data) {
-                return data.data.id
-            }
-        })
-    }
+{#            #}
+{#    $(document).ready(function () {#}
+{#        var offset = 100,#}
+{#            offset_opacity = 1200,#}
+{#            scroll_top_duration = 700,#}
+{#            $back_to_top = $('.cd-top');#}
+{##}
+{#        $(window).scroll(function () {#}
+{#            ( $(this).scrollTop() > offset ) ? $back_to_top.addClass('cd-is-visible') : $back_to_top.removeClass('cd-is-visible cd-fade-out');#}
+{#            if ($(this).scrollTop() > offset_opacity) {#}
+{#                $back_to_top.addClass('cd-fade-out');#}
+{#            }#}
+{#        });#}
+{#        $back_to_top.on('click', function (event) {#}
+{#            event.preventDefault();#}
+{#            $('body,html').animate({#}
+{#                    scrollTop: 0#}
+{#                }, scroll_top_duration#}
+{#            );#}
+{#        });#}
+{##}
+{#    });#}
+{#    function getCompanyID(name) {#}
+{#        $.ajax({#}
+{#            type: "POST",#}
+{#            url: "/news/comp/gid=" + name,#}
+{#            data: {#}
+{#                'csrfmiddlewaretoken': '{{ csrf_token }}'#}
+{#            },#}
+{#            success: function (data) {#}
+{#                return data.data.id#}
+{#            }#}
+{#        })#}
+{#    }#}
     $("#companies-search").autocomplete({
         source: function (request, response) {
             $.ajax({
@@ -845,62 +825,63 @@
         ));
         return matches ? decodeURIComponent(matches[1]) : undefined;
     }
-    $(function () {
-        $(".tabs-to-dropdown").each(function () {
-            var resizeTimeout = 20;
-            var tabBar = $(this).children(".tab-bar");
-            var tabList = tabBar.children("ul");
-            var tabListItem = tabList.children("li");
-
-            var dropdown = $(this).children(".dropdown");
-            var dropdownToggle = dropdown.children(".dropdown-toggle");
-            var dropdownList = dropdown.children("ul");
-
-            var clickHandler = ("ontouchstart" in document.documentElement ? "touchstart" : "click");
-
-            var tabsToDropdown = function () {
-                var tabBarWidth = tabBar.width();
-                tabListItem.each(function (index) {
-                    var dropdownListItem = dropdownList.children("li").eq(index);
-                    var tabListItemOffset = $(this).position().left;// + $(this).outerWidth();
-
-                    if (tabListItemOffset >= tabBarWidth) {
-                        $(this).addClass("ttd-hide");
-                        dropdownListItem.addClass("ttd-show");
-                    } else {
-                        $(this).removeClass("ttd-hide");
-                        dropdownListItem.removeClass("ttd-show");
-                    }
-                });
-
-                tabList.children(".ttd-hide").length > 0 ? dropdown.addClass("ttd-show") : dropdown.removeClass("ttd-show");
-            };
-
-            tabListItem.clone().appendTo(dropdownList);
-
-
-            tabsToDropdown();
-            $(window).bind("resize", function () {
-                if (typeof sizeWait != "undefined") {
-                    clearTimeout(sizeWait);
-                }
-                sizeWait = setTimeout(function () {
-                    tabsToDropdown();
-                }, resizeTimeout);
-            });
-
-            dropdown.bind(clickHandler, function (e) {
-                e.stopPropagation();
-            });
-            $(document).bind(clickHandler, function () {
-                dropdown.removeClass("ttd-open");
-            });
-            dropdownToggle.bind(clickHandler, function (e) {
-                dropdown.toggleClass("ttd-open");
-                e.stopPropagation();
-            });
-        });
-    });
+{#            #}
+{#    $(function () {#}
+{#        $(".tabs-to-dropdown").each(function () {#}
+{#            var resizeTimeout = 20;#}
+{#            var tabBar = $(this).children(".tab-bar");#}
+{#            var tabList = tabBar.children("ul");#}
+{#            var tabListItem = tabList.children("li");#}
+{##}
+{#            var dropdown = $(this).children(".dropdown");#}
+{#            var dropdownToggle = dropdown.children(".dropdown-toggle");#}
+{#            var dropdownList = dropdown.children("ul");#}
+{##}
+{#            var clickHandler = ("ontouchstart" in document.documentElement ? "touchstart" : "click");#}
+{##}
+{#            var tabsToDropdown = function () {#}
+{#                var tabBarWidth = tabBar.width();#}
+{#                tabListItem.each(function (index) {#}
+{#                    var dropdownListItem = dropdownList.children("li").eq(index);#}
+{#                    var tabListItemOffset = $(this).position().left;// + $(this).outerWidth();#}
+{##}
+{#                    if (tabListItemOffset >= tabBarWidth) {#}
+{#                        $(this).addClass("ttd-hide");#}
+{#                        dropdownListItem.addClass("ttd-show");#}
+{#                    } else {#}
+{#                        $(this).removeClass("ttd-hide");#}
+{#                        dropdownListItem.removeClass("ttd-show");#}
+{#                    }#}
+{#                });#}
+{##}
+{#                tabList.children(".ttd-hide").length > 0 ? dropdown.addClass("ttd-show") : dropdown.removeClass("ttd-show");#}
+{#            };#}
+{##}
+{#            tabListItem.clone().appendTo(dropdownList);#}
+{##}
+{##}
+{#            tabsToDropdown();#}
+{#            $(window).bind("resize", function () {#}
+{#                if (typeof sizeWait != "undefined") {#}
+{#                    clearTimeout(sizeWait);#}
+{#                }#}
+{#                sizeWait = setTimeout(function () {#}
+{#                    tabsToDropdown();#}
+{#                }, resizeTimeout);#}
+{#            });#}
+{##}
+{#            dropdown.bind(clickHandler, function (e) {#}
+{#                e.stopPropagation();#}
+{#            });#}
+{#            $(document).bind(clickHandler, function () {#}
+{#                dropdown.removeClass("ttd-open");#}
+{#            });#}
+{#            dropdownToggle.bind(clickHandler, function (e) {#}
+{#                dropdown.toggleClass("ttd-open");#}
+{#                e.stopPropagation();#}
+{#            });#}
+{#        });#}
+{#    });#}
     $(document).ready(function () {
         scaleVideoContainer();
         initBannerVideoSize('.video-container video');
@@ -1245,8 +1226,6 @@
             threshold: 0
         });
     });
-        </script>
-        <script>
             $('#nav-search-btn').click(function () {
                 if ($(this).hasClass('active-search-btn')) {
                     $('#nav-search-bar').slideUp();
@@ -1264,7 +1243,19 @@
                     }
                 })
             })
+
         </script>
+
+
+<script>
+    var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            slidesPerView: 2,
+            centeredSlides: true,
+            paginationClickable: true,
+            spaceBetween: 30
+        });
+    </script>
     </main>
     <footer>
         {% if here_private and not browser %}

@@ -5,7 +5,7 @@ from news.models import News, NewsWatches, NewsPortal, NewsCategory, RssPortals,
     UserRssNewsReading, RssNews
 from userprofile.models import UserSettings
 from django.contrib.auth.models import User
-
+from favourite.models import RssSaveNews
 
 register = template.Library()
 
@@ -178,3 +178,10 @@ def divide(value, arg):
 @register.filter(name="get_news_cover")
 def get_news_cover(value):
     return 1
+
+@register.filter(name="check_saved_rss")
+def check_saved_rss(value, user):
+    if RssSaveNews.objects.filter(rss_id=int(value), user_id=user).exists():
+        return True
+    else:
+        return False

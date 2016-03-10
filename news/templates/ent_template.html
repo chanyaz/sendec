@@ -18,7 +18,6 @@
     }
     .current_news{height: 400px;}
 </style>
-
 {% if flavour != 'mobile' %}
     <div class="dyn-news-2 container" style="height: inherit; margin-bottom: 5%; margin-left: -3%;">
         {% paginate 30 total_news %}
@@ -41,7 +40,15 @@
                              style="margin-top: 2%;">
                             <div class="news-title">
                                 <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                    <b>{{ i.news_title|safe }}</b>
+                                    <b>
+                                        {% if lang == 'eng' %}
+                                            {{ i.news_title_english }}
+                                        {% elif lang == 'rus' %}
+                                            {{ i.news_title_russian }}
+                                        {% else %}
+                                            {{ i.news_title_chinese }}
+                                        {% endif %}
+                                    </b>
                                 </a>
                             </div>
                         </div>
@@ -51,11 +58,16 @@
                             </span>&nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
                         </div>
                         <div class="news-text" style="margin-top: 5%; ">
-                            {{ i.news_post_text_english|safe|truncatechars:150 }}
+                            {% if lang == 'eng' %}
+                                {{ i.teaser_english }}
+                            {% elif lang == 'rus' %}
+                                {{ i.teaser_russian }}
+                            {% else %}
+                                {{ i.teaser_chinese }}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-
                 {% if forloop.last %}
                     <div class="row row-centered col-xs-12 pull-center" style="height: 90px; background-color: #00fff9"></div>
                 {% endif %}
@@ -81,7 +93,15 @@
                              style="float: right;">
                             <div class="news-title-mobile" style="line-height: 0.9em; margin-top: 0;">
                                 <a class="mobile-title" href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                    <b>{{ i.news_title|safe }}</b>
+                                    <b>
+                                        {% if lang == 'eng' %}
+                                            {{ i.news_title_english }}
+                                        {% elif lang == 'rus' %}
+                                            {{ i.news_title_russian }}
+                                        {% else %}
+                                            {{ i.news_title_chinese }}
+                                        {% endif %}
+                                    </b>
                                 </a>
                             </div>
                         </div>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-14 12:04+0000\n"
+"POT-Creation-Date: 2016-03-06 22:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: favourite/templates/liked_news.html:62
+#: favourite/templates/liked_news.html:90 news/templates/browse_tech.html:202
+#: news/templates/manage_portals.html:77 news/templates/user_news.html:309
+#: news/templates/user_news.html.py:483 news/templates/user_news_beta.html:396
+msgid "Manage portals"
+msgstr "管理追随者"
+
+#: favourite/templates/liked_news.html:96 news/templates/browse_tech.html:203
+#: news/templates/manage_portals.html:83 news/templates/user_news.html:310
+#: news/templates/user_news.html.py:489 news/templates/user_news_beta.html:402
+msgid "Browse portals"
+msgstr "友情链接的分类"
+
+#: favourite/templates/liked_news.html:106
 msgid "FAVOURITE ARTICLES"
 msgstr "最喜爱的文章"
-
-#: favourite/templates/liked_news.html:68
-msgid "Your favourite articles"
-msgstr "你的喜爱的文章"
 
 #: loginsys/forms.py:13 loginsys/forms.py:56
 msgid "The two password fields didn't match."
@@ -41,74 +49,130 @@ msgstr "确认密码"
 msgid "Enter the same password as above, for verification."
 msgstr "请再次输入密码"
 
-#: loginsys/forms.py:59 loginsys/templates/register.html:166
-#: userprofile/templates/profile.html:183
+#: loginsys/forms.py:59 loginsys/templates/register.html:72
+#: userprofile/templates/profile.html:153
 msgid "Username"
 msgstr "帐号"
 
-#: loginsys/templates/cant_login.html:102
+#: loginsys/templates/cant_login.html:34
 msgid "Reset"
 msgstr "取消"
 
-#: loginsys/templates/footer_loginsys.html:29 loginsys/templates/login.html:60
-#: loginsys/templates/register.html:196 templates/footer.html:146
-#: templates/footer_usernews.html:125
+#: loginsys/templates/footer_loginsys.html:29 loginsys/templates/login.html:63
+#: loginsys/templates/register.html:102 templates/footer.html:106
+#: templates/footer.html.py:189 templates/footer_usernews.html:130
+#: templates/mobile/mobile_footer.html:126
+#: templates/mobile/mobile_footer.html:209
 msgid "Advertisement"
 msgstr "广告"
 
-#: loginsys/templates/footer_loginsys.html:32 loginsys/templates/login.html:63
-#: loginsys/templates/register.html:199 templates/footer.html:145
-#: templates/footer_usernews.html:124
+#: loginsys/templates/footer_loginsys.html:32 templates/footer.html:188
+#: templates/footer_usernews.html:129 templates/mobile/mobile_footer.html:125
+#: templates/mobile/mobile_footer.html:208
 msgid "Contacts"
 msgstr " 联系我们"
 
 #: loginsys/templates/footer_loginsys.html:35 loginsys/templates/login.html:66
-#: loginsys/templates/register.html:202 templates/footer.html:144
-#: templates/footer_usernews.html:123
+#: loginsys/templates/register.html:105 templates/footer.html:105
+#: templates/footer.html.py:187 templates/footer_usernews.html:128
+#: templates/mobile/mobile_footer.html:124
+#: templates/mobile/mobile_footer.html:207
 msgid "About us"
 msgstr "关于我们"
 
-#: loginsys/templates/login.html:46 loginsys/templates/register.html:185
+#: loginsys/templates/login.html:49 loginsys/templates/register.html:91
 msgid "SIGN IN"
 msgstr "登录"
 
-#: loginsys/templates/login.html:48 loginsys/templates/register.html:183
+#: loginsys/templates/login.html:51 loginsys/templates/register.html:89
 msgid "SIGN UP"
 msgstr "注册"
 
-#: loginsys/templates/login.html:49
-msgid "Can't sign in?"
-msgstr "忘记密码?"
-
-#: loginsys/templates/register.html:175 templates/contacts.html:54
-#: templates/contacts.html.py:71
+#: loginsys/templates/register.html:81
 msgid "E-mail"
 msgstr "邮箱"
 
-#: news/templates/auto.html:313 news/templates/auto.html.py:330
-#: news/templates/auto.html:476 news/templates/bio.html:313
-#: news/templates/bio.html.py:330 news/templates/bio.html:476
-#: news/templates/current_company_news.html:50
-#: news/templates/current_news.html:319 news/templates/entertainment.html:313
-#: news/templates/entertainment.html:330 news/templates/entertainment.html:476
-#: news/templates/space.html:313 news/templates/space.html.py:330
-#: news/templates/space.html:476 news/templates/technology.html:313
-#: news/templates/technology.html.py:330 news/templates/technology.html:476
-#: news/templates/top_news.html:319 news/templates/total.html:475
-#: news/templates/total.html.py:496 news/templates/total.html:677
-#: search/templates/search.html:172
+#: news/mobile/mobile_cur_news.html:178 news/mobile/mobile_cur_news.html:271
+#: news/mobile/mobile_cur_news.html:295 news/mobile/mobile_cur_news.html:317
+#: news/mobile/mobile_cur_news.html:340 news/mobile/mobile_cur_news.html:376
+#: news/mobile/mobile_other_materials.html:105 news/templates/auto.html:68
+#: news/templates/auto.html.py:119 news/templates/auto.html:171
+#: news/templates/auto.html.py:207 news/templates/auto.html:230
+#: news/templates/auto.html.py:255 news/templates/auto.html:278
+#: news/templates/auto.html.py:322 news/templates/auto_template.html:42
+#: news/templates/bio.html:66 news/templates/bio.html.py:117
+#: news/templates/bio.html:169 news/templates/bio.html.py:203
+#: news/templates/bio.html:226 news/templates/bio.html.py:251
+#: news/templates/bio.html:274 news/templates/bio.html.py:318
+#: news/templates/bio_template.html:42 news/templates/browse_portals.html:404
+#: news/templates/browse_portals.html:422 news/templates/catalog.html:193
+#: news/templates/catalog.html.py:211 news/templates/current_news.html:359
+#: news/templates/current_news_beta.html:145
+#: news/templates/current_news_beta.html:258
+#: news/templates/current_news_beta.html:288
+#: news/templates/current_news_beta.html:316
+#: news/templates/current_news_beta.html:345
+#: news/templates/current_news_beta.html:389
+#: news/templates/ent_template.html:49 news/templates/entertainment.html:180
+#: news/templates/entertainment.html:231 news/templates/entertainment.html:283
+#: news/templates/entertainment.html:319 news/templates/entertainment.html:342
+#: news/templates/entertainment.html:367 news/templates/entertainment.html:390
+#: news/templates/entertainment.html:434 news/templates/page_template.html:50
+#: news/templates/pre_paginate.html:39 news/templates/pre_paginate.html:88
+#: news/templates/space.html:180 news/templates/space.html.py:231
+#: news/templates/space.html:287 news/templates/space.html.py:327
+#: news/templates/space.html:350 news/templates/space.html.py:375
+#: news/templates/space.html:398 news/templates/space.html.py:442
+#: news/templates/space_template.html:49 news/templates/tech_template.html:57
+#: news/templates/technology.html:180 news/templates/technology.html.py:239
+#: news/templates/technology.html:303 news/templates/technology.html.py:349
+#: news/templates/technology.html:378 news/templates/technology.html.py:409
+#: news/templates/technology.html:438 news/templates/technology.html.py:490
+#: news/templates/top_news.html:145 news/templates/top_news.html.py:247
+#: news/templates/top_news.html:277 news/templates/top_news.html.py:305
+#: news/templates/top_news.html:334 news/templates/top_news.html.py:376
+#: news/templates/total.html:257 news/templates/total.html.py:307
+#: news/templates/total.html:351 news/templates/total.html.py:368
+#: news/templates/total.html:419 news/templates/total.html.py:446
+#: news/templates/total.html:475 news/templates/total.html.py:502
+#: news/templates/total.html:551 news/templates/total_beta.html:81
+#: news/templates/total_beta.html.py:130 news/templates/total_beta.html:193
+#: news/templates/total_beta.html.py:234 news/templates/total_beta.html:263
+#: news/templates/total_beta.html.py:294 news/templates/total_beta.html:323
+#: news/templates/total_beta.html.py:379 news/templates/total_beta.html:423
+#: news/templates/user_news_beta.html:487
+#: news/templates/user_news_beta.html:502 search/templates/search.html:119
+#: templates/index_25_02.html:1229 templates/index_25_02.html.py:1268
+#: templates/index_25_02.html:1316 templates/index_beta.html:1015
+#: templates/index_beta.html.py:1032 templates/index_beta.html:1093
+#: templates/index_beta.html.py:1140 templates/index_beta.html:1157
+#: templates/index_beta.html.py:1218
 msgid "By"
 msgstr "作者"
 
-#: news/templates/auto.html:343 news/templates/bio.html:343
-#: news/templates/entertainment.html:343 news/templates/space.html:343
-#: news/templates/technology.html:343 news/templates/total.html:513
-msgid "Interesting articles"
-msgstr "有兴趣的文章"
+#: news/mobile/mobile_cur_news.html:205 news/templates/current_news.html:387
+#: news/templates/current_news_beta.html:173 news/templates/top_news.html:173
+msgid "Edit"
+msgstr "编辑"
 
-#: news/templates/browse_auto.html:324 news/templates/browse_auto.html:357
-#: news/templates/browse_auto.html:390 news/templates/browse_auto.html:423
-#: news/templates/browse_auto.html:456 news/templates/browse_bio.html:324
+#: news/mobile/mobile_cur_news.html:252
+#: news/templates/current_news_beta.html:234 news/templates/top_news.html:223
+msgid "MORE ON INSYDIA "
+msgstr ""
+
+#: news/mobile/mobile_cur_news.html:402 news/templates/current_news.html:565
+#: news/templates/current_news_beta.html:428 news/templates/top_news.html:415
+msgid "Please enable JavaScript to view the"
+msgstr "请您放开 JavaScript 运行权限"
+
+#: news/mobile/mobile_cur_news.html:402 news/templates/current_news.html:565
+#: news/templates/current_news_beta.html:428 news/templates/top_news.html:415
+msgid "comments powered by Disqus."
+msgstr "如果您想看看Disqus的评价"
+
+#: news/templates/browse_auto.html:172 news/templates/browse_auto.html:204
+#: news/templates/browse_auto.html:236 news/templates/browse_auto.html:268
+#: news/templates/browse_auto.html:300 news/templates/browse_bio.html:324
 #: news/templates/browse_bio.html.py:357 news/templates/browse_bio.html:390
 #: news/templates/browse_bio.html.py:423 news/templates/browse_bio.html:456
 #: news/templates/browse_ent.html:324 news/templates/browse_ent.html.py:357
@@ -120,117 +184,66 @@ msgstr "有兴趣的文章"
 msgid "Follow"
 msgstr "追随"
 
-#: news/templates/browse_portals.html:136 news/templates/browse_tech.html:162
-#: news/templates/manage_portals.html:104 news/templates/user_news.html:432
+#: news/templates/browse_portals.html:81
+#, fuzzy
+#| msgid "What are you looking for?"
+msgid "What would you like to read?"
+msgstr "我们要搜索什么?"
+
+#: news/templates/browse_portals.html:461 templates/index_25_02.html:1154
+#: templates/index_beta.html:961
+#, fuzzy
+#| msgid "Description"
+msgid "Subscription added"
+msgstr "详情"
+
+#: news/templates/browse_portals.html:475
+#: news/templates/manage_portals.html:153
+#, fuzzy
+#| msgid "Description"
+msgid "Subscription remove"
+msgstr "详情"
+
+#: news/templates/browse_tech.html:162 news/templates/user_news.html:277
 msgid "Main"
 msgstr "首页"
 
-#: news/templates/browse_portals.html:138
-#: news/templates/manage_portals.html:106 news/templates/user_news.html:434
-msgid "Overview"
-msgstr "概述"
-
-#: news/templates/browse_portals.html:140 news/templates/browse_tech.html:166
-#: news/templates/manage_portals.html:108
+#: news/templates/browse_tech.html:166
 msgid "My feed"
 msgstr "我的消息流"
 
-#: news/templates/browse_portals.html:141 news/templates/browse_tech.html:167
-#: news/templates/manage_portals.html:109 news/templates/user_news.html:438
+#: news/templates/browse_tech.html:167 news/templates/user_news.html:282
+#: news/templates/user_news_beta.html:365
 msgid "Saved articles"
 msgstr "保存的文章"
 
-#: news/templates/browse_portals.html:146 news/templates/browse_tech.html:172
-msgid "Configures"
-msgstr "设置"
+#: news/templates/browse_tech.html:172
+msgid "Properties"
+msgstr ""
 
-#: news/templates/browse_portals.html:156 news/templates/browse_tech.html:182
-#: news/templates/manage_portals.html:114 news/templates/user_news.html:443
+#: news/templates/browse_tech.html:182 news/templates/user_news.html:286
+#: news/templates/user_news_beta.html:370
 msgid "Portals"
 msgstr "友情链接"
 
-#: news/templates/browse_portals.html:174 news/templates/browse_tech.html:200
-#: news/templates/manage_portals.html:132 news/templates/user_news.html:465
+#: news/templates/browse_tech.html:200 news/templates/user_news.html:307
 msgid "Configures"
 msgstr "设置"
 
-#: news/templates/browse_portals.html:176 news/templates/browse_tech.html:202
-#: news/templates/manage_portals.html:134 news/templates/user_news.html:467
-msgid "Manage portals"
-msgstr "管理追随者"
-
-#: news/templates/browse_portals.html:177 news/templates/browse_tech.html:203
-#: news/templates/manage_portals.html:135 news/templates/user_news.html:468
-msgid "Browse portals"
-msgstr "友情链接的分类"
-
-#: news/templates/browse_portals.html:190 news/templates/browse_tech.html:215
+#: news/templates/browse_tech.html:215
 msgid "Pick your own collection of news"
 msgstr "收集各自的专辑"
-
-#: news/templates/browse_portals.html:203
-msgid "Drop the key word or link"
-msgstr "请输入关键字或链接"
-
-#: news/templates/browse_portals.html:212 templates/index_new.html:1250
-msgid "Loading..."
-msgstr "加载"
-
-#: news/templates/browse_portals.html:213
-msgid "Wait please"
-msgstr "请您等一等"
-
-#: news/templates/browse_portals.html:220
-msgid ""
-"Sorry, we can't work with this portal. Try another one or search by key-word."
-msgstr "对不起，我们不能用这个链接. 请试试另一个或输入关键字"
-
-#: news/templates/browse_portals.html:223
-msgid "We find RSS-channel on"
-msgstr "我们找到消息流在"
-
-#: news/templates/browse_portals.html:223
-msgid "and add it to our Database."
-msgstr "加入我们的数据库了"
-
-#: news/templates/browse_portals.html:229
-msgid "We are collecting news for current portals. Wait please. Or you can read the latest news almost now by click"
-msgstr "现在我们找新闻在这个链接呢. 请等一下. 或者如果您想看看最新消息就点击"
-
-#: news/templates/browse_portals.html:230
-msgid "here"
-msgstr "在这里"
-
-#: news/templates/browse_portals.html:265 rss/templates/rss.html:72
-#: templates/footer.html:129 templates/footer_usernews.html:108
-msgid "Technology"
-msgstr "科技"
-
-#: news/templates/browse_portals.html:290 rss/templates/rss.html:83
-#: templates/footer.html:130 templates/footer_usernews.html:109
-msgid "Entertainment"
-msgstr "娱乐"
-
-#: news/templates/browse_portals.html:315 rss/templates/rss.html:94
-#: templates/footer.html:131 templates/footer_usernews.html:110
-msgid "Auto"
-msgstr "汽车"
-
-#: news/templates/browse_portals.html:340
-msgid "Spase"
-msgstr "太空"
-
-#: news/templates/browse_portals.html:365
-msgid "Bio-technology"
-msgstr "生物技术"
 
 #: news/templates/browse_tech.html:222
 msgid "Drop the key word or url"
 msgstr "请输入关键字或链接"
 
-#: news/templates/browse_tech.html:232 templates/index_new.html:617
-#: templates/index_new.html.py:619 templates/index_new.html:843
-#: templates/index_new.html.py:1003
+#: news/templates/browse_tech.html:232 templates/index_25_02.html:333
+#: templates/index_25_02.html.py:335 templates/index_25_02.html:445
+#: templates/index_beta.html:148 templates/index_beta.html.py:150
+#: templates/index_beta.html:325 templates/index_new.html:626
+#: templates/index_new.html.py:628 templates/index_new.html:853
+#: templates/index_new.html.py:1013
 msgid "TECHNOLOGY"
 msgstr "科技"
 
@@ -242,244 +255,265 @@ msgstr "追随者"
 msgid "Articles:"
 msgstr "文章"
 
-#: news/templates/companies.html:62 search/templates/search.html:199
-#: templates/footer.html:134 templates/footer_usernews.html:113
+#: news/templates/companies.html:24 search/templates/search.html:151
+#: search/templates/search.html.py:167 templates/footer.html:91
+#: templates/footer.html.py:180 templates/footer_usernews.html:118
+#: templates/mobile/mobile_footer.html:110
+#: templates/mobile/mobile_footer.html:200
 msgid "Companies"
 msgstr "公司"
 
-#: news/templates/companies.html:64
-msgid "Here you can search news of the certain company which do you want."
-msgstr "在这里可以找到具体公司的新闻"
-
-#: news/templates/companies.html:74
+#: news/templates/companies.html:33
 msgid "Search company"
 msgstr "搜索公司"
 
-#: news/templates/companies.html:82 search/templates/search.html:157
-#: templates/index_new.html:699
+#: news/templates/companies.html:39 search/templates/search.html:104
+#: templates/index_25_02.html:399 templates/index_beta.html:241
+#: templates/index_new.html:708
 msgid "Search"
 msgstr "搜索"
 
-#: news/templates/companies.html:97 news/templates/companies_endless.html:10
+#: news/templates/companies.html:44 news/templates/companies_endless.html:10
 msgid "Logo"
 msgstr "公司标记"
 
-#: news/templates/companies.html:98 news/templates/companies_endless.html:11
-#: templates/contacts.html:65
+#: news/templates/companies.html:45 news/templates/companies_endless.html:11
 msgid "Name"
 msgstr "名称"
 
-#: news/templates/companies.html:99 news/templates/companies_endless.html:12
-#: search/templates/search.html:240 search/templates/search.html.py:256
-#: userprofile/templates/moderator_profile.html:108
-#: userprofile/templates/profile.html:139
+#: news/templates/companies.html:46 news/templates/companies_endless.html:12
+#: search/templates/search.html:209 search/templates/search.html.py:232
+#: templates/advertisers.html:178
+#: userprofile/templates/moderator_profile.html:40
+#: userprofile/templates/profile.html:109
 msgid "Articles"
 msgstr "文章"
 
-#: news/templates/companies.html:100
-#: news/templates/companies_endless.html:13
+#: news/templates/companies.html:47 news/templates/companies_endless.html:13
 msgid "Location"
 msgstr "地区"
 
-#: news/templates/current_company.html:52
-#, python-format
-msgid "All %(company.name)s's news"
-msgstr "%(company.name)s的所有的消息"
+#: news/templates/current_company.html:60 search/templates/search.html:291
+msgid "Latest news"
+msgstr "最新消息"
 
-#: news/templates/current_news.html:345 news/templates/top_news.html:345
-msgid "Edit"
-msgstr "编辑"
+#: news/templates/current_news.html:491
+msgid "RECOMMEND "
+msgstr ""
 
-#: news/templates/current_news.html:443 news/templates/top_news.html:443
-msgid "Recommendations of"
-msgstr "为您推荐"
-
-#: news/templates/current_news.html:511 news/templates/top_news.html:511
-msgid "Please enable JavaScript to view the"
-msgstr "请您放开 JavaScript 运行权限"
-
-#: news/templates/current_news.html:511 news/templates/top_news.html:511
-msgid "comments powered by Disqus."
-msgstr "如果您想看看Disqus的评价"
-
-#: news/templates/current_news.html:523 news/templates/top_news.html:523
+#: news/templates/current_news.html:577
 #, python-format
 msgid "News&nbsp;of&nbsp;%(company_name)s"
 msgstr "%(company_name)s的消息"
 
-#: news/templates/current_news_comments.html:22 templates/contacts.html:102
-#: userprofile/templates/profile.html:95
+#: news/templates/current_news_comments.html:22
+#: userprofile/templates/profile.html:66
 msgid "Send"
 msgstr "提交"
 
-#: news/templates/manage_portals.html:177
+#: news/templates/manage_portals.html:91 templates/index_25_02.html:382
+#: templates/index_beta.html:197 templates/index_new.html:687
+msgid "Private news"
+msgstr "我的新闻"
+
+#: news/templates/manage_portals.html:91
+#, fuzzy
+#| msgid "Browse portals"
+msgid "Browser"
+msgstr "友情链接的分类"
+
+#: news/templates/manage_portals.html:105
 msgid "Portal name"
 msgstr "名称"
 
-#: news/templates/manage_portals.html:178
+#: news/templates/manage_portals.html:106
 msgid "Description"
 msgstr "详情"
 
-#: news/templates/manage_portals.html:179
-msgid "Configures"
+#: news/templates/manage_portals.html:107
+#, fuzzy
+#| msgid "Configures"
+msgid "Configs"
 msgstr "设置"
 
-#: news/templates/manage_portals.html:192
+#: news/templates/manage_portals.html:120
 msgid "unfollow"
 msgstr "取消关注"
 
-#: news/templates/manage_portals.html:198
+#: news/templates/manage_portals.html:126
 msgid "You have no one portals yet. Would you like pick your own collection?"
 msgstr "现在一个链接你也不追随呢. 您愿意收集各自的专辑吗?"
 
-#: news/templates/manage_portals.html:200
+#: news/templates/manage_portals.html:128
 msgid "You just need to"
 msgstr "简直"
 
-#: news/templates/manage_portals.html:200
+#: news/templates/manage_portals.html:128
 msgid "open"
 msgstr "翻开"
 
-#: news/templates/manage_portals.html:200
+#: news/templates/manage_portals.html:128
 msgid "portals browser."
 msgstr "友情链接的分类"
 
-#: news/templates/manage_portals.html:202
+#: news/templates/manage_portals.html:130
 msgid "If you have any questions or offers,"
 msgstr "如果您有什么的问题或者建议就"
 
-#: news/templates/manage_portals.html:202
+#: news/templates/manage_portals.html:130
 msgid "write"
 msgstr "给我们"
 
-#: news/templates/manage_portals.html:202
+#: news/templates/manage_portals.html:130
 msgid "to us, please."
 msgstr "写一封信"
 
-#: news/templates/top_news.html:297
-msgid ""
-"Your browser does not support the video tag. I suggest you upgrade your "
-"browser."
-msgstr "您的浏览器不支持视频. 我们劝您升级浏览器"
+#: news/templates/total.html:396
+msgid "Interesting articles"
+msgstr "有兴趣的文章"
 
-#: news/templates/user_news.html:437
+#: news/templates/user_news.html:279
+msgid "Overview"
+msgstr "概述"
+
+#: news/templates/user_news.html:281 news/templates/user_news_beta.html:359
 msgid "My Feed"
 msgstr "我的消息流"
 
-#: news/templates/user_news.html:497
+#: news/templates/user_news.html:335
 msgid "Recommended portals"
 msgstr "为您推荐:"
 
-#: news/templates/user_news.html:505
+#: news/templates/user_news.html:343
 msgid "Your current portals "
 msgstr "您的追随"
 
-#: news/templates/user_news.html:510
+#: news/templates/user_news.html:348
 msgid "Done"
 msgstr "完成了"
 
-#: news/templates/user_news.html:518
+#: news/templates/user_news.html:356
 msgid "All"
 msgstr "所有的"
 
-#: news/templates/user_news.html:549
+#: news/templates/user_news.html:502 news/templates/user_news_beta.html:440
 msgid "FEED"
 msgstr "消息流"
 
-#: news/templates/user_news.html:579
+#: news/templates/user_news.html:532 news/templates/user_news_beta.html:466
 msgid ""
 "At this time we cant find any news of chosen portals. We think that there "
 "will appear later."
 msgstr "现在在这个链接什么的消息我们都找不了. 我们脑力激荡呢. "
 
-#: news/templates/user_news.html:591
+#: news/templates/user_news.html:544
 msgid "The most popular portals."
 msgstr "热门链接"
 
-#: rss/templates/rss.html:57
+#: rss/templates/rss.html:32
 msgid "RSS Feed"
 msgstr "消息流"
 
-#: rss/templates/rss.html:61
+#: rss/templates/rss.html:36
 msgid "Latest"
 msgstr "最新"
 
-#: rss/templates/rss.html:63 rss/templates/rss.html.py:74
-#: rss/templates/rss.html:85 rss/templates/rss.html.py:96
-#: rss/templates/rss.html:107 rss/templates/rss.html.py:118
+#: rss/templates/rss.html:38 rss/templates/rss.html.py:49
+#: rss/templates/rss.html:60 rss/templates/rss.html.py:71
+#: rss/templates/rss.html:82 rss/templates/rss.html.py:93
 msgid "Today"
 msgstr "今日"
 
-#: rss/templates/rss.html:67 rss/templates/rss.html.py:78
-#: rss/templates/rss.html:89 rss/templates/rss.html.py:100
-#: rss/templates/rss.html:111 rss/templates/rss.html.py:122
+#: rss/templates/rss.html:42 rss/templates/rss.html.py:53
+#: rss/templates/rss.html:64 rss/templates/rss.html.py:75
+#: rss/templates/rss.html:86 rss/templates/rss.html.py:97
 msgid "This week"
 msgstr "周内"
 
-#: rss/templates/rss.html:105 templates/footer.html:132
-#: templates/footer_usernews.html:111
+#: rss/templates/rss.html:47 templates/footer.html:86
+#: templates/footer.html.py:175 templates/footer_usernews.html:113
+#: templates/mobile/mobile_footer.html:105
+#: templates/mobile/mobile_footer.html:195
+msgid "Technology"
+msgstr "科技"
+
+#: rss/templates/rss.html:58 templates/footer.html:87
+#: templates/footer.html.py:176 templates/footer_usernews.html:114
+#: templates/mobile/mobile_footer.html:106
+#: templates/mobile/mobile_footer.html:196
+msgid "Entertainment"
+msgstr "娱乐"
+
+#: rss/templates/rss.html:69 templates/footer.html:88
+#: templates/footer.html.py:177 templates/footer_usernews.html:115
+#: templates/mobile/mobile_footer.html:107
+#: templates/mobile/mobile_footer.html:197
+msgid "Auto"
+msgstr "汽车"
+
+#: rss/templates/rss.html:80 templates/footer.html:89
+#: templates/footer.html.py:178 templates/footer_usernews.html:116
+#: templates/mobile/mobile_footer.html:108
+#: templates/mobile/mobile_footer.html:198
 msgid "Space"
 msgstr "太空"
 
-#: rss/templates/rss.html:116 templates/footer.html:133
-#: templates/footer_usernews.html:112 templates/index_new.html:641
-#: templates/index_new.html.py:643 templates/index_new.html:1023
+#: rss/templates/rss.html:91 templates/footer.html:90
+#: templates/footer.html.py:179 templates/footer_usernews.html:117
+#: templates/index_25_02.html:353 templates/index_25_02.html.py:355
+#: templates/index_beta.html:168 templates/index_beta.html.py:170
+#: templates/index_new.html:650 templates/index_new.html.py:652
+#: templates/index_new.html:1033 templates/mobile/mobile_footer.html:109
+#: templates/mobile/mobile_footer.html:199
 msgid "BIO"
 msgstr "生物材料"
 
-#: rss/templates/rss.html:128
-msgid "Company feed"
-msgstr "公司的消息流"
+#: rss/templates/rss.html:113
+msgid "Which company would you like to search?"
+msgstr ""
 
-#: rss/templates/rss.html:130
-msgid "Use this form if you want to get RSS for certain company"
-msgstr "如果您愿意收到这家公司的消息流就用这种程式 "
-
-#: rss/templates/rss.html:144
+#: rss/templates/rss.html:116
 msgid "Get"
 msgstr "收到"
 
-#: search/templates/search.html:144
+#: search/templates/search.html:91
 msgid "No one matches. Please, try another request word"
 msgstr "抱歉，没有找到与“запрос” 相关的内容"
 
-#: search/templates/search.html:154 templates/index_new.html:713
+#: search/templates/search.html:101 templates/index_25_02.html:410
+#: templates/index_beta.html:255 templates/index_new.html:722
 msgid "What are you looking for?"
 msgstr "我们要搜索什么?"
 
-#: search/templates/search.html:163
+#: search/templates/search.html:110
 msgid "Popular news"
 msgstr "热门新闻"
 
-#: search/templates/search.html:185
+#: search/templates/search.html:136
 msgid "Results for "
 msgstr "我们为您找到 相关"
 
-#: search/templates/search.html:186
+#: search/templates/search.html:137
 msgid "matches"
 msgstr "结果约”цифра”个"
 
-#: search/templates/search.html:187
+#: search/templates/search.html:138
 msgid "match"
 msgstr "结果约”цифра”个"
 
-#: search/templates/search.html:194
+#: search/templates/search.html:146 search/templates/search.html.py:162
 msgid "News"
 msgstr "新闻"
 
-#: search/templates/search.html:204
+#: search/templates/search.html:156 search/templates/search.html.py:172
 msgid "Moderators"
 msgstr "主持人"
 
-#: search/templates/search.html:259
-#: userprofile/templates/moderator_profile.html:104
-#: userprofile/templates/profile.html:135
+#: search/templates/search.html:233
+#: userprofile/templates/moderator_profile.html:39
+#: userprofile/templates/profile.html:105
 msgid "Rate"
 msgstr "排名"
-
-#: search/templates/search.html:277
-msgid "Latest news"
-msgstr "最新消息"
 
 #: templates/403.html:10
 msgid ""
@@ -530,12 +564,102 @@ msgstr "Insydia就是"
 msgid "GRATITUDE"
 msgstr "感谢"
 
-#: templates/advertisers.html:10
-msgid "ADVERTISEMENT"
+#: templates/advertisers.html:158 templates/contacts.html:446
+#: templates/hire.html:136
+msgid "BACK TO SITE"
+msgstr ""
+
+#: templates/advertisers.html:161
+msgid "MEDIA KIT"
+msgstr ""
+
+#: templates/advertisers.html:164
+msgid "You have selected the best place for your advertising"
+msgstr ""
+
+#: templates/advertisers.html:165
+msgid ""
+"После прохождения бета-теста мы дополним данную страницу, указав всю "
+"необходиую информацтю для\n"
+"                рекламодателя."
+msgstr ""
+
+#: templates/advertisers.html:172
+#, fuzzy
+#| msgid "Advertisement"
+msgid "Types of advertisement"
 msgstr "广告"
 
-#: templates/advertisers.html:13
-msgid "So,"
+#: templates/advertisers.html:181
+msgid ""
+"Если вы хотите заказать у нас статью о вашем продукте/проекте, напишите нам "
+"на почу\n"
+"                            <a href=\"mailto:advert@insydia.com"
+"\">advert@insydia.com</a>."
+msgstr ""
+
+#: templates/advertisers.html:183
+msgid ""
+"Мы работаем над проектами любого типа и формата. Мы не имеем каких-либо "
+"рамок или\n"
+"                            особых требований. Единственное, что вы должны "
+"понимать - мы занимаемся\n"
+"                            созданием статей лишь в категориях Технологии, "
+"Развлечения, Автомобили, Космос,\n"
+"                            Био-технологии, при условии, что в них идёт "
+"упоминание о Hi-Tech."
+msgstr ""
+
+#: templates/advertisers.html:191
+#, fuzzy
+#| msgid "Contacts"
+msgid "Context"
+msgstr " 联系我们"
+
+#: templates/advertisers.html:194
+msgid ""
+"<p>Помимо написания статей мы предлагаем вам разместить у нас свою рекламу в "
+"виде\n"
+"                            контексного/информационного блока. В скором "
+"времени мы активируем данную\n"
+"                            функцию и Вы получите полный доступ к работе с "
+"рекламой этого типа.</p>\n"
+"                            <p>Данный вид рекламы заключается в том, что нет "
+"необходимости связываться с нами.\n"
+"                            Вы сами выбираете способ отображения, время, в "
+"течении которого будет вестись показ,\n"
+"                            а так же вам открываеся доступ к загрузке своей "
+"рекламы непосредственно на наш сервер\n"
+"                            в удобном для вас формате будь то изображение, "
+"анимация или видео-ролик.</p>\n"
+"                            <p>Более подробное описание и инструкции мы "
+"выложим сразу, как только включим эту\n"
+"                            услугу.</p>"
+msgstr ""
+
+#: templates/advertisers.html:212
+#, fuzzy
+#| msgid "Advertisement"
+msgid "Advertisement for startups"
+msgstr "广告"
+
+#: templates/advertisers.html:215
+msgid ""
+"Если вы являетесь участником стартапа и хотите рассказать о своей задумке "
+"большому числу\n"
+"                    заинтересованных людей, то мы предлагаем вам на выгодных "
+"условиях начать своё восхождение в\n"
+"                    мир высоких технологий. Ваша реклама не будет отличаться "
+"от контента рекламодателей, у которых\n"
+"                    нету подобных привелегий. Вы будете на равне со всеми, "
+"что поможет вашему проекту."
+msgstr ""
+
+#: templates/advertisers.html:219
+msgid ""
+"По вопросам сотрудничества свяжитесь с нами по почте\n"
+"                    <a href=\"mailto:startups@insydia.com\">startups@insydia."
+"com</a>."
 msgstr ""
 
 #: templates/confirm.html:6
@@ -589,360 +713,617 @@ msgid ""
 "&nbsp;|&nbsp;St.&nbsp;Petersburg,&nbsp;Russia"
 msgstr ""
 
-#: templates/contacts.html:47
-msgid "CONTACT INFORMATION"
-msgstr "联系方式"
+#: templates/contacts.html:452
+msgid "Insydia was founded at March 2016."
+msgstr ""
 
-#: templates/contacts.html:53
-msgid "Cell"
-msgstr "电话"
+#: templates/contacts.html:459
+msgid "WHAT WE DO"
+msgstr ""
 
-#: templates/contacts.html:55
-msgid "On cooperation"
-msgstr "合作的问题"
+#: templates/contacts.html:462
+msgid ""
+"<h2>Проект Insydia начинает свою историю летом 2015 года, когда наш "
+"основатель заметил, что в рускоязычном сегменте\n"
+"Интернета очень мало информации о высоких технологиях по сравнению с, "
+"например, англоязычном. С того момента\n"
+"мы начали работу по созданию сервиса, который помог бы русскоговорящим людям "
+"получить больше информации\n"
+"из мира Hi-Tech. Мы не просто хотим искать и собирать новости, мы хотим "
+"предоставлять нашим посетителям\n"
+"такой контент, который редко встречается где-либо, но может оказаться\n"
+"очень интересным. Большую ставку мы делаем на стартапы нашей страны, мы "
+"хотим помочь им, хотим, чтобы о них узнали не\n"
+"только в России, но и во всём мире(для чего мы будем писать о вас на трёх "
+"самых популярных языках мира), ведь это\n"
+"открывает для них практически неограниченные возможности от поиска "
+"сотрудников до получения инвестиций со всего мира,\n"
+"а так же эта информация может стать вдохновением для любого мечтателя, "
+"желающего создать что-то интересное,\n"
+"полезное и нужное. Развитие высокотехнологичной индустрии начинается с идеи "
+"и распространения информации о ней и\n"
+"мы готовы помочь вам с последним.</h2>"
+msgstr ""
 
-#: templates/contacts.html:57
-msgid "Contact with us"
-msgstr "联系我们"
+#: templates/contacts.html:476
+msgid "Media kit"
+msgstr ""
 
-#: templates/contacts.html:77 templates/contacts.html.py:84
-msgid "Message"
-msgstr "发消息"
+#: templates/contacts.html:486
+#, fuzzy
+#| msgid "Moderators"
+msgid "collaborators"
+msgstr "主持人"
 
-#: templates/contacts.html:112
-msgid "OUR TEAM"
-msgstr "我们队"
-
-#: templates/contacts.html:119
-msgid "Founder"
-msgstr "创业者"
-
-#: templates/contacts.html:120
-msgid "Evgeniy Privalov"
+#: templates/contacts.html:491
+#, fuzzy
+#| msgid "Evgeniy Privalov"
+msgid "Eugene Privalov"
 msgstr "Evgeniy Privalov"
 
-#: templates/contacts.html:122
-msgid "St. Petersburg"
-msgstr "圣彼得堡"
+#: templates/contacts.html:492
+msgid "CEO, Founder, Publisher"
+msgstr ""
 
-#: templates/contacts.html:130
-msgid "Co-Founder"
-msgstr "共同创办人"
-
-#: templates/contacts.html:131
+#: templates/contacts.html:511
 msgid "Anton Tinishov"
 msgstr "Anton Tinishov"
 
-#: templates/contacts.html:133
-msgid "St.Petersburg"
-msgstr "圣彼得堡"
-
-#: templates/contacts.html:141
-msgid
- "At this time we need in"
-msgstr "现在我们需要"
-
-#: templates/contacts.html:144
-msgid "LOCALIZATION"
+#: templates/contacts.html:512
+msgid "CTO, Co-founder, Advisor"
 msgstr ""
 
-#: templates/contacts.html:145
-msgid "EDITORS & REPORTERS"
-msgstr "编辑和记者"
+#: templates/contacts.html:531
+#, fuzzy
+#| msgid "Evgeniy Privalov"
+msgid "Stanislav Privalov"
+msgstr "Evgeniy Privalov"
 
-#: templates/contacts.html:148
-msgid "PROGRAMMER"
-msgstr "开发者"
+#: templates/contacts.html:532
+msgid "Finance advisor"
+msgstr ""
 
-#: templates/contacts.html:151
-msgid "MARKETING"
-msgstr "营销人员"
+#: templates/contacts.html:551
+msgid "Kate Vlasova"
+msgstr ""
 
-#: templates/contacts.html:157
-msgid "Join to us"
-msgstr "加入我们"
+#: templates/contacts.html:552
+msgid "English localizer"
+msgstr ""
 
-#: templates/contacts.html:164
-msgid "Social Networks"
-msgstr "社会网络"
+#: templates/contacts.html:571
+msgid "Mary Konosova"
+msgstr ""
 
-#: templates/footer.html:94 templates/footer_usernews.html:77
+#: templates/contacts.html:572
+msgid "Chinese localizer"
+msgstr ""
+
+#: templates/contacts.html:591
+msgid "Nikita Illin"
+msgstr ""
+
+#: templates/contacts.html:592
+msgid "Video editor"
+msgstr ""
+
+#: templates/contacts.html:611
+msgid "Elizaveta Karceva"
+msgstr ""
+
+#: templates/contacts.html:612
+msgid "Design advisor, logo creator"
+msgstr ""
+
+#: templates/contacts.html:631
+msgid "Artem Panin"
+msgstr ""
+
+#: templates/contacts.html:632
+msgid "Crucial advisor"
+msgstr ""
+
+#: templates/contacts.html:655
+msgid "get in touch"
+msgstr ""
+
+#: templates/contacts.html:661
+msgid "Take special info"
+msgstr ""
+
+#: templates/contacts.html:667
+#, fuzzy
+#| msgid "Advertisement"
+msgid "Advertisements"
+msgstr "广告"
+
+#: templates/contacts.html:673
+msgid "Need in support?"
+msgstr ""
+
+#: templates/contacts.html:679
+msgid "For partners"
+msgstr ""
+
+#: templates/contacts.html:689
+msgid "Say hello."
+msgstr ""
+
+#: templates/contacts.html:691
+#, fuzzy
+#| msgid "Portal name"
+msgid "Your name"
+msgstr "名称"
+
+#: templates/contacts.html:692
+#, fuzzy
+#| msgid "Your portals"
+msgid "Your email"
+msgstr "您的追随"
+
+#: templates/contacts.html:693
+#, fuzzy
+#| msgid "Message"
+msgid "Type message"
+msgstr "发消息"
+
+#: templates/contacts.html:706
+msgid "Alpiyskiy pereulok 15k2 | suit 1411"
+msgstr ""
+
+#: templates/contacts.html:707
+msgid "St. Petersburg, Russian Federation, 192239"
+msgstr ""
+
+#: templates/footer.html:45 templates/footer_usernews.html:83
+#: templates/mobile/mobile_footer.html:70
 msgid "RECENT NEWS"
 msgstr "最新消息"
 
-#: templates/footer.html:128 templates/footer_usernews.html:107
+#: templates/footer.html:85 templates/footer_usernews.html:112
+#: templates/mobile/mobile_footer.html:104
 msgid "Categories"
 msgstr "类别"
 
-#: templates/footer.html:135 templates/footer_usernews.html:114
-msgid "Reviews"
-msgstr "评论"
-
-#: templates/footer.html:137 templates/footer_usernews.html:116
-#: templates/index_new.html:659 templates/index_new.html.py:661
-#: templates/index_new.html:1041
+#: templates/footer.html:94 templates/footer.html.py:183
+#: templates/footer_usernews.html:121 templates/index_25_02.html:368
+#: templates/index_25_02.html.py:370 templates/index_beta.html:183
+#: templates/index_beta.html.py:185 templates/index_new.html:668
+#: templates/index_new.html.py:670 templates/index_new.html:1051
+#: templates/mobile/mobile_footer.html:113
+#: templates/mobile/mobile_footer.html:203
 msgid "PRIVATE"
 msgstr "我的新闻"
 
-#: templates/footer.html:143 templates/footer_usernews.html:122
+#: templates/footer.html:104 templates/footer_usernews.html:127
+#: templates/mobile/mobile_footer.html:123
 msgid "Quick links"
 msgstr "快速链接"
 
-#: templates/footer.html:160
-msgid "International Editions: "
-msgstr "国际版"
+#: templates/footer.html:107 templates/mobile/mobile_footer.html:127
+#, fuzzy
+#| msgid "RSS Feed"
+msgid "RSS feeds"
+msgstr "消息流"
 
-#: templates/index_new.html:75
+#: templates/footer.html:108 templates/footer_usernews.html:132
+#: templates/mobile/mobile_footer.html:128
+#: templates/mobile/mobile_footer.html:211
+msgid "Hiring"
+msgstr ""
+
+#: templates/footer_usernews.html:119 templates/mobile/mobile_footer.html:111
+#: templates/mobile/mobile_footer.html:201
+msgid "Reviews"
+msgstr "评论"
+
+#: templates/footer_usernews.html:131 templates/mobile/mobile_footer.html:210
+#, fuzzy
+#| msgid "RSS Feed"
+msgid "RSS feed"
+msgstr "消息流"
+
+#: templates/hire.html:139
+msgid "CAREER"
+msgstr ""
+
+#: templates/hire.html:142
+msgid "Join to our team and change the media industry"
+msgstr ""
+
+#: templates/index_25_02.html:51 templates/index_beta.html:51
+#: templates/index_new.html:74
 #, python-format
 msgid "%(title)sInsydia"
 msgstr ""
 
-#: templates/index_new.html:606
+#: templates/index_25_02.html:324 templates/index_beta.html:139
+#: templates/index_new.html:615
 msgid "Toggle navigation"
 msgstr ""
 
-#: templates/index_new.html:623 templates/index_new.html.py:625
-#: templates/index_new.html:849 templates/index_new.html.py:1008
+#: templates/index_25_02.html:338 templates/index_25_02.html.py:340
+#: templates/index_25_02.html:451 templates/index_beta.html:153
+#: templates/index_beta.html.py:155 templates/index_beta.html:331
+#: templates/index_new.html:632 templates/index_new.html.py:634
+#: templates/index_new.html:859 templates/index_new.html.py:1018
 msgid "ENTERTAINMENT"
 msgstr "娱乐"
 
-#: templates/index_new.html:629 templates/index_new.html.py:631
-#: templates/index_new.html:855 templates/index_new.html.py:876
-#: templates/index_new.html:1013
+#: templates/index_25_02.html:343 templates/index_25_02.html.py:345
+#: templates/index_25_02.html:457 templates/index_25_02.html.py:478
+#: templates/index_beta.html:158 templates/index_beta.html.py:160
+#: templates/index_beta.html:337 templates/index_new.html:638
+#: templates/index_new.html.py:640 templates/index_new.html:865
+#: templates/index_new.html.py:886 templates/index_new.html:1023
 msgid "AUTO"
 msgstr "娱乐"
 
-#: templates/index_new.html:635 templates/index_new.html.py:637
-#: templates/index_new.html:861 templates/index_new.html.py:1018
+#: templates/index_25_02.html:348 templates/index_25_02.html.py:350
+#: templates/index_25_02.html:463 templates/index_beta.html:163
+#: templates/index_beta.html.py:165 templates/index_beta.html:343
+#: templates/index_new.html:644 templates/index_new.html.py:646
+#: templates/index_new.html:871 templates/index_new.html.py:1028
 msgid "SPACE"
 msgstr "太空"
 
-#: templates/index_new.html:647 templates/index_new.html.py:649
-#: templates/index_new.html:1028
+#: templates/index_25_02.html:358 templates/index_25_02.html.py:360
+#: templates/index_beta.html:173 templates/index_beta.html.py:175
+#: templates/index_new.html:656 templates/index_new.html.py:658
+#: templates/index_new.html:1038
 msgid "COMPANIES"
 msgstr "公司"
 
-#: templates/index_new.html:653 templates/index_new.html.py:655
-#: templates/index_new.html:867 templates/index_new.html.py:1033
+#: templates/index_25_02.html:363 templates/index_25_02.html.py:365
+#: templates/index_25_02.html:469 templates/index_new.html:662
+#: templates/index_new.html.py:664 templates/index_new.html:877
+#: templates/index_new.html.py:1043
 msgid "REVIEWS"
 msgstr "评论"
 
-#: templates/index_new.html:677 userprofile/templates/profile.html:99
+#: templates/index_25_02.html:381 templates/index_beta.html:196
+#: templates/index_new.html:686 userprofile/templates/profile.html:61
 msgid "Profile"
 msgstr "设定档"
 
-#: templates/index_new.html:678
-msgid "Private news"
-msgstr "我的新闻"
-
-#: templates/index_new.html:681
+#: templates/index_25_02.html:385 templates/index_beta.html:199
+#: templates/index_new.html:690
 msgid "Sign out"
 msgstr "退出登录"
 
-#: templates/index_new.html:685 templates/index_new.html.py:972
+#: templates/index_25_02.html:389 templates/index_beta.html:203
+#: templates/index_new.html:694 templates/index_new.html.py:982
 msgid "Sign in"
 msgstr "登录"
 
-#: templates/index_new.html:837
+#: templates/index_25_02.html:439 templates/index_beta.html:319
+#: templates/index_new.html:847
 msgid "HOME"
 msgstr "首页"
 
-#: templates/index_new.html:872
+#: templates/index_25_02.html:474 templates/index_new.html:882
 msgid "DROPDOWN HEADING"
 msgstr ""
 
-#: templates/index_new.html:881
+#: templates/index_25_02.html:483 templates/index_new.html:891
 msgid "PHONES"
 msgstr "手机"
 
-#: templates/index_new.html:886
+#: templates/index_25_02.html:488 templates/index_new.html:896
 msgid "PC"
 msgstr "电脑"
 
-#: templates/index_new.html:891
+#: templates/index_25_02.html:493 templates/index_new.html:901
 msgid "SPACE SHUTTLES"
 msgstr "太空飞行器"
 
-#: templates/index_new.html:896
+#: templates/index_25_02.html:498 templates/index_new.html:906
 msgid "OTHER"
 msgstr "更多"
 
-#: templates/index_new.html:904
+#: templates/index_25_02.html:506 templates/index_beta.html:361
+#: templates/index_new.html:914
 msgid "PROFILE"
 msgstr "设定档"
 
-#: templates/index_new.html:912
+#: templates/index_25_02.html:514 templates/index_beta.html:369
+#: templates/index_new.html:922
 msgid "ABOUT US"
 msgstr "关于我们"
 
-#: templates/index_new.html:918
+#: templates/index_25_02.html:520 templates/index_beta.html:375
+#: templates/index_new.html:928
 msgid "CONTACT US"
 msgstr "联系我们"
 
-#: templates/index_new.html:924
+#: templates/index_25_02.html:526 templates/index_beta.html:381
+#: templates/index_new.html:934
 msgid "ADVERTISER"
 msgstr "广告"
 
-#: templates/index_new.html:947 templates/index_new.html.py:951
-msgid "SEARCH"
-msgstr "搜索"
-
-#: templates/index_new.html:965
-msgid "Log out"
-msgstr "退出登录"
-
-#: templates/index_new.html:977
-msgid "Sign up"
-msgstr "注册"
-
-#: templates/index_new.html:998
-msgid "LATEST"
-msgstr "最新"
-
-#: templates/index_new.html:1052
-msgid "ALL"
-msgstr "所有的"
-
-#: templates/index_new.html:1053
-msgid "GAMES"
-msgstr "游戏"
-
-#: templates/index_new.html:1054
-msgid "MEDIA"
-msgstr ""
-
-#: templates/index_new.html:1176
+#: templates/index_25_02.html:644 templates/index_new.html:1187
 msgid "Close"
 msgstr "关闭"
 
-#: templates/index_new.html:1307
+#: templates/index_25_02.html:700 templates/index_new.html:1263
+msgid "Loading..."
+msgstr "加载"
+
+#: templates/index_25_02.html:718 templates/index_25_02.html.py:721
+#: templates/index_beta.html:542
+#, fuzzy
+#| msgid "Your favourite articles"
+msgid "New favourite article"
+msgstr "你的喜爱的文章"
+
+#: templates/index_beta.html:289
+msgid "What searching?"
+msgstr ""
+
+#: templates/index_beta.html:349 templates/index_beta.html.py:354
+msgid "<later>"
+msgstr ""
+
+#: templates/index_beta.html:556
+#, fuzzy
+#| msgid "Your favourite articles"
+msgid "Remove favourite article"
+msgstr "你的喜爱的文章"
+
+#: templates/index_new.html:957 templates/index_new.html.py:961
+msgid "SEARCH"
+msgstr "搜索"
+
+#: templates/index_new.html:975
+msgid "Log out"
+msgstr "退出登录"
+
+#: templates/index_new.html:987
+msgid "Sign up"
+msgstr "注册"
+
+#: templates/index_new.html:1008
+msgid "LATEST"
+msgstr "最新"
+
+#: templates/index_new.html:1062
+msgid "ALL"
+msgstr "所有的"
+
+#: templates/index_new.html:1063
+msgid "GAMES"
+msgstr "游戏"
+
+#: templates/index_new.html:1064
+msgid "MEDIA"
+msgstr ""
+
+#: templates/index_new.html:1320
 msgid "Your portals"
 msgstr "您的追随"
 
-#: templates/index_new.html:1315
+#: templates/index_new.html:1328
 msgid "Save"
 msgstr "保存"
 
-#: templates/index_new.html:1320 userprofile/templates/profile.html:308
+#: templates/index_new.html:1333 userprofile/templates/profile.html:260
 msgid "Cancel"
 msgstr "取消"
 
-#: templates/index_new.html:1326
+#: templates/index_new.html:1339
 msgid "CLOSE"
 msgstr "关闭"
 
-#: userprofile/templates/moderator_profile.html:115
-#: userprofile/templates/profile.html:242
-msgid "Facebook:"
-msgstr ""
-
-#: userprofile/templates/moderator_profile.html:118
-#: userprofile/templates/profile.html:264
-msgid "Twitter:"
-msgstr ""
-
-#: userprofile/templates/moderator_profile.html:121
-#: userprofile/templates/profile.html:276
-msgid "VK:"
-msgstr ""
-
-#: userprofile/templates/moderator_profile.html:124
-#: userprofile/templates/profile.html:253
-msgid "Linkedin:"
-msgstr ""
-
-#: userprofile/templates/moderator_profile.html:127
-msgid "E-mail:"
-msgstr ""
-
-#: userprofile/templates/profile.html:95
+#: userprofile/templates/profile.html:66
 msgid " new email with confirmation code."
 msgstr "新的邮箱和"
 
-#: userprofile/templates/profile.html:114
+#: userprofile/templates/profile.html:84
 msgid "Upload photo"
 msgstr "上传照片"
 
-#: userprofile/templates/profile.html:124
+#: userprofile/templates/profile.html:94
 msgid "Accept"
 msgstr "上传"
 
-#: userprofile/templates/profile.html:131
+#: userprofile/templates/profile.html:101
 msgid "Status"
 msgstr "动态"
 
-#: userprofile/templates/profile.html:131
+#: userprofile/templates/profile.html:101
 msgid "moderator"
 msgstr "主持人"
 
-#: userprofile/templates/profile.html:142
+#: userprofile/templates/profile.html:112
 msgid "See all"
 msgstr "翻开所有的"
 
-#: userprofile/templates/profile.html:150
-#: userprofile/templates/profile.html:164
+#: userprofile/templates/profile.html:120
+#: userprofile/templates/profile.html:134
 msgid "Delete Account"
 msgstr "删除帐户"
 
-#: userprofile/templates/profile.html:153
-#: userprofile/templates/profile.html:168
+#: userprofile/templates/profile.html:123
+#: userprofile/templates/profile.html:138
 msgid "Delete All Articles"
 msgstr "删除所有的我的文章"
 
-#: userprofile/templates/profile.html:158
+#: userprofile/templates/profile.html:128
 msgid "Want to be a freelance editor?"
 msgstr "您原来当我们自由编辑吗?"
 
-#: userprofile/templates/profile.html:159
+#: userprofile/templates/profile.html:129
 msgid "It's easy"
 msgstr "简直"
 
-#: userprofile/templates/profile.html:159
+#: userprofile/templates/profile.html:129
 msgid "click here"
 msgstr "点击下方"
 
-#: userprofile/templates/profile.html:196
-#: userprofile/templates/profile.html:201
+#: userprofile/templates/profile.html:159
+#: userprofile/templates/profile.html:164
 msgid "First name"
 msgstr "名字"
 
-#: userprofile/templates/profile.html:206
-#: userprofile/templates/profile.html:211
+#: userprofile/templates/profile.html:169
+#: userprofile/templates/profile.html:174
 msgid "Last name"
 msgstr "贵姓"
 
-#: userprofile/templates/profile.html:231
+#: userprofile/templates/profile.html:195
 msgid "Your phone number"
 msgstr "手机号"
 
-#: userprofile/templates/profile.html:240
+#: userprofile/templates/profile.html:201
 msgid "Social Networks(Moderator Mode)"
 msgstr "社会网络(主持人模式) "
 
-#: userprofile/templates/profile.html:247
+#: userprofile/templates/profile.html:203
+msgid "Facebook:"
+msgstr ""
+
+#: userprofile/templates/profile.html:208
 msgid "Facebook"
 msgstr ""
 
-#: userprofile/templates/profile.html:258
+#: userprofile/templates/profile.html:213
+msgid "Linkedin:"
+msgstr ""
+
+#: userprofile/templates/profile.html:218
 msgid "Linkedin"
 msgstr ""
 
-#: userprofile/templates/profile.html:269
+#: userprofile/templates/profile.html:223
+msgid "Twitter:"
+msgstr ""
+
+#: userprofile/templates/profile.html:228
 msgid "Twitter"
 msgstr ""
 
-#: userprofile/templates/profile.html:281
+#: userprofile/templates/profile.html:233
+msgid "VK:"
+msgstr ""
+
+#: userprofile/templates/profile.html:238
 msgid "VK"
 msgstr ""
 
-#: userprofile/templates/profile.html:288
+#: userprofile/templates/profile.html:243
 msgid "Perosnal email"
 msgstr "邮箱"
 
-#: userprofile/templates/profile.html:293
+#: userprofile/templates/profile.html:249
 msgid "Personal email"
 msgstr "邮箱"
 
-#: userprofile/templates/profile.html:306
+#: userprofile/templates/profile.html:258
 msgid "Save Changes"
 msgstr "保存修改"
+
+#~ msgid "Can't sign in?"
+#~ msgstr "忘记密码?"
+
+#~ msgid "Drop the key word or link"
+#~ msgstr "请输入关键字或链接"
+
+#~ msgid "Wait please"
+#~ msgstr "请您等一等"
+
+#~ msgid ""
+#~ "Sorry, we can't work with this portal. Try another one or search by key-"
+#~ "word."
+#~ msgstr "对不起，我们不能用这个链接. 请试试另一个或输入关键字"
+
+#~ msgid "We find RSS-channel on"
+#~ msgstr "我们找到消息流在"
+
+#~ msgid "and add it to our Database."
+#~ msgstr "加入我们的数据库了"
+
+#~ msgid ""
+#~ "We are collecting news for current portals. Wait please. Or you can read "
+#~ "the latest news almost now by click"
+#~ msgstr ""
+#~ "现在我们找新闻在这个链接呢. 请等一下. 或者如果您想看看最新消息就点击"
+
+#~ msgid "here"
+#~ msgstr "在这里"
+
+#~ msgid "Spase"
+#~ msgstr "太空"
+
+#~ msgid "Bio-technology"
+#~ msgstr "生物技术"
+
+#~ msgid "Here you can search news of the certain company which do you want."
+#~ msgstr "在这里可以找到具体公司的新闻"
+
+#~ msgid "All %(company.name)s's news"
+#~ msgstr "%(company.name)s的所有的消息"
+
+#~ msgid "Recommendations of"
+#~ msgstr "为您推荐"
+
+#~ msgid ""
+#~ "Your browser does not support the video tag. I suggest you upgrade your "
+#~ "browser."
+#~ msgstr "您的浏览器不支持视频. 我们劝您升级浏览器"
+
+#~ msgid "Company feed"
+#~ msgstr "公司的消息流"
+
+#~ msgid "Use this form if you want to get RSS for certain company"
+#~ msgstr "如果您愿意收到这家公司的消息流就用这种程式 "
+
+#~ msgid "ADVERTISEMENT"
+#~ msgstr "广告"
+
+#~ msgid "CONTACT INFORMATION"
+#~ msgstr "联系方式"
+
+#~ msgid "Cell"
+#~ msgstr "电话"
+
+#~ msgid "On cooperation"
+#~ msgstr "合作的问题"
+
+#~ msgid "Contact with us"
+#~ msgstr "联系我们"
+
+#~ msgid "OUR TEAM"
+#~ msgstr "我们队"
+
+#~ msgid "Founder"
+#~ msgstr "创业者"
+
+#~ msgid "St. Petersburg"
+#~ msgstr "圣彼得堡"
+
+#~ msgid "Co-Founder"
+#~ msgstr "共同创办人"
+
+#~ msgid "St.Petersburg"
+#~ msgstr "圣彼得堡"
+
+#~ msgid "At this time we need in"
+#~ msgstr "现在我们需要"
+
+#~ msgid "EDITORS & REPORTERS"
+#~ msgstr "编辑和记者"
+
+#~ msgid "PROGRAMMER"
+#~ msgstr "开发者"
+
+#~ msgid "MARKETING"
+#~ msgstr "营销人员"
+
+#~ msgid "Join to us"
+#~ msgstr "加入我们"
+
+#~ msgid "Social Networks"
+#~ msgstr "社会网络"
+
+#~ msgid "International Editions: "
+#~ msgstr "国际版"

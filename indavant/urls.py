@@ -41,31 +41,22 @@ router = routers.DefaultRouter()
 #import debug_toolbar
 
 urlpatterns = patterns('',
-
-
-
     url(r'^o/', include(router.urls)),
     # url(r'^oauth/', include('oauth2_provider.urls'),name='oauth2_provider'),
     url(r'^oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
 
-
-
-
-    url(r'^about/', include('news.urls')),
-    url(r'^about', 'news.views.render_contacts_page'),
+    url(r'^about/', include('about.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^advert/', include('advert.urls')),
     url(r'^api/', include('api.urls')),
     url(r'^auth/', include('loginsys.urls')),
-
+    url(r'^beta/', include('beta_test.urls')),
 
    # url(r'^debug/', include(debug_toolbar.urls)),
 
 
     url(r'^ext/', include("news.urls")),
     url(r'^favourite/', include('favourite.urls')),
-    url(r'^job/', 'news.views.render_job_page'),
     url(r'^news/', include('news.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^news/', include('news.urls')),

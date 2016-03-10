@@ -1,119 +1,77 @@
 {% load endless %}
 {% load my %}
 {% load i18n %}
-{% load jsonate_tags %}
-
-<style>
-
-    #current-portal-rss-news{
-       height: 100%;
-        margin-top: 10%;
-        margin-bottom: 10%;
-    }
-    .current_rss_news{
-            position: relative;
-            width: 33%;
-            padding: 0.5% 0.5%;
-            height: 25em;
-{#            min-height: 20em;#}
-{#            max-height: 25em;#}
-{#            margin-left: 1%;#}
-{#            margin-bottom: 1%;#}
-{#            border-radius: 5px;#}
-{#            box-shadow: 0 0 5px black;#}
-            border: solid 2px lightgrey;
-            float: left;
-{#            margin-right: 1%;#}
-        }
-        .current_rss_news_mas{
-             position: relative;
-            width: 33%;
-            padding: 0.5% 0.5%;
-{#            height: 10em;#} min-height:3em;
-            max-height:15em;
-{#            margin-right: 1%;#}
-{#            min-height: 20em;#}
-{#            max-height: 25em;#}
-{#            margin-left: 1%;#}
-{#            margin-bottom: 1%;#}
-            border: solid 2px lightgrey;
-{#            border-radius: 5px;#}
-{#            box-shadow: 0 0 5px black;#}
-            float: left;
-        }
-
-    .sect-rss-new{
-        width: 100%;
-        margin-bottom: 1%;
-    }
-    .category-name{
-            position: absolute;
-            z-index: 900;
-            margin-top: -1%;
-        }
-        .category-name-content{
-            background-color: #F62A00;
-            color: white;
-            font-family: Georgia, Times, "Times New Roman", serif;
-            text-transform: uppercase;
-        }
-    .category-link:hover{
-        text-decoration: none;
-    }
-    .rss-title{
-        margin-top: 15%;
-        font-family: Georgia, Times, "Times New Roman", serif;
-        font-size: 15px;
-    }
-    .sect-new{
-        display: inline-block;
-        width: 23%;
-        margin-left: 1%;
-{#        min-height: 213px;#}
-    }
-</style>
-
-    {{ portal }}<br>
-    <div id="current-portal-rss-news">
-
-    <div class="any40items" style="height: inherit;">
+{% load staticfiles %}
+{% load thumbnail %}
+<div class="any40items">
 {% paginate 20 portal_news %}
-{% for i in portal_news %}
-    <div class="sect-new" style="padding: 10% 10%;">
-        {% if i.id|get_rss_news_cover != '[]' %}
-            <div class="current_rss_news rss-rss"
-                 id="rss_id_{{ i.id }}"
-                 data-indx="{{ i.nuid }}"
-                 data-current-rss-news-id="{{ i.id }}"
-                 onclick="RssPreviewPopUpShow('{{ i.id }}')">
-            {% else %}
-            <div class="current_rss_news rss-rss"
-                 id="rss_id_{{ i.id }}"
-                 data-indx="{{ i.nuid }}"
-                 data-current-rss-news-id="{{ i.id }}"
-                 onclick="RssPreviewPopUpShow('{{ i.id }}')">
-            {% endif %}
-        <div class="category-name">
-                <span class="category-name-content">
+    {% for i in portal_news %}
+        {% if flavour != 'mobile' %}
+            <div class="sect-new">
+                <div class="current_rss_news rss-rss"
+                     id="rss_id_{{ i.id }}"
+                     data-indx="{{ i.nuid }}"
+                     data-current-rss-news-id="{{ i.id }}">
+        {% else %}
+            <div class="sect-new">
+                <div class="current_rss_news rss-rss"
+                     style="width: 100%;"
+                     id="rss_id_{{ i.id }}"
+                     data-indx="{{ i.nuid }}"
+                     data-current-rss-news-id="{{ i.id }}">
+        {% endif %}
+            <div class="portal-name">
+                <span class="portal-name-content"
+                      onclick="showCurrentPortalNews('{{ i.portal_name_id|get_rss_verbose_name }}');">
                     &nbsp;{{ i.portal_name_id|get_rss_portal_name }}&nbsp;
                 </span>
-        </div>
-            {% if i.id|get_rss_news_cover != '' %}
-            <div class="news-image" style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;"></div>
+            </div>
+                {% if i.id|get_rss_news_cover != '' %}
+                    <div class="news-image"
+                         onclick="RssPreviewPopUpShow('{{ i.id }}')"
+                         style="background:url({{ i.id|get_rss_news_cover }}) no-repeat center;background-size:cover">
+                    </div>
+                {% endif %}
+            {% if i.id|check_read_rss:username.id == True %}
+                <div class="rss-title current-title rss-title-read"
+                     id="rss-title-{{ i.id }}"
+                     onclick="RssPreviewPopUpShow('{{ i.id }}')">
+            {% else %}
+                    <div class="rss-title current-title"
+                     id="rss-title-{{ i.id }}"
+                     onclick="RssPreviewPopUpShow('{{ i.id }}')">
             {% endif %}
-            <div class="rss-title"><b>{{ i.title|safe|striptags }}</b></div>
+                    <h1>
+                        <b>
+                            {{ i.title|safe|striptags }}
+                        </b>
+                    </h1>
+                </div>
+                <div class="rss-params">
+                    <div class="rp-author pull-left">
+                        {% if i.author != '' %}
+                            {% trans 'By' %}&nbsp;<span class="rss-author-name">{{ i.author }}</span>
+                        {% else %}
+                            {{ i.portal_name.portal }}
+                        {% endif %}
+                    </div>
+                    <div class="rp-time pull-right">
+                        {{ i.date_posted.date|date }}
+                    </div>
+                    <div class="rp-conf">
+                        <div class="rpc-left pull-left"><a href="{{ i.link }}">original</a></div>
+                        <div id="link-save-{{ i.id }}" class="rpc-right pull-right">
+                            {% if i.id|check_saved_rss:username.id == False %}
+                                <a href="#" onclick="setRssFavourite('{{ i.id }}'); return false;">save</a>
+                            {% else %}
+                                <a href="#" onclick="removeRssFavourite('{{ i.id }}'); return false;">unsave</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-{% endfor %}
-    </div>
+    {% endfor %}
+</div>
     {% show_more %}
-    <script>
-        $('.any40items').masonry({
-              // options
-            itemSelector: '.rss-rss',
-{#            singleMode: true,#}
-{#            isResizable: true,#}
-{#            isAnimated: true,#}
-{#            colu1mnWidth: 0#}
-        });
-    </script>
+<script>$('.any40items').masonry({itemSelector: '.rss-rss'});</script>

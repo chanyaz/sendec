@@ -4,343 +4,6 @@
 {% load endless %}
 {% load i18n %}
 {% block user_news %}
-    <style>
-        .pagination ul{list-style-type: none;}
-        .pagination li{margin-left: 1%;margin-right: 1%;float: left;}
-        .rss_portal_preview{position: relative;width: 20%;min-height: 10em;max-height: 28em;float: left;margin-left: 1%;background: white;opacity: 1}
-        .rss_tech_middle{padding: 2%;}
-        .rss_tech_title{text-align: center;margin-top: 1%;}
-        .rss_tech_description{margin-top: 1%;}
-        .rss_tech_configs{margin-top: 1%;}
-        .rss_tech_btn{margin-top: 1%;}
-        .current_rss_news{
-            position: relative;
-            width: 33%;
-            padding: 0.5% 0.5%;
-            height: 25em;
-            border: solid 2px lightgrey;
-            float: left;
-        }
-        .current_rss_news_mobile{
-            position: relative;
-            width: 100%;
-            padding: 0.5% 0.5%;
-            height: 25em;
-            border: solid 2px lightgrey;
-            float: left;
-        }
-        .current_rss_news_mas{
-            position: relative;
-            width: 33%;
-            padding: 0.5% 0.5%;
-            min-height:3em;
-            max-height:15em;
-            border: solid 2px lightgrey;
-            float: left;
-        }
-        .most-popular-portals input[type=checkbox]:checked + .lab .description-duke{background-color: greenyellow;}
-        .current_portal_item{border: solid 1px red;height: 2em;}
-        .current_portal_item:hover{background: #F62A00;cursor: pointer}
-        #add-portals-image{height: 2em;}
-        #left-control-portals{
-            position: fixed;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            z-index: 989;
-            height: 100%;
-            margin-top: -5.5%;
-            float: left;
-            width: 16.1%;
-            left: 0;
-        }
-        #rss-news{
-            height:inherit;
-            min-height: 30em;
-            border: solid 1px lightgrey;
-            width: 84%;
-            float: right;
-            background-color: #F1F3CE;
-        }
-        #rss-title{ text-align: center;}
-        .user_rss_missing{text-align: center;}
-        .check_portals{display: none;}
-        .lab{}
-        .sect-rss{float: left; width: 100%; margin-top: 1%;}
-        .current_rss_popular_portal{height: 200px; float: left;}
-        .add-current{position: static; margin-top: 18%; margin-left: 90%;}
-        .right-side a:hover{text-decoration: none;}
-        .choosen-portals{border: solid 1px red; font-family: Georgia, Times, "Times New Roman", serif}
-        .recommendations{border: solid 1px red; height: 20em; overflow-y: auto;}
-        .user-rss-portals{text-align: center}
-        .user-chosen-portals{border: solid 1px red; height: 20em; overflow-y: auto;}
-        .user-portals-edit-done{text-align: right; display: none;}
-        #add-portals-image{display: none;}
-        .user-cur-p-edit{display: none;}
-        .edit-image{height: 2em;}
-        .bottom-panel-edit-portals{text-align: right;}
-        .test-duke-cover{width: 32%;color: white;}
-
-        /* FROM RSS PAGE */
-        .sect-rss-new{width: 100%;margin-bottom: 1%;}
-        .portal-name{position: absolute;z-index: 900;margin-top: -1%;}
-        .portal-name-content{
-            background-color: #F62A00;
-            color: white;
-            font-family: Georgia, Times, "Times New Roman", serif;
-            text-transform: uppercase;
-        }
-        .rss-title{margin-top: 15%;font-family: Georgia, Times, "Times New Roman", serif; font-size: 15px; }
-        .rss-title:hover{color: #F62A00;}
-        /* END FROM RSS PAGE */
-        .edit-portals-panel{cursor: pointer;}
-        #browser{width: 100%;float: right;position: relative;min-height: 300px;}
-        #browser-main-title{width: 100%;text-align: center;font-family: Georgia, Times, "Times New Roman", serif;font-size: 16px;}
-        #browser-middle{width: 100%;border: solid 1px red;}
-        #browser-technology{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-            background: url('{% static 'static/img/rss-technology/back.jpg' %}') no-repeat center;
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-entertainment{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-            background: url('{% static 'static/img/rss-entertainment/back.jpg' %}') no-repeat center;
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-auto{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-            background: url('{% static 'static/img/rss-auto/back.jpg' %}') no-repeat center;
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-space{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-            background: url('{% static 'static/img/rss-space/back.jpg' %}') no-repeat center;
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        #browser-bio{
-            width: 100%;
-            height: 500px;
-            border: solid 1px blue;
-            background: url('{% static 'static/img/rss-bio/back.jpg' %}') no-repeat center;
-            background-size: cover;
-            margin-bottom: 50px;
-        }
-
-        .category-main-title{
-            position: relative;
-            width: 100%;
-            font-family:Georgia, Times, "Times New Roman", serif;
-            font-size: 16px;
-            color: white;
-            text-align: center;
-        }
-
-        .has-children a:hover{text-decoration: none;color: #F62A00;}
-        #left-panel-main-title a:hover{text-decoration: none;color: #F62A00;}
-        .sidebar-offcanvas{
-            background-color: #F1F3CE;
-            position: fixed;
-            left: 0;
-            top: 0;
-            padding-top: 5%;
-            height: 100%;
-            overflow-y: scroll;
-        }
-        @media screen and (max-width: 767px) {
-          .row-offcanvas {
-            position: relative;
-            -webkit-transition: all 0.25s ease-out;
-            -moz-transition: all 0.25s ease-out;
-            transition: all 0.25s ease-out;
-          }
-          .sidebar-offcanvas{right: -41.6%;}
-          .sidebar-offcanvas{left:-41.6%;}
-          .row-offcanvas-right.active{right:41.6%;}
-          .row-offcanvas-left.active{left:41.6%;}
-          .sidebar-offcanvas{position:absolute;top:0;width:41.6%;}
-          #sidebar{padding-top:0;}
-        }
-        .side-bat-brand {position: absolute;bottom: 0;}
-        #side-list{padding-left:0;}
-        #side-list > li.side-list-item{height: 40px; margin-bottom: 5px;}
-        #side-list > li.side-list-item > a{}
-        .side-text{color:black;}
-        #fadeandscale-mobile {
-            background: white;
-            width: 100%;
-            height: 100%;
-            overflow-y: scroll;
-        -webkit-transform: scale(0.8);
-           -moz-transform: scale(0.8);
-            -ms-transform: scale(0.8);
-                transform: scale(0.8);
-        }
-        .popup_visible #fadeandscale-mobile {
-            -webkit-transform: scale(1);
-               -moz-transform: scale(1);
-                -ms-transform: scale(1);
-                    transform: scale(1);
-        }
-        .cur-pw-btn-fl{position: absolute;bottom:0;right:0;}
-        .cur-pw-btn-bck{position: absolute;bottom:0;left:0;}
-.swiper-container {
-        width: 100%;
-        height: 200px;
-        margin: 20px auto;
-    }
-    .swiper-slide {
-        text-align: center;
-        font-size: 18px;
-        background: #fff;
-        width: 60%;
-        display: -ms-flexbox;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-    }
-        .swiper-slide:nth-child(2n) {width: 40%}
-        .swiper-slide:nth-child(3n) {width: 20%}
-        .swiper-bottom-nav > ul > li > a{color: #F62A00;}
-    </style>
-    <script>
-        String.prototype.format = function(placeholders) {
-                var s = this;
-                for(var propertyName in placeholders) {
-                    var re = new RegExp('{' + propertyName + '}', 'gm');
-                    s = s.replace(re, placeholders[propertyName]);
-                }
-                return s;
-            };
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie != '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-        function updateUserRssPortals(){
-                $.get("/news/update_user_rss/").done(function (data) {
-                    var table = $(".user-chosen-portals").val("");
-                    data.portals.forEach(function(portal){
-                        var sstring = "<span onclick='removeUserRssPortal({uuid}, {pid});'>X</span>".format({uuid:portal.cur_user, pid:portal.id});
-                        table.val(portal.name+" + "+ sstring +"<br>");
-                    })
-                });
-            return true;
-        }
-        function removeUserRssPortal(uuid,pid, id){
-            $("#ajax-preloader").show();
-            var $link = "/news/update_user_rss_news/";
-            var csrftoken = getCookie('csrftoken');
-            $.ajax({
-                url: "/news/rrp&uid="+uuid+"&pid="+pid+"/",
-                type: "POST",
-                data: {
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function(result){
-                    $("#curp-"+id).slideToggle();
-                    updateUserRssPortals();
-                    $("#rss-news").load("/news/usernews/");
-                    $("#ajax-preloader").hide();
-                }
-            })
-        }
-        function followCurrentRssPortal(uuid,pid, id){
-            $("#ajax-preloader").show();
-            var csrftoken = getCookie('csrftoken');
-            $.ajax({
-                url: "/news/arp&uid="+uuid+"&pid="+pid+"/",
-                type: "POST",
-                data: {
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function(result){
-                    $("#curp-"+id).slideToggle();
-                    updateUserRssPortals();
-                    $("#rss-news").load("/news/usernews/");
-                    $("#ajax-preloader").hide();
-                }
-            })
-        }
-        function userPortalsListEdit(){
-            $('#all-portals-link').hide();
-            $('.current_portal_item').attr('onclick', '');
-            $('.user-portals-edit-done').fadeIn();
-            $('#add-portals-image').fadeIn();
-            $('.user-cur-p-edit').fadeIn();
-            $('#sortContainer').sortable({});
-        }
-        function userPortalsListDoneEdit(){
-            $('.user-cur-p-edit').fadeOut();
-            $('.user-portals-edit-done').fadeOut();
-            $('#add-portals-image').fadeOut();
-            var $order = $('#sortContainer').sortable('toArray');
-            var dict = {};
-            for(var i=0; i<$order.length; i++){
-                dict[i] = {id: $order[i], pos: i+1};
-            }
-            $.ajax({
-                type: "POST",
-                url: "/news/change_portals_order/",
-                data: {
-                    dataArray: decodeURIComponent(JSON.stringify({"dict": dict})),
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                }
-            });
-            location.reload();
-        }
-        function showCurrentPortalNews(portal){
-            var homeLoader = $('body').loadingIndicator({
-					useImage: false
-				}).data("loadingIndicator");
-            if($('.loading-indicator-wrapper').hasClass('loader-hidden')){
-                $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');
-            }
-            $.ajax({
-                method: "POST",
-                url: "/news/usernews/page/"+portal,
-                data:{csrfmiddlewaretoken: "{{ csrf_token }}"},
-                success: function(data){
-                    $('#rss-news').html(data);
-                    homeLoader.hide();
-                },
-                error: function(result){
-                    alert("Oh,"+portal+"'s news have been broken. Try later, please.\nWe are working on this problem.");
-                    homeLoader.hide();
-                }
-            })
-        }
-
-    </script>
     {% if flavour != 'mobile' %}
         <div class="container-fluid container usernews">
             <div class="row row-centered row-offcanvas row-offcanvas-left">
@@ -411,7 +74,11 @@
                         <div class="swiper-wrapper" style="transform: translate3d(55.5px, 0px, 0px); transition-duration: 0ms;">
                             {% for current_portal in user_rss_portals %}
                                 <div class="swiper-slide swiper-slide-prev"
+                                     {% if flavour != 'mobile' %}
                                      onclick="showCurrentPortalData('{{ current_portal.portal_id }}'); return false;"
+                                     {% else %}
+                                     onclick="showCurrentPortalDataMobile('{{ current_portal.portal_id }}'); return false;"
+                                        {% endif %}
                                      style="width: 81px; margin-right: 30px;border-radius:5px;">
                                     <div class="swiper-cover" style="background: url('{{ current_portal.portal_id|get_cover_last_article }}') no-repeat center; background-size: cover; width:100%; height: 70%;"></div>
                                     <div class="swiper-name">
@@ -437,7 +104,7 @@
                 <div id="rss-news-mobile">
             {% endif %}
                 <div id="rss-title">
-                    <h2 style="margin-bottom: 2%; margin-top: 1%; color:black; font-family: Georgia, Times, 'Times New Roman', serif">{% trans 'FEED' %}</h2>
+                    <h2>{% trans 'FEED' %}</h2>
                 </div>
             {% if rss_news_count != 0 %}
                 <div class="load-more">
@@ -471,112 +138,279 @@
     </div>
     <hr width="100%">
     <script>
-    function showCurrentPortalData(i) {
-        {% if flavour != 'mobile' %}
-        $.ajax({
-            type: "POST",
-            url: "/news/preview_portal="+i+"/",
-            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            success: function (data) {
-                $('#fadeandscale-mobile').popup({
-                    autoopen: true,
-                    pagecontainer: '.container',
-                    transition: 'all 0.3s'
+        function showCurrentPortalData(i) {
+            $.ajax({
+                type: "POST",
+                url: "/news/preview_portal="+i+"/",
+                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                success: function (data) {
+                    $('#fadeandscale').popup({
+                        autoopen: true,
+                        pagecontainer: '.container',
+                        transition: 'all 0.3s'
+                    });
+                    $('.cur-pw-top').append("<div class='cur-pw-btn-close'><button class='btn-close-rss btn btn-primary' onclick='$('#fadeandscale-mobile').hide();'>Close</button></div>");
+                    $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
+                }
+            });
+        }
+        function showCurrentPortalDataMobile(i){
+               $.ajax({
+                type: "POST",
+                url: "/news/preview_portal_m="+i+"/",
+                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                success: function (data) {
+                    $('#fadeandscale-mobile').popup({
+                        autoopen: true,
+                        pagecontainer: '.container',
+                        transition: 'all 0.3s'
+                    });
+                    $('.cur-pw-top').append("<div class='cur-pw-btn-close'><button class='btn-close-rss btn btn-primary' onclick='$('#fadeandscale-mobile').hide();'>Close</button></div>");
+                    $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
+                }
+            });
+        }
+        function hideCurrentRssPortal(){
+            $('#fadeandscale').hide();
+            $('#fadeandscale-mobile').popup('hide');
+        }
+        function changeStatePortals(element){
+                if (!$(element).parent().hasClass('active')) {
+                    $(element).parent().addClass('active');
+                }
+                else {
+                    $(element).parent().removeClass('active');
+                }
+            }
+        function RssPreviewArticleMobileHide(){
+            $('#current-rss-preview-mobile').popup('hide');
+        }
+        function RssPreviewPopUpShow(i) {
+            {% if flavour != 'mobile' %}
+                $.ajax({
+                    type: "POST",
+                    url: "/news/scar=" + i,
+                    data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    success: function () {
+                        $('#rss-title-' + i).addClass('rss-title-read');
+                    }
                 });
-                $('.cur-pw-top').append("<div class='cur-pw-btn-close'><button class='btn-close-rss btn btn-primary' onclick='$('#fadeandscale-mobile').hide();'>Close</button></div>");
-                $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
+                $('#fadeandscale-desktop').animate({
+                    scrollTop: $('html, body').offset().top
+                });
+                $.ajax({
+                type: "POST",
+                url: "/news/gcr=" + i + "/",
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function (data) {
+                    $('#current-rss-preview').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
+                    $('#current-rss-preview-mobile').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
+                    $('#close-preview').fadeIn();
+                    $('.preview-content').html(data.string);
+                    $('.preview-content-mobile').html(data.string);
+                    $parsedData = data.data;
+                    if ($parsedData.content.length === 0) {
+                        $(".rss-preview-body").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+                    else {
+                        $(".rss-preview-body").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                    }
+                    if(data.data.fav == true){
+                        $('.rss-item-save').attr('onclick', 'removeRssFavourite("{id}");'.replace("{id}", i));
+                        $('.rss-fav').attr('data-fav', 1).css({'color': 'lime'})
+                    }
+                    else{
+                        $('.rss-item-save').attr('onclick', 'setRssFavourite("{id}");'.replace("{id}", i));
+                        $('.rss-fav').attr('data-fav', 0).css({'color': 'white'})
+                    }
+                }
+            });
+            {% else %}
+                $.ajax({
+                type: "POST",
+                url: "/news/scar=" + i,
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function () {
+                    $('#rss-title-' + i).addClass('rss-title-read');
+                }
+            });
+                $.ajax({
+                type: "POST",
+                url: "/news/gcr_m=" + i + "/",
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function (data) {
+                    $('#current-rss-preview').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
+                    $('#current-rss-preview-mobile').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
+                    $('#close-preview').fadeIn();
+                    $('.preview-content').html(data.string);
+                    $('.preview-content-mobile').html(data.string);
+                    $parsedData = data.data;
+                    if ($parsedData.content.length === 0) {
+                        $(".rss-preview-body").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a><button class='btn btn-primary' onclick='RssPreviewArticleMobileHide(); return false;'>Close</button>");
+                    }
+                    else {
+                        $(".rss-preview-body").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a><button class='btn btn-primary' onclick='RssPreviewArticleMobileHide(); return false;'>Close</button>");
+                    }
+                    if(data.data.fav == true){
+                        $('.rss-item-save').attr('onclick', 'removeRssFavourite("{id}");'.replace("{id}", i));
+                        $('.rss-fav').attr('data-fav', 1).css({'color': 'lime'})
+                    }
+                    else{
+                        $('.rss-item-save').attr('onclick', 'setRssFavourite("{id}");'.replace("{id}", i));
+                        $('.rss-fav').attr('data-fav', 0).css({'color': 'white'})
+                    }
+                }
+            });
+            {% endif %}
+        }
+        function RssPreviewPopUpHide() {
+            $(".preview-rss-news").hide();
+            $("html").css("overflowY", "auto");
+        }
+        $(document).ready(function (event) {
+            RssPreviewPopUpHide();
+            $("html, body").keyup(function (e) {
+                if (e.keyCode == 27) {
+                    $('#close-preview').hide();
+                }
+            });
+        });
+        function setRssFavourite(news_id) {
+            $.ajax({
+                type: "POST",
+                url: "/news/add_like_rss/r=" + news_id,
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function () {
+                    alertify.success("{% trans 'New favourite article' %}");
+                    $('.rss-fav').css({
+                        'color': 'lime'
+                    });
+                    $('#link-save-'+news_id).html("<a href='#' onclick='removeRssFavourite('{id}'); return false;'>unsave</a>".replace("{id}", news_id));
+                    $('.rss-item-save').attr('onclick', 'removeRssFavourite("{id}");'.replace("{id}", news_id));
+                }
+            });
+        }
+        function removeRssFavourite(news_id){
+            $.ajax({
+                type: "POST",
+                url: "/news/remove_like_rss/r="+news_id,
+                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
+                success: function(){
+                    alertify.error("{% trans 'Remove favourite article' %}");
+                    $('.rss-fav').css({
+                        'color': 'white'
+                    });
+                    $('#link-save-'+news_id).html("<a href='#' onclick='setRssFavourite('{id}'); return false;'>save</a>".replace("{id}", news_id));
+                    $('.rss-item-save').attr('onclick', 'setRssFavourite("{id}");'.replace("{id}", news_id));
+                }
+            })
+        }
+        $(document).on('click', function (event) {
+            if (!$(event.target).closest('#current-rss-preview').length && !$(event.target).closest('#close-preview').length) {
+                $('#close-preview').hide();
             }
         });
-        {% else %}
-           $.ajax({
-            type: "POST",
-            url: "/news/preview_portal_m="+i+"/",
-            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            success: function (data) {
-                $('#fadeandscale-mobile').popup({
-                    autoopen: true,
-                    pagecontainer: '.container',
-                    transition: 'all 0.3s'
-                });
-                $('.cur-pw-top').append("<div class='cur-pw-btn-close'><button class='btn-close-rss btn btn-primary' onclick='$('#fadeandscale-mobile').hide();'>Close</button></div>");
-                $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
+        String.prototype.format = function(placeholders) {
+                    var s = this;
+                    for(var propertyName in placeholders) {
+                        var re = new RegExp('{' + propertyName + '}', 'gm');
+                        s = s.replace(re, placeholders[propertyName]);
+                    }
+                    return s;
+                };
+        function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
             }
-        });
-        {% endif %}
-    }
-    function loadCurrentArticle(i){
+        function updateUserRssPortals(){
+                    $.get("/news/update_user_rss/").done(function (data) {
+                        var table = $(".user-chosen-portals").val("");
+                        data.portals.forEach(function(portal){
+                            var sstring = "<span onclick='removeUserRssPortal({uuid}, {pid});'>X</span>".format({uuid:portal.cur_user, pid:portal.id});
+                            table.val(portal.name+" + "+ sstring +"<br>");
+                        })
+                    });
+                return true;
+            }
+        function removeUserRssPortal(uuid,pid, id){
+                $("#ajax-preloader").show();
+                var $link = "/news/update_user_rss_news/";
+                var csrftoken = getCookie('csrftoken');
+                $.ajax({
+                    url: "/news/rrp&uid="+uuid+"&pid="+pid+"/",
+                    type: "POST",
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(result){
+                        $("#curp-"+id).slideToggle();
+                        updateUserRssPortals();
+                        $("#rss-news").load("/news/usernews/");
+                        $("#ajax-preloader").hide();
+                    }
+                })
+            }
+        function followCurrentRssPortal(uuid,pid, id){
+                $("#ajax-preloader").show();
+                var csrftoken = getCookie('csrftoken');
+                $.ajax({
+                    url: "/news/arp&uid="+uuid+"&pid="+pid+"/",
+                    type: "POST",
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(result){
+                        $("#curp-"+id).slideToggle();
+                        updateUserRssPortals();
+                        $("#rss-news").load("/news/usernews/");
+                        $("#ajax-preloader").hide();
+                    }
+                })
+            }
+        function showCurrentPortalNews(portal){
+            var body = $('html, body');
+            body.stop().animate({scrollTop:0},500);
             var homeLoader = $('body').loadingIndicator({
 					useImage: false
 				}).data("loadingIndicator");
             if($('.loading-indicator-wrapper').hasClass('loader-hidden')){
                 $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');
             }
-            {% if flavour != 'mobile' %}
             $.ajax({
-                type: "POST",
-                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-                url: "/news/gcr="+i+"/",
+                method: "POST",
+                url: "/news/usernews/page/"+portal,
+                data:{csrfmiddlewaretoken: "{{ csrf_token }}"},
                 success: function(data){
-                    $parsedData = data.data;
-                    $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
-                    if ($parsedData.content.length === 0) {
-                        $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                    }
-                    else {
-                        $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                    }
-                    $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
-                    $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
-                    $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
+                    $('#rss-news').html(data);
+                    homeLoader.hide();
+                },
+                error: function(result){
+                    alert("Oh,"+portal+"'s news have been broken. Try later, please.\nWe are working on this problem.");
                     homeLoader.hide();
                 }
-            });
-            {% else %}
-                $.ajax({
-                type: "POST",
-                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-                url: "/news/gcr_m="+i+"/",
-                success: function(data){
-                    $parsedData = data.data;
-                    $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
-                    if ($parsedData.content.length === 0) {
-                        $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                    }
-                    else {
-                        $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                    }
-                    $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
-                    $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
-                    $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
-                    homeLoader.hide();
-                }
-            });
-            {% endif %}
-        }
-    function hideCurrentRssPortal(){
-        $('#fadeandscale').hide();
-        $('#fadeandscale-mobile').popup('hide');
-{#        $('#fadeandscale-mobile_background').hide();#}
-{#        $('#fadeandscale-mobile_wrapper').hide();#}
-    }
-        function changeStatePortals(element){
-            if (!$(element).parent().hasClass('active')) {
-                $(element).parent().addClass('active');
-            }
-            else {
-                $(element).parent().removeClass('active');
-            }
+            })
         }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.min.js"></script>
     <script>
     var swiper = new Swiper('.swiper-container', {
-        pagination: '.swiper-pagination',
-        slidesPerView: 2,
-        centeredSlides: true,
-        paginationClickable: true,
-        spaceBetween: 30
-    });
+            pagination: '.swiper-pagination',
+            slidesPerView: 2,
+            centeredSlides: true,
+            paginationClickable: true,
+            spaceBetween: 30
+        });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.min.js"></script>
 
 {% endblock %}

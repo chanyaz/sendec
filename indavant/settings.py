@@ -63,6 +63,8 @@ INSTALLED_APPS = (
     #"debug_toolbar",
     "django_mobile",
     "advert",
+    "about",
+    "beta_test",
 )
 
 # INTERNAL_IPS = ('127.0.0.1',)
@@ -141,6 +143,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates'),  # Main templates
+                 os.path.join(BASE_DIR, 'beta_test/templates'),  # Main templates
                  os.path.join(BASE_DIR, 'loginsys/templates'),  # Login system templates
                  os.path.join(BASE_DIR, 'news/templates'),  # News templates
                  os.path.join(BASE_DIR, 'news/mobile'),  # News templates
@@ -149,6 +152,7 @@ TEMPLATES = [
                  os.path.join(BASE_DIR, 'favourite/templates'),  # User favourite news templates
                  os.path.join(BASE_DIR, 'notify/templates'),  # User favourite news templates
                  os.path.join(BASE_DIR, 'search/templates'),  # User favourite news templates
+                 os.path.join(BASE_DIR, 'about/templates'),  # About Insydia templates
                  ],
         'APP_DIRS': True,
         'OPTIONS': {

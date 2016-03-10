@@ -147,6 +147,18 @@
         #su-content{color:white;font-size:20px;width:50%;left:45%;padding:2%;position:absolute;top:15%;border: solid 1px lightgrey; border-radius: 5px;}
         #su-content>p>a{color:#F62A00}
         #su-content>p>a:hover{color:white}
+
+
+        /********************** footer *************************/
+
+        footer{background: black}
+        .cf-title>h2{font-size:26px;color:white;padding:0;margin:2% 0;}
+        .cf-list{list-style-type: none;padding:0;margin-left:1%}
+        .cfl-item{display: inline-block;font-size:30px;margin-right:10px}
+        .cfl-item>a{color:white}
+        .cfl-item>a:hover{color:#F62A00}
+        .cf-brand{color:white}
+
 </style>
 
 
@@ -221,6 +233,49 @@
                 </div>
             </div>
         </section>
+        <footer>
+            <div id="career-footer" class="container container-fluid">
+                <div class="row row-center text-center">
+                    <div class="cf-title text-center">
+                        <h2>
+                            {% trans 'Мы в социальных сетях' %}
+                        </h2>
+                    </div>
+                    <div class="cf-socials text-center">
+                        <ul class="cf-list">
+                            <li class="cfl-item">
+                                <a href="https://www.facebook.com/insydiaofficial/">
+                                    <span class="fa fa-facebook"></span>
+                                </a>
+                            </li>
+                            <li class="cfl-item">
+                                <a href="https://twitter.com/insydianews">
+                                    <span class="fa fa-twitter"></span>
+                                </a>
+                            </li>
+                            <li class="cfl-item">
+                                <a href="https://vk.com/insydianews">
+                                    <span class="fa fa-vk"></span>
+                                </a>
+                            </li>
+                            <li class="cfl-item">
+                                <a href="https://www.linkedin.com/company/insydia">
+                                    <span class="fa fa-linkedin"></span>
+                                </a>
+                            </li>
+                            <li class="cfl-item">
+                                <a href="https://instagram.com/insydiaofficial/">
+                                    <span class="fa fa-instagram"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="cf-brand">
+                        &copy;&nbsp;Insydia, {% now 'Y' %}
+                    </div>
+                </div>
+            </div>
+        </footer>
 
     <script src="{% static 'static/js/jquery.js' %}"></script>
     <script src="{% static 'static/js/jquery.min.js' %}"></script>

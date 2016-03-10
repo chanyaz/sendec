@@ -1,53 +1,30 @@
 {% load endless %}
 {% load my %}
+{% load i18n %}
 {% load staticfiles %}
 {% load thumbnail %}
 
 <style>
-    .pagination ul{list-style-type: none;}
-        .pagination li{margin-left: 1%;margin-right: 1%;float: left;}
-        .current_rss_news{
-            position: relative;
-            width: 33%;
-            padding: 0.5% 0.5%;
-            height: 25em;
-            border: solid 2px lightgrey;
-            float: left;
-        }
-        .most-popular-portals input[type=checkbox]:checked + .lab .description-duke{background-color: greenyellow;}
-        .right-side a:hover{text-decoration: none;}
-        .portal-name{position: absolute;z-index: 900;margin-top: -1%;}
-        .portal-name-content{
-            background-color: #F62A00;
-            color: white;
-            font-family: Georgia, Times, "Times New Roman", serif;
-            text-transform: uppercase;
-        }
-        .rss-title{margin-top: 15%;font-family: Georgia, Times, "Times New Roman", serif; font-size: 15px; }
-        .rss-title:hover{color: #F62A00;}
-        .sect-new{display: inline-block;width: 23%;margin-left: 1%;}
 
-        .has-children a:hover{text-decoration: none;color: #F62A00;}
-        #left-panel-main-title a:hover{text-decoration: none;color: #F62A00;}
 </style>
 
-
 <div class="any40items" style="height: inherit;">
-
-{% paginate 20 favs %} <!-- rss_news -->
+{% paginate 20 favs %}
     {% for i in favs %}
-        <div class="col-xs-12">
-            {% if i.id|get_rss_news_cover != '[]' %}
-            <div class="current_rss_news rss-rss"
-                 id="rss_id_{{ i.id }}"
-                 data-indx="{{ i.nuid }}"
-                 data-current-rss-news-id="{{ i.id }}">
-            {% else %}
-            <div class="current_rss_news rss-rss"
-                 id="rss_id_{{ i.id }}"
-                 data-indx="{{ i.nuid }}"
-                 data-current-rss-news-id="{{ i.id }}">
-            {% endif %}
+        {% if flavour != 'mobile' %}
+            <div class="sect-new" style="cursor: pointer;">
+                <div class="current_rss_news rss-rss"
+                     id="rss_id_{{ i.id }}"
+                     data-indx="{{ i.nuid }}"
+                     data-current-rss-news-id="{{ i.id }}">
+        {% else %}
+            <div class="sect-new" style="cursor: pointer;">
+                <div class="current_rss_news rss-rss"
+                     style="width: 100%;"
+                     id="rss_id_{{ i.id }}"
+                     data-indx="{{ i.nuid }}"
+                     data-current-rss-news-id="{{ i.id }}">
+        {% endif %}
             <div class="portal-name">
                 <span class="portal-name-content"
                       onclick="showCurrentPortalNews('{{ i.portal_name_id|get_rss_verbose_name }}');">
@@ -57,7 +34,7 @@
                 {% if i.id|get_rss_news_cover != '' %}
                     <div class="news-image"
                          onclick="RssPreviewPopUpShow('{{ i.id }}')"
-                         style="background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;">
+                         style="border-bottom:solid 1px lightgrey;background: url({{ i.id|get_rss_news_cover }}) no-repeat center; background-size: cover;  width: 100%; height: 50%;">
 
                     </div>
                 {% endif %}
@@ -70,15 +47,37 @@
                      id="rss-title-{{ i.id }}"
                      onclick="RssPreviewPopUpShow('{{ i.id }}')">
             {% endif %}
-                    <b>{{ i.title|safe|striptags }}</b>
+                    <h1>
+                        <b>
+                            {{ i.title|safe|striptags }}
+                        </b>
+                    </h1>
+                </div>
+                <div class="rss-params">
+                    <div class="rp-author pull-left">
+                        {% if i.author != '' %}
+                            {% trans 'By' %}&nbsp;<span class="rss-author-name">{{ i.author }}</span>
+                        {% else %}
+                            {{ i.portal_name.portal }}
+                        {% endif %}
+                    </div>
+                    <div class="rp-time pull-right">
+                        {{ i.date_posted.date|date }}
+                    </div>
+                    <div class="rp-conf">
+                        <div class="rpc-left pull-left"><a href="{{ i.link }}">original</a></div>
+                        <div id="link-save-{{ i.id }}" class="rpc-right pull-right">
+                            {% if i.id|check_saved_rss:username.id == False %}
+                                <a href="#" onclick="setRssFavourite('{{ i.id }}'); return false;">save</a>
+                            {% else %}
+                                <a href="#" onclick="removeRssFavourite('{{ i.id }}'); return false;">unsave</a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     {% endfor %}
 </div>
     {% show_more %}
-<script>
-        $('.any40items').masonry({
-            itemSelector: '.rss-rss',
-        });
-</script>
+<script>$('.any40items').masonry({itemSelector: '.rss-rss'});</script>

@@ -75,6 +75,7 @@
                 <li class="col-xs-2">
                     <div id="footer-logo">
                         <img src="{% static 'static/img/favicons/all/white_trans.png' %}" width="128px" height="128px"/>
+                        <img src="{% static 'static/img/aws.png' %}" width="127px" height="48px"/>
                         <span class="footer-logo" hidden><h1>INSYDIA</h1></span>
                     </div>
                 </li>
@@ -116,7 +117,7 @@
                         <li class="footer-list-item"><a href="/news/space/">{% trans 'Space' %}</a></li>
                         <li class="footer-list-item"><a href="/news/bio/">{% trans 'BIO' %}</a></li>
                         <li class="footer-list-item"><a href="/news/companies/">{% trans 'Companies' %}</a></li>
-                        <li class="footer-list-item"><a href="/news/reviews/">{% trans 'Reviews' %}</a></li>
+{#                        <li class="footer-list-item"><a href="/news/reviews/">{% trans 'Reviews' %}</a></li>#}
                         {% if username.username %}
                             <li class="footer-list-item"><a href="/news/reviews/">{% trans 'PRIVATE' %}</a></li>
                         {% endif %}
@@ -125,11 +126,10 @@
                 <li class="col-xs-3">
                     <ul>
                         <li><h3 class="footer-title">{% trans 'Quick links' %}</h3></li>
-                        <li class="footer-list-item"><a href="/about">{% trans 'About us' %}</a></li>
-                        <li class="footer-list-item"><a href="/about/contacts/">{% trans 'Contacts' %}</a></li>
-                        <li class="footer-list-item"><a href="/about/advertisers/">{% trans 'Advertisement' %}</a></li>
+                        <li class="footer-list-item"><a href="/about/">{% trans 'About us' %}</a></li>
+                        <li class="footer-list-item"><a href="/about/advertisement/">{% trans 'Advertisement' %}</a></li>
                         <li class="footer-list-item"><a href="/rss/">{% trans 'RSS feed' %}</a></li>
-                        <li class="footer-list-item"><a href="">{% trans 'Hiring' %}</a></li>
+                        <li class="footer-list-item"><a href="/about/career/">{% trans 'Career' %}</a></li>
                     </ul>
                 </li>
             </ul>
@@ -145,7 +145,7 @@
             <div class="bottom-right" style="float: right; margin-right: 5%;">
                 <ul id="footer-social" style="list-style-type: none;">
                     <li>
-                        <a class="social" href="https://telegram.me/insydia" target="_blank">
+                        <a class="social" href="/about/telegram/" target="_blank">
                             <span class="fa fa-paper-plane"></span>
                         </a>
                     </li>
@@ -185,6 +185,9 @@
                         </a>
                     </li>
                 </ul>
+            </div>
+            <div class="col-xs-12 text-center">
+                Site by <a href="/about/#person1">Eugene Privalov</a>
             </div>
         </div>
     </div>

@@ -108,7 +108,7 @@
                                     <li class="footer-list-item"><a href="/news/space/">{% trans 'Space' %}</a></li>
                                     <li class="footer-list-item"><a href="/news/bio/">{% trans 'BIO' %}</a></li>
                                     <li class="footer-list-item"><a href="/news/companies/">{% trans 'Companies' %}</a></li>
-                                    <li class="footer-list-item"><a href="/news/reviews/">{% trans 'Reviews' %}</a></li>
+{#                                    <li class="footer-list-item"><a href="/news/reviews/">{% trans 'Reviews' %}</a></li>#}
                                     {% if username.username %}
                                         <li class="footer-list-item"><a href="/news/reviews/">{% trans 'PRIVATE' %}</a></li>
                                     {% endif %}
@@ -121,11 +121,10 @@
                             <nav role="navigation">
                                 <ul>
                                     <li><h3 class="footer-title">{% trans 'Quick links' %}</h3></li>
-                                    <li class="footer-list-item"><a href="/about">{% trans 'About us' %}</a></li>
-                                    <li class="footer-list-item"><a href="/about/contacts/">{% trans 'Contacts' %}</a></li>
-                                    <li class="footer-list-item"><a href="/about/advertisers/">{% trans 'Advertisement' %}</a></li>
+                                    <li class="footer-list-item"><a href="/about/">{% trans 'About us' %}</a></li>
+                                    <li class="footer-list-item"><a href="/about/advertisement/">{% trans 'Advertisement' %}</a></li>
                                     <li class="footer-list-item"><a href="/rss/">{% trans 'RSS feeds' %}</a></li>
-                                    <li class="footer-list-item"><a href="/rss/">{% trans 'Hiring' %}</a></li>
+                                    <li class="footer-list-item"><a href="/about/career/">{% trans 'Hiring' %}</a></li>
                                 </ul>
                             </nav>
                         </li>
@@ -139,7 +138,7 @@
                     <div class="bottom-right" style="float: right;">
                         <ul id="footer-social" style="list-style-type: none;">
                             <li>
-                                <a class="social" href="https://telegram.me/insydia" target="_blank">
+                                <a class="social" href="/about/telegram/" target="_blank">
                                     <span class="fa fa-paper-plane"></span>
                                 </a>
                             </li>
@@ -198,22 +197,21 @@
                                 <li><a href="/news/space/">{% trans 'Space' %}</a></li>
                                 <li><a href="/news/bio/">{% trans 'BIO' %}</a></li>
                                 <li><a href="/news/companies/">{% trans 'Companies' %}</a></li>
-                                <li><a href="/news/reviews/">{% trans 'Reviews' %}</a></li>
+{#                                <li><a href="/news/reviews/">{% trans 'Reviews' %}</a></li>#}
                                 {% if username.username %}
                                     <li><a href="/news/reviews/">{% trans 'PRIVATE' %}</a></li>
                                 {% endif %}
                         </ul>
                         <ul class="col-xs-6 pull-right">
-                            <li><a href="/about">{% trans 'About us' %}</a></li>
-                            <li><a href="/about/contacts/">{% trans 'Contacts' %}</a></li>
-                            <li><a href="/about/advertisers/">{% trans 'Advertisement' %}</a></li>
-                            <li><a href="/about/advertisers/">{% trans 'RSS feed' %}</a></li>
-                            <li><a href="/about/advertisers/">{% trans 'Hiring' %}</a></li>
+                            <li><a href="/about/">{% trans 'About us' %}</a></li>
+                            <li><a href="/about/advertisement/">{% trans 'Advertisement' %}</a></li>
+                            <li><a href="/rss/">{% trans 'RSS feed' %}</a></li>
+                            <li><a href="/about/career/">{% trans 'Career' %}</a></li>
                         </ul>
                     </div>
                     <ul id="footer-social" class="col-xs-12 col-md-12 text-center" style="list-style-type: none;">
                          <li>
-                                <a class="social" href="https://telegram.me/insydia" target="_blank">
+                                <a class="social" href="/about/telegram/" target="_blank">
                                     <span class="fa fa-paper-plane"></span>
                                 </a>
                             </li>

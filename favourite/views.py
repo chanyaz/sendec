@@ -15,12 +15,19 @@ from news.views import get_user_rss_portals
 def render_liked_news_page(request, template="liked_news.html", fav_template="fav_template.html", extra_context=None):
     user_instance = User.objects.get(username=auth.get_user(request).username)
     args = {
+        "title": "Saved articles | ",
         "username": User.objects.get(username=auth.get_user(request).username),
         "favs": list(get_favourite_news(request, user_instance)),
         "fav_template": fav_template,
         "user_rss_portals": get_user_rss_portals(request, user_id=user_instance.id),
         "here_private": True,
     }
+    if "eng" in request.COOKIES.get('lang'):
+        args['lang'] = 'eng'
+    elif "rus" in request.COOKIES.get('lang'):
+        args['lang'] = 'rus'
+    elif "ch" in request.COOKIES.get('lang'):
+        args['lang'] = 'ch'
     if request.is_ajax():
         template = fav_template
     args.update(csrf(request))

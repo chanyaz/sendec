@@ -22,9 +22,11 @@
                     <tr>
                         <td colspan="2" style="padding:30px 30px 0 30px;color:#444444;font-size:14px;line-height:1.5em;" align="left" valign="top">
                             <div style="font-size:14px;line-height:1.6em;color:#444444;">
-                                {% trans 'Hi' %},&nbsp;{{ username }},
+                                {% trans 'Welcome to Insydia,' %}
                                 <p>
-                                    {% trans 'Please confirm' %} <a href="mailto:{{ email }}">{{ email }}</a>
+                                    {% blocktrans %}
+                                        Thank you for creating an Insydia account.
+                                    {% endblocktrans %}
                                     <span>{% trans 'If you do it, you will get access to the hidden features of the portal' %}</span>
                                     <span>.&nbsp;{% trans 'Thank you!' %}</span>
                                 </p>

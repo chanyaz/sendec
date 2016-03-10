@@ -13,7 +13,7 @@
         .total-top{margin-bottom: 70%;height:100%;}
         #latest-news{cursor: pointer;float: left;width: 100%;height: 400px;position:relative;}
         .top-total-content{height: 400px;background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;background-size: cover;}
-        @media(max-device-width: 767px){ #latest-news{height: 280px;} .top-total-content{height: 280px;background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;background-size: contain;}}
+        @media(max-device-width: 767px){ #latest-news{height: 280px;} .top-total-content{height: 280px;background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;background-size: cover;}}
         .bn-title{bottom: 0;position: absolute;z-index: 998;width: 100%;height: 100%;background: linear-gradient(to top, #F62A00, black);opacity: 0.8;box-sizing: border-box;display: block}
         .bn-title:hover{opacity: 0.5;-webkit-animation: fadeInFromNone 0.3s ease-out;-moz-animation: fadeInFromNone 0.3s ease-out;-o-animation: fadeInFromNone 0.3s ease-out;animation: fadeInFromNone 0.3s ease-out}
         @-webkit-keyframes fadeInFromNone {0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
@@ -44,7 +44,7 @@
         <div class="total-container">
             <div class="ash">
                 <div class="panel panel-default col-md-12 mobile-top">
-                    <div class="total-news-block" >
+                    <div class="total-news-block">
                         <div class="total-top">
                             <div class="breaking-news col-md-12">
                                 <div class="bn">
@@ -111,7 +111,15 @@
                                                          style="margin-top: 5%; margin-left: -4%;">
                                                         <div class="news-title">
                                                             <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                                                <b>{{ i.news_title|safe }}</b>
+                                                                <b>
+                                                                    {% if lang == 'eng' %}
+                                                                        {{ i.news_title_english }}
+                                                                    {% elif lang == 'rus' %}
+                                                                        {{ i.news_title_russian }}
+                                                                    {% else %}
+                                                                        {{ i.news_title_chinese }}
+                                                                    {% endif %}
+                                                                </b>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -164,7 +172,15 @@
                                         <div class="right-middle-top col-xs-12 col-md-3">
                                             <div id="big-news-one" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
                                             <a href="/news/{{ total_bottom_news.0.news_post_date.year }}/{{ total_bottom_news.0.news_post_date.month }}/{{ total_bottom_news.0.news_post_date.day }}/{{ total_bottom_news.0.id }}/{{ total_bottom_news.0.slug }}">
-                                                    <b>{{ total_bottom_news.0.news_title }}</b>
+                                                    <b>
+                                                        {% if lang == 'eng' %}
+                                                            {{ total_bottom_news.0.news_title_english }}
+                                                        {% elif lang == 'rus' %}
+                                                            {{ total_bottom_news.0.news_title_russian }}
+                                                        {% else %}
+                                                            {{ total_bottom_news.0.news_title_chinese }}
+                                                        {% endif %}
+                                                    </b>
                                                 </a>
                                             </div>
                                             <div class="params">
@@ -173,7 +189,15 @@
                                                 </span>
                                                     &nbsp;|&nbsp;<span class="publushed">{{ total_bottom_news.0.news_post_date.date|date }}</span></i>
                                             </div>
-                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">{{ total_bottom_news.0.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
+                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">
+                                                {% if lang == 'eng' %}
+                                                    {{ total_bottom_news.0.teaser_english }}
+                                                {% elif lang == 'rus' %}
+                                                    {{ total_bottom_news.0.teaser_russian }}
+                                                {% else %}
+                                                    {{ total_bottom_news.0.teaser_chinese }}
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -223,7 +247,13 @@
                                                     </a>
                                                     <div class="carousel-inner-item-title">
                                                         <a href="/news/{{ interest.1.news_post_date.year }}/{{ interest.1.news_post_date.month }}/{{ interest.1.news_post_date.day }}/{{ interest.1.id }}/{{ interest.1.slug }}">
-                                                            {{ interest.1.news_title }}
+                                                            {% if lang == 'eng' %}
+                                                                {{ interest.1.news_title_english }}
+                                                            {% elif lang == 'rus' %}
+                                                                {{ interest.1.news_title_russian }}
+                                                            {% else %}
+                                                                {{ interest.1.news_title_chinese }}
+                                                            {% endif %}
                                                         </a>
                                                         <div class="carousel-inner-item-author">
                                                             <span class="">
@@ -248,7 +278,15 @@
                                                     </a>
                                                     <div class="carousel-inner-item-title">
                                                         <a href="/news/{{ interest.2.news_post_date.year }}/{{ interest.2.news_post_date.month }}/{{ interest.2.news_post_date.day }}/{{ interest.2.id }}/{{ interest.2.slug }}">
-                                                            {{ interest.2.news_title }}
+                                                            <b>
+                                                                {% if lang == 'eng' %}
+                                                                    {{ interest.2.news_title_english }}
+                                                                {% elif lang == 'rus' %}
+                                                                    {{ interest.2.news_title_russian }}
+                                                                {% else %}
+                                                                    {{ interest.2.news_title_chinese }}
+                                                                {% endif %}
+                                                            </b>
                                                         </a>
                                                         <div class="carousel-inner-item-author">
                                                             <span class="">
@@ -271,7 +309,15 @@
                                                     </a>
                                                    <div class="carousel-inner-item-title">
                                                         <a href="/news/{{ interest.3.news_post_date.year }}/{{ interest.3.news_post_date.month }}/{{ interest.3.news_post_date.day }}/{{ interest.3.id }}/{{ interest.3.slug }}">
-                                                            {{ interest.3.news_title }}
+                                                            <b>
+                                                                {% if lang == 'eng' %}
+                                                                    {{ interest.3.news_title_english }}
+                                                                {% elif lang == 'rus' %}
+                                                                    {{ interest.3.news_title_russian }}
+                                                                {% else %}
+                                                                    {{ interest.3.news_title_chinese }}
+                                                                {% endif %}
+                                                            </b>
                                                         </a>
                                                         <div class="carousel-inner-item-author">
                                                             <span class="">
@@ -315,7 +361,15 @@
                                                         {% endif %}
                                                         <div class="news-title">
                                                             <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                                                <b>{{ i.news_title|safe }}</b>
+                                                                <b>
+                                                                    {% if lang == 'eng' %}
+                                                                        {{ i.news_title_english }}
+                                                                    {% elif lang == 'rus' %}
+                                                                        {{ i.news_title_russian }}
+                                                                    {% else %}
+                                                                        {{ i.news_title_chinese }}
+                                                                    {% endif %}
+                                                                </b>
                                                             </a>
                                                         </div>
                                                     <div class="params">
@@ -324,7 +378,13 @@
                                                         </span>&nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
                                                     </div>
                                                 <div class="news-text">
-                                                    {{ i.news_post_text_english|safe|truncatechars:150 }}
+                                                    {% if lang == 'eng' %}
+                                                        {{ i.teaser_english }}
+                                                    {% elif lang == 'rus' %}
+                                                        {{ i.teaser_russian }}
+                                                    {% else %}
+                                                        {{ i.teaser_chinese }}
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -332,9 +392,9 @@
                                     </div>
                                 </div>
                                 <hr width="100%">
-                                <div id="announce-reviews" class="col-md-12">
-                                    reviews
-                                </div>
+{#                                <div id="announce-reviews" class="col-md-12">#}
+{#                                    reviews#}
+{#                                </div>#}
                                 {% include 'pre_paginate.html' %}
                                 <div class="load-more">
                                     <div class="endless_page_template">

@@ -3,6 +3,15 @@ import psycopg2
 import re
 from telebot import types
 
+"""
+Команда Insydia приветствует вас.
+Здесь вы можете узнать о последних новостях на нашем портале.
+Мы будем поддерживать данное направление и обновлять функционал нашего робота.
+
+Спасибо, что начали пользоваться InsydiaAsiaBot.
+"""
+
+
 TOKEN = "169868104:AAErdiL_Mq6P0Z-RFnHRdC_SF20ipOui-3o"
 bot = telebot.TeleBot(TOKEN)
 
@@ -15,6 +24,7 @@ USER = "testuser"
 PASSWORD = "test"
 
 CONNECT_DB = "dbname='%s' user='%s' host='' password='%s'" % (DB_NAME, USER, PASSWORD)
+
 
 @bot.message_handler(commands=["rss"])
 def current_rss_syndicate(message):
@@ -29,8 +39,13 @@ def current_rss_syndicate(message):
 @bot.message_handler(commands=["start"])
 def send_welcome(message):
     markup = types.ReplyKeyboardMarkup(row_width=3,resize_keyboard=True)
-    markup.add('Latest', 'Interest', 'Categories', 'Reviews', 'Help')
-    bot.send_message(chat_id=message.chat.id, text="Insydia welcomes you! Send your <username> from web-site to confirmation.", reply_markup=markup)
+    markup.add('Latest', 'Interest', 'Categories', 'Help')
+    welcome_text="""Insydia團隊歡迎你。
+在這裡，你可以了解我們網站上的最新消息。
+我們將保持這個方向和更新我們的機器人的功能。
+
+感謝您開始使用InsydiaAsiaBot"""
+    bot.send_message(chat_id=message.chat.id, text=welcome_text, reply_markup=markup)
 
 
 @bot.message_handler(regexp='^Categories$')
@@ -71,7 +86,7 @@ def categories(message):
     else:
         db = psycopg2.connect(CONNECT_DB)
         cursor = db.cursor()
-        query_set = "SELECT news_category_id, id, news_title FROM news WHERE news_category_id=%s ORDER BY id DESC LIMIT %s"
+        query_set = "SELECT news_category_id, id, news_title_english FROM news WHERE news_category_id=%s ORDER BY id DESC LIMIT %s"
         cat_id = cat_dict[cat_letter]
         data_query_set = (cat_id, amount,)
         cursor.execute(query_set, data_query_set)
@@ -80,8 +95,13 @@ def categories(message):
             string = "%s\nhttps://insydia.com/news/%s/%s/" % (item[i][2], item[i][0], item[i][1])
             bot.send_message(chat_id=message.chat.id, text=string)
     markup = types.ReplyKeyboardMarkup(row_width=3,resize_keyboard=True)
-    markup.add('Latest', 'Interest', 'Categories', 'Reviews', 'Help')
-    bot.send_message(chat_id=message.chat.id, text="Insydia welcomes you! Send your <username> from web-site to confirmation.", reply_markup=markup)
+    markup.add('Latest', 'Interest', 'Categories', 'Help')
+    welcome_text="""Insydia團隊歡迎你。
+在這裡，你可以了解我們網站上的最新消息。
+我們將保持這個方向和更新我們的機器人的功能。
+
+感謝您開始使用InsydiaAsiaBot"""
+    bot.send_message(chat_id=message.chat.id, text=welcome_text, reply_markup=markup)
 
 
 @bot.message_handler(regexp='^Last\snews\((T|E|A|S|B)\)$')
@@ -97,7 +117,7 @@ def categories_last_one(message):
     cat_letter = match_cat[0]
     db = psycopg2.connect(CONNECT_DB)
     cursor = db.cursor()
-    query_set = "SELECT news_category_id, id, news_title FROM news WHERE news_category_id=%s ORDER BY id DESC LIMIT 1"
+    query_set = "SELECT news_category_id, id, news_title_english FROM news WHERE news_category_id=%s ORDER BY id DESC LIMIT 1"
     cat_id = cat_dict[cat_letter]
     data_query_set = (cat_id,)
     cursor.execute(query_set, data_query_set)
@@ -106,24 +126,34 @@ def categories_last_one(message):
         string = "%s\nhttps://insydia.com/news/%s/%s/" % (item[i][2], item[i][0], item[i][1])
         bot.send_message(chat_id=message.chat.id, text=string)
     markup = types.ReplyKeyboardMarkup(row_width=3, resize_keyboard=True)
-    markup.add('Latest', 'Interest', 'Categories', 'Reviews', 'Help')
-    bot.send_message(chat_id=message.chat.id, text="Insydia welcomes you! Send your <username> from web-site to confirmation.", reply_markup=markup)
+    markup.add('Latest', 'Interest', 'Categories', 'Help')
+    welcome_text="""Insydia團隊歡迎你。
+在這裡，你可以了解我們網站上的最新消息。
+我們將保持這個方向和更新我們的機器人的功能。
+
+感謝您開始使用InsydiaAsiaBot"""
+    bot.send_message(chat_id=message.chat.id, text=welcome_text, reply_markup=markup)
 
 
 @bot.message_handler(regexp='^Menu$')
 def back_to_menu(message):
     markup = types.ReplyKeyboardMarkup(row_width=3,resize_keyboard=True)
     markup.add('Latest', 'Interest', 'Categories', 'Reviews', 'Help')
-    bot.send_message(chat_id=message.chat.id, text="Insydia welcomes you! Send your <username> from web-site to confirmation.", reply_markup=markup)
+    welcome_text="""Insydia團隊歡迎你。
+在這裡，你可以了解我們網站上的最新消息。
+我們將保持這個方向和更新我們的機器人的功能。
+
+感謝您開始使用InsydiaAsiaBot"""
+    bot.send_message(chat_id=message.chat.id, text=welcome_text, reply_markup=markup)
 
 
 @bot.message_handler(regexp='^Interest$')
 def back_to_menu(message):
     markup = types.ReplyKeyboardMarkup(row_width=3, resize_keyboard=True)
-    markup.add('Latest', 'Interest', 'Categories', 'Reviews', 'Help')
+    markup.add('Latest', 'Interest', 'Categories', 'Help')
     db = psycopg2.connect(CONNECT_DB)
     cursor = db.cursor()
-    query_set = "SELECT news_id, news_title, news_category_id FROM news t1 INNER JOIN news_watches t2 ON t1.id=t2.news_id ORDER BY t2.watches DESC LIMIT 1"
+    query_set = "SELECT news_id, news_title_english, news_category_id FROM news t1 INNER JOIN news_watches t2 ON t1.id=t2.news_id ORDER BY t2.watches DESC LIMIT 1"
     # data_query_set = [amount]
     cursor.execute(query_set)
     db.commit()
@@ -135,10 +165,10 @@ def back_to_menu(message):
 @bot.message_handler(regexp='^Latest$')
 def back_to_menu(message):
     markup = types.ReplyKeyboardMarkup(row_width=3, resize_keyboard=True)
-    markup.add('Latest', 'Interest', 'Categories', 'Reviews', 'Help')
+    markup.add('Latest', 'Interest', 'Categories', 'Help')
     db = psycopg2.connect(CONNECT_DB)
     cursor = db.cursor()
-    query_set = "SELECT id, news_title, news_category_id FROM news ORDER BY news_post_date DESC LIMIT 1"
+    query_set = "SELECT id, news_title_english, news_category_id FROM news ORDER BY news_post_date DESC LIMIT 1"
     # data_query_set = [amount]
     cursor.execute(query_set)
     db.commit()

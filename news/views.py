@@ -66,13 +66,13 @@ def main_page_load(request, template="index_beta.html", page_template="page_temp
         "current_year": datetime.datetime.now().year,
         "title": "Home Page | ",
         "news_block": True,
-        "total_middle_news": instance[0:4],
-        "total_bottom_news": instance[4:6],
+        "total_middle_news": instance[0:6],
+        "total_bottom_news": instance[6:8], # to 6
         "interest": get_hottest_news(request, category_id=5),
-        "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
+        # "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
         "before_reviews": get_before_reviews(request, category_id=None),
 
-        "pre_total": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
+        "pre_total": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
 
         "total_news": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
         "page_template": page_template,
@@ -129,10 +129,10 @@ def get_before_reviews(request, category_id):
     }
     if category_id != None:
         return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, teaser_english, teaser_russian, teaser_chinese, news_post_date, news_author_id, news_company_owner_id, news_main_cover,"
-                                "slug FROM news WHERE news_category_id=%s ORDER BY news_post_date DESC OFFSET 6 LIMIT 3;" % category_id, translations=translation)
+                                "slug FROM news WHERE news_category_id=%s ORDER BY news_post_date DESC OFFSET 8 LIMIT 3;" % category_id, translations=translation)
     else:
         return News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, teaser_english, teaser_russian, teaser_chinese, news_post_date, news_author_id, news_company_owner_id, news_main_cover,"
-                                "slug FROM news ORDER BY news_post_date DESC OFFSET 6 LIMIT 3;", translations=translation)
+                                "slug FROM news ORDER BY news_post_date DESC OFFSET 8 LIMIT 3;", translations=translation)
 def get_hottest_news(request, category_id):
     translation = {
         "id": "id",
@@ -475,20 +475,24 @@ def get_rss_news_pagination(request, current_page, next_page):
 def get_current_rss_news(request, news_id):
     news_instance = RssNews.objects.get(id=int(news_id))
     instance = RssNews.objects.get(id=int(news_id)).get_json_rss()
-
-
+    if len(news_instance.title) > 140:
+        h1_title = """<h1 class="rss-title-preview-new text-center title-small">{title}</h1>""".format(
+            title=news_instance.title
+        )
+    else:
+        h1_title = """<h1 class="rss-title-preview-new text-center">{title}</h1>""".format(
+            title=news_instance.title
+        )
     b = ""
     if request.COOKIES.get("lang") == "eng": b = "Close"
     elif request.COOKIES.get("lang") == "rus": b = "Закрыть"
     elif request.COOKIES.get("lang") == "cn": b = "cn"
-
-
     string = """<div class="cur-pw-top" data-rss-id="{data_id}">
     <div class="cur-pw-background"></div>
     <div class="cur-pw-btn-bck"></div>
 
     <div class="cur-pw-description col-md-12" style="position: absolute; top: 3em;">
-        <h1 class="rss-title-preview-new text-center">{title}</h1>
+        {title}
         <div class="cur-pw-td text-center">By <span class="rss-author-new">{author}</span></div>
     </div>
         <div class="col-md-12 col-xs-12" style="position: absolute; bottom: 0;">
@@ -521,37 +525,34 @@ def get_current_rss_news(request, news_id):
                 </li>
             </ul>
         </div>
-
 </div>
-
 </div>
-
 <div class="rss-preview-body"></div>
-    """.format(title=news_instance.title,
+    """.format(title=h1_title,
                author=news_instance.author if news_instance.author else news_instance.portal_name,
                read=123,
                data_id=news_instance.id,
                likes=321,
                link=news_instance.link,
                body=news_instance.content_value if news_instance.content_value else news_instance.post_text)
-
-
-
-
-
     response_data = {
         "data": instance,
         "string": string,
     }
-
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
 def get_current_rss_news_mobile(request, news_id):
     news_instance = RssNews.objects.get(id=int(news_id))
     instance = RssNews.objects.get(id=int(news_id)).get_json_rss()
-
-
+    if len(news_instance.title) > 180:
+        h1_title = """<h1 class="rss-title-preview-new text-center title-small">{title}</h1>""".format(
+            title=news_instance.title
+        )
+    else:
+        h1_title = """<h1 class="rss-title-preview-new text-center">{title}</h1>""".format(
+            title=news_instance.title
+        )
     b = ""
     if request.COOKIES.get("lang") == "eng": b = "Close"
     elif request.COOKIES.get("lang") == "rus": b = "Закрыть"
@@ -605,7 +606,7 @@ def get_current_rss_news_mobile(request, news_id):
 </div>
 
 <div class="rss-preview-body"></div>
-    """.format(title=news_instance.title,
+    """.format(title=h1_title,
                author=news_instance.author if news_instance.author else news_instance.portal_name,
                read=123,
                data_id=news_instance.id,
@@ -791,6 +792,7 @@ def render_technology_news(request, template="technology.html", tech_template="t
         "page_template": tech_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
+        "here_tech": True,
     }
     if request.is_ajax():
         template = tech_template
@@ -851,6 +853,7 @@ def render_auto_news(request, template="auto.html", auto_template="auto_template
         "page_template": auto_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
+        "here_auto": True,
     }
     if request.is_ajax():
         template = auto_template
@@ -896,6 +899,7 @@ def render_bio_news(request, template="bio.html", bio_template="bio_template.htm
         "page_template": bio_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
+        "here_bio": True,
     }
     if request.is_ajax():
         template = bio_template
@@ -1007,6 +1011,7 @@ def render_entertainment_news(request, template="entertainment.html", ent_templa
         "page_template": ent_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
+        "here_ent": True,
     }
     if request.is_ajax():
         template = ent_template
@@ -1097,6 +1102,7 @@ def render_space_news(request, template="space.html", space_template="space_temp
         "page_template": space_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
+        "here_space": True,
     }
     if request.is_ajax():
         template = space_template
@@ -1178,7 +1184,10 @@ def remove_rss_portal_from_feed(request, uuid, pid):
 
     data_response = {
         "uuid": str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
-        "id": pid
+        "id": pid,
+        "string": """<button class="btn-fl-rss btn btn-primary"
+        onclick="followCurrentRssPortal('{uuid}', '{id}', '{id}'); return false;">
+        Follow</button>""".format(uuid=str(uuid), id=pid)
     }
     return HttpResponse(json.dumps(data_response), content_type="application/json")
 
@@ -1224,71 +1233,6 @@ def test_rendering(request):
     args["footer_news"] = get_news_for_footer(request)[:3]
     return render_to_response("test_rss_news.html", args, context_instance=RequestContext(request))
 
-
-def render_contacts_page(request):
-    from news.forms import SendReportForm
-    args = {
-        "title": "Contacts |",
-        "email": "info@insydia.com",
-        "phone": "+7-931-579-06-96",
-        "cooperation": "advert@insydia.com",
-        "form": SendReportForm,
-
-        "left_bar": True,
-    }
-    args.update(csrf(request))
-    if auth.get_user(request).username:
-        args["username"] = User.objects.get(username=auth.get_user(request).username)
-        args["search_private"] = True
-    args["footer_news"] = get_news_for_footer(request)[:3]
-    if "eng" in request.COOKIES.get('lang'):
-        args['lang'] = 'eng'
-    elif "rus" in request.COOKIES.get('lang'):
-        args['lang'] = 'rus'
-    elif "ch" in request.COOKIES.get('lang'):
-        args['lang'] = 'ch'
-    return render_to_response("contacts.html", args)
-
-
-def render_about_page(request):
-    args = {
-        "title": "About |",
-        "left_bar": True,
-    }
-    args.update(csrf(request))
-    if auth.get_user(request).username:
-        args["username"] = User.objects.get(username=auth.get_user(request).username)
-        args["search_private"] = True
-    args["expression"] = """We express our gratitude for the financial and moral support to Afanasyev M.J.
-(Associate Professor of "Instrumentation Technology")."""
-    args["footer_news"] = get_news_for_footer(request)[:3]
-    if "eng" in request.COOKIES.get('lang'):
-        args['lang'] = 'eng'
-    elif "rus" in request.COOKIES.get('lang'):
-        args['lang'] = 'rus'
-    elif "ch" in request.COOKIES.get('lang'):
-        args['lang'] = 'ch'
-    return render_to_response("about.html", args)
-
-
-def render_adertisers_page(request):
-    args = {
-        "title": "Advertisement | ",
-
-        "left_bar": True,
-    }
-    args.update(csrf(request))
-    if auth.get_user(request).username:
-        args["username"] = User.objects.get(username=auth.get_user(request).username)
-        args["search_private"] = True
-    args["footer_news"] = get_news_for_footer(request)[:3]
-    if "eng" in request.COOKIES.get('lang'):
-        args['lang'] = 'eng'
-    elif "rus" in request.COOKIES.get('lang'):
-        args['lang'] = 'rus'
-    elif "ch" in request.COOKIES.get('lang'):
-        args['lang'] = 'ch'
-    return render_to_response("advertisers.html", args)
 
 
 def set_user_portals(request):
@@ -1479,6 +1423,7 @@ def get_news_for_footer(request):
 def render_manager_portal(request):
     user_instance = User.objects.get(username=auth.get_user(request).username)
     args = {
+        "title": "Manager | ",
         "username": user_instance,
         "user_rss_portals": get_user_rss_portals(request, user_id=user_instance.id),
         "left_bar": False,
@@ -1502,6 +1447,7 @@ def get_all_rss_portals(request):
 def render_browser_portals(request, template="browse_portals.html", browse_template="browse_template.html", extra_context=None):
     user_instance = User.objects.get(username=auth.get_user(request).username)
     args = {
+        "title": "Browser | ",
         "username": user_instance,
         "browse_template": browse_template,
         "rss_portals": get_all_rss_portals(request),
@@ -1678,7 +1624,10 @@ def follow_current_rss_portal(request, uuid, pid):
             rss_portal_instance.save()
             data = {
                 'uuid': str(user.profile.uuid),
-                'id': pid
+                'id': pid,
+                "string": """<button class="btn-fl-rss btn btn-primary"
+            onclick="unfollowCurrentRssPortal('{uuid}', '{id}', '{id}'); return false;">
+            Unfollow</button>""".format(uuid=str(user.profile.uuid), id=pid)
             }
             portal_news_instance = RssNews.objects.filter(portal_name_id=int(pid))
             count_news = portal_news_instance.count() # amount of news on this portal
@@ -1715,7 +1664,10 @@ def follow_current_rss_portal(request, uuid, pid):
         )
         data = {
             'uuid': str(user.profile.uuid),
-            'id': pid
+            'id': pid,
+            "string": """<button class="btn-fl-rss btn btn-primary"
+            onclick="unfollowCurrentRssPortal('{uuid}', '{id}', '{id}'); return false;">
+            Unfollow</button>""".format(uuid=str(user.profile.uuid), id=pid)
             }
         return HttpResponse(json.dumps(data), content_type="application/json")
 
@@ -1942,6 +1894,13 @@ def get_latest_articles_of_new_rss(request):
 def popup_current_portal(request, portal_id):
     args = {}
     args.update(csrf(request))
+    user_instance = User.objects.get(username=auth.get_user(request).username)
+    if UserRssPortals.objects.filter(portal_id=portal_id, user_id=user_instance.id).exists() == False:
+        UserRssPortals.objects.create(
+            portal_id=portal_id,
+            user_id=user_instance.id,
+            check=False
+        )
 
     l = request.COOKIES.get("lang")
     b = ""
@@ -1996,15 +1955,12 @@ def popup_current_portal(request, portal_id):
 
 <div class="cur-pw-btn-bck">
     <button class="btn-close-rss btn btn-primary" onclick="hideCurrentRssPortal();return false;">Close</button>
-</div>
+</div>"""
 
-"""
-
-    if UserRssPortals.objects.get(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username).id).check == False or\
-        UserRssPortals.objects.get(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username)).DoesNotExist:
+    if UserRssPortals.objects.get(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username).id).check == False:
         string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
         <button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal('{uuid}', '{id}', '{id}');
-            return false;">Follow</button>
+            return false;">unFollow</button>
     </div>
     """.format(uuid=str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
                id=instance.id)
@@ -2044,6 +2000,13 @@ def popup_current_portal(request, portal_id):
 def popup_current_portal_mobile(request, portal_id):
     args = {}
     args.update(csrf(request))
+    user_instance = User.objects.get(username=auth.get_user(request).username)
+    if UserRssPortals.objects.filter(portal_id=portal_id, user_id=user_instance.id).exists() == False:
+        UserRssPortals.objects.create(
+            portal_id=portal_id,
+            user_id=user_instance.id,
+            check=False
+        )
 
     l = request.COOKIES.get("lang")
     b = ""
@@ -2147,6 +2110,7 @@ def popup_current_portal_mobile(request, portal_id):
 
 def render_catalog(request):
     args = {
+        "title": "Catalog | ",
         "username":User.objects.get(username=auth.get_user(request).username),
         "rss_tech": RssPortals.objects.filter(category_id=1).order_by("-follows")[:12],
         "footer_news": get_news_for_footer(request)[:3],
@@ -2414,9 +2378,8 @@ def popup_new_portal_mobile(request):
 
 <div class="cur-pw-btn-bck">
     <button class="btn-close-rss btn btn-primary" onclick="hideCurrentRssPortal();return false;">Close</button>
-</div>
+</div>"""
 
-"""
         if UserRssPortals.objects.filter(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username).id).exists() == False or\
             UserRssPortals.objects.get(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username)).DoesNotExist:
             string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
@@ -2459,11 +2422,3 @@ def popup_new_portal_mobile(request):
         return HttpResponse(json.dumps(data_response), content_type="application/json")
     else:
         return HttpResponse()
-
-
-def render_job_page(request):
-    args={}
-    args.update(csrf(request))
-    response=render_to_response("hire.html", args, context_instance=RequestContext(request))
-    response.status_code=200
-    return response

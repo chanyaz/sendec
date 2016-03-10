@@ -125,8 +125,8 @@
                             </div>
                         </div>
                     {% else %}
-                        {% trans 'Want to be a freelance editor?' %}
-                        <br>{% trans "It's easy" %} - <a href="">{% trans 'click here' %}</a>
+{#                        {% trans 'Want to be a freelance editor?' %}#}
+{#                        <br>{% trans "It's easy" %} - <a href="">{% trans 'click here' %}</a>#}
                         <hr width="100%">
                         <div class="requests">
                             <div class="request-deleting">
@@ -265,12 +265,12 @@
             </div>
         </div>
     </div>
-    {% if flavour != 'mobile' %}
-        <div class="profile-footer" style="margin-top: 100px;">
-            {% include 'footer.html' %}
-        </div>
-    {% else %}
-        {% include 'mobile/mobile_footer.html' %}
-    {% endif %}
+{#    {% if flavour != 'mobile' %}#}
+{#        <div class="profile-footer" style="margin-top: 100px;">#}
+{#            {% include 'footer.html' %}#}
+{#        </div>#}
+{#    {% else %}#}
+{#        {% include 'mobile/mobile_footer.html' %}#}
+{#    {% endif %}#}
 
 {% endblock %}

@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^preferences=categories$', "loginsys.views.render_user_preferences_categories_page"),
     url(r'^preferences=portals$', "loginsys.views.render_user_preferences_portal_page"),
     url(r'^skip-preferences/$', "loginsys.views.skip_preferences"),
+    url(r'^register/ce/', 'loginsys.views.check_email'),
     url(r'^register/cu=(?P<username>\w+)$', 'loginsys.views.check_username'),
     url(r'^register/$', 'loginsys.views.register'),
     url(r'^ucid=(?P<confirm_code>\w+)&uuid=(?P<user_uuid>[^/]+)/$', 'loginsys.views.confirm_email'),#&iid=(?P<email_hash>\w+)/', )

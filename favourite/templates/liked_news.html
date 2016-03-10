@@ -5,40 +5,40 @@
 {% load jsonate_tags %}
 {% block favourite %}
     <style>
-        #rss-news {width: 100%;margin-left: 1%;height: 100%;min-height: 100%;}
-        #fav-main-title{text-align: center;}
-        .fav-footer{bottom: 10px;}
-        .favourites{min-height: 30em;}
-        .has-children a:hover{text-decoration: none;color: #F62A00;}
-        #left-panel-main-title a:hover{text-decoration: none;color: #F62A00;}
-        .sidebar-offcanvas{
-            background-color: #F1F3CE;
-            position: fixed;
-            left: 0;
-            top: 0;
-            padding-top: 5%;
-            height: 100%;
-            overflow-y: scroll;
+        #sidebar{background:white;border-right:solid 1px lightgrey}
+        #rss-news{width:100%;margin-left:1%;height:100%;min-height:100%}
+        #fav-main-title{text-align:center}
+        .fav-footer{bottom:10px}
+        .favourites{min-height:30em}
+        .has-children a:hover{text-decoration:none;color:#F62A00}
+        #left-panel-main-title a:hover{text-decoration:none;color:#F62A00}
+        .sidebar-offcanvas{background-color:#F1F3CE;position:fixed;left:0;top:0;padding-top:5%;height:100%;overflow-y:scroll}
+        @media screen and (max-width:767px){
+          .row-offcanvas {position:relative;-webkit-transition:all 0.25s ease-out;-moz-transition:all 0.25s ease-out;transition:all 0.25s ease-out}
+          .sidebar-offcanvas{right:-41.6%}
+          .sidebar-offcanvas{left:-41.6%}
+          .row-offcanvas-right.active{right:41.6%}
+          .row-offcanvas-left.active{left:41.6%}
+          .sidebar-offcanvas{position:absolute;top:0;width:41.6%}
+          #sidebar{padding-top:0}
         }
-        @media screen and (max-width: 767px) {
-          .row-offcanvas {
-            position: relative;
-            -webkit-transition: all 0.25s ease-out;
-            -moz-transition: all 0.25s ease-out;
-            transition: all 0.25s ease-out;
-          }
-          .sidebar-offcanvas{right: -41.6%;}
-          .sidebar-offcanvas{left:-41.6%;}
-          .row-offcanvas-right.active{right:41.6%;}
-          .row-offcanvas-left.active{left:41.6%;}
-          .sidebar-offcanvas{position:absolute;top:0;width:41.6%;}
-          #sidebar{padding-top:0;}
-        }
-        .side-bat-brand {position: absolute;bottom: 0;}
+        .side-bat-brand {position:absolute;bottom:0}
         #side-list{padding-left:0;}
-        #side-list > li.side-list-item{height: 40px; margin-bottom: 5px;}
-        #side-list > li.side-list-item > a{}
-        .side-text{color:black;}
+        #side-list>li.side-list-item{height:40px;margin-bottom:5px}
+        #side-list>li.side-list-item>a{}
+        .side-text{color:black}
+        .current_rss_news{position:relative;width:30%;height:25em;margin-right:3%;margin-bottom:3%;border:solid 2px lightgrey;float:left}
+        .current_rss_news_mobile{position:relative;width:100%;padding:0.5% 0.5%;height:25em;border:solid 2px lightgrey;float:left}
+        .current_rss_news_mas{position:relative;width:30%;min-height:3em;max-height:15em;margin-right:3%;margin-bottom:3%;border:solid 2px lightgrey;float:left}
+        .right-side a:hover{text-decoration:none}
+        .portal-name{position:absolute;z-index:900;margin-top:-1%}
+        .portal-name-content{background-color:#F62A00;color:white;font-family:Georgia,Times,"Times New Roman",serif;text-transform:uppercase}
+        .rss-params{width:100%;padding:5%}
+        .rp-conf{position:absolute;bottom:10px;width:90%}
+        .rss-title{margin-top:0}
+        .rss-title>h1{font-size:16px;color:black;padding:5% 5%;margin:0}
+        .rss-title>h1:hover{color:#F62A00}
+        .rss-title:hover{color:#F62A00}
 
     </style>
     <div class="container-fluid container favourites">
@@ -141,6 +141,109 @@
                 success: alert("success")
             });
         }
+    function RssPreviewPopUpShow(i) {
+        {% if flavour != 'mobile' %}
+            $.ajax({
+                type: "POST",
+                url: "/news/scar=" + i,
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function () {
+                    $('#rss-title-' + i).addClass('rss-title-read');
+                }
+            });
+            $('#fadeandscale-desktop').animate({
+                scrollTop: $('html, body').offset().top
+            });
+            $.ajax({
+            type: "POST",
+            url: "/news/gcr=" + i + "/",
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success: function (data) {
+                $('#current-rss-preview').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
+                $('#current-rss-preview-mobile').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
+                $('#close-preview').fadeIn();
+                $('.preview-content').html(data.string);
+                $('.preview-content-mobile').html(data.string);
+                $parsedData = data.data;
+                if ($parsedData.content.length === 0) {
+                    $(".rss-preview-body").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                }
+                else {
+                    $(".rss-preview-body").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
+                }
+                if(data.data.fav == true){
+                    $('.rss-item-save').attr('onclick', 'removeRssFavourite("{id}");'.replace("{id}", i));
+                    $('.rss-fav').attr('data-fav', 1).css({'color': 'lime'})
+                }
+                else{
+                    $('.rss-item-save').attr('onclick', 'setRssFavourite("{id}");'.replace("{id}", i));
+                    $('.rss-fav').attr('data-fav', 0).css({'color': 'white'})
+                }
+            }
+        });
+        {% else %}
+            $.ajax({
+                type: "POST",
+                url: "/news/scar=" + i,
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function () {
+                    $('#rss-title-' + i).addClass('rss-title-read');
+                }
+            });
+            $('#fadeandscale-desktop').animate({
+                scrollTop: $('html, body').offset().top
+            });
+            $.ajax({
+            type: "POST",
+            url: "/news/gcr_m=" + i + "/",
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success: function (data) {
+                $('#current-rss-preview').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
+                $('#current-rss-preview-mobile').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
+                $('#close-preview').fadeIn();
+                $('.preview-content').html(data.string);
+                $('.preview-content-mobile').html(data.string);
+                $parsedData = data.data;
+                if ($parsedData.content.length === 0) {
+                    $(".rss-preview-body").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a><button class='btn btn-primary' onclick='RssPreviewArticleMobileHide(); return false;'>Close</button>");
+                }
+                else {
+                    $(".rss-preview-body").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a class='pull-left' href='" + $parsedData.link + "' target='_blank'><button style='margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a><button class='btn btn-primary' onclick='RssPreviewArticleMobileHide(); return false;'>Close</button>");
+                }
+                if(data.data.fav == true){
+                    $('.rss-item-save').attr('onclick', 'removeRssFavourite("{id}");'.replace("{id}", i));
+                    $('.rss-fav').attr('data-fav', 1).css({'color': 'lime'})
+                }
+                else{
+                    $('.rss-item-save').attr('onclick', 'setRssFavourite("{id}");'.replace("{id}", i));
+                    $('.rss-fav').attr('data-fav', 0).css({'color': 'white'})
+                }
+            }
+        });
+        {% endif %}
+    }
+    function RssPreviewArticleMobileHide(){
+        $('#current-rss-preview-mobile').popup('hide');
+    }function RssPreviewArticleHide(){
+        $('#current-rss-preview-mobile').popup('hide');
+    }
+        $(document).on('click', function (event) {
+        if (!$(event.target).closest('#current-rss-preview').length && !$(event.target).closest('#close-preview').length) {
+            $('#close-preview').hide();
+        }
+    });
+        $(document).ready(function () {
+        $(this).keydown(function (eventObject) {
+            if (eventObject.which == 27)
+                $('.preview-rss-news').hide();
+                $('#close-preview').hide();
+                $("html").css("overflowY", "auto");
+        });
+    });
+    function RssPreviewPopUpHide() {
+        $(".preview-rss-news").hide();
+        $("html").css("overflowY", "auto");
+    }
     </script>
 
 

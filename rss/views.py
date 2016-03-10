@@ -1,14 +1,11 @@
-from django.shortcuts import render
 from news.models import News
-from django.contrib.auth.models import User, auth
 from django.views.generic import TemplateView
 from django.contrib.syndication.views import Feed
-from django.template.context_processors import csrf
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, RequestContext
-from django.core.urlresolvers import reverse
-from news.models import NewsCategory, Companies
+from django.http import HttpResponseRedirect
+from news.models import Companies
 import datetime
+import json
+import urllib.request as r
 
 
 class RenderRSSPage(TemplateView):
@@ -21,7 +18,22 @@ class RenderRSSPage(TemplateView):
         context['title'] = "RSS | "
         context['latest_news'] = self.get_news_offset(offset=6)
         context['footer_news'] = self.get_news_offset(offset=3)
+        if not self.request.COOKIES.get('lang'):
+            region = self.get_region_code()
+            if region == 'RU': context['lang'] = 'rus'
+            elif region == "US": context['lang'] = 'eng'
+            else: context['lang'] = 'ch'
+        else:
+            if 'rus' in self.request.COOKIES.get('lang'): context['lang'] = 'rus'
+            elif 'eng' in self.request.COOKIES.get('lang'): context['lang'] = 'eng'
+            elif 'ch' in self.request.COOKIES.get('lang'): context['lang'] = 'ch'
         return context
+
+    def get_region_code(self):
+        url = "http://ip-api.com/json"
+        t = r.urlopen(url)
+        data = json.loads(t.read().decode(t.info().get_param('charset') or 'utf-8'))
+        return data['countryCode']
 
     def get_news_offset(self, offset):
         return News.objects.order_by("-news_post_date")[:offset].values()

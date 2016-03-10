@@ -9,8 +9,6 @@ urlpatterns = patterns('',
     url(r'^cl&t=1&id=(?P<news_id>\w+)&lang_code=(?P<lang_code>\w+)', 'news.views.change_languages_top_news'),
     url(r'^change_portals_order/', 'news.views.change_rates'),
     url(r'^add_portals/', 'news.views.set_user_portals'),
-    url(r'^about/', 'news.views.render_about_page'),
-    url(r'^advertisers/', 'news.views.render_adertisers_page'),
     url(r'^send_report/', 'news.views.send_report'),
     url(r"^test_rendering/", "news.views.test_rendering"),
 

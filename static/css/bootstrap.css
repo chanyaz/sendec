@@ -4155,8 +4155,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .container-fluid > .navbar-header,
   .container > .navbar-collapse,
   .container-fluid > .navbar-collapse {
-    margin-right: 0;
-    margin-left: 0;
+    /*margin-right: 0;*/
+    /*margin-left: 0;*/
   }
 }
 .navbar-static-top {
@@ -4207,7 +4207,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (min-width: 768px) {
   .navbar > .container .navbar-brand,
   .navbar > .container-fluid .navbar-brand {
+    position:relative;
     margin-left: -15px;
+  }
+  .navbar > .container .navbar-brand-slogo,
+  .navbar > .container-fluid .navbar-brand-slogo{
+    position: absolute;
+    right:10%;
   }
 }
 .navbar-toggle {
@@ -4434,15 +4440,20 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   /*color: #777;*/
   color: white;
   font-size: 1.1em;
+  border-bottom: solid 1px rgba(0,41,60, 1);
+  border-top: solid 1px rgba(0,41,60, 1);
 }
 
 .navbar-default .navbar-nav > li > a.active{
   color: #F62A00;
+  border-bottom:solid 1px #F62A00;
 }
 
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #ff6e1f;
+  border-bottom: solid 1px #F62A00;
+  border-top: solid 1px #F62A00;
   background-color: transparent;
 }
 .navbar-default .navbar-nav > .active > a,

@@ -26,7 +26,7 @@
             .top-total-content{
                 height: 280px;
                 background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;
-                background-size: contain;
+                background-size: cover;
             }
         }
         .bn-title{
@@ -92,7 +92,6 @@
             color: black;
             font-size: 17px;
             margin-top: 1.5%;
-            font-family: Georgia, Times, "Times New Roman", serif
         }
         .news-title a:hover{color: #F62A00;}
         .current_news{
@@ -165,7 +164,7 @@
                                         <a href="/news/top/{{ top_news.0.id }}/{{ top_news.0.slug }}/">
                                             <div class="bn-title col-md-12"></div>
                                         </a>
-                                        <div class="bn-title-text text-center col-md-12 col-xs-12">
+                                        <div class="bn-title-text text-center col-xs-12 col-md-12">
                                                 <a href="/news/top/{{ top_news.0.id }}/{{ top_news.0.slug }}/">
                                                     {% if lang == 'eng' %}
                                                         {{ top_news.0.top_news_title_english }}
@@ -200,22 +199,12 @@
                                                     </div>
                                                     {% if i.news_main_cover != '' %}
                                                         <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                                            {% if i.news_main_cover|check_format == True %}
                                                                 <div class="middle-news-cover"
                                                                      style="cursor: pointer;">
                                                                     {% thumbnail i.news_main_cover '330x216' crop='center' as im %}
                                                                         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/>
                                                                     {% endthumbnail %}
                                                                 </div>
-                                                            {% else %}
-                                                                    <div class="middle-news-cover"
-                                                                     style="max-width: 100%;
-                                                                             cursor:pointer;
-                                                                             max-height: 100%;
-                                                                             height: 210px;
-                                                                                background: url('{% static 'static/img/companies_cover/' %}{{ current_middle_news.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center;
-                                                                                background-size: cover;"></div>
-                                                            {% endif %}
                                                         </a>
                                                     {% endif %}
                                                     <div class="title col-xs-12"
@@ -259,10 +248,6 @@
                                     {% include 'total_beta_top_news_m.html' %}
                                 {% endif %}
                             </div>
-{#                            <div class=adver-near-top" style="float: right;">#}
-{#                                <div style="margin-top:5%; width: 300px;height: 250px;background-color: #00fff9"></div>#}
-{#                                <div style="margin-top:5%; width: 300px;height: 250px;background-color: #00fff9"></div>#}
-{#                            </div>#}
                         </div>
                         <div class="media-block col-md-12">
                             <hr width="100%">
@@ -305,10 +290,11 @@
                                                 </span>
                                                     &nbsp;|&nbsp;<span class="publushed">{{ total_bottom_news.0.news_post_date.date|date }}</span></i>
                                             </div>
-                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">{{ total_bottom_news.0.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
+                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">
+                                                {{ total_bottom_news.0.teaser_english|safe|striptags|truncatechars:"150" }}
+                                            </div>
                                         </div>
                                     </div>
-{#                                    <hr class="separator-line" width="100%">#}
                                 </div>
                                 <hr width="100%">
 
@@ -506,15 +492,10 @@
                                     </div>
                                 </div>
                                 <hr width="100%">
-                                <div id="announce-reviews" class="col-md-12">
-                                    reviews
-                                </div>
-
-
+{#                                <div id="announce-reviews" class="col-md-12">#}
+{#                                    reviews#}
+{#                                </div>#}
                                 {% include 'pre_paginate.html' %}
-
-
-
                                 <div class="load-more">
                                     <div class="endless_page_template">
                                         {% block js %}

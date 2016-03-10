@@ -3,120 +3,109 @@
 {% load my %}
 {% load i18n %}
  {% if flavour != 'mobile' %}
-    <div class="dyn-news-2 container" style="height: inherit; margin-bottom: 5%; margin-left: -3%;">
-        <div id="top-4-news"  class="col-xs-12" style="float: left;">
-            {% for i in pre_total %}
-                    <div class="" style="width: 31%; float: left; margin-right: 1%; margin-bottom: 5%; border-bottom: solid 1px lightgrey;">
-                    <div class="current_news">
-                        <div class="cat cat-left">
-                            <a href="/news/{{ i.id|get_news_category }}">{{ i.id|get_news_category|upper }}</a>
-                        </div>
-                        <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                <div class="middle-news-cover" style="max-width: 100%;cursor: pointer;max-height: 100%;">
-                                {% thumbnail i.news_main_cover '310x200' crop='center' as im %}
-                                    <img src="{{ im.url }}" height="{{ im.height }}" width="100%"/>
-                                {% endthumbnail %}
-                                </div>
+     <div class="before-reviews container col-md-12">
+        {% for i in pre_total %}
+            <div class="col-md-4" >
+                <div class="current_news news-news">
+                    <div class="cat">
+                        <a href="/news/{{ i.id|get_news_category }}">
+                            {{ i.id|get_news_category|upper }}
                         </a>
-                        <div class="title"
-                             id="title-{{ i.id }}"
-                             style="margin-top: 2%;">
-                            <div class="news-title">
-                                <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                    <b>
-                                        {% if lang == 'eng' %}
-                                            {{ i.news_title_english|safe }}
-                                        {% elif lang == 'rus' %}
-                                            {{ i.news_title_russian|safe }}
-                                        {% else %}
-                                            {{ i.news_title_chinese|safe }}
-                                        {% endif %}
-                                    </b>
-                                </a>
+                    </div>
+                    {% if i.news_main_cover != '' %}
+                        <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                            <div class="middle-news-cover">
+                            <img src="{% thumbnail i.news_main_cover '310x210' crop='center'%}" />
                             </div>
-                        </div>
-                        <div class="params">
-                            <i>{% trans 'By' %}&nbsp;<span class="article-author">
-                                <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
-                            </span>&nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
-                        </div>
-                        <div class="news-text" style="margin-top: 5%; ">
-                            {% if lang == 'eng' %}
-                                {{ i.teaser_english|safe }}
-                            {% elif lang == 'rus' %}
-                                {{ i.teaser_russian|safe }}
-                            {% else %}
-                                {{ i.teaser_chinese|safe }}
-                            {% endif %}
-                        </div>
+                        </a>
+                    {% endif %}
+                    <div class="news-title">
+                        <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                            <b>
+                                {% if lang == 'eng' %}
+                                    {{ i.news_title_english }}
+                                {% elif lang == 'rus' %}
+                                    {{ i.news_title_russian }}
+                                {% else %}
+                                    {{ i.news_title_chinese }}
+                                {% endif %}
+                            </b>
+                        </a>
+                    </div>
+                    <div class="params">
+                        <i>{% trans 'By' %}&nbsp;<span class="article-author">
+                            <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
+                        </span>&nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
+                    </div>
+                    <div class="news-text">
+                        {% if lang == 'eng' %}
+                            {{ i.teaser_english }}
+                        {% elif lang == 'rus' %}
+                            {{ i.teaser_russian }}
+                        {% else %}
+                            {{ i.teaser_chinese }}
+                        {% endif %}
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+        {% endfor %}
+     </div>
+     <div class="two-news-item col-md-12">
+        <div class="cat cat-left col-xs-12">
+            <a href="/news/{{ total_bottom_news.1.id|get_news_category }}">
+                {{ total_bottom_news.1.id|get_news_category|upper }}
+            </a>
+        </div>
+        <div class="news-cover container col-sm-10 col-md-9">
+            <a href="/news/{{ total_bottom_news.1.news_post_date.year }}/{{ total_bottom_news.1.news_post_date.month }}/{{ total_bottom_news.1.news_post_date.day }}/{{ total_bottom_news.1.id }}/{{ total_bottom_news.1.slug }}">
+                <div class="cover-top-middle" style="background:url('/media/{{ total_bottom_news.0.news_main_cover }}') no-repeat center;background-size:cover"></div>
+            </a>
+        </div>
+        <div class="right-middle-top col-xs-12 col-md-3">
+            <div id="big-news-one" class="title-top-middle">
+            <a href="/news/{{ total_bottom_news.1.news_post_date.year }}/{{ total_bottom_news.1.news_post_date.month }}/{{ total_bottom_news.1.news_post_date.day }}/{{ total_bottom_news.0.id }}/{{ total_bottom_news.0.slug }}">
+                    <b>
+                        {% if lang == 'eng' %}
+                            {{ total_bottom_news.1.news_title_english|safe }}
+                        {% elif lang == 'rus' %}
+                            {{ total_bottom_news.1.news_title_russian|safe }}
+                        {% else %}
+                            {{ total_bottom_news.1.news_title_chinese|safe }}
+                        {% endif %}
+                    </b>
+                </a>
+            </div>
+            <div class="params">
+                <i>{% trans 'By' %}&nbsp;<span class="article-author">
+                    <a href="/profile/m/{{ total_bottom_news.1.news_author }}/">{{ total_bottom_news.1.news_author }}</a>
+                </span>
+                    &nbsp;|&nbsp;<span class="publushed">{{ total_bottom_news.1.news_post_date.date|date }}</span></i>
+            </div>
+            <div class="text-top-middle">
+                {% if lang == 'eng' %}
+                    {{ total_bottom_news.1.teaser_english|safe }}
+                {% elif lang == 'rus' %}
+                    {{ total_bottom_news.1.teaser_russian|safe }}
+                {% else %}
+                    {{ total_bottom_news.1.teaser_chinese|safe }}
+                {% endif %}
+            </div>
         </div>
     </div>
-
-                                <div class="two-news-item col-md-12" style="margin-bottom: 5%;">
-                                        <div class="cat cat-left col-xs-12">
-                                            <a href="/news/{{ total_bottom_news.1.id|get_news_category }}">
-                                                {{ total_bottom_news.1.id|get_news_category|upper }}
-                                            </a>
-                                        </div>
-                                        <div class="news-cover container col-sm-10 col-md-9">
-                                            <a href="/news/{{ total_bottom_news.1.news_post_date.year }}/{{ total_bottom_news.1.news_post_date.month }}/{{ total_bottom_news.1.news_post_date.day }}/{{ total_bottom_news.1.id }}/{{ total_bottom_news.1.slug }}">
-                                                <div class="cover-top-middle" style="float: left;
-                                                        height: 300px;
-                                                        width: 100%;
-                                                        background: url('/media/{{ total_bottom_news.0.news_main_cover }}') no-repeat center;
-                                                        background-size: cover;"></div>
-                                            </a>
-                                        </div>
-                                        <div class="right-middle-top col-xs-12 col-md-3">
-                                            <div id="big-news-one" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
-                                            <a href="/news/{{ total_bottom_news.1.news_post_date.year }}/{{ total_bottom_news.1.news_post_date.month }}/{{ total_bottom_news.1.news_post_date.day }}/{{ total_bottom_news.0.id }}/{{ total_bottom_news.0.slug }}">
-                                                    <b>
-                                                        {% if lang == 'eng' %}
-                                                            {{ total_bottom_news.1.news_title_english|safe }}
-                                                        {% elif lang == 'rus' %}
-                                                            {{ total_bottom_news.1.news_title_russian|safe }}
-                                                        {% else %}
-                                                            {{ total_bottom_news.1.news_title_chinese|safe }}
-                                                        {% endif %}
-                                                    </b>
-                                                </a>
-                                            </div>
-                                            <div class="params">
-                                                <i>{% trans 'By' %}&nbsp;<span class="article-author">
-                                                    <a href="/profile/m/{{ total_bottom_news.1.news_author }}/">{{ total_bottom_news.1.news_author }}</a>
-                                                </span>
-                                                    &nbsp;|&nbsp;<span class="publushed">{{ total_bottom_news.1.news_post_date.date|date }}</span></i>
-                                            </div>
-                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">
-                                                {% if lang == 'eng' %}
-                                                    {{ total_bottom_news.1.teaser_english|safe }}
-                                                {% elif lang == 'rus' %}
-                                                    {{ total_bottom_news.1.teaser_russian|safe }}
-                                                {% else %}
-                                                    {{ total_bottom_news.1.teaser_chinese|safe }}
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
-
 {% else %}
-    <div class="dyn-news-2 container" style="height: inherit; margin-bottom: 5%; margin-left: -3%;">
-        <div id="paginate-list" style="float: left;">
+    <div class="dyn-news-2 container">
+        <div id="paginate-list">
             {% for i in pre_total %}
                 <div class="container-fluid col-md-6 mobile-container">
                     <div class="current_news_mas_mobile news-news mobile-news">
                         <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                            <div class="middle-news-cover" style="/* float: left; *//* cursor: pointer; */">
+                            <div class="middle-news-cover">
                                 {% thumbnail i.news_main_cover '100x100' crop='center' as im %}
                                     <img src="{{ im.url }}" class="col-xs-6 mobile-top"/>
                                 {% endthumbnail %}
                             </div>
                         </a>
-                        <div class="title total-container col-xs-8" id="title-{{ i.id }}"
-                             style="float: right;">
+                        <div class="title total-container col-xs-8" id="title-{{ i.id }}" style="float: right;">
                             <div class="news-title-mobile" style="line-height: 0.9em; margin-top: 0;">
                                 <a class="mobile-title" href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
                                     <b>
@@ -132,7 +121,7 @@
                             </div>
                         </div>
                         <div class="params total-container col-xs-8" style="float: right;">
-                            <i>Автор&nbsp;<span class="article-author">
+                            <i>{% trans 'By' %}&nbsp;<span class="article-author">
                                 <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
                             </span>
                                 &nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>

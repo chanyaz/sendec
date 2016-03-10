@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django.contrib.auth import logout
-from django.shortcuts import redirect, render_to_response, HttpResponseRedirect, HttpResponse, RequestContext
+from django.shortcuts import redirect, render_to_response, RequestContext
 from django.template.context_processors import csrf
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -16,8 +16,7 @@ import string
 from random import choice, randint
 from django.contrib.sites.models import Site, RequestSite
 from django.conf import settings
-from django import forms
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
+from django.http import HttpResponse, HttpResponseRedirect
 
 SESSION_LIFE_TIME = 86400
 SESSION_LIFE_TIME_REMEMBERED = 31536000
@@ -82,6 +81,8 @@ def register(request):
                     user_id=User.objects.get(username=auth.get_user(request).username).id,
                 )
                 user_email = request.POST["email"]
+                if User.objects.filter(email=user_email).exists():
+                    return HttpResponseRedirect("/auth/register/", {"ce": "Current email is used"})
                 user_phone = "+0-000-000-00-00"
                 #    request.POST["phone"]
 
@@ -219,6 +220,17 @@ def send_message_via_sms(request, verify_code, phone_number):
 def set_uuid(user_id):
     user_instance = User.objects.get(id=user_id)
     return uuid.uuid3(uuid.NAMESPACE_DNS, "%s %s" % (user_instance.username, datetime.datetime.now()))
+
+
+def check_email(request):
+    if request.POST:
+        email = request.POST['email']
+        if User.objects.filter(email=email).exists():
+            return HttpResponse(json.dumps({"data": True}), content_type="application/json")
+        else:
+            return HttpResponse(json.dumps({"data": False}), content_type="application/json")
+    else:
+        return HttpResponse(json.dumps({"data": False}), content_type="application/json")
 
 
 def check_username(request, username):

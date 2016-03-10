@@ -5,60 +5,13 @@
 {% load i18n %}
 {% load thumbnail %}
 {% block politics %}
-    <style>
-        .total-container{margin-left: -15px;margin-right: -15px}
-        .mobile-top{margin-left: -30px;margin-right: -30px}
-        .total-news-block{width: 100%; height: 100%;}
-        .total-top{margin-bottom: 70%;height:100%;}
-        #latest-news, #before-reviews{cursor: pointer;float: left;width: 100%;height: 400px;position:relative;}
-        .top-total-content{height: 400px;background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;background-size: cover;}
-        @media(max-device-width: 767px){
-            #before-reviews{margin-top:5%;}
-            .before-reviews{margin-bottom:5%;}
-            #latest-news, #before-reviews{height: 280px}
-            .top-total-content{height: 280px;background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;background-size: cover}
-        }
-        .bn-title{bottom: 0;position: absolute;z-index: 998;width: 100%;height: 100%;background: linear-gradient(to top, #F62A00, black);opacity: 0.8;box-sizing: border-box;display: block}
-        .bn-title:hover{opacity: 0.5;-webkit-animation: fadeInFromNone 0.3s ease-out;-moz-animation: fadeInFromNone 0.3s ease-out;-o-animation: fadeInFromNone 0.3s ease-out;animation: fadeInFromNone 0.3s ease-out}
-        @-webkit-keyframes fadeInFromNone{0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
-        @-moz-keyframes fadeInFromNone{0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
-        @-o-keyframes fadeInFromNone {0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
-        @keyframes fadeInFromNone{0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
-        .bn-title-text{position: absolute;bottom: 45%; z-index: 999;font-size: 1.8em;color: ivory;text-shadow: 0 0 20px black}
-        .bn-title-text>a{color: ivory;}
-        .bn-title-author{z-index: 999;font-size: 15px;}
-        .top-author>a{color: #F62A00}
-        .news-title a{color: black;font-size: 17px;margin-top: 1.5%;font-family: Georgia, Times, "Times New Roman", serif}
-        .news-title a:hover{color: #F62A00;}
-        .current_news{min-height: 150px;max-height: 400px;height: 400px;width: 100%;position: relative;float: left}
-        .current_news_mas{margin-bottom: 50px;}
-        #announce-reviews{position: relative;width: 100%;height: 250px;border: solid 1px lightblue;margin-top: 15px;margin-bottom: 40px}
-        .before-reviews{height: 400px;}
-        .title-top-middle a{text-decoration: none;color: black;}
-        .title-top-middle a:hover{text-decoration: none;color: #F62A00;}
-        .article-author>a{color: #F62A00;}
-        .article-author>a:hover{color: #1E656D;}
-        @media (min-width: 768px){
-            #interests{width: 1024px;height: 200px;margin-left: -5%}
-            .carousel-image{width: 100%;height: 300px}
-        }
-        @media (min-width: 1170px){
-            #interests{width: 1366px;height: 300px;margin-left: -10%}
-            .carousel-image{width: 100%;height: 300px}
-        }
-        @media (min-width: 1920px) {
-            #interests{width: 1960px;height: 500px;margin-left: -38%}
-            .carousel-image{width: 100%;height: 500px}
-        }
-        #mobile-slider > li{display: inline;}
-        #mobile-slider{padding-left: 0;}
-    </style>
     <div class="container-fluid container">
         <div class="total-container">
             <div class="ash">
                 <div class="panel panel-default col-md-12 mobile-top">
                     <div class="total-news-block" >
                         <div class="total-top">
+                            <!-- THE LATEST ONE NEWS -->
                             <div class="breaking-news col-md-12">
                                 <div class="bn">
                                     <div id="latest-news">
@@ -89,67 +42,71 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- /THE LATEST ONW NEWS -->
                             <hr width="100%">
-                            <div id="middle-news-special" class="col-md-12">
-                                {% if flavour != 'mobile' %}
-                                    <div id="top-4-news"  class="mobile-top col-xs-12" style="float: left;">
-                                        {% for i in total_middle_news %}
-                                            <div class="container-fluid col-md-4" style="float: left;">
-                                                <div class="current_news_mas news-news">
-                                                    <div class="cat cat-left">
-                                                        <a href="/news/{{ i.id|get_news_category }}">{{ i.id|get_news_category|upper }}</a>
-                                                    </div>
-                                                    {% if i.news_main_cover != '' %}
+                            {% if flavour != 'mobile' %}
+                                <!-- LATEST 4 NEWS AFTER TOP -->
+                                <div id="top-4-news"  class="col-xs-12">
+                                    {% for i in total_middle_news %}
+                                        <div class="container-fluid col-md-4" style="float: left;">
+                                            <div class="current_news_mas news-news">
+                                                <div class="cat cat-left">
+                                                    <a href="/news/{{ i.id|get_news_category }}">{{ i.id|get_news_category|upper }}</a>
+                                                </div>
+                                                {% if i.news_main_cover != '' %}
+                                                    <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                                            <div class="middle-news-cover"
+                                                                 style="cursor: pointer;">
+                                                                {% thumbnail i.news_main_cover '330x216' crop='center' as im %}
+                                                                    <img src="{{ im.url }}" width="100%" height="{{ im.height }}"/>
+                                                                {% endthumbnail %}
+                                                            </div>
+                                                    </a>
+                                                {% endif %}
+                                                <div class="title col-xs-12"
+                                                     id="title-{{ i.id }}"
+                                                     style="margin-top: 5%; margin-left: -4%;">
+                                                    <div class="news-title">
                                                         <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                                                <div class="middle-news-cover"
-                                                                     style="cursor: pointer;">
-                                                                    {% thumbnail i.news_main_cover '330x216' crop='center' as im %}
-                                                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/>
-                                                                    {% endthumbnail %}
-                                                                </div>
+                                                            <b>
+                                                                {% if lang == 'eng' %}
+                                                                    {{ i.news_title_english }}
+                                                                {% elif lang == 'rus' %}
+                                                                    {{ i.news_title_russian }}
+                                                                {% else %}
+                                                                    {{ i.news_title_chinese }}
+                                                                {% endif %}
+                                                            </b>
                                                         </a>
-                                                    {% endif %}
-                                                    <div class="title col-xs-12"
-                                                         id="title-{{ i.id }}"
-                                                         style="margin-top: 5%; margin-left: -4%;">
-                                                        <div class="news-title">
-                                                            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                                                <b>
-                                                                    {% if lang == 'eng' %}
-                                                                        {{ i.news_title_english }}
-                                                                    {% elif lang == 'rus' %}
-                                                                        {{ i.news_title_russian }}
-                                                                    {% else %}
-                                                                        {{ i.news_title_chinese }}
-                                                                    {% endif %}
-                                                                </b>
-                                                            </a>
-                                                        </div>
                                                     </div>
-                                                    <div class="params">
-                                                        <i>{% trans 'By' %}&nbsp;<span class="article-author">
-                                                            <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
-                                                        </span>
-                                                            &nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
-                                                    </div>
+                                                </div>
+                                                <div class="params">
+                                                    <i>{% trans 'By' %}&nbsp;<span class="article-author">
+                                                        <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
+                                                    </span>
+                                                        &nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
                                                 </div>
                                             </div>
-                                            {% if forloop.counter == 2 or forloop.counter == 3 %}
-                                                <div class="col-md-4">
-                                                    <div class="cat cat-left">
-                                                        <a>ADVERTISEMENT</a>
-                                                    </div>
-                                                    <div class="" style="height: 400px;">
-                                                        <div style="float: left; margin-top:0; width: 300px;height: 250px;background-color: #00fff9"></div>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {% include 'total_beta_top_news_m.html' %}
-                                {% endif %}
-                            </div>
+                                        </div>
+                                        {% if forloop.counter == 3 %}
+                                            <div class="top4advert col-xs-12"></div>
+                                        {% endif %}
+{#                                            {% if forloop.counter == 2 or forloop.counter == 3 %}#}
+{#                                                <div class="col-md-4">#}
+{#                                                    <div class="cat cat-left">#}
+{#                                                        <a>ADVERTISEMENT</a>#}
+{#                                                    </div>#}
+{#                                                    <div class="" style="height: 400px;">#}
+{#                                                        <div style="float: left; margin-top:0; width: 300px;height: 250px;background-color: #00fff9"></div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            {% endif %}#}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {% include 'total_beta_top_news_m.html' %}
+                            {% endif %}
+                            <!-- /LATEST 4 NEWS -->
                         </div>
                     {% if flavour != 'mobile' %}
                         <div class="media-block col-md-12">
@@ -157,8 +114,7 @@
                         <div class="media-block">
                     {% endif %}
                             <hr width="100%">
-                            <hr width="100%">
-                            <div class="recently-news col-md-12">
+                            <div class="recently-news">
                                 <div class="two-news col-xs-12 container">
                                     <div class="two-news-item col-md-12">
                                         <div class="cat cat-left col-xs-12">
@@ -176,7 +132,7 @@
                                             </a>
                                         </div>
                                         <div class="right-middle-top col-xs-12 col-md-3">
-                                            <div id="big-news-one" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
+                                            <div id="big-news-one" class="title-top-middle" style="font-size: 20px">
                                             <a href="/news/{{ total_bottom_news.0.news_post_date.year }}/{{ total_bottom_news.0.news_post_date.month }}/{{ total_bottom_news.0.news_post_date.day }}/{{ total_bottom_news.0.id }}/{{ total_bottom_news.0.slug }}">
                                                     <b>
                                                         {% if lang == 'eng' %}
@@ -204,10 +160,7 @@
                                     {% if flavour != 'mobile' %}
                                         <div id="interests" class="carousel slide container fill col-lg-10" style="margin-top: 5%;">
                                             <div id="myCarousel" class="carousel-inner">
-                                                <div class="active item" style="
-    {#                                            height: 250px; #}
-    {#                                            max-height: 250px;#}
-                                                ">
+                                                <div class="active item">
                                                     <div class="car-it-block">
                                                         <a class="car-it-link" href="/news/{{ interest.0.news_post_date.year }}/{{ interest.0.news_post_date.month }}/{{ interest.0.news_post_date.day }}/{{ interest.0.id }}/{{ interest.0.slug }}">
                                                                 <div class="carousel-image carousel-inner-item-left"
@@ -336,10 +289,10 @@
                                                 </div>
                                             </div>
                                             <div class="carousel-control right" href="#interests" data-slide="next">
-                                        <div class="control-arrow">
-                                            &rsaquo;
-                                        </div>
-                                    </div>
+                                                <div class="control-arrow">
+                                                    &rsaquo;
+                                                </div>
+                                            </div>
                                         </div>
                                     {% else %}
                                     {% endif %}

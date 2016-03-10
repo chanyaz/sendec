@@ -6,6 +6,14 @@
 <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'static/css/style_beta.css' %}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'static/css/alertify.default.css' %}">
+<link rel="stylesheet" href="{% static 'static/css/alertify.core.css' %}">
+<link rel="stylesheet" href="{% static 'static/css/alertify.bootstrap.css' %}">
+<script src="{% static 'static/js/jquery.js' %}"></script>
+<script src="{% static 'static/js/jquery.min.js' %}"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
 <style                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          >
         header{position: relative;z-index:1;}
         section{width:100%;height:100%}
@@ -249,7 +257,7 @@
 
 
         /******************** TEAM *****************************/
-        #team{background: white; height:3400px; position:relative}
+        #team{background: white; height:3800px; position:relative}
         #team-back{width:100%;height:550px;
             background: url('{% static "static/img/about/team.jpg" %}') no-repeat center;
             -webkit-background-size: cover;
@@ -269,7 +277,7 @@
 .team-arrow {
     z-index:1;
   position: absolute;
-  top: 16%;
+  top: 14%;
   width: 100%;
   padding-bottom:3%;
   background-color: white;
@@ -302,7 +310,8 @@
 }
 
         #teammates{width:100%;padding:5%; padding-top:2%;}
-        .person{width:50%;float:left;margin-bottom:5%}
+        .person-left{width:50%;float:left;margin-bottom:5%}
+        .person-right{width:50%;float:right;margin-bottom:5%}
         .photo{width:75%;height:350px;background:lightseagreen; margin:0 12.5%;}
         .teammate-name{width:100%; text-align: center; margin:2% 0;}
         .teammate-name>h1{font-size:30px;color:black;padding:0;margin:0}
@@ -311,6 +320,7 @@
         .separator{}
         .text{width:100%;padding:0 12.5%;margin-bottom:3%}
         .text>h3{font-size:16px;color:black;padding:0;margin:0;line-height: 1.5em}
+        .text>h3>blockquote{border-left:none;border-top:1px solid #ccc;border-bottom:1px solid #ccc;color:#a5a4a4;font-style:italic;margin:10px;padding:10px;text-align:center;font-size:16px}
         .socials{}
         .social-list{list-style-type: none; margin:0 12.5%; padding:0}
         .sl-item{display:inline-block; font-size:26px;margin-right:2%}
@@ -472,7 +482,7 @@
 мы готовы помочь вам с последним.</h2>{% endblocktrans %}
                     <div id="description-btns">
                         <div class="request-btn">
-                            <a href="/about/advertisers/">
+                            <a href="/about/advertisement/">
                                 <div class="request-content">{% trans 'Media kit' %}</div>
                             </a>
                         </div>
@@ -486,163 +496,218 @@
             <div id="team-title"><h1>{% trans 'collaborators' %}</h1></div>
             <div class="team-arrow"></div>
             <div id="teammates">
-                <div id="person1" class="person">
+                <div id="person1" class="person-left">
                     <div class="photo"></div>
                     <div class="teammate-name"><h1>{% trans 'Eugene Privalov' %}</h1></div>
                     <div class="position"><h2>{% trans 'CEO, Founder, Publisher' %}</h2></div>
                     <div class="separator"></div>
                     <div class="text">
                         <h3>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                            Обычный студент Санкт-Петербурга с идеей изменить высокотехнологичную индустрию
+                            России и любой другой страны через распространение информации об интересных
+                            событиях, открытиях и инновациях. Большой упор хочет сделать на стартапы, у
+                            которых на начальных этапах очень низкое или вовсе отсутствует финансирование,
+                            ведь размещение своего проекта на мировом портале станет отправной точкой в мир
+                            Hi-Tech.
                         </h3>
                     </div>
                     <div class="socials">
                         <ul class="social-list">
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                            <li class="sl-item"><a href="https://facebook.com/indavant" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+                            <li class="sl-item"><a href="https://twitter.com/clohik94" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
+                            <li class="sl-item"><a href="https://linkedin.com/in/indavant" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
+                            <li class="sl-item"><a href="https://vk.com/indavant" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="https://instagram.com/insyret" target="_blank"><span class="fa fa-instagram"></span></a></li>
                         </ul>
                     </div>
                 </div>
-                <div id="person2" class="person">
+                <div id="person2" class="person-left">
                     <div class="photo"></div>
                     <div class="teammate-name"><h1>{% trans 'Anton Tinishov' %}</h1></div>
                     <div class="position"><h2>{% trans 'CTO, Co-founder, Advisor' %}</h2></div>
                     <div class="separator"></div>
                     <div class="text">
                         <h3>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                            <blockquote>
+                            Лично мне нравится узнавать о классных айтишных штуках. Правда,
+                            приходится посещать множество порталов... Нет какого-то определённого
+                            ресурса со всем интересным контентом. Так, поддержав идею Евгения о
+                            создании единого портала о мировых технологиях и высокотехнологичных
+                            стартапах, был создан проект Insydia. Я занимаюсь разработкой сетевой
+                            инфраструктуры, чтобы каждый наш пользователь из любого уголка мира был
+                            доволен качеством нашего сервиса.
+                                </blockquote>
                         </h3>
                     </div>
                     <div class="socials">
                         <ul class="social-list">
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>#}
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>#}
+                            <li class="sl-item"><a href="https://linkedin.com/in/antontinishov" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
+                            <li class="sl-item"><a href="https://vk.com/anton.tinishov" target="_blank"><span class="fa fa-vk"></span></a></li>
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>#}
                         </ul>
                     </div>
                 </div>
-                <div id="person3" class="person">
+                <div id="person3" class="person-right">
                     <div class="photo"></div>
                     <div class="teammate-name"><h1>{% trans 'Stanislav Privalov' %}</h1></div>
                     <div class="position"><h2>{% trans 'Finance advisor' %}</h2></div>
                     <div class="separator"></div>
                     <div class="text">
                         <h3>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                            Живёт в городе Уфа(Урал, Россия) и является нашим финансовым консультантом,
+                            помогал на стадии зарождения проекта по всем вопросам касающимся бюджета.
+                            Когда мы чуть не потратили 5-значную сумму на определённую покупку, убедил и
+                            нашёл альтернативное решение данной задачи. Надеемся, что вскоре он войдёт в
+                            нашу команду полноценно и будет неотемлимой её частью, а пока мы будем
+                            консультироваться по некоторым вопросам. Нам важно мнение окружающих, поэтому у нас
+                            есть много различныъ консультантов, таких как Станислав.
                         </h3>
                     </div>
                     <div class="socials">
                         <ul class="social-list">
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                            <li class="sl-item"><a href="https://facebook.com/stanislav.privalov.9" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>#}
+                            <li class="sl-item"><a href="https://linkedin.com/станислав-привалов-74340a116" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
+                            <li class="sl-item"><a href="https://vk.com/id97705288" target="_blank"><span class="fa fa-vk"></span></a></li>
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>#}
                         </ul>
                     </div>
                 </div>
-                <div id="person4" class="person">
+                <div id="person4" class="person-left">
                     <div class="photo"></div>
                     <div class="teammate-name"><h1>{% trans 'Kate Vlasova' %}</h1></div>
                     <div class="position"><h2>{% trans 'English localizer' %}</h2></div>
                     <div class="separator"></div>
                     <div class="text">
                         <h3>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                            <blockquote>
+                                Живу в Санкт-Петербурге(Россия) и здесь же учусь по направлению "Международные Отношения".
+                                Изучаю английский и испанский языки для работы не только с
+                                российскими компаниями, но и зарубежными. В свободное время увлекаюсь танцами.
+                                О проекте узнала от Евгения Привалова, нашего босса. Как только получила
+                                приглашение в команду – согласилась без сомнений! Уверенна, «Insydia»
+                                определенно ждет успех! В скором времени он сможет выйти на международный
+                                уровень, обойти всех конкурентов и занять первое место среди остальных порталов.
+                                Хочу вносить свой вклад в развитие проекта и развиваться вместе с ним! Рада, что
+                                у меня появилась такая возможность.
+                            </blockquote>
                         </h3>
                     </div>
                     <div class="socials">
                         <ul class="social-list">
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                            <li class="sl-item"><a href="https://facebook.com/katevlasova211" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>#}
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>#}
+                            <li class="sl-item"><a href="https://vk.com/katevlasova212" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="https://instagram.com/catherine_meowww/" target="_blank"><span class="fa fa-instagram"></span></a></li>
                         </ul>
                     </div>
                 </div>
-                <div id="person5" class="person">
+                <div id="person5" class="person-right">
                     <div class="photo"></div>
                     <div class="teammate-name"><h1>{% trans 'Mary Konosova' %}</h1></div>
                     <div class="position"><h2>{% trans 'Chinese localizer' %}</h2></div>
                     <div class="separator"></div>
                     <div class="text">
                         <h3>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                            <blockquote>
+                                Я разносторонний человек и практически всё считаю интересным и достойным внимания.
+                                Не могу усидеть на меcте, мне нужно постоянно менять город, обстановку.
+                                Думаю, из -за этой черты решила податься в международники и изучать иностранные
+                                языки, в частности китайский. Через общих знакомых судьба свела с Евгением,
+                                которому нужны были люди для проекта, разбирающиеся в китайском , ну а мне…
+                                любопытно же, плюс бесченная языковая практика. Так и согласилась. На мой взгляд,
+                                подобному проекту небходимо внимание, силы и время. Надеюсь, всеобщими силами
+                                проект набирет мощность и разовьется до глобальных масштабов, а все участники
+                                вместе с ним. Желаю взаимного прогресса! Присоединяйтесь к нам, пока не поздно :)
+                            </blockquote>
                         </h3>
                     </div>
                     <div class="socials">
                         <ul class="social-list">
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>#}
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>#}
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>#}
+                            <li class="sl-item"><a href="http://vk.com/id56786789" target="_blank"><span class="fa fa-vk"></span></a></li>
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>#}
                         </ul>
                     </div>
                 </div>
-                <div id="person6" class="person">
+                <div id="person6" class="person-left">
                     <div class="photo"></div>
                     <div class="teammate-name"><h1>{% trans 'Nikita Illin' %}</h1></div>
                     <div class="position"><h2>{% trans 'Video editor' %}</h2></div>
                     <div class="separator"></div>
                     <div class="text">
                         <h3>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                            Гик. Фотограф любитель. Любит заниматься фотографией и видео-съёмкой.
+                            За чтение литературы в любом её проявлениею. Очень любит комиксы и почти всё,
+                            что касается супер-героев и мира Фэнтэзи. Фантазёр и несбывшийся сценарист.
+                            Зажигалка и человек с отличным чувством юмора. Человек, который не смотря ни
+                            на что во всём найдёт что-то забавное и смешное. Поддержание морального духа
+                            и уровня юмора в команде очень важно и потому мы его любим, уважаем и ценим.
                         </h3>
                     </div>
                     <div class="socials">
                         <ul class="social-list">
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+                            <li class="sl-item"><a href="https://facebook.com/ilin.nikita" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
+                            <li class="sl-item"><a href="https://twitter.com/ilinbuba" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>#}
+                            <li class="sl-item"><a href="https://vk.com/ilinbuba" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="https://instagram.com/ilinbuba/" target="_blank"><span class="fa fa-instagram"></span></a></li>
                         </ul>
                     </div>
                 </div>
-                <div id="person7" class="person">
+                <div id="person7" class="person-left">
                     <div class="photo"></div>
                     <div class="teammate-name"><h1>{% trans 'Elizaveta Karceva' %}</h1></div>
                     <div class="position"><h2>{% trans 'Design advisor, logo creator' %}</h2></div>
                     <div class="separator"></div>
                     <div class="text">
                         <h3>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                            Мы очень долго думали над логотипом, создавали макеты, шаблоны, примеры, но все попытки
+                            были неудачны. Нам всегда что-то не нравилось и мы никак не могли прийти к одному общему
+                            мнению. В определённый момент времени мы обратились к Елизавете за помощью в создании
+                            логотипа. Объяснив, что мы хотим и показав свои эскизы, она создала текущий логотип уже
+                            через 12-15 часов, от чего мы были в восторге и в тоже время шоке. Елизавета учится
+                            в городе Санкт-Петербург(Россия) по направлению "Архитектура и Дизайн". Мы надеемся, что
+                            закончив своё обучение, она не откажет нам в создании нашего первого офиса :)
                         </h3>
                     </div>
                     <div class="socials">
                         <ul class="social-list">
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>#}
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>#}
+{#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>#}
+                            <li class="sl-item"><a href="https://vk.com/id332096371" target="_blank"><span class="fa fa-vk"></span></a></li>
+                            <li class="sl-item"><a href="https://instagram.com/kler_rile/" target="_blank"><span class="fa fa-instagram"></span></a></li>
                         </ul>
                     </div>
                 </div>
-                <div id="person8" class="person">
+                <div id="person8" class="person-left">
                     <div class="photo"></div>
                     <div class="teammate-name"><h1>{% trans 'Artem Panin' %}</h1></div>
                     <div class="position"><h2>{% trans 'Crucial advisor' %}</h2></div>
                     <div class="separator"></div>
                     <div class="text">
                         <h3>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mi urna, venenatis ut libero quis, elementum congue magna. Maecenas laoreet fermentum eros. Mauris eu consectetur dui, sed laoreet leo. Vivamus quis turpis vitae nibh malesuada accumsan. Quisque in tortor hendrerit, lobortis risus ac, mattis purus. Maecenas a dui consectetur, luctus.
+                            Живёт и учится в Москве(Россия). Является неотъемлимой частью команды, хотя
+                            сам того не подозревает. Всегда поможет и укажет на что-нибудь важное с технической
+                            или экономической точки зрения. Мы рады, что у нас есть такой человек. Надеемся,
+                            что к моменту завершения своего обучения, наш проект будет достаточно уверенно стоять
+                            на ногах и он сможет войти в состав нашей команды. Вся наша семья Insydia и
+                            лично Евгений Привалов очень на это надеемся.
                         </h3>
                     </div>
                     <div class="socials">
                         <ul class="social-list">
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-vk"></span></a></li>
-                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>
+{#                            <li class="sl-item"><a href="https://facebook.com/" target="_blank"><span class="fa fa-facebook-square"></span></a></li>#}
+{#                            <li class="sl-item"><a href="https://twitter.com/" target="_blank"><span class="fa fa-twitter-square"></span></a></li>#}
+{#                            <li class="sl-item"><a href="https://linkedin.com/" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>#}
+                            <li class="sl-item"><a href="https://vk.com/reqwy" target="_blank"><span class="fa fa-vk"></span></a></li>
+{#                            <li class="sl-item"><a href="https://instagram.com/" target="_blank"><span class="fa fa-instagram"></span></a></li>#}
                         </ul>
                     </div>
                 </div>
@@ -687,7 +752,8 @@
                     <div id="cc-left">
                         <div id="">
                             <h1>{% trans 'Say hello.' %}</h1>
-                            <form method="POST" action="">
+                            <form method="POST">
+                                {% csrf_token %}
                                 <input class="form-input" name="form-name" id="form-name" placeholder="{% trans 'Your name' %}">
                                 <input class="form-input" name="form-email" id="form-email" type="email" placeholder="{% trans 'Your email' %}">
                                 <input name="text" id="form-text" placeholder="{% trans 'Type message' %}">
@@ -725,7 +791,7 @@
                                 </a>
                             </li>
                             <li class="cbl-item ln">
-                                <a href="https://linkedin.com/insydia" target="_blank">
+                                <a href="https://linkedin.com/company/insydia/" target="_blank">
                                     <div class="sm-link">
                                         <span class="sm fa fa-linkedin"></span>
                                     </div>
@@ -750,6 +816,31 @@
                 </div>
             </div>
         </section>
-    <script src="{% static 'static/js/jquery.js' %}"></script>
-    <script src="{% static 'static/js/jquery.min.js' %}"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'static/js/alertify.js' %}"></script>
+    <script src="{% static 'static/js/alertify.min.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#form-submit").on('click', function() {
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        "csrfmiddlewaretoken": "{{ csrf_token }}",
+                        "name": $('#form-name').val(),
+                        "email": $('#form-email').val(),
+                        "message": $('#form-text').val()
+                    },
+                    url: "/about/hello/",
+                    success: function(data){
+                        if(data.data == "sent"){
+                            alertify.success("Message has been sent. Thanks you!");
+                        }
+                        else{
+                            alertify.error("Your message has not been sent. Try once more!");
+                        }
+                    }
+
+                });
+                return false;
+            })
+        })
+    </script>
