@@ -18,24 +18,103 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-from rss.views import RssChannelLatest,RssChannelTechnology,RssChannelEntertainment,RssChannelAuto,RssChannelSpace,RssChannelBio,RssChannelCompany,\
-    RssChannelLatestWeek, RssChannelTechnologyWeek, RssChannelEntertainmentWeek, RssChannelAutoWeek, RssChannelSpaceWeek,RssChannelBioWeek
+from rss.views import \
+    RssChannelLatestEnglish, \
+    RssChannelLatestChinese, \
+    RssChannelLatestRussian, \
+    RssChannelLatestWeekEnglish, \
+    RssChannelLatestWeekChinese, \
+    RssChannelLatestWeekRussian, \
+    RssChannelTechnologyEnglish, \
+    RssChannelTechnologyChinese, \
+    RssChannelTechnologyRussian, \
+    RssChannelEntertainmentEnglish, \
+    RssChannelEntertainmentChinese, \
+    RssChannelEntertainmentRussian, \
+    RssChannelAutoEnglish, \
+    RssChannelAutoChinese, \
+    RssChannelAutoRussian, \
+    RssChannelSpaceEnglish, \
+    RssChannelSpaceChinese, \
+    RssChannelSpaceRussian, \
+    RssChannelBioEnglish, \
+    RssChannelBioChinese, \
+    RssChannelBioRussian, \
+    RssChannelCompany, \
+    RssChannelTechnologyWeekEnglish, RssChannelTechnologyWeekChinese, RssChannelTechnologyWeekRussian, \
+    RssChannelEntertainmentWeekEnglish, \
+    RssChannelEntertainmentWeekChinese, \
+    RssChannelEntertainmentWeekRussian, \
+    RssChannelAutoWeekEnglish, \
+    RssChannelAutoWeekRussian, \
+    RssChannelAutoWeekChinese, \
+    RssChannelSpaceWeekEnglish, \
+    RssChannelSpaceWeekChinese, \
+    RssChannelSpaceWeekRussian, \
+    RssChannelBioWeekEnglish, \
+    RssChannelBioWeekChinese, \
+    RssChannelBioWeekRussian
 from rss.views import RenderRSSPage
 
 urlpatterns = patterns('',
     url(r'^gcr/', 'rss.views.get_current_company_rss'),
     url(r'^news&channel=company&name=(?P<company_name>\w+)$', RssChannelCompany()),
-    url(r'^news&channel=technology&range=week', RssChannelTechnologyWeek()),
-    url(r'^news&channel=technology', RssChannelTechnology()),
-    url(r'^news&channel=entertainment&range=week', RssChannelEntertainmentWeek()),
-    url(r'^news&channel=entertainment', RssChannelEntertainment()),
-    url(r'^news&channel=auto&range=week', RssChannelAutoWeek()),
-    url(r'^news&channel=auto', RssChannelAuto()),
-    url(r'^news&channel=space&range=week', RssChannelSpaceWeek()),
-    url(r'^news&channel=space', RssChannelSpace()),
-    url(r'^news&channel=bio&range=week', RssChannelBioWeek()),
-    url(r'^news&channel=bio', RssChannelBio()),
-    url(r'^news&channel=latest&range=week', RssChannelLatestWeek()),
-    url(r'^news&channel=latest', RssChannelLatest()),
+
+    # Technology WEEK for all langs
+    url(r'^news&channel=technology&range=week&lang=eng', RssChannelTechnologyWeekEnglish()),
+    url(r'^news&channel=technology&range=week&lang=ch', RssChannelTechnologyWeekChinese()),
+    url(r'^news&channel=technology&range=week&lang=rus', RssChannelTechnologyWeekRussian()),
+
+    # Technology TODAY for all langs
+    url(r'^news&channel=technology&lang=eng', RssChannelTechnologyEnglish()),
+    url(r'^news&channel=technology&lang=ch', RssChannelTechnologyChinese()),
+    url(r'^news&channel=technology&lang=rus', RssChannelTechnologyRussian()),
+
+
+    url(r'^news&channel=entertainment&range=week&lang=eng', RssChannelEntertainmentWeekEnglish()),
+    url(r'^news&channel=entertainment&range=week&lang=ch', RssChannelEntertainmentWeekChinese()),
+    url(r'^news&channel=entertainment&range=week&lang=rus', RssChannelEntertainmentWeekRussian()),
+
+    url(r'^news&channel=entertainment&lang=eng', RssChannelEntertainmentEnglish()),
+    url(r'^news&channel=entertainment&lang=ch', RssChannelEntertainmentChinese()),
+    url(r'^news&channel=entertainment&lang=rus', RssChannelEntertainmentRussian()),
+
+
+    url(r'^news&channel=auto&range=week&lang=eng', RssChannelAutoWeekEnglish()),
+    url(r'^news&channel=auto&range=week&lang=ch', RssChannelAutoWeekChinese()),
+    url(r'^news&channel=auto&range=week&lang=rus', RssChannelAutoWeekRussian()),
+
+    url(r'^news&channel=auto&lang=eng', RssChannelAutoEnglish()),
+    url(r'^news&channel=auto&lang=ch', RssChannelAutoChinese()),
+    url(r'^news&channel=auto&lang=rus', RssChannelAutoRussian()),
+
+
+    url(r'^news&channel=space&range=week&lang=eng', RssChannelSpaceWeekEnglish()),
+    url(r'^news&channel=space&range=week&lang=ch', RssChannelSpaceWeekChinese()),
+    url(r'^news&channel=space&range=week&lang=rus', RssChannelSpaceWeekRussian()),
+
+    url(r'^news&channel=space&lang=eng', RssChannelSpaceEnglish()),
+    url(r'^news&channel=space&lang=ch', RssChannelSpaceChinese()),
+    url(r'^news&channel=space&lang=rus', RssChannelSpaceRussian()),
+
+
+    url(r'^news&channel=bio&range=week&lang=eng', RssChannelBioWeekEnglish()),
+    url(r'^news&channel=bio&range=week&lang=ch', RssChannelBioWeekChinese()),
+    url(r'^news&channel=bio&range=week&lang=rus', RssChannelBioWeekRussian()),
+
+    url(r'^news&channel=bio&lang=eng', RssChannelBioEnglish()),
+    url(r'^news&channel=bio&lang=ch', RssChannelBioChinese()),
+    url(r'^news&channel=bio&lang=rus', RssChannelBioRussian()),
+
+
+    url(r'^news&channel=latest&range=week&lang=eng', RssChannelLatestWeekEnglish()),
+    url(r'^news&channel=latest&range=week&lang=ch', RssChannelLatestWeekChinese()),
+    url(r'^news&channel=latest&range=week&lang=rus', RssChannelLatestWeekRussian()),
+
+    url(r'^news&channel=latest&lang=eng', RssChannelLatestEnglish()),
+    url(r'^news&channel=latest&lang=ch', RssChannelLatestChinese()),
+    url(r'^news&channel=latest&lang=rus', RssChannelLatestRussian()),
+
+
     url(r'^', RenderRSSPage.as_view()),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

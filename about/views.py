@@ -116,3 +116,32 @@ If you have any questions, write their to <a href="support@insydia.com">support@
         msg.send()
 
         return HttpResponse(json.dumps({"data": "sent"}), content_type="application/json")
+
+
+def send_resume(request):
+    args = {}
+    args.update(csrf(request))
+    if request.POST:
+        name = request.POST['name']
+        email = request.POST['email']
+        tel = request.POST['tel']
+        text = request.POST['text']
+
+        mail_subject = "[CAREER] Request a Career"
+        mail_to = "hr@insydia.com"
+        mail_from = settings.DEFAULT_FROM_EMAIL
+        text_content = """User want to be a teammate"""
+        html_content = """User want to be a teammate of Insydia.<br>
+
+name: {name}<br>
+email: {email}<br>
+tel: {tel}<br>
+<blockquote>
+        {text}
+</blockquote>
+""".format(text=text, name=name, email=email, tel=tel)
+
+        msg = EmailMultiAlternatives(mail_subject, text_content, mail_from, [mail_to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+        return HttpResponse(json.dumps({'data': True}), content_type="application/json")

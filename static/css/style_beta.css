@@ -3,25 +3,24 @@ html{
     width: 100%;
     overflow-x:hidden;
 }
-body {
+body{
     position: relative;
     height: 100%;
     width: 100%;
     overflow-x: hidden;
+    background: #F1F3CE;
 }
-body > *{
-    font-family: Georgia, Times, "Times New Roman", serif;
-}
+body>*{font-family: Georgia, Times, "Times New Roman", serif}
 
-/*::-webkit-scrollbar{*/
-    /*margin-left:-0.5em;*/
-    /*width: 0.5em;*/
-    /*height: 2em;*/
-    /*background: #F62A00;*/
-/*}*/
-/*::-webkit-scrollbar-thumb {*/
-  /*background: #F62A00;*/
-/*}*/
+::-webkit-scrollbar{
+    margin-left:-0.5em;
+    width: 0.5em;
+    height: 2em;
+    background: #F1F3CE;
+}
+::-webkit-scrollbar-thumb {
+  background: #F62A00;
+}
 
 header{
     position: relative;
@@ -2000,6 +1999,62 @@ Sidebar
 /************************* END TIMELINE ****************************/
 
 
+/************************ INDEX *************************************/
+#wrapper-new{background-color: #F1F3CE;}
+.li-cat{float: left;margin-left: 1%;}
+.navigation-profile:hover .fa-user{color: yellow;}
+#rss-share-list li{float:left;}
+#rss-properties-list li{float: left;}
+.rss-share-item{width: 50px;margin-bottom:0;margin-left: 0;text-align: center}
+#wrapper-new{min-height: 100%;}
+#news-block{height: 100%;width: 100%; margin-bottom:50px;}
+.user-image input[type='text']{width: 80%;}
+.total-body{padding-top: 2%;}
+.total-body-closer{z-index:100003;position: fixed;margin-left: 75.5%;font-size: 2em;background-color: rgba(165, 165, 165, 0.5);top: 5%}
+.total-body-closer a{color: #F62A00}
+.total-body-closer a:hover{color: #1E656D;cursor: pointer;}
+#rss-share-list{margin-left: auto;margin-right: auto;padding-left: 0;padding-right: 0;width: 300px;list-style-type: none}
+#rss-share-list li{margin-right: 0;}
+#rss-share-list a{color: white;}
+#rss-share-list a:active{color: #333333;}
+.rss-preview-body{width: 100%;padding: 0 5%;margin-top: 2%;font-family: Georgia,Times,sans-serif;font-size: 17px}
+.rss-preview-body h3{color: black}
+.rss-preview-body img{max-height: 800px;max-width: 100%;height: inherit;margin-left: auto !important;margin-right: auto !important}
+.rss-preview-body>*{max-width:100%}
+ul{list-style-type: none;}
+.other{min-height:100%;height:100%;background-color:#F1F3CE}
+h2{color: black;}
+a:hover{text-decoration: none;color: #F62A00;}
+.social-rss:hover{cursor: pointer;color: #F62A00;}
+#current-rss-preview {background: white;width: 50%;height: 90%;overflow-y: scroll;-webkit-transform: scale(0.8);-moz-transform: scale(0.8);-ms-transform: scale(0.8);transform: scale(0.8)}
+#current-rss-preview-mobile{background: white;width: 100%;height: 100%;overflow-y: scroll;-webkit-transform: scale(1);-moz-transform: scale(1);-ms-transform: scale(1);transform: scale(1)}
+#current-rss-preview-mobile>.preview-content-mobile>.cur-pw-top>.cur-pw-description>.rss-title-preview-new {font-size: 20px;}
+#current-rss-preview-mobile>.preview-content-mobile>.rss-preview-body>h1{font-size:28px}
+#current-rss-preview-mobile>.preview-content-mobile>.rss-preview-body>h2{font-size:25px}
+.popup_visible #current-rss-preview{-webkit-transform: scale(1); -moz-transform: scale(1);-ms-transform: scale(1);transform: scale(1)}
+.cur-pw-item > li{width:100%; height:inherit; margin-bottom: 15px;}
+.cur-pw-description > .rss-title-preview-new{font-size:26px;}
+.cur-pw-description > .title-small{font-size:20px;}
+.cur-pw-td > .rss-author-new{color: #F62A00;}
+.cur-pw-ar-cover{float:left;width:40%;padding-left:0;}
+.cur-pw-ar-content{float:right;width:60%;padding-left:0;padding-right:0;}
+.cont-cover{
+widows:                                                                                                                                                                                                                                                 ;dth:100%;height:100px;float:left;}
+.cont-cover:hover{cursor:pointer;}
+.cur-pw-td{color: white;}
+.cur-pw-right{top: 80%;color: white;position: absolute;text-align: center}
+.cur-pw-left{width: 100%;padding: 0 5%;margin-top: 2%;font-family: Georgia,Times,sans-serif;font-size: 17px}
+.cur-pw-left img{max-height: 800px;max-width: 100%;height: inherit;margin-left: auto !important;margin-right: auto !important}
+.cur-pw-top{position: relative;}
+.cur-pw-cover{width:100%;height: 150px}
+.fl-btn{width:100%;}
+.cur-pw-background{width: 100%; height: 200px; background: url('{% static 'static/img/rss/top-back-12jpg' %}') no-repeat center; background-size: cover;}
+.cur-pw-btn-fl{position: absolute;bottom:0;right:0;}
+.cur-pw-btn-bck{position: absolute;bottom:0;left:0;}
+.change:hover{cursor:pointer;}
+.navbar-form-mobile{padding:10px 15px;margin-top:8px;margin-right:-15px;margin-bottom:8px;margin-left:-15px}
+/********************** END INDEX ***********************************/
+
 
 /*********************** CURRENT NEWS ******************************/
 .homepage-hero-module{height:450px}
@@ -2021,7 +2076,8 @@ ul{list-style-type:none;}
 .news-post-text-mobile{margin-bottom:5%}
 .news-post-text-mobile>*{font-size:18px;line-height:1.4;font-weight:300}
 .news-post-text>h2{font-size:16px;line-height:1.4;font-weight:300}
-.news-post-text img{position:relative;min-width:100%;width:200%;max-width:200%;margin-left:-50%;margin-right:50%}
+.news-post-text img.big-img{position:relative;min-width:100%;width:200%;max-width:200%;margin-left:-50%;margin-right:50%}
+.news-post-text img{position:relative;min-width:100%;width:100%;max-width:100%}
 .news-post-text-mobile img{position: relative;min-width: 100%;width:100%;max-width: 100%;}
 .news-post-text img.middle-size{position:relative;min-width: 100%;width:100%;margin-left:auto;margin-right:auto}
 #share-news{position:relative;height:30px;}
@@ -2029,7 +2085,7 @@ ul{list-style-type:none;}
 #share-news>ul>li{float:left;height:30px;width:25%;text-align:center;padding-top:4px}
 #share-news>ul>li>a{color:ivory;text-decoration:none}
 #share-news>ul>li>a:hover{color:ivory;text-decoration:none}
-#share-news>.share{ color:ivory;font-family:Georgia,Times,"Times New Roman",serif}
+#share-news>.share{ color:ivory}
 #share-news>.share .facebook{background-color:#3b5998}
 #share-news>.share .facebook:hover{background-color:#3b4998;cursor:pointer}
 #share-news>.share .twitter{background-color:#00aced;}
@@ -2038,7 +2094,7 @@ ul{list-style-type:none;}
 #share-news>.share .linkedin:hover{background-color:#008bb6;cursor:pointer}
 #share-news>.share .vk{background-color:#45668e}
 #share-news>.share .vk:hover{background-color:#45568e;cursor: pointer}
-.news_tags{font-family:Georgia,Times,"Times New Roman",serif;margin-left:25%;width:50%;height:50px;margin-bottom:10px}
+.news_tags{margin-left:25%;width:50%;height:50px;margin-bottom:10px}
 .tags-title{font-weight:bold;font-size:25px;float:left;margin-right:15px;}
 .current-tag{min-width:75px;padding:3px 7px;border:solid 1px #1E656D;float:left;margin-right:15px;text-align:center;font-size:20px}
 .recom-text{font-size:20px;margin-top:2%;margin-bottom:2%}
@@ -2180,8 +2236,8 @@ ul{list-style-type:none;}
 .portal-name{position:absolute;z-index:900;margin-top:-1%}
 .portal-name-content{background-color:#F62A00;color:white;text-transform:uppercase}
 .rss-params{width:100%;padding:5%}
-.rp-top{position:absolute;bottom:30px;width:90%}
-.rp-conf{position:absolute;bottom:10px;width:90%}
+.rp-top{position:absolute;bottom:25px;width:90%}
+.rp-conf{position:absolute;bottom:0;width:90%}
 .rss-title{margin-top:0}
 .rss-title>h1{font-size:16px;color:black;padding:5% 5%;margin:0}
 .rss-title>h1:hover{color:#F62A00}
@@ -2232,15 +2288,15 @@ ul{list-style-type:none;}
 .mobile-current-popular-portal{height: 210px}
 .portal-picture{width:100%;height:150px}
 .mobile-portal-picture{width:100%;height:120px}
-.portal-name{position:absolute;bottom:0}
+.portal-name-rss{position:absolute;top:0}
 .portal-bottom{position:absolute;bottom:5%;width:100%}
 .portal-footer{position:absolute;bottom:0}
 .portal-link>h3{font-size:16px;color:#F62A00}
 #left-control-portals{position:fixed;overflow-y:scroll;overflow-x:hidden;z-index:989;height:100%;margin-top: -5.5%;float: left;width: 16.1%;left: 0}
 #browser{width:100%;float:right;position:relative;min-height:300px}
-#browser-main-title{width:100%;text-align:center;font-family:Georgia,Times,"Times New Roman",serif;font-size:16px}
+#browser-main-title{width:100%;text-align:center;font-size:16px}
 #browser-middle{width:100%;border:solid 1px red}
-.category-main-title{position:relative;width:100%;font-family:Georgia,Times,"Times New Roman",serif;font-size:16px;color:white;text-align:center}
+.category-main-title{position:relative;width:100%;font-size:16px;color:white;text-align:center}
 #success-follow{visibility:hidden;z-index:999;top:0;width:100%;height:100%;position:fixed}
 #sf-content{background:white;width:30%;height:20%;position:absolute;top:40%;left:35%}
 #fadeandscale{background: white;width: 50%;height: 90%;overflow-y: scroll;-webkit-transform: scale(0.8);-moz-transform: scale(0.8);-ms-transform: scale(0.8);transform: scale(0.8)}
@@ -2252,7 +2308,7 @@ ul{list-style-type:none;}
 .cont-cover:hover{cursor:pointer}
 .cur-pw-td{color:white;}
 .cur-pw-right{top:80%;color:white;position:absolute;text-align:center}
-.cur-pw-left{width:100%;padding:0 5%;margin-top:2%;font-family:Georgia,Times,sans-serif;font-size:17px}
+.cur-pw-left{width:100%;padding:0 5%;margin-top:2%;font-size:17px}
 .cur-pw-left img{max-height:800px;max-width:100%;height:inherit;margin-left:auto !important;margin-right:auto !important}
 .cur-pw-top{position:relative;}
 .cur-pw-cover{width:100%;height:150px}
@@ -2280,7 +2336,7 @@ ul{list-style-type:none;}
 .current-popular-portal{width:24%;height:200px;float:left;margin-right:5px;margin-bottom:15px}
 .portal-picture{width:100%;height:150px;}
 .mobile-portal-picture{width:100%;height:120px;}
-.portal-name{position:absolute;bottom:0;}
+/*.portal-name-rss{position:absolute;bottom:0;}*/
 .mobile-portal-name{bottom:0;}
 .portal-bottom{position:absolute;bottom:5%;width:100%;}
 .mobile-portal-bottom{bottom:5%;width:100%;}
@@ -2289,9 +2345,9 @@ ul{list-style-type:none;}
 .portal-link>h3{font-size: 16px;color: #F62A00;}
 #left-control-portals{position:fixed;overflow-y:scroll;overflow-x:hidden;z-index:989;height:100%;margin-top:-5.5%;float:left;width:16.1%;left:0}
 #browser{width:100%;float:right;position:relative;min-height:300px}
-#browser-main-title{width:100%;text-align:center;font-family:Georgia,Times,"Times New Roman",serif;font-size:16px}
+#browser-main-title{width:100%;text-align:center;font-size:16px}
 #browser-middle{width:100%;border:solid 1px red}
-.category-main-title{position:relative;width:100%;font-family:Georgia,Times,"Times New Roman", serif;font-size:16px;color:white;text-align:center}
+.category-main-title{position:relative;width:100%;font-size:16px;color:white;text-align:center}
 #fadeandscale-desktop{
     background:white;
     width:50%;
@@ -2312,7 +2368,7 @@ ul{list-style-type:none;}
 .cont-cover:hover{cursor:pointer}
 .cur-pw-td{color:white}
 .cur-pw-right{top:80%;color:white;position:absolute;text-align:center}
-.cur-pw-left{width:100%;padding:0 5%;margin-top:2%;font-family:Georgia,Times,sans-serif;font-size:17px}
+.cur-pw-left{width:100%;padding:0 5%;margin-top:2%;font-size:17px}
 .cur-pw-left img{max-height:800px;max-width:100%;height:inherit;margin-left:auto !important;margin-right:auto !important}
 .cur-pw-top{position: relative;}
 .cur-pw-cover{width:100%;height:150px}
@@ -2325,3 +2381,49 @@ ul{list-style-type:none;}
 .notify-text{color:white}
 /* END CATALOG */
 /************************* END USER NEWS ***************************/
+
+
+/*************************** ABOUT ********************************/
+/* Effect Move Left */
+.effect-moveleft{background: #f4f3f1}
+.effect-moveleft .container{transition: transform 0.4s;transform-origin: 50% 50%}
+.effect-moveleft .container::after{background: rgba(255,255,255,0.6)}
+.effect-moveleft.animate .container{transform: translateX(-50%) rotateY(45deg) translateZ(-50px);}
+/* Fallback */
+.no-csstransforms3d .effect-moveleft.animate .container{left: -75%;}
+/* Navigation */
+.effect-moveleft .outer-nav a{color: #e86a32;opacity: 0;transform: translateX(100px) translateZ(-1000px);transition: transform 0.4s, opacity 0.4s;}
+.effect-moveleft .outer-nav a:hover{color: #333;}
+.effect-moveleft.animate .outer-nav a{opacity: 1;transform: translateX(0) translateZ(0);}
+.effect-moveleft.animate .outer-nav a:nth-child(2){transition-delay: 0.04s;}
+.effect-moveleft.animate .outer-nav a:nth-child(3){transition-delay: 0.08s;}
+.effect-moveleft.animate .outer-nav a:nth-child(4){transition-delay: 0.12s;}
+.effect-moveleft.animate .outer-nav a:nth-child(5){transition-delay: 0.16s;}
+.effect-moveleft.animate .outer-nav a:nth-child(6){transition-delay: 0.2s;}
+.effect-moveleft.animate .outer-nav a:nth-child(7){transition-delay: 0.24s;}
+/************************* END ABOUT ******************************/
+
+/************************ FAVOURITE *******************************/
+ #sidebar{background:white;border-right:solid 1px lightgrey}
+        #fav-main-title{text-align:center}
+        .fav-footer{bottom:10px}
+        .favourites{min-height:30em}
+        .has-children a:hover{text-decoration:none;color:#F62A00}
+        #left-panel-main-title a:hover{text-decoration:none;color:#F62A00}
+        .sidebar-offcanvas{background-color:#F1F3CE;position:fixed;left:0;top:0;padding-top:5%;height:100%;overflow-y:scroll}
+        #side-list{padding-left:0;}
+        #side-list>li.side-list-item{height:40px;margin-bottom:5px}
+        #side-list>li.side-list-item>a{}
+        .side-text{color:black}
+        .current_rss_news{position:relative;width:30%;height:25em;margin-right:3%;margin-bottom:3%;border:solid 2px lightgrey;float:left}
+        .current_rss_news_mobile{position:relative;width:100%;padding:0.5% 0.5%;height:25em;border:solid 2px lightgrey;float:left}
+        .current_rss_news_mas{position:relative;width:30%;min-height:3em;max-height:15em;margin-right:3%;margin-bottom:3%;border:solid 2px lightgrey;float:left}
+        .right-side a:hover{text-decoration:none}
+        .portal-name{position:absolute;z-index:900;margin-top:-1%}
+        .portal-name-content{background-color:#F62A00;color:white;font-family:Georgia,Times,"Times New Roman",serif;text-transform:uppercase}
+        .rss-params{width:100%;padding:5%}
+        .rss-title{margin-top:0}
+        .rss-title>h1{font-size:16px;color:black;padding:5% 5%;margin:0}
+        .rss-title>h1:hover{color:#F62A00}
+        .rss-title:hover{color:#F62A00}
+/************************ END FAVOURITE ***************************/

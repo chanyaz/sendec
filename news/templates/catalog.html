@@ -78,7 +78,7 @@
             <div class="portals-list">
                 {% for i in rss_tech %}
                     {% if flavour != 'mobile' %}
-                        <div onclick="showCurrentPortalData('{{ i.id }}'); return false;" class="fadeandscale_open current-popular-portal col-md-2" id="portal-{{ i.id }}" data-alt-id="{{ i.puid }}">
+                        <div onclick="showCurrentPortalData('{{ i.id }}'); return false;" class="fadeandscale_open current-popular-portal col-md-2" id="portal-{{ i.id }}" data-alt-id="{{ i.puid }}" style="margin-bottom:5%">
                     {% else %}
                         <div onclick="showCurrentPortalDataMobile('{{ i.id }}'); return false;" class="col-xs-6 fadeandscale_open mobile-current-popular-portal col-md-2" id="portal-{{ i.id }}" data-alt-id="{{ i.puid }}">
                     {% endif %}
@@ -133,205 +133,211 @@
 {% if flavour != 'mobile' %}
     <!-- DESKTOP -->
     <script>
-    function showCurrentPortalData(i) {
-        $('#fadeandscale-desktop').animate({
-            scrollTop: $('html, body').offset().top
-        });
-        $.ajax({
-            type: "POST",
-            url: "/news/preview_portal="+i+"/",
-            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            success: function (data) {
-                $('#fadeandscale-desktop').popup({
-                    autoopen: true,
-                    pagecontainer: '.container',
-                    transition: 'all 0.3s'
-                });
-                $('.cur-pw-content').html(data.data);
-            }
-        })
-    }
-    $(document).ready(function(){
-        $('.list-group-item').click(function(){
-            if($(this).hasClass('item-active')){}
-            else{
-                $('.item-active').removeClass('item-active');
-                $(this).addClass('item-active')
-            }
-        })
-    });
-    function hideCurrentRssPortal(){
-        $('#fadeandscale-desktop').popup('hide');
-    }
-    function loadCurrentCategoryPortals(i) {
-        var homeLoader = $('body').loadingIndicator({
-            useImage: false
-        }).data("loadingIndicator");
-        if($('.loading-indicator-wrapper').hasClass('loader-hidden')){
-            $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');
-        }
-        $.ajax({
-            type: "POST",
-            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            url: "/news/catalog/gcrc=" + i + "/",
-            success: function (data) {
-                $('.portals-list').html(data.data);
-            }
-        }).done(function () {
-            homeLoader.hide();
-        });
-    }
-    function loadCurrentArticle(i){
-        $('#fadeandscale-desktop').animate({scrollTop: $('html, body').offset().top});
-        $.ajax({
-            type: "POST",
-            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            url: "/news/gcr="+i+"/",
-            success: function(data){
-                $parsedData = data.data;
-                $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
-                if ($parsedData.content.length === 0) {
-                    $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                }
-                else {
-                    $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                }
-                $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
-                $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
-                $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
-            }
-        });
-    }
-    function followCurrentRssPortal(uuid,pid, id){
-        $.ajax({
-            url: "/news/arp&uid=" + uuid + "&pid=" + id + "/",
-            type: "POST",
-            data: {
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            success: function (data) {
-                alertify.success("{% trans 'Subscription added' %}");
-                $('.cur-pw-btn-fl').html(data.string);
-            }
-        })
-    }
-    function unfollowCurrentRssPortal(uuid, pid, id){
-        $.ajax({
-            url: "/news/rrp&uid="+uuid+"&pid="+id+"/",
-            type: "POST",
-            data:{"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            success: function(data){
-                alertify.error("{% trans 'Subscription remove' %}");
-                $('.cur-pw-btn-fl').html(data.string);
-            }
-        })
-    }
+    function showCurrentPortalData(t){$("#fadeandscale-desktop").animate({scrollTop:$("html, body").offset().top}),$.ajax({type:"POST",url:"/news/preview_portal="+t+"/",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(t){$("#fadeandscale-desktop").popup({autoopen:!0,pagecontainer:".container",transition:"all 0.3s"}),$(".cur-pw-content").html(t.data)}})}function hideCurrentRssPortal(){$("#fadeandscale-desktop").popup("hide")}function loadCurrentCategoryPortals(t){var a=$("body").loadingIndicator({useImage:!1}).data("loadingIndicator");$(".loading-indicator-wrapper").hasClass("loader-hidden")&&$(".loading-indicator-wrapper").removeClass("loader-hidden").addClass("loader-visible"),$.ajax({type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},url:"/news/catalog/gcrc="+t+"/",success:function(t){$(".portals-list").html(t.data)}}).done(function(){a.hide()})}function loadCurrentArticle(t){$("#fadeandscale-desktop").animate({scrollTop:$("html, body").offset().top}),$.ajax({type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},url:"/news/gcr="+t+"/",success:function(t){$parsedData=t.data,$(".cur-pw-description").html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>"),0===$parsedData.content.length?$(".cur-pw-left").html($parsedData.text+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>"):$(".cur-pw-left").html($parsedData.content+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>"),$(".cur-pw-btn-bck").html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>'),$(".cur-pw-btn-fl").html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>'),$(".cur-pw-right").html('By <span class="rss-author-name">'+$parsedData.author+"</span> | "+$parsedData.date)}})}function followCurrentRssPortal(t,a,e){$.ajax({url:"/news/arp&uid="+t+"&pid="+e+"/",type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(t){alertify.success("{% trans 'Subscription added' %}"),$(".cur-pw-btn-fl").html(t.string)}})}function unfollowCurrentRssPortal(t,a,e){$.ajax({url:"/news/rrp&uid="+t+"&pid="+e+"/",type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(t){alertify.error("{% trans 'Subscription remove' %}"),$(".cur-pw-btn-fl").html(t.string)}})}$(document).ready(function(){$(".list-group-item").click(function(){$(this).hasClass("item-active")||($(".item-active").removeClass("item-active"),$(this).addClass("item-active"))})});
+{#    function showCurrentPortalData(i) {#}
+{#        $('#fadeandscale-desktop').animate({#}
+{#            scrollTop: $('html, body').offset().top#}
+{#        });#}
+{#        $.ajax({#}
+{#            type: "POST",#}
+{#            url: "/news/preview_portal="+i+"/",#}
+{#            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#            success: function (data) {#}
+{#                $('#fadeandscale-desktop').popup({#}
+{#                    autoopen: true,#}
+{#                    pagecontainer: '.container',#}
+{#                    transition: 'all 0.3s'#}
+{#                });#}
+{#                $('.cur-pw-content').html(data.data);#}
+{#            }#}
+{#        })#}
+{#    }#}
+{#    $(document).ready(function(){#}
+{#        $('.list-group-item').click(function(){#}
+{#            if($(this).hasClass('item-active')){}#}
+{#            else{#}
+{#                $('.item-active').removeClass('item-active');#}
+{#                $(this).addClass('item-active')#}
+{#            }#}
+{#        })#}
+{#    });#}
+{#    function hideCurrentRssPortal(){#}
+{#        $('#fadeandscale-desktop').popup('hide');#}
+{#    }#}
+{#    function loadCurrentCategoryPortals(i) {#}
+{#        var homeLoader = $('body').loadingIndicator({#}
+{#            useImage: false#}
+{#        }).data("loadingIndicator");#}
+{#        if($('.loading-indicator-wrapper').hasClass('loader-hidden')){#}
+{#            $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');#}
+{#        }#}
+{#        $.ajax({#}
+{#            type: "POST",#}
+{#            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#            url: "/news/catalog/gcrc=" + i + "/",#}
+{#            success: function (data) {#}
+{#                $('.portals-list').html(data.data);#}
+{#            }#}
+{#        }).done(function () {#}
+{#            homeLoader.hide();#}
+{#        });#}
+{#    }#}
+{#    function loadCurrentArticle(i){#}
+{#        $('#fadeandscale-desktop').animate({scrollTop: $('html, body').offset().top});#}
+{#        $.ajax({#}
+{#            type: "POST",#}
+{#            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#            url: "/news/gcr="+i+"/",#}
+{#            success: function(data){#}
+{#                $parsedData = data.data;#}
+{#                $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");#}
+{#                if ($parsedData.content.length === 0) {#}
+{#                    $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");#}
+{#                }#}
+{#                else {#}
+{#                    $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");#}
+{#                }#}
+{#                $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>');#}
+{#                $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');#}
+{#                $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);#}
+{#            }#}
+{#        });#}
+{#    }#}
+{#    function followCurrentRssPortal(uuid,pid, id){#}
+{#        $.ajax({#}
+{#            url: "/news/arp&uid=" + uuid + "&pid=" + id + "/",#}
+{#            type: "POST",#}
+{#            data: {#}
+{#                csrfmiddlewaretoken: '{{ csrf_token }}'#}
+{#            },#}
+{#            success: function (data) {#}
+{#                alertify.success("{% trans 'Subscription added' %}");#}
+{#                $('.cur-pw-btn-fl').html(data.string);#}
+{#            }#}
+{#        })#}
+{#    }#}
+{#    function unfollowCurrentRssPortal(uuid, pid, id){#}
+{#        $.ajax({#}
+{#            url: "/news/rrp&uid="+uuid+"&pid="+id+"/",#}
+{#            type: "POST",#}
+{#            data:{"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#            success: function(data){#}
+{#                alertify.error("{% trans 'Subscription remove' %}");#}
+{#                $('.cur-pw-btn-fl').html(data.string);#}
+{#            }#}
+{#        })#}
+{#    }#}
     </script>
 {% else %}
     <!-- MOBILE -->
     <script>
-        function showCurrentPortalDataMobile(i) {
-            $.ajax({
-                type: "POST",
-                url: "/news/preview_portal_m="+i+"/",
-                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-                success: function (data) {
-                    $('#fadeandscale-mobile').popup({
-                        autoopen: true,
-                        pagecontainer: '.container',
-                        transition: 'all 0.3s'
-                    });
-                    $('.cur-pw-content-mobile').html(data.data);
-                }
-            })
-        }
-        $(document).ready(function(){
-            $('.list-group-item').click(function(){
-                if($(this).hasClass('item-active')){}
-                else{
-                    $('.item-active').removeClass('item-active');
-                    $(this).addClass('item-active')
-                }
-            })
-        });
-        function hideCurrentRssPortal(){
-            $('#fadeandscale-mobile').popup('hide');
-        }
-        function loadCurrentCategoryPortals(i) {
-            var homeLoader = $('body').loadingIndicator({
-                useImage: false
-            }).data("loadingIndicator");
-            if($('.loading-indicator-wrapper').hasClass('loader-hidden')){
-                $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');
-            }
-                $.ajax({
-                type: "POST",
-                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-                url: "/news/catalog/gcrc_m=" + i + "/",
-                success: function (data) {
-                    $('.portals-list').html(data.data);
-                }
-            }).done(function () {
-                homeLoader.hide();
-            });
-        }
-        function loadCurrentArticle(i){
-            var homeLoader = $('body').loadingIndicator({
-					useImage: false
-				}).data("loadingIndicator");
-            if($('.loading-indicator-wrapper').hasClass('loader-hidden')){
-                $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');
-            }
-                $.ajax({
-                type: "POST",
-                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-                url: "/news/gcr_m="+i+"/",
-                success: function(data){
-                    $parsedData = data.data;
-                    $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
-                    if ($parsedData.content.length === 0) {
-                        $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                    }
-                    else {
-                        $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                    }
-                    $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalDataMobile('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
-                    $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
-                    $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
-                    homeLoader.hide();
-                }
-            });
-        }
-        function followCurrentRssPortal(uuid,pid, id){
-            $.ajax({
-                url: "/news/arp&uid=" + uuid + "&pid=" + id + "/",
-                type: "POST",
-                data: {
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function (data) {
-                    alertify.success("{% trans 'Subscription added' %}");
-                    $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="unfollowCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Unfollow</button>'
-                            .replace("{uuid}", data.uuid)
-                            .replace("{id}", data.id)
-                            .replace("{id}", data.id));
-                }
-            })
-        }
-        function unfollowCurrentRssPortal(uuid, pid, id){
-        $.ajax({
-            url: "/news/rrp&uid="+uuid+"&pid="+id+"/",
-            type: "POST",
-            data:{"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            success: function(data){
-                alertify.error("{% trans 'Subscription remove' %}");
-                $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Follow</button>'
-                        .replace("{uuid}", data.uuid)
-                        .replace("{id}", data.id)
-                        .replace("{id}", data.id));
-            }
-        })
-    }
+    function showCurrentPortalDataMobile(e){$.ajax({type:"POST",url:"/news/preview_portal_m="+e+"/",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(e){$("#fadeandscale-mobile").popup({autoopen:!0,pagecontainer:".container",transition:"all 0.3s"}),$(".cur-pw-content-mobile").html(e.data)}})}function hideCurrentRssPortal(){$("#fadeandscale-mobile").popup("hide")}$(document).ready(function(){$(".list-group-item").click(function(){$(this).hasClass("item-active")||($(".item-active").removeClass("item-active"),$(this).addClass("item-active"))})});
+{#        function showCurrentPortalDataMobile(i) {#}
+{#            $.ajax({#}
+{#                type: "POST",#}
+{#                url: "/news/preview_portal_m="+i+"/",#}
+{#                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#                success: function (data) {#}
+{#                    $('#fadeandscale-mobile').popup({#}
+{#                        autoopen: true,#}
+{#                        pagecontainer: '.container',#}
+{#                        transition: 'all 0.3s'#}
+{#                    });#}
+{#                    $('.cur-pw-content-mobile').html(data.data);#}
+{#                }#}
+{#            })#}
+{#        }#}
+{#        $(document).ready(function(){#}
+{#            $('.list-group-item').click(function(){#}
+{#                if($(this).hasClass('item-active')){}#}
+{#                else{#}
+{#                    $('.item-active').removeClass('item-active');#}
+{#                    $(this).addClass('item-active')#}
+{#                }#}
+{#            })#}
+{#        });#}
+{#        function hideCurrentRssPortal(){#}
+{#            $('#fadeandscale-mobile').popup('hide');#}
+{#        }#}
+        function loadCurrentCategoryPortals(a){var d=$("body").loadingIndicator({useImage:!1}).data("loadingIndicator");$(".loading-indicator-wrapper").hasClass("loader-hidden")&&$(".loading-indicator-wrapper").removeClass("loader-hidden").addClass("loader-visible"),$.ajax({type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},url:"/news/catalog/gcrc_m="+a+"/",success:function(a){$(".portals-list").html(a.data)}}).done(function(){d.hide()})}
+{#        function loadCurrentCategoryPortals(i) {#}
+{#            var homeLoader = $('body').loadingIndicator({#}
+{#                useImage: false#}
+{#            }).data("loadingIndicator");#}
+{#            if($('.loading-indicator-wrapper').hasClass('loader-hidden')){#}
+{#                $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');#}
+{#            }#}
+{#                $.ajax({#}
+{#                type: "POST",#}
+{#                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#                url: "/news/catalog/gcrc_m=" + i + "/",#}
+{#                success: function (data) {#}
+{#                    $('.portals-list').html(data.data);#}
+{#                }#}
+{#            }).done(function () {#}
+{#                homeLoader.hide();#}
+{#            });#}
+{#        }#}
+        function loadCurrentArticle(t){var a=$("body").loadingIndicator({useImage:!1}).data("loadingIndicator");$(".loading-indicator-wrapper").hasClass("loader-hidden")&&$(".loading-indicator-wrapper").removeClass("loader-hidden").addClass("loader-visible"),$.ajax({type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},url:"/news/gcr_m="+t+"/",success:function(t){$parsedData=t.data,$(".cur-pw-description").html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>"),0===$parsedData.content.length?$(".cur-pw-left").html($parsedData.text+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>"):$(".cur-pw-left").html($parsedData.content+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>"),$(".cur-pw-btn-bck").html('<button onclick="showCurrentPortalDataMobile('+$parsedData.portal+');" class="btn btn-primary">Back</button>'),$(".cur-pw-btn-fl").html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>'),$(".cur-pw-right").html('By <span class="rss-author-name">'+$parsedData.author+"</span> | "+$parsedData.date),a.hide()}})}
+{#        function loadCurrentArticle(i){#}
+{#            var homeLoader = $('body').loadingIndicator({#}
+{#					useImage: false#}
+{#				}).data("loadingIndicator");#}
+{#            if($('.loading-indicator-wrapper').hasClass('loader-hidden')){#}
+{#                $('.loading-indicator-wrapper').removeClass('loader-hidden').addClass('loader-visible');#}
+{#            }#}
+{#                $.ajax({#}
+{#                type: "POST",#}
+{#                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#                url: "/news/gcr_m="+i+"/",#}
+{#                success: function(data){#}
+{#                    $parsedData = data.data;#}
+{#                    $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");#}
+{#                    if ($parsedData.content.length === 0) {#}
+{#                        $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");#}
+{#                    }#}
+{#                    else {#}
+{#                        $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");#}
+{#                    }#}
+{#                    $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalDataMobile('+$parsedData.portal+');" class="btn btn-primary">Back</button>');#}
+{#                    $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');#}
+{#                    $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);#}
+{#                    homeLoader.hide();#}
+{#                }#}
+{#            });#}
+{#        }#}
+        function followCurrentRssPortal(r,t,n){$.ajax({url:"/news/arp&uid="+r+"&pid="+n+"/",type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(r){alertify.success("{% trans 'Subscription added' %}"),$(".cur-pw-btn-fl").html("<button class=\"btn-fl-rss btn btn-primary\" onclick=\"unfollowCurrentRssPortal('{uuid}', '{id}', '{id}'); return false;\">Unfollow</button>".replace("{uuid}",r.uuid).replace("{id}",r.id).replace("{id}",r.id))}})}
+{#        function followCurrentRssPortal(uuid,pid, id){#}
+{#            $.ajax({#}
+{#                url: "/news/arp&uid=" + uuid + "&pid=" + id + "/",#}
+{#                type: "POST",#}
+{#                data: {#}
+{#                    csrfmiddlewaretoken: '{{ csrf_token }}'#}
+{#                },#}
+{#                success: function (data) {#}
+{#                    alertify.success("{% trans 'Subscription added' %}");#}
+{#                    $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="unfollowCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Unfollow</button>'#}
+{#                            .replace("{uuid}", data.uuid)#}
+{#                            .replace("{id}", data.id)#}
+{#                            .replace("{id}", data.id));#}
+{#                }#}
+{#            })#}
+{#        }#}
+        function unfollowCurrentRssPortal(r,t,e){$.ajax({url:"/news/rrp&uid="+r+"&pid="+e+"/",type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(r){alertify.error("{% trans 'Subscription remove' %}"),$(".cur-pw-btn-fl").html("<button class=\"btn-fl-rss btn btn-primary\" onclick=\"followCurrentRssPortal('{uuid}', '{id}', '{id}'); return false;\">Follow</button>".replace("{uuid}",r.uuid).replace("{id}",r.id).replace("{id}",r.id))}})}
+{#        function unfollowCurrentRssPortal(uuid, pid, id){#}
+{#            $.ajax({#}
+{#                url: "/news/rrp&uid="+uuid+"&pid="+id+"/",#}
+{#                type: "POST",#}
+{#                data:{"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#                success: function(data){#}
+{#                    alertify.error("{% trans 'Subscription remove' %}");#}
+{#                    $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Follow</button>'#}
+{#                            .replace("{uuid}", data.uuid)#}
+{#                            .replace("{id}", data.id)#}
+{#                            .replace("{id}", data.id));#}
+{#                }#}
+{#            })#}
+{#        }#}
     </script>
 {% endif %}
 

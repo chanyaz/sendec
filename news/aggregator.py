@@ -7,6 +7,7 @@ import datetime
 from random import choice
 import string
 import re
+import tldextract
 
 
 class Aggregator(object):
@@ -142,7 +143,6 @@ class Aggregator(object):
                     count = cursor.fetchall()
 
                     if len(count) == 0:
-                        import re
                         match_2 = re.findall(r'src=\"(.*?)\"\s.*/>', data["content"])
                         if len(match_2) >= 1:
                             data["main_cover"] = str(match_2[0])
@@ -182,47 +182,49 @@ class Aggregator(object):
                         query_for_rss = "SELECT * FROM rss_portals"
                         cursor.execute(query_for_rss)
                         portals_list = cursor.fetchall()
-
+                        n = tldextract.extract(data['link'])
+                        n_d, n_s = n.domain, n.suffix
+                        new_url = n_d+"."+n_s
                         for current_portal in portals_list:
-                            if current_portal[2] in data["link"] or data['link'] in current_portal[2] or current_portal[2].split('.')[0] in data['link']:
-                                current_rss_news_id = current_portal[0]    # CURRENT PORTAL ID
-                                current_rss_news_cat_id = current_portal[8                                                                                  ]
-                        query = """INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author, nuid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-                        data_query = (data["title"],
-                                      date_posted,
-                                      data["description"],
-                                      data["link"],
-                                      current_rss_news_id,
-                                      current_rss_news_cat_id,
-                                      data["content"],
-                                      data["author"],
-                                      ''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _
-                                              in range(33)))
-                        cursor.execute(query, data_query)
-                        query_2 = "SELECT ID FROM news_rss WHERE title=%s"
-                        data_query_2 = [data["title"]]
-                        cursor.execute(query_2, data_query_2)
-                        current_rss_id = cursor.fetchone()[0]
+                            if current_portal[2] in new_url or new_url in current_portal[2] or current_portal[2].split('.')[0] in new_url:
+                                self.current_rss_news_id = current_portal[0]    # CURRENT PORTAL ID
+                                self.current_rss_news_cat_id = current_portal[8]
+                                query = """INSERT INTO news_rss(title, date_posted, post_text, link, portal_name_id, category_id, content_value, author, nuid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+                                data_query = (data["title"],
+                                              date_posted,
+                                              data["description"],
+                                              data["link"],
+                                              self.current_rss_news_id,
+                                              self.current_rss_news_cat_id,
+                                              data["content"],
+                                              data["author"],
+                                              ''.join(choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _
+                                                      in range(33)))
+                                cursor.execute(query, data_query)
+                                query_2 = "SELECT ID FROM news_rss WHERE title=%s"
+                                data_query_2 = [data["title"]]
+                                cursor.execute(query_2, data_query_2)
+                                current_rss_id = cursor.fetchone()[0]
 
 
-                        query_3 = "INSERT INTO rss_news_covers(rss_news_id, main_cover) VALUES (%s, %s)"
-                        data_query_3 = (int(current_rss_id), data["main_cover"])
-                        cursor.execute(query_3, data_query_3)
+                                query_3 = "INSERT INTO rss_news_covers(rss_news_id, main_cover) VALUES (%s, %s)"
+                                data_query_3 = (int(current_rss_id), data["main_cover"])
+                                cursor.execute(query_3, data_query_3)
 
 
-                        query_rss_portal = "UPDATE rss_portals SET cover=%s WHERE id=%s"
-                        query_rss_portal_data=(data["main_cover"], int(current_rss_news_id))
-                        cursor.execute(query_rss_portal, query_rss_portal_data)
+                                query_rss_portal = "UPDATE rss_portals SET cover=%s WHERE id=%s"
+                                query_rss_portal_data=(data["main_cover"], int(self.current_rss_news_id))
+                                cursor.execute(query_rss_portal, query_rss_portal_data)
 
 
-                        db.commit()
-                        instance = self.get_amount_of_user_readers(current_rss_news_id)
-                        users = [i[0] for i in instance[1]]
-                        for i in range(len(users)):
-                            self.set_user_rss_read(users[i], current_rss_id, current_rss_news_id)
-                            # else:
-                            #     pass
-                        print("Add one news form ", url)
+                                db.commit()
+                                instance = self.get_amount_of_user_readers(self.current_rss_news_id)
+                                users = [i[0] for i in instance[1]]
+                                for i in range(len(users)):
+                                    self.set_user_rss_read(users[i], current_rss_id, self.current_rss_news_id)
+                                    # else:
+                                    #     pass
+                                print("Add one news form ", url)
                     else:
                         break
         db.close()

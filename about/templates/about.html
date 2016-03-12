@@ -9,8 +9,8 @@
 <link rel="stylesheet" href="{% static 'static/css/alertify.default.css' %}">
 <link rel="stylesheet" href="{% static 'static/css/alertify.core.css' %}">
 <link rel="stylesheet" href="{% static 'static/css/alertify.bootstrap.css' %}">
-<script src="{% static 'static/js/jquery.js' %}"></script>
-<script src="{% static 'static/js/jquery.min.js' %}"></script>
+{#<script src="{% static 'static/js/jquery.js' %}"></script>#}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 
@@ -33,6 +33,8 @@
         #head-menu>a{color:white;}
         #head-menu>a:hover{color:#F62A00;}
         #head-logo{position:absolute;top:5%;right:5%;color:white;font-size:20px}
+        #head-logo>a{color:white;text-decoration:none}
+        #head-logo>a:hover,#head-logo>a:focus{color:#F62A00;text-decoration:none}
         #head-title{position: absolute;top:40%;padding:10px;}
         #head-title>h1{font-size:72px;color:white}
         #head-description{position:absolute;top:55%;color:white;font-size:20px}
@@ -257,7 +259,7 @@
 
 
         /******************** TEAM *****************************/
-        #team{background: white; height:3800px; position:relative}
+        #team{background: white; height:2500px; position:relative} /* 39 */
         #team-back{width:100%;height:550px;
             background: url('{% static "static/img/about/team.jpg" %}') no-repeat center;
             -webkit-background-size: cover;
@@ -277,7 +279,8 @@
 .team-arrow {
     z-index:1;
   position: absolute;
-  top: 14%;
+{#  top: 14%;#}
+    top:21%;
   width: 100%;
   padding-bottom:3%;
   background-color: white;
@@ -329,7 +332,7 @@
 
 
         /************************* CONTACTS **************************/
-        #contacts{background: white; position: relative; height:830px}
+        #contacts{background: white; position: relative; height:900px}
         #c-cover{width:100%;height:550px;
             background: url('{% static "static/img/about/contact-2.jpg" %}') no-repeat 75%;
             -webkit-background-size: cover;
@@ -416,7 +419,7 @@
 .arrow {
     z-index:1;
   position: absolute;
-  top: 60%;
+  top: 55%;
   width: 100%;
   padding-bottom:3%;
   background-color: white;
@@ -447,14 +450,57 @@
   -webkit-transform: skewX(-67.5deg);
   transform: skewX(-67.5deg);
 }
+
+
+    /*********************** DONATE ***************************/
+        #donate{width:100%;margin-top:2%}
+    .d-b{width:100%;height:120px;
+        background:url('{% static "static/img/about/coffee-2.jpg" %}') no-repeat center;
+        background-size:cover;
+        -webkit-background-size: cover;
+            background-size: cover;
+            -webkit-filter: url(#blur);
+             filter: url(#blur);
+             -webkit-filter: blur(2px);
+             filter: blur(2px);
+             filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='2');
+             -webkit-transition: 1s -webkit-filter linear;
+             transition: 1s filter linear;}
+    #d-r{position:absolute;top:0}
+    #d-r>.d-w>.dw-title>h3{color:white;padding-top: 2%;margin:0;font-size:18px}
+    #d-r>.d-w>h3{color:white;font-size:18px}
+    .d-c{float:left}
+    #dc-table{margin-top:2%}
+
+
     </style>
 
-        <!-- INTRO -->
+
+<link rel="stylesheet" href="{% static 'static/css/about/normalize.css' %}">
+<link rel="stylesheet" href="{% static 'static/css/about/demo.css' %}">
+<link rel="stylesheet" href="{% static 'static/css/about/component.css' %}">
+    <script src="{% static 'static/js/about/modernizr.custom.25376.js' %}"></script>
+
+
+
+                <div id="perspective" class="perspective effect-airbnb">
+                    <div class="container-effect">
+                        <div class="wrapper"><!-- wrapper needed for scroll -->
+                            <!-- Top Navigation -->
+
+			 <!-- INTRO -->
         <header>
             <div id="head-back"></div>
             <div class="head-arrow bounce"></div>
-            <div id="head-menu"><a href="/">{% trans 'BACK TO SITE' %}</a></div>
-            <div id="head-logo">INSYDIA</div>
+            <div id="head-menu">
+{#                <a href="/">{% trans 'BACK TO SITE' %}</a>#}
+                            <div class="main clearfix">
+                                <div class="column">
+                                    <p><button id="showMenu">{% trans 'MENU' %}</button></p>
+                                </div>
+                            </div><!-- /main -->
+            </div>
+            <div id="head-logo"><a href="/">INSYDIA</a></div>
             <div id="head-title" class="col-xs-12 text-center">
                 <h1>INSYDIA</h1>
             </div>
@@ -497,7 +543,7 @@
             <div class="team-arrow"></div>
             <div id="teammates">
                 <div id="person1" class="person-left">
-                    <div class="photo"></div>
+{#                    <div class="photo"></div>#}
                     <div class="teammate-name"><h1>{% trans 'Eugene Privalov' %}</h1></div>
                     <div class="position"><h2>{% trans 'CEO, Founder, Publisher' %}</h2></div>
                     <div class="separator"></div>
@@ -522,9 +568,9 @@
                     </div>
                 </div>
                 <div id="person2" class="person-left">
-                    <div class="photo"></div>
+{#                    <div class="photo"></div>#}
                     <div class="teammate-name"><h1>{% trans 'Anton Tinishov' %}</h1></div>
-                    <div class="position"><h2>{% trans 'CTO, Co-founder, Advisor' %}</h2></div>
+                    <div class="position"><h2>{% trans 'CTO, Co-Founder, Advisor' %}</h2></div>
                     <div class="separator"></div>
                     <div class="text">
                         <h3>
@@ -550,7 +596,7 @@
                     </div>
                 </div>
                 <div id="person3" class="person-right">
-                    <div class="photo"></div>
+{#                    <div class="photo"></div>#}
                     <div class="teammate-name"><h1>{% trans 'Stanislav Privalov' %}</h1></div>
                     <div class="position"><h2>{% trans 'Finance advisor' %}</h2></div>
                     <div class="separator"></div>
@@ -576,7 +622,7 @@
                     </div>
                 </div>
                 <div id="person4" class="person-left">
-                    <div class="photo"></div>
+{#                    <div class="photo"></div>#}
                     <div class="teammate-name"><h1>{% trans 'Kate Vlasova' %}</h1></div>
                     <div class="position"><h2>{% trans 'English localizer' %}</h2></div>
                     <div class="separator"></div>
@@ -606,7 +652,7 @@
                     </div>
                 </div>
                 <div id="person5" class="person-right">
-                    <div class="photo"></div>
+{#                    <div class="photo"></div>#}
                     <div class="teammate-name"><h1>{% trans 'Mary Konosova' %}</h1></div>
                     <div class="position"><h2>{% trans 'Chinese localizer' %}</h2></div>
                     <div class="separator"></div>
@@ -630,13 +676,13 @@
 {#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>#}
 {#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>#}
 {#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>#}
-                            <li class="sl-item"><a href="http://vk.com/id56786789" target="_blank"><span class="fa fa-vk"></span></a></li>
+{#                            <li class="sl-item"><a href="http://vk.com/id56786789" target="_blank"><span class="fa fa-vk"></span></a></li>#}
 {#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-instagram"></span></a></li>#}
                         </ul>
                     </div>
                 </div>
                 <div id="person6" class="person-left">
-                    <div class="photo"></div>
+{#                    <div class="photo"></div>#}
                     <div class="teammate-name"><h1>{% trans 'Nikita Illin' %}</h1></div>
                     <div class="position"><h2>{% trans 'Video editor' %}</h2></div>
                     <div class="separator"></div>
@@ -661,7 +707,7 @@
                     </div>
                 </div>
                 <div id="person7" class="person-left">
-                    <div class="photo"></div>
+{#                    <div class="photo"></div>#}
                     <div class="teammate-name"><h1>{% trans 'Elizaveta Karceva' %}</h1></div>
                     <div class="position"><h2>{% trans 'Design advisor, logo creator' %}</h2></div>
                     <div class="separator"></div>
@@ -681,13 +727,13 @@
 {#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-facebook-square"></span></a></li>#}
 {#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-twitter-square"></span></a></li>#}
 {#                            <li class="sl-item"><a href="" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>#}
-                            <li class="sl-item"><a href="https://vk.com/id332096371" target="_blank"><span class="fa fa-vk"></span></a></li>
-                            <li class="sl-item"><a href="https://instagram.com/kler_rile/" target="_blank"><span class="fa fa-instagram"></span></a></li>
+{#                            <li class="sl-item"><a href="https://vk.com/id332096371" target="_blank"><span class="fa fa-vk"></span></a></li>#}
+{#                            <li class="sl-item"><a href="https://instagram.com/kler_rile/" target="_blank"><span class="fa fa-instagram"></span></a></li>#}
                         </ul>
                     </div>
                 </div>
                 <div id="person8" class="person-left">
-                    <div class="photo"></div>
+{#                    <div class="photo"></div>#}
                     <div class="teammate-name"><h1>{% trans 'Artem Panin' %}</h1></div>
                     <div class="position"><h2>{% trans 'Crucial advisor' %}</h2></div>
                     <div class="separator"></div>
@@ -706,7 +752,7 @@
 {#                            <li class="sl-item"><a href="https://facebook.com/" target="_blank"><span class="fa fa-facebook-square"></span></a></li>#}
 {#                            <li class="sl-item"><a href="https://twitter.com/" target="_blank"><span class="fa fa-twitter-square"></span></a></li>#}
 {#                            <li class="sl-item"><a href="https://linkedin.com/" target="_blank"><span class="fa fa-linkedin-square"></span></a></li>#}
-                            <li class="sl-item"><a href="https://vk.com/reqwy" target="_blank"><span class="fa fa-vk"></span></a></li>
+{#                            <li class="sl-item"><a href="https://vk.com/reqwy" target="_blank"><span class="fa fa-vk"></span></a></li>#}
 {#                            <li class="sl-item"><a href="https://instagram.com/" target="_blank"><span class="fa fa-instagram"></span></a></li>#}
                         </ul>
                     </div>
@@ -751,11 +797,15 @@
                 <div id="c-center">
                     <div id="cc-left">
                         <div id="">
-                            <h1>{% trans 'Say hello.' %}</h1>
-                            <form method="POST">
+                            <h1>{% trans 'SAY HELLO' %}</h1>
+                            <form method="POST" role="form">
                                 {% csrf_token %}
                                 <input class="form-input" name="form-name" id="form-name" placeholder="{% trans 'Your name' %}">
-                                <input class="form-input" name="form-email" id="form-email" type="email" placeholder="{% trans 'Your email' %}">
+                                <input class="form-input"
+                                       name="form-email"
+                                       required
+                                       pattern="[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"
+                                       id="form-email" type="email" placeholder="{% trans 'Your email' %}">
                                 <input name="text" id="form-text" placeholder="{% trans 'Type message' %}">
                                 <input class="form-btn" type="submit" id="form-submit">
                                 <input class="form-btn" type="reset" id="form-reset">
@@ -812,35 +862,97 @@
                                 </a>
                             </li>
                         </ul>
+                    <div id="donate" class="col-xs-12 text-center">
+                        <div class="d-b"></div>
+                        <div id="d-r" class="col-xs-12">
+                            <div class="d-w">
+                                <div class="dw-title text-center">
+                                    <h3>{% trans 'Угостите нас кофе' %}</h3>
+                                </div>
+                                <h3>
+                                    {% blocktrans %}
+                                        Если вам понравился наш портал и вы хотите нас поддержать, Вы можете купить
+                                        нам чашечку кофе, чтобы мы лучше и быстрее работали :)
+                                    {% endblocktrans %}
+                                </h3>
+                            </div>
+                        </div>
+                    <div class="d-c col-xs-12">
+                                <table id="dc-table" class="col-xs-12">
+                                    <tr>
+                                        <td class="col-xs-6 text-center">
+                                            <img src="{% static 'static/img/about/ym.png' %}" width="28px" height="28px">
+                                            <span class="dwl-text">41001447657761</span>
+                                        </td>
+                                        <td class="col-xs-6 text-center">
+                                            <img src="{% static 'static/img/about/pp.png' %}" width="32px" height="32px">
+                                            <span class="dwl-text"><a href="https://paypal.me/insydia/" target="_blank">paypal.me/insydia</a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-6 text-center">
+                                            <img src="{% static 'static/img/about/wm.png' %}" width="32px" height="32px">
+                                            <span class="dwl-text">R292626120344</span>
+                                        </td>
+                                        <td class="col-xs-6 text-center">
+                                            <img src="{% static 'static/img/about/wm.png' %}" width="32px" height="32px">
+                                            <span class="dwl-tetx">Z197873262474</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                    </div>
                     </div>
                 </div>
             </div>
         </section>
-    <script src="{% static 'static/js/alertify.js' %}"></script>
-    <script src="{% static 'static/js/alertify.min.js' %}"></script>
-    <script>
-        $(document).ready(function() {
-            $("#form-submit").on('click', function() {
-                $.ajax({
-                    type: "POST",
-                    data: {
-                        "csrfmiddlewaretoken": "{{ csrf_token }}",
-                        "name": $('#form-name').val(),
-                        "email": $('#form-email').val(),
-                        "message": $('#form-text').val()
-                    },
-                    url: "/about/hello/",
-                    success: function(data){
-                        if(data.data == "sent"){
-                            alertify.success("Message has been sent. Thanks you!");
-                        }
-                        else{
-                            alertify.error("Your message has not been sent. Try once more!");
-                        }
-                    }
+    </div>
+</div>
+	<nav class="outer-nav left vertical">
+		<nav class="outer-nav left vertical">
+            <a href="/"><span class="fa fa-home"></span> Home</a>
+            <a href="/news/technology/"><span class="fa fa-desktop"></span> Technology</a>
+            <a href="/news/entertainment/"><span class="fa fa-film"></span> Entertainment</a>
+            <a href="/news/auto/"><span class="fa fa-car"></span> Auto</a>
+            <a href="/news/space/"><span class="fa fa-space-shuttle"></span> Space</a>
+            <a href="/news/bio/"><i class="fa fa-heartbeat"></i> BIO</a>
+            <a href="/news/usernews/"><span class="fa fa-user"></span> Private</a>
+            <a href="/about/advertisement/"><span class="fa fa-line-chart"></span> Advertisement</a>
+            <a href="/about/career/"><span class="fa fa-briefcase"></span> Career</a>
+        </nav>
+	</nav>
+                </div>
 
-                });
-                return false;
-            })
-        })
+
+    <script src="{% static 'static/js/about/classie.min.js' %}"></script>
+    <script src="{% static 'static/js/about/menu.min.js' %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.11/alertify.js"></script>
+{#    <script src="{% static 'static/js/alertify.js' %}"></script>#}
+{#    <script src="{% static 'static/js/alertify.min.js' %}"></script>#}
+    <script>
+{#        $(document).ready(function() {#}
+{#            $("#form-submit").on('click', function() {#}
+{#                $.ajax({#}
+{#                    type: "POST",#}
+{#                    data: {#}
+{#                        "csrfmiddlewaretoken": "{{ csrf_token }}",#}
+{#                        "name": $('#form-name').val(),#}
+{#                        "email": $('#form-email').val(),#}
+{#                        "message": $('#form-text').val()#}
+{#                    },#}
+{#                    url: "/about/hello/",#}
+{#                    success: function(data){#}
+{#                        if(data.data == "sent"){#}
+{#                            alertify.success("Message has been sent. Thanks you!");#}
+{#                        }#}
+{#                        else{#}
+{#                            alertify.error("Your message has not been sent. Try once more!");#}
+{#                        }#}
+{#                    }#}
+{##}
+{#                });#}
+{#                return false;#}
+{#            })#}
+{#        })#}
+        $(document).ready(function(){$("#form-submit").on("click",function(){return $.ajax({type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}",name:$("#form-name").val(),email:$("#form-email").val(),message:$("#form-text").val()},url:"/about/hello/",success:function(e){"sent"==e.data?alertify.success("Message has been sent. Thanks you!"):alertify.error("Your message has not been sent. Try once more!")}}),!1})});
     </script>

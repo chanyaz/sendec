@@ -33,7 +33,7 @@
                     <div class="most-rss-portals-list col-xs-12">
                         {% for i in most_popular %}
                             {% if flavour != 'mobile' %}
-                                <div onclick="showCurrentPortalData('{{ i.id }}'); return false;" class="fadeandscale_open current-popular-portal col-md-2" id="portal-{{ i.id }}" data-alt-id="{{ i.puid }}">
+                                <div onclick="showCurrentPortalData('{{ i.id }}'); return false;" class="fadeandscale_open current-popular-portal col-md-2" id="portal-{{ i.id }}" data-alt-id="{{ i.puid }}" style="margin-bottom:50px">
                             {% else %}
                                 <div onclick="showCurrentPortalDataMobile('{{ i.id }}'); return false;" class="col-xs-6 fadeandscale_open mobile-current-popular-portal col-md-2" id="portal-{{ i.id }}" data-alt-id="{{ i.puid }}">
                             {% endif %}
@@ -314,208 +314,211 @@
 {% if flavour == 'mobile' %}
 <!-- MOBILE -->
 <script>
-    function changeStatePortals(element){
-            if (!$(element).parent().hasClass('active')) {
-                $(element).parent().addClass('active');
-            }
-            else {
-                $(element).parent().removeClass('active');
-            }
-        }
-    function showCurrentPortalDataMobile(i) {
-        $.ajax({
-            type: "POST",
-            url: "/news/preview_portal_m="+i+"/",
-            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            success: function (data) {
-                $('#fadeandscale-mobile').popup({
-                    autoopen: true,
-                    pagecontainer: '.container',
-                    transition: 'all 0.3s'
-                }).css({
-                    'background': 'white'
-                });
-                $('.cur-pw-content-mobile').html(data.data);
-
-            }
-        })
-    }
-    function loadCurrentArticleMobile(i){
-        $.ajax({
-            type: "POST",
-            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            url: "/news/gcr="+i+"/",
-            success: function(data){
-                $('#fadeandscale').animate({
-                    scrollTop: 0
-                });
-                $parsedData = data.data;
-                $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
-                if ($parsedData.content.length === 0) {
-                    $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                }
-                else {
-                    $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                }
-                $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalDataMobile('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
-                $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
-                $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
-            }
-        })
-    }
-    function followCurrentRssPortal(uuid,pid, id){
-        $.ajax({
-            url: "/news/arp&uid=" + uuid + "&pid=" + id + "/",
-            type: "POST",
-            data: {
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            success: function (data) {
-                alertify.success("{% trans 'Subscription added' %}");
-                $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="unfollowCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Unfollow</button>'
-                        .replace("{uuid}", data.uuid)
-                        .replace("{id}", data.id)
-                        .replace("{id}", data.id));
-            }
-        })
-    }
-    function unfollowCurrentRssPortal(uuid, pid, id){
-        $.ajax({
-            url: "/news/rrp&uid="+uuid+"&pid="+id+"/",
-            type: "POST",
-            data:{"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            success: function(data){
-                alertify.error("{% trans 'Subscription remove' %}");
-                $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Follow</button>'
-                        .replace("{uuid}", data.uuid)
-                        .replace("{id}", data.id)
-                        .replace("{id}", data.id));
-            }
-        })
-    }
-    function hideCurrentRssPortal(){
-        $('#fadeandscale').popup('hide');
-        $('#fadeandscale-mobile').popup('hide');
-    }
-    function showCurrentPortalNews(portal){
-        $('#ajax-preloader').show();
-        $.ajax({
-            method: "POST",
-            url: "/news/usernews/page/"+portal,
-            data:{csrfmiddlewaretoken: "{{ csrf_token }}"},
-            success: function(data){
-                $('#browser').html(data);
-                $('#ajax-preloader').hide();
-            },
-            error: function(result){
-                alert("Oh,"+portal+"'s news have been broken. Try later, please.\nWe are working on this problem.");
-                $('#ajax-preloader').hide();
-            }
-        })
-    }
+    function changeStatePortals(t){$(t).parent().hasClass("active")?$(t).parent().removeClass("active"):$(t).parent().addClass("active")}function showCurrentPortalDataMobile(t){$.ajax({type:"POST",url:"/news/preview_portal_m="+t+"/",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(t){$("#fadeandscale-mobile").popup({autoopen:!0,pagecontainer:".container",transition:"all 0.3s"}).css({background:"white"}),$(".cur-pw-content-mobile").html(t.data)}})}function loadCurrentArticleMobile(t){$.ajax({type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},url:"/news/gcr="+t+"/",success:function(t){$("#current-rss-preview").animate({scrollTop:$("html, body").offset().top}),$parsedData=t.data,$(".cur-pw-description").html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>"),0===$parsedData.content.length?$(".cur-pw-left").html($parsedData.text+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>"):$(".cur-pw-left").html($parsedData.content+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>"),$(".cur-pw-btn-bck").html('<button onclick="showCurrentPortalDataMobile('+$parsedData.portal+');" class="btn btn-primary">Back</button>'),$(".cur-pw-btn-fl").html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>'),$(".cur-pw-right").html('By <span class="rss-author-name">'+$parsedData.author+"</span> | "+$parsedData.date)}})}function followCurrentRssPortal(t,e,a){$.ajax({url:"/news/arp&uid="+t+"&pid="+a+"/",type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(t){alertify.success("{% trans 'Subscription added' %}"),$(".cur-pw-btn-fl").html("<button class=\"btn-fl-rss btn btn-primary\" onclick=\"unfollowCurrentRssPortal('{uuid}', '{id}', '{id}'); return false;\">Unfollow</button>".replace("{uuid}",t.uuid).replace("{id}",t.id).replace("{id}",t.id))}})}function unfollowCurrentRssPortal(t,e,a){$.ajax({url:"/news/rrp&uid="+t+"&pid="+a+"/",type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(t){alertify.error("{% trans 'Subscription remove' %}"),$(".cur-pw-btn-fl").html("<button class=\"btn-fl-rss btn btn-primary\" onclick=\"followCurrentRssPortal('{uuid}', '{id}', '{id}'); return false;\">Follow</button>".replace("{uuid}",t.uuid).replace("{id}",t.id).replace("{id}",t.id))}})}function hideCurrentRssPortal(){$("#fadeandscale").popup("hide"),$("#fadeandscale-mobile").popup("hide")}function showCurrentPortalNews(t){$("#ajax-preloader").show(),$.ajax({method:"POST",url:"/news/usernews/page/"+t,data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(t){$("#browser").html(t),$("#ajax-preloader").hide()},error:function(e){alert("Oh,"+t+"'s news have been broken. Try later, please.\nWe are working on this problem."),$("#ajax-preloader").hide()}})}
+{#    function changeStatePortals(element){#}
+{#            if (!$(element).parent().hasClass('active')) {#}
+{#                $(element).parent().addClass('active');#}
+{#            }#}
+{#            else {#}
+{#                $(element).parent().removeClass('active');#}
+{#            }#}
+{#        }#}
+{#    function showCurrentPortalDataMobile(i) {#}
+{#        $.ajax({#}
+{#            type: "POST",#}
+{#            url: "/news/preview_portal_m="+i+"/",#}
+{#            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#            success: function (data) {#}
+{#                $('#fadeandscale-mobile').popup({#}
+{#                    autoopen: true,#}
+{#                    pagecontainer: '.container',#}
+{#                    transition: 'all 0.3s'#}
+{#                }).css({#}
+{#                    'background': 'white'#}
+{#                });#}
+{#                $('.cur-pw-content-mobile').html(data.data);#}
+{##}
+{#            }#}
+{#        })#}
+{#    }#}
+{#    function loadCurrentArticleMobile(i){#}
+{#        $.ajax({#}
+{#            type: "POST",#}
+{#            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#            url: "/news/gcr="+i+"/",#}
+{#            success: function(data){#}
+{#                $('#current-rss-preview').animate({#}
+{#                    scrollTop: $('html, body').offset().top#}
+{#                });#}
+{#                $parsedData = data.data;#}
+{#                $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");#}
+{#                if ($parsedData.content.length === 0) {#}
+{#                    $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");#}
+{#                }#}
+{#                else {#}
+{#                    $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");#}
+{#                }#}
+{#                $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalDataMobile('+$parsedData.portal+');" class="btn btn-primary">Back</button>');#}
+{#                $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');#}
+{#                $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);#}
+{#            }#}
+{#        })#}
+{#    }#}
+{#    function followCurrentRssPortal(uuid,pid, id){#}
+{#        $.ajax({#}
+{#            url: "/news/arp&uid=" + uuid + "&pid=" + id + "/",#}
+{#            type: "POST",#}
+{#            data: {#}
+{#                csrfmiddlewaretoken: '{{ csrf_token }}'#}
+{#            },#}
+{#            success: function (data) {#}
+{#                alertify.success("{% trans 'Subscription added' %}");#}
+{#                $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="unfollowCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Unfollow</button>'#}
+{#                        .replace("{uuid}", data.uuid)#}
+{#                        .replace("{id}", data.id)#}
+{#                        .replace("{id}", data.id));#}
+{#            }#}
+{#        })#}
+{#    }#}
+{#    function unfollowCurrentRssPortal(uuid, pid, id){#}
+{#        $.ajax({#}
+{#            url: "/news/rrp&uid="+uuid+"&pid="+id+"/",#}
+{#            type: "POST",#}
+{#            data:{"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#            success: function(data){#}
+{#                alertify.error("{% trans 'Subscription remove' %}");#}
+{#                $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Follow</button>'#}
+{#                        .replace("{uuid}", data.uuid)#}
+{#                        .replace("{id}", data.id)#}
+{#                        .replace("{id}", data.id));#}
+{#            }#}
+{#        })#}
+{#    }#}
+{#    function hideCurrentRssPortal(){#}
+{#        $('#fadeandscale').popup('hide');#}
+{#        $('#fadeandscale-mobile').popup('hide');#}
+{#    }#}
+{#    function showCurrentPortalNews(portal){#}
+{#        $('#ajax-preloader').show();#}
+{#        $.ajax({#}
+{#            method: "POST",#}
+{#            url: "/news/usernews/page/"+portal,#}
+{#            data:{csrfmiddlewaretoken: "{{ csrf_token }}"},#}
+{#            success: function(data){#}
+{#                $('#browser').html(data);#}
+{#                $('#ajax-preloader').hide();#}
+{#            },#}
+{#            error: function(result){#}
+{#                alert("Oh,"+portal+"'s news have been broken. Try later, please.\nWe are working on this problem.");#}
+{#                $('#ajax-preloader').hide();#}
+{#            }#}
+{#        })#}
+{#    }#}
 </script>
 {% else %}
 <!-- DESKTOP -->
 <script>
-    function changeStatePortals(element){
-        if (!$(element).parent().hasClass('active')) {
-            $(element).parent().addClass('active');
-        }
-        else {
-            $(element).parent().removeClass('active');
-        }
-    }
-    function showCurrentPortalData(i) {
-        $.ajax({
-            type: "POST",
-            url: "/news/preview_portal_m="+i+"/",
-            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            success: function (data) {
-                $('#fadeandscale').popup({
-                    autoopen: true,
-                    pagecontainer: '.container',
-                    transition: 'all 0.3s'
-                }).css({
-                    'background': 'white'
-                });
-                $('.cur-pw-content').html(data.data);
-
-            }
-        })
-    }
-    function loadCurrentArticle(i){
-        $.ajax({
-            type: "POST",
-            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            url: "/news/gcr="+i+"/",
-            success: function(data){
-                $('#fadeandscale').animate({
-                    scrollTop: 0
-                });
-                $parsedData = data.data;
-                $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");
-                if ($parsedData.content.length === 0) {
-                    $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                }
-                else {
-                    $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");
-                }
-                $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>');
-                $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');
-                $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);
-            }
-        })
-    }
-    function followCurrentRssPortal(uuid,pid, id){
-        $.ajax({
-            url: "/news/arp&uid=" + uuid + "&pid=" + id + "/",
-            type: "POST",
-            data: {
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            success: function (data) {
-                alertify.success("{% trans 'Subscription added' %}");
-                $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="unfollowCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Unfollow</button>'
-                        .replace("{uuid}", data.uuid)
-                        .replace("{id}", data.id)
-                        .replace("{id}", data.id));
-            }
-        })
-    }
-    function unfollowCurrentRssPortal(uuid, pid, id){
-        $.ajax({
-            url: "/news/rrp&uid="+uuid+"&pid="+id+"/",
-            type: "POST",
-            data:{"csrfmiddlewaretoken": "{{ csrf_token }}"},
-            success: function(data){
-                alertify.error("{% trans 'Subscription remove' %}");
-                $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Follow</button>'
-                        .replace("{uuid}", data.uuid)
-                        .replace("{id}", data.id)
-                        .replace("{id}", data.id));
-            }
-        })
-    }
-    function hideCurrentRssPortal(){
-        $('#fadeandscale').popup('hide');
-        $('#fadeandscale-mobile').popup('hide');
-    }
-    function showCurrentPortalNews(portal){
-        $('#ajax-preloader').show();
-        $.ajax({
-            method: "POST",
-            url: "/news/usernews/page/"+portal,
-            data:{csrfmiddlewaretoken: "{{ csrf_token }}"},
-            success: function(data){
-                $('#browser').html(data);
-                $('#ajax-preloader').hide();
-            },
-            error: function(result){
-                alert("Oh,"+portal+"'s news have been broken. Try later, please.\nWe are working on this problem.");
-                $('#ajax-preloader').hide();
-            }
-        })
-    }
+    function changeStatePortals(t){$(t).parent().hasClass("active")?$(t).parent().removeClass("active"):$(t).parent().addClass("active")}function showCurrentPortalData(t){$.ajax({type:"POST",url:"/news/preview_portal_m="+t+"/",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(t){$("#fadeandscale").popup({autoopen:!0,pagecontainer:".container",transition:"all 0.3s"}).css({background:"white"}),$(".cur-pw-content").html(t.data)}})}function loadCurrentArticle(t){$.ajax({type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},url:"/news/gcr="+t+"/",success:function(t){$("#current-rss-preview").animate({scrollTop:$("html, body").offset().top}),$parsedData=t.data,$(".cur-pw-description").html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>"),0===$parsedData.content.length?$(".cur-pw-left").html($parsedData.text+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>"):$(".cur-pw-left").html($parsedData.content+"<hr width='100%'><p style='text-align: center;'><a href='"+$parsedData.link+"'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>"),$(".cur-pw-btn-bck").html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>'),$(".cur-pw-btn-fl").html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>'),$(".cur-pw-right").html('By <span class="rss-author-name">'+$parsedData.author+"</span> | "+$parsedData.date)}})}function followCurrentRssPortal(t,a,e){$.ajax({url:"/news/arp&uid="+t+"&pid="+e+"/",type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(t){alertify.success("{% trans 'Subscription added' %}"),$(".cur-pw-btn-fl").html("<button class=\"btn-fl-rss btn btn-primary\" onclick=\"unfollowCurrentRssPortal('{uuid}', '{id}', '{id}'); return false;\">Unfollow</button>".replace("{uuid}",t.uuid).replace("{id}",t.id).replace("{id}",t.id))}})}function unfollowCurrentRssPortal(t,a,e){$.ajax({url:"/news/rrp&uid="+t+"&pid="+e+"/",type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(t){alertify.error("{% trans 'Subscription remove' %}"),$(".cur-pw-btn-fl").html("<button class=\"btn-fl-rss btn btn-primary\" onclick=\"followCurrentRssPortal('{uuid}', '{id}', '{id}'); return false;\">Follow</button>".replace("{uuid}",t.uuid).replace("{id}",t.id).replace("{id}",t.id))}})}function hideCurrentRssPortal(){$("#fadeandscale").popup("hide"),$("#fadeandscale-mobile").popup("hide")}function showCurrentPortalNews(t){$("#ajax-preloader").show(),$.ajax({method:"POST",url:"/news/usernews/page/"+t,data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(t){$("#browser").html(t),$("#ajax-preloader").hide()},error:function(a){alert("Oh,"+t+"'s news have been broken. Try later, please.\nWe are working on this problem."),$("#ajax-preloader").hide()}})}
+{#    function changeStatePortals(element){#}
+{#        if (!$(element).parent().hasClass('active')) {#}
+{#            $(element).parent().addClass('active');#}
+{#        }#}
+{#        else {#}
+{#            $(element).parent().removeClass('active');#}
+{#        }#}
+{#    }#}
+{#    function showCurrentPortalData(i) {#}
+{#        $.ajax({#}
+{#            type: "POST",#}
+{#            url: "/news/preview_portal_m="+i+"/",#}
+{#            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#            success: function (data) {#}
+{#                $('#fadeandscale').popup({#}
+{#                    autoopen: true,#}
+{#                    pagecontainer: '.container',#}
+{#                    transition: 'all 0.3s'#}
+{#                }).css({#}
+{#                    'background': 'white'#}
+{#                });#}
+{#                $('.cur-pw-content').html(data.data);#}
+{##}
+{#            }#}
+{#        })#}
+{#    }#}
+{#    function loadCurrentArticle(i){#}
+{#        $.ajax({#}
+{#            type: "POST",#}
+{#            data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#            url: "/news/gcr="+i+"/",#}
+{#            success: function(data){#}
+{#                                    $('#current-rss-preview').animate({#}
+{#                scrollTop: $('html, body').offset().top#}
+{#            });#}
+{##}
+{#                $parsedData = data.data;#}
+{#                $('.cur-pw-description').html("<h1 style='font-size: 25px;' class='text-center'>"+$parsedData.title+"</h1>");#}
+{#                if ($parsedData.content.length === 0) {#}
+{#                    $(".cur-pw-left").html($parsedData.text + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%;  background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");#}
+{#                }#}
+{#                else {#}
+{#                    $(".cur-pw-left").html($parsedData.content + "<hr width='100%'><p style='text-align: center;'><a href='" + $parsedData.link + "'><button style='width: 30%; margin-bottom: 20px; background-color: #1E656D; color: ivory;' class='btn btn-to-original'>See&nbsp;original</button></a>");#}
+{#                }#}
+{#                $('.cur-pw-btn-bck').html('<button onclick="showCurrentPortalData('+$parsedData.portal+');" class="btn btn-primary">Back</button>');#}
+{#                $('.cur-pw-btn-fl').html('<a href="'+$parsedData.link+'" target="_blank"><button class="btn btn-primary">Original</button></a>');#}
+{#                $('.cur-pw-right').html('By '+'<span class="rss-author-name">'+$parsedData.author+'</span> | '+$parsedData.date);#}
+{#            }#}
+{#        })#}
+{#    }#}
+{#    function followCurrentRssPortal(uuid,pid, id){#}
+{#        $.ajax({#}
+{#            url: "/news/arp&uid=" + uuid + "&pid=" + id + "/",#}
+{#            type: "POST",#}
+{#            data: {#}
+{#                csrfmiddlewaretoken: '{{ csrf_token }}'#}
+{#            },#}
+{#            success: function (data) {#}
+{#                alertify.success("{% trans 'Subscription added' %}");#}
+{#                $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="unfollowCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Unfollow</button>'#}
+{#                        .replace("{uuid}", data.uuid)#}
+{#                        .replace("{id}", data.id)#}
+{#                        .replace("{id}", data.id));#}
+{#            }#}
+{#        })#}
+{#    }#}
+{#    function unfollowCurrentRssPortal(uuid, pid, id){#}
+{#        $.ajax({#}
+{#            url: "/news/rrp&uid="+uuid+"&pid="+id+"/",#}
+{#            type: "POST",#}
+{#            data:{"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#            success: function(data){#}
+{#                alertify.error("{% trans 'Subscription remove' %}");#}
+{#                $('.cur-pw-btn-fl').html('<button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal(\'{uuid}\', \'{id}\', \'{id}\'); return false;">Follow</button>'#}
+{#                        .replace("{uuid}", data.uuid)#}
+{#                        .replace("{id}", data.id)#}
+{#                        .replace("{id}", data.id));#}
+{#            }#}
+{#        })#}
+{#    }#}
+{#    function hideCurrentRssPortal(){#}
+{#        $('#fadeandscale').popup('hide');#}
+{#        $('#fadeandscale-mobile').popup('hide');#}
+{#    }#}
+{#    function showCurrentPortalNews(portal){#}
+{#        $('#ajax-preloader').show();#}
+{#        $.ajax({#}
+{#            method: "POST",#}
+{#            url: "/news/usernews/page/"+portal,#}
+{#            data:{csrfmiddlewaretoken: "{{ csrf_token }}"},#}
+{#            success: function(data){#}
+{#                $('#browser').html(data);#}
+{#                $('#ajax-preloader').hide();#}
+{#            },#}
+{#            error: function(result){#}
+{#                alert("Oh,"+portal+"'s news have been broken. Try later, please.\nWe are working on this problem.");#}
+{#                $('#ajax-preloader').hide();#}
+{#            }#}
+{#        })#}
+{#    }#}
 </script>
 {% endif %}
 {% endblock %}

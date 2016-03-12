@@ -3,55 +3,44 @@
 {% load my %}
 {% load i18n %}
 {% load thumbnail %}
-<style>
-    .sect{width: 23%; margin-bottom: 1%;}
-    .news-title{font-size: 17px; margin-top: 1.5%; font-family: Georgia, Times, "Times New Roman", serif}
-    .main-page-news-cover{max-width: 100%; max-height: 100%; height: 200px; background: url('/media/{{ i.news_main_cover }}') no-repeat center; background-size: cover;}
-    .text_post{width: 100%;}
-    .sect-2-top{width: 30%;display: inline-block;margin-right: 1%;margin-top: 3%;height:400px;max-height: 400px}
-    .current_news{height: 400px;}
-</style>
-
 {% if flavour != 'mobile' %}
-    <div class="dyn-news-2 container" style="height: inherit; margin-bottom: 5%; margin-left: -3%;">
+    <div class="dyn-news-2 container">
         {% paginate 30 total_news %}
         <div id="top-4-news"  class="col-xs-12" style="float: left;">
             {% for i in total_news %}
-                    <div class="" style="width: 31%; float: left; margin-right: 1%; margin-bottom: 5%; border-bottom: solid 1px lightgrey;">
-                    <div class="current_news">
-                        <div class="cat cat-left">
-                            <a href="/news/{{ i.id|get_news_category }}">{{ i.id|get_news_category|upper }}</a>
+                <div class="col-md-4" >
+                    <div class="current_news news-news">
+                        <div class="cat">
+                            <a href="/news/{{ i.id|get_news_category }}">
+                                {{ i.id|get_news_category|upper }}
+                            </a>
                         </div>
-                        <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                <div class="middle-news-cover" style="max-width: 100%;cursor: pointer;max-height: 100%;">
-                                {% thumbnail i.news_main_cover '310x200' crop='center' as im %}
-                                    <img src="{{ im.url }}" height="{{ im.height }}" width="100%"/>
-                                {% endthumbnail %}
+                        {% if i.news_main_cover != '' %}
+                            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                <div class="middle-news-cover">
+                                    <img src="{% thumbnail i.news_main_cover '310x210' crop='center'%}" />
                                 </div>
-                        </a>
-                        <div class="title"
-                             id="title-{{ i.id }}"
-                             style="margin-top: 2%;">
-                            <div class="news-title">
-                                <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                    <b>
-                                        {% if lang == 'eng' %}
-                                            {{ i.news_title_english }}
-                                        {% elif lang == 'rus' %}
-                                            {{ i.news_title_russian }}
-                                        {% else %}
-                                            {{ i.news_title_chinese }}
-                                        {% endif %}
-                                    </b>
-                                </a>
-                            </div>
+                            </a>
+                        {% endif %}
+                        <div class="news-title">
+                            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                <b>
+                                    {% if lang == 'eng' %}
+                                        {{ i.news_title_english }}
+                                    {% elif lang == 'rus' %}
+                                        {{ i.news_title_russian }}
+                                    {% else %}
+                                        {{ i.news_title_chinese }}
+                                    {% endif %}
+                                </b>
+                            </a>
                         </div>
                         <div class="params">
                             <i>{% trans 'By' %}&nbsp;<span class="article-author">
                                 <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
                             </span>&nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
                         </div>
-                        <div class="news-text" style="margin-top: 5%; ">
+                        <div class="news-text">
                             {% if lang == 'eng' %}
                                 {{ i.teaser_english }}
                             {% elif lang == 'rus' %}
@@ -83,8 +72,7 @@
                                 {% endthumbnail %}
                             </div>
                         </a>
-                        <div class="title total-container col-xs-8" id="title-{{ i.id }}"
-                             style="float: right;">
+                        <div class="title total-container col-xs-8" id="title-{{ i.id }}" style="float: right;">
                             <div class="news-title-mobile" style="line-height: 0.9em; margin-top: 0;">
                                 <a class="mobile-title" href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
                                     <b>
@@ -100,7 +88,7 @@
                             </div>
                         </div>
                         <div class="params total-container col-xs-8" style="float: right;">
-                            <i>Автор&nbsp;<span class="article-author">
+                            <i>{% trans 'By' %}&nbsp;<span class="article-author">
                                 <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
                             </span>
                                 &nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>

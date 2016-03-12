@@ -20,7 +20,7 @@
                      data-indx="{{ i.nuid }}"
                      data-current-rss-news-id="{{ i.id }}">
         {% endif %}
-            <div class="portal-name">
+            <div class="portal-name-rss">
                 <span class="portal-name-content"
                       onclick="showCurrentPortalNews('{{ i.portal_name_id|get_rss_verbose_name }}');">
                     &nbsp;{{ i.portal_name_id|get_rss_portal_name }}&nbsp;
@@ -43,7 +43,7 @@
             {% endif %}
                     <h1>
                         <b>
-                            {{ i.title|safe|striptags }}
+                            {{ i.title|safe|striptags|truncatechars:"140" }}
                         </b>
                     </h1>
                 </div>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="rp-conf">
-                        <div class="rpc-left pull-left"><a href="{{ i.link }}">original</a></div>
+                        <div class="rpc-left pull-left"><a href="{{ i.link }}" target="_blank">original</a></div>
                         <div id="link-save-{{ i.id }}" class="rpc-right pull-right">
                             {% if i.id|check_saved_rss:username.id == False %}
                                 <a href="#" onclick="setRssFavourite('{{ i.id }}'); return false;">save</a>

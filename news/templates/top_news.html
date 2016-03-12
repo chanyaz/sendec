@@ -6,32 +6,23 @@
 {% load thumbnail %}
 {% block current_news %}
     <script>
-        function changeArticleLanguage(news_id, lang_code){
-            $.ajax({
-                url: "/news/cl&t=0&id="+news_id+"&lang_code="+lang_code,
-                type: "POST",
-                data: {
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function(data){
-                    var $newsTable = $(".news-post-text");
-                    $newsTable.fadeOut(400, function(){
-                        $newsTable.html(data.data).fadeIn(400);
-                    })
-
-                }
-            });
-            $.ajax({
-                url: 'https://www.googleapis.com/urlshortener/v1/url?shortUrl=http://goo.gl/fbsS&key=AIzaSyAQcZRnM2pfC2KdLbjsl329GY9UbIoKI4Q',
-                type: "POST",
-                data: '{longUrl: "' + 'https://tjournal.ru/c/22530-obeshaniya-putina-rossiya-stanet-stranoi-gde-kazhdii-chelovek-smozhet-realizovat-svou-mechtu' +'"}',
-                contentType: "application/json; charset=utf-8",
-                success: function (response) {
-                    var result = JSON.parse(response);
-                    alert(result);
-                }
-            });
-        }
+{#        function changeArticleLanguage(news_id, lang_code){#}
+{#            $.ajax({#}
+{#                url: "/news/cl&t=0&id="+news_id+"&lang_code="+lang_code,#}
+{#                type: "POST",#}
+{#                data: {#}
+{#                    csrfmiddlewaretoken: '{{ csrf_token }}'#}
+{#                },#}
+{#                success: function(data){#}
+{#                    var $newsTable = $(".news-post-text");#}
+{#                    $newsTable.fadeOut(400, function(){#}
+{#                        $newsTable.html(data.data).fadeIn(400);#}
+{#                    })#}
+{##}
+{#                }#}
+{#            });#}
+{#        }#}
+        function changeArticleLanguage(e,t){$.ajax({url:"/news/cl&t=0&id="+e+"&lang_code="+t,type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(e){var t=$(".news-post-text");t.fadeOut(400,function(){t.html(e.data).fadeIn(400)})}})}
     </script>
     <style>
         .news-cover{

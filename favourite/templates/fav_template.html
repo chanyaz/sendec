@@ -4,10 +4,6 @@
 {% load staticfiles %}
 {% load thumbnail %}
 
-<style>
-
-</style>
-
 <div class="any40items" style="height: inherit;">
 {% paginate 20 favs %}
     {% for i in favs %}
@@ -54,18 +50,20 @@
                     </h1>
                 </div>
                 <div class="rss-params">
-                    <div class="rp-author pull-left">
-                        {% if i.author != '' %}
-                            {% trans 'By' %}&nbsp;<span class="rss-author-name">{{ i.author }}</span>
-                        {% else %}
-                            {{ i.portal_name.portal }}
-                        {% endif %}
-                    </div>
-                    <div class="rp-time pull-right">
-                        {{ i.date_posted.date|date }}
+                    <div class="rp-top">
+                        <div class="rp-author pull-left">
+                            {% if i.author != '' %}
+                                {% trans 'By' %}&nbsp;<span class="rss-author-name">{{ i.author }}</span>
+                            {% else %}
+                                <span class="rss-author-name">{{ i.portal_name_id|get_rss_portal_name }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="rp-time pull-right">
+                            {{ i.date_posted.date|date }}
+                        </div>
                     </div>
                     <div class="rp-conf">
-                        <div class="rpc-left pull-left"><a href="{{ i.link }}">original</a></div>
+                        <div class="rpc-left pull-left"><a href="{{ i.link }}" target="_blank">original</a></div>
                         <div id="link-save-{{ i.id }}" class="rpc-right pull-right">
                             {% if i.id|check_saved_rss:username.id == False %}
                                 <a href="#" onclick="setRssFavourite('{{ i.id }}'); return false;">save</a>
@@ -80,4 +78,4 @@
     {% endfor %}
 </div>
     {% show_more %}
-<script>$('.any40items').masonry({itemSelector: '.rss-rss'});</script>
+<script>$('.any40items').masonry({itemSelector:'.rss-rss'});</script>

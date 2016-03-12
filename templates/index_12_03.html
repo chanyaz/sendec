@@ -86,7 +86,12 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 {#    <script src="{% static 'static/js/insydia.js' %}"></script>#}
     <script>
-        $(document).ready(function(){$(".change").on("click",function(){document.cookie="lang="+$(this).attr("data-lang"),location.reload()})});
+    $(document).ready(function(){
+                $('.change').on('click', function(){
+                    document.cookie = "lang="+$(this).attr('data-lang');
+                    location.reload();
+                })
+            });
     </script>
 </head>
 {% if here_private %}
@@ -340,24 +345,24 @@
         <article id="current-rss-preview" class="fadeandscale" hidden>
             <div class="preview-content"></div>
         </article>
-{#        <div id="close-preview" class="total-body-closer fadeandscale" hidden>#}
-{#            <ul id="" data-rss-id="" class="text-center" style="padding-left:10px; padding-right:10px;width:50px;">#}
+        <div id="close-preview" class="total-body-closer fadeandscale" hidden>
+            <ul id="" data-rss-id="" class="text-center" style="padding-left:10px; padding-right:10px;width:50px;">
 {#                <li class="social-rss">#}
 {#                    <span class="close-cur-rss glyphicon glyphicon-remove" style="font-size: 0.75em;color:white;"></span>#}
 {#                </li>#}
-{#                <li class="rss-item-save social-rss"#}
-{#                    onclick="setRssFavourite($('.cur-pw-top').attr('data-rss-id'));">#}
-{#                    <span data-fav="0" class="rss-fav glyphicon glyphicon-plus text-muted"#}
-{#                          style="font-size: 0.75em;color:white;"></span>#}
-{#                </li>#}
-{#                <li class="rss-item-send social-rss" style="">#}
-{#                    <a href="mailto:">#}
-{#                        <span class="glyphicon glyphicon-send text-muted"#}
-{#                        style="font-size: 0.75em;color:white;"></span>#}
-{#                    </a>#}
-{#                </li>#}
-{#            </ul>#}
-{#        </div>#}
+                <li class="rss-item-save social-rss"
+                    onclick="setRssFavourite($('.cur-pw-top').attr('data-rss-id'));">
+                    <span data-fav="0" class="rss-fav glyphicon glyphicon-plus text-muted"
+                          style="font-size: 0.75em;color:white;"></span>
+                </li>
+                <li class="rss-item-send social-rss" style="">
+                    <a href="mailto:">
+                        <span class="glyphicon glyphicon-send text-muted"
+                        style="font-size: 0.75em;color:white;"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     {% else %}
         <article id="current-rss-preview-mobile" class="fadeandscale" hidden>
             <div class="preview-content-mobile"></div>
@@ -386,8 +391,8 @@
         {#        <script src="{% static 'static/js/jquery-ui.js' %}"></script>#}
 {#        <script src="{% static 'static/js/jquery.cookie.js' %}"></script>#}
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-        <script src="{% static 'static/js/endless-pagination.min.js' %}"></script>
-        <script src="{% static 'static/js/endless_on_scroll.min.js' %}"></script>
+        <script src="{% static 'static/js/endless-pagination.js' %}"></script>
+        <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
 {#        <script src="{% static 'static/js/alertify.js' %}"></script>#}
 {#        <script src="{% static 'static/js/alertify.min.js' %}"></script>#}
         <script src="//cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.11/alertify.js"></script>
@@ -523,8 +528,7 @@
                         });
                     });
             $(document).on('click', function (event) {
-                    if (!$(event.target).closest('#current-rss-preview').length
-                            && !$(event.target).closest('#close-preview').length) {
+                    if (!$(event.target).closest('#current-rss-preview').length && !$(event.target).closest('#close-preview').length) {
                         $('#close-preview').hide();
                     }
                 });
@@ -548,7 +552,7 @@
                         success: function (data) {
                             $('#current-rss-preview').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
                             $('#current-rss-preview-mobile').popup({autoopen: true, pagecontainer: '.container', transition: 'all 0.3s'});
-{#                            $('#close-preview').fadeIn();#}
+                            $('#close-preview').fadeIn();
                             $('.preview-content').html(data.string);
                             $('.preview-content-mobile').html(data.string);
                             $parsedData = data.data;
@@ -1065,8 +1069,14 @@
             });
         </script>
         <script>
-            var swiper=new Swiper(".swiper-container",{pagination:".swiper-pagination",slidesPerView:2,centeredSlides:!0,paginationClickable:!0,spaceBetween:30});
-        </script>
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            slidesPerView: 2,
+            centeredSlides: true,
+            paginationClickable: true,
+            spaceBetween: 30
+        });
+    </script>
     </main>
     <footer>
         {% if here_private and not browser %}

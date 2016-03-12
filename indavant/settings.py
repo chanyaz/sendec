@@ -65,6 +65,7 @@ INSTALLED_APPS = (
     "advert",
     "about",
     "beta_test",
+    "reports",
 )
 
 # INTERNAL_IPS = ('127.0.0.1',)

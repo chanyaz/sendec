@@ -390,9 +390,10 @@
                                 <div class="load-more">
                                     <div class="endless_page_template">
                                         {% block js %}
-                                            <script src="{% static 'static/js/jquery.js' %}"></script>
-                                            <script src="{% static 'static/js/endless-pagination.js' %}"></script>
-                                            <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+{#                                            <script src="{% static 'static/js/jquery.js' %}"></script>#}
+                                            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+                                            <script src="{% static 'static/js/endless-pagination.min.js' %}"></script>
+                                            <script src="{% static 'static/js/endless_on_scroll.min.js' %}"></script>
                                             <script>
                                                 $(document).ready(function() {
                                                     $.endlessPaginate({

@@ -6,6 +6,10 @@
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/css/style_beta.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'static/css/about/normalize.css' %}">
+<link rel="stylesheet" href="{% static 'static/css/about/demo.css' %}">
+<link rel="stylesheet" href="{% static 'static/css/about/component.css' %}">
+    <script src="{% static 'static/js/about/modernizr.custom.25376.js' %}"></script>
 
 <style>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     >
         header{position: relative;z-index:1;}
@@ -26,6 +30,8 @@
         #head-menu>a{color:white;}
         #head-menu>a:hover{color:#F62A00;}
         #head-logo{position:absolute;top:5%;right:5%;color:white;font-size:20px}
+        #head-logo>a{color:white;text-decoration:none}
+        #head-logo>a:hover,#head-logo>a:focus{color:#F62A00;text-decoration:none}
         #head-title{position: absolute;top:40%;padding:10px;}
         #head-title>h1{font-size:72px;color:white}
         #head-description{position:absolute;top:55%;color:white;font-size:20px}
@@ -162,13 +168,23 @@
 </style>
 
 
-
+<div id="perspective" class="perspective effect-airbnb">
+                    <div class="container-effect">
+                        <div class="wrapper"><!-- wrapper needed for scroll -->
+                            <!-- Top Navigation -->
         <!-- INTRO -->
         <header>
             <div id="head-back"></div>
             <div class="head-arrow bounce"></div>
-            <div id="head-menu"><a href="/">{% trans 'BACK TO SITE' %}</a></div>
-            <div id="head-logo">INSYDIA</div>
+            <div id="head-menu">
+{#                <a href="/">{% trans 'BACK TO SITE' %}</a>#}
+                            <div class="main clearfix">
+                                <div class="column">
+                                    <p><button id="showMenu" style="background:white;color:black">{% trans 'MENU' %}</button></p>
+                                </div>
+                            </div><!-- /main -->
+            </div>
+            <div id="head-logo"><a href="/">INSYDIA</a></div>
             <div id="head-title" class="col-xs-12 text-center">
                 <h1>{% trans 'MEDIA KIT' %}</h1>
             </div>
@@ -276,7 +292,26 @@
                 </div>
             </div>
         </footer>
+                        </div></div>
+    <nav class="outer-nav left vertical">
+		<nav class="outer-nav left vertical">
+            <a href="/"><span class="fa fa-home"></span> Home</a>
+            <a href="/news/technology/"><span class="fa fa-desktop"></span> Technology</a>
+            <a href="/news/entertainment/"><span class="fa fa-film"></span> Entertainment</a>
+            <a href="/news/auto/"><span class="fa fa-car"></span> Auto</a>
+            <a href="/news/space/"><span class="fa fa-space-shuttle"></span> Space</a>
+            <a href="/news/bio/"><i class="fa fa-heartbeat"></i> BIO</a>
+            <a href="/news/usernews/"><span class="fa fa-user"></span> Private</a>
+            <a href="/about/advertisement/"><span class="fa fa-line-chart"></span> Advertisement</a>
+            <a href="/about/career/"><span class="fa fa-briefcase"></span> Career</a>
+        </nav>
+	</nav>
+                </div>
 
-    <script src="{% static 'static/js/jquery.js' %}"></script>
-    <script src="{% static 'static/js/jquery.min.js' %}"></script>
+    <script src="{% static 'static/js/about/classie.min.js' %}"></script>
+    <script src="{% static 'static/js/about/menu.min.js' %}"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+{#    <script src="{% static 'static/js/jquery.js' %}"></script>#}
+{#    <script src="{% static 'static/js/jquery.min.js' %}"></script>#}
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

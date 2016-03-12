@@ -42,6 +42,7 @@ router = routers.DefaultRouter()
 
 urlpatterns = patterns('',
     url(r'^advertisement/', 'about.views.render_adertisement_page'),
+    url(r'^career/resume/', 'about.views.send_resume'),
     url(r'^career/', 'about.views.render_career_page'),
     url(r'hello/', 'about.views.hello'),
     url(r'^telegram/', 'about.views.render_telegram_page'),

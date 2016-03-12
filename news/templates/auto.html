@@ -6,46 +6,13 @@
 {% load i18n %}
 {% load thumbnail %}
 {% block auto %}
-    <style>
-        .total-container{margin-left: -15px;margin-right: -15px}
-        .mobile-top{margin-left: -30px;margin-right: -30px;}
-        .total-news-block{width: 100%; height: 100%;}
-        .total-top{margin-bottom: 70%;height:100%;}
-        #latest-news{cursor: pointer;float: left;width: 100%;height: 400px;position:relative;}
-        .top-total-content{height: 400px;background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;background-size: cover;}
-        @media(max-device-width: 767px){ #latest-news{height: 280px;} .top-total-content{height: 280px;background: url('/media/{{ top_news.0.top_news_main_cover }}') no-repeat center;background-size: cover;}}
-        .bn-title{bottom: 0;position: absolute;z-index: 998;width: 100%;height: 100%;background: linear-gradient(to top, #F62A00, black);opacity: 0.8;box-sizing: border-box;display: block}
-        .bn-title:hover{opacity: 0.5;-webkit-animation: fadeInFromNone 0.3s ease-out;-moz-animation: fadeInFromNone 0.3s ease-out;-o-animation: fadeInFromNone 0.3s ease-out;animation: fadeInFromNone 0.3s ease-out}
-        @-webkit-keyframes fadeInFromNone {0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
-        @-moz-keyframes fadeInFromNone {0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
-        @-o-keyframes fadeInFromNone {0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
-        @keyframes fadeInFromNone {0% {opacity: 0.8;}50% {opacity: 0.65;}100% {opacity: 0.5;}}
-        .bn-title-text{position: absolute;bottom: 45%;z-index: 999;font-size: 1.8em;color: ivory;text-shadow: 0 0 20px black}
-        .bn-title-text>a{color: ivory;}
-        .bn-title-author{z-index: 999;font-size: 15px}
-        .top-author>a{color: #F62A00}
-        .news-title a{color: black;font-size: 17px;margin-top: 1.5%;font-family: Georgia, Times, "Times New Roman", serif}
-        .news-title a:hover{color: #F62A00;}
-        .current_news{min-height: 150px;max-height: 400px;height: 400px;width: 100%;position: relative;float: left}
-        .current_news_mas{margin-bottom: 50px;}
-        #announce-reviews{width: 100%;height: 250px;border: solid 1px lightblue;margin-top: 40px;margin-bottom: 40px}
-        .before-reviews{height: 400px;}
-        .title-top-middle a{text-decoration: none;color: black;}
-        .title-top-middle a:hover{text-decoration: none;color: #F62A00;}
-        .article-author > a{color: #F62A00;}
-        .article-author > a:hover{color: #1E656D;}
-
-        @media (min-width: 768px){ #interests{width: 1024px;height: 200px;margin-left: -5%;} .carousel-image{width: 100%;height: 300px;}}
-        @media (min-width: 1170px){ #interests{width: 1366px;height: 300px;margin-left: -10%;}
-            .carousel-image{width: 100%;height: 300px;}}
-        @media (min-width: 1920px) { #interests{width: 1960px;height: 500px;margin-left: -38%;} .carousel-image{width: 100%;height: 500px;}}
-    </style>
     <div class="container-fluid container">
         <div class="total-container">
             <div class="ash">
                 <div class="panel panel-default col-md-12 mobile-top">
-                    <div class="total-news-block">
+                    <div class="total-news-block" >
                         <div class="total-top">
+                            <!-- THE LATEST ONE NEWS -->
                             <div class="breaking-news col-md-12">
                                 <div class="bn">
                                     <div id="latest-news">
@@ -53,7 +20,7 @@
                                         <a href="/news/top/{{ top_news.0.id }}/{{ top_news.0.slug }}/">
                                             <div class="bn-title col-md-12"></div>
                                         </a>
-                                        <div class="bn-title-text text-center col-md-12 col-xs-12">
+                                        <div class="bn-title-text text-center col-xs-12 col-md-12">
                                                 <a href="/news/top/{{ top_news.0.id }}/{{ top_news.0.slug }}/">
                                                     {% if lang == 'eng' %}
                                                         {{ top_news.0.top_news_title_english }}
@@ -76,83 +43,79 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- /THE LATEST ONW NEWS -->
                             <hr width="100%">
-                            <div id="middle-news-special" class="col-md-12">
-                                {% if flavour != 'mobile' %}
-                                    <div id="top-4-news"  class="mobile-top col-xs-12" style="float: left;">
-                                        {% for i in total_middle_news %}
-                                            <div class="container-fluid col-md-4" style="float: left;">
-                                                <div class="current_news_mas news-news">
-                                                    <div class="cat cat-left">
-                                                        <a href="/news/{{ i.id|get_news_category }}">{{ i.id|get_news_category|upper }}</a>
-                                                    </div>
-                                                    {% if i.news_main_cover != '' %}
+                            {% if flavour != 'mobile' %}
+                                <!-- LATEST 4 NEWS AFTER TOP -->
+                                <div id="top-4-news"  class="col-xs-12">
+                                    {% for i in total_middle_news %}
+                                        <div class="container-fluid col-md-4" style="float: left;">
+                                            <div class="current_news_mas news-news">
+                                                <div class="cat cat-left">
+                                                    <a href="/news/{{ i.id|get_news_category }}">{{ i.id|get_news_category|upper }}</a>
+                                                </div>
+                                                {% if i.news_main_cover != '' %}
+                                                    <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                                            <div class="middle-news-cover"
+                                                                 style="cursor: pointer;">
+                                                                {% thumbnail i.news_main_cover '330x216' crop='center' as im %}
+                                                                    <img src="{{ im.url }}" width="100%" height="{{ im.height }}"/>
+                                                                {% endthumbnail %}
+                                                            </div>
+                                                    </a>
+                                                {% endif %}
+                                                <div class="title col-xs-12"
+                                                     id="title-{{ i.id }}"
+                                                     style="margin-top: 5%; margin-left: -4%;">
+                                                    <div class="news-title">
                                                         <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                                            {% if i.news_main_cover|check_format == True %}
-                                                                <div class="middle-news-cover"
-                                                                     style="cursor: pointer;">
-                                                                    {% thumbnail i.news_main_cover '330x216' crop='center' as im %}
-                                                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/>
-                                                                    {% endthumbnail %}
-                                                                </div>
-                                                            {% else %}
-                                                                    <div class="middle-news-cover"
-                                                                     style="max-width: 100%;
-                                                                             cursor:pointer;
-                                                                             max-height: 100%;
-                                                                             height: 210px;
-                                                                                background: url('{% static 'static/img/companies_cover/' %}{{ current_middle_news.news_company_owner_id|get_company_owner_name }}.jpg') no-repeat center;
-                                                                                background-size: cover;"></div>
-                                                            {% endif %}
+                                                            <b>
+                                                                {% if lang == 'eng' %}
+                                                                    {{ i.news_title_english }}
+                                                                {% elif lang == 'rus' %}
+                                                                    {{ i.news_title_russian }}
+                                                                {% else %}
+                                                                    {{ i.news_title_chinese }}
+                                                                {% endif %}
+                                                            </b>
                                                         </a>
-                                                    {% endif %}
-                                                    <div class="title col-xs-12"
-                                                         id="title-{{ i.id }}"
-                                                         style="margin-top: 5%; margin-left: -4%;">
-                                                        <div class="news-title">
-                                                            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
-                                                                <b>
-                                                                    {% if lang == 'eng' %}
-                                                                        {{ i.news_title_english }}
-                                                                    {% elif lang == 'rus' %}
-                                                                        {{ i.news_title_russian }}
-                                                                    {% else %}
-                                                                        {{ i.news_title_chinese }}
-                                                                    {% endif %}
-                                                                </b>
-                                                            </a>
-                                                        </div>
                                                     </div>
-                                                    <div class="params">
-                                                        <i>{% trans 'By' %}&nbsp;<span class="article-author">
-                                                            <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
-                                                        </span>
-                                                            &nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
-                                                    </div>
+                                                </div>
+                                                <div class="params">
+                                                    <i>{% trans 'By' %}&nbsp;<span class="article-author">
+                                                        <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author }}</a>
+                                                    </span>
+                                                        &nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
                                                 </div>
                                             </div>
-                                            {% if forloop.counter == 2 or forloop.counter == 3 %}
-                                                <div class="col-md-4">
-                                                    <div class="cat cat-left">
-                                                        <a>ADVERTISEMENT</a>
-                                                    </div>
-                                                    <div class="" style="height: 400px;">
-                                                        <div style="float: left; margin-top:0; width: 300px;height: 250px;background-color: #00fff9"></div>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {% include 'total_beta_top_news_m.html' %}
-                                {% endif %}
-                            </div>
+                                        </div>
+                                        {% if forloop.counter == 3 %}
+                                            <div class="top4advert col-xs-12"></div>
+                                        {% endif %}
+{#                                            {% if forloop.counter == 2 or forloop.counter == 3 %}#}
+{#                                                <div class="col-md-4">#}
+{#                                                    <div class="cat cat-left">#}
+{#                                                        <a>ADVERTISEMENT</a>#}
+{#                                                    </div>#}
+{#                                                    <div class="" style="height: 400px;">#}
+{#                                                        <div style="float: left; margin-top:0; width: 300px;height: 250px;background-color: #00fff9"></div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            {% endif %}#}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {% include 'total_beta_top_news_m.html' %}
+                            {% endif %}
+                            <!-- /LATEST 4 NEWS -->
                         </div>
+                    {% if flavour != 'mobile' %}
                         <div class="media-block col-md-12">
+                    {% else %}
+                        <div class="media-block">
+                    {% endif %}
                             <hr width="100%">
-                            <div class="google-news-right" style="margin-left: auto; margin-right: auto; width: 970px; height: 90px; background-color: #00fff9"></div>
-                            <hr width="100%">
-                            <div class="recently-news col-md-12">
+                            <div class="recently-news">
                                 <div class="two-news col-xs-12 container">
                                     <div class="two-news-item col-md-12">
                                         <div class="cat cat-left col-xs-12">
@@ -170,7 +133,7 @@
                                             </a>
                                         </div>
                                         <div class="right-middle-top col-xs-12 col-md-3">
-                                            <div id="big-news-one" class="title-top-middle" style="font-size: 20px; font-family: Georgia, Times, 'Times New Roman', serif">
+                                            <div id="big-news-one" class="title-top-middle" style="font-size: 20px">
                                             <a href="/news/{{ total_bottom_news.0.news_post_date.year }}/{{ total_bottom_news.0.news_post_date.month }}/{{ total_bottom_news.0.news_post_date.day }}/{{ total_bottom_news.0.id }}/{{ total_bottom_news.0.slug }}">
                                                     <b>
                                                         {% if lang == 'eng' %}
@@ -189,159 +152,153 @@
                                                 </span>
                                                     &nbsp;|&nbsp;<span class="publushed">{{ total_bottom_news.0.news_post_date.date|date }}</span></i>
                                             </div>
-                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">
-                                                {% if lang == 'eng' %}
-                                                    {{ total_bottom_news.0.teaser_english }}
-                                                {% elif lang == 'rus' %}
-                                                    {{ total_bottom_news.0.teaser_russian }}
-                                                {% else %}
-                                                    {{ total_bottom_news.0.teaser_chinese }}
-                                                {% endif %}
-                                            </div>
+                                            <div class="text-top-middle" style="font-size: 15px; font-family: Georgia, Times, 'Times New Roman', serif">{{ total_bottom_news.0.news_post_text_english|safe|striptags|truncatechars:"150" }}</div>
                                         </div>
                                     </div>
                                 </div>
                                 <hr width="100%">
-
-
                                 <div class="interested">
-                                    <div id="interests" class="carousel slide container fill col-lg-10" style="margin-top: 5%;">
-                                        <div class="carousel-inner">
-                                            <div class="active item" style="
-{#                                            height: 250px; #}
-{#                                            max-height: 250px;#}
-                                            ">
-                                                <div class="car-it-block">
-                                                    <a class="car-it-link" href="/news/{{ interest.0.news_post_date.year }}/{{ interest.0.news_post_date.month }}/{{ interest.0.news_post_date.day }}/{{ interest.0.id }}/{{ interest.0.slug }}">
-                                                            <div class="carousel-image carousel-inner-item-left"
-                                                                     style="position: relative;
-                                                                             z-index:1;">
-                                                            {% thumbnail interest.0.news_main_cover '800x400' crop='center' as im %}
-                                                                <img src="{{ im.url }}" class="carousel-image" />
-                                                            {% endthumbnail %}
-                                                            <div class="inner-item-back"></div>
-                                                        </div>
-                                                    </a>
-                                                    <div class="carousel-inner-item-title">
-                                                        <a href="/news/{{ interest.0.news_post_date.year }}/{{ interest.0.news_post_date.month }}/{{ interest.0.news_post_date.day }}/{{ interest.0.id }}/{{ interest.0.slug }}">
-                                                            {{ interest.0.news_title }}
+                                    {% if flavour != 'mobile' %}
+                                        <div id="interests" class="carousel slide container fill col-lg-10" style="margin-top: 5%;">
+                                            <div id="myCarousel" class="carousel-inner">
+                                                <div class="active item">
+                                                    <div class="car-it-block">
+                                                        <a class="car-it-link" href="/news/{{ interest.0.news_post_date.year }}/{{ interest.0.news_post_date.month }}/{{ interest.0.news_post_date.day }}/{{ interest.0.id }}/{{ interest.0.slug }}">
+                                                                <div class="carousel-image carousel-inner-item-left"
+                                                                         style="position: relative;
+                                                                                 z-index:1;">
+                                                                {% thumbnail interest.0.news_main_cover '800x400' crop='center' as im %}
+                                                                    <img src="{{ im.url }}" class="carousel-image" />
+                                                                {% endthumbnail %}
+                                                                <div class="inner-item-back"></div>
+                                                            </div>
                                                         </a>
-                                                        <div class="carousel-inner-item-author">
-                                                            <span class="">
-                                                                {% trans 'By' %}&nbsp;<a href="/profile/m/{{interest.0.news_author }}/">{{ interest.0.news_author }}</a>
-                                                            </span>
-                                                            <span class="">
-                                                                &nbsp;|&nbsp;{{ interest.0.news_post_date.date|date }}
-                                                            </span>
+                                                        <div class="carousel-inner-item-title">
+                                                            <a href="/news/{{ interest.0.news_post_date.year }}/{{ interest.0.news_post_date.month }}/{{ interest.0.news_post_date.day }}/{{ interest.0.id }}/{{ interest.0.slug }}">
+                                                                 {% if lang == 'eng' %}
+                                                                    {{ interest.0.news_title_english }}
+                                                                {% elif lang == 'rus' %}
+                                                                    {{ interest.0.news_title_russian }}
+                                                                {% else %}
+                                                                    {{ interest.0.news_title_chinese }}
+                                                                {% endif %}
+                                                            </a>
+                                                            <div class="carousel-inner-item-author">
+                                                                <span class="">
+                                                                    {% trans 'By' %}&nbsp;<a href="/profile/m/{{interest.0.news_author }}/">{{ interest.0.news_author }}</a>
+                                                                </span>
+                                                                <span class="">
+                                                                    &nbsp;|&nbsp;{{ interest.0.news_post_date.date|date }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="car-it-block">
+                                                        <a class="car-it-link" href="/news/{{ interest.1.news_post_date.year }}/{{ interest.1.news_post_date.month }}/{{ interest.1.news_post_date.day }}/{{ interest.1.id }}/{{ interest.1.slug }}">
+                                                            <div class="carousel-image carousel-inner-item-right" style="position: relative;z-index:1;">
+                                                                {% thumbnail interest.1.news_main_cover '800x400' crop='center' as im %}
+                                                                    <img class="carousel-image" src="{{ im.url }}">
+                                                                {% endthumbnail %}
+                                                                <div class="inner-item-back"></div>
+                                                            </div>
+                                                        </a>
+                                                        <div class="carousel-inner-item-title">
+                                                            <a href="/news/{{ interest.1.news_post_date.year }}/{{ interest.1.news_post_date.month }}/{{ interest.1.news_post_date.day }}/{{ interest.1.id }}/{{ interest.1.slug }}">
+                                                                 {% if lang == 'eng' %}
+                                                                    {{ interest.1.news_title_english }}
+                                                                {% elif lang == 'rus' %}
+                                                                    {{ interest.1.news_title_russian }}
+                                                                {% else %}
+                                                                    {{ interest.1.news_title_chinese }}
+                                                                {% endif %}
+                                                            </a>
+                                                            <div class="carousel-inner-item-author">
+                                                                <span class="">
+                                                                    {% trans 'By' %}&nbsp;<a href="/profile/m/{{interest.1.news_author }}/">{{ interest.1.news_author }}</a>
+                                                                </span>
+                                                                <span class="">
+                                                                    &nbsp;|&nbsp;{{ interest.1.news_post_date.date|date }}
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="car-it-block">
-                                                    <a class="car-it-link" href="/news/{{ interest.1.news_post_date.year }}/{{ interest.1.news_post_date.month }}/{{ interest.1.news_post_date.day }}/{{ interest.1.id }}/{{ interest.1.slug }}">
-                                                        <div class="carousel-image carousel-inner-item-right" style="position: relative;z-index:1;">
-                                                            {% thumbnail interest.1.news_main_cover '800x400' crop='center' as im %}
-                                                                <img class="carousel-image" src="{{ im.url }}">
-                                                            {% endthumbnail %}
-                                                            <div class="inner-item-back"></div>
-                                                        </div>
-                                                    </a>
-                                                    <div class="carousel-inner-item-title">
-                                                        <a href="/news/{{ interest.1.news_post_date.year }}/{{ interest.1.news_post_date.month }}/{{ interest.1.news_post_date.day }}/{{ interest.1.id }}/{{ interest.1.slug }}">
-                                                            {% if lang == 'eng' %}
-                                                                {{ interest.1.news_title_english }}
-                                                            {% elif lang == 'rus' %}
-                                                                {{ interest.1.news_title_russian }}
-                                                            {% else %}
-                                                                {{ interest.1.news_title_chinese }}
-                                                            {% endif %}
+                                                <div class="item">
+                                                    <div class="car-it-block">
+                                                        <a class="car-it-link" href="/news/{{ interest.2.news_post_date.year }}/{{ interest.2.news_post_date.month }}/{{ interest.2.news_post_date.day }}/{{ interest.2.id }}/{{ interest.2.slug }}">
+                                                            <div class="carousel-image carousel-inner-item-left" style="position: relative;z-index:1;">
+                                                                {% thumbnail interest.2.news_main_cover '800x400' crop='center' as im %}
+                                                                    <img class="carousel-image" src="{{ im.url }}">
+                                                                {% endthumbnail %}
+                                                                <div class="inner-item-back"></div>
+                                                            </div>
                                                         </a>
-                                                        <div class="carousel-inner-item-author">
-                                                            <span class="">
-                                                                {% trans 'By' %}&nbsp;<a href="/profile/m/{{interest.1.news_author }}/">{{ interest.1.news_author }}</a>
-                                                            </span>
-                                                            <span class="">
-                                                                &nbsp;|&nbsp;{{ interest.1.news_post_date.date|date }}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="car-it-block">
-                                                    <a class="car-it-link" href="/news/{{ interest.2.news_post_date.year }}/{{ interest.2.news_post_date.month }}/{{ interest.2.news_post_date.day }}/{{ interest.2.id }}/{{ interest.2.slug }}">
-                                                        <div class="carousel-image carousel-inner-item-left" style="position: relative;z-index:1;">
-                                                            {% thumbnail interest.2.news_main_cover '800x400' crop='center' as im %}
-                                                                <img class="carousel-image" src="{{ im.url }}">
-                                                            {% endthumbnail %}
-                                                            <div class="inner-item-back"></div>
-                                                        </div>
-                                                    </a>
-                                                    <div class="carousel-inner-item-title">
-                                                        <a href="/news/{{ interest.2.news_post_date.year }}/{{ interest.2.news_post_date.month }}/{{ interest.2.news_post_date.day }}/{{ interest.2.id }}/{{ interest.2.slug }}">
-                                                            <b>
-                                                                {% if lang == 'eng' %}
+                                                        <div class="carousel-inner-item-title">
+                                                            <a href="/news/{{ interest.2.news_post_date.year }}/{{ interest.2.news_post_date.month }}/{{ interest.2.news_post_date.day }}/{{ interest.2.id }}/{{ interest.2.slug }}">
+                                                                 {% if lang == 'eng' %}
                                                                     {{ interest.2.news_title_english }}
                                                                 {% elif lang == 'rus' %}
                                                                     {{ interest.2.news_title_russian }}
                                                                 {% else %}
                                                                     {{ interest.2.news_title_chinese }}
                                                                 {% endif %}
-                                                            </b>
-                                                        </a>
-                                                        <div class="carousel-inner-item-author">
-                                                            <span class="">
-                                                                {% trans 'By' %}&nbsp;<a href="/profile/m/{{interest.2.news_author }}/">{{ interest.2.news_author }}</a>
-                                                            </span>
-                                                            <span class="">
-                                                                &nbsp;|&nbsp;{{ interest.2.news_post_date.date|date }}
-                                                            </span>
+                                                            </a>
+                                                            <div class="carousel-inner-item-author">
+                                                                <span class="">
+                                                                    {% trans 'By' %}&nbsp;<a href="/profile/m/{{interest.2.news_author }}/">{{ interest.2.news_author }}</a>
+                                                                </span>
+                                                                <span class="">
+                                                                    &nbsp;|&nbsp;{{ interest.2.news_post_date.date|date }}
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="car-it-block">
-                                                    <a class="car-it-link" href="/news/{{ interest.3.news_post_date.year }}/{{ interest.3.news_post_date.month }}/{{ interest.3.news_post_date.day }}/{{ interest.3.id }}/{{ interest.3.slug }}">
-                                                        <div class="carousel-image carousel-inner-item-right" style="position: relative;z-index:1;">
-                                                            {% thumbnail interest.3.news_main_cover '800x400' crop='center' as im %}
-                                                                <img class="carousel-image" src="{{ im.url }}">
-                                                            {% endthumbnail %}
-                                                            <div class="inner-item-back"></div>
-                                                        </div>
-                                                    </a>
-                                                   <div class="carousel-inner-item-title">
-                                                        <a href="/news/{{ interest.3.news_post_date.year }}/{{ interest.3.news_post_date.month }}/{{ interest.3.news_post_date.day }}/{{ interest.3.id }}/{{ interest.3.slug }}">
-                                                            <b>
-                                                                {% if lang == 'eng' %}
+                                                    <div class="car-it-block">
+                                                        <a class="car-it-link" href="/news/{{ interest.3.news_post_date.year }}/{{ interest.3.news_post_date.month }}/{{ interest.3.news_post_date.day }}/{{ interest.3.id }}/{{ interest.3.slug }}">
+                                                            <div class="carousel-image carousel-inner-item-right" style="position: relative;z-index:1;">
+                                                                {% thumbnail interest.3.news_main_cover '800x400' crop='center' as im %}
+                                                                    <img class="carousel-image" src="{{ im.url }}">
+                                                                {% endthumbnail %}
+                                                                <div class="inner-item-back"></div>
+                                                            </div>
+                                                        </a>
+                                                       <div class="carousel-inner-item-title">
+                                                            <a href="/news/{{ interest.3.news_post_date.year }}/{{ interest.3.news_post_date.month }}/{{ interest.3.news_post_date.day }}/{{ interest.3.id }}/{{ interest.3.slug }}">
+                                                                 {% if lang == 'eng' %}
                                                                     {{ interest.3.news_title_english }}
                                                                 {% elif lang == 'rus' %}
                                                                     {{ interest.3.news_title_russian }}
                                                                 {% else %}
                                                                     {{ interest.3.news_title_chinese }}
                                                                 {% endif %}
-                                                            </b>
-                                                        </a>
-                                                        <div class="carousel-inner-item-author">
-                                                            <span class="">
-                                                                {% trans 'By' %}&nbsp;<a href="/profile/m/{{interest.3.news_author }}/">{{ interest.3.news_author }}</a>
-                                                            </span>
-                                                            <span class="">
-                                                                &nbsp;|&nbsp;{{ interest.3.news_post_date.date|date }}
-                                                            </span>
+                                                            </a>
+                                                            <div class="carousel-inner-item-author">
+                                                                <span class="">
+                                                                    {% trans 'By' %}&nbsp;<a href="/profile/m/{{interest.3.news_author }}/">{{ interest.3.news_author }}</a>
+                                                                </span>
+                                                                <span class="">
+                                                                    &nbsp;|&nbsp;{{ interest.3.news_post_date.date|date }}
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="carousel-control left" href="#interests" data-slide="prev">
-                                            <div class="control-arrow">
-                                                &lsaquo;
+                                            <div class="carousel-control left" href="#interests" data-slide="prev">
+                                                <div class="control-arrow">
+                                                    &lsaquo;
+                                                </div>
+                                            </div>
+                                            <div class="carousel-control right" href="#interests" data-slide="next">
+                                                <div class="control-arrow">
+                                                    &rsaquo;
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="carousel-control right" href="#interests" data-slide="next">
-                                            <div class="control-arrow">
-                                                &rsaquo;
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {% else %}
+                                    {% endif %}
+                                </div>
+                                {% if flavour != 'mobile' %}
                                     <div class="before-reviews container col-md-12" style="margin-top: 3%;">
                                         {% for i in before_reviews %}
                                             <div class="col-md-4" >
@@ -390,18 +347,54 @@
                                         </div>
                                     {% endfor %}
                                     </div>
+                                {% else %}
+                                    {% for i in before_reviews %}
+                                        <div id="before-reviews">
+                                            <div class="before-reviews"
+                                                 style="
+                                                 height: 280px;
+                                                {% thumbnail i.news_main_cover '400x400' crop='center' as im %}
+                                                    background: url('{{ im.url }}') no-repeat center;
+                                                    background-size: cover;
+                                                {% endthumbnail %}
+                                                 ">
+                                            </div>
+                                            <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                                <div class="bn-title col-md-12"></div>
+                                            </a>
+                                            <div class="bn-title-text text-center col-md-12">
+                                                <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
+                                                        {% if lang == 'eng' %}
+                                                            {{ i.news_title_english|safe }}
+                                                        {% elif lang == 'rus' %}
+                                                            {{ i.news_title_russian|safe }}
+                                                        {% else %}
+                                                            {{ i.news_title_chinese|safe }}
+                                                        {% endif %}
+                                                    </a>
+                                                <div class="bn-title-author col-md-12 col-xs-11 text-center">
+                                                    <span class="top-author">
+                                                        {% trans 'By' %}&nbsp;
+                                                        <a href="/profile/m/{{ i.news_author }}">{{ i.news_author }}</a>
+                                                    </span>
+                                                    <span class="top-date">
+                                                        {{ i.news_post_date.date|date }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
                                 </div>
-                                <hr width="100%">
-{#                                <div id="announce-reviews" class="col-md-12">#}
-{#                                    reviews#}
-{#                                </div>#}
+                         <hr width="100%">
                                 {% include 'pre_paginate.html' %}
                                 <div class="load-more">
                                     <div class="endless_page_template">
                                         {% block js %}
-                                            <script src="{% static 'static/js/jquery.js' %}"></script>
-                                            <script src="{% static 'static/js/endless-pagination.js' %}"></script>
-                                            <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+{#                                            <script src="{% static 'static/js/jquery.js' %}"></script>#}
+                                            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+                                            <script src="{% static 'static/js/endless-pagination.min.js' %}"></script>
+                                            <script src="{% static 'static/js/endless_on_scroll.min.js' %}"></script>
                                             <script>
                                                 $(document).ready(function() {
                                                     $.endlessPaginate({

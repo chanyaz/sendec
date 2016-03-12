@@ -197,7 +197,6 @@ class Aggregator(object):
                 n_d, n_s = n.domain, n.suffix
                 new_url = n_d+"."+n_s
                 for current_portal in portals_list:
-
                     if current_portal[2] in new_url or new_url in current_portal[2] or current_portal[2].split('.')[0] in new_url:
                         print("portal id: ", current_portal[0])
                         # print("cat id: ", current_portal[8])

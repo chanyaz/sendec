@@ -778,5 +778,126 @@
     "favicon": "",
     "category": "Space",
     "feed": "http://www.davidreneke.com/feed/"
-}
+},
+  "object-80":{
+    "name": "Habidatum",
+    "verbose": "habidatum",
+    "description": "Habidatum is an international company assisting urban planners, businesses and professional experts in understanding the hyper-dynamic urban environment.",
+    "base_link":"http://habidatum.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"Technology",
+    "feed":"http://habidatum.com/feed/"
+  },
+  "object-81":{
+    "name": "SS&C",
+    "verbose": "ss&c",
+    "description": "Leading cloud-based provider of financial services technology faltand solutions. SS&C Technologies own and maintain the best financial technology in the industry.",
+    "base_link":"http://www.ssctech.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"Technology",
+    "feed":"http://sscledger.com/feed/"
+  },
+  "object-82":{
+    "name": "Cisco",
+    "verbose": "cisco",
+    "description": "",
+    "base_link":"http://www.cisco.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"Technology",
+    "feed":"http://www.cisco.com/cdc_content_elements/rss/whats_new/whatsnew_rss_feed.xml"
+  },
+  "object-83":{
+    "name": "Amgen",
+    "verbose": "amgen",
+    "description": "Amgen is one of the world’s leading biotechnology companies. Amgen is a values-based company, deeply rooted in science and innovation to transform new ideas and discoveries into medicines for patients with serious illnesses.",
+    "base_link":"http://www.amgen.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"BIO",
+    "feed":"http://investors.amgen.com/corporate.rss?c=61656&Rule=Cat=news~subcat=ALL"
+  },
+  "object-84":{
+    "name": "Celgene",
+    "verbose": "celgene",
+    "description": "Learn about how Celgene, a global biopharmaceutical company, is committed to improving the lives of patients worldwide by delivering truly innovative and life-changing treatments.",
+    "base_link":"http://www.cisco.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"BIO",
+    "feed":"https://www.celgene.com/feed/"
+  },
+  "object-85":{
+    "name": "Regeneron",
+    "verbose": "regeneron",
+    "description": "Learn about how Celgene, a global biopharmaceutical company, is committed to improving the lives of patients worldwide by delivering truly innovative and life-changing treatments.",
+    "base_link":"http://regeneron.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"BIO",
+    "feed":"http://apps.shareholder.com/rss/rss.aspx?channels=6422&companyid=REGN&sh_auth=1676951743%2E0%2E0%2E42441%2E45bb5dd5c1286fe3987b37698b669687"
+  },
+  "object-86":{
+    "name": "Regeneron",
+    "verbose": "regeneron",
+    "description": "Learn about how Celgene, a global biopharmaceutical company, is committed to improving the lives of patients worldwide by delivering truly innovative and life-changing treatments.",
+    "base_link":"http://regeneron.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"BIO",
+    "feed":"http://apps.shareholder.com/rss/rss.aspx?channels=6423&companyid=REGN&sh_auth=1676951743%2E0%2E0%2E42441%2E45bb5dd5c1286fe3987b37698b669687"
+  },
+  "object-87":{
+    "name": "Regeneron",
+    "verbose": "regeneron",
+    "description": "Learn about how Celgene, a global biopharmaceutical company, is committed to improving the lives of patients worldwide by delivering truly innovative and life-changing treatments.",
+    "base_link":"http://regeneron.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"BIO",
+    "feed":"http://apps.shareholder.com/rss/rss.aspx?channels=6424&companyid=REGN&sh_auth=1676951743%2E0%2E0%2E42441%2E45bb5dd5c1286fe3987b37698b669687"
+  },
+  "object-88":{
+    "name": "Fiercebiotech",
+    "verbose": "fiercebiotech",
+    "description": "FierceBiotech is the drug development industry's news monitor, covering biopharma deals, clinical trials, FDA decisions, and more. Subscribe to our free daily email and join the largest, most influential biotechnology news audience in the world.",
+    "base_link":"http://www.fiercebiotech.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"BIO",
+    "feed":"http://www.fiercebiotech.com/feed"
+  },
+  "object-89":{
+    "name": "Oracle",
+    "verbose": "oracle",
+    "description": "Oracle offers a comprehensive and fully integrated stack of cloud applications and platform services.",
+    "base_link":"https://www.oracle.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"Technology",
+    "feed":"https://www.oracle.com/corporate/press/rss/rss-pr.xml"
+  },
+  "object-90":{
+    "name": "Crytek",
+    "verbose": "crytek",
+    "description": "Crytek is an independent videogame developer, publisher, and technology provider dedicated to pushing the boundaries of gaming with our cutting-edge CRYENGINE software.",
+    "base_link":"http://www.crytek.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"Entertainment",
+    "feed":"http://www.crytek.com/rss"
+  },
+  "object-91":{
+    "name": "Nvidia",
+    "verbose": "nvidia",
+    "description": "Visual computing technology from NVIDIA: inventor of the GPU, which creates interactive graphics on laptops, workstations, mobile devices, notebooks, PCs, and more.",
+    "base_link":"http://nvidia.com/",
+    "cover":"",
+    "favicon":"",
+    "category":"Entertainment",
+    "feed":"http://nvidianews.nvidia.com/releases.xml"
+  },
+
 }

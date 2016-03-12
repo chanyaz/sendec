@@ -505,22 +505,41 @@ def get_current_rss_news(request, news_id):
                     </a>
                 </li>
                 <li class="rss-share-item">
-                    <a data-target-link="{link}" class="rss-share-vk" onclick="window.open('https://vk.com='+$(this).attr('data-target-link'),
+                    <a data-target-link="{link}"
+                    class="rss-share-vk"
+                    onclick="window.open('https://vk.com='+$(this).attr('data-target-link'),
                          'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
                         <span class="fa fa-vk social-rss" style="font-size: 1.5em;"></span>
                     </a>
                 </li>
                 <li class="rss-share-item">
-                    <a data-target-link="{link}" class="rss-share-twitter"
-                    onclick="window.open('https://twitter.com/intent/tweet?original_referer='+'https://insydia.com/'+'&ref_src=twsrc%5Etfw&%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+$(this).attr('data-target-link')+'&via=InsydiaNews',
+                    <a data-target-link="{link}"
+                    class="rss-share-twitter"
+                    data-target-title="{rss_title}"
+                    onclick="window.open('https://twitter.com/intent/tweet?original_referer='+'https://insydia.com/'+'&ref_src=twsrc%5Etfw&text='+$(this).attr('data-target-title')+'&%20%7C%20%C2%A0Insydia&tw_p=tweetbutton&url='+$(this).attr('data-target-link')+'&via=InsydiaNews',
                          'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes')">
                         <span class="fa fa-twitter social-rss" style="font-size: 1.5em;"></span>
                     </a>
                 </li>
                 <li class="rss-share-item">
-                    <a data-target-link="{link}" class="rss-share-linkedin" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+$(this).attr('data-target-link')+'&title='+'TITLE'+'&summary='+'summary',
+                    <a data-target-link="{link}"
+                    data-target-title="{rss_title}"
+                    class="rss-share-linkedin"
+                    onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+$(this).attr('data-target-link')+'&title='+$(this).attr('data-target-title'),
                          'JSSite', 'width=420,height=230,resizable=yes,scrollbars=yes,status=yes');">
                         <span class="fa fa-linkedin social-rss" style="font-size: 1.5em;"></span>
+                    </a>
+                </li>
+                <li class="rss-share-item rss-item-save"
+                    id="rss-preview-{id}"
+                    data-rss-id="{id}">
+                    <span data-fav="0" class="rss-fav glyphicon glyphicon-plus text-muted"
+                          style="font-size: 1.5em;color:white;"></span>
+                </li>
+                <li class="rss-share-item">
+                    <a href="mailto:">
+                        <span class="glyphicon glyphicon-send text-muted"
+                        style="font-size: 1.5em;color:white;"></span>
                     </a>
                 </li>
             </ul>
@@ -529,8 +548,10 @@ def get_current_rss_news(request, news_id):
 </div>
 <div class="rss-preview-body"></div>
     """.format(title=h1_title,
+               rss_title=news_instance.title,
                author=news_instance.author if news_instance.author else news_instance.portal_name,
                read=123,
+               id=news_instance.id,
                data_id=news_instance.id,
                likes=321,
                link=news_instance.link,
@@ -1380,7 +1401,7 @@ def render_current_portal_news(request, portal, template="user_news_beta.html", 
         args = {
             "page_template": page_template,
             "portal": portal_instance,
-            "portal_news": RssNews.objects.filter(portal_name_id=portal_instance.id).order_by("-date_posted").defer("author").defer("content_value").values(),
+            "portal_news": RssNews.objects.filter(portal_name_id=portal_instance.id).order_by("-date_posted").defer("content_value").values(),
 
             "left_bar": False,
         }
@@ -1614,7 +1635,7 @@ def follow_current_rss_portal(request, uuid, pid):
     args = {}
     args.update(csrf(request))
     user = User.objects.get(id=UserProfile.objects.get(uuid=uuid).user_id)
-    try:
+    if UserRssPortals.objects.filter(portal_id=pid, user_id=user.id).exists() == True:
         user_rss_instance = UserRssPortals.objects.get(portal_id=pid, user_id=user.id)
         if user_rss_instance.check == False:
             user_rss_instance.check = True
@@ -1654,7 +1675,7 @@ def follow_current_rss_portal(request, uuid, pid):
             user_rss_instance.check = True
             user_rss_instance.save()
             return HttpResponse(json.dumps({'exists': True}), content_type="application/json")
-    except UserRssPortals.DoesNotExist:
+    else:
         UserRssPortals.objects.create(
             user_id=user.id,
             portal_id=pid,
@@ -1693,7 +1714,6 @@ def count_unread_articles(request, portal_id):
 def get_rss_matches(request, word):
     args = {}
     args.update(csrf(request))
-
     instance = RssNews.objects.filter(Q(title__contains=str(word).capitalize()) |
                                       Q(title__contains=str(word).lower()) |
                                       Q(post_text__contains=str(word).capitalize()) |
@@ -1704,7 +1724,6 @@ def get_rss_matches(request, word):
                                       Q(portal_name__description__contains=str(word).lower()) |
                                       Q(content_value__contains=str(word).capitalize())  |
                                       Q(content_value__contains=str(word).lower())).distinct("portal_name__portal")
-
     return HttpResponse(json.dumps([i.get_portal_json() for i in instance.all()]), content_type="application/json")
 
 
@@ -1811,7 +1830,7 @@ def search_rss(request):
 
 
 
-        if RssPortals.objects.filter(portal_base_link=str(url_domain+"."+url_suffix), portal=str(url_domain).capitalize(), verbose_name=url_domain).exists() == False:
+        if RssPortals.objects.filter(portal_base_link=str(url_domain+"."+url_suffix), verbose_name=str(url_domain).lower()).exists() == False:
             if feeds:
                 RssPortals.objects.create(
                     portal=str(url_domain).capitalize(),
@@ -1820,7 +1839,7 @@ def search_rss(request):
                     description=description,
                     cover="",
                     favicon=favicon,
-                    verbose_name=url_domain,
+                    verbose_name=str(url_domain).lower(),
                     category_id=1,
                     puid=uuid.uuid3(uuid.NAMESPACE_DNS, "%s" % str(url_domain+"."+url_suffix))
                 )
@@ -1833,20 +1852,120 @@ def search_rss(request):
                             link=i
                         )
         else:
-            data_response['pid'] = RssPortals.objects.get(portal=str(url_domain).capitalize()).id
             data_response['exists'] = True
-            pass
+            data_response['response'] = False
+            data_response['string'] = get_existing_rss_portal(request, portal_id=RssPortals.objects.get(verbose_name=str(url_domain).lower()).id)
+            return HttpResponse(json.dumps(data_response), content_type="application/json")
         if len(feeds) > 0:
             data_url = True
-            data_response["data"] = data_url
-            data_response["feed"] = feeds
             data_response['response'] = True
         else:
+            data_response['exists'] = False
             data_response['response'] = False
+            data_response['no_feed'] = True
 
         return HttpResponse(json.dumps(data_response), content_type="application/json")
     else:
         raise 404
+
+
+def get_existing_rss_portal(request, portal_id):
+    user_instance = User.objects.get(username=auth.get_user(request).username)
+    if UserRssPortals.objects.filter(portal_id=portal_id, user_id=user_instance.id).exists() == False:
+        UserRssPortals.objects.create(
+            portal_id=portal_id,
+            user_id=user_instance.id,
+            check=False
+        )
+    l = request.COOKIES.get("lang")
+    b = ""
+    if l == "eng": b = "By"
+    elif l == "ch": b = "ch"
+    elif l == "rus": b = "Автор"
+
+
+    instance = RssPortals.objects.get(id=portal_id)
+    # news_instance = RssNews.objects.filter(portal_name_id=portal_id)
+    translation = {
+        "id": "id",
+        "title": "title",
+        "date_posted": "date_posted",
+        "portal_name_id": "portal_name_id",
+        "author": "author",
+        "nuid": "nuid"
+    }
+    news_instance = list(RssNews.objects.raw("SELECT id, title, date_posted, portal_name_id, author, nuid FROM news_rss WHERE portal_name_id=%s" % portal_id, translations=translation))
+
+    news_instance_offset = news_instance[:12]
+    string_offset = """<div class="cur-pw-articles">
+<ul class="cur-pw-item" style="padding-left: 0;">"""
+    for i in news_instance_offset:
+        string_offset += """
+    <li class="col-xs-12" style="height:200px;border-bottom: solid 1px lightgrey;">
+        <div class="cur-pw-ar">
+            <div class="cur-pw-ar-cover col-md-3">
+                <div class="cont-cover" onclick="loadCurrentArticle('%s');return false;" style="background: url('%s') no-repeat center; background-size: cover;"></div>
+            </div>
+            <div class="cur-pw-ar-content col-md-9">
+                <div class="cur-pw-ar-t" onclick="loadCurrentArticle('%s'); return false;">%s</div>
+                <div class="cur-pw-ar-par" style="font-size:14px;">
+                    %s&nbsp;<span style="color: #F62A00;">%s</span>
+                    &nbsp;|&nbsp;
+                    <span>%s</span>
+                </div>
+            </div>
+        </div>
+    </li>
+""" % (i.id,
+       i.get_main_cover(),
+       i.id,
+       i.title,
+       b,
+       i.author,
+       i.date_posted.strftime("%b, %d %Y"))
+    string_offset+="""</ul></div>"""
+    string = """<div class="cur-pw-top">
+<div class="cur-pw-background"></div>
+<div class="cur-pw-btn-bck"></div>
+
+<div class="cur-pw-btn-bck">
+    <button class="btn-close-rss btn btn-primary" onclick="hideCurrentRssPortal();return false;">Close</button>
+</div>"""
+
+    if UserRssPortals.objects.get(portal_id=portal_id, user_id=User.objects.get(username=auth.get_user(request).username).id).check == False:
+        string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
+        <button class="btn-fl-rss btn btn-primary" onclick="followCurrentRssPortal('{uuid}', '{id}', '{id}');
+            return false;">Follow</button>
+    </div>
+    """.format(uuid=str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
+               id=instance.id)
+    else:
+        string += """<div class="cur-pw-btn-fl" data-id="{id}" data-special-id="{uuid}">
+        <button class="btn-fl-rss btn btn-primary" onclick="unfollowCurrentRssPortal('{uuid}', '{id}', '{id}'); return
+        false;">Unfollow</button></div>""".\
+            format(uuid=str(User.objects.get(username=auth.get_user(request).username).profile.uuid),
+                   id=instance.id)
+
+    string += """<div class="cur-pw-description col-md-12" style="position: absolute; top: 3em;">
+        <h1 class="text-center">%s</h1>
+        <div class="cur-pw-td text-center">%s</div>
+    </div>
+        <div class="cur-pw-right text-center col-xs-6 col-xs-offset-3">
+            <span class="cur-pw-follows">Followers: %s</span>&nbsp;|&nbsp;
+            <span class="cur-pw-articles-amount">Articles: %s</span>
+        </div>
+</div>
+</div>
+<div class="cur-pw-left col-md-12">
+    %s
+</div>
+    """ % (instance.portal,
+           instance.description,
+           instance.follows,
+           len(news_instance),
+           string_offset)
+
+    return string
 
 
 def send_mail_about_favicon(request, portal):
@@ -1859,7 +1978,6 @@ def send_mail_about_favicon(request, portal):
     send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [settings.DEFAULT_FROM_EMAIL])
     return HttpResponse(json.dumps({'report': 'send'}), content_type="application/json")
 
-
 def aggregate_current_feeds(request):
     from feedfinder2 import find_feeds
     from .aggregator import Aggregator
@@ -1868,8 +1986,6 @@ def aggregate_current_feeds(request):
         feeds = find_feeds(url)
         Aggregator(urls=feeds)
         return HttpResponse(json.dumps({'end': 'true'}), content_type="application/json")
-
-
 
 def get_latest_articles_of_new_rss(request):
     from .models import RSSChannels
@@ -1895,7 +2011,7 @@ def popup_current_portal(request, portal_id):
     args = {}
     args.update(csrf(request))
     user_instance = User.objects.get(username=auth.get_user(request).username)
-    if UserRssPortals.objects.filter(portal_id=portal_id, user_id=user_instance.id).exists() == False:
+    if UserRssPortals.objects.filter(user_id=user_instance.id, portal_id=portal_id).exists() == False:
         UserRssPortals.objects.create(
             portal_id=portal_id,
             user_id=user_instance.id,
@@ -2135,7 +2251,7 @@ def render_current_category_portals(request, category_id):
     """
 
     for i in news_instance:
-        string += """<div onclick="showCurrentPortalData('%s'); return false;" class="fadeandscale_open current-popular-portal col-md-2" id="portal-%s" data-alt-id="%s">
+        string += """<div onclick="showCurrentPortalData('%s'); return false;" class="fadeandscale_open current-popular-portal col-md-2" id="portal-%s" data-alt-id="%s" style="margin-bottom:%s">
                 <a href="">
                     <div class="portal-picture" style="background: url('%s') no-repeat center; background-size: cover;"></div>
                 </a>
@@ -2155,6 +2271,7 @@ def render_current_category_portals(request, category_id):
         """ % (i.id,
                i.id,
                i.puid,
+               "5%",
                i.cover,
                i.favicon,
                i.portal,
@@ -2243,9 +2360,9 @@ def popup_new_portal(request):
         url = request.POST['url']
         url_instance = tldextract.extract(url)
         url_domain = url_instance.domain
-        portal_id = RssPortals.objects.get(portal=str(url_domain).capitalize()).id
 
-        instance = RssPortals.objects.get(id=portal_id)
+        instance = RssPortals.objects.get(verbose_name=str(url_instance.domain).lower())
+        portal_id = instance.id
         news_instance = RssNews.objects.filter(portal_name_id=portal_id)
 
         news_instance_offset = news_instance[:12]

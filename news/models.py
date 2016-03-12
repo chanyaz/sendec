@@ -133,7 +133,7 @@ class News(models.Model):
         # URL is /{year}/{month}/{day}/{slug}
         # return "/news/%s/%s" % (self.news_category_id, self.id)
         # return reverse('news.views.render_current_news', args=[str(self.slug)])
-        return "news/%s/%s/%s/%s/%s" % (self.news_post_date.year,
+        return "/news/%s/%s/%s/%s/%s" % (self.news_post_date.year,
                              self.news_post_date.month,
                              self.news_post_date.day,
                              self.id,
@@ -197,9 +197,9 @@ class TopNews(models.Model):
     top_news_category = models.ForeignKey(NewsCategory)
     top_news_post_date = models.DateTimeField(auto_now_add=True)
 
-    teaser_english = models.TextField(max_length=512, blank=False)
-    teaser_russian = models.TextField(max_length=512, blank=False)
-    teaser_chinese = models.TextField(max_length=512, blank=False)
+    teaser_english = models.TextField(max_length=128, blank=False)
+    teaser_russian = models.TextField(max_length=128, blank=False)
+    teaser_chinese = models.TextField(max_length=128, blank=False)
 
     top_news_post_text_english = models.TextField(max_length=4096)
     top_news_post_text_russian = models.TextField(max_length=4096)
@@ -432,8 +432,6 @@ class RssNewsCovers(models.Model):
 
     def __str__(self):
         return self.rss_news.portal_name.portal
-
-
 
 
 class TopVideoContent(models.Model):

@@ -39,11 +39,11 @@ class RenderRSSPage(TemplateView):
         return News.objects.order_by("-news_post_date")[:offset].values()
 
 
-class RssChannelLatest(Feed):
+class RssChannelLatestEnglish(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=latest'
+    link = '/rss/news&channel=latest&lang=eng'
 
     def items(self):
         return News.objects.filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
@@ -52,7 +52,7 @@ class RssChannelLatest(Feed):
         return item.news_post_date
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
@@ -62,13 +62,59 @@ class RssChannelLatest(Feed):
 
     def author_email(self):
         return "eprivalov@insydia.com"
-
-
-class RssChannelLatestWeek(Feed):
+class RssChannelLatestChinese(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=latest&range=week'
+    link = '/rss/news&channel=latest&lang=ch'
+
+    def items(self):
+        return News.objects.filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelLatestRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=latest&lang=rus'
+
+    def items(self):
+        return News.objects.filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+
+
+class RssChannelLatestWeekEnglish(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=latest&range=week&lang=eng'
 
     def items(self):
         current_day = datetime.datetime.now() - datetime.timedelta(days=7)
@@ -78,7 +124,7 @@ class RssChannelLatestWeek(Feed):
         return item.news_post_date
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
@@ -88,13 +134,61 @@ class RssChannelLatestWeek(Feed):
 
     def author_email(self):
         return "eprivalov@insydia.com"
-
-
-class RssChannelTechnology(Feed):
+class RssChannelLatestWeekChinese(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=technology'
+    link = '/rss/news&channel=latest&range=week&lang=ch'
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return ["Evgeny Privalov"]
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelLatestWeekRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=latest&range=week&lang=rus'
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
+
+    def author_name(self):
+        return ["Evgeny Privalov"]
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+
+
+class RssChannelTechnologyEnglish(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=technology&lang=eng'
 
     def title(self):
         return "Technology news"
@@ -109,7 +203,7 @@ class RssChannelTechnology(Feed):
         return ['Technology']
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
@@ -119,13 +213,71 @@ class RssChannelTechnology(Feed):
 
     def author_email(self):
         return "eprivalov@insydia.com"
-
-
-class RssChannelTechnologyWeek(Feed):
+class RssChannelTechnologyChinese(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=technology&range=week'
+    link = '/rss/news&channel=technology&lang=ch'
+
+    def title(self):
+        return "Technology news"
+
+    def items(self):
+        return News.objects.filter(news_category_id=1).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Technology']
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelTechnologyRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=technology&lang=rus'
+
+    def title(self):
+        return "Technology news"
+
+    def items(self):
+        return News.objects.filter(news_category_id=1).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Technology']
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+
+
+class RssChannelTechnologyWeekEnglish(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=technology&range=week&lang=eng'
 
     def title(self):
         return "Technology news"
@@ -141,7 +293,7 @@ class RssChannelTechnologyWeek(Feed):
         return ['Technology']
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
@@ -151,13 +303,73 @@ class RssChannelTechnologyWeek(Feed):
 
     def author_email(self):
         return "eprivalov@insydia.com"
-
-
-class RssChannelEntertainment(Feed):
+class RssChannelTechnologyWeekChinese(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=entertainment'
+    link = '/rss/news&channel=technology&range=week&lang=ch'
+
+    def title(self):
+        return "Technology news"
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_category_id=1).filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Technology']
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelTechnologyWeekRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=technology&range=week&lang=rus'
+
+    def title(self):
+        return "Technology news"
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_category_id=1).filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Technology']
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+
+
+class RssChannelEntertainmentEnglish(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=entertainment&lang=eng'
 
     def items(self):
         return News.objects.filter(news_category_id=2).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
@@ -169,7 +381,7 @@ class RssChannelEntertainment(Feed):
         return ['Entertainment']
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
@@ -179,13 +391,65 @@ class RssChannelEntertainment(Feed):
 
     def author_email(self):
         return "eprivalov@insydia.com"
-
-
-class RssChannelEntertainmentWeek(Feed):
+class RssChannelEntertainmentChinese(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=entertainment&range=week'
+    link = '/rss/news&channel=entertainment&lang=ch'
+
+    def items(self):
+        return News.objects.filter(news_category_id=2).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Entertainment']
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelEntertainmentRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=entertainment&lang=rus'
+
+    def items(self):
+        return News.objects.filter(news_category_id=2).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Entertainment']
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+
+
+class RssChannelEntertainmentWeekEnglish(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=entertainment&range=week&lang=eng'
 
     def items(self):
         current_day = datetime.datetime.now() - datetime.timedelta(days=7)
@@ -198,7 +462,7 @@ class RssChannelEntertainmentWeek(Feed):
         return ['Entertainment']
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
@@ -208,13 +472,67 @@ class RssChannelEntertainmentWeek(Feed):
 
     def author_email(self):
         return "eprivalov@insydia.com"
-
-
-class RssChannelAuto(Feed):
+class RssChannelEntertainmentWeekChinese(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=auto'
+    link = '/rss/news&channel=entertainment&range=week&lang=ch'
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_category_id=2).filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Entertainment']
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelEntertainmentWeekRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=entertainment&range=week&lang=rus'
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_category_id=2).filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Entertainment']
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+
+
+class RssChannelAutoEnglish(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=auto&lang=eng'
 
     def items(self):
         return News.objects.filter(news_category_id=3).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
@@ -226,7 +544,7 @@ class RssChannelAuto(Feed):
         return ['Auto']
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
@@ -236,13 +554,65 @@ class RssChannelAuto(Feed):
 
     def author_email(self):
         return "eprivalov@insydia.com"
-
-
-class RssChannelAutoWeek(Feed):
+class RssChannelAutoChinese(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=auto&range=week'
+    link = '/rss/news&channel=auto&lang=ch'
+
+    def items(self):
+        return News.objects.filter(news_category_id=3).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Auto']
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelAutoRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=auto&lang=rus'
+
+    def items(self):
+        return News.objects.filter(news_category_id=3).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Auto']
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+
+
+class RssChannelAutoWeekEnglish(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=auto&range=week&lang=eng'
 
     def items(self):
         current_day = datetime.datetime.now() - datetime.timedelta(days=7)
@@ -255,7 +625,7 @@ class RssChannelAutoWeek(Feed):
         return ['Auto']
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
@@ -265,13 +635,67 @@ class RssChannelAutoWeek(Feed):
 
     def author_email(self):
         return "eprivalov@insydia.com"
-
-
-class RssChannelSpace(Feed):
+class RssChannelAutoWeekChinese(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=space'
+    link = '/rss/news&channel=auto&range=week&lang=ch'
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_category_id=3).filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Auto']
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelAutoWeekRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=auto&range=week&lang=rus'
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_category_id=3).filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Auto']
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+
+
+class RssChannelSpaceEnglish(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=space&lang=eng'
 
     def items(self):
         return News.objects.filter(news_category_id=4).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
@@ -283,7 +707,7 @@ class RssChannelSpace(Feed):
         return ['Space']
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
@@ -293,13 +717,65 @@ class RssChannelSpace(Feed):
 
     def author_email(self):
         return "eprivalov@insydia.com"
-
-
-class RssChannelSpaceWeek(Feed):
+class RssChannelSpaceChinese(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=space&range=week'
+    link = '/rss/news&channel=space&lang=ch'
+
+    def items(self):
+        return News.objects.filter(news_category_id=4).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Space']
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelSpaceRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=space&lang=rus'
+
+    def items(self):
+        return News.objects.filter(news_category_id=4).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Space']
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+
+
+class RssChannelSpaceWeekEnglish(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=space&range=week&lang=eng'
 
     def items(self):
         current_day = datetime.datetime.now() - datetime.timedelta(days=7)
@@ -312,7 +788,7 @@ class RssChannelSpaceWeek(Feed):
         return ['Space']
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
@@ -322,13 +798,67 @@ class RssChannelSpaceWeek(Feed):
 
     def author_email(self):
         return "eprivalov@insydia.com"
-
-
-class RssChannelBio(Feed):
+class RssChannelSpaceWeekChinese(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=bio'
+    link = '/rss/news&channel=space&range=week&lang=ch'
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_category_id=4).filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Space']
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelSpaceWeekRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=space&range=week&lang=rus'
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_category_id=4).filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['Space']
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+
+
+class RssChannelBioEnglish(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=bio&lang=eng'
 
     def items(self):
         return News.objects.filter(news_category_id=5).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
@@ -340,7 +870,7 @@ class RssChannelBio(Feed):
         return ['BIO']
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
@@ -350,13 +880,65 @@ class RssChannelBio(Feed):
 
     def author_email(self):
         return "eprivalov@insydia.com"
-
-
-class RssChannelBioWeek(Feed):
+class RssChannelBioChinese(Feed):
 
     title_template = "Rss Channel of Insydia"
     description_template = "desc"
-    link = '/rss/news&channel=bio&range=week'
+    link = '/rss/news&channel=bio&lang=ch'
+
+    def items(self):
+        return News.objects.filter(news_category_id=5).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['BIO']
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelBioRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=bio&lang=rus'
+
+    def items(self):
+        return News.objects.filter(news_category_id=5).filter(news_post_date__hour='00').order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['BIO']
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+
+
+class RssChannelBioWeekEnglish(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=bio&range=week&lang=eng'
 
     def items(self):
         current_day = datetime.datetime.now() - datetime.timedelta(days=7)
@@ -369,10 +951,64 @@ class RssChannelBioWeek(Feed):
         return ['BIO']
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelBioWeekChinese(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=bio&range=week&lang=ch'
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_category_id=5).filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['BIO']
+
+    def item_title(self, item):
+        return item.news_title_chinese
+
+    def item_description(self, item):
+        return item.news_post_text_chinese
+
+    def author_name(self):
+        return "Evgeny Privalov"
+
+    def author_email(self):
+        return "eprivalov@insydia.com"
+class RssChannelBioWeekRussian(Feed):
+
+    title_template = "Rss Channel of Insydia"
+    description_template = "desc"
+    link = '/rss/news&channel=bio&range=week&lang=rus'
+
+    def items(self):
+        current_day = datetime.datetime.now() - datetime.timedelta(days=7)
+        return News.objects.filter(news_category_id=5).filter(news_post_date__gt=current_day).order_by("-news_post_date")[:10]
+
+    def item_pubdate(self, item):
+        return item.news_post_date
+
+    def item_categories(self, item):
+        return ['BIO']
+
+    def item_title(self, item):
+        return item.news_title_russian
+
+    def item_description(self, item):
+        return item.news_post_text_russian
 
     def author_name(self):
         return "Evgeny Privalov"
@@ -399,7 +1035,7 @@ class RssChannelCompany(Feed):
         return item.news_post_date
 
     def item_title(self, item):
-        return item.news_title
+        return item.news_title_english
 
     def item_description(self, item):
         return item.news_post_text_english

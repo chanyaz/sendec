@@ -6,6 +6,10 @@
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/css/style_beta.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'static/css/about/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'static/css/about/demo.css' %}">
+    <link rel="stylesheet" href="{% static 'static/css/about/component.css' %}">
+    <script src="{% static 'static/js/about/modernizr.custom.25376.js' %}"></script>
 
 <style>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     >
         header{position: relative;z-index:1;}
@@ -26,6 +30,8 @@
         #head-menu>a{color:#F62A00;}
         #head-menu>a:hover{color:#1E656D;}
         #head-logo{position:absolute;top:5%;right:5%;font-size:20px;color:#F62A00}
+        #head-logo>a{color:white;text-decoration:none}
+        #head-logo>a:focus,#head-logo>a:hover{color:#F62A00;text-decoration:none}
         #head-title{position: absolute;top:25%;padding:10px;}
         #head-title>h1{font-size:72px;color:white}
         #head-description{position:absolute;top:40%;color:white;font-size:20px}
@@ -141,10 +147,11 @@
         #conditions{width:100%;height:100%;background:white}
 
         /*********************** resume ***********************/
-        #resume{width:100%;height:100%;background:black}
+        #resume{width:100%;height:80%;background:black}
         .res-title{margin-top:5%}
         .res-title>h2{color:white;padding:0;margin:0;font-size:26px}
-        .res-descriptoin{margin-top:2%}
+        .res-descriptoin{margin-top:2%;padding:0}
+        .res-descriptoin>form>input{margin-bottom: 15px}
 
         footer{background: black}
         .cf-title>h2{font-size:26px;color:white;padding:0;margin:2% 0;}
@@ -153,7 +160,14 @@
         .cfl-item>a{color:white}
         .cfl-item>a:hover{color:#F62A00}
         .cf-brand{color:white}
+
+        #resume-result{position: absolute;bottom:45%;left:27%;width:49%;height: 17%;background: #1E656D;color:white;padding:1%;border-radius: 5px;font-size: 15px;text-align: center;border-left: solid 2px #F62A00;z-index: 999;}
 </style>
+
+                <div id="perspective" class="perspective effect-airbnb">
+                    <div class="container-effect">
+                        <div class="wrapper"><!-- wrapper needed for scroll -->
+                            <!-- Top Navigation -->
 
 
         <main>
@@ -161,8 +175,15 @@
             <header>
                 <div id="head-back"></div>
                 <div class="head-arrow bounce"></div>
-                <div id="head-menu"><a href="/">{% trans 'BACK TO SITE' %}</a></div>
-                <div id="head-logo">INSYDIA</div>
+            <div id="head-menu">
+{#                <a href="/">{% trans 'BACK TO SITE' %}</a>#}
+                            <div class="main clearfix">
+                                <div class="column">
+                                    <p><button id="showMenu">{% trans 'MENU' %}</button></p>
+                                </div>
+                            </div><!-- /main -->
+            </div>
+                <div id="head-logo"><a href="/">INSYDIA</a></div>
                 <div id="head-title" class="col-xs-12 text-center">
                     <h1>{% trans 'CAREER' %}</h1>
                 </div>
@@ -176,7 +197,9 @@
                     <div class="row row-center col-xs-12">
                         <div class="col-xs-4 text-center">
                             <div class="adv-one">
-                                <div class="advo-image"></div>
+                                <div class="advo-image">
+                                    <img src="{% static 'static/img/about/draw.png' %}" width="32px" height="32px"/>
+                                </div>
                                 <div class="advo-title"><h2>{% trans 'Творите' %}</h2></div>
                                 <div class="advo-description">
                                     <h3>{% blocktrans %}Мы занимаемся творчеством и нам это безумно нравится. Мы рады заниматься
@@ -186,7 +209,9 @@
                         </div>
                         <div class="col-xs-4 text-center">
                             <div class="adv-two">
-                                <div class="advt-image"></div>
+                                <div class="advt-image">
+                                    <img src="{% static 'static/img/about/study.png' %}" width="32px" height="32px"/>
+                                </div>
                                 <div class="advt-title"><h2>{% trans 'Учитесь' %}</h2></div>
                                 <div class="advt-description">
                                     <h3>{% blocktrans %}Мы всегда находимся в процессе обучения и изучения нового. Мы не стоим на месте
@@ -197,7 +222,9 @@
                         </div>
                         <div class="col-xs-4 text-center">
                             <div class="adv-three">
-                                <div class="advt-image"></div>
+                                <div class="advt-image">
+                                    <img src="{% static 'static/img/about/happy.png' %}" width="32px" height="32px"/>
+                                </div>
                                 <div class="advth-title"><h2>{% trans 'Получайте удовольствие от работы' %}</h2></div>
                                 <div class="advth-description">
                                     <h3>{% blocktrans %}Самое главное в работе это получать от неё удовольствие и радоваться каждому
@@ -316,22 +343,42 @@
                     </div>
                 </div>
             </section>
-            <section id="work">
-                <div class="section-title">work</div>
-            </section>
-            <section id="conditions">
-                <div class="section-title">conditions</div>
-            </section>
+{#            <section id="work">#}
+{#                <div class="section-title">work</div>#}
+{#            </section>#}
+{#            <section id="conditions">#}
+{#                <div class="section-title">conditions</div>#}
+{#            </section>#}
             <section id="resume">
                 <div id="res-table" class="container container-fluid text-center">
                     <div class="row row-center col-xs-12">
                         <div class="res-title text-center">
                             <h2>
-                                {% trans 'Присоединитесь к нам сегодня и измените медиа индустрию' %}
+                                {% blocktrans %}
+                                    На текущий момент у нас нет каких-либо открытых вакансий, но если Вы думаете,
+                                    что можете помочь нашему проекту и хотите стать членом нашей семьи,
+                                    заполните форму ниже и мы обязательно с вами свяжемся.
+                                {% endblocktrans %}
                             </h2>
                         </div>
-                        <div class="res-descriptoin text-center">
-                            <button class="">{% trans 'Отправить резюме' %}</button>
+                        <div id="resume-result" hidden>
+                            <img src="{% static 'static/img/favicons/all/white_trans.png' %}" width="64px" height="64px" /> {% trans 'Thanks for your desire to be with Insydia' %}
+                        </div>
+
+                        <div class="res-descriptoin text-center col-xs-6 col-xs-offset-3">
+                            <form id="form-resume" method="POST" role="form" action="/about/career/resume/" class="form-horizontal">
+                                {% csrf_token %}
+                                <input required class="form-control" name="name" placeholder="{% trans 'Your name' %}">
+                                <input required type="tel" name="tel" class="form-control" placeholder="{% trans 'Your phone' %}">
+                                <input type="email"
+                                       required
+                                       name="email"
+                                       pattern="[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"
+                                       class="form-control" placeholder="{% trans 'Your email' %}">
+                                <label style="color:white" for="form-resume-text">{% trans 'Расскажите нам немного о себе. Откуда узнали про проект Insydia и в какой роли вы бы хотели быть в нашей команде.' %}</label>
+                                <textarea required id="form-resume-text" name="text" class="form-control" placeholder="{% trans 'Расскажите о себе' %}"></textarea>
+                                <button type="submit" style="margin-top:2%">{% trans 'Отправить' %}</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -340,12 +387,6 @@
         <footer>
             <div id="career-footer" class="container container-fluid">
                 <div class="row row-center text-center">
-                    <hr width="50%">
-                    <div class="cf-title text-center">
-                        <h2>
-                            {% trans 'Присоединяйтесь к нам' %}
-                        </h2>
-                    </div>
                     <div class="cf-socials text-center">
                         <ul class="cf-list">
                             <li class="cfl-item">
@@ -381,7 +422,27 @@
                 </div>
             </div>
         </footer>
+ </div>
+</div>
+	<nav class="outer-nav left vertical">
+		<nav class="outer-nav left vertical">
+            <a href="/"><span class="fa fa-home"></span> Home</a>
+            <a href="/news/technology/"><span class="fa fa-desktop"></span> Technology</a>
+            <a href="/news/entertainment/"><span class="fa fa-film"></span> Entertainment</a>
+            <a href="/news/auto/"><span class="fa fa-car"></span> Auto</a>
+            <a href="/news/space/"><span class="fa fa-space-shuttle"></span> Space</a>
+            <a href="/news/bio/"><i class="fa fa-heartbeat"></i> BIO</a>
+            <a href="/news/usernews/"><span class="fa fa-user"></span> Private</a>
+            <a href="/about/advertisement/"><span class="fa fa-line-chart"></span> Advertisement</a>
+            <a href="/about/career/"><span class="fa fa-briefcase"></span> Career</a>
+        </nav>
+	</nav>
+                </div>
 
-    <script src="{% static 'static/js/jquery.js' %}"></script>
-    <script src="{% static 'static/js/jquery.min.js' %}"></script>
+    <script src="{% static 'static/js/about/classie.min.js' %}"></script>
+    <script src="{% static 'static/js/about/menu.min.js' %}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script>
+        $form=$("#form-resume"),$($form).submit(function(){return $.ajax({type:$form.attr("method"),url:$form.attr("action"),data:$form.serialize(),success:function(r){1==r.data&&$("#resume-result").fadeIn("slow").delay(1100).fadeOut("slow")}}),!1});
+    </script>

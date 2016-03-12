@@ -12,17 +12,27 @@
         #feeds-table{width:100%}
         .table-item{height:30px}
         .table-item:hover{background-color:#F62A00;color:white}
-{#        .table-item:hover a{color:white;}#}
-        .channel-name{font-weight:bold;width:50%;}
-        .channel-today{width:25%;}
-        .channel-week{width:25%;}
+        .table-item:hover a{color:white;text-decoration:none}
+        a{color:#F62A00}
+        a:hover,a:focus{color:white;text-decoration:none}
+        .channel-name{width:20%;}
+        .channel-today{width:12%;}
+        .channel-today>ul{padding:0;list-style-type: none}
+        .channel-today>ul>li{display: inline-block;margin-left:10%}
+        .channel-week{width:12%;}
+        .channel-week>ul{padding:0;list-style-type: none}
+        .channel-week>ul>li{display: inline-block;margin-left:10%}
         #rss-company-form{width:100%;position:relative;}
         #company-name{float:left;width:65%}
         #search-rss-company{background:#F62A00}
         #search-rss-company:hover{background: #ff4c0e}
-        #search-rss-company{float:right;width:25%}
+        #search-rss-company{width:27%}
         .news-title>a{color:black}
         .news-title>a:hover{color:#F62A00}
+
+        .hc{width:20%}
+        .ht{width:40%}
+        .hw{width:40%}
     </style>
     <div id="feed" class="container-fluid container">
         <div class="row row-centered">
@@ -32,70 +42,111 @@
                         <h1>{% trans 'RSS Feed' %}</h1>
                     </div>
                     <table id="feeds-table">
+                        <tr>
+                            <th class="hc">Category</th>
+                            <th class="ht text-center">Today</th>
+                            <th class="hw text-center">This week</th>
+                        </tr>
                         <tr class="table-item">
                             <td class="channel-name">{% trans 'Latest' %}</td>
                             <td class="channel-today">
-                                <a href="/rss/news&channel=latest" target="_blank">{% trans 'Today' %}</a>
+                                <ul>
+                                    <li><a href="/rss/news&channel=latest&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=latest&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=latest&lang=rus" target="_blank">Русский</a></li>
+                                </ul>
                             </td>
-                            <td class="channel-week">
-                                <a href="/rss/news&channel=latest&range=week" target="_blank">
-                                    {% trans 'This week' %}
-                                </a>
+                            <td class="channel-week text-center">
+                                <ul>
+                                    <li><a href="/rss/news&channel=latest&range=week&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=latest&range=week&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=latest&range=week&lang=rus" target="_blank">Russian</a></li>
+                                </ul>
                             </td>
                         </tr>
                         <tr class="table-item">
                             <td class="channel-name">{% trans 'Technology' %}</td>
                             <td class="channel-today">
-                                <a href="/rss/news&channel=technology" target="_blank">{% trans 'Today' %}</a>
+                                <ul>
+                                    <li><a href="/rss/news&channel=technology&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=technology&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=technology&lang=rus" target="_blank">Russian</a></li>
+                                </ul>
                             </td>
-                            <td class="channel-week">
-                                <a href="/rss/news&channel=technology&range=week" target="_blank">
-                                    {% trans 'This week' %}
-                                </a>
+                            <td class="channel-week text-center">
+                                <ul>
+                                    <li><a href="/rss/news&channel=technology&range=week&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=technology&range=week&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=technology&range=week&lang=rus" target="_blank">Russian</a></li>
+                                </ul>
                             </td>
                         </tr>
                         <tr class="table-item">
                             <td class="channel-name">{% trans 'Entertainment' %}</td>
                             <td class="channel-today">
-                                <a href="/rss/news&channel=entertainment" target="_blank">{% trans 'Today' %}</a>
+                                <ul>
+                                    <li><a href="/rss/news&channel=entertainment&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=entertainment&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=entertainment&lang=rus" target="_blank">Russian</a></li>
+                                </ul>
                             </td>
-                            <td class="channel-week">
-                                <a href="/rss/news&channel=entertainment&range=week" target="_blank">
-                                    {% trans 'This week' %}
-                                </a>
+                            <td class="channel-week text-center">
+                                <ul>
+                                    <li><a href="/rss/news&channel=entertainment&range=week&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=entertainment&range=week&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=entertainment&range=week&lang=rus" target="_blank">Russian</a></li>
+                                </ul>
                             </td>
                         </tr>
                         <tr class="table-item">
                             <td class="channel-name">{% trans 'Auto' %}</td>
                             <td class="channel-today">
-                                <a href="/rss/news&channel=auto" target="_blank">{% trans 'Today' %}</a>
+                                <ul>
+                                    <li><a href="/rss/news&channel=auto&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=auto&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=auto&lang=rus" target="_blank">Russian</a></li>
+                                </ul>
                             </td>
-                            <td class="channel-week">
-                                <a href="/rss/news&channel=auto&range=week" target="_blank">
-                                    {% trans 'This week' %}
-                                </a>
+                            <td class="channel-week text-center">
+                                <ul>
+                                    <li><a href="/rss/news&channel=auto&range=week&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=auto&range=week&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=auto&range=week&lang=rus" target="_blank">Russian</a></li>
+                                </ul>
                             </td>
                         </tr>
                         <tr class="table-item">
                             <td class="channel-name">{% trans 'Space' %}</td>
                             <td class="channel-today">
-                                <a href="/rss/news&channel=space" target="_blank">{% trans 'Today' %}</a>
+                                <ul>
+                                    <li><a href="/rss/news&channel=space&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=space&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=space&lang=rus" target="_blank">Russian</a></li>
+                                </ul>
                             </td>
-                            <td class="channel-week">
-                                <a href="/rss/news&channel=space&range=week" target="_blank">
-                                    {% trans 'This week' %}
-                                </a>
+                            <td class="channel-week text-center">
+                                <ul>
+                                    <li><a href="/rss/news&channel=space&range=week&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=space&range=week&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=space&range=week&lang=rus" target="_blank">Russian</a></li>
+                                </ul>
                             </td>
                         </tr>
                         <tr class="table-item">
                             <td class="channel-name">{% trans 'BIO' %}</td>
                             <td class="channel-today">
-                                <a href="/rss/news&channel=bio" target="_blank">{% trans 'Today' %}</a>
+                                <ul>
+                                    <li><a href="/rss/news&channel=bio&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=bio&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=bio&lang=rus" target="_blank">Russian</a></li>
+                                </ul>
                             </td>
-                            <td class="channel-week">
-                                <a href="/rss/news&channel=bio&range=week" target="_blank">
-                                    {% trans 'This week' %}
-                                </a>
+                            <td class="channel-week text-center">
+                                <ul>
+                                    <li><a href="/rss/news&channel=bio&range=week&lang=eng" target="_blank">English</a></li>
+                                    <li><a href="/rss/news&channel=bio&range=week&lang=ch" target="_blank">Chinese</a></li>
+                                    <li><a href="/rss/news&channel=bio&range=week&lang=rus" target="_blank">Russian</a></li>
+                                </ul>
                             </td>
                         </tr>
                     </table>
@@ -126,9 +177,9 @@
                     </aside>
                 </div>
             </div>
-            <div id="latest-news">
+            <div id="" class="" style="width:70%">
                 {% for i in latest_news %}
-                    <div class="sect-2-top" style="width: 33%; margin-right: 2%; margin-bottom: 3%; float: left">
+                    <div class="" style="width:48%;float:left;margin-left:2%">
                         <div class="current_news_mas news-news">
                             <a href="/news/{{ i.news_post_date.year }}/{{ i.news_post_date.month }}/{{ i.news_post_date.day }}/{{ i.id }}/{{ i.slug }}">
                                 <div class="middle-news-cover"
@@ -150,6 +201,12 @@
                                         </b>
                                     </a>
                                 </div>
+                                <div class="ta" style="color:black">
+                                    <i>{% trans 'By' %}&nbsp;<span class="article-author">
+                                        <a href="/profile/m/{{ i.news_author }}/">{{ i.news_author_id|get_article_author }}</a>
+                                    </span>
+                                        &nbsp;|&nbsp;<span class="publushed">{{ i.news_post_date.date|date }}</span></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -157,4 +214,46 @@
             </div>
         </div>
     </div>
+    <script>
+    $("#rss-company-form").submit(function(){location.href="/rss/news&channel=company&name="+$("#company-name")}),$("#company-name").autocomplete({source:function(e,n){$.ajax({url:"/news/companies/cs="+$("#company-name").val().replace(/\./g,""),dataType:"json",type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}",q:e.term},success:function(e){n($.map(e,function(e){return{id:e.id,label:e.name,value:e.name,verbose:e.verbose}}))}})},minLength:1,maxLength:10,select:function(e,n){location.href="/rss/news&channel=company&name="+n.item.verbose},open:function(){$(this).removeClass("ui-corner-all").addClass("ui-corner-top")},close:function(){$(this).removeClass("ui-corner-top").addClass("ui-corner-all")}}).data("autocomplete")._renderItem=function(e,n){return $("<li></li>").data("item.autocomplete",n).append("<a>"+n.label+"<br>"+n.name+"</a>").appendTo(e)};
+{#    $('#rss-company-form').submit(function () {#}
+{#        location.href = '/rss/news&channel=company&name=' + $('#company-name');#}
+{#    });#}
+{#    $('#company-name').autocomplete({#}
+{#        source: function (request, response) {#}
+{#            $.ajax({#}
+{#                url: "/news/companies/cs=" + $('#company-name').val().replace(/\./g, ""),#}
+{#                dataType: "json",#}
+{#                type: "POST",#}
+{#                data: {#}
+{#                    'csrfmiddlewaretoken': '{{ csrf_token }}',#}
+{#                    q: request.term#}
+{#                },#}
+{#                success: function (data) {#}
+{#                    response($.map(data, function (item) {#}
+{#                        return {#}
+{#                            id: item.id,#}
+{#                            label: item.name,#}
+{#                            value: item.name,#}
+{#                            verbose: item.verbose#}
+{#                        };#}
+{#                    }));#}
+{#                }#}
+{#            });#}
+{#        },#}
+{#        minLength: 1,#}
+{#        maxLength: 10,#}
+{#        select: function (event, ui) {#}
+{#            location.href = '/rss/news&channel=company&name=' + ui.item.verbose;#}
+{#        },#}
+{#        open: function () {#}
+{#            $(this).removeClass('ui-corner-all').addClass('ui-corner-top');#}
+{#        },#}
+{#        close: function () {#}
+{#            $(this).removeClass('ui-corner-top').addClass('ui-corner-all');#}
+{#        }#}
+{#    }).data("autocomplete")._renderItem = function (ul, item) {#}
+{#        return $("<li></li>").data("item.autocomplete", item).append("<a>" + item.label + "<br>" + item.name + "</a>").appendTo(ul);#}
+{#    };#}
+    </script>
 {% endblock %}

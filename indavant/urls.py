@@ -70,7 +70,7 @@ urlpatterns = patterns('',
     # url(r'^ru/', 'news.views.translate_russian'),
     # url(r'^cn/', 'news.views.translate_chinese'),
     url(r'^rss/', include('rss.urls')),
-
+    url(r'^reports/', include('reports.urls')),
 
 
     url(r'^closet/check_email/email=(?P<email>\w+)$', 'news.views.check_email_subs'),
