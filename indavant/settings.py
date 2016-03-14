@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# sudo grep . 'mysite' -P -R -I -l * | xargs sed -i "s/{% mysite/{% static '/g"
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -54,9 +55,9 @@ INSTALLED_APPS = (
     "maintenancemode",
     "nocaptcha_recaptcha",
     "password_reset",
-    "api",
-    "oauth2_provider",
-    "rest_framework",
+    # "api",
+    # "oauth2_provider",
+    # "rest_framework",
     "rss",
     #"imagekit",
     "sorl.thumbnail",
@@ -267,6 +268,11 @@ import json
 with open(BASE_DIR+"/indavant/admin_data_mail.json") as json_file:
 #with open(BASE_DIR+"indavant/admin_data_mail.json") as json_file:
     json_data = json.load(json_file)
+
+
+
+# "static 'static/"
+# static '"
 
 
 # E-mail

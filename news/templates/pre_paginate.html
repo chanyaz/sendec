@@ -39,17 +39,18 @@
                     </div>
                     <div class="news-text">
                         {% if lang == 'eng' %}
-                            {{ i.teaser_english }}
+                            {{ i.teaser_english|truncatechars:"128" }}
                         {% elif lang == 'rus' %}
-                            {{ i.teaser_russian }}
+                            {{ i.teaser_russian|truncatechars:"128" }}
                         {% else %}
-                            {{ i.teaser_chinese }}
+                            {{ i.teaser_chinese|truncatechars:"128" }}
                         {% endif %}
                     </div>
                 </div>
             </div>
         {% endfor %}
      </div>
+     {% if total_bottom_news %}
      <div class="two-news-item col-md-12">
         <div class="cat cat-left col-xs-12">
             <a href="/news/{{ total_bottom_news.1.id|get_news_category }}">
@@ -92,6 +93,7 @@
             </div>
         </div>
     </div>
+     {% endif %}
 {% else %}
     <div class="dyn-news-2 container">
         <div id="paginate-list">

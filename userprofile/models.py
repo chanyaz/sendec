@@ -11,9 +11,10 @@ class UserSettings(models.Model):
         verbose_name_plural = "Settings"
 
     user = models.ForeignKey(User)
-    color_scheme = models.TextField(max_length=9)
-    portals_to_show = models.TextField(max_length=256)
-    categories_to_show = models.TextField(max_length=64)
+    color_scheme = models.TextField(max_length=9, blank=True)
+    portals_to_show = models.TextField(max_length=256, blank=True)
+    categories_to_show = models.TextField(max_length=64, blank=True)
+    font = models.IntegerField(default=16,blank=True)
 
     def __str__(self):
         return self.user.username
@@ -63,9 +64,10 @@ class ModeratorSpecialFields(models.Model):
     twitter = models.CharField(max_length=128)
     vk = models.CharField(max_length=128)
     linkedin = models.CharField(max_length=128)
-    # instagram = models.CharField(max_length=128)
+    instagram = models.CharField(max_length=128)
     personal_email = models.EmailField(max_length=128)
-    # description = models.CharField(max_length=256)
+    description = models.CharField(max_length=256)
+    telegram = models.CharField(max_length=64)
 
     def __str__(self):
         return self.user.username

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-06 22:55+0000\n"
+"POT-Creation-Date: 2016-03-13 19:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,25 +17,801 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: favourite/templates/liked_news.html:90 news/templates/browse_tech.html:202
-#: news/templates/manage_portals.html:77 news/templates/user_news.html:309
-#: news/templates/user_news.html.py:483 news/templates/user_news_beta.html:396
+#: about/templates/about.html:499 about/templates/advertisers.html:183
+#: about/templates/hire.html:182 about/templates/telegram_guide.html:194
+msgid "MENU"
+msgstr ""
+
+#: about/templates/about.html:508
+msgid "Insydia was founded at March 2016."
+msgstr ""
+
+#: about/templates/about.html:515
+msgid "WHAT WE DO"
+msgstr ""
+
+#: about/templates/about.html:518
+msgid ""
+"<h2>Проект Insydia начинает свою историю летом 2015 года, когда наш "
+"основатель\n"
+"    заметил, что в рускоязычном сегменте Интернета очень мало информации о "
+"высоких технологиях\n"
+"    по сравнению , например, с англоязычным. С того момента мы начали работу "
+"по созданию сервиса,\n"
+"    который помог бы русскоговорящим людям получить больше информации из "
+"мира Hi-Tech. Мы не просто\n"
+"    хотим искать и собирать новости, мы хотим предоставлять нашим "
+"посетителям такой контент, который\n"
+"    редко встречается где-либо, но может оказаться очень интересным. Большую "
+"ставку мы делаем на стартапы\n"
+"    нашей страны. Мы хотим помочь им. Хотим, чтобы о них узнали не только в "
+"России, но и во всём мире\n"
+"    (для этого мы будем писать о них на трёх самых популярных языках мира), "
+"это откроет для них практически\n"
+"    неограниченные возможности: от поиска сотрудников и до получения "
+"инвестиций со всего мира, а также данная\n"
+"    информация может стать вдохновением для любого мечтателя, желающего "
+"создать что-то интересное, полезное и\n"
+"    важное. Развитие высокотехнологичной индустрии начинается с идеи и "
+"распространения информации о ней, и мы\n"
+"    готовы помочь вам с последним.</h2>"
+msgstr ""
+
+#: about/templates/about.html:533
+msgid "Media kit"
+msgstr ""
+
+#: about/templates/about.html:543
+#, fuzzy
+#| msgid "Moderators"
+msgid "collaborators"
+msgstr "Редакторы"
+
+#: about/templates/about.html:548
+#, fuzzy
+#| msgid "Evgeniy Privalov"
+msgid "Eugene Privalov"
+msgstr "Евгений Привалов"
+
+#: about/templates/about.html:549
+msgid "CEO, Founder, Publisher"
+msgstr ""
+
+#: about/templates/about.html:573
+msgid "Anton Tinishov"
+msgstr "Антон Тинишов"
+
+#: about/templates/about.html:574
+msgid "CTO, Co-Founder, Advisor"
+msgstr ""
+
+#: about/templates/about.html:601
+#, fuzzy
+#| msgid "Evgeniy Privalov"
+msgid "Stanislav Privalov"
+msgstr "Евгений Привалов"
+
+#: about/templates/about.html:602
+msgid "Finance advisor"
+msgstr ""
+
+#: about/templates/about.html:627
+msgid "Kate Vlasova"
+msgstr ""
+
+#: about/templates/about.html:628
+msgid "English localizer"
+msgstr ""
+
+#: about/templates/about.html:657
+msgid "Mary Konosova"
+msgstr ""
+
+#: about/templates/about.html:658
+msgid "Chinese localizer"
+msgstr ""
+
+#: about/templates/about.html:687
+msgid "Nikita Illin"
+msgstr ""
+
+#: about/templates/about.html:688
+msgid "Video editor"
+msgstr ""
+
+#: about/templates/about.html:712
+msgid "Elizaveta Karceva"
+msgstr ""
+
+#: about/templates/about.html:713
+msgid "Design advisor, logo creator"
+msgstr ""
+
+#: about/templates/about.html:738
+msgid "Artem Panin"
+msgstr ""
+
+#: about/templates/about.html:739
+msgid "Crucial advisor"
+msgstr ""
+
+#: about/templates/about.html:767
+msgid "get in touch"
+msgstr ""
+
+#: about/templates/about.html:773
+msgid "Take special info"
+msgstr ""
+
+#: about/templates/about.html:779
+#, fuzzy
+#| msgid "Advertiser"
+msgid "Advertisements"
+msgstr "Рекламодателям"
+
+#: about/templates/about.html:785
+msgid "Need in support?"
+msgstr ""
+
+#: about/templates/about.html:791
+msgid "For partners"
+msgstr ""
+
+#: about/templates/about.html:801
+msgid "SAY HELLO"
+msgstr ""
+
+#: about/templates/about.html:804 about/templates/hire.html:373
+#, fuzzy
+#| msgid "First name"
+msgid "Your name"
+msgstr "Имя"
+
+#: about/templates/about.html:809 about/templates/hire.html:379
+#, fuzzy
+#| msgid "Enter your email"
+msgid "Your email"
+msgstr "Введите вашу почту"
+
+#: about/templates/about.html:810
+#, fuzzy
+#| msgid "Message"
+msgid "Type message"
+msgstr "Сообщение"
+
+#: about/templates/about.html:823
+msgid "Alpiyskiy pereulok 15k2 | suit 1411"
+msgstr ""
+
+#: about/templates/about.html:824
+msgid "St. Petersburg, Russian Federation, 192239"
+msgstr ""
+
+#: about/templates/about.html:871
+msgid "Угостите нас кофе"
+msgstr ""
+
+#: about/templates/about.html:874
+msgid ""
+"\n"
+"                                        Если вам понравился наш портал и вы "
+"хотите нас поддержать, Вы можете купить\n"
+"                                        нам чашечку кофе, чтобы мы лучше и "
+"быстрее работали :)\n"
+"                                    "
+msgstr ""
+
+#: about/templates/advertisers.html:189
+#, fuzzy
+#| msgid "MEDIA"
+msgid "MEDIA KIT"
+msgstr "Медиа"
+
+#: about/templates/advertisers.html:192
+msgid "You have selected the best place for your advertising"
+msgstr ""
+
+#: about/templates/advertisers.html:193
+msgid ""
+"После прохождения бета-теста мы дополним данную страницу, указав всю "
+"необходиую информацтю для\n"
+"                рекламодателя."
+msgstr ""
+
+#: about/templates/advertisers.html:200
+msgid "Реклама"
+msgstr ""
+
+#: about/templates/advertisers.html:206 news/templates/browse_portals.html:69
+#: news/templates/browse_portals.html:115
+#: news/templates/browse_portals.html:161
+#: news/templates/browse_portals.html:207
+#: news/templates/browse_portals.html:253
+#: news/templates/browse_portals.html:299 news/templates/catalog.html:116
+#: news/templates/companies.html:34 news/templates/companies_endless.html:12
+#: news/templates/current_portal_rss_news.html:47
+#: search/templates/search.html:209 search/templates/search.html.py:232
+#: userprofile/templates/moderator_profile.html:21
+#: userprofile/templates/profile.html:62
+msgid "Articles"
+msgstr "Статьи"
+
+#: about/templates/advertisers.html:209
+msgid ""
+"Если вы хотите заказать у нас статью о вашем продукте/проекте, напишите нам "
+"на почту\n"
+"                            <a href=\"mailto:advert@insydia.com"
+"\">advert@insydia.com</a>."
+msgstr ""
+
+#: about/templates/advertisers.html:211
+msgid ""
+"Мы работаем над проектами любого типа и формата. Мы не\n"
+"                                имеем каких-либо рамок или особых "
+"требований. Единственное, что вы\n"
+"                                должны понимать - мы занимаемся созданием "
+"статей лишь в категориях:\n"
+"                                Технологии, Развлечения, Автомобили, Космос, "
+"Био-технологии, при условии,\n"
+"                                что в них идёт упоминание о Hi-Tech."
+msgstr ""
+
+#: about/templates/advertisers.html:220
+#, fuzzy
+#| msgid "Contacts"
+msgid "Context"
+msgstr "Контакты"
+
+#: about/templates/advertisers.html:223
+msgid ""
+"<p>Помимо написания статей мы предлагаем вам разместить у\n"
+"                                нас свою рекламу в виде контекстного/"
+"информационного блока. В скором\n"
+"                                времени мы активируем данную функцию и вы "
+"получите полный доступ к\n"
+"                                работе с рекламой этого типа.</p>\n"
+"                            <p>Данный вид рекламы заключается в том, что нет "
+"необходимости связываться с нами.\n"
+"                                Вы сами выбираете способ отображения и "
+"время, в течении которого будет вестись показ,\n"
+"                                а также вы выбираете интересующий вас тип "
+"рекламы -\n"
+"                                будь то изображение, анимация или видео-"
+"ролик.</p>\n"
+"                            <p>Более подробное описание и инструкции мы "
+"выложим сразу, как только запустим эту услугу.</p>"
+msgstr ""
+
+#: about/templates/advertisers.html:241
+msgid "Специальные предложения для стартапов"
+msgstr ""
+
+#: about/templates/advertisers.html:244
+msgid ""
+"Если вы являетесь участником стартапа и хотите рассказать о своей\n"
+"                        задумке большому числу заинтересованных людей, то мы "
+"предлагаем вам на выгодных\n"
+"                        условиях начать своё восхождение в мир высоких "
+"технологий. Ваша реклама не будет\n"
+"                        отличаться от контента рекламодателей у которых нет "
+"подобных привилегий.\n"
+"                        Вы будете на равне со всеми, что поможет вашему "
+"проекту."
+msgstr ""
+
+#: about/templates/advertisers.html:249
+msgid ""
+"По вопросам сотрудничества свяжитесь с нами по почте\n"
+"                    <a href=\"mailto:startups@insydia.com\">startups@insydia."
+"com</a>."
+msgstr ""
+
+#: about/templates/advertisers.html:259
+#: about/templates/telegram_guide.html:383
+msgid "Мы в социальных сетях"
+msgstr ""
+
+#: about/templates/hire.html:5
+#, fuzzy
+#| msgid "Home | Insydia"
+msgid "Carrer Insydia"
+msgstr "Главная | Insydia"
+
+#: about/templates/hire.html:188 beta_test/templates/close_reviews.html:118
+msgid "CAREER"
+msgstr ""
+
+#: about/templates/hire.html:191 beta_test/templates/close_reviews.html:121
+msgid "Join to our team and change the media industry"
+msgstr ""
+
+#: about/templates/hire.html:203
+msgid "Творите"
+msgstr ""
+
+#: about/templates/hire.html:205
+msgid ""
+"Мы занимаемся творчеством и нам это безумно нравится. Готовы браться за "
+"любую часть проекта, начиная от самой маленькой и заканчивая самой трудной и "
+"важной."
+msgstr ""
+
+#: about/templates/hire.html:214
+msgid "Учитесь"
+msgstr ""
+
+#: about/templates/hire.html:216
+msgid ""
+"Мы не стоим на месте и  развиваемся каждую минуту. Наша цель - с каждым днем "
+"становиться лучше и интереснее.Мы учимся друг у друга и каждый готов помочь "
+"другому члену команды."
+msgstr ""
+
+#: about/templates/hire.html:225
+msgid "Получайте удовольствие от работы"
+msgstr ""
+
+#: about/templates/hire.html:227
+msgid ""
+"\n"
+"                                        Самое главное в работе - это "
+"получать от нее удовольствие и радоваться каждому дню проведенному вместе с "
+"коллективом.Наши условия труда будут построены именно по этой схеме. Мы "
+"хотим, чтобы каждый наш будущий сотрудник гордился своим местом работы.\n"
+"                                    "
+msgstr ""
+
+#: about/templates/hire.html:240
+#, fuzzy
+#| msgid "Home | Insydia"
+msgid "Family of Insydia"
+msgstr "Главная | Insydia"
+
+#: about/templates/hire.html:244
+msgid ""
+"\n"
+"                                    <p>На данном этапе мы еще маленькая "
+"команда, но у нас большие амбиции.\n"
+"                                        Для достижения наших великих целей "
+"нам нужны такие же энтузиасты,\n"
+"                                        как и мы. Всей командой мы сможем "
+"создать что-то большое.\n"
+"                                        В коллективе мы работаем усердно, "
+"постоянно обсуждаем новые идеи\n"
+"                                        и решения. Каждый из сотрудников "
+"имеет право голоса и мнение, к\n"
+"                                        которому мы всегда прислушиваемся.\n"
+"                                    </p>\n"
+"                                "
+msgstr ""
+
+#: about/templates/hire.html:263
+msgid "Какие наши сотрудники"
+msgstr ""
+
+#: about/templates/hire.html:268
+msgid "Заинтересованные"
+msgstr ""
+
+#: about/templates/hire.html:271
+msgid ""
+"\n"
+"                                            Каждый участник проекта "
+"относится к своему делу с интересом и\n"
+"                                            ответственностью, и готов сразу "
+"же приступить к новым задачам,\n"
+"                                            после завершения текущих\n"
+"                                        "
+msgstr ""
+
+#: about/templates/hire.html:280
+msgid "Надёжные"
+msgstr ""
+
+#: about/templates/hire.html:283
+msgid ""
+"\n"
+"                                            Мы всегда готовы помочь, если "
+"это в наших силах.\n"
+"                                            Мы одна команда - одна семья.\n"
+"                                        "
+msgstr ""
+
+#: about/templates/hire.html:291
+msgid "С чувством юмора"
+msgstr ""
+
+#: about/templates/hire.html:294
+msgid ""
+"\n"
+"                                            В любое время суток и одной "
+"единственной шуткой наши сотрудники\n"
+"                                            могут заразить смехом любую "
+"компанию.\n"
+"                                        "
+msgstr ""
+
+#: about/templates/hire.html:302
+msgid "Разносторонние"
+msgstr ""
+
+#: about/templates/hire.html:305
+msgid ""
+"\n"
+"                                            Работать над определённым "
+"проектом или задачей это очень хорошо,\n"
+"                                            но мы также не забываем и о том, "
+"что творится за их пределами.\n"
+"                                            Мы все увлекаемся различными "
+"вещами: кто-то катается на сноуборде\n"
+"                                            в Альпах; кто-то погружается на "
+"10-метровую глубину в Атлантике;\n"
+"                                            кто-то наизусть знает то или "
+"иное художественное произведение и\n"
+"                                            многое многое другое.\n"
+"                                        "
+msgstr ""
+
+#: about/templates/hire.html:317
+msgid "Творческие"
+msgstr ""
+
+#: about/templates/hire.html:320
+msgid ""
+"\n"
+"                                            Каждый член нашей семьи в той "
+"или иной степени, но очень творческий\n"
+"                                            человек. Системный администратор "
+"может жонглировать аппаратурой,\n"
+"                                            а наши локализаторы готовят "
+"шикарные блюда, что шеф-повара\n"
+"                                            ресторанов позавидуют их "
+"мастерству. Все мы очень разные и каждый\n"
+"                                            из нас по-своему интересен. "
+"Именно творчество и общие цели объединяют\n"
+"                                            всех нас в одну команду.\n"
+"                                        "
+msgstr ""
+
+#: about/templates/hire.html:332
+msgid "Смелые"
+msgstr ""
+
+#: about/templates/hire.html:335
+msgid ""
+"\n"
+"                                            Прочитав наши планы можно "
+"подумать, что мы, подобно Гераклу,\n"
+"                                            идём на великие подвиги. От "
+"части это так, ведь в наших планах\n"
+"                                            изменить и усовершенствовать "
+"этот мир. Кто-то может сказать, что\n"
+"                                            мы - безумцы. Но лишь безумцы "
+"меняют этот мир!\n"
+"                                        "
+msgstr ""
+
+#: about/templates/hire.html:359
+msgid ""
+"\n"
+"                                    На текущий момент у нас нет каких-либо "
+"открытых вакансий, но если Вы думаете,\n"
+"                                    что можете помочь нашему проекту и "
+"хотите стать членом нашей семьи,\n"
+"                                    заполните форму ниже и мы обязательно с "
+"вами свяжемся.\n"
+"                                "
+msgstr ""
+
+#: about/templates/hire.html:367
+msgid "Thanks for your desire to be with Insydia"
+msgstr ""
+
+#: about/templates/hire.html:374
+#, fuzzy
+#| msgid "Your phone number"
+msgid "Your phone"
+msgstr "Телефон"
+
+#: about/templates/hire.html:380
+msgid ""
+"Расскажите нам немного о себе. Откуда узнали про проект Insydia и в какой "
+"роли вы бы хотели быть в нашей команде."
+msgstr ""
+
+#: about/templates/hire.html:381
+msgid "Расскажите о себе"
+msgstr ""
+
+#: about/templates/hire.html:382
+msgid "Отправить"
+msgstr ""
+
+#: about/templates/telegram_guide.html:203
+msgid "Insydia has 3 Telegram bots and will work on this way in future"
+msgstr ""
+
+#: about/templates/telegram_guide.html:210
+msgid "Что это и зачем"
+msgstr ""
+
+#: about/templates/telegram_guide.html:212
+msgid ""
+"\n"
+"                                <p>Как показала практика, доставка контента "
+"через телеграм очень удобная и\n"
+"                                    доступная. При малых скоростях "
+"интернета, при малом объёме трафика или\n"
+"                                    не самом мощном девайсе, использование "
+"ботов и каналов в этом мессенджере\n"
+"                                    для вас окажется самым верным способом. "
+"Почему? Потому что мессенджер\n"
+"                                    использует меньше ресурсов как вашего "
+"устройства, так и интернета, что\n"
+"                                    ускоряет время получения контента. Время "
+"сегодня - очень важно и мы работаем\n"
+"                                    над скоростью и качеством доставки "
+"контента.</p>\n"
+"                                <p>Используйте наших ботов, они ждут вас и "
+"хотят помочь. В дальнейшем мы\n"
+"                                    будем развивать данное направление и "
+"многие функции переведём или добавим\n"
+"                                    в данный мессенджер. Надеемся, что вы "
+"оцените наши старания по достоинству.</p>\n"
+"                            "
+msgstr ""
+
+#: about/templates/telegram_guide.html:231
+msgid "Chinese bot"
+msgstr ""
+
+#: about/templates/telegram_guide.html:234
+msgid ""
+"\n"
+"                                        <p>Специально для наших читатей из "
+"Восточно-Азиатского региона мы сделали отдельного телеграм\n"
+"                                        бота, который поможет им быстрее "
+"узнавать о последних новостях на нашем портале.\n"
+"                                        Надеемся, что он будет полезен вам.</"
+"p>\n"
+"\n"
+"                                        <p><a href=\"https://telegram.me/"
+"InsydiaAsiaBot\">Начать пользоваться</a></p>\n"
+"                                    "
+msgstr ""
+
+#: about/templates/telegram_guide.html:247
+msgid "English bot"
+msgstr ""
+
+#: about/templates/telegram_guide.html:250
+msgid ""
+"\n"
+"                                        <p>Для другой большой языковой "
+"половины миры мы также сделали бота на\n"
+"                                            английском языке. Заходите, "
+"читайте тизеры, делитесь нашими новостями,\n"
+"                                            которые вам понравились со "
+"своими знакомыми, чтобы они были в курсе всех\n"
+"                                            новшеств IT-индустрии.</p>\n"
+"\n"
+"                                        <p><a href=\"https://telegram.me/"
+"InsydiaEnglishBot\">Начать пользоваться</a></p>\n"
+"                                    "
+msgstr ""
+
+#: about/templates/telegram_guide.html:271
+msgid "Russian bot"
+msgstr ""
+
+#: about/templates/telegram_guide.html:274
+msgid ""
+"\n"
+"                                        <p>Россия и русскоязычный регион мы "
+"так же не оставили в стороне и сделали точно\n"
+"                                        такого же бота для вас, дорогие "
+"пользователи.</p>\n"
+"\n"
+"                                        <p><a href=\"https://telegram.me/"
+"InsydiaRussianBot\">Начать пользоваться</a></p>\n"
+"                                    "
+msgstr ""
+
+#: about/templates/telegram_guide.html:285
+msgid "Broadcast channel"
+msgstr ""
+
+#: about/templates/telegram_guide.html:288
+msgid ""
+"\n"
+"                                    Помимо очень удобных ботов мы открыли "
+"вещательный канал, где будем размещать\n"
+"                                    новости или события исключительно на "
+"английском языке. Если у вас Интернет не\n"
+"                                    может похвастаться скоростью или вы не "
+"имеете безлимитного(очень большого) трафика,\n"
+"                                    такой способ получения информации будет "
+"очень вам по душе. Мы позаботимся о качестве,\n"
+"                                    достоверности и своевременности доставки "
+"контента.\n"
+"                                "
+msgstr ""
+
+#: about/templates/telegram_guide.html:306
+#, fuzzy
+#| msgid "Join to us"
+msgid "How to use it"
+msgstr "Присоединиться к нашей команде"
+
+#: about/templates/telegram_guide.html:314
+msgid ""
+"\n"
+"                                <p>Каждый наш бот имеет пока что по 4 "
+"команды: <i>\"последние\"</i>, <i>\"интересные\"</i>, <i>\"категории\"</i> и "
+"<i>\"помощь\"</i></p>\n"
+"                                <p>При нажатии команд <i>\"последние\"</i> и "
+"<i>\"интересные\"</i> вам будут показаны по одной последней\n"
+"                                новости из каждого пункта. В случае нажатия "
+"на первую - самая последняя новость,\n"
+"                                второй - самая популярная новость за неделю."
+"</p>\n"
+"                                <p>Команда \"Категории\" направит вас в меню "
+"выбора интересующей категории, выбрав\n"
+"                                нужную, робот предложит выбрать показ "
+"последних одной или пяти новостей.</p>\n"
+"                                <p>Пункт \"помощь\" поможет вам разобраться "
+"в том куда и кому написать, если вы\n"
+"                                    нуждаетесь в какой-либо помощи.</p>\n"
+"                            "
+msgstr ""
+
+#: about/templates/telegram_guide.html:327
+msgid ""
+"\n"
+"                                    <p>Если вы ещё не скачали <a href="
+"\"https://telegram.org/\">Telegram Messenger</a>, настоятельно рекомендуем "
+"сделать это и\n"
+"                                    использовать не только наших ботов, но и "
+"любых других, например, банкинг через\n"
+"                                    ботов очень и очень удобен. Мы "
+"пользуемся ботами повсеместно и смело предлагаем\n"
+"                                    вам, потому что это почти во всех "
+"случаях экономит ваше время и деньги за интернет при\n"
+"                                    лимитировании трафика.</p>\n"
+"                                "
+msgstr ""
+
+#: about/templates/telegram_guide.html:342
+msgid ""
+"*Мы не получали заказ на рекламу данного приложения. Мы лишь предлгаем\n"
+"                                удобный сервис, который используем сами."
+msgstr ""
+
+#: about/templates/telegram_guide.html:360
+msgid "Наше будущее с Телеграм"
+msgstr ""
+
+#: about/templates/telegram_guide.html:365
+msgid ""
+"\n"
+"                                        В будущем мы планируем не "
+"останавливаться на том, что имеем, и работать над\n"
+"                                        усовершенствованием наших роботов, "
+"созданием новых сервисов, работающих\n"
+"                                        при помощи или на основе платформы "
+"данного мессенджера, а так же все\n"
+"                                        продукты от нашей команды будут так "
+"же иметь какого-либо помощника-бота.\n"
+"                                    "
+msgstr ""
+
+#: beta_test/templates/close_reviews.html:5
+#, python-format
+msgid "%(title)s"
+msgstr ""
+
+#: beta_test/templates/close_reviews.html:115
+msgid "BACK TO SITE"
+msgstr ""
+
+#: favourite/templates/fav_template.html:56
+#: favourite/templates/liked_news.html:110
+#: favourite/templates/liked_news.html:126
+#: news/mobile/mobile_cur_news.html:178 news/mobile/mobile_cur_news.html:271
+#: news/mobile/mobile_cur_news.html:295 news/mobile/mobile_cur_news.html:317
+#: news/mobile/mobile_cur_news.html:340 news/mobile/mobile_cur_news.html:376
+#: news/mobile/mobile_other_materials.html:105 news/templates/auto.html:35
+#: news/templates/auto.html.py:85 news/templates/auto.html:151
+#: news/templates/auto.html.py:189 news/templates/auto.html:218
+#: news/templates/auto.html.py:249 news/templates/auto.html:278
+#: news/templates/auto.html.py:334 news/templates/auto.html:378
+#: news/templates/auto_template.html:39 news/templates/auto_template.html:91
+#: news/templates/bio.html:35 news/templates/bio.html.py:85
+#: news/templates/bio.html:151 news/templates/bio.html.py:189
+#: news/templates/bio.html:218 news/templates/bio.html.py:249
+#: news/templates/bio.html:278 news/templates/bio.html.py:334
+#: news/templates/bio.html:378 news/templates/bio_template.html:39
+#: news/templates/bio_template.html:91 news/templates/current_news.html:359
+#: news/templates/current_news_beta.html:86
+#: news/templates/current_news_beta.html:199
+#: news/templates/current_news_beta.html:229
+#: news/templates/current_news_beta.html:257
+#: news/templates/current_news_beta.html:286
+#: news/templates/current_news_beta.html:329
+#: news/templates/current_portal_rss_news.html:99
+#: news/templates/ent_template.html:39 news/templates/ent_template.html:91
+#: news/templates/entertainment.html:35 news/templates/entertainment.html:85
+#: news/templates/entertainment.html:151 news/templates/entertainment.html:189
+#: news/templates/entertainment.html:218 news/templates/entertainment.html:249
+#: news/templates/entertainment.html:278 news/templates/entertainment.html:334
+#: news/templates/entertainment.html:378 news/templates/page_template.html:39
+#: news/templates/page_template.html:91 news/templates/pre_paginate.html:36
+#: news/templates/pre_paginate.html:80 news/templates/pre_paginate.html:126
+#: news/templates/rss_template.html:54 news/templates/space.html:35
+#: news/templates/space.html.py:85 news/templates/space.html:151
+#: news/templates/space.html.py:189 news/templates/space.html:218
+#: news/templates/space.html.py:249 news/templates/space.html:278
+#: news/templates/space.html.py:334 news/templates/space.html:378
+#: news/templates/space_template.html:39 news/templates/space_template.html:91
+#: news/templates/tech_template.html:39 news/templates/tech_template.html:91
+#: news/templates/technology.html:35 news/templates/technology.html.py:85
+#: news/templates/technology.html:151 news/templates/technology.html.py:189
+#: news/templates/technology.html:218 news/templates/technology.html.py:249
+#: news/templates/technology.html:278 news/templates/technology.html.py:334
+#: news/templates/technology.html:378 news/templates/top_news.html:86
+#: news/templates/top_news.html.py:199 news/templates/top_news.html:229
+#: news/templates/top_news.html.py:257 news/templates/top_news.html:286
+#: news/templates/top_news.html.py:329 news/templates/total.html:257
+#: news/templates/total.html.py:307 news/templates/total.html:351
+#: news/templates/total.html.py:368 news/templates/total.html:419
+#: news/templates/total.html.py:446 news/templates/total.html:475
+#: news/templates/total.html.py:502 news/templates/total.html:551
+#: news/templates/total_beta.html:34 news/templates/total_beta.html.py:84
+#: news/templates/total_beta.html:150 news/templates/total_beta.html.py:188
+#: news/templates/total_beta.html:217 news/templates/total_beta.html.py:248
+#: news/templates/total_beta.html:277 news/templates/total_beta.html.py:333
+#: news/templates/total_beta.html:377 news/templates/user_news_beta.html:143
+#: news/templates/user_news_beta.html:160 rss/templates/rss.html:205
+#: search/templates/search.html:119 templates/index_12_03.html:423
+#: templates/index_12_03.html.py:820 templates/index_12_03.html:837
+#: templates/index_12_03.html.py:851 templates/index_12_03.html:901
+#: templates/index_12_03.html.py:953 templates/index_12_03.html:970
+#: templates/index_12_03.html.py:1024 templates/index_25_02.html:1229
+#: templates/index_25_02.html.py:1268 templates/index_25_02.html:1316
+#: templates/index_beta.html:430 templates/index_beta.html.py:828
+#: templates/index_beta.html:845 templates/index_beta.html.py:859
+#: templates/index_beta.html:909 templates/index_beta.html.py:961
+#: templates/index_beta.html:978 templates/index_beta.html.py:1032
+msgid "By"
+msgstr "Автор"
+
+#: favourite/templates/liked_news.html:52 news/templates/browse_tech.html:202
+#: news/templates/manage_portals.html:49 news/templates/user_news.html:309
+#: news/templates/user_news.html.py:483 news/templates/user_news_beta.html:59
 #, fuzzy
 #| msgid "Your portals"
 msgid "Manage portals"
 msgstr "Ваши порталы"
 
-#: favourite/templates/liked_news.html:96 news/templates/browse_tech.html:203
-#: news/templates/manage_portals.html:83 news/templates/user_news.html:310
-#: news/templates/user_news.html.py:489 news/templates/user_news_beta.html:402
+#: favourite/templates/liked_news.html:58 news/templates/browse_tech.html:203
+#: news/templates/manage_portals.html:55 news/templates/user_news.html:310
+#: news/templates/user_news.html.py:489 news/templates/user_news_beta.html:65
 #, fuzzy
 #| msgid "Your portals"
 msgid "Browse portals"
 msgstr "Ваши порталы"
 
-#: favourite/templates/liked_news.html:106
+#: favourite/templates/liked_news.html:68
 msgid "FAVOURITE ARTICLES"
 msgstr ""
+
+#: favourite/templates/liked_news.html:217
+#: news/templates/user_news_beta.html:310 templates/index_12_03.html:509
+#: templates/index_beta.html:516
+#, fuzzy
+#| msgid "Your portals"
+msgid "Remove favourite article"
+msgstr "Ваши порталы"
 
 #: loginsys/forms.py:13 loginsys/forms.py:56
 msgid "The two password fields didn't match."
@@ -53,8 +829,8 @@ msgstr "Подтверждение пороля"
 msgid "Enter the same password as above, for verification."
 msgstr "Повторите пароль"
 
-#: loginsys/forms.py:59 loginsys/templates/register.html:72
-#: userprofile/templates/profile.html:153
+#: loginsys/forms.py:59 loginsys/templates/register.html:37
+#: userprofile/templates/profile.html:106
 msgid "Username"
 msgstr "Логин"
 
@@ -62,117 +838,53 @@ msgstr "Логин"
 msgid "Reset"
 msgstr "Сброс"
 
-#: loginsys/templates/footer_loginsys.html:29 loginsys/templates/login.html:63
-#: loginsys/templates/register.html:102 templates/footer.html:106
-#: templates/footer.html.py:189 templates/footer_usernews.html:130
-#: templates/mobile/mobile_footer.html:126
-#: templates/mobile/mobile_footer.html:209
+#: loginsys/templates/footer_loginsys.html:19 loginsys/templates/login.html:48
+#: loginsys/templates/register.html:69 templates/footer.html:90
+#: templates/footer.html.py:176 templates/footer_usernews.html:72
+#: templates/mobile/mobile_footer.html:125
+#: templates/mobile/mobile_footer.html:207
 #, fuzzy
 #| msgid "Advertiser"
 msgid "Advertisement"
 msgstr "Рекламодателям"
 
-#: loginsys/templates/footer_loginsys.html:32 templates/footer.html:188
-#: templates/footer_usernews.html:129 templates/mobile/mobile_footer.html:125
-#: templates/mobile/mobile_footer.html:208
-msgid "Contacts"
-msgstr "Контакты"
-
-#: loginsys/templates/footer_loginsys.html:35 loginsys/templates/login.html:66
-#: loginsys/templates/register.html:105 templates/footer.html:105
-#: templates/footer.html.py:187 templates/footer_usernews.html:128
+#: loginsys/templates/footer_loginsys.html:22 loginsys/templates/login.html:51
+#: loginsys/templates/register.html:72 templates/footer.html:89
+#: templates/footer.html.py:174 templates/footer_usernews.html:71
 #: templates/mobile/mobile_footer.html:124
-#: templates/mobile/mobile_footer.html:207
+#: templates/mobile/mobile_footer.html:206
 msgid "About us"
 msgstr "О нас"
 
-#: loginsys/templates/login.html:49 loginsys/templates/register.html:91
+#: loginsys/templates/login.html:34 loginsys/templates/register.html:58
 msgid "SIGN IN"
 msgstr ""
 
-#: loginsys/templates/login.html:51 loginsys/templates/register.html:89
+#: loginsys/templates/login.html:36 loginsys/templates/register.html:56
 msgid "SIGN UP"
 msgstr ""
 
-#: loginsys/templates/register.html:81
+#: loginsys/templates/register.html:47
 msgid "E-mail"
 msgstr "Электронная почта"
 
-#: news/mobile/mobile_cur_news.html:178 news/mobile/mobile_cur_news.html:271
-#: news/mobile/mobile_cur_news.html:295 news/mobile/mobile_cur_news.html:317
-#: news/mobile/mobile_cur_news.html:340 news/mobile/mobile_cur_news.html:376
-#: news/mobile/mobile_other_materials.html:105 news/templates/auto.html:68
-#: news/templates/auto.html.py:119 news/templates/auto.html:171
-#: news/templates/auto.html.py:207 news/templates/auto.html:230
-#: news/templates/auto.html.py:255 news/templates/auto.html:278
-#: news/templates/auto.html.py:322 news/templates/auto_template.html:42
-#: news/templates/bio.html:66 news/templates/bio.html.py:117
-#: news/templates/bio.html:169 news/templates/bio.html.py:203
-#: news/templates/bio.html:226 news/templates/bio.html.py:251
-#: news/templates/bio.html:274 news/templates/bio.html.py:318
-#: news/templates/bio_template.html:42 news/templates/browse_portals.html:404
-#: news/templates/browse_portals.html:422 news/templates/catalog.html:193
-#: news/templates/catalog.html.py:211 news/templates/current_news.html:359
-#: news/templates/current_news_beta.html:145
-#: news/templates/current_news_beta.html:258
-#: news/templates/current_news_beta.html:288
-#: news/templates/current_news_beta.html:316
-#: news/templates/current_news_beta.html:345
-#: news/templates/current_news_beta.html:389
-#: news/templates/ent_template.html:49 news/templates/entertainment.html:180
-#: news/templates/entertainment.html:231 news/templates/entertainment.html:283
-#: news/templates/entertainment.html:319 news/templates/entertainment.html:342
-#: news/templates/entertainment.html:367 news/templates/entertainment.html:390
-#: news/templates/entertainment.html:434 news/templates/page_template.html:50
-#: news/templates/pre_paginate.html:39 news/templates/pre_paginate.html:88
-#: news/templates/space.html:180 news/templates/space.html.py:231
-#: news/templates/space.html:287 news/templates/space.html.py:327
-#: news/templates/space.html:350 news/templates/space.html.py:375
-#: news/templates/space.html:398 news/templates/space.html.py:442
-#: news/templates/space_template.html:49 news/templates/tech_template.html:57
-#: news/templates/technology.html:180 news/templates/technology.html.py:239
-#: news/templates/technology.html:303 news/templates/technology.html.py:349
-#: news/templates/technology.html:378 news/templates/technology.html.py:409
-#: news/templates/technology.html:438 news/templates/technology.html.py:490
-#: news/templates/top_news.html:145 news/templates/top_news.html.py:247
-#: news/templates/top_news.html:277 news/templates/top_news.html.py:305
-#: news/templates/top_news.html:334 news/templates/top_news.html.py:376
-#: news/templates/total.html:257 news/templates/total.html.py:307
-#: news/templates/total.html:351 news/templates/total.html.py:368
-#: news/templates/total.html:419 news/templates/total.html.py:446
-#: news/templates/total.html:475 news/templates/total.html.py:502
-#: news/templates/total.html:551 news/templates/total_beta.html:81
-#: news/templates/total_beta.html.py:130 news/templates/total_beta.html:193
-#: news/templates/total_beta.html.py:234 news/templates/total_beta.html:263
-#: news/templates/total_beta.html.py:294 news/templates/total_beta.html:323
-#: news/templates/total_beta.html.py:379 news/templates/total_beta.html:423
-#: news/templates/user_news_beta.html:487
-#: news/templates/user_news_beta.html:502 search/templates/search.html:119
-#: templates/index_25_02.html:1229 templates/index_25_02.html.py:1268
-#: templates/index_25_02.html:1316 templates/index_beta.html:1015
-#: templates/index_beta.html.py:1032 templates/index_beta.html:1093
-#: templates/index_beta.html.py:1140 templates/index_beta.html:1157
-#: templates/index_beta.html.py:1218
-msgid "By"
-msgstr "Автор"
-
 #: news/mobile/mobile_cur_news.html:205 news/templates/current_news.html:387
-#: news/templates/current_news_beta.html:173 news/templates/top_news.html:173
+#: news/templates/current_news_beta.html:114 news/templates/top_news.html:114
 msgid "Edit"
 msgstr "Редактировать"
 
 #: news/mobile/mobile_cur_news.html:252
-#: news/templates/current_news_beta.html:234 news/templates/top_news.html:223
+#: news/templates/current_news_beta.html:179 news/templates/top_news.html:179
 msgid "MORE ON INSYDIA "
 msgstr ""
 
 #: news/mobile/mobile_cur_news.html:402 news/templates/current_news.html:565
-#: news/templates/current_news_beta.html:428 news/templates/top_news.html:415
+#: news/templates/current_news_beta.html:368 news/templates/top_news.html:368
 msgid "Please enable JavaScript to view the"
 msgstr ""
 
 #: news/mobile/mobile_cur_news.html:402 news/templates/current_news.html:565
-#: news/templates/current_news_beta.html:428 news/templates/top_news.html:415
+#: news/templates/current_news_beta.html:368 news/templates/top_news.html:368
 msgid "comments powered by Disqus."
 msgstr ""
 
@@ -190,19 +902,107 @@ msgstr ""
 msgid "Follow"
 msgstr ""
 
-#: news/templates/browse_portals.html:81
+#: news/templates/browse_portals.html:11 news/templates/browse_tech.html:215
+msgid "Pick your own collection of news"
+msgstr ""
+
+#: news/templates/browse_portals.html:15
 #, fuzzy
 #| msgid "What are you looking for?"
 msgid "What would you like to read?"
 msgstr "Что будем искать?"
 
-#: news/templates/browse_portals.html:461 templates/index_25_02.html:1154
-#: templates/index_beta.html:961
+#: news/templates/browse_portals.html:19
+msgid "or"
+msgstr ""
+
+#: news/templates/browse_portals.html:19
+#, fuzzy
+#| msgid "Your portals"
+msgid "browse catalog"
+msgstr "Ваши порталы"
+
+#: news/templates/browse_portals.html:22
+#, fuzzy
+#| msgid "Your portals"
+msgid "portals"
+msgstr "Ваши порталы"
+
+#: news/templates/browse_portals.html:22
+#, fuzzy
+#| msgid "change"
+msgid "channels"
+msgstr "изменить"
+
+#: news/templates/browse_portals.html:22 templates/footer.html:69
+#: templates/footer_usernews.html:55 templates/mobile/mobile_footer.html:104
+msgid "Categories"
+msgstr ""
+
+#: news/templates/browse_portals.html:31
+#, fuzzy
+#| msgid "The most popular portals."
+msgid "Most popular portals"
+msgstr "Наиболее популярные порталы"
+
+#: news/templates/browse_portals.html:68
+#: news/templates/browse_portals.html:114
+#: news/templates/browse_portals.html:160
+#: news/templates/browse_portals.html:206
+#: news/templates/browse_portals.html:252
+#: news/templates/browse_portals.html:298 news/templates/catalog.html:115
+#: news/templates/current_portal_rss_news.html:46
+msgid "Followers"
+msgstr ""
+
+#: news/templates/browse_portals.html:77 news/templates/catalog.html:19
+#: news/templates/catalog.html.py:44 rss/templates/rss.html:68
+#: templates/footer.html:70 templates/footer.html.py:162
+#: templates/footer_usernews.html:56 templates/mobile/mobile_footer.html:105
+#: templates/mobile/mobile_footer.html:194
+msgid "Technology"
+msgstr ""
+
+#: news/templates/browse_portals.html:123 news/templates/catalog.html:20
+#: news/templates/catalog.html.py:45 rss/templates/rss.html:85
+#: templates/footer.html:71 templates/footer.html.py:163
+#: templates/footer_usernews.html:57 templates/mobile/mobile_footer.html:106
+#: templates/mobile/mobile_footer.html:195
+msgid "Entertainment"
+msgstr ""
+
+#: news/templates/browse_portals.html:169 news/templates/catalog.html:21
+#: news/templates/catalog.html.py:46 rss/templates/rss.html:102
+#: templates/footer.html:72 templates/footer.html.py:164
+#: templates/footer_usernews.html:58 templates/mobile/mobile_footer.html:107
+#: templates/mobile/mobile_footer.html:196
+msgid "Auto"
+msgstr ""
+
+#: news/templates/browse_portals.html:215 news/templates/catalog.html:22
+#: news/templates/catalog.html.py:47 rss/templates/rss.html:119
+#: templates/footer.html:73 templates/footer.html.py:165
+#: templates/footer_usernews.html:59 templates/mobile/mobile_footer.html:108
+#: templates/mobile/mobile_footer.html:197
+msgid "Space"
+msgstr ""
+
+#: news/templates/browse_portals.html:261
+msgid "Bio-technology"
+msgstr ""
+
+#: news/templates/browse_portals.html:317
+#: news/templates/browse_portals.html:421 news/templates/catalog.html:134
+#: news/templates/catalog.html.py:307 templates/index_12_03.html:763
+#: templates/index_25_02.html:1154 templates/index_beta.html:771
 msgid "Subscription added"
 msgstr ""
 
-#: news/templates/browse_portals.html:475
-#: news/templates/manage_portals.html:153
+#: news/templates/browse_portals.html:317
+#: news/templates/browse_portals.html:421 news/templates/catalog.html:134
+#: news/templates/catalog.html.py:324
+#: news/templates/current_portal_rss_news.html:125
+#: news/templates/manage_portals.html:128
 msgid "Subscription remove"
 msgstr ""
 
@@ -210,12 +1010,12 @@ msgstr ""
 msgid "Main"
 msgstr ""
 
-#: news/templates/browse_tech.html:166
+#: news/templates/browse_tech.html:166 news/templates/manage_portals.html:15
 msgid "My feed"
 msgstr ""
 
-#: news/templates/browse_tech.html:167 news/templates/user_news.html:282
-#: news/templates/user_news_beta.html:365
+#: news/templates/browse_tech.html:167 news/templates/manage_portals.html:21
+#: news/templates/user_news.html:282 news/templates/user_news_beta.html:28
 #, fuzzy
 #| msgid "Articles"
 msgid "Saved articles"
@@ -225,8 +1025,8 @@ msgstr "Статьи"
 msgid "Properties"
 msgstr ""
 
-#: news/templates/browse_tech.html:182 news/templates/user_news.html:286
-#: news/templates/user_news_beta.html:370
+#: news/templates/browse_tech.html:182 news/templates/manage_portals.html:26
+#: news/templates/user_news.html:286 news/templates/user_news_beta.html:33
 #, fuzzy
 #| msgid "Your portals"
 msgid "Portals"
@@ -236,20 +1036,16 @@ msgstr "Ваши порталы"
 msgid "Configures"
 msgstr ""
 
-#: news/templates/browse_tech.html:215
-msgid "Pick your own collection of news"
-msgstr ""
-
 #: news/templates/browse_tech.html:222
 msgid "Drop the key word or url"
 msgstr ""
 
-#: news/templates/browse_tech.html:232 templates/index_25_02.html:333
+#: news/templates/browse_tech.html:232 templates/index_12_03.html:119
+#: templates/index_12_03.html.py:121 templates/index_25_02.html:333
 #: templates/index_25_02.html.py:335 templates/index_25_02.html:445
-#: templates/index_beta.html:148 templates/index_beta.html.py:150
-#: templates/index_beta.html:325 templates/index_new.html:626
-#: templates/index_new.html.py:628 templates/index_new.html:853
-#: templates/index_new.html.py:1013
+#: templates/index_beta.html:115 templates/index_beta.html.py:117
+#: templates/index_new.html:626 templates/index_new.html.py:628
+#: templates/index_new.html:853 templates/index_new.html.py:1013
 msgid "TECHNOLOGY"
 msgstr "Технологии"
 
@@ -263,41 +1059,67 @@ msgstr ""
 msgid "Articles:"
 msgstr "Статьи"
 
-#: news/templates/companies.html:24 search/templates/search.html:151
-#: search/templates/search.html.py:167 templates/footer.html:91
-#: templates/footer.html.py:180 templates/footer_usernews.html:118
+#: news/templates/catalog.html:23 news/templates/catalog.html.py:48
+#: rss/templates/rss.html:136 templates/footer.html:74
+#: templates/footer.html.py:166 templates/footer_usernews.html:60
+#: templates/index_12_03.html:139 templates/index_12_03.html.py:141
+#: templates/index_25_02.html:353 templates/index_25_02.html.py:355
+#: templates/index_beta.html:135 templates/index_beta.html.py:137
+#: templates/index_new.html:650 templates/index_new.html.py:652
+#: templates/index_new.html:1033 templates/mobile/mobile_footer.html:109
+#: templates/mobile/mobile_footer.html:198
+msgid "BIO"
+msgstr "БИО"
+
+#: news/templates/catalog.html:28 news/templates/catalog.html.py:53
+msgid "My news"
+msgstr ""
+
+#: news/templates/catalog.html:33 news/templates/catalog.html.py:58
+#: news/templates/manage_portals.html:65 news/templates/user_news_beta.html:94
+#, fuzzy
+#| msgid "Your portals"
+msgid "Browser"
+msgstr "Ваши порталы"
+
+#: news/templates/catalog.html:38 news/templates/catalog.html.py:63
+#: news/templates/manage_portals.html:77 news/templates/user_news_beta.html:94
+#, fuzzy
+#| msgid "Your portals"
+msgid "Manager"
+msgstr "Ваши порталы"
+
+#: news/templates/catalog.html:75
+msgid "CATALOG"
+msgstr ""
+
+#: news/templates/companies.html:12 search/templates/search.html:151
+#: search/templates/search.html.py:167 templates/footer.html:75
+#: templates/footer.html.py:167 templates/footer_usernews.html:61
 #: templates/mobile/mobile_footer.html:110
-#: templates/mobile/mobile_footer.html:200
+#: templates/mobile/mobile_footer.html:199
 msgid "Companies"
 msgstr "Компании"
 
-#: news/templates/companies.html:33
+#: news/templates/companies.html:21
 msgid "Search company"
 msgstr ""
 
-#: news/templates/companies.html:39 search/templates/search.html:104
-#: templates/index_25_02.html:399 templates/index_beta.html:241
-#: templates/index_new.html:708
+#: news/templates/companies.html:27 search/templates/search.html:104
+#: templates/index_12_03.html:253 templates/index_25_02.html:399
+#: templates/index_beta.html:249 templates/index_new.html:708
 msgid "Search"
 msgstr "Поиск"
 
-#: news/templates/companies.html:44 news/templates/companies_endless.html:10
+#: news/templates/companies.html:32 news/templates/companies_endless.html:10
 msgid "Logo"
 msgstr "Логотип"
 
-#: news/templates/companies.html:45 news/templates/companies_endless.html:11
+#: news/templates/companies.html:33 news/templates/companies_endless.html:11
 msgid "Name"
 msgstr "Имя"
 
-#: news/templates/companies.html:46 news/templates/companies_endless.html:12
-#: search/templates/search.html:209 search/templates/search.html.py:232
-#: templates/advertisers.html:178
-#: userprofile/templates/moderator_profile.html:40
-#: userprofile/templates/profile.html:109
-msgid "Articles"
-msgstr "Статьи"
-
-#: news/templates/companies.html:47 news/templates/companies_endless.html:13
+#: news/templates/companies.html:35 news/templates/companies_endless.html:13
 msgid "Location"
 msgstr ""
 
@@ -316,66 +1138,61 @@ msgid "News&nbsp;of&nbsp;%(company_name)s"
 msgstr "Новости %(company_name)s"
 
 #: news/templates/current_news_comments.html:22
-#: userprofile/templates/profile.html:66
+#: userprofile/templates/profile.html:19
 msgid "Send"
 msgstr "Отправить"
 
-#: news/templates/manage_portals.html:91 templates/index_25_02.html:382
-#: templates/index_beta.html:197 templates/index_new.html:687
+#: news/templates/manage_portals.html:64 templates/index_12_03.html:203
+#: templates/index_25_02.html:382 templates/index_beta.html:199
+#: templates/index_new.html:687
 #, fuzzy
 #| msgid "Latest news"
 msgid "Private news"
 msgstr "Последние новости"
 
-#: news/templates/manage_portals.html:91
-#, fuzzy
-#| msgid "Your portals"
-msgid "Browser"
-msgstr "Ваши порталы"
-
-#: news/templates/manage_portals.html:105
+#: news/templates/manage_portals.html:82
 #, fuzzy
 #| msgid "First name"
 msgid "Portal name"
 msgstr "Имя"
 
-#: news/templates/manage_portals.html:106
+#: news/templates/manage_portals.html:83
 msgid "Description"
 msgstr ""
 
-#: news/templates/manage_portals.html:107
+#: news/templates/manage_portals.html:84
 msgid "Configs"
 msgstr ""
 
-#: news/templates/manage_portals.html:120
+#: news/templates/manage_portals.html:97
 msgid "unfollow"
 msgstr ""
 
-#: news/templates/manage_portals.html:126
+#: news/templates/manage_portals.html:103
 msgid "You have no one portals yet. Would you like pick your own collection?"
 msgstr ""
 
-#: news/templates/manage_portals.html:128
+#: news/templates/manage_portals.html:104
 msgid "You just need to"
 msgstr ""
 
-#: news/templates/manage_portals.html:128
+#: news/templates/manage_portals.html:104
 msgid "open"
 msgstr ""
 
-#: news/templates/manage_portals.html:128
+#: news/templates/manage_portals.html:104
 msgid "portals browser."
 msgstr ""
 
-#: news/templates/manage_portals.html:130
+#: news/templates/manage_portals.html:105
 msgid "If you have any questions or offers,"
 msgstr ""
 
-#: news/templates/manage_portals.html:130
+#: news/templates/manage_portals.html:105
 msgid "write"
 msgstr ""
 
-#: news/templates/manage_portals.html:130
+#: news/templates/manage_portals.html:105
 msgid "to us, please."
 msgstr ""
 
@@ -387,7 +1204,7 @@ msgstr "Нравится пользователям"
 msgid "Overview"
 msgstr ""
 
-#: news/templates/user_news.html:281 news/templates/user_news_beta.html:359
+#: news/templates/user_news.html:281 news/templates/user_news_beta.html:22
 msgid "My Feed"
 msgstr ""
 
@@ -407,11 +1224,11 @@ msgstr "Готово"
 msgid "All"
 msgstr "Все"
 
-#: news/templates/user_news.html:502 news/templates/user_news_beta.html:440
+#: news/templates/user_news.html:502 news/templates/user_news_beta.html:107
 msgid "FEED"
 msgstr ""
 
-#: news/templates/user_news.html:532 news/templates/user_news_beta.html:466
+#: news/templates/user_news.html:532 news/templates/user_news_beta.html:135
 msgid ""
 "At this time we cant find any news of chosen portals. We think that there "
 "will appear later."
@@ -421,71 +1238,21 @@ msgstr ""
 msgid "The most popular portals."
 msgstr "Наиболее популярные порталы"
 
-#: rss/templates/rss.html:32
+#: rss/templates/rss.html:42
 msgid "RSS Feed"
 msgstr ""
 
-#: rss/templates/rss.html:36
+#: rss/templates/rss.html:51
 #, fuzzy
 #| msgid "Latest news"
 msgid "Latest"
 msgstr "Последние новости"
 
-#: rss/templates/rss.html:38 rss/templates/rss.html.py:49
-#: rss/templates/rss.html:60 rss/templates/rss.html.py:71
-#: rss/templates/rss.html:82 rss/templates/rss.html.py:93
-msgid "Today"
-msgstr ""
-
-#: rss/templates/rss.html:42 rss/templates/rss.html.py:53
-#: rss/templates/rss.html:64 rss/templates/rss.html.py:75
-#: rss/templates/rss.html:86 rss/templates/rss.html.py:97
-msgid "This week"
-msgstr ""
-
-#: rss/templates/rss.html:47 templates/footer.html:86
-#: templates/footer.html.py:175 templates/footer_usernews.html:113
-#: templates/mobile/mobile_footer.html:105
-#: templates/mobile/mobile_footer.html:195
-msgid "Technology"
-msgstr ""
-
-#: rss/templates/rss.html:58 templates/footer.html:87
-#: templates/footer.html.py:176 templates/footer_usernews.html:114
-#: templates/mobile/mobile_footer.html:106
-#: templates/mobile/mobile_footer.html:196
-msgid "Entertainment"
-msgstr ""
-
-#: rss/templates/rss.html:69 templates/footer.html:88
-#: templates/footer.html.py:177 templates/footer_usernews.html:115
-#: templates/mobile/mobile_footer.html:107
-#: templates/mobile/mobile_footer.html:197
-msgid "Auto"
-msgstr ""
-
-#: rss/templates/rss.html:80 templates/footer.html:89
-#: templates/footer.html.py:178 templates/footer_usernews.html:116
-#: templates/mobile/mobile_footer.html:108
-#: templates/mobile/mobile_footer.html:198
-msgid "Space"
-msgstr ""
-
-#: rss/templates/rss.html:91 templates/footer.html:90
-#: templates/footer.html.py:179 templates/footer_usernews.html:117
-#: templates/index_25_02.html:353 templates/index_25_02.html.py:355
-#: templates/index_beta.html:168 templates/index_beta.html.py:170
-#: templates/index_new.html:650 templates/index_new.html.py:652
-#: templates/index_new.html:1033 templates/mobile/mobile_footer.html:109
-#: templates/mobile/mobile_footer.html:199
-msgid "BIO"
-msgstr "БИО"
-
-#: rss/templates/rss.html:113
+#: rss/templates/rss.html:164
 msgid "Which company would you like to search?"
 msgstr ""
 
-#: rss/templates/rss.html:116
+#: rss/templates/rss.html:167
 msgid "Get"
 msgstr ""
 
@@ -493,8 +1260,9 @@ msgstr ""
 msgid "No one matches. Please, try another request word"
 msgstr "Ничего не найдено. Пожалуйста, попробуйте другой поисковый запрос"
 
-#: search/templates/search.html:101 templates/index_25_02.html:410
-#: templates/index_beta.html:255 templates/index_new.html:722
+#: search/templates/search.html:101 templates/index_12_03.html:267
+#: templates/index_25_02.html:410 templates/index_beta.html:263
+#: templates/index_new.html:722
 msgid "What are you looking for?"
 msgstr "Что будем искать?"
 
@@ -523,8 +1291,8 @@ msgid "Moderators"
 msgstr "Редакторы"
 
 #: search/templates/search.html:233
-#: userprofile/templates/moderator_profile.html:39
-#: userprofile/templates/profile.html:105
+#: userprofile/templates/moderator_profile.html:20
+#: userprofile/templates/profile.html:58
 msgid "Rate"
 msgstr "Рейтинг"
 
@@ -569,151 +1337,45 @@ msgstr "Спасибо за Ваше понимание"
 msgid "Insydia Team"
 msgstr "Команда Insydia"
 
-#: templates/about.html:18
-msgid "ABOUT"
-msgstr "О"
-
-#: templates/about.html:20
-msgid "Insydia is a ..."
-msgstr ""
-
-#: templates/about.html:24
-msgid "GRATITUDE"
-msgstr "БЛАГОДАРНОСТЬ"
-
-#: templates/advertisers.html:158 templates/contacts.html:446
-#: templates/hire.html:136
-msgid "BACK TO SITE"
-msgstr ""
-
-#: templates/advertisers.html:161
-#, fuzzy
-#| msgid "MEDIA"
-msgid "MEDIA KIT"
-msgstr "Медиа"
-
-#: templates/advertisers.html:164
-msgid "You have selected the best place for your advertising"
-msgstr ""
-
-#: templates/advertisers.html:165
-msgid ""
-"После прохождения бета-теста мы дополним данную страницу, указав всю "
-"необходиую информацтю для\n"
-"                рекламодателя."
-msgstr ""
-
-#: templates/advertisers.html:172
-#, fuzzy
-#| msgid "Advertiser"
-msgid "Types of advertisement"
-msgstr "Рекламодателям"
-
-#: templates/advertisers.html:181
-msgid ""
-"Если вы хотите заказать у нас статью о вашем продукте/проекте, напишите нам "
-"на почу\n"
-"                            <a href=\"mailto:advert@insydia.com"
-"\">advert@insydia.com</a>."
-msgstr ""
-
-#: templates/advertisers.html:183
-msgid ""
-"Мы работаем над проектами любого типа и формата. Мы не имеем каких-либо "
-"рамок или\n"
-"                            особых требований. Единственное, что вы должны "
-"понимать - мы занимаемся\n"
-"                            созданием статей лишь в категориях Технологии, "
-"Развлечения, Автомобили, Космос,\n"
-"                            Био-технологии, при условии, что в них идёт "
-"упоминание о Hi-Tech."
-msgstr ""
-
-#: templates/advertisers.html:191
-#, fuzzy
-#| msgid "Contacts"
-msgid "Context"
-msgstr "Контакты"
-
-#: templates/advertisers.html:194
-msgid ""
-"<p>Помимо написания статей мы предлагаем вам разместить у нас свою рекламу в "
-"виде\n"
-"                            контексного/информационного блока. В скором "
-"времени мы активируем данную\n"
-"                            функцию и Вы получите полный доступ к работе с "
-"рекламой этого типа.</p>\n"
-"                            <p>Данный вид рекламы заключается в том, что нет "
-"необходимости связываться с нами.\n"
-"                            Вы сами выбираете способ отображения, время, в "
-"течении которого будет вестись показ,\n"
-"                            а так же вам открываеся доступ к загрузке своей "
-"рекламы непосредственно на наш сервер\n"
-"                            в удобном для вас формате будь то изображение, "
-"анимация или видео-ролик.</p>\n"
-"                            <p>Более подробное описание и инструкции мы "
-"выложим сразу, как только включим эту\n"
-"                            услугу.</p>"
-msgstr ""
-
-#: templates/advertisers.html:212
-#, fuzzy
-#| msgid "Advertiser"
-msgid "Advertisement for startups"
-msgstr "Рекламодателям"
-
-#: templates/advertisers.html:215
-msgid ""
-"Если вы являетесь участником стартапа и хотите рассказать о своей задумке "
-"большому числу\n"
-"                    заинтересованных людей, то мы предлагаем вам на выгодных "
-"условиях начать своё восхождение в\n"
-"                    мир высоких технологий. Ваша реклама не будет отличаться "
-"от контента рекламодателей, у которых\n"
-"                    нету подобных привелегий. Вы будете на равне со всеми, "
-"что поможет вашему проекту."
-msgstr ""
-
-#: templates/advertisers.html:219
-msgid ""
-"По вопросам сотрудничества свяжитесь с нами по почте\n"
-"                    <a href=\"mailto:startups@insydia.com\">startups@insydia."
-"com</a>."
-msgstr ""
-
-#: templates/confirm.html:6
+#: templates/confirm.html:7
 msgid "Title"
 msgstr "Заголовок"
 
-#: templates/confirm.html:25
-msgid "Hi"
-msgstr "Здравствуйте"
-
-#: templates/confirm.html:27
-msgid "Please confirm"
-msgstr "Пожалуйста, подтвердите"
-
 #: templates/confirm.html:28
-msgid "If you do it, you will get access to the hidden features of the portal"
-msgstr "Если Вы это сделаете, Вы получите расширенный доступ."
+#, fuzzy
+#| msgid "Home | Insydia"
+msgid "Welcome to Insydia,"
+msgstr "Главная | Insydia"
 
 #: templates/confirm.html:29
-msgid "Thank you!"
-msgstr "Спасибо!"
+msgid ""
+"\n"
+"                                        <p>Поздравляем! Вы создали учётную "
+"запись Insydia.</p>\n"
+"                                        <p>Теперь вы сможете читать новости "
+"с любых порталов в Интернете на специально\n"
+"                                        отведённой для этого страничке, у "
+"нас на портале.</p>\n"
+"                                        <p>Чтобы начать, подтвердите Ваш "
+"электронный адрес, нажав на ссылку ниже.</p>\n"
+"                                    "
+msgstr ""
 
-#: templates/confirm.html:34
-msgid "Confirm your e-mail "
+#: templates/confirm.html:38
+#, fuzzy
+#| msgid "Confirm your e-mail "
+msgid "Confirm your e-mail"
 msgstr "Подтвердите Вашу электронную почту"
 
-#: templates/confirm.html:39
-msgid "Cheers"
-msgstr "С Уважением,"
+#: templates/confirm.html:45
+msgid "Kind regards"
+msgstr ""
 
-#: templates/confirm.html:41
+#: templates/confirm.html:47
 msgid "Your Insydia Team"
 msgstr "Команда Insydia"
 
-#: templates/confirm.html:48
+#: templates/confirm.html:54
 msgid ""
 "If you did not sign up or request for email confirmation, please ignore this "
 "email."
@@ -721,7 +1383,7 @@ msgstr ""
 "Если Вы не регистрировались или не запрашивали письмо на подтверждение, "
 "пожалуйста, проигнорируйте это письмо"
 
-#: templates/confirm.html:59
+#: templates/confirm.html:65
 #, python-format
 msgid ""
 "You&nbsp;are&nbsp;receiving&nbsp;this&nbsp;email&nbsp;because&nbsp;"
@@ -734,264 +1396,123 @@ msgid ""
 "&nbsp;|&nbsp;St.&nbsp;Petersburg,&nbsp;Russia"
 msgstr ""
 
-#: templates/contacts.html:452
-msgid "Insydia was founded at March 2016."
-msgstr ""
-
-#: templates/contacts.html:459
-msgid "WHAT WE DO"
-msgstr ""
-
-#: templates/contacts.html:462
-msgid ""
-"<h2>Проект Insydia начинает свою историю летом 2015 года, когда наш "
-"основатель заметил, что в рускоязычном сегменте\n"
-"Интернета очень мало информации о высоких технологиях по сравнению с, "
-"например, англоязычном. С того момента\n"
-"мы начали работу по созданию сервиса, который помог бы русскоговорящим людям "
-"получить больше информации\n"
-"из мира Hi-Tech. Мы не просто хотим искать и собирать новости, мы хотим "
-"предоставлять нашим посетителям\n"
-"такой контент, который редко встречается где-либо, но может оказаться\n"
-"очень интересным. Большую ставку мы делаем на стартапы нашей страны, мы "
-"хотим помочь им, хотим, чтобы о них узнали не\n"
-"только в России, но и во всём мире(для чего мы будем писать о вас на трёх "
-"самых популярных языках мира), ведь это\n"
-"открывает для них практически неограниченные возможности от поиска "
-"сотрудников до получения инвестиций со всего мира,\n"
-"а так же эта информация может стать вдохновением для любого мечтателя, "
-"желающего создать что-то интересное,\n"
-"полезное и нужное. Развитие высокотехнологичной индустрии начинается с идеи "
-"и распространения информации о ней и\n"
-"мы готовы помочь вам с последним.</h2>"
-msgstr ""
-
-#: templates/contacts.html:476
-msgid "Media kit"
-msgstr ""
-
-#: templates/contacts.html:486
-#, fuzzy
-#| msgid "Moderators"
-msgid "collaborators"
-msgstr "Редакторы"
-
-#: templates/contacts.html:491
-#, fuzzy
-#| msgid "Evgeniy Privalov"
-msgid "Eugene Privalov"
-msgstr "Евгений Привалов"
-
-#: templates/contacts.html:492
-msgid "CEO, Founder, Publisher"
-msgstr ""
-
-#: templates/contacts.html:511
-msgid "Anton Tinishov"
-msgstr "Антон Тинишов"
-
-#: templates/contacts.html:512
-msgid "CTO, Co-founder, Advisor"
-msgstr ""
-
-#: templates/contacts.html:531
-#, fuzzy
-#| msgid "Evgeniy Privalov"
-msgid "Stanislav Privalov"
-msgstr "Евгений Привалов"
-
-#: templates/contacts.html:532
-msgid "Finance advisor"
-msgstr ""
-
-#: templates/contacts.html:551
-msgid "Kate Vlasova"
-msgstr ""
-
-#: templates/contacts.html:552
-msgid "English localizer"
-msgstr ""
-
-#: templates/contacts.html:571
-msgid "Mary Konosova"
-msgstr ""
-
-#: templates/contacts.html:572
-msgid "Chinese localizer"
-msgstr ""
-
-#: templates/contacts.html:591
-msgid "Nikita Illin"
-msgstr ""
-
-#: templates/contacts.html:592
-msgid "Video editor"
-msgstr ""
-
-#: templates/contacts.html:611
-msgid "Elizaveta Karceva"
-msgstr ""
-
-#: templates/contacts.html:612
-msgid "Design advisor, logo creator"
-msgstr ""
-
-#: templates/contacts.html:631
-msgid "Artem Panin"
-msgstr ""
-
-#: templates/contacts.html:632
-msgid "Crucial advisor"
-msgstr ""
-
-#: templates/contacts.html:655
-msgid "get in touch"
-msgstr ""
-
-#: templates/contacts.html:661
-msgid "Take special info"
-msgstr ""
-
-#: templates/contacts.html:667
-#, fuzzy
-#| msgid "Advertiser"
-msgid "Advertisements"
-msgstr "Рекламодателям"
-
-#: templates/contacts.html:673
-msgid "Need in support?"
-msgstr ""
-
-#: templates/contacts.html:679
-msgid "For partners"
-msgstr ""
-
-#: templates/contacts.html:689
-msgid "Say hello."
-msgstr ""
-
-#: templates/contacts.html:691
-#, fuzzy
-#| msgid "First name"
-msgid "Your name"
-msgstr "Имя"
-
-#: templates/contacts.html:692
-#, fuzzy
-#| msgid "Enter your email"
-msgid "Your email"
-msgstr "Введите вашу почту"
-
-#: templates/contacts.html:693
-#, fuzzy
-#| msgid "Message"
-msgid "Type message"
-msgstr "Сообщение"
-
-#: templates/contacts.html:706
-msgid "Alpiyskiy pereulok 15k2 | suit 1411"
-msgstr ""
-
-#: templates/contacts.html:707
-msgid "St. Petersburg, Russian Federation, 192239"
-msgstr ""
-
-#: templates/footer.html:45 templates/footer_usernews.html:83
+#: templates/footer.html:29 templates/footer_usernews.html:26
 #: templates/mobile/mobile_footer.html:70
 #, fuzzy
 #| msgid "RECENTLY NEWS"
 msgid "RECENT NEWS"
 msgstr "Последние новости"
 
-#: templates/footer.html:85 templates/footer_usernews.html:112
-#: templates/mobile/mobile_footer.html:104
-msgid "Categories"
-msgstr ""
-
-#: templates/footer.html:94 templates/footer.html.py:183
-#: templates/footer_usernews.html:121 templates/index_25_02.html:368
-#: templates/index_25_02.html.py:370 templates/index_beta.html:183
-#: templates/index_beta.html.py:185 templates/index_new.html:668
+#: templates/footer.html:78 templates/footer.html.py:170
+#: templates/footer_usernews.html:64 templates/index_12_03.html:149
+#: templates/index_12_03.html.py:151 templates/index_25_02.html:368
+#: templates/index_25_02.html.py:370 templates/index_beta.html:145
+#: templates/index_beta.html.py:147 templates/index_new.html:668
 #: templates/index_new.html.py:670 templates/index_new.html:1051
 #: templates/mobile/mobile_footer.html:113
-#: templates/mobile/mobile_footer.html:203
+#: templates/mobile/mobile_footer.html:202
 msgid "PRIVATE"
 msgstr "Мои новости"
 
-#: templates/footer.html:104 templates/footer_usernews.html:127
+#: templates/footer.html:88 templates/footer_usernews.html:70
 #: templates/mobile/mobile_footer.html:123
 msgid "Quick links"
 msgstr ""
 
-#: templates/footer.html:107 templates/mobile/mobile_footer.html:127
+#: templates/footer.html:91 templates/footer_usernews.html:74
+#: templates/mobile/mobile_footer.html:209
+msgid "Career"
+msgstr ""
+
+#: templates/footer.html:92 templates/mobile/mobile_footer.html:126
 msgid "RSS feeds"
 msgstr ""
 
-#: templates/footer.html:108 templates/footer_usernews.html:132
-#: templates/mobile/mobile_footer.html:128
-#: templates/mobile/mobile_footer.html:211
-msgid "Hiring"
-msgstr ""
+#: templates/footer.html:175
+msgid "Contacts"
+msgstr "Контакты"
 
-#: templates/footer_usernews.html:119 templates/mobile/mobile_footer.html:111
-#: templates/mobile/mobile_footer.html:201
-msgid "Reviews"
-msgstr ""
-
-#: templates/footer_usernews.html:131 templates/mobile/mobile_footer.html:210
+#: templates/footer_usernews.html:73 templates/mobile/mobile_footer.html:208
 msgid "RSS feed"
 msgstr ""
 
-#: templates/hire.html:139
-msgid "CAREER"
-msgstr ""
-
-#: templates/hire.html:142
-msgid "Join to our team and change the media industry"
-msgstr ""
-
-#: templates/index_25_02.html:51 templates/index_beta.html:51
-#: templates/index_new.html:74
+#: templates/index_12_03.html:63 templates/index_25_02.html:51
+#: templates/index_beta.html:63 templates/index_new.html:74
 #, python-format
 msgid "%(title)sInsydia"
 msgstr ""
 
-#: templates/index_25_02.html:324 templates/index_beta.html:139
-#: templates/index_new.html:615
+#: templates/index_12_03.html:110 templates/index_25_02.html:324
+#: templates/index_beta.html:106 templates/index_new.html:615
 msgid "Toggle navigation"
 msgstr ""
 
+#: templates/index_12_03.html:124 templates/index_12_03.html.py:126
 #: templates/index_25_02.html:338 templates/index_25_02.html.py:340
-#: templates/index_25_02.html:451 templates/index_beta.html:153
-#: templates/index_beta.html.py:155 templates/index_beta.html:331
-#: templates/index_new.html:632 templates/index_new.html.py:634
-#: templates/index_new.html:859 templates/index_new.html.py:1018
+#: templates/index_25_02.html:451 templates/index_beta.html:120
+#: templates/index_beta.html.py:122 templates/index_new.html:632
+#: templates/index_new.html.py:634 templates/index_new.html:859
+#: templates/index_new.html.py:1018
 msgid "ENTERTAINMENT"
 msgstr "Развлечения"
 
+#: templates/index_12_03.html:129 templates/index_12_03.html.py:131
 #: templates/index_25_02.html:343 templates/index_25_02.html.py:345
 #: templates/index_25_02.html:457 templates/index_25_02.html.py:478
-#: templates/index_beta.html:158 templates/index_beta.html.py:160
-#: templates/index_beta.html:337 templates/index_new.html:638
-#: templates/index_new.html.py:640 templates/index_new.html:865
-#: templates/index_new.html.py:886 templates/index_new.html:1023
+#: templates/index_beta.html:125 templates/index_beta.html.py:127
+#: templates/index_new.html:638 templates/index_new.html.py:640
+#: templates/index_new.html:865 templates/index_new.html.py:886
+#: templates/index_new.html:1023
 msgid "AUTO"
 msgstr "Авто"
 
+#: templates/index_12_03.html:134 templates/index_12_03.html.py:136
 #: templates/index_25_02.html:348 templates/index_25_02.html.py:350
-#: templates/index_25_02.html:463 templates/index_beta.html:163
-#: templates/index_beta.html.py:165 templates/index_beta.html:343
-#: templates/index_new.html:644 templates/index_new.html.py:646
-#: templates/index_new.html:871 templates/index_new.html.py:1028
+#: templates/index_25_02.html:463 templates/index_beta.html:130
+#: templates/index_beta.html.py:132 templates/index_new.html:644
+#: templates/index_new.html.py:646 templates/index_new.html:871
+#: templates/index_new.html.py:1028
 msgid "SPACE"
 msgstr "Космос"
 
+#: templates/index_12_03.html:144 templates/index_12_03.html.py:146
 #: templates/index_25_02.html:358 templates/index_25_02.html.py:360
-#: templates/index_beta.html:173 templates/index_beta.html.py:175
+#: templates/index_beta.html:140 templates/index_beta.html.py:142
 #: templates/index_new.html:656 templates/index_new.html.py:658
 #: templates/index_new.html:1038
 msgid "COMPANIES"
 msgstr "Компании"
+
+#: templates/index_12_03.html:171 templates/index_beta.html:167
+msgid "What searching?"
+msgstr ""
+
+#: templates/index_12_03.html:202 templates/index_25_02.html:381
+#: templates/index_beta.html:198 templates/index_new.html:686
+#: userprofile/templates/profile.html:14
+msgid "Profile"
+msgstr "Профиль"
+
+#: templates/index_12_03.html:205 templates/index_25_02.html:385
+#: templates/index_beta.html:201 templates/index_new.html:690
+#, fuzzy
+#| msgid "Sign up"
+msgid "Sign out"
+msgstr "Зарегистрироваться"
+
+#: templates/index_12_03.html:210 templates/index_12_03.html.py:213
+#: templates/index_25_02.html:389 templates/index_beta.html:206
+#: templates/index_beta.html.py:209 templates/index_new.html:694
+#: templates/index_new.html.py:982
+msgid "Sign in"
+msgstr "Войти"
+
+#: templates/index_12_03.html:494 templates/index_25_02.html:718
+#: templates/index_25_02.html.py:721 templates/index_beta.html:501
+#, fuzzy
+#| msgid "Your portals"
+msgid "New favourite article"
+msgstr "Ваши порталы"
 
 #: templates/index_25_02.html:363 templates/index_25_02.html.py:365
 #: templates/index_25_02.html:469 templates/index_new.html:662
@@ -1000,25 +1521,7 @@ msgstr "Компании"
 msgid "REVIEWS"
 msgstr "Обзоры"
 
-#: templates/index_25_02.html:381 templates/index_beta.html:196
-#: templates/index_new.html:686 userprofile/templates/profile.html:61
-msgid "Profile"
-msgstr "Профиль"
-
-#: templates/index_25_02.html:385 templates/index_beta.html:199
-#: templates/index_new.html:690
-#, fuzzy
-#| msgid "Sign up"
-msgid "Sign out"
-msgstr "Зарегистрироваться"
-
-#: templates/index_25_02.html:389 templates/index_beta.html:203
-#: templates/index_new.html:694 templates/index_new.html.py:982
-msgid "Sign in"
-msgstr "Войти"
-
-#: templates/index_25_02.html:439 templates/index_beta.html:319
-#: templates/index_new.html:847
+#: templates/index_25_02.html:439 templates/index_new.html:847
 msgid "HOME"
 msgstr "Главная"
 
@@ -1042,23 +1545,19 @@ msgstr ""
 msgid "OTHER"
 msgstr "Другое"
 
-#: templates/index_25_02.html:506 templates/index_beta.html:361
-#: templates/index_new.html:914
+#: templates/index_25_02.html:506 templates/index_new.html:914
 msgid "PROFILE"
 msgstr "Профиль"
 
-#: templates/index_25_02.html:514 templates/index_beta.html:369
-#: templates/index_new.html:922
+#: templates/index_25_02.html:514 templates/index_new.html:922
 msgid "ABOUT US"
 msgstr "О нас"
 
-#: templates/index_25_02.html:520 templates/index_beta.html:375
-#: templates/index_new.html:928
+#: templates/index_25_02.html:520 templates/index_new.html:928
 msgid "CONTACT US"
 msgstr "Контакты"
 
-#: templates/index_25_02.html:526 templates/index_beta.html:381
-#: templates/index_new.html:934
+#: templates/index_25_02.html:526 templates/index_new.html:934
 msgid "ADVERTISER"
 msgstr "Рекламодателям"
 
@@ -1070,26 +1569,13 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: templates/index_25_02.html:718 templates/index_25_02.html.py:721
-#: templates/index_beta.html:542
-#, fuzzy
-#| msgid "Your portals"
-msgid "New favourite article"
-msgstr "Ваши порталы"
-
-#: templates/index_beta.html:289
-msgid "What searching?"
+#: templates/index_beta.html:291
+msgid ""
+"\n"
+"                    Пожалуйста, проверьте свою почту и подтвердите "
+"регистрацию на нашем портале.\n"
+"                "
 msgstr ""
-
-#: templates/index_beta.html:349 templates/index_beta.html.py:354
-msgid "<later>"
-msgstr ""
-
-#: templates/index_beta.html:556
-#, fuzzy
-#| msgid "Your portals"
-msgid "Remove favourite article"
-msgstr "Ваши порталы"
 
 #: templates/index_new.html:957 templates/index_new.html.py:961
 msgid "SEARCH"
@@ -1127,7 +1613,7 @@ msgstr "Ваши порталы"
 msgid "Save"
 msgstr "Сохранить"
 
-#: templates/index_new.html:1333 userprofile/templates/profile.html:260
+#: templates/index_new.html:1333 userprofile/templates/profile.html:213
 msgid "Cancel"
 msgstr "Отменить"
 
@@ -1135,113 +1621,144 @@ msgstr "Отменить"
 msgid "CLOSE"
 msgstr "Закрыть"
 
-#: userprofile/templates/profile.html:66
+#: templates/mobile/mobile_footer.html:127
+msgid "Hiring"
+msgstr ""
+
+#: userprofile/templates/profile.html:19
 msgid " new email with confirmation code."
 msgstr ""
 
-#: userprofile/templates/profile.html:84
+#: userprofile/templates/profile.html:37
 msgid "Upload photo"
 msgstr "Загрузить фото"
 
-#: userprofile/templates/profile.html:94
+#: userprofile/templates/profile.html:47
 msgid "Accept"
 msgstr "Применить"
 
-#: userprofile/templates/profile.html:101
+#: userprofile/templates/profile.html:54
 msgid "Status"
 msgstr "Статус"
 
-#: userprofile/templates/profile.html:101
+#: userprofile/templates/profile.html:54
 msgid "moderator"
 msgstr "модератор"
 
-#: userprofile/templates/profile.html:112
+#: userprofile/templates/profile.html:65
 msgid "See all"
 msgstr "Показать все"
 
-#: userprofile/templates/profile.html:120
-#: userprofile/templates/profile.html:134
+#: userprofile/templates/profile.html:73 userprofile/templates/profile.html:87
 msgid "Delete Account"
 msgstr "Удалить профиль"
 
-#: userprofile/templates/profile.html:123
-#: userprofile/templates/profile.html:138
+#: userprofile/templates/profile.html:76 userprofile/templates/profile.html:91
 msgid "Delete All Articles"
 msgstr "Удалить все статьи"
 
-#: userprofile/templates/profile.html:128
-msgid "Want to be a freelance editor?"
-msgstr "Хотите быть нашим внештатным редактором?"
-
-#: userprofile/templates/profile.html:129
-msgid "It's easy"
-msgstr "Это легко"
-
-#: userprofile/templates/profile.html:129
-msgid "click here"
-msgstr "наэмите здесь"
-
-#: userprofile/templates/profile.html:159
-#: userprofile/templates/profile.html:164
+#: userprofile/templates/profile.html:112
+#: userprofile/templates/profile.html:117
 msgid "First name"
 msgstr "Имя"
 
-#: userprofile/templates/profile.html:169
-#: userprofile/templates/profile.html:174
+#: userprofile/templates/profile.html:122
+#: userprofile/templates/profile.html:127
 msgid "Last name"
 msgstr "Фамилия"
 
-#: userprofile/templates/profile.html:195
+#: userprofile/templates/profile.html:148
 msgid "Your phone number"
 msgstr "Телефон"
 
-#: userprofile/templates/profile.html:201
+#: userprofile/templates/profile.html:154
 msgid "Social Networks(Moderator Mode)"
 msgstr "Социальные сети(Режим модератора)"
 
-#: userprofile/templates/profile.html:203
+#: userprofile/templates/profile.html:156
 msgid "Facebook:"
 msgstr ""
 
-#: userprofile/templates/profile.html:208
+#: userprofile/templates/profile.html:161
 msgid "Facebook"
 msgstr ""
 
-#: userprofile/templates/profile.html:213
+#: userprofile/templates/profile.html:166
 msgid "Linkedin:"
 msgstr ""
 
-#: userprofile/templates/profile.html:218
+#: userprofile/templates/profile.html:171
 msgid "Linkedin"
 msgstr ""
 
-#: userprofile/templates/profile.html:223
+#: userprofile/templates/profile.html:176
 msgid "Twitter:"
 msgstr ""
 
-#: userprofile/templates/profile.html:228
+#: userprofile/templates/profile.html:181
 msgid "Twitter"
 msgstr ""
 
-#: userprofile/templates/profile.html:233
+#: userprofile/templates/profile.html:186
 msgid "VK:"
 msgstr ""
 
-#: userprofile/templates/profile.html:238
+#: userprofile/templates/profile.html:191
 msgid "VK"
 msgstr ""
 
-#: userprofile/templates/profile.html:243
+#: userprofile/templates/profile.html:196
 msgid "Perosnal email"
 msgstr "Личная почта"
 
-#: userprofile/templates/profile.html:249
+#: userprofile/templates/profile.html:202
 msgid "Personal email"
 msgstr "Личная почта"
 
-#: userprofile/templates/profile.html:258
+#: userprofile/templates/profile.html:211
 msgid "Save Changes"
 msgstr "Сохранить изменения"
+
+#~ msgid "ABOUT"
+#~ msgstr "О"
+
+#~ msgid "GRATITUDE"
+#~ msgstr "БЛАГОДАРНОСТЬ"
+
+#, fuzzy
+#~| msgid "Advertiser"
+#~ msgid "Types of advertisement"
+#~ msgstr "Рекламодателям"
+
+#, fuzzy
+#~| msgid "Advertiser"
+#~ msgid "Advertisement for startups"
+#~ msgstr "Рекламодателям"
+
+#~ msgid "Hi"
+#~ msgstr "Здравствуйте"
+
+#~ msgid "Please confirm"
+#~ msgstr "Пожалуйста, подтвердите"
+
+#~ msgid ""
+#~ "If you do it, you will get access to the hidden features of the portal"
+#~ msgstr "Если Вы это сделаете, Вы получите расширенный доступ."
+
+#~ msgid "Thank you!"
+#~ msgstr "Спасибо!"
+
+#~ msgid "Cheers"
+#~ msgstr "С Уважением,"
+
+#~ msgid "Want to be a freelance editor?"
+#~ msgstr "Хотите быть нашим внештатным редактором?"
+
+#~ msgid "It's easy"
+#~ msgstr "Это легко"
+
+#~ msgid "click here"
+#~ msgstr "наэмите здесь"
 
 #, fuzzy
 #~| msgid "Can't log in?"
@@ -1302,9 +1819,6 @@ msgstr "Сохранить изменения"
 
 #~ msgid "MARKETING"
 #~ msgstr "Маркетологи"
-
-#~ msgid "Join to us"
-#~ msgstr "Присоединиться к нашей команде"
 
 #~ msgid "Social Networks"
 #~ msgstr "Социальные сети"
@@ -1368,9 +1882,6 @@ msgstr "Сохранить изменения"
 #~ msgid "Home"
 #~ msgstr "Главная"
 
-#~ msgid "change"
-#~ msgstr "изменить"
-
 #~ msgid "Key word"
 #~ msgstr "Ключевое слово"
 
@@ -1385,6 +1896,3 @@ msgstr "Сохранить изменения"
 
 #~ msgid "Chosen"
 #~ msgstr "Ваши порталы"
-
-#~ msgid "Home | Insydia"
-#~ msgstr "Главная | Insydia"

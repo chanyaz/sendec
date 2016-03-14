@@ -5,6 +5,9 @@
 {% load cache %}
 {% load thumbnail %}
 {% block current_news %}
+    <style>
+        main>h1{color: #F62A00;text-align: center;font-size:26px}#to-russian{background:url("{% static 'static/img/rus.png' %}") center no-repeat;background-size:cover}#to-english{background:url("{% static 'static/img/uk.png' %}") center no-repeat;background-size:cover}#to-chinese{background:url("{% static 'static/img/china.png' %}") center no-repeat;background-size:cover}
+    </style>
     <script>
 {#        function changeArticleLanguage(news_id, lang_code){#}
 {#            $.ajax({#}
@@ -161,13 +164,21 @@
         </article>
         <hr width="100%">
         <div class="container-fluid container text-center">
-                            <div class="google-news-below-shares" style="
-                     margin-left: auto;
-                     margin-right: auto;
-                     width:980px;
-                     height: 120px;
-                     background-color: #00fff9;">
-                </div>
+            <div class="google-news-below-shares" style="
+                 margin-left: auto;
+                 margin-right: auto;
+                 width:980px;
+                 height: 120px">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Main Page Top -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3573531709355550"
+     data-ad-slot="7352515427"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
          </div>
     {% if flavour != 'mobile' %}
         <div class="other-materials container-fluid container">
@@ -364,7 +375,18 @@
                         </script>
                         <noscript>{% trans 'Please enable JavaScript to view the'%} <a href="https://disqus.com/?ref_noscript" rel="nofollow">{% trans 'comments powered by Disqus.' %}</a></noscript>
                     </div>
-                    <div class="desktop-ad adver-near-comments" style="float: right; width: 300px; height: 660px; background-color: #00fff9"></div>
+
+                    <div class="" style="float: right; width: 300px; height: 660px">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- companies -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:600px"
+     data-ad-client="ca-pub-3573531709355550"
+     data-ad-slot="4399049021"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                    </div>
                 </div>
             </div>
     </div>

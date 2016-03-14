@@ -7,75 +7,16 @@
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <script src="{% static 'static/js/jquery.js' %}"></script>
-    <script src="{% static 'static/js/jquery.min.js' %}"></script>
-    <script src="{% static 'static/js/jquery-ui.js' %}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="   crossorigin="anonymous"></script>
     <script>
-        $(document).ready(function(){
-            $("#user-register-name").focusout(function() {
-                $.ajax({
-                    type: "POST",
-                    url: "/auth/register/cu=" + $("#user-register-name").val(),
-                    data: {
-                        csrfmiddlewaretoken: "{{ csrf_token }}"
-                    },
-                    success: function (data) {
-                        if (data.data == true) {
-                            $("#span-check-username").html("User is already exists");
-                            $("#reg-submit").attr("type", "");
-                            $("#reg-submit").addClass("disabled");
-                        }
-                        else {
-                            $("#span-check-username").html("");
-                            $("#reg-submit").attr("type", "submit");
-                            $("#reg-submit").removeClass("disabled");
-                        }
-                    }
-                })
-            });
-            $('#user-register-email').focusout(function(){
-                $.ajax({
-                    type: "POST",
-                    url: "/auth/register/ce/",
-                    data: {
-                        "csrfmiddlewaretoken": "{{ csrf_token }}",
-                        "email": $('#user-register-email').val(),
-                    },
-                    success: function(data){
-                        if(data.data == true){
-                            $("#span-check-email").html("Current email is used");
-                            $("#reg-submit").attr("type", "");
-                            $("#reg-submit").addClass("disabled");
-                        }
-                        else{
-                            $("#span-check-email").html("");
-                            $("#reg-submit").attr("type", "submit");
-                            $("#reg-submit").removeClass("disabled");
-                        }
-                    }
-                })
-            })
-        })
+        $(document).ready(function(){$("#user-register-name").focusout(function(){$.ajax({type:"POST",url:"/auth/register/cu="+$("#user-register-name").val(),data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(e){1==e.data?($("#span-check-username").html("User is already exists"),$("#reg-submit").attr("type",""),$("#reg-submit").addClass("disabled")):($("#span-check-username").html(""),$("#reg-submit").attr("type","submit"),$("#reg-submit").removeClass("disabled"))}})}),$("#user-register-email").focusout(function(){$.ajax({type:"POST",url:"/auth/register/ce/",data:{csrfmiddlewaretoken:"{{ csrf_token }}",email:$("#user-register-email").val()},success:function(e){1==e.data?($("#span-check-email").html("Current email is used"),$("#reg-submit").attr("type",""),$("#reg-submit").addClass("disabled")):($("#span-check-email").html(""),$("#reg-submit").attr("type","submit"),$("#reg-submit").removeClass("disabled"))}})})});
     </script>
     <script>$(document).ready(function(){$("#progress-bar").progressbar({value: false});})</script>
     <style>
-        body{background: black;}
-        @media(max-device-width: 767px){.background-image{opacity: 0;visibility: hidden;}}
-        #auth-register{height:90%;margin-top: 3%;position: relative;}
-        .background-image{top: 0;margin-left: 0;width: 100%;height: 100%;position: absolute;background: black;}
-        #auth-video{margin-left: 1%;margin-top: -3%;}
-        .form-field-link a:hover{text-decoration: none;color: #F62A00;}
-        ul{list-style-type: none;}
-        .form-control{margin-left:0;}
-        #auth_login_logo a{text-decoration: none;color: #F62A00;}
-        #auth_login_logo a:hover{text-decoration: none;color: #1E656D;}
-        footer{position: absolute;bottom: 0;width: 100%;}
-        html{overflow-x: hidden;}
-        .auth-button{margin-top:3%;position:relative;}
-        #span-check-email,
-        #span-check-username{font-size:16px;color:#F62A00;margin-bottom:2%}
+        #auth_login_logo a,.form-field-link a:hover{text-decoration:none;color:#F62A00}.background-image,footer{position:absolute;width:100%}body{background:#000}@media(max-device-width:767px){.background-image{opacity:0;visibility:hidden}}#auth-register{height:90%;margin-top:3%;position:relative}.background-image{top:0;margin-left:0;height:100%;background:#000}#auth-video{margin-left:1%;margin-top:-3%}ul{list-style-type:none}.form-control{margin-left:0}#auth_login_logo a:hover{text-decoration:none;color:#1E656D}footer{bottom:0}html{overflow-x:hidden}.auth-button{margin-top:3%;position:relative}#span-check-email,#span-check-username{font-size:16px;color:#F62A00;margin-bottom:2%}
     </style>
-    <div class="background-image"></div>
+{#    <div class="background-image"></div>#}
     <div id="auth-register" class="row">
         <div class=" container">
             <div class="col-md-4 col-md-offset-4">

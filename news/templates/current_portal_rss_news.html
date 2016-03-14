@@ -3,6 +3,51 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load thumbnail %}
+
+<script>$('#rss-news').addClass('container').addClass('container-fluid');</script>
+<style>
+    @media  (min-device-height: 769px){
+        #rss-news{margin-top:100px}
+        #portal-banner{
+            position: absolute;
+            top:10%;
+            width:46.5%;
+            height:50px;
+        }
+    }
+    @media  (max-device-height: 768px) {
+        #rss-news {
+            margin-top: 100px
+        }
+        #portal-banner {
+            position: absolute;
+            top: 10%;
+            width: 65.5%;
+            height: 50px;
+        }
+    }
+    @media (min-device-height: 769px) and (max-device-width: 1600px){
+        #rss-news {
+            margin-top: 100px
+        }
+        #portal-banner {
+            position: absolute;
+            top: 7%;
+            width: 55.5%;
+            height: 50px;
+        }
+    }
+    #portal-banner{text-align: center;}
+    #portal-banner>h1{font-size:26px;color:black;padding:0;margin-top:2%}
+</style>
+
+<div id="portal-banner">
+    <h1>{{ portal }}</h1>
+    <span class="">{% trans 'Followers' %}:&nbsp;{{ portal.follows }}</span>&nbsp;|&nbsp;
+    <span class="">{% trans 'Articles' %}:&nbsp;{{ portal.id|rss_articles_amount }}</span>&nbsp;|&nbsp;
+    <span class=""><a href="#" onclick="removePortalFromFav('{{ username.profile.uuid }}', '{{ portal.id }}', '{{ portal.id }}'); return false;">unfollow</a></span>
+</div>
+
 <div class="any40items">
 {% paginate 20 portal_news %}
     {% for i in portal_news %}
@@ -43,23 +88,25 @@
             {% endif %}
                     <h1>
                         <b>
-                            {{ i.title|safe|striptags }}
+                            {{ i.title|safe|striptags|truncatechars:"140" }}
                         </b>
                     </h1>
                 </div>
                 <div class="rss-params">
-                    <div class="rp-author pull-left">
-                        {% if i.author != '' %}
-                            {% trans 'By' %}&nbsp;<span class="rss-author-name">{{ i.author }}</span>
-                        {% else %}
-                            {{ i.portal_name.portal }}
-                        {% endif %}
-                    </div>
-                    <div class="rp-time pull-right">
-                        {{ i.date_posted.date|date }}
+                    <div class="rp-top">
+                        <div class="rp-author pull-left">
+                            {% if i.author != '' %}
+                                {% trans 'By' %}&nbsp;<span class="rss-author-name">{{ i.author }}</span>
+                            {% else %}
+                                <span class="rss-author-name">{{ i.portal_name_id|get_rss_portal_name }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="rp-time pull-right">
+                            {{ i.date_posted.date|date }}
+                        </div>
                     </div>
                     <div class="rp-conf">
-                        <div class="rpc-left pull-left"><a href="{{ i.link }}">original</a></div>
+                        <div class="rpc-left pull-left"><a href="{{ i.link }}" target="_blank">original</a></div>
                         <div id="link-save-{{ i.id }}" class="rpc-right pull-right">
                             {% if i.id|check_saved_rss:username.id == False %}
                                 <a href="#" onclick="setRssFavourite('{{ i.id }}'); return false;">save</a>
@@ -74,4 +121,6 @@
     {% endfor %}
 </div>
     {% show_more %}
-<script>$('.any40items').masonry({itemSelector: '.rss-rss'});</script>
+    <script>
+        function removePortalFromFav(r,e,s){$.ajax({url:"/news/rrp&uid="+r+"&pid="+e+"/",type:"POST",data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(r){alertify.error("{% trans 'Subscription remove' %}"),window.location.href="/news/usernews/"}})}$(".any40items").masonry({itemSelector:".rss-rss"});
+    </script>

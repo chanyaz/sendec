@@ -61,7 +61,7 @@
     <meta name='yandex-verification' content='5e44980913d08dad' />
     <meta name="google-site-verification" content="y6Xw9KEH5CLn8NGw7Q2xWyettWl8PNt06hQVCjG2EBs" />
     <title>{% blocktrans %}{{ title }}Insydia{% endblocktrans %}</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/font-awesome.min.css">
     <link href="{% static 'static/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'static/css/style_beta.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{% static 'static/css/jquery.loading-indicator.css' %}">
@@ -87,6 +87,7 @@
 {#    <script src="{% static 'static/js/insydia.js' %}"></script>#}
     <script>
         $(document).ready(function(){$(".change").on("click",function(){document.cookie="lang="+$(this).attr("data-lang"),location.reload()})});
+        $(document).ready(function(){$(".link-hua").on('click',function(){$(".user-active").slideUp();return false;})})
     </script>
 </head>
 {% if here_private %}
@@ -283,6 +284,17 @@
     {% endif %}
     </header>
     <main id="total-wrapper" class="">
+    {% if username.username and not username.is_active %}
+        <div class="user-active col-xs-12">
+            <div class="container container-fluid col-xs-6 col-xs-offset-3 text-center"
+            style="background: lightblue;height: 26px;margin-top:-10px;margin-bottom:10px;padding-top:0;font-size:14px">
+                {% blocktrans %}
+                    Пожалуйста, проверьте свою почту и подтвердите регистрацию на нашем портале.
+                {% endblocktrans %}
+            <span class="hide-user-active pull-right"><a class="link-hua" href="#">x</a></span>
+            </div>
+        </div>
+    {% endif %}
         <div id="wrapper-main-content" class="row">
             <div id="wrapper-new" class="">
                 <div id="page-wrapper">
@@ -481,31 +493,31 @@
                     return valid;
                 }
             function setRssFavourite(news_id) {
-                        $.ajax({
-                            type: "POST",
-                            url: "/news/add_like_rss/r=" + news_id,
-                            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                            success: function () {
-                                alertify.success("{% trans 'New favourite article' %}");
-                                $('.rss-fav').css({
-                                    'color': 'lime'
-                                });
-                                $('#link-save-'+news_id).html("<a href='#' onclick='removeRssFavourite('{id}'); return false;'>unsave</a>".replace("{id}", news_id));
-                                $('.rss-item-save').attr('onclick', 'removeRssFavourite("{id}");'.replace("{id}", news_id));
-                            }
+                $.ajax({
+                    type: "POST",
+                    url: "/news/add_like_rss/r=" + news_id,
+                    data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    success: function (data) {
+                        alertify.success("{% trans 'New favourite article' %}");
+                        $('.rss-fav').css({
+                            'color': 'lime'
                         });
+                        $('#link-save-'+news_id).html(data.string);
+                        $('.rss-item-save').attr('onclick', 'removeRssFavourite("{id}");'.replace("{id}", news_id));
                     }
+                });
+                }
             function removeRssFavourite(news_id){
                     $.ajax({
                         type: "POST",
                         url: "/news/remove_like_rss/r="+news_id,
                         data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-                        success: function(){
+                        success: function(data){
                             alertify.error("{% trans 'Remove favourite article' %}");
                             $('.rss-fav').css({
                                 'color': 'white'
                             });
-                            $('#link-save-'+news_id).html("<a href='#' onclick='setRssFavourite('{id}'); return false;'>save</a>".replace("{id}", news_id));
+                            $('#link-save-'+news_id).html(data.string);
                             $('.rss-item-save').attr('onclick', 'setRssFavourite("{id}");'.replace("{id}", news_id));
                         }
                     })
@@ -518,7 +530,7 @@
                         $("#current-rss-preview").keyup(function (e) {
                             if (e.keyCode == 27) {
                                 $('#close-preview').hide();
-                                $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();
+{#                                $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();#}
                             }
                         });
                     });
@@ -831,14 +843,14 @@
                                             transition: 'all 0.3s'
                                         });
                                         $('.cur-pw-content').html(data.data).replace('{by}', "{% trans 'By' %}");
-                                        $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();
+{#                                        $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();#}
                                     }
                                 });
                             }
                         }
                         else if(data.response != true && data.exists == true) {
                             homeLoader.hide();
-                            $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();
+{#                            $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();#}
                             $('#fadeandscale').popup({
                                 autoopen: true,
                                 pagecontainer: '.container',
@@ -847,15 +859,15 @@
                             $('.cur-pw-content').html(data.string).replace('{by}', "{% trans 'By' %}");
                         }
                         else {
-                            homeLoader.hide();
-                            $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();
+{#                            homeLoader.hide();#}
+{#                            $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();#}
                             var message = "Sorry, we can't work with this portal. But we will try to change it.";
                             alertify.alert(message);
                         }
                     },
                     error: function(){
                         homeLoader.hide();
-                        $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();
+{#                        $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();#}
                     }
                 });
             }
@@ -964,21 +976,21 @@
                                             transition: 'all 0.3s'
                                         });
                                         $('.preview-content-mobile').html(data.data).replace('{by}', "{% trans 'By' %}");
-                                        $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();
+{#                                        $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();#}
                                     }
                                 });
                             }
                         }
                         else {
                             homeLoader.hide();
-                            $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();
+{#                            $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();#}
                             var message = "Sorry, we can't work with this portal. But we will try to change it.";
                             alertify.alert(message);
                         }
                     },
                     error: function(){
                         homeLoader.hide();
-                        $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();
+{#                        $('#uap').val('').removeAttr('checked').removeAttr('selected').blur();#}
                     }
                 });
             }

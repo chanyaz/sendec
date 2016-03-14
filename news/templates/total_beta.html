@@ -15,7 +15,7 @@
                             <div class="breaking-news col-md-12">
                                 <div class="bn">
                                     <div id="latest-news">
-                                        <div class="top-total-content"></div>
+                                        <div class="top-total-content" style="height:400px;background:url('/media/{{ top_news.0.top_news_main_cover }}') center no-repeat;background-size:cover"></div>
                                         <a href="/news/top/{{ top_news.0.id }}/{{ top_news.0.slug }}/">
                                             <div class="bn-title col-md-12"></div>
                                         </a>
@@ -89,7 +89,17 @@
                                             </div>
                                         </div>
                                         {% if forloop.counter == 3 %}
-                                            <div class="top4advert col-xs-12"></div>
+                                            <div class=" col-xs-12"> {# class: top4advert #}
+                                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Main Page Top -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3573531709355550"
+     data-ad-slot="7352515427"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                                            </div>
                                         {% endif %}
 {#                                            {% if forloop.counter == 2 or forloop.counter == 3 %}#}
 {#                                                <div class="col-md-4">#}
@@ -114,6 +124,7 @@
                         <div class="media-block">
                     {% endif %}
                             <hr width="100%">
+                    {% if total_bottom_news %}
                             <div class="recently-news">
                                 <div class="two-news col-xs-12 container">
                                     <div class="two-news-item col-md-12">
@@ -335,11 +346,11 @@
                                                     </div>
                                                 <div class="news-text">
                                                     {% if lang == 'eng' %}
-                                                        {{ i.teaser_english }}
+                                                        {{ i.teaser_english|truncatechars:"128" }}
                                                     {% elif lang == 'rus' %}
-                                                        {{ i.teaser_russian }}
+                                                        {{ i.teaser_russian|truncatechars:"128" }}
                                                     {% else %}
-                                                        {{ i.teaser_chinese }}
+                                                        {{ i.teaser_chinese|truncatechars:"128" }}
                                                     {% endif %}
                                                 </div>
                                             </div>
@@ -385,6 +396,7 @@
                                     {% endfor %}
                                 {% endif %}
                                 </div>
+                    {% endif %}
                          <hr width="100%">
                                 {% include 'pre_paginate.html' %}
                                 <div class="load-more">

@@ -17,48 +17,16 @@ from django.conf.urls import include, url, patterns
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from django.contrib.auth.models import User, Group
 from django.views.generic.base import RedirectView
-
-
-# API MODELS
-from news.models import News
-
-
-from django.conf.urls import handler404
 handler404 = 'news.views.page_not_found'
-
-
 admin.autodiscover()
-from rest_framework import routers
-# from api.views import NewsViewSet
-
-
-router = routers.DefaultRouter()
-# router.register(r'news', NewsViewSet)
-
-
-#import debug_toolbar
 
 urlpatterns = patterns('',
-    url(r'^o/', include(router.urls)),
-    # url(r'^oauth/', include('oauth2_provider.urls'),name='oauth2_provider'),
-    url(r'^oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-
-
     url(r'^about/', include('about.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/', include('api.urls')),
+    url(r'^insydiaadministrative/', include(admin.site.urls)),
     url(r'^auth/', include('loginsys.urls')),
     url(r'^beta/', include('beta_test.urls')),
-
-   # url(r'^debug/', include(debug_toolbar.urls)),
-
-
-    url(r'^ext/', include("news.urls")),
     url(r'^favourite/', include('favourite.urls')),
-    url(r'^news/', include('news.urls')),
-    url(r'^news/', include('news.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^notify/', include('notify.urls')),
     url(r'^profile/', include('userprofile.urls')),
@@ -66,24 +34,13 @@ urlpatterns = patterns('',
     url(r'^pref/', include('loginsys.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^c/', include('loginsys.urls')),
-    # url(r'^en/', 'news.views.main_page_load'),
-    # url(r'^ru/', 'news.views.translate_russian'),
-    # url(r'^cn/', 'news.views.translate_chinese'),
     url(r'^rss/', include('rss.urls')),
     url(r'^reports/', include('reports.urls')),
-
-
-    url(r'^closet/check_email/email=(?P<email>\w+)$', 'news.views.check_email_subs'),
-    url(r'^closet/subs/$', 'news.views.closet_subscribe'),
-    url(r'^closet/(?P<lang>\w+)/$', 'news.views.render_close_page'),
-
-
-
+    # url(r'^closet/check_email/email=(?P<email>\w+)$', 'news.views.check_email_subs'),
+    # url(r'^closet/subs/$', 'news.views.closet_subscribe'),
+    # url(r'^closet/(?P<lang>\w+)/$', 'news.views.render_close_page'),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicons/favicon.ico')),
     url(r'^robots\.txt$', 'news.views.render_robots'),
-
-(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-        'document_root': settings.MEDIA_ROOT}),
-
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
     url(r'^$', 'news.views.main_page_load'),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

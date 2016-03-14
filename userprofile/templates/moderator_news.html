@@ -27,7 +27,13 @@
                         </a>
                     </div>
                     <div class="current_searched_content_post">
-                        {{ current_result.news_post_text_english|safe|striptags|truncatechars:"200" }}
+                        {% if lang == 'eng' %}
+                            {{ current_result.teser_english }}
+                        {% elif lang == 'rus' %}
+                            {{ current_result.teaser_russian }}
+                        {% else %}
+                            {{ current_result.teaser_chinese }}
+                        {% endif %}
                     </div>
 
                     <div class="md-bt-ct">

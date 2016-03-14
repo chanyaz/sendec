@@ -43,9 +43,9 @@
                                             <span class="cprs">
                                                 <span class="side-text">{{ current_portal.portal_id|get_rss_portal_name|truncatechars:15 }}</span>
                                             </span>
-                                            {% if current_portal.portal_id|get_unread_news:username.id != 0 %}
-                                                <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>
-                                            {% endif %}
+{#                                            {% if current_portal.portal_id|get_unread_news:username.id != 0 %}#}
+{#                                                <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>#}
+{#                                            {% endif %}#}
                                         </a>
                                     </li>
                                 {% endfor %}
@@ -284,7 +284,7 @@
 {#                }#}
 {#            });#}
 {#        });#}
-        function setRssFavourite(e){$.ajax({type:"POST",url:"/news/add_like_rss/r="+e,data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(){alertify.success("{% trans 'New favourite article' %}"),$(".rss-fav").css({color:"lime"}),$("#link-save-"+e).html("<a href='#' onclick='removeRssFavourite('{id}'); return false;'>unsave</a>".replace("{id}",e)),$(".rss-item-save").attr("onclick",'removeRssFavourite("{id}");'.replace("{id}",e))}})}
+{#        function setRssFavourite(e){$.ajax({type:"POST",url:"/news/add_like_rss/r="+e,data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(){alertify.success("{% trans 'New favourite article' %}"),$(".rss-fav").css({color:"lime"}),$("#link-save-"+e).html("<a href='#' onclick='removeRssFavourite('{id}'); return false;'>unsave</a>".replace("{id}",e)),$(".rss-item-save").attr("onclick",'removeRssFavourite("{id}");'.replace("{id}",e))}})}#}
 {#        function setRssFavourite(news_id) {#}
 {#            $.ajax({#}
 {#                type: "POST",#}

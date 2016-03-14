@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load i18n %}
+{% load staticfiles %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +13,9 @@
             <table style="width: 600px; margin-left: auto; margin-right: auto;">
                 <tr>
                     <td>
-                        <div class="" style="float: right">INSYDIA</div>
+                        <div class="" style="float: left;color:#F62A00;">
+                            INSYDIA
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -23,22 +26,23 @@
                         <td colspan="2" style="padding:30px 30px 0 30px;color:#444444;font-size:14px;line-height:1.5em;" align="left" valign="top">
                             <div style="font-size:14px;line-height:1.6em;color:#444444;">
                                 {% trans 'Welcome to Insydia,' %}
-                                <p>
                                     {% blocktrans %}
-                                        Thank you for creating an Insydia account.
+                                        <p>Поздравляем! Вы создали учётную запись Insydia.</p>
+                                        <p>Теперь вы сможете читать новости с любых порталов в Интернете на специально
+                                        отведённой для этого страничке, у нас на портале.</p>
+                                        <p>Чтобы начать, подтвердите Ваш электронный адрес, нажав на ссылку ниже.</p>
                                     {% endblocktrans %}
-                                    <span>{% trans 'If you do it, you will get access to the hidden features of the portal' %}</span>
-                                    <span>.&nbsp;{% trans 'Thank you!' %}</span>
-                                </p>
                                 <p style="text-align:center;">
                                     <a href="http://{{ site }}/c/ucid={{ ucid }}&uuid={{ uuid }}/" class="">
                                         <span style="font-size:16px;min-width:200px;background-color:#19ab58;line-height:42px;display:inline-block;color:white;border-radius:4px;text-align:center;margin-top:10px;padding:0 8px;">
-                                            {% trans 'Confirm your e-mail ' %}»
+                                            {% trans 'Confirm your e-mail' %}
                                         </span>
                                     </a>
                                 </p>
+                            <p>Благодарим вас за то, что присоединились к большому числу людей по всему миру,
+                            которым понравились и наш сервис.</p>
                                 <p>
-                                    {% trans 'Cheers' %},
+                                    {% trans 'Kind regards' %},
                                     <br>
                                     {% trans 'Your Insydia Team' %}
                                     <br><br>

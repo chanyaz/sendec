@@ -2,17 +2,7 @@
 {% load i18n %}
 {% load cache %}
 <style>
-
-    .ftr-rt{float:right; margin-top: 2%; color: #1E656D;}
-    #copyrights{margin-top: -1.7%; margin-left: 14%; color: #1E656D;}
-
-    #footer-div-2{  bottom: 20px;  font-family: Georgia, Times, "Times New Roman", serif  }
-    .footer-list-top .footer-list-element{list-style-type: none;display: inline;width: 100%;}
-    .ftr-lf{float: left;font-size: 40px;margin-right: -1%;}
-    .ftr-lf a{text-decoration: none; color: #1E656D;}
-    .ftr-lf a:hover{  text-decoration: none;  color: #F62A00;  }
-    .ftr-rt a{  text-decoration: none;  color: #1E656D;  }
-    .ftr-rt a:hover{  text-decoration: none;  color: #F62A00;  }
+    #copyrights,.ftr-lf a,.ftr-rt{color:#1E656D}.ftr-lf a,.ftr-lf a:hover,.ftr-rt a,.ftr-rt a:hover{text-decoration:none}.ftr-rt{float:right;margin-top:2%}#copyrights{margin-top:-1.7%;margin-left:14%}#footer-div-2{bottom:20px;font-family:Georgia,Times,"Times New Roman",serif}.footer-list-top .footer-list-element{list-style-type:none;display:inline;width:100%}.ftr-lf{float:left;font-size:40px;margin-right:-1%}.ftr-lf a:hover{color:#F62A00}.ftr-rt a{color:#1E656D}.ftr-rt a:hover{color:#F62A00}
 </style>
 
 <div id="footer-div-2" class="container">
@@ -26,13 +16,10 @@
                     <div id="ftr-rt-top">
                         <ul class="footer-list-top">
                             <li class="footer-list-element">
-                                <a href="/about/advertisers/">{% trans 'Advertisement' %}</a>
+                                <a href="/about/advertisement/">{% trans 'Advertisement' %}</a>
                             </li>&nbsp;|&nbsp;
                             <li class="footer-list-element">
-                                <a href="/about/contacts/">{% trans 'Contacts' %}</a>
-                            </li>&nbsp;|&nbsp;
-                            <li class="footer-list-element">
-                                <a href="/about">{% trans 'About us' %}</a>
+                                <a href="/about/">{% trans 'About us' %}</a>
                             </li>
                         </ul>
                     </div>

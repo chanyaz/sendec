@@ -17,7 +17,6 @@ from djorm_pgarray.fields import ArrayField
 def upload_news_cover(instance, filename):
         return "/".join(["content", "news", "covers", filename])
 
-
 def upload_company_cover(instance, filename):
     return "/".join(["content", "companies", "logo", filename])
 
@@ -28,6 +27,10 @@ def upload_rss_portals_covevrs(instance, filename):
 
 def upload_rss_favicon(instance, filename):
     return "/".join(['content', 'rss', 'portals', 'favicons', filename])
+
+
+def upload_main_rss_portal_cover(instance, filename):
+    return "/".join(["content", "rss", "portals", "main_covers", filename])
 
 
 class NewsCategory(models.Model):
@@ -296,7 +299,7 @@ class RssPortals(models.Model):
         db_table = "rss_portals"
 
     portal = models.CharField(max_length=128)
-    portal_base_link = models.URLField()
+    portal_base_link = models.CharField(max_length=128)
     follows = models.IntegerField(default=0)
     description = models.TextField(max_length=1024)
     cover = models.CharField(max_length=512)
@@ -304,7 +307,7 @@ class RssPortals(models.Model):
     favicon = models.TextField(max_length=512, blank=True)
     verbose_name = models.CharField(max_length=128)
     category = models.ForeignKey(NewsCategory)
-
+    main_portal_cover = models.FileField(upload_to=upload_main_rss_portal_cover, blank=True)
     # feed_url = models.URLField(max_length=256)
 
     puid = models.UUIDField(max_length=33, unique=True)
@@ -454,3 +457,11 @@ class SubscriptionUsers(models.Model):
     email = models.EmailField(max_length=128)
     uid = models.UUIDField(max_length=33)
 
+
+class UserSearchPortals(models.Model):
+    class Meta:
+        db_table = "search_rss_user"
+    name = models.CharField(max_length=64,blank=False)
+    url = models.CharField(max_length=128,blank=False)
+    link = models.TextField(max_length=1024,blank=False)
+    date = models.DateTimeField(auto_now_add=True,blank=False)

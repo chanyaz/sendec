@@ -5,9 +5,7 @@
 {% load my %}
 {% block catalog %}
     <style>
-        .private-top-background{position: absolute;width:100%;height:400px;background:url('{% static 'static/img/rss/top-back-12jpg' %}') no-repeat center;opacity: 1}
-        #news-block{margin-bottom:0}
-        .cur-pw-background{width:100%;height:200px;background:url('{% static 'static/img/rss/top-back-12jpg' %}') no-repeat center; background-size: cover;}
+        .cur-pw-background,.private-top-background{width:100%;background:url("{% static 'static/img/rss/top-back-12jpg' %}") center no-repeat}.private-top-background{position:absolute;height:400px;opacity:1}#news-block{margin-bottom:0}.cur-pw-background{height:200px;background-size:cover}
     </style>
     <div id="catalog" class="container-fluid container col-xs-12">
         {% if flavour != 'mobile' %}

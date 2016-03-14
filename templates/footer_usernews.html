@@ -3,83 +3,25 @@
 {% load cache %}
 {% load my %}
 <style>
-    #footer-div{
-        color: white;
-        height: inherit;
-        background-color: #00293C;
-        -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
-{#        width: 80%;#}
-        font-family: Georgia, Times, "Times New Roman", serif;
-        bottom: 0px;
-    }
-    #footer-div a:hover{
-        color: #F62A00;
-        text-decoration: none;
-    }
-    .footer-bottom-block{}
-    #footer-social li{
-        display: inline;
-    }
-    #footer-list-top li{
-        display: inline;
-    }
-    .main-footer-item {
-        width: 25%;
-        float: left;
-    }
-
-    .footer-top{
-        height: 250px;
-    }
-    .footer-middle{
-        height: 50px;
-    }
-    .footer-bottom{
-        height: 100px;
-    }
-
-    .footer-list-item a{
-        text-decoration: none;
-        color: white;
-    }
-    .footer-list-item a:hover{
-        color: rgb(25, 189, 155);
-    }
-    .footer-main-title-link{
-        color: white;
-    }
-    .footer-main-title-link:hover{
-        color: rgb(25, 189, 155);
-    }
-
-    #footer-social li{display: inline;}
-    .social{font-size: 25px; color: white; margin-right: 5px;}
-    .social:hover{cursor: pointer;color: rgb(25, 180, 155);}
-
-
-    .footer-current-news{
-        height: 60px;
-        margin-top: 5px;
-        bottom: 5px;
-        border-bottom: dotted 1px red;
-        font-size: 12px;
-    }
-
+   #footer-list-top li,#footer-social li{display:inline}#footer-div{color:#fff;height:inherit;background-color:#00293C;-webkit-box-shadow:0 0 10px rgba(0,0,0,.5);-moz-box-shadow:0 0 10px rgba(0,0,0,.5);box-shadow:0 0 10px rgba(0,0,0,.5);bottom:0}#footer-div a:hover{color:#F62A00;text-decoration:none}.main-footer-item{width:25%;float:left}.footer-top{height:250px}.footer-middle{height:50px}.footer-bottom{height:100px}.footer-list-item a{text-decoration:none;color:#fff}.footer-list-item a:hover{color:#19bd9b}.footer-main-title-link{color:#fff}.footer-main-title-link:hover{color:#19bd9b}.social{font-size:25px;color:#fff;margin-right:5px}.social:hover{cursor:pointer;color:#19b49b}.footer-current-news{height:60px;margin-top:5px;bottom:5px;border-bottom:dotted 1px red;font-size:12px}#footer-3,#footer-4{float:left;width:18%}
 </style>
 <div id="footer-div" class="col-xs-10 col-xs-offset-2">
     <div class="footer-bottom-block row row-centered">
         <div class="footer-top">
             <ul id="main-footer-list">
-                <li class="col-xs-2">
+                <li class="col-xs-3">
                     <div id="footer-logo">
-                        <img src="{% static 'static/img/favicons/all/white_trans.png' %}" width="128px" height="128px"/>
-                        <img src="{% static 'static/img/aws.png' %}" width="127px" height="48px"/>
+                        <div class="fl-top text-center">
+                            <img src="{% static 'static/img/favicons/all/white_trans.png' %}" width="128px" height="128px"/>
+                        </div>
+                        <div class="fl-bottom text-center">
+                            <img src="{% static 'static/img/comodo.png' %}" width="108px" height="54px"/>
+                            <img src="{% static 'static/img/aws.png' %}" width="110px" height="40px"/>
+                        </div>
                         <span class="footer-logo" hidden><h1>INSYDIA</h1></span>
                     </div>
                 </li>
-                <li class="col-xs-4">
+                <li id="footer-2" class="col-xs-4">
                     <ul>
                         <li><h3 class="footer-title">{% trans 'RECENT NEWS' %}</h3></li>
                         {% for i in footer_news %}
@@ -108,7 +50,7 @@
                         {% endfor %}
                     </ul>
                 </li>
-                <li class="col-xs-3">
+                <li id="footer-3">
                     <ul>
                         <li><h3 class="footer-title">{% trans 'Categories' %}</h3></li>
                         <li class="footer-list-item"><a href="/news/technology/">{% trans 'Technology' %}</a></li>
@@ -123,7 +65,7 @@
                         {% endif %}
                     </ul>
                 </li>
-                <li class="col-xs-3">
+                <li id="footer-4">
                     <ul>
                         <li><h3 class="footer-title">{% trans 'Quick links' %}</h3></li>
                         <li class="footer-list-item"><a href="/about/">{% trans 'About us' %}</a></li>
@@ -135,11 +77,6 @@
             </ul>
         </div>
         <hr width="100%">
-        <div class="footer-middle" style="width:84%; text-align: center; margin-left: auto; margin-right: auto;">
-            <div class="middle-text">
-                <span class="footer-main-title">INSYDIA</span>, 2015{% now "Y" as current_year %}{% if current_year != '2015' %}-{% now "Y" %}{% endif %}
-            </div>
-        </div>
         <div class="footer-bottom">
             <div class="bottom-left" style="float: left; font-size: 30px; margin-left: 3%;"><a class="footer-main-title-link" href="/">INSYDIA</a></div>
             <div class="bottom-right" style="float: right; margin-right: 5%;">

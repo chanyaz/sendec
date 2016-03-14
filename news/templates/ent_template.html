@@ -42,11 +42,11 @@
                         </div>
                         <div class="news-text">
                             {% if lang == 'eng' %}
-                                {{ i.teaser_english }}
+                                {{ i.teaser_english|truncatechars:"128" }}
                             {% elif lang == 'rus' %}
-                                {{ i.teaser_russian }}
+                                {{ i.teaser_russian|truncatechars:"128" }}
                             {% else %}
-                                {{ i.teaser_chinese }}
+                                {{ i.teaser_chinese|truncatechars:"128" }}
                             {% endif %}
                         </div>
                     </div>

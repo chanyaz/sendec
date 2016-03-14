@@ -5,26 +5,7 @@
 {% block moderator_page %}
 
     <style>
-        .md-bt-ct{position:relative; margin-top:2%;}
-        .current_searched_content_post{margin-top: 3%;font-size: 13px}
-        .current_searched_content_author{position: relative;float: left}
-        .current_searched_content_author a{text-decoration: none;color: #F62A00}
-        .current_searched_content_author a:hover{text-decoration: none;color: #1E656D}
-        .current_searched{margin-bottom: 3em;height: 13em;font-family: Georgia, Times, "Times New Roman", serif;border-bottom: solid 1px lightgrey}
-        .search-news-block{height: inherit;margin-bottom: 20px}
-        .current_searched_content{height:10em}
-        .current_searched_content_top{position: relative;height: 87%;margin-left: 35%}
-        .searched-category-name{z-index: 900;float: right}
-        .searched-category-name-content{background-color: #F62A00;color: ivory;font-family: Georgia, Times, "Times New Roman", serif;text-transform: uppercase}
-        .current_searched_content_title>a{color:black}
-        .current_searched_content_title>a:hover{color:#F62A00}
-        .searched-category-link:hover{text-decoration: none}
-        .searched_company_name{margin-bottom: 5%;height: 3em}
-        .moderator-chars{padding: 10px;}
-        .moderator-socials{padding-left: 0;list-style-type:none;}
-        .ms-item{display: inline-block; font-size: 20px; margin-right: 5px;}
-        .ms-item>a{color:rgba(1,1,1,0.5)}
-        .ms-item>a:hover{color:#F62A00}
+        .current_searched,.searched-category-name-content{font-family:Georgia,Times,"Times New Roman",serif}.md-bt-ct{position:relative;margin-top:2%}.current_searched_content_post{margin-top:3%;font-size:13px}.current_searched_content_author{position:relative;float:left}.current_searched_content_author a{text-decoration:none;color:#F62A00}.current_searched_content_author a:hover{text-decoration:none;color:#1E656D}.current_searched{margin-bottom:3em;height:13em;border-bottom:solid 1px #d3d3d3}.search-news-block{height:inherit;margin-bottom:20px}.current_searched_content{height:10em}.current_searched_content_top{position:relative;height:87%;margin-left:35%}.searched-category-name{z-index:900;float:right}.searched-category-name-content{background-color:#F62A00;color:ivory;text-transform:uppercase}.current_searched_content_title>a{color:#000}.current_searched_content_title>a:hover{color:#F62A00}.searched-category-link:hover{text-decoration:none}.searched_company_name{margin-bottom:5%;height:3em}.moderator-chars{padding:10px}.moderator-socials{padding-left:0;list-style-type:none}.ms-item{display:inline-block;font-size:20px;margin-right:5px}.ms-item>a{color:rgba(1,1,1,.5)}.ms-item>a:hover{color:#F62A00}
     </style>
     <div class="container-fluid container">
         <div class="row row-centered">
@@ -52,35 +33,35 @@
                         </div>
                         <div id="moderator-socials" class="col-xs-12">
                             <ul class="moderator-socials">
-                                {% if god.values.0.facebook != '' %}
+                                {% if god.values.0.facebook %}
                                     <li class="ms-item">
                                         <a target="_blank" href="https://facebook.com/{{ god.facebook }}/">
                                             <span class="fa fa-facebook-square"></span>
                                         </a>
                                     </li>
                                 {% endif %}
-                                {% if current_user.god.values.0.twitter != '' %}
+                                {% if current_user.god.values.0.twitter %}
                                     <li class="ms-item">
                                         <a target="_blank" href="https://instagram.com/{{ current_user.god.values.0.twitter }}/">
                                             <span class="fa fa-twitter"></span>
                                         </a>
                                     </li>
                                 {% endif %}
-                                {% if current_user.god.values.0.linkedin != '' %}
+                                {% if current_user.god.values.0.linkedin %}
                                     <li class="ms-item">
                                         <a target="_blank" href="https://linkedin.com/in/{{ current_user.god.values.0.linkedin }}/">
                                             <span class="fa fa-linkedin"></span>
                                         </a>
                                     </li>
                                 {% endif %}
-                                {% if current_user.god.values.0.vk != ''%}
+                                {% if current_user.god.values.0.vk %}
                                     <li class="ms-item">
                                         <a target="_blank" href="https://vk.com/{{ current_user.god.values.0.vk }}/">
                                             <span class="fa fa-vk"></span>
                                         </a>
                                     </li>
                                 {% endif %}
-                                {% if current_user.god.values.0.instagram != '' %}
+                                {% if current_user.god.values.0.instagram %}
                                     <li class="ms-item">
                                         <a target="_blank" href="https://instagram.com/{{ current_user.god.values.0.instagram }}/">
                                             <span class="fa fa-instagram"></span>
@@ -96,9 +77,9 @@
                 <div class="load-more">
                     <div class="endless_page_template">
                         {% block js %}
-                            <script src="{% static 'static/js/jquery.js' %}"></script>
-                            <script src="{% static 'static/js/endless-pagination.js' %}"></script>
-                            <script src="{% static 'static/js/endless_on_scroll.js' %}"></script>
+                            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+                            <script src="{% static 'static/js/endless-pagination.min.js' %}"></script>
+                            <script src="{% static 'static/js/endless_on_scroll.min.js' %}"></script>
                             <script>
                                 $(document).ready(function() {
                                     $.endlessPaginate({

@@ -6,29 +6,14 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
     <style>
-        body{background: black;font-family: Georgia, Times, "Times New Roman", serif}
-        @media(max-device-width: 767px){.background-image{opacity: 0;visibility: hidden;}}
-        #auth-login{height:90%;margin-top: 3%;position: relative;}
-        .brand-title>h1{color: #F62A00}
-        .brand-title>h1>a{color: #F62A00;text-decoration: none}
-        .brand-title>h1>a:hover{color: white;text-decoration: none}
-        .background-image{top: 0;margin-left: 0;width: 100%;height: 100%;position: absolute;background: black;}
-        #auth-video{margin-left: 1%;margin-top: -3%;}
-        .form-field-link a:hover{text-decoration: none;color: #F62A00;}
-        ul{list-style-type: none;}
-        .form-control{margin-left:0;}
-        #auth_login_logo a{text-decoration: none;color: #F62A00;}
-        #auth_login_logo a:hover{text-decoration: none;color: #1E656D;}
-        footer{position: absolute;bottom: 0;width: 100%;}
-        html{overflow-x: hidden;}
-        .auth-button{margin-top:3%;position:relative;}
+        .background-image,footer{position:absolute;width:100%}body{background:#000;font-family:Georgia,Times,"Times New Roman",serif}@media(max-device-width:767px){.background-image{opacity:0;visibility:hidden}}#auth-login{height:90%;margin-top:3%;position:relative}.brand-title>h1{color:#F62A00}.brand-title>h1>a{color:#F62A00;text-decoration:none}.brand-title>h1>a:hover{color:#fff;text-decoration:none}#auth_login_logo a,.form-field-link a:hover{color:#F62A00;text-decoration:none}.background-image{top:0;margin-left:0;height:100%;background:#000}#auth-video{margin-left:1%;margin-top:-3%}ul{list-style-type:none}.form-control{margin-left:0}#auth_login_logo a:hover{text-decoration:none;color:#1E656D}footer{bottom:0}html{overflow-x:hidden}.auth-button{margin-top:3%;position:relative}
     </style>
 
-    <div class="background-image">
-        <video loop autoplay muted id="auth-video">
-            <source src="{% static 'static/video/loginsys/hoverboard.mp4' %}" type="video/mp4" />
-        </video>
-    </div>
+{#    <div class="background-image">#}
+{#        <video loop autoplay muted id="auth-video">#}
+{#            <source src="{% static 'static/video/loginsys/hoverboard.mp4' %}" type="video/mp4" />#}
+{#        </video>#}
+{#    </div>#}
     <div id="auth-login" class="row">
         <div class="container">
             <div class="col-md-4 col-md-offset-4">

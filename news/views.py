@@ -7,7 +7,7 @@ from django.contrib import auth
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsWatches, RssNewsCovers, TopNews, NewsPortal,UserRssNewsReading, RSSChannels
+from .models import News, NewsCategory, Companies, TopVideoContent, RssNews, RssPortals, NewsWatches, RssNewsCovers, TopNews, NewsPortal,UserRssNewsReading, RSSChannels, UserSearchPortals
 import datetime
 import json
 from userprofile.models import UserLikesNews, UserSettings, UserProfile, UserRssPortals
@@ -72,9 +72,9 @@ def main_page_load(request, template="index_beta.html", page_template="page_temp
         # "test_ids": NewsWatches.objects.order_by("-watches").values("news_id")[:4].values(),
         "before_reviews": get_before_reviews(request, category_id=None),
 
-        "pre_total": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 9 LIMIT 3;", translations=name_map)),
+        "pre_total": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 11 LIMIT 3;", translations=name_map)),
 
-        "total_news": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 12;", translations=name_map)),#get_total_news),
+        "total_news": list(News.objects.raw("SELECT id, news_title_english, news_title_russian, news_title_chinese, news_post_date, news_author_id FROM news ORDER BY news_post_date DESC OFFSET 14;", translations=name_map)),#get_total_news),
         "page_template": page_template,
         "top_news": get_top_total_news(request),
         "left_bar": True,
@@ -532,6 +532,7 @@ def get_current_rss_news(request, news_id):
                 </li>
                 <li class="rss-share-item rss-item-save"
                     id="rss-preview-{id}"
+                    style="cursor:pointer"
                     data-rss-id="{id}">
                     <span data-fav="0" class="rss-fav glyphicon glyphicon-plus text-muted"
                           style="font-size: 1.5em;color:white;"></span>
@@ -1225,13 +1226,17 @@ def save_rss_news(request, rss_id):
         )
     else:
         pass
-    return HttpResponse(json.dumps({"process": "added"}), content_type="application/json")
+    return HttpResponse(json.dumps({"process": "added",
+                                    "string": """<a href="#" onclick="removeRssFavourite('{news_id}'); return false;">unsave</a>""".format(news_id=rss_id)
+                                    }), content_type="application/json")
 
 
 def forget_rss_news(request, rss_id):
     instance = RssSaveNews.objects.get(rss_id=int(rss_id))
     instance.delete()
-    return HttpResponse(json.dumps({"process": "removed"}), content_type="application/json")
+    return HttpResponse(json.dumps({"process": "removed",
+                                    "string": """<a href="#" onclick="setRssFavourite('{news_id}'); return false;">save</a>""".format(news_id=rss_id)
+                                    }), content_type="application/json")
 
 
 def get_interesting_news(request):
@@ -1399,6 +1404,7 @@ def render_current_portal_news(request, portal, template="user_news_beta.html", 
         portal_instance = RssPortals.objects.get(verbose_name=portal)
 
         args = {
+            "username": User.objects.get(username=auth.get_user(request).username),
             "page_template": page_template,
             "portal": portal_instance,
             "portal_news": RssNews.objects.filter(portal_name_id=portal_instance.id).order_by("-date_posted").defer("content_value").values(),
@@ -1767,8 +1773,9 @@ def search_rss(request):
         url_instance = tldextract.extract(url)
         url_domain, url_suffix = url_instance.domain, url_instance.suffix
 
+        favicon = ""
         try:
-            favicon = ""
+            # favicon = ""
             # home_page_url = "http://"+url_domain+"."+url_suffix
 
 
@@ -1801,8 +1808,10 @@ def search_rss(request):
             #     favicon = str(favicons[0])[2:]
             # else:
             #     favicon = "%sfavicon.ico" % url
-        except OSError or urllib.error.HTTPError:
+        except urllib.error.HTTPError:
             favicon = ""
+        # except OSError:
+        #     pass
 
 
 
@@ -1831,6 +1840,11 @@ def search_rss(request):
 
 
         if RssPortals.objects.filter(portal_base_link=str(url_domain+"."+url_suffix), verbose_name=str(url_domain).lower()).exists() == False:
+            UserSearchPortals.objects.create(
+                name=str(url_domain).capitalize(),
+                url=url_domain+"."+url_suffix,
+                link=url
+            )
             if feeds:
                 RssPortals.objects.create(
                     portal=str(url_domain).capitalize(),

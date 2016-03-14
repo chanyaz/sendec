@@ -36,9 +36,9 @@
                                             <span class="cprs">
                                                 <span class="side-text">{{ current_portal.portal_id|get_rss_portal_name|truncatechars:15 }}</span>
                                             </span>
-                                            {% if current_portal.portal_id|get_unread_news:username.id != 0 %}
-                                                <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>
-                                            {% endif %}
+{#                                            {% if current_portal.portal_id|get_unread_news:username.id != 0 %}#}
+{#                                                <span id="cprs-count-{{ current_portal.id }}" class="count">{{ current_portal.portal_id|get_unread_news:username.id|default:'' }}</span>#}
+{#                                            {% endif %}#}
                                         </a>
                                     </li>
                                 {% endfor %}
@@ -214,76 +214,54 @@
             });
             {% endif %}
         }
-        function RssPreviewPopUpHide() {
-            $(".preview-rss-news").hide();
-            $("html").css("overflowY", "auto");
-        }
-        $(document).ready(function (event) {
-            RssPreviewPopUpHide();
-            $("html, body").keyup(function (e) {
-                if (e.keyCode == 27) {
-                    $('#close-preview').hide();
-                }
-            });
-        });
-
-        function removeRssFavourite(news_id){
-            $.ajax({
-                type: "POST",
-                url: "/news/remove_like_rss/r="+news_id,
-                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},
-                success: function(){
-                    alertify.error("{% trans 'Remove favourite article' %}");
-                    $('#rss_id_'+news_id).fadeOut();
-                }
-            })
-        }
-        $(document).on('click', function (event) {
-            if (!$(event.target).closest('#current-rss-preview').length && !$(event.target).closest('#close-preview').length) {
-                $('#close-preview').hide();
-            }
-        });
-        String.prototype.format = function(placeholders) {
-                    var s = this;
-                    for(var propertyName in placeholders) {
-                        var re = new RegExp('{' + propertyName + '}', 'gm');
-                        s = s.replace(re, placeholders[propertyName]);
-                    }
-                    return s;
-                };
-        function getCookie(name) {
-                var cookieValue = null;
-                if (document.cookie && document.cookie != '') {
-                    var cookies = document.cookie.split(';');
-                    for (var i = 0; i < cookies.length; i++) {
-                        var cookie = jQuery.trim(cookies[i]);
-                        // Does this cookie string begin with the name we want?
-                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
-                    }
-                }
-                return cookieValue;
-            }
-        function removeUserRssPortal(uuid,pid, id){
-                $("#ajax-preloader").show();
-                var $link = "/news/update_user_rss_news/";
-                var csrftoken = getCookie('csrftoken');
-                $.ajax({
-                    url: "/news/rrp&uid="+uuid+"&pid="+pid+"/",
-                    type: "POST",
-                    data: {
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
-                    },
-                    success: function(result){
-                        $("#curp-"+id).slideToggle();
-                        updateUserRssPortals();
-                        $("#rss-news").load("/news/usernews/");
-                        $("#ajax-preloader").hide();
-                    }
-                })
-            }
+        function RssPreviewPopUpHide(){$(".preview-rss-news").hide(),$("html").css("overflowY","auto")}function removeRssFavourite(e){$.ajax({type:"POST",url:"/news/remove_like_rss/r="+e,data:{csrfmiddlewaretoken:"{{ csrf_token }}"},success:function(){alertify.error("{% trans 'Remove favourite article' %}"),$("#rss_id_"+e).fadeOut()}})}$(document).ready(function(e){RssPreviewPopUpHide(),$("html, body").keyup(function(e){27==e.keyCode&&$("#close-preview").hide()})});
+{#        function RssPreviewPopUpHide() {#}
+{#            $(".preview-rss-news").hide();#}
+{#            $("html").css("overflowY", "auto");#}
+{#        }#}
+{#        $(document).ready(function (event) {#}
+{#            RssPreviewPopUpHide();#}
+{#            $("html, body").keyup(function (e) {#}
+{#                if (e.keyCode == 27) {#}
+{#                    $('#close-preview').hide();#}
+{#                }#}
+{#            });#}
+{#        });#}
+{##}
+{#        function removeRssFavourite(news_id){#}
+{#            $.ajax({#}
+{#                type: "POST",#}
+{#                url: "/news/remove_like_rss/r="+news_id,#}
+{#                data: {"csrfmiddlewaretoken": "{{ csrf_token }}"},#}
+{#                success: function(){#}
+{#                    alertify.error("{% trans 'Remove favourite article' %}");#}
+{#                    $('#rss_id_'+news_id).fadeOut();#}
+{#                }#}
+{#            })#}
+{#        }#}
+{#        $(document).on('click', function (event) {#}
+{#            if (!$(event.target).closest('#current-rss-preview').length && !$(event.target).closest('#close-preview').length) {#}
+{#                $('#close-preview').hide();#}
+{#            }#}
+{#        });#}
+        function getCookie(e){var o=null;if(document.cookie&&""!=document.cookie)for(var r=document.cookie.split(";"),t=0;t<r.length;t++){var n=jQuery.trim(r[t]);if(n.substring(0,e.length+1)==e+"="){o=decodeURIComponent(n.substring(e.length+1));break}}return o}String.prototype.format=function(e){var o=this;for(var r in e){var t=new RegExp("{"+r+"}","gm");o=o.replace(t,e[r])}return o};
+{#        function removeUserRssPortal(uuid,pid, id){#}
+{#                $("#ajax-preloader").show();#}
+{#                var $link = "/news/update_user_rss_news/";#}
+{#                var csrftoken = getCookie('csrftoken');#}
+{#                $.ajax({#}
+{#                    url: "/news/rrp&uid="+uuid+"&pid="+pid+"/",#}
+{#                    type: "POST",#}
+{#                    data: {#}
+{#                        csrfmiddlewaretoken: '{{ csrf_token }}'#}
+{#                    },#}
+{#                    success: function(result){#}
+{#                        $("#curp-"+id).slideToggle();#}
+{#                        $("#rss-news").load("/news/usernews/");#}
+{#                        $("#ajax-preloader").hide();#}
+{#                    }#}
+{#                })#}
+{#            }#}
         function followCurrentRssPortal(uuid,pid, id){
             $("#ajax-preloader").show();
             var csrftoken = getCookie('csrftoken');
@@ -295,7 +273,6 @@
                 },
                 success: function(result){
                     $("#curp-"+id).slideToggle();
-                    updateUserRssPortals();
                     $("#rss-news").load("/news/usernews/");
                     $("#ajax-preloader").hide();
                 }

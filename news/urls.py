@@ -94,8 +94,6 @@ urlpatterns = patterns('',
 
     url(r'^companies/cs=(?P<company>\w+)', 'news.views.get_match_company'),
     url(r'^companies/', view='news.views.render_companies_news'),
-    # url(r'^/blink-to-company/(?P<company_name>\w+)', 'news.views.blink_to_company'),
-    # url(r'^comp/gid=(?P<company_verbose>\w+)', 'news.views.get_company_id'),
 
 
     url(r'^rss/get_matches=(?P<word>\w+)$', 'news.views.get_rss_matches'),

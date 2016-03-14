@@ -3,14 +3,15 @@ from django.template.context_processors import csrf
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib.admin.views.decorators import staff_member_required, user_passes_test
+from django.contrib.admin.views.decorators import user_passes_test
 from django.template.loader import render_to_string
 from news.models import News, Companies, NewsCategory, NewsPortal
 from userprofile.models import UserProfile, UserSettings, UserRssPortals, RssPortals, ModeratorSpecialFields
 from django.core.mail import EmailMultiAlternatives, send_mail
 from django.conf import settings
 import datetime
-
+import urllib.request as r
+import json
 from django.core import signing
 from django.contrib.sites.models import Site, RequestSite
 
@@ -63,12 +64,11 @@ def get_site(request):
         else:
             return RequestSite(request)
 
-def send_notification(request):
 
+def send_notification(request):
     instance_user = User.objects.get(username=auth.get_user(request).username)
     email_template_name = 'password_reset/recovery_email.txt'
     email_subject_template_name = 'password_reset/recovery_email_subject.txt'
-
     context = {
         'site': get_site(request),
         'user': instance_user,
@@ -83,6 +83,15 @@ def send_notification(request):
     send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
               [instance_user.email])
     return HttpResponseRedirect("/profile/")
+
+
+def get_region_code():
+    url = "http://ip-api.com/json"
+    t = r.urlopen(url)
+    data = json.loads(t.read().decode(t.info().get_param('charset') or 'utf-8'))
+    return data['countryCode']
+
+
 
 def render_moderator_profile_page(request, username, template="moderator_profile.html", page_template="moderator_news.html", extra_context=None):
     user_instance = User.objects.get(username=auth.get_user(request).username)
@@ -101,9 +110,25 @@ def render_moderator_profile_page(request, username, template="moderator_profile
             args["god"] = get_god_data(request, user_moderator.username)
             if request.is_ajax():
                 template = page_template
-
+            if not request.COOKIES.get('lang'):
+                region = get_region_code()
+                if region == 'RU': args['lang'] = 'rus'
+                elif region == "US": args['lang'] = 'eng'
+                else: args['lang'] = 'ch'
+            else:
+                if 'rus' in request.COOKIES.get('lang'): args['lang'] = 'rus'
+                elif 'eng' in request.COOKIES.get('lang'): args['lang'] = 'eng'
+                elif 'ch' in request.COOKIES.get('lang'): args['lang'] = 'ch'
             args["footer_news"] = get_news_for_footer(request)[:3]
-            return render_to_response(template, args, context_instance=RequestContext(request))
+            response =  render_to_response(template, args, context_instance=RequestContext(request))
+            if not request.COOKIES.get('lang'):
+                region = get_region_code()
+                if region == 'RU': response.set_cookie("lang", "rus")
+                elif region == "US": response.set_cookie("lang", "eng")
+                else: response.set_cookie("lang", "ch")
+            else:
+                pass
+            return response
         else:
             raise Http404()
     else:

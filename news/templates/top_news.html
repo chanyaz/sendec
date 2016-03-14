@@ -5,6 +5,9 @@
 {% load cache %}
 {% load thumbnail %}
 {% block current_news %}
+    <style>
+        main>h1{color: #F62A00;text-align: center;font-size:26px}#to-russian{background:url("{% static 'static/img/rus.png' %}") center no-repeat;background-size:cover}#to-english{background:url("{% static 'static/img/uk.png' %}") center no-repeat;background-size:cover}#to-chinese{background:url("{% static 'static/img/china.png' %}") center no-repeat;background-size:cover}
+    </style>
     <script>
 {#        function changeArticleLanguage(news_id, lang_code){#}
 {#            $.ajax({#}
