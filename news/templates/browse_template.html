@@ -1,0 +1,12 @@
+{% load endless %}
+{% load staticfiles %}
+{% load my %}
+
+
+<div class="browser-portals">
+    {% paginate rss_portals %}
+    {% for i in rss_portals %}
+
+    {% endfor %}
+</div>
+{% show_more %}
